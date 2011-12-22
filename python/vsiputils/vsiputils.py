@@ -157,7 +157,7 @@ def create(atype,atuple):
        'chol_f':'vsip_chold_create_f(l[0],l[1])',
        'chol_d':'vsip_chold_create_d(l[0],l[1])',
        'cchol_f':'vsip_cchold_create_f(l[0],l[1])',
-       'cchol_d':'vsip_cchold_create_f(l[0],l[1])',
+       'cchol_d':'vsip_cchold_create_d(l[0],l[1])',
        'sv_f':'vsip_svd_create_f(l[0],l[1],l[2],l[3])',
        'sv_d':'vsip_svd_create_d(l[0],l[1],l[2],l[3])',
        'fir_f':'vsip_fir_create_f(l[0],l[1],l[2],l[3],l[4],l[5],l[6])',
@@ -1270,7 +1270,25 @@ def subview(v,i):
     else:
         print('Type ' + t + ' not defined for subview')
         return False
-
+def transview(A):
+    """
+       Note this function creates a transpose view that should
+       be destroyed when it is no longer needed
+    """
+    f={'mview_bl': vsip_mtransview_bl,
+       'mview_i': vsip_mtransview_i,
+       'mview_si': vsip_mtransview_si,
+       'mview_uc': vsip_mtransview_uc,
+       'cmview_d': vsip_cmtransview_d,
+       'cmview_f': vsip_cmtransview_f,
+       'mview_d': vsip_mtransview_d,
+       'mview_f': vsip_mtransview_f}
+    t=getType(A)[1]
+    if f.has_key(t):
+        return f[t](A)
+    else:
+        print('Type ' + t + ' not supported by transview')
+        return False
 def get(a,i):
     """
        get(aView,aIndex) will return a value from a vsip view. Argument aIndex
@@ -1809,6 +1827,21 @@ def meanval(input):
        'vview_d':vsip_vmeanval_d,
        'mview_f':vsip_mmeanval_f,
        'vview_f':vsip_vmeanval_f}
+    t=getType(input)[1]
+    if f.has_key(t):
+        return f[t](input)
+    else:
+        print(t + ' Is not a supported type for meanval')
+        return False
+def meansqval(input):
+    f={'cmview_d':vsip_cmmeansqval_d,
+       'cvview_d':vsip_cvmeansqval_d,
+       'cmview_f':vsip_cmmeansqval_f,
+       'cvview_f':vsip_cvmeansqval_f,
+       'mview_d':vsip_mmeansqval_d,
+       'vview_d':vsip_vmeansqval_d,
+       'mview_f':vsip_mmeansqval_f,
+       'vview_f':vsip_vmeansqval_f}
     t=getType(input)[1]
     if f.has_key(t):
         return f[t](input)
@@ -3290,8 +3323,8 @@ def prodt(A,B,C):
         print('Not a supported argument type for prodt')
         return False
 def trans(A,C):
-    f = {'cmview_d':vsip_cmprodt_d,'cmview_f':vsip_cmprodt_f,
-         'mview_d':vsip_mprodt_d,  'mview_f':vsip_mprodt_f}
+    f = {'cmview_d':vsip_cmtrans_d,'cmview_f':vsip_cmtrans_f,
+         'mview_d':vsip_mtrans_d,  'mview_f':vsip_mtrans_f}
     t=getType(A)
     if t[0] and t==getType(C) and f.has_key(t[1]):
         f[t[1]](A,C)
@@ -3390,7 +3423,7 @@ def chold(ch,A):
     f={'chol_fmview_f':vsip_chold_f,
        'cchol_fcmview_f':vsip_cchold_f,
        'chol_dmview_d':vsip_chold_d,
-       'cchold_dcmview_d':vsip_cchold_d}
+       'cchol_dcmview_d':vsip_cchold_d}
     t=getType(ch)[1]+getType(A)[1]
     if f.has_key(t):
         ret= f[t](ch,A)
@@ -3423,7 +3456,7 @@ def cholsol(ch,XB):
     f={'chol_fmview_f':vsip_cholsol_f,
        'cchol_fcmview_f':vsip_ccholsol_f,
        'chol_dmview_d':vsip_cholsol_d,
-       'cchold_dcmview_d':vsip_ccholsol_d}
+       'cchol_dcmview_d':vsip_ccholsol_d}
     t=getType(ch)[1]+getType(XB)[1]
     if f.has_key(t):
         ret= f[t](ch,XB)

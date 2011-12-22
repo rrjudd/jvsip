@@ -1,0 +1,12 @@
+This test uses givens rotations to calculate (in place) the R matrix of a QR decomposition
+
+To run do 
+ > python testGivens.py
+
+To check copy matrix A into Matlab (or octave) and caculate R and comparet to
+the R printed by the routine.
+
+Test was originally done to debug a problem with the C VSIPL library. Problem
+was found where I did not check for a division by zero. Python reported this where
+C just did the division with a Nand return. So using python as a debug tool worked
+in this case.
