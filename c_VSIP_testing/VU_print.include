@@ -1,0 +1,240 @@
+#ifndef VU_PRINT_H
+#define VU_PRINT_H 1
+
+static void VU_cmprintm_d(char s[], vsip_cmview_d *X) {
+    char format[50];
+    vsip_length RL = vsip_cmgetrowlength_d(X);
+    vsip_length CL = vsip_cmgetcollength_d(X);
+    vsip_length row,col;
+    vsip_cscalar_d x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"lf %+");
+    strcat(format,s);
+    strcat(format,"lfi) %s");
+    printf("[\n");	
+    for(row=0; row<CL; row++){ 
+        for(col=0; col<RL; col++){ 
+           x=vsip_cmget_d(X,row,col);
+           printf(format,vsip_real_d(x), vsip_imag_d(x), ((col==(RL-1)) ? ";" : " "));
+      }  
+      printf("\n");
+    }
+    printf("];\n");
+    return;
+}
+
+static void VU_cmprintm_f(char s[], vsip_cmview_f *X) {
+    char format[50];
+    vsip_length RL = vsip_cmgetrowlength_f(X);
+    vsip_length CL = vsip_cmgetcollength_f(X);
+    vsip_length row,col;
+    vsip_cscalar_f x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"f %+");
+    strcat(format,s);
+    strcat(format,"fi) %s");
+    printf("[\n");	
+    for(row=0; row<CL; row++){
+      for(col=0; col<RL; col++){
+        x=vsip_cmget_f(X,row,col);
+        printf(format,vsip_real_f(x),
+                      vsip_imag_f(x),
+               ((col==(RL-1)) ? ";" : " "));
+      }  
+      printf("\n");
+    }
+    printf("];\n");
+    return;
+}
+
+static void VU_cvprintm_d(char s[], vsip_cvview_d *X)
+{
+    char format[50];
+    vsip_length L = vsip_cvgetlength_d(X);
+    vsip_index vi;
+    vsip_cscalar_d x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"lf %+");
+    strcat(format,s);
+    strcat(format,"lfi) %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_cvget_d(X,vi);
+      printf(format,vsip_real_d(x),
+                    vsip_imag_d(x),";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_cvprintm_f(char s[], vsip_cvview_f *X) {
+    char format[50];
+    vsip_length L = vsip_cvgetlength_f(X);
+    vsip_index vi;
+    vsip_cscalar_f x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"f %+");
+    strcat(format,s);
+    strcat(format,"fi) %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_cvget_f(X,vi);
+      printf(format,vsip_real_f(x),
+                    vsip_imag_f(x),";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_mprintm_d(char s[], vsip_mview_d *X) {
+    char format[50];
+    vsip_length RL = vsip_mgetrowlength_d(X);
+    vsip_length CL = vsip_mgetcollength_d(X);
+    vsip_length row,col;
+    vsip_scalar_d x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"lf %s");
+    printf("[\n");	
+    for(row=0; row<CL; row++){
+      for(col=0; col<RL; col++){
+        x=vsip_mget_d(X,row,col);
+        printf(format,x,((col==(RL-1)) ? ";" : " "));
+      }  
+      printf("\n");
+    }
+    printf("];\n");
+    return;
+}
+
+static void VU_mprintm_f(char s[], vsip_mview_f *X) {
+    char format[50];
+    vsip_length RL = vsip_mgetrowlength_f(X);
+    vsip_length CL = vsip_mgetcollength_f(X);
+    vsip_length row,col;
+    vsip_scalar_f x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"f %s");
+    printf("[\n");	
+    for(row=0; row<CL; row++){
+      for(col=0; col<RL; col++){
+        x=vsip_mget_f(X,row,col);
+        printf(format,x,((col==(RL-1)) ? ";" : " "));
+      }  
+      printf("\n");
+    }
+    printf("];\n");
+    return;
+}
+
+static void VU_vprintm_d(char s[], vsip_vview_d *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_d(X);
+    vsip_index vi;
+    vsip_scalar_d x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"lf %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_d(X,vi);
+      printf(format,x,";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_vprintm_f(char s[], vsip_vview_f *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_f(X);
+    vsip_index vi;
+    vsip_scalar_f x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"f %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_f(X,vi);
+      printf(format,x,";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_vprintm_i(char s[], vsip_vview_i *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_i(X);
+    vsip_index vi;
+    vsip_scalar_i x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"d %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_i(X,vi);
+      printf(format,x,";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_vprintm_mi(char s[], vsip_vview_mi *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_mi(X);
+    vsip_index vi;
+    vsip_scalar_mi x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"ld %");
+    strcat(format,s);
+    strcat(format,"ld) %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_mi(X,vi);
+      printf(format,vsip_rowindex(x),
+                    vsip_colindex(x),";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_vprintm_si(char s[], vsip_vview_si *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_si(X);
+    vsip_index vi;
+    vsip_scalar_si x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"d %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_si(X,vi);
+      printf(format,x,";");
+    }  
+    printf("];\n");
+    return;
+}
+
+static void VU_vprintm_vi(char s[], vsip_vview_vi *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_vi(X);
+    vsip_index vi;
+    vsip_scalar_vi x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"ld %s\n");
+    printf("[\n");	
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_vi(X,vi);
+      printf(format,x,";");
+    }  
+    printf("];\n");
+    return;
+}
+
+#endif

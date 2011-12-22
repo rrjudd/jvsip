@@ -1,0 +1,16 @@
+This dirctory includes documentation.
+Some documents are copied directly from TVCPP. These should be updated but are to much work for the moment.
+
+The official VSIPL specification is available at http://www.vsipl.org/
+I include an anotated copy here. The anotations are mistakes I know are in the official document
+but have not been fixed. Fixing them is a little painful but getting the fixes through the forum is almost
+imposible. So for now I will update this document with notes on things I find and perhaps someday there will
+be a new official release with these misakes fixed.
+
+I make my annotations using Apples preview application. I have not researched how these annotations show up
+using other tools.
+
+I also include newer documents. All my documentation is under continous review and modification. 
+
+Python documents are mine alone. Currently there is no "official" vsipl python spec so I am free 
+to do what I want. 

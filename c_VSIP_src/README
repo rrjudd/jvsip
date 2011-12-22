@@ -1,0 +1,12 @@
+This directory holds C Source code needed to build the jvsip VSIPL C Library.
+
+To Build (if all else fails) try
+
+cc -c *.c -I./
+ar rcvs libvsip.a *.o
+
+To use include vsip.h (in this directory; put it in a handy place) and link
+with libvsip.a .
+
+There are other ways to make this library and lots of flags you can try. This is the most brain dead way if you just want to try it out; don't know a lot about C or libraries; and can't get the Makefile to work properly for you. This code
+depends only on an ansi C89 commpliant compiler to build.

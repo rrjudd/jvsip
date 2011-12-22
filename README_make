@@ -1,0 +1,67 @@
+Introduction
+A more complete document (pdf) called jvsip_howToMake is availale in the doc directory.
+
+These instructions assume you have the JVSIP distribution in a directory at $HOME/jvsip.
+You can put the distribution and name the directory anything; there is no requirement for
+it to actually reside in $HOME or be called jvsip.
+
+Making and installing the C vsipl library.
+There is a Makefile in $HOME/jvsip.  This top level Makefile is for creating the C VSIPL library. 
+You should use GNU's make.  Typing 
+> make
+in the $HOME/jvsip directory should create a libvsip.a in the c_VSIP_src directory;
+create a $HOME/jvsip/lib directory and a $HOME/jvsip/include directory; and then copy
+libvsip.a into $HOME/jvsip/lib and copy vsip.h into $HOME/jvsip/include . Note this
+is the location makefiles in testing and example code will look for these items.
+
+You can also go directly in  $HOME/jvsip/c_VSIP_src and make there. This will just 
+create the libvsip.a file in $HOME/jvsip/c_VSIP_src.
+
+If you want to install into /usr/local (or some other standard location) then all you
+need to do is copy libvsip.a and vsip.h to those locations.
+
+Making the baseline test
+Inside $HOME/jvsip/c_VSIP_testing is a lot of (fairly ugly) code designed to exercise
+the C VSIPL routines enough to give one some confidence that most things work. 
+I make this with a shell script. To create the tests do
+> cd $HOME/local/jvsip/c_VSIP_testing
+> sh gen_all.sh
+This should create a file called test_all.c and compile it into an executable called
+test_all. To run do
+>./test_all | grep error
+or
+>./test_all >output
+or just
+>./test_all
+
+Creating and installing the vsip python module
+To make the vsip python module cd to ./python/vsip
+You need a tool called swig (www.swig.org). I assume you have it as well as any other
+development tools (such as c, make, etc.) from the vsip directory use swig to create 
+the wrapper files and vsip.py. Then use setup.py to create and install the vsip module. Should look
+something like
+
+swig -python vsip.i
+python setup.py install
+
+Note the swig I was using was SWIG Version 2.0.4. I believe this version
+should make a wrapper suitable for python 2.6, 2.7 or 3.2
+
+There are several ways to do the install.
+You can do a build first and then do the install as above
+python setup.py build
+python setup.py install
+
+If you don't have permisions to install you can also install into a user space
+python setup.py install --user
+
+To create and install the vsiputils python module cd into python/vsiputils. 
+Note this module is not well tested and is very much alpha code.
+Also not vsiputils requires the vsip module. It overloads VSIPL functionality
+and adds some support.  
+To install I generally do
+> python setup.py install --user
+
+Creating and installing the vsipUser python module
+cd into python/vsipUser
+> python setup.py install --user
