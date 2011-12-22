@@ -1,5 +1,5 @@
 Introduction
-A more complete document (pdf) called jvsip_howToMake is availale in the doc directory.
+A more complete document (pdf) called jvsip_howToMake is available in the doc directory.
 
 These instructions assume you have the JVSIP distribution in a directory at $HOME/jvsip.
 You can put the distribution and name the directory anything; there is no requirement for
@@ -52,7 +52,7 @@ You can do a build first and then do the install as above
 python setup.py build
 python setup.py install
 
-If you don't have permisions to install you can also install into a user space
+If you don't have permissions to install you can also install into a user space
 python setup.py install --user
 
 To create and install the vsiputils python module cd into python/vsiputils. 

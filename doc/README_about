@@ -1,16 +1,11 @@
-This dirctory includes documentation.
-Some documents are copied directly from TVCPP. These should be updated but are to much work for the moment.
+This directory includes documentation.
+Some documents I have copied directly from TVCPP. These older documents should be updated but are a low priority for now.
 
 The official VSIPL specification is available at http://www.vsipl.org/
-I include an anotated copy here. The anotations are mistakes I know are in the official document
-but have not been fixed. Fixing them is a little painful but getting the fixes through the forum is almost
-imposible. So for now I will update this document with notes on things I find and perhaps someday there will
-be a new official release with these misakes fixed.
+I include an annotated copy here. The annotations are mistakes I know are in the official document; or changes to the pdf document I would like to see. Fixing errors in the official document is painful and getting fixes finally approved seems to be impossible. For now I am looking for an easy way to publish (and document) problems. If somebody picks up editing the official document then they can use this as a resource.
 
-I make my annotations using Apples preview application. I have not researched how these annotations show up
-using other tools.
+I make annotations using Apples preview application. I have not researched how these annotations show up using other tools.
 
-I also include newer documents. All my documentation is under continous review and modification. 
+I also include newer documents. All my documentation are under continuos review and modification. I am currently using LibreOffice as my documentation tool but I (currently) only publish in PDF.
 
-Python documents are mine alone. Currently there is no "official" vsipl python spec so I am free 
-to do what I want. 
+Python documents are mine alone. Currently there is no "official" VSIPL python spec so I am free to do what I want. Currently I am doing more of a proof of concept so decisions may change frequently. When I get something that I like for python VSIPL I may document it.

@@ -10,13 +10,13 @@ The C++ API includes both a serial and parallel spec. This distribution does not
 support the C++ API.
 
 Note the original VSIPL was done by the VSIPL working group which was specific to VSIPL. 
-The VSIPL working group morphed into the HPEC-SI working gorup (High Perfromance Embeded 
+The VSIPL working group morphed into the HPEC-SI working group (High Performance Embedded 
 Computing - Software Initiative) which developed the C++ API's. Note HPEC-SI is not specific
 to VSIPL.
 
 One of the goals of VSIPL is that anybody can implement a VSIPL Library. The idea was that
 multiple (hardware) vendors would implement VSIPL instead of their proprietary library and
-software would be more portable when new hardware is purchaed. The reality has been more 
+software would be more portable when new hardware is purchased. The reality has been more 
 toward software vendors creating VSIPL libraries for multiple platforms. 
 
 This distribution is open and free to anybody that wants to use it or modify the source code 
