@@ -3,10 +3,15 @@ This test uses givens rotations to calculate (in place) the R matrix of a QR dec
 To run do 
  > python testGivens.py
 
-To check copy matrix A into Matlab (or octave) and caculate R and comparet to
+To check copy matrix A into Matlab (or octave) and caculate R and compare to
 the R printed by the routine.
 
-Test was originally done to debug a problem with the C VSIPL library. Problem
-was found where I did not check for a division by zero. Python reported this where
-C just did the division with a Nand return. So using python as a debug tool worked
-in this case.
+Test was originally done to debug a problem with the C VSIPL library. Note code in
+this directory 'VI_cgivens.c. This is the original C code with the bug still in it.
+VI_givens_d.py is the python analog of VI_cgivens.c. Python recognized I was dividing
+by zero making it easy to find and correct the problem in my c code.
+
+So using python as a debug tool worked in this case.
+
+The problem in the c code is line 55.
+I correct this in the python version, lines 44-46.
