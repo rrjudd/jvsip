@@ -1372,11 +1372,15 @@ def put(a,i,scl):
     if t == 'cmview_f' or t=='cvview_f':
         if getType(scl)[1] == 'scalar':
             x=vsip_cmplx_f(scl,0)
+        elif getType(scl)[1] == 'cscalar_f':
+            x=vsip_cmplx_f(scl.r,scl.i)
         elif type(scl) == complex:
             x=vsip_cmplx_f(scl.real,scl.imag)
     if t == 'cmview_d' or t == 'cvview_d':
         if getType(scl)[1] == 'scalar':
             x=vsip_cmplx_d(scl,0)
+        elif getType(scl)[1] == 'cscalar_d':
+            x=vsip_cmplx_d(scl.r,scl.i)
         elif type(scl) == complex:
             x=vsip_cmplx_d(scl.real,scl.imag)
     if type(i) == tuple:
