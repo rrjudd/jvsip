@@ -235,3 +235,23 @@ def mstring(m,fmt):
         return "[" + " ".join(V) + "]\n"
     else:
         print('Object not VSIP vector or matrix')
+def vView(x,o,s,l):
+    """ vView(x,o,s,l) returns the view x with offset, stride and
+        length (o,s,l) .
+        This could also be done with vsiputils using
+        bind(vsip.block(x),(o,s,l))
+        except that bind will create a new object that will need to 
+        be allocated and destroyed.
+        vView will modify the supplied object x.
+    """
+    t=['vview_f', 'vview_d',
+       'cvview_f','cvview_d',
+       'vview_i','vview_si','vview_uc','vview_vi',
+       'vview_bl','vview_mi']
+    myT=vsip.getType(x)[1]
+    if myT in t:
+        attr=vsip.getattrib(x)
+        attr.offset=o; attr.stride=s; attr.length=l
+        return vsip.putattrib(x,attr)
+    else:
+        print('type ' + myT + ' not supported by vView')
