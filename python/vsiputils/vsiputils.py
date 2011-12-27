@@ -241,6 +241,7 @@ def destroy(obj):
         return False
      
 # VSIPL scalar functions
+# s on front denotes scalar and prevents conflict with overloaded view functions
 def sconj(a):
     t=getType(a)[1]
     f={'cscalar_f':vsip_conj_f,
@@ -249,6 +250,43 @@ def sconj(a):
         return f[t](a)
     else:
         print('Type ' + t + ' not supported by sconj')
+def scmplx(p,a,b):
+    """
+       p is a string designating a type, either scalar_f or scalar_d.
+    """
+    if p == 'scalar_f':
+        return vsip_cmplx_f(a,b)
+    elif p == 'scalar_d':
+        return vsip_cmplx_d(a,b)
+    else:
+        print('Type ' + p + ' not defined for cmplx');
+        return False
+def scsub(a,b):
+    t=getType(a)[1]
+    if t != getType(b)[1]:
+        print('Type of arguments must agree')
+        return False
+    if t == 'cscalar_f':
+        return vsip_csub_f(a,b)
+    elif t == 'cscalar_d':
+        return vsip_csub_d(a,b)
+    else:
+        print('Type ' + p + ' not defined for complex subtraction')
+        return False
+def smag(a):
+    if type(a) == float or type(a) == int:
+        if(a < 0):
+            return -a
+        else:
+            return a
+    t = getType(a)[1]
+    if t == 'cscalar_f':
+        return vsip_cmag_f(a)
+    elif t == 'cscalar_d':
+        return vsip_cmag_d(a)
+    else:
+        print('Type ' + t + ' not recognized by mag');
+        return False
 
 def _vget(a,b): # used internal to this module
     f={ 'vview_f':vsip_vget_f,
