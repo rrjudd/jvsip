@@ -1,6 +1,12 @@
 from vsip import *
 
 # Python support functions
+def init():
+    return vsip_init(None)
+
+def finalize():
+    return vsip_finalize(None)
+
 def getType(v):
     """
         Returns a tuple with True if a vsip type is found, plus a string indicating the type.
