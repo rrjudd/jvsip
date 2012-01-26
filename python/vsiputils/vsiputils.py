@@ -1,6 +1,12 @@
 from vsip import *
 
 # Python support functions
+def init():
+    return vsip_init(None)
+
+def finalize():
+    return vsip_finalize(None)
+
 def getType(v):
     """
         Returns a tuple with True if a vsip type is found, plus a string indicating the type.
@@ -1782,12 +1788,15 @@ def conj(input,output):
        'cmview_f':vsip_cmconj_f,
        'cvview_d':vsip_cvconj_d,
        'cvview_f':vsip_cvconj_f}
+    fr=['vview_d','vview_f','mview_d','mview_f']
     t=getType(input)[1]
     if f.has_key(t):
         f[t](input,output)
         return output
+    elif t in fr:
+        return copy(input,output)
     else:
-        print('Not a supported type')
+        print('Type' + t + 'Not a supported type for copy')
         return False
 def cumsum(input,output):
     """
@@ -2225,9 +2234,9 @@ def jmul(a,b,c):
        'cvview_f':vsip_cvjmul_f}
     if f.has_key(t):
         f[t](a,b,c)
-        return c
+        return
     else:
-        print(t+' Not a valid type for jmul')
+        print('Type ' + t +' Not a valid type for jmul')
         return False
 def div(a,b,c):
     """
@@ -3221,8 +3230,17 @@ def herm(a,b):
         print('Not a supported argument list for cmherm')
         return False
 def jdot(a,b):
-    f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_f}
-    t=getType(a)
+    def _rcjdot_d(a,b):
+        
+    f  = {  'cvview_fcvview_f':vsip_cvjdot_f,
+            'cvview_dcvview_d':vsip_cvjdot_d,
+            'vview_dvview_d':vsip_vdot_d,
+            'vview_dcvview_d':_rcjdot_d,
+            'cvview_dvview_d':_crjdot_d,
+            'vview_fvview_f': vsip_vdot_f,
+            'vview_fcvview_f':_rcjdot_f,
+            'cvview_fvview_f':_crjdot_f,}
+    t=getType(a)[1]+getType(b)[1]
     if t[0] and t == getType(b) and f.has_key(t[1]):
         return f[t[1]](a,b)
     else:
