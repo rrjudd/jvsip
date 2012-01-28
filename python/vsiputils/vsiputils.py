@@ -3,10 +3,8 @@ from vsip import *
 # Python support functions
 def init():
     return vsip_init(None)
-
 def finalize():
     return vsip_finalize(None)
-
 def getType(v):
     """
         Returns a tuple with True if a vsip type is found, plus a string indicating the type.
@@ -1790,6 +1788,9 @@ def conj(input,output):
        'cvview_f':vsip_cvconj_f}
     fr=['vview_d','vview_f','mview_d','mview_f']
     t=getType(input)[1]
+    if t != getType(output)[1]:
+        print('Type of input and output must be the same')
+        return False
     if f.has_key(t):
         f[t](input,output)
         return output
@@ -2234,7 +2235,7 @@ def jmul(a,b,c):
        'cvview_f':vsip_cvjmul_f}
     if f.has_key(t):
         f[t](a,b,c)
-        return
+        return c
     else:
         print('Type ' + t +' Not a valid type for jmul')
         return False
@@ -3053,102 +3054,6 @@ def fftDestroy(fftobj):
     else:
         print('Not a valid type for fftDestroy')
         return False
-def fft(l,s):
-    def _cfftip(a,s):
-        m=s
-        dir=VSIP_FFT_INV
-        hint=VSIP_ALG_NOISE
-        if s < 0:
-            m=-s
-            dir=VSIP_FFT_FWD
-        t=getType(a)[1]
-        f={'cvview_d':'fftCreate(t,(getlength(a),m,dir,1,hint))',
-           'cvview_f':'fftCreate(t,(getlength(a),m,dir,1,hint))',
-           'cmview_d':'fftCreate(t,(getcollength(a),getrowlength(a),m,dir,VSIP_ROW,1,hint))',
-           'cmview_f':'fftCreate(t,(getcollength(a),getrowlength(a),m,dir,VSIP_ROW,1,hint))'}
-        fftobj= eval(f[t])
-        fftip(fftobj,a)
-        fftDestroy(fftobj)
-        return a
-    def _cfftop(a,b,s):
-        m=s
-        dir=VSIP_FFT_INV
-        hint=VSIP_ALG_NOISE
-        if s < 0:
-            m=-s
-            dir=VSIP_FFT_FWD
-        t=getType(a)[1]+getType(b)[1]
-        f={'cvview_dcvview_d':'fftCreate(t,(getlength(a),m,dir,1,hint))',
-           'cvview_fcvview_f':'fftCreate(t,(getlength(a),m,dir,1,hint))',
-           'cmview_dcmview_d':'fftCreate(t,(getcollength(a),getrowlength(a),m,dir,VSIP_ROW,1,hint))',
-           'cmview_fcmview_f':'fftCreate(t,(getcollength(a),getrowlength(a),m,dir,VSIP_ROW,1,hint))'}
-        fftobj= eval(f[t])
-        fftop(fftobj,a,b)
-        fftDestroy(fftobj)
-        
-        return b
-    def _rcfftop(a,b,s):
-        m=s
-        hint=VSIP_ALG_NOISE
-        if s < 0:
-            m=-s
-            dir=VSIP_FFT_FWD
-        t=getType(a)[1]+getType(b)[1]
-        f={'vview_dcvview_d':'fftCreate(t,(getlength(a),m,1,hint))',
-           'vview_fcvview_f':'fftCreate(t,(getlength(a),m,1,hint))',
-           'mview_dcmview_d':'fftCreate(t,(getcollength(a),getrowlength(a),m,VSIP_ROW,1,hint))',
-           'mview_fcmview_f':'fftCreate(t,(getcollength(a),getrowlength(a),m,VSIP_ROW,1,hint))'}
-        fftobj= eval(f[t])
-        fftop(fftobj,a,b)
-        fftDestroy(fftobj)
-        return b
-    def _crfftop(a,b,s):
-        m=s
-        dir=VSIP_FFT_INV
-        hint=VSIP_ALG_NOISE
-        if s < 0:
-            m=-s
-        t=getType(a)[1]+getType(b)[1]
-        f={'cvview_dvview_d':'fftCreate(t,(getlength(a),m,1,hint))',
-           'cvview_fvview_f':'fftCreate(t,(getlength(a),m,1,hint))',
-           'cmview_dmview_d':'fftCreate(t,(getcollength(a),getrowlength(a),m,VSIP_ROW,1,hint))',
-           'cmview_fmview_f':'fftCreate(t,(getcollength(a),getrowlength(a),m,VSIP_ROW,1,hint))'}
-        fftobj= eval(f[t])
-        fftop(fftobj,a,b)
-        fftDestroy(fftobj)
-        return b
-    t = str()
-    argument=str()
-    if type(l) == tuple and len(l) == 2:
-        t=getType(l[0])[1] + getType(l[1])[1]
-        argument='(l[0],l[1],s)'
-    elif type(l) == tuple and len(l) == 1:
-        t=getType(l[0])[1]
-        argument='(l[0],s)'
-    elif type(l) != tuple and getType(l)[0]:
-        t=getType(l)[1]
-        argument='(l,s)'
-    f={ 'cvview_d'        :'_cfftip',
-        'cvview_f'        :'_cfftip',
-        'cvview_dcvview_d':'_cfftop',
-        'cvview_fcvview_f':'_cfftop',
-        'vview_dcvview_d' :'_rcfftop', 
-        'vview_fcvview_f' :'_rcfftop',
-        'cvview_dvview_d' :'_crfftop', 
-        'cvview_dvview_f' :'_crfftop',
-        'cmview_d'        :'_cfftip',
-        'cmview_f'        :'_cfftip',
-        'cmview_dcmview_d':'_cfftop',
-        'cmview_fcmview_f':'_cfftop',
-        'cmview_dmview_d' :'_crfftop', 
-        'cmview_fmview_f' :'_crfftop',
-        'mview_dcmview_d' :'_rcfftop',  
-        'mview_fcmview_f' :'_rcfftop' }
-    if f.has_key(t):
-        return eval(f[t]+argument)
-    else:
-        print('Type ' + t + ' not supported by fft')
-        return False
 
 #Fir Functions
 #TVCPP does not seem to handle the rcfir case. may need to fix that. 
@@ -3198,8 +3103,8 @@ def firReset(fir):
         f[t](fir)
         return fir
     else:
-        print('not a fir object')
-        return('False')
+        print('Type ' + t + ' not a fir object')
+        return False
 
 # Miscellaneous
 def histo(src,min_bin,max_bin,opt,hist):
@@ -3218,6 +3123,25 @@ def histo(src,min_bin,max_bin,opt,hist):
     else:
         print('Type ' + t + ' not supported by histogram')
         return False
+def freqswap(x):
+    """Swaps halves of a vector, or quadrants of a matrix, to remap zero 
+       frequencies from the origin to the middle.
+    """
+    f = { 'cvview_d':vsip_cvfreqswap_d,
+          'vview_d':vsip_vfreqswap_d,
+          'cmview_d':vsip_cmfreqswap_d,
+          'mview_d':vsip_mfreqswap_d,
+          'cvveiw_f':vsip_cvfreqswap_f,
+          'vview_f':vsip_vfreqswap_f,
+          'cmview_f':vsip_cmfreqswap_f,
+          'mview_f':vsip_mfreqswap_f}
+    t=getType(x)[1]
+    if f.has_key(t):
+        f[t](x)
+        return x
+    else:
+        print('Type ' + t + ' not supported for freqswap')
+        return(False)
 
 # Matrix and Vector Operations
 def herm(a,b):
@@ -3230,17 +3154,8 @@ def herm(a,b):
         print('Not a supported argument list for cmherm')
         return False
 def jdot(a,b):
-    def _rcjdot_d(a,b):
-        
-    f  = {  'cvview_fcvview_f':vsip_cvjdot_f,
-            'cvview_dcvview_d':vsip_cvjdot_d,
-            'vview_dvview_d':vsip_vdot_d,
-            'vview_dcvview_d':_rcjdot_d,
-            'cvview_dvview_d':_crjdot_d,
-            'vview_fvview_f': vsip_vdot_f,
-            'vview_fcvview_f':_rcjdot_f,
-            'cvview_fvview_f':_crjdot_f,}
-    t=getType(a)[1]+getType(b)[1]
+    f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_f}
+    t=getType(a)
     if t[0] and t == getType(b) and f.has_key(t[1]):
         return f[t[1]](a,b)
     else:
