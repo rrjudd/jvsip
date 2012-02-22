@@ -1932,10 +1932,5 @@ void vsip_vfreqswap_f( const vsip_vview_f*);
 void vsip_cmfreqswap_f( const vsip_cmview_f*);
 void vsip_mfreqswap_f( const vsip_mview_f*);
 
-/* extra functions for python */
-vsip_index *vindexptr(void);
-void vindexfree(vsip_index*);
-vsip_index vindexptrToInt(vsip_index*);
-
 #endif
 

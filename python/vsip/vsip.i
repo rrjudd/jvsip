@@ -1,6 +1,7 @@
 %module vsip
 %{
 #include "../../c_VSIP_src/vsip.h"
+#include "./c_src/pyVsip.h"
 %}
 typedef enum { VSIP_MEM_NONE          = 0, VSIP_MEM_RDONLY        = 1, VSIP_MEM_CONST         = 2, VSIP_MEM_SHARED        = 3, VSIP_MEM_SHARED_RDONLY = 4, VSIP_MEM_SHARED_CONST  = 5 } vsip_memory_hint;
 typedef enum{ VSIP_TVX = 0, VSIP_TVY = 1, VSIP_TVZ = 2 }vsip_tvslice;
@@ -1736,3 +1737,7 @@ void vsip_mfreqswap_f( const vsip_mview_f*);
 vsip_index* vindexptr();
 void vindexfree(vsip_index*);
 vsip_index vindexptrToInt(vsip_index*);
+vsip_cscalar_f py_rcvjdot_f(const vsip_vview_f*, const vsip_cvview_f*);
+vsip_cscalar_f py_crvjdot_f(const vsip_cvview_f* , const vsip_vview_f*);
+vsip_cscalar_d py_rcvjdot_d(const vsip_vview_d*, const vsip_cvview_d*);
+vsip_cscalar_d py_crvjdot_d(const vsip_cvview_d* , const vsip_vview_d*);
