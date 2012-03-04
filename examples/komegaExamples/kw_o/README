@@ -1,0 +1,24 @@
+This code is specific to an Apple objective-C environment. 
+
+This code expects a VSIPL framework has been created. I call mine jvsipF
+
+I use clang to compile from the command line or using the Makefile (make).
+
+I suspect it will compile in other objective C environments but I am only
+familiar with what Apple does. As well as VSIPL it uses the Foundation 
+framework and I don't know the availability of that outside apple.
+
+Note that plt.m is a file for ploting the output using Octave or Matlab. 
+Don't confuse it with objective C code.
+
+To compile I do
+> clang -o beamformer_ex beamformer_ex.m param.m kw.m ts.m -framework jvsipF -framework Foundation
+To run I do
+> beamformer_ex param_file
+To plot I open octave and cd to this directory. 
+Typing 'plt' should cause the plot to happen.
+
+The param file is just ascii text. To try other parameters edit with any
+text editor.
+
+

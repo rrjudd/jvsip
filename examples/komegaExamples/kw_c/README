@@ -1,0 +1,3 @@
+This directory contains the C komega example.
+The default makefile expects the top level make has been run to create
+the vsip library.

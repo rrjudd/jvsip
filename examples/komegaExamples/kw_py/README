@@ -1,0 +1,12 @@
+To run this you need a python environment that includes matplotlib and numpy as 
+well as the vsipl modules included with jvsip distribution.
+
+To run at a command line type 
+
+> python bf_ex.py
+
+I also run by starting ipython. Looks like
+> ipython --pylab
+In [1]: from beamformer import *
+
+In [2]: beamformer('param_file',2)

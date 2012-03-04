@@ -1,0 +1,8 @@
+This directory contains a komega example done in c (kw_c), 
+objective C (kw_o) and Python (kw_py).
+
+The komega example is adapted from a previous komega example I developed
+for the VSIPL tutorial held at Georgia Tech in Feb, 2002.
+
+The purpose is to have a common example for VSIPL used with different 
+baseline languages.
