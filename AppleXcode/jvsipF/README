@@ -1,0 +1,4 @@
+If you open jvsipF.xcodeproj with Xcode >=Version 4.2.1 and push the
+run button for a build you should build a framework called jvsipF.framework
+which can be copied into /Library/Frameworks. The kw_o example 
+(examples/komegaExamples/kw_o ) should make and run.

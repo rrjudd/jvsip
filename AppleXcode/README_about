@@ -1,0 +1,5 @@
+jvsipF
+The jvsipF directory contains an xcode project which should allow one to create
+a framework, called jvsipF, with a jvsip library. I am not sure this will work
+when translated to an apple computer other than my own; so your mileage
+may vary.
