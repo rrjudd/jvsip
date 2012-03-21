@@ -9,12 +9,19 @@
  // product, or process disclosed, or represents that its use would    /
  // not infringe privately owned rights                                /
  **********************************************************************/
-#include<vsip.h>
-#include"VI_mrealview_f.h"
-#include"VI_mcopy_f_f.h"
 
-void vsip_mreal_f(const vsip_cmview_f* a, const vsip_mview_f* r){
-   vsip_mview_f R;
-   VI_mrealview_f(a,&R);
-   VI_mcopy_f_f(&R,r);
+#include<vsip.h>
+#include<vsip_rcfirattributes_f.h>
+#include"VI_valldestroy_f.h"
+#include"VI_cvalldestroy_f.h"
+
+int vsip_rcfir_destroy_f(
+                        vsip_rcfir_f* filt)
+{
+   if(filt != NULL){
+      VI_valldestroy_f(filt->h);
+      VI_cvalldestroy_f(filt->s);
+      free((void*) filt);
+   }
+   return 0;
 }

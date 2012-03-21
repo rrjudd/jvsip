@@ -1,4 +1,4 @@
-/* Created RJudd March 18, 2018 */
+/* Created RJudd March 18, 2012 */
 /*********************************************************************
  // This code includes                                                 /
  // no warranty, express or implied, including the warranties          /
@@ -52,5 +52,5 @@ void vsip_mcmplx_d(const vsip_mview_d* a, const vsip_mview_d* b, const vsip_cmvi
             vcmplx_d(&av,&bv,&rv);
         }
     }
-
+    
 }

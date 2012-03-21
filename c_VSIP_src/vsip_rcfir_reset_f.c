@@ -1,4 +1,4 @@
-/* Created RJudd March 18, 2012 */
+/* Created RJudd March 17, 2012 */
 /*********************************************************************
  // This code includes                                                 /
  // no warranty, express or implied, including the warranties          /
@@ -10,11 +10,16 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 #include<vsip.h>
-#include"VI_mrealview_f.h"
-#include"VI_mcopy_f_f.h"
+#include<vsip_cvviewattributes_f.h>
+#include<vsip_vviewattributes_f.h>
+#include<vsip_rcfirattributes_f.h>
+#include"VI_cvfill_f.h"
 
-void vsip_mreal_f(const vsip_cmview_f* a, const vsip_mview_f* r){
-   vsip_mview_f R;
-   VI_mrealview_f(a,&R);
-   VI_mcopy_f_f(&R,r);
+void vsip_rcfir_reset_f(
+                       vsip_rcfir_f *fir)
+{
+   fir->p = 0;
+   fir->s->length = fir->M - 1;
+   VI_cvfill_f(vsip_cmplx_f((vsip_scalar_f)0,(vsip_scalar_f)0),fir->s);
+   return;
 }

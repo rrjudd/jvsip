@@ -10,11 +10,17 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 #include<vsip.h>
-#include"VI_mrealview_f.h"
-#include"VI_mcopy_f_f.h"
+#include<vsip_rcfirattributes_f.h>
 
-void vsip_mreal_f(const vsip_cmview_f* a, const vsip_mview_f* r){
-   vsip_mview_f R;
-   VI_mrealview_f(a,&R);
-   VI_mcopy_f_f(&R,r);
+void vsip_rcfir_getattr_f(
+     const vsip_rcfir_f *fir,
+     vsip_rcfir_attr *attr)
+{
+    attr->symm = fir->symm;
+    attr->kernel_len = fir->M;
+    attr->decimation = fir->D;
+    attr->in_len = fir->N;
+    attr->out_len = fir->N/fir->D + ((fir->N % fir->D) ? 1:0);
+    attr->state = fir->state;
+    return;
 }
