@@ -15,11 +15,9 @@
 #include<vsip.h>
 #include<vsip_mviewattributes_f.h>
 
-void (vsip_mswap_f)(
+void vsip_mswap_f(
   const vsip_mview_f *a,
   const vsip_mview_f *r) {
-
-  { 
     vsip_length n_mj, /* major length */
                 n_mn; /* minor length */
     vsip_stride ast_mj, ast_mn,
@@ -53,6 +51,4 @@ void (vsip_mswap_f)(
        ap0 += ast_mn; rp0 += rst_mn;
        ap = ap0; rp = rp0;
     }
-  }
-  return;
 }

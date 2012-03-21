@@ -47,7 +47,7 @@
 #include<vsip.h>
 #include"vsip_scalars.h"
 
-vsip_cscalar_f (vsip_rect_f)(
+vsip_cscalar_f vsip_rect_f(
   vsip_scalar_f r, vsip_scalar_f t) {
   return vsip_cmplx_f(r * VSIP_COS_F(t),
 			    r * VSIP_SIN_F(t)); }

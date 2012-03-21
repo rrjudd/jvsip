@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		062836C61517749C001EBA82 /* vsip_mrect_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C41517749C001EBA82 /* vsip_mrect_d.c */; };
+		062836C71517749C001EBA82 /* vsip_mrect_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C51517749C001EBA82 /* vsip_mrect_f.c */; };
+		062836CA1518C6D1001EBA82 /* vsip_mreal_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C91518C6D0001EBA82 /* vsip_mreal_f.c */; };
+		062836CC1518C974001EBA82 /* vsip_mreal_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836CB1518C974001EBA82 /* vsip_mreal_d.c */; };
+		062836CF1518CBF7001EBA82 /* vsip_mimag_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836CD1518CBF6001EBA82 /* vsip_mimag_d.c */; };
+		062836D01518CBF7001EBA82 /* vsip_mimag_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836CE1518CBF6001EBA82 /* vsip_mimag_f.c */; };
 		06307E52150BB71E00EF9D00 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 06307E50150BB71E00EF9D00 /* InfoPlist.strings */; };
 		0630860E150BB7EB00EF9D00 /* VI.h in Headers */ = {isa = PBXBuildFile; fileRef = 06307E60150BB7E700EF9D00 /* VI.h */; };
 		0630860F150BB7EB00EF9D00 /* VI_blockcreate_bl.h in Headers */ = {isa = PBXBuildFile; fileRef = 06307E61150BB7E700EF9D00 /* VI_blockcreate_bl.h */; };
@@ -1971,9 +1977,19 @@
 		06308DB6150BB7EC00EF9D00 /* vsip_vxor_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308608150BB7EB00EF9D00 /* vsip_vxor_i.c */; };
 		06308DB7150BB7EC00EF9D00 /* vsip_vxor_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308609150BB7EB00EF9D00 /* vsip_vxor_si.c */; };
 		06308DB8150BB7EC00EF9D00 /* vsip_vxor_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630860A150BB7EB00EF9D00 /* vsip_vxor_uc.c */; };
+		06917BB41519049A0044F7F9 /* vsip_mcmplx_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */; };
+		06917BB51519049A0044F7F9 /* vsip_mcmplx_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */; };
+		06E047641518F56A001765DF /* vsip_mpolar_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047621518F56A001765DF /* vsip_mpolar_d.c */; };
+		06E047651518F56A001765DF /* vsip_mpolar_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047631518F56A001765DF /* vsip_mpolar_f.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		062836C41517749C001EBA82 /* vsip_mrect_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrect_d.c; sourceTree = "<group>"; };
+		062836C51517749C001EBA82 /* vsip_mrect_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrect_f.c; sourceTree = "<group>"; };
+		062836C91518C6D0001EBA82 /* vsip_mreal_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mreal_f.c; sourceTree = "<group>"; };
+		062836CB1518C974001EBA82 /* vsip_mreal_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mreal_d.c; sourceTree = "<group>"; };
+		062836CD1518CBF6001EBA82 /* vsip_mimag_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mimag_d.c; sourceTree = "<group>"; };
+		062836CE1518CBF6001EBA82 /* vsip_mimag_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mimag_f.c; sourceTree = "<group>"; };
 		06307E44150BB71E00EF9D00 /* jvsipF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = jvsipF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06307E4F150BB71E00EF9D00 /* jvsipF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "jvsipF-Info.plist"; sourceTree = "<group>"; };
 		06307E51150BB71E00EF9D00 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2003,12 +2019,12 @@
 		06307E76150BB7E700EF9D00 /* VI_cblockadmit_f_as.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockadmit_f_as.h; sourceTree = "<group>"; };
 		06307E77150BB7E700EF9D00 /* VI_cblockadmit_f_di.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockadmit_f_di.h; sourceTree = "<group>"; };
 		06307E78150BB7E700EF9D00 /* VI_cblockadmit_f_ds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockadmit_f_ds.h; sourceTree = "<group>"; };
-		06307E79150BB7E700EF9D00 /* VI_cblockbind_d_ai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_d_ai.h; sourceTree = "<group>"; };
-		06307E7A150BB7E700EF9D00 /* VI_cblockbind_d_as.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_d_as.h; sourceTree = "<group>"; };
+		06307E79150BB7E700EF9D00 /* VI_cblockbind_d_ai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VI_cblockbind_d_ai.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		06307E7A150BB7E700EF9D00 /* VI_cblockbind_d_as.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VI_cblockbind_d_as.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		06307E7B150BB7E700EF9D00 /* VI_cblockbind_d_di.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_d_di.h; sourceTree = "<group>"; };
 		06307E7C150BB7E700EF9D00 /* VI_cblockbind_d_ds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_d_ds.h; sourceTree = "<group>"; };
-		06307E7D150BB7E700EF9D00 /* VI_cblockbind_f_ai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_f_ai.h; sourceTree = "<group>"; };
-		06307E7E150BB7E700EF9D00 /* VI_cblockbind_f_as.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_f_as.h; sourceTree = "<group>"; };
+		06307E7D150BB7E700EF9D00 /* VI_cblockbind_f_ai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VI_cblockbind_f_ai.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		06307E7E150BB7E700EF9D00 /* VI_cblockbind_f_as.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VI_cblockbind_f_as.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		06307E7F150BB7E700EF9D00 /* VI_cblockbind_f_di.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_f_di.h; sourceTree = "<group>"; };
 		06307E80150BB7E700EF9D00 /* VI_cblockbind_f_ds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockbind_f_ds.h; sourceTree = "<group>"; };
 		06307E81150BB7E700EF9D00 /* VI_cblockcreate_d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cblockcreate_d.h; sourceTree = "<group>"; };
@@ -2091,7 +2107,7 @@
 		06307ECE150BB7E700EF9D00 /* VI_cmrowview_f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cmrowview_f.h; sourceTree = "<group>"; };
 		06307ECF150BB7E700EF9D00 /* VI_cmtransview_d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cmtransview_d.h; sourceTree = "<group>"; };
 		06307ED0150BB7E700EF9D00 /* VI_cmtransview_f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_cmtransview_f.h; sourceTree = "<group>"; };
-		06307ED1150BB7E700EF9D00 /* VI_crfftmop_create_d_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_crfftmop_create_d_def.h; sourceTree = "<group>"; };
+		06307ED1150BB7E700EF9D00 /* VI_crfftmop_create_d_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VI_crfftmop_create_d_def.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		06307ED2150BB7E700EF9D00 /* VI_crfftmop_create_d_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_crfftmop_create_d_loop.h; sourceTree = "<group>"; };
 		06307ED3150BB7E700EF9D00 /* VI_crfftmop_create_f_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_crfftmop_create_f_def.h; sourceTree = "<group>"; };
 		06307ED4150BB7E700EF9D00 /* VI_crfftmop_create_f_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_crfftmop_create_f_loop.h; sourceTree = "<group>"; };
@@ -3941,6 +3957,10 @@
 		06308608150BB7EB00EF9D00 /* vsip_vxor_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_i.c; sourceTree = "<group>"; };
 		06308609150BB7EB00EF9D00 /* vsip_vxor_si.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_si.c; sourceTree = "<group>"; };
 		0630860A150BB7EB00EF9D00 /* vsip_vxor_uc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_uc.c; sourceTree = "<group>"; };
+		06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_d.c; sourceTree = "<group>"; };
+		06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_f.c; sourceTree = "<group>"; };
+		06E047621518F56A001765DF /* vsip_mpolar_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_d.c; sourceTree = "<group>"; };
+		06E047631518F56A001765DF /* vsip_mpolar_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_f.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4242,6 +4262,8 @@
 				06307F57150BB7E700EF9D00 /* VI_vsin_d.h */,
 				06307F58150BB7E700EF9D00 /* VI_vsin_f.h */,
 				06307F59150BB7E700EF9D00 /* vsip.h */,
+				06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */,
+				06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */,
 				06307F5A150BB7E700EF9D00 /* vsip_arg_d.c */,
 				06307F5B150BB7E700EF9D00 /* vsip_arg_f.c */,
 				06307F5C150BB7E700EF9D00 /* vsip_blockadmit_bl.c */,
@@ -5155,10 +5177,18 @@
 				063082E8150BB7E800EF9D00 /* vsip_mputrowstride_i.c */,
 				063082E9150BB7E800EF9D00 /* vsip_mputrowstride_si.c */,
 				063082EA150BB7E800EF9D00 /* vsip_mputrowstride_uc.c */,
+				062836C91518C6D0001EBA82 /* vsip_mreal_f.c */,
+				062836CB1518C974001EBA82 /* vsip_mreal_d.c */,
+				062836CD1518CBF6001EBA82 /* vsip_mimag_d.c */,
+				06E047621518F56A001765DF /* vsip_mpolar_d.c */,
+				06E047631518F56A001765DF /* vsip_mpolar_f.c */,
+				062836CE1518CBF6001EBA82 /* vsip_mimag_f.c */,
 				063082EB150BB7E800EF9D00 /* vsip_mrealview_d.c */,
 				063082EC150BB7E800EF9D00 /* vsip_mrealview_f.c */,
 				063082ED150BB7E800EF9D00 /* vsip_mrecip_d.c */,
 				063082EE150BB7E800EF9D00 /* vsip_mrecip_f.c */,
+				062836C41517749C001EBA82 /* vsip_mrect_d.c */,
+				062836C51517749C001EBA82 /* vsip_mrect_f.c */,
 				063082EF150BB7E800EF9D00 /* vsip_mrowview_bl.c */,
 				063082F0150BB7E800EF9D00 /* vsip_mrowview_d.c */,
 				063082F1150BB7E800EF9D00 /* vsip_mrowview_f.c */,
@@ -7996,6 +8026,16 @@
 				06308DB6150BB7EC00EF9D00 /* vsip_vxor_i.c in Sources */,
 				06308DB7150BB7EC00EF9D00 /* vsip_vxor_si.c in Sources */,
 				06308DB8150BB7EC00EF9D00 /* vsip_vxor_uc.c in Sources */,
+				062836C61517749C001EBA82 /* vsip_mrect_d.c in Sources */,
+				062836C71517749C001EBA82 /* vsip_mrect_f.c in Sources */,
+				062836CA1518C6D1001EBA82 /* vsip_mreal_f.c in Sources */,
+				062836CC1518C974001EBA82 /* vsip_mreal_d.c in Sources */,
+				062836CF1518CBF7001EBA82 /* vsip_mimag_d.c in Sources */,
+				062836D01518CBF7001EBA82 /* vsip_mimag_f.c in Sources */,
+				06E047641518F56A001765DF /* vsip_mpolar_d.c in Sources */,
+				06E047651518F56A001765DF /* vsip_mpolar_f.c in Sources */,
+				06917BB41519049A0044F7F9 /* vsip_mcmplx_d.c in Sources */,
+				06917BB51519049A0044F7F9 /* vsip_mcmplx_f.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8064,6 +8104,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = c89;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "jvsipF/jvsipF-Prefix.pch";
 				INFOPLIST_FILE = "jvsipF/jvsipF-Info.plist";
@@ -8082,6 +8123,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = c89;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "jvsipF/jvsipF-Prefix.pch";
@@ -8114,6 +8156,7 @@
 				06307E5B150BB71E00EF9D00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

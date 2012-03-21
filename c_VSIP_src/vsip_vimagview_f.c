@@ -16,7 +16,7 @@
 #include<vsip_vviewattributes_f.h>
 #include<vsip_cvviewattributes_f.h>
 
-vsip_vview_f* (vsip_vimagview_f)(
+vsip_vview_f* vsip_vimagview_f(
   const vsip_cvview_f* v) {
     return vsip_vbind_f(
               v->block->I,

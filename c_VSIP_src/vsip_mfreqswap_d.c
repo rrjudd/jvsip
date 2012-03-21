@@ -1,14 +1,14 @@
 /* Created RJudd Nov 27, 2011 */
 /*********************************************************************
-// This code includes                                                 /
-// no warranty, express or implied, including the warranties          /
-// of merchantability and fitness for a particular purpose.           /
-// No person or entity                                                /
-// assumes any legal liability or responsibility for the accuracy,    /
-// completeness, or usefulness of any information, apparatus,         /
-// product, or process disclosed, or represents that its use would    /
-// not infringe privately owned rights                                /
-**********************************************************************/
+ // This code includes                                                 /
+ // no warranty, express or implied, including the warranties          /
+ // of merchantability and fitness for a particular purpose.           /
+ // No person or entity                                                /
+ // assumes any legal liability or responsibility for the accuracy,    /
+ // completeness, or usefulness of any information, apparatus,         /
+ // product, or process disclosed, or represents that its use would    /
+ // not infringe privately owned rights                                /
+ **********************************************************************/
 #include<vsip.h>
 #include<vsip_blockattributes_d.h>
 #include<vsip_vviewattributes_d.h>
@@ -55,11 +55,11 @@ void vsip_mfreqswap_d(const vsip_mview_d *a){
    vsip_vview_d a_c;
    vsip_index i;
    for(i=0; i<a->col_length; i++){
-       ROW(a,a_r,i);
-       freqswap(&a_r);
+      ROW(a,a_r,i);
+      freqswap(&a_r);
    }
    for(i=0; i<a->row_length; i++){
-       COL(a,a_c,i);
-       freqswap(&a_c);
+      COL(a,a_c,i);
+      freqswap(&a_c);
    }
 }

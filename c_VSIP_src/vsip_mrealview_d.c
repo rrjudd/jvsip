@@ -16,7 +16,7 @@
 #include<vsip_cmviewattributes_d.h>
 #include<vsip_mviewattributes_d.h>
 
-vsip_mview_d* (vsip_mrealview_d)(
+vsip_mview_d* vsip_mrealview_d(
   const vsip_cmview_d* v) {
     return vsip_mbind_d(
               v->block->R,
