@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<vsip.h>
-#include"VU_print.include"
+
 #define NDPTR_f ((vsip_scalar_f*)NULL)
 #define NDPTR_d ((vsip_scalar_d*)NULL)
 #define NDPTR_i ((vsip_scalar_i*)NULL)

@@ -1,3 +1,4 @@
+#include"VU_cvprintm_d.include"
 /* Created RJudd */
 /* SPAWARSYSCEN D857 */
 /**********************************************************************
@@ -11,6 +12,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vcmplx_d.h,v 2.0 2003/02/22 15:23:28 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vcmplx_d(void){
    printf("********\nTEST vcmplx_d\n");
    {

@@ -3,7 +3,8 @@
 /* MIT style license, see Copyright notice in top level directory */
 /* $Id: toeplitz_f.h,v 1.1 2006/05/16 16:45:18 judd Exp $ */
 
-void toeplitz_f(void)
+#include"VU_vprintm_f.include"
+static void toeplitz_f(void)
 {
     vsip_mview_f *A = vsip_mcreate_f(4,4,VSIP_ROW,VSIP_MEM_NONE);
     vsip_mview_f *B = vsip_mcreate_f(4,1,VSIP_ROW,VSIP_MEM_NONE);

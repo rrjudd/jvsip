@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vatan_f.h,v 2.0 2003/02/22 15:23:28 judd Exp $ */
+#include"VU_vprintm_f.include"
 static void vatan_f(void){
    printf("********\nTEST vatan_f\n");
    {

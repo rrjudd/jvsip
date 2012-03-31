@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mcmaxmgsq_f.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_cmprintm_f.include"
 static void mcmaxmgsq_f(void){
     printf("\n******\nTEST mcmaxmgsq_f\n");
     {

@@ -11,10 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: chol_f.h,v 2.2 2006/04/09 20:58:37 judd Exp $ */
-
-static
-void
-chol_f(void){
+#include"VU_mprintm_f.include"
+static void chol_f(void){
    printf("********\nTEST chol_f\n");
    {
       vsip_index i,j;

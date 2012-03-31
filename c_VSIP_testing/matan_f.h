@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: matan_f.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void matan_f(void){
    printf("\n*******\nTEST matan_f\n\n");
    { vsip_scalar_f ans[] = {M_PI/8.0, M_PI/4.0, M_PI/3.0, -M_PI/3.0, .25 * M_PI, -.25 * M_PI};

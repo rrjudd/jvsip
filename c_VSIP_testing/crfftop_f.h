@@ -12,6 +12,8 @@
 **********************************************************************/
 /* $Id: crfftop_f.h,v 2.2 2009/09/05 18:01:44 judd Exp $ */
 
+#include"VU_vprintm_f.include"
+#include"VU_cvprintm_f.include"
 static void crfftop_f(void)
 {
    printf("*********\nTEST crfftop \n");

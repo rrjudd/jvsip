@@ -2,7 +2,8 @@
 /* Copyright (c) 2006 Randall Judd */
 /* MIT style license, see Copyright notice in top level directory */
 
-int ccovsol_f(void) {
+#include"VU_cmprintm_f.include"
+static int ccovsol_f(void) {
    vsip_cmview_f *A = vsip_cmcreate_f(10,6,VSIP_ROW,VSIP_MEM_NONE);
    vsip_cmview_f *BX = vsip_cmcreate_f(10,3,VSIP_ROW,VSIP_MEM_NONE);
    vsip_cmview_f *X = vsip_cmcreate_f(6,3,VSIP_ROW,VSIP_MEM_NONE);

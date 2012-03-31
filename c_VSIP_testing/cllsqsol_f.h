@@ -3,7 +3,8 @@
 /* MIT style license, see Copyright notice in top level directory */
 /* $Id: cllsqsol_f.h,v 1.1 2006/05/16 16:45:18 judd Exp $ */
 
-int cllsqsol_f(void) {
+#include"VU_cmprintm_f.include"
+static int cllsqsol_f(void) {
    vsip_cmview_f *A = vsip_cmcreate_f(10,6,VSIP_ROW,VSIP_MEM_NONE);
    vsip_cvview_f *ad = vsip_cmdiagview_f(A,0);
    vsip_vview_f *ad_r = vsip_vrealview_f(ad);

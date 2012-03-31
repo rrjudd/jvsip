@@ -1,0 +1,23 @@
+#ifndef VU_VPRINTM_MI_H
+#define VU_VPRINTM_MI_H 1
+
+static void VU_vprintm_mi(char s[], vsip_vview_mi *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_mi(X);
+    vsip_index vi;
+    vsip_scalar_mi x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"ld %");
+    strcat(format,s);
+    strcat(format,"ld) %s\n");
+    printf("[\n");
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_mi(X,vi);
+      printf(format,vsip_rowindex(x),
+                    vsip_colindex(x),";");
+    }
+    printf("];\n");
+    return;
+}
+#endif

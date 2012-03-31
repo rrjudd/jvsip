@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: smdiv_f.h,v 2.0 2003/02/22 15:23:27 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void smdiv_f(void){
     printf("\n******\nTEST smdiv_f\n");
     {

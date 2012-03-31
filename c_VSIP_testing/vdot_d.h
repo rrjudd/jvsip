@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vdot_d.h,v 2.1 2007/04/18 17:05:54 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vdot_d(void){
    printf("********\nTEST vdot_d\n");
    {

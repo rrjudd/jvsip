@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mlge_d.h,v 2.0 2003/02/22 15:23:25 judd Exp $ */
+#include"VU_mprintm_d.include"
 static void mlge_d(void){
     printf("\n******\nTEST mlge_d\n");
     {

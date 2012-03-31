@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: marg_f.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_cmprintm_f.include"
 static void marg_f(void){
     printf("\n*****\nTEST marg_f\n");
     {

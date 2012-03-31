@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvouter_covariance_d.h,v 2.1 2004/05/16 05:02:34 judd Exp $ */
+#include"VU_cmprintm_d.include"
+#include"VU_cvprintm_d.include"
 static void cvouter_covariance_d(void){
    printf("********\nTEST cvouter_d\n");
    {

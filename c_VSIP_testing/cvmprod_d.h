@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvmprod_d.h,v 2.0 2003/02/22 15:23:23 judd Exp $ */
+#include"VU_cmprintm_d.include"
+#include"VU_cvprintm_d.include"
 static void cvmprod_d(void){
    printf("********\nTEST cvmprod_d\n");
    {

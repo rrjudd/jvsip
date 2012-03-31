@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mtrans_f.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mtrans_f(void){
    printf("********\nTEST mtrans_f\n");
    {

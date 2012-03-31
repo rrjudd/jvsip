@@ -11,6 +11,8 @@
 **********************************************************************/
 /* $Id: svd1_d.h,v 1.6 2009/08/09 21:04:55 judd Exp $ */
 
+#include"VU_mprintm_d.include"
+#include"VU_vprintm_d.include"
 static void svd1_d(void){
    printf("********\nTEST svd1 for double\n");
    {

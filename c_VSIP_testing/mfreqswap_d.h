@@ -1,5 +1,6 @@
 /* Created RJudd */
 /* */
+#include"VU_mprintm_d.include"
 static void mfreqswap_d(void){
    printf("*********\nTEST  vfreqswap_d\n");
    {

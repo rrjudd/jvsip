@@ -11,6 +11,7 @@
 **********************************************************************/
 /* $Id: vcopyfrom_user_f.h,v 1.1 2007/04/18 03:59:06 judd Exp $ */
 
+#include"VU_vprintm_f.include"
 static void vcopyfrom_user_f(void){
    printf("********\nTEST vcopyfrom_user_f\n");
    { 

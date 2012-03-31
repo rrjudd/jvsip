@@ -1,5 +1,6 @@
 /* Created RJudd */
 /* */
+#include"VU_cmprintm_d.include"
 static void cmfreqswap_d(void){
    printf("*********\nTEST  cmfreqswap_d\n");
    {

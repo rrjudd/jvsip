@@ -12,6 +12,7 @@
 **********************************************************************/
 
 /* $Id: cfir_N201_D3_d.h,v 2.2 2009/09/05 18:01:45 judd Exp $ */
+#include"VU_cvprintm_d.include"
 static void cfir_N201_D3_d(void){
    printf("********\nTEST cfir_N201_D3_d\n");
    {

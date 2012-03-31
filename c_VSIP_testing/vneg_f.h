@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vneg_f.h,v 2.0 2003/02/22 15:23:30 judd Exp $ */
+#include"VU_vprintm_f.include"
 static void vneg_f(void){
    printf("********\nTEST vneg_f\n");
    {

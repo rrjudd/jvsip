@@ -1,6 +1,7 @@
 /* Created RJudd */
 /* $Id: ccfftmop_f.h,v 1.2 2009/05/23 05:27:27 judd Exp $ */
 
+#include"VU_cmprintm_f.include"
 static void ccfftmop_f(void)
 {  
   printf("******\nTEST ccfftmop for float \n");

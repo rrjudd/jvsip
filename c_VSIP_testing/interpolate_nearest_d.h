@@ -1,5 +1,6 @@
 /* Created RJudd */
 /* */
+#include"VU_vprintm_d.include"
 static void interpolate_nearest_d(void) {
    printf("*********\nTEST  nearest fit for double\n");
    {

@@ -12,6 +12,7 @@
 **********************************************************************/
 
 /* $Id: firO_n3_N67_D3_d.h,v 2.2 2009/09/05 18:01:45 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void firO_n3_N67_D3_d(void){
    printf("********\nTEST firO_n3_N67_D3_d\n");
    {

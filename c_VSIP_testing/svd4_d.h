@@ -6,6 +6,8 @@
  *  Copyright 2008 Home. All rights reserved.
  *
  */
+#include"VU_mprintm_d.include"
+#include"VU_vprintm_d.include"
 static void svd4_d(void){
    printf("********\nTEST svd4 for double\n");
    {

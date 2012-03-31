@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: crmdiv_f.h,v 2.0 2003/02/22 15:23:22 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_cmprintm_f.include"
 static void crmdiv_f(void){
     printf("\n******\nTEST crmdiv_f\n");
     {

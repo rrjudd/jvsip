@@ -7,6 +7,7 @@
  *
  */
 
+#include"VU_vprintm_d.include"
 static void svd6_d(void){
    printf("********\nTEST svd6 for double\n");
    {

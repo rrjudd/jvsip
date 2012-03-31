@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mclip_f.h,v 2.1 2004/04/03 14:45:20 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mclip_f(void){
     printf("\n******\nTEST mclip_f\n");
     {

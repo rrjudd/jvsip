@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mexp_f.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mexp_f(void){
    printf("\n*******\nTEST mexp_f\n\n");
    { vsip_scalar_f data[] = {0.1, M_PI/4.0, M_PI/2.0, M_PI, 1.25 * M_PI, 1.5 * M_PI};

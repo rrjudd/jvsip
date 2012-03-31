@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mlog10_f.h,v 2.0 2003/02/22 15:23:25 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mlog10_f(void){
    printf("\n*******\nTEST mlog10_f\n\n");
    { vsip_scalar_f data[] = {0.1, M_PI/4.0, M_PI/2.0, M_PI, 1.25 * M_PI, 1.5 * M_PI};

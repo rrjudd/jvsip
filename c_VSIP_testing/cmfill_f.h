@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cmfill_f.h,v 2.0 2003/02/22 15:23:21 judd Exp $ */
+#include"VU_cmprintm_f.include"
 static void cmfill_f(void){
     printf("\n******\nTEST cmfill_f\n");
     {

@@ -10,6 +10,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: svd2_f.h,v 1.2 2008/09/21 17:17:49 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_f.include"
 static void svd2_f(void){
    printf("********\nTEST svd2 for float\n");
    {

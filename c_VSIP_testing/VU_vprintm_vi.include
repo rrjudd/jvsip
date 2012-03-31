@@ -1,0 +1,22 @@
+#ifndef VU_VPRINTM_VI_H
+#define VU_VPRINTM_VI_H 1
+
+static void VU_vprintm_vi(char s[], vsip_vview_vi *X) {
+    char format[50];
+    vsip_length L = vsip_vgetlength_vi(X);
+    vsip_index vi;
+    vsip_scalar_vi x;
+    strcpy(format,"%");
+    strcat(format,s);
+    strcat(format,"ld %s\n");
+    printf("[\n");
+    for(vi=0; vi<L; vi++){
+      x=vsip_vget_vi(X,vi);
+      printf(format,x,";");
+    }
+    printf("];\n");
+    return;
+}
+
+#endif
+

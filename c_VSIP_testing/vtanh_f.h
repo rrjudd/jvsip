@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vtanh_f.h,v 2.0 2003/02/22 15:23:30 judd Exp $ */
+#include"VU_vprintm_f.include"
 static void vtanh_f(void){
    printf("\n*******\nTEST vtanh_f\n\n");
    { vsip_scalar_f data[] = {0, M_PI/4.0, M_PI/2.0, M_PI, 1.5 * M_PI};

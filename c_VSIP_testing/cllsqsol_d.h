@@ -2,8 +2,8 @@
 /* Copyright (c) 2006 Randall Judd */
 /* MIT style license, see Copyright notice in top level directory */
 /* $Id: cllsqsol_d.h,v 1.1 2006/05/16 16:45:18 judd Exp $ */
-
-int cllsqsol_d(void) {
+#include"VU_cmprintm_d.include"
+static int cllsqsol_d(void) {
    vsip_cmview_d *A = vsip_cmcreate_d(10,6,VSIP_ROW,VSIP_MEM_NONE);
    vsip_cvview_d *ad = vsip_cmdiagview_d(A,0);
    vsip_vview_d *ad_r = vsip_vrealview_d(ad);

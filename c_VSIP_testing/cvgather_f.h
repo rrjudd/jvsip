@@ -11,7 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvgather_f.h,v 2.0 2003/02/22 15:23:22 judd Exp $ */
-static void cvgather_f(void){
+#include"VU_cvprintm_f.include"
+#include"VU_vprintm_vi.include"
+ void cvgather_f(void){
    printf("********\nTEST cvgather_f\n");
    {
         vsip_scalar_f data1_r[]= {1, .1, 2, .2, 3,.3, 4,-.1,  5,-.3,  6,-.4, 7,.8};

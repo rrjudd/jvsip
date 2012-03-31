@@ -11,7 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvscatter_d.h,v 2.0 2003/02/22 15:23:23 judd Exp $ */
-static void cvscatter_d(void){
+#include"VU_cvprintm_d.include"
+#include"VU_vprintm_vi.include"
+ void cvscatter_d(void){
    printf("********\nTEST cvscatter_d\n");
    {
         vsip_scalar_d data1_r[]= {1, 2,3,4, 5, 6};

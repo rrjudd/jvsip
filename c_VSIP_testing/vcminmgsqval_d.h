@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vcminmgsqval_d.h,v 2.1 2009/09/05 18:01:45 judd Exp $ */
+#include"VU_cvprintm_d.include"
 static void vcminmgsqval_d(void){
    printf("********\nTEST vcminmgsqval_d\n");
    {

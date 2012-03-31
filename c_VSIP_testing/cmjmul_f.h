@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cmjmul_f.h,v 2.0 2003/02/22 15:23:21 judd Exp $ */
+#include"VU_cmprintm_f.include"
 static void cmjmul_f(void){
     printf("\n******\nTEST cmjmul_f\n");
     {

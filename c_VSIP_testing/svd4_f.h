@@ -6,6 +6,8 @@
  *  Copyright 2008 Home. All rights reserved.
  *
  */
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_f.include"
 static void svd4_f(void){
    printf("********\nTEST svd4 for float\n");
    {

@@ -1,5 +1,6 @@
 /* Created RJudd */
 /* */
+#include"VU_vprintm_d.include"
 static void interpolate_linear_d(void) {
    printf("*********\nTEST  linear fitfor double\n");
    {

@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vlle_d.h,v 2.0 2003/02/22 15:23:29 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vlle_d(void){
    printf("********\nTEST vlle_d\n");
    {

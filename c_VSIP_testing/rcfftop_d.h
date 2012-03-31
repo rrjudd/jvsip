@@ -12,6 +12,8 @@
 **********************************************************************/
 /* $Id: rcfftop_d.h,v 2.2 2009/09/05 18:01:44 judd Exp $ */
 
+#include"VU_vprintm_d.include"
+#include"VU_cvprintm_d.include"
 static void rcfftop_d(void)
 {
    printf("********\nTEST rcfftop\n");

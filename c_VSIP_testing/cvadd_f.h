@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvadd_f.h,v 2.0 2003/02/22 15:23:22 judd Exp $ */
+#include"VU_cvprintm_f.include"
 static void cvadd_f(void){
    printf("********\nTEST cvadd_f\n");
    {

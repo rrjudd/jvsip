@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: rcvadd_d.h,v 2.0 2003/02/22 15:23:27 judd Exp $ */
+#include"VU_vprintm_d.include"
+#include"VU_cvprintm_d.include"
 static void rcvadd_d(void){
    printf("********\nTEST rcvadd_d\n");
    {

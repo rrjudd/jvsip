@@ -11,6 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mscatter_f.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_f.include"
+#include"VU_vprintm_mi.include"
 static void mscatter_f(void){
     printf("\n******\nTEST mscatter_f\n");
     {

@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vclip_d.h,v 2.1 2009/09/05 18:01:45 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vclip_d(void){
    printf("********\nTEST vclip_d\n");
    {

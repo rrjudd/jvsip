@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mllt_f.h,v 2.0 2003/02/22 15:23:25 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mllt_f(void){
     printf("\n******\nTEST mllt_f\n");
     {

@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cgemp_f.h,v 2.0 2003/02/22 15:23:20 judd Exp $ */
+#include"VU_cmprintm_f.include"
 static void cgemp_f(void){
    printf("********\nTEST cgemp_f\n");
    {

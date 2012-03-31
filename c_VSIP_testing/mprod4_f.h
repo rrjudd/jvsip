@@ -12,6 +12,7 @@
 **********************************************************************/
 /*  */
 /* $Id: mprod4_f.h,v 2.2 2006/04/27 01:40:55 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mprod4_f(void){
    printf("********\nTEST mprod4_f\n");
    {

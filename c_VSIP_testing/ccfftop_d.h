@@ -12,6 +12,7 @@
 **********************************************************************/
 /* $Id: ccfftop_d.h,v 2.2 2009/09/05 18:01:44 judd Exp $ */
 
+#include"VU_cvprintm_d.include"
 static void ccfftop_d(void)
 {
    printf("*********\nTEST ccfftop forward\n");

@@ -10,7 +10,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mcopyfrom_user_f.h,v 1.1 2007/04/18 03:59:06 judd Exp $ */
-
+#include"VU_mprintm_f.include"
 static void mcopyfrom_user_f(void){
    vsip_index i,j;
    printf("********\nTEST mcopyfrom_user_f\n");

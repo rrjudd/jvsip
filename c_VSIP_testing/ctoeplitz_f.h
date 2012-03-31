@@ -3,7 +3,8 @@
 /* MIT style license, see Copyright notice in top level directory */
 /* $Id: ctoeplitz_f.h,v 1.1 2006/05/16 16:45:18 judd Exp $ */
 
-void ctoeplitz_f(void)
+#include"VU_cvprintm_f.include"
+static void ctoeplitz_f(void)
 {
     vsip_cmview_f *A = vsip_cmcreate_f(4,4,VSIP_ROW,VSIP_MEM_NONE);
     vsip_cmview_f *B = vsip_cmcreate_f(4,1,VSIP_ROW,VSIP_MEM_NONE);

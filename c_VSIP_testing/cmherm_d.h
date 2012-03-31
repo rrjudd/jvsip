@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cmherm_d.h,v 2.0 2003/02/22 15:23:21 judd Exp $ */
+#include"VU_cmprintm_d.include"
 static void cmherm_d(void){
    printf("********\nTEST cmherm_d\n");
    {

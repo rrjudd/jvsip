@@ -12,6 +12,7 @@
 **********************************************************************/
 /* $Id: iccfftip_f.h,v 2.2 2009/09/05 18:01:44 judd Exp $ */
 
+#include"VU_cvprintm_f.include"
 static void iccfftip_f(void)
 {
    printf("********\nTEST ccfftip inverse\n");

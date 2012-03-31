@@ -12,6 +12,7 @@
 **********************************************************************/
 /* $Id: ccfftip_d.h,v 2.2 2009/09/05 18:01:44 judd Exp $ */
 
+#include"VU_cvprintm_d.include"
 static void ccfftip_d(void)
 {  
    printf("******\nTEST ccfftip forward\n");

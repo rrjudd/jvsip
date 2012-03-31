@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: macos_f.h,v 2.0 2003/02/22 15:23:23 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void macos_f(void){
    printf("\n*******\nTEST macos_f\n\n");
    { vsip_scalar_f ans[] = {0, M_PI/4.0, M_PI/2.0, M_PI, .75 * M_PI, M_PI/2.0};

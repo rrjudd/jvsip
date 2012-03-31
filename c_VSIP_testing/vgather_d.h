@@ -11,7 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vgather_d.h,v 2.0 2003/02/22 15:23:29 judd Exp $ */
-static void vgather_d(void){
+#include"VU_vprintm_d.include"
+#include"VU_vprintm_vi.include"
+ void vgather_d(void){
    printf("********\nTEST vgather_d\n");
    {
         vsip_scalar_d data1[]= {1, .1, 2, .2, 3,.3, 4,-.1,  5,-.3,  6,-.4, 7,.8};

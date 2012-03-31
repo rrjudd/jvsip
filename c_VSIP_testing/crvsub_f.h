@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: crvsub_f.h,v 2.0 2003/02/22 15:23:22 judd Exp $ */
+#include"VU_vprintm_f.include"
+#include"VU_cvprintm_f.include"
 static void crvsub_f(void){
    printf("********\nTEST crvsub_f\n");
    {

@@ -3,7 +3,8 @@
 /* MIT style license, see Copyright notice in top level directory */
 /* $Id: llsqsol_d.h,v 1.1 2006/05/16 16:45:18 judd Exp $ */
 
-int llsqsol_d(void) {
+#include"VU_mprintm_d.include"
+static int llsqsol_d(void) {
    vsip_mview_d *A = vsip_mcreate_d(10,6,VSIP_ROW,VSIP_MEM_NONE);
    vsip_vview_d *ad = vsip_mdiagview_d(A,0);
    vsip_vview_d *ac = vsip_mcolview_d(A,0);

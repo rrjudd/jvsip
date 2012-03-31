@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: msumval_d.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_d.include"
 static void msumval_d(void){
    printf("\n*******\nTEST msumval_d\n");
    {

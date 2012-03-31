@@ -8,6 +8,7 @@
  */
 
 /* $Id: cmprod3_d.h,v 2.1 2006/04/27 01:40:55 judd Exp $ */
+#include"VU_cmprintm_d.include"
 static void cmprod3_d(void){
    printf("********\nTEST cmprod3_d\n");
    {

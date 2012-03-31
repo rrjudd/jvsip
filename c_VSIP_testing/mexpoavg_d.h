@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mexpoavg_d.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_d.include"
 static void mexpoavg_d(void){
     printf("\n******\nTEST mexpoavg_d\n");
     {

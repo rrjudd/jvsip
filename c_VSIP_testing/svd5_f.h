@@ -7,6 +7,8 @@
  *
  */
 
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_f.include"
 static void svd5_f(void){
    printf("********\nTEST svd5 for float\n");
    {

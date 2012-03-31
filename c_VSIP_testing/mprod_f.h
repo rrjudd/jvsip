@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mprod_f.h,v 2.2 2007/04/18 17:05:54 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mprod_f(void){
    printf("********\nTEST mprod_f\n");
    {

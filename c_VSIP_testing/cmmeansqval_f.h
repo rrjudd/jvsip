@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cmmeansqval_f.h,v 2.0 2003/02/22 15:23:21 judd Exp $ */
+#include"VU_cmprintm_f.include"
 static void cmmeansqval_f(void){
    printf("\n*******\nTEST cmmeansqval_f\n\n");
    { vsip_scalar_f data_r[] = {M_PI/8.0,  M_PI/4.0,  M_PI/3.0,  M_PI/1.5,  1.25 * M_PI,  1.75 * M_PI};

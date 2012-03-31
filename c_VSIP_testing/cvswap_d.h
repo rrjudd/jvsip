@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvswap_d.h,v 2.0 2003/02/22 15:23:23 judd Exp $ */
+#include"VU_cvprintm_d.include"
 static void cvswap_d(void){
    printf("********\nTEST cvswap_d\n");
    {

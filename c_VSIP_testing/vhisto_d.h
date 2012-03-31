@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vhisto_d.h,v 2.0 2003/02/22 15:23:29 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vhisto_d(void){
    printf("********\nTEST vhisto_d\n");
    {

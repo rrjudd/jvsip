@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vfirst_i.h,v 2.1 2007/04/18 17:05:54 judd Exp $ */
+#include"VU_vprintm_i.include"
 static
 vsip_bool first_test_i(
           vsip_scalar_i a,

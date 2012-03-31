@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cmswap_f.h,v 2.0 2003/02/22 15:23:21 judd Exp $ */
+#include"VU_cmprintm_f.include"
 static void cmswap_f(void){
    printf("\n*******\nTEST cmswap_f\n\n");
    { vsip_scalar_f data1_r[] = { -1, -2, 3, 4, -5, -6};

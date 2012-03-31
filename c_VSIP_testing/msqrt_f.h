@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: msqrt_f.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void msqrt_f(void){
    printf("\n*********\nTEST msqrt_f\n");
    {

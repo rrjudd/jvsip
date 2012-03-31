@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvsub_d.h,v 2.0 2003/02/22 15:23:23 judd Exp $ */
+#include"VU_cvprintm_d.include"
 static void cvsub_d(void){
    printf("********\nTEST cvsub_d\n");
    {

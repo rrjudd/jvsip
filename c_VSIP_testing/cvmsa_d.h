@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvmsa_d.h,v 2.1 2007/04/18 17:05:54 judd Exp $ */
+#include"VU_cvprintm_d.include"
 static void cvmsa_d(void){
    printf("********\nTEST cvmsa_d\n");
    {

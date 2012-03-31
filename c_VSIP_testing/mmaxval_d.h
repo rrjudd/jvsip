@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mmaxval_d.h,v 2.0 2003/02/22 15:23:25 judd Exp $ */
+#include"VU_mprintm_d.include"
 static void mmaxval_d(void){
    printf("\n*******\nTEST mmaxval_d\n\n");
    { vsip_scalar_d data1[]  = {-1, 2, 0, -5, -6,  3.4, -3.4, 5.6, -.3};

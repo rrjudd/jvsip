@@ -2,8 +2,8 @@
 /* Copyright (c) 2006 Randall Judd */
 /* MIT style license, see Copyright notice in top level directory */
 /* $Id: covsol_f.h,v 1.2 2006/05/16 16:45:18 judd Exp $ */
-
-int covsol_f(void) {
+#include"VU_mprintm_f.include"
+static int covsol_f(void) {
    vsip_mview_f *A = vsip_mcreate_f(10,6,VSIP_ROW,VSIP_MEM_NONE);
    vsip_mview_f *BX = vsip_mcreate_f(6,3,VSIP_ROW,VSIP_MEM_NONE);
    vsip_mview_f *B = vsip_mcreate_f(6,3,VSIP_ROW,VSIP_MEM_NONE);

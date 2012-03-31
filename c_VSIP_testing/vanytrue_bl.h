@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vanytrue_bl.h,v 2.0 2003/02/22 15:23:28 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vanytrue_bl(void){
    printf("********\nTEST vanytrue_bl\n");
    {

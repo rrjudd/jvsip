@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvkron_d.h,v 2.1 2009/09/05 18:01:45 judd Exp $ */
+#include"VU_cmprintm_d.include"
+#include"VU_cvprintm_d.include"
 static void cvkron_d(void){
    printf("********\nTEST cvkron_d\n");
    {

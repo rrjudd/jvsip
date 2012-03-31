@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vmsa_d.h,v 2.0 2003/02/22 15:23:29 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void vmsa_d(void){
    printf("********\nTEST vmsa_d\n");
    {

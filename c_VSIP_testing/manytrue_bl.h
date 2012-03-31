@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: manytrue_bl.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_d.include"
 static void manytrue_bl(void){
    printf("\n*******\nTEST manytrue_bl\n");
    {

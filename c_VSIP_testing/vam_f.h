@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vam_f.h,v 2.0 2003/02/22 15:23:27 judd Exp $ */
+#include"VU_vprintm_f.include"
 static void vam_f(void){
    printf("********\nTEST vam_f\n");
    {

@@ -11,7 +11,10 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mgather_f.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
-static void mgather_f(void){
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_f.include"
+#include"VU_vprintm_mi.include"
+ void mgather_f(void){
     printf("\n******\nTEST mgather_f\n");
     {
         vsip_scalar_f data1[]= {1,.1, 2,.2, 3,.3, 4,-.1, 5,-.3, 6,-.4, 7,.8, 8,.9, 9,-1};

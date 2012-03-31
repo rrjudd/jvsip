@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: svmul_d.h,v 2.0 2003/02/22 15:23:27 judd Exp $ */
+#include"VU_vprintm_d.include"
 static void svmul_d(void){
    printf("********\nTEST svmul_d\n");
    {

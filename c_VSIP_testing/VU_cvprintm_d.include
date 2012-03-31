@@ -1,0 +1,23 @@
+#ifndef VU_CVPRINTM_D_H
+#define VU_CVPRINTM_D_H 1
+static void VU_cvprintm_d(char s[], vsip_cvview_d *X)
+{
+    char format[50];
+    vsip_length L = vsip_cvgetlength_d(X);
+    vsip_index vi;
+    vsip_cscalar_d x;
+    strcpy(format,"(%");
+    strcat(format,s);
+    strcat(format,"lf %+");
+    strcat(format,s);
+    strcat(format,"lfi) %s\n");
+    printf("[\n");
+    for(vi=0; vi<L; vi++){
+      x=vsip_cvget_d(X,vi);
+      printf(format,vsip_real_d(x),
+                    vsip_imag_d(x),";");
+    }
+    printf("];\n");
+    return;
+}
+#endif

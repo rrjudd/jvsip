@@ -10,7 +10,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vcopyfrom_user_si.h,v 1.1 2007/04/21 19:38:33 judd Exp $ */
-
+#include"VU_vprintm_si.include"
 static void vcopyfrom_user_si(void){
    printf("********\nTEST vcopyfrom_user_si\n");
    { 

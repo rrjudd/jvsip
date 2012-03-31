@@ -12,9 +12,8 @@
 **********************************************************************/
 /* $Id: chol_d.h,v 2.0 2003/02/22 15:23:07 judd Exp $ */
 
-static
-void
-chol_d(void){
+#include"VU_mprintm_d.include"
+static void chol_d(void){
    printf("********\nTEST chol_d\n");
    {
       vsip_index i,j;

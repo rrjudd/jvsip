@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: rcmmul_f.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_cmprintm_f.include"
 static void rcmmul_f(void){
     printf("\n******\nTEST rcmmul_f\n");
     {

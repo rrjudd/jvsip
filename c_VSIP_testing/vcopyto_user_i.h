@@ -11,7 +11,8 @@
 **********************************************************************/
 /* $Id */
 
-static void vcopyto_user_i(void){
+#include"VU_vprintm_i.include"
+ void vcopyto_user_i(void){
    printf("********\nTEST vcopyto_user_i\n");
    { 
       int i;

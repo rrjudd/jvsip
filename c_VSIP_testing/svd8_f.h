@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: svd8_f.h,v 1.1 2008/10/03 19:48:11 judd Exp $ */
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_f.include"
 static void svd8_f(void){
    printf("********\nTEST svd8 for float\n");
    {

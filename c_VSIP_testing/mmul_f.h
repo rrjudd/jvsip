@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mmul_f.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mmul_f(void){
     printf("\n******\nTEST mmul_f\n");
     {

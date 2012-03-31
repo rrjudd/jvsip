@@ -1,5 +1,6 @@
 /* Created RJudd */
 /* */
+#include"VU_vprintm_d.include"
 static void interpolate_spline_d(void) {
    printf("*********\nTEST spline for double\n");
    {

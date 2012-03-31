@@ -12,9 +12,8 @@
 **********************************************************************/
 /* $Id: cchol_f.h,v 2.2 2006/04/09 20:58:37 judd Exp $ */
 
-static
-void
-cchol_f(void){
+#include"VU_cmprintm_f.include"
+static void cchol_f(void){
    printf("********\nTEST cchol_f\n"); 
    {
       vsip_index i,j;

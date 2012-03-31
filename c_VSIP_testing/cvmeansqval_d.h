@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: cvmeansqval_d.h,v 2.0 2003/02/22 15:23:23 judd Exp $ */
+#include"VU_cvprintm_d.include"
 static void cvmeansqval_d(void){
    printf("********\nTEST cvmeansqval_d\n");
    {

@@ -11,6 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: meuler_d.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
+#include"VU_mprintm_d.include"
+#include"VU_cmprintm_d.include"
 static void meuler_d(void){
    printf("\n*******\nTEST meuler_d\n\n");
    { vsip_scalar_d data[] = {M_PI/8.0, M_PI/4.0, M_PI/3.0, M_PI/1.5, 1.25 * M_PI, 1.75 * M_PI};

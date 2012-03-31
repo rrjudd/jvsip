@@ -10,6 +10,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: svd2_d.h,v 1.5 2008/09/21 17:17:49 judd Exp $ */
+#include"VU_mprintm_d.include"
+#include"VU_vprintm_d.include"
 static void svd2_d(void){
    printf("********\nTEST svd2 for double\n");
    {

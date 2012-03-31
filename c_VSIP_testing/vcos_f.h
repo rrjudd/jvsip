@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vcos_f.h,v 2.0 2003/02/22 15:23:28 judd Exp $ */
+#include"VU_vprintm_f.include"
 static void vcos_f(void){
    printf("********\nTEST vcos_f\n");
    {

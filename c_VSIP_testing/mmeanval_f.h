@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mmeanval_f.h,v 2.0 2003/02/22 15:23:25 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void mmeanval_f(void){
    printf("\n*******\nTEST mmeanval_f\n");
    {

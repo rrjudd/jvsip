@@ -1,6 +1,6 @@
 /* Created RJudd */
 /* $Id: ccfftmop_d.h,v 1.1 2008/11/02 22:42:07 judd Exp $ */
-
+#include"VU_cmprintm_d.include"
 static void ccfftmop_d(void)
 {  
   printf("******\nTEST ccfftmop for double \n");

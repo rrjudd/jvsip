@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: msumsqval_f.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_f.include"
 static void msumsqval_f(void){
    printf("\n*******\nTEST msumsqval_f\n");
    {

@@ -11,7 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mindexbool.h,v 2.0 2003/02/22 15:23:24 judd Exp $ */
-static void mindexbool(void){
+#include"VU_mprintm_f.include"
+#include"VU_vprintm_mi.include"
+ void mindexbool(void){
    printf("\n*******\nTEST mindexbool\n");
    {
        vsip_scalar_bl crct = VSIP_TRUE;

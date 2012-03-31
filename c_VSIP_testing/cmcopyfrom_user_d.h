@@ -11,6 +11,7 @@
 **********************************************************************/
 /* $Id: cmcopyfrom_user_d.h,v 1.1 2007/04/18 03:59:06 judd Exp $ */
 
+#include"VU_cmprintm_d.include"
 static void cmcopyfrom_user_d(void){
    vsip_index i,j;
    printf("********\nTEST cmcopyfrom_user_d\n");

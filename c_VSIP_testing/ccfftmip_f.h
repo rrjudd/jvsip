@@ -1,6 +1,7 @@
 /* Created RJudd */
 /* $Id: ccfftmip_f.h,v 1.1 2008/11/02 22:42:07 judd Exp $ */
 
+#include"VU_cmprintm_f.include"
 static void ccfftmip_f(void)
 {  
   printf("******\nTEST ccfftmip forward\n");

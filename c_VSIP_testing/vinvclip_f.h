@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vinvclip_f.h,v 2.1 2009/09/05 18:01:45 judd Exp $ */
+#include"VU_vprintm_f.include"
 static void vinvclip_f(void){
    printf("********\nTEST vinvclip_f\n");
    {

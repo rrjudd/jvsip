@@ -11,6 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: mtanh_d.h,v 2.0 2003/02/22 15:23:26 judd Exp $ */
+#include"VU_mprintm_d.include"
 static void mtanh_d(void){
    printf("\n*******\nTEST mtanh_d\n\n");
    { vsip_scalar_d data[] = {0, .1, .2, .4, .8, 1.6};
