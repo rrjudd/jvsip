@@ -1,6 +1,6 @@
 #ifndef VU_VPRINTM_SI_H
 #define VU_VPRINTM_SI_H 1
-
+#include<string.h>
 static void VU_vprintm_si(char s[], vsip_vview_si *X) {
     char format[50];
     vsip_length L = vsip_vgetlength_si(X);

@@ -1,5 +1,6 @@
 #ifndef VU_CVPRINTM_F_H
 #define VU_CVPRINTM_F_H 1
+#include<string.h>
 static void VU_cvprintm_f(char s[], vsip_cvview_f *X)
 {
     char format[50];
