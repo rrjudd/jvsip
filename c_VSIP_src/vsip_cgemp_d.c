@@ -11,7 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_cgemp_d.c,v 2.2 2008/03/03 17:48:38 judd Exp $ */
-/* vsip_gemp_d */
+
 #include<vsip_cmviewattributes_d.h>
 #include<vsip_cvviewattributes_d.h>
 #include<vsip.h>
@@ -56,7 +56,7 @@ VI_cvjjdot_d(const vsip_cvview_d *a,const vsip_cvview_d *b)
   return r;
 }
 
-void (vsip_cgemp_d)(vsip_cscalar_d alpha,
+void vsip_cgemp_d(vsip_cscalar_d alpha,
                    const vsip_cmview_d *AA,
                    vsip_mat_op OpA,
                    const vsip_cmview_d *BB,

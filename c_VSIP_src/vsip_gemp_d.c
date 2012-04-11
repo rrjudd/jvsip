@@ -12,7 +12,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_gemp_d.c,v 2.3 2008/03/03 18:36:36 judd Exp $ */
-/* vsip_gemp_d */
+
 #include<vsip_mviewattributes_d.h>
 #include<vsip_vviewattributes_d.h>
 #include<vsip.h>
@@ -90,7 +90,7 @@ rp_i0 += r_st_c;\
 ap_i0 += a_st_c;\
 }}
 
-void (vsip_gemp_d)(vsip_scalar_d alpha,
+void vsip_gemp_d(vsip_scalar_d alpha,
                    const vsip_mview_d *AA,
                    vsip_mat_op OpA,
                    const vsip_mview_d *BB,

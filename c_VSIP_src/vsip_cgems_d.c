@@ -11,12 +11,12 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_cgems_d.c,v 2.1 2003/03/08 14:43:33 judd Exp $ */
-/* vsip_gemp_d */
+
 #include<vsip_cmviewattributes_d.h>
 #include<vsip_cvviewattributes_d.h>
 #include<vsip.h>
 
-void (vsip_cgems_d)(vsip_cscalar_d alpha,
+void vsip_cgems_d(vsip_cscalar_d alpha,
                    const vsip_cmview_d *AA,
                    vsip_mat_op OpA,
                    vsip_cscalar_d beta,

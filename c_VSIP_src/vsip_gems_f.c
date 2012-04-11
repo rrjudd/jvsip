@@ -12,12 +12,12 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_gems_f.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
-/* vsip_gemp_f */
+
 #include<vsip_mviewattributes_f.h>
 #include<vsip_vviewattributes_f.h>
 #include<vsip.h>
 
-void (vsip_gems_f)(vsip_scalar_f alpha,
+void vsip_gems_f(vsip_scalar_f alpha,
                    const vsip_mview_f *AA,
                    vsip_mat_op OpA,
                    vsip_scalar_f beta,
