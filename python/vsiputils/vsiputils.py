@@ -497,9 +497,14 @@ def _blockcreate(l,t): # used internal to this module
     return f[t](l,VSIP_MEM_NONE)
 # VU Functions
 def dataGen(a):
+    print getType(a)[1]
     from math import cos as ccos,sin as ssin,pi
     def _gen(a):
+        print getType(a)[1]
         N=int(getlength(a))
+        print(repr(N))
+        if(N==0):
+            return False
         npm=N/2
         c=pi/float(N)
         put(a,0,(float(N) - 1.0)/2.0)
@@ -1829,16 +1834,16 @@ def cumsum(input,output):
     else:
         print('Not a supported type')        
 def euler(input,output):
-    f={'mview_d':vsip_meuler_d,
-       'mview_f':vsip_meuler_f,
-       'vview_d':vsip_veuler_d,
-       'vview_f':vsip_veuler_f}
-    t=getType(input)
+    f={'mview_dcmview_d':vsip_meuler_d,
+       'mview_fcmview_f':vsip_meuler_f,
+       'vview_dcvview_d':vsip_veuler_d,
+       'vview_fcvview_f':vsip_veuler_f}
+    t=getType(input)[1]+getType(output)[1]
     if f.has_key(t):
         f[t](input,output)
         return output
     else:
-        print('Not a supported type')
+        print('Type <:' + t + ':> a supported type')
         return False
 def mag(input,output):
     f={'cmview_d':vsip_cmmag_d,
@@ -2628,7 +2633,7 @@ def copy(a,b):
                 put(b,[i,j],get(a,[i,j]))
         return b
     else:
-        print('Type ' + t1 + t2 + ' not supported by copy')
+        print('Type <:' + t1 + t2 + ':> not supported by copy')
         return False    
 
 # Selection Operations
