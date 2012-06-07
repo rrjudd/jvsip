@@ -1,0 +1,6 @@
+This directory contains a module which demonstrates a VSIPL inspired, python vector/matrix signal processing library.
+The (pyJvsip) module needs the vsip module and the vsiputils module to be installed.
+
+STATUS
+Draft and under development
+Not well tested
