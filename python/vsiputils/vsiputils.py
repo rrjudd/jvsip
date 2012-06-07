@@ -306,7 +306,11 @@ def _vget(a,b): # used internal to this module
 def _cvget(a,b): # used internal to this module
    f={'cvview_f':vsip_cvget_f,
       'cvview_d':vsip_cvget_d}
-   return [cscalarToComplex(f[b](a,i)) for i in range(getlength(a))]
+   retval = []
+   for i in range(getlength(a)):
+       val=f[b](a,i)
+       retval.append(complex(val.r,val.i))
+   return retval
 def _mget(a,b): # used internal to this module
    retval=list()
    attr = getattrib(a)
@@ -1184,6 +1188,76 @@ def getcollength(a):
     else:
         print('not a supported type for getcollength')
         return 0
+def putrowstride(a,s):
+    """
+        Put the stride of a matrix view object
+        """
+    t=getType(a)
+    f={'mview_f':vsip_mputrowstride_f,
+        'mview_d':vsip_mputrowstride_d,
+        'mview_i':vsip_mputrowstride_i,
+        'mview_si':vsip_mputrowstride_si,
+        'mview_uc':vsip_mputrowstride_uc,
+        'mview_bl':vsip_mputrowstride_bl,
+        'cmview_f':vsip_cmputrowstride_f,
+        'cmview_d':vsip_cmputrowstride_d }
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,s)
+    else:
+        print('Not a supported type for putrowstride')
+        return 0
+def putcolstride(a,s):
+    """
+        Put the stride of a matrix view object
+        """
+    t=getType(a)
+    f={'mview_f':vsip_mputcolstride_f,
+        'mview_d':vsip_mputcolstride_d,
+        'mview_i':vsip_mputcolstride_i,
+        'mview_si':vsip_mputcolstride_si,
+        'mview_uc':vsip_mputcolstride_uc,
+        'mview_bl':vsip_mputcolstride_bl,
+        'cmview_f':vsip_cmputcolstride_f,
+        'cmview_d':vsip_cmputcolstride_d }
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,s)
+    else:
+        print('not a supported type for putcolstride')
+        return 0
+def putrowlength(a,l):
+    """
+        Put the length of a matrix view object
+        """
+    t=getType(a)
+    f={'mview_f':vsip_mputrowlength_f,
+        'mview_d':vsip_mputrowlength_d,
+        'mview_i':vsip_mputrowlength_i,
+        'mview_si':vsip_mputrowlength_si,
+        'mview_uc':vsip_mputrowlength_uc,
+        'cmview_f':vsip_cmputrowlength_f,
+        'cmview_d':vsip_cmputrowlength_d }
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,l)
+    else:
+        print('not a supported type for getrowlength')
+        return 0
+def putcollength(a,l):
+    """
+        Put the length of a matrix view object
+        """
+    t=getType(a)
+    f={'mview_f':vsip_mputcollength_f,
+        'mview_d':vsip_mputcollength_d,
+        'mview_i':vsip_mputcollength_i,
+        'mview_si':vsip_mputcollength_si,
+        'mview_uc':vsip_mputcollength_uc,
+        'cmview_f':vsip_cmputcollength_f,
+        'cmview_d':vsip_cmputcollength_d }
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,l)
+    else:
+        print('not a supported type for putcollength')
+        return 0
 def cloneview(a):
     f={'vview_f':vsip_vcloneview_f,
        'vview_d':vsip_vcloneview_d,
@@ -1334,7 +1408,7 @@ def transview(A):
     if f.has_key(t):
         return f[t](A)
     else:
-        print('Type ' + t + ' not supported by transview')
+        print('Type <:' + t + ':> not supported by transview')
         return False
 def get(a,i):
     """
