@@ -32,7 +32,7 @@ def cscalarToComplex(a):
     """
     t=['cscalar_f','cscalar_d']
     if getType(a)[1] in t:
-        return (a.r + a.i * 1j)
+        return complex(a.r,a.i)
     elif type(a) == float or type(a) == int:
         return a
     else:
@@ -1014,7 +1014,9 @@ def getoffset(a):
         'cmview_f':vsip_cmgetoffset_f,
         'cvview_d':vsip_cvgetoffset_d,
         'cmview_d':vsip_cmgetoffset_d,
-        'vview_mi':vsip_vgetoffset_mi }
+        'vview_mi':vsip_vgetoffset_mi,
+        'mview_bl':vsip_mgetoffset_bl,
+        'vview_bl':vsip_vgetoffset_bl}
     if t[0] and f.has_key(t[1]):
         return f[t[1]](a)
     else:
@@ -1040,7 +1042,9 @@ def putoffset(a,s):
         'cmview_f':vsip_cmputoffset_f,
         'cvview_d':vsip_cvputoffset_d,
         'cmview_d':vsip_cmputoffset_d,
-        'vview_mi':vsip_vputoffset_mi }
+        'vview_mi':vsip_vputoffset_mi,
+        'mview_bl':vsip_mputoffset_bl,
+        'vview_bl':vsip_vputoffset_bl }
     if t[0] and f.has_key(t[1]):
         return f[t[1]](a,s)
     else:
@@ -1056,6 +1060,7 @@ def getstride(a):
         'vview_i':vsip_vgetstride_i,
         'vview_si':vsip_vgetstride_si,
         'vview_uc':vsip_vgetstride_uc,
+        'vview_bl':vsip_vgetstride_bl,
         'vview_vi':vsip_vgetstride_vi,
         'cvview_f':vsip_cvgetstride_f,
         'cvview_d':vsip_cvgetstride_d,
@@ -1074,6 +1079,7 @@ def putstride(a,s):
         'vview_i':vsip_vputstride_i,
         'vview_si':vsip_vputstride_si,
         'vview_uc':vsip_vputstride_uc,
+        'vview_bl':vsip_vputstride_bl,
         'vview_vi':vsip_vputstride_vi,
         'cvview_f':vsip_cvputstride_f,
         'cvview_d':vsip_cvputstride_d,
@@ -1092,6 +1098,7 @@ def getlength(a):
        'vview_i':vsip_vgetlength_i,
        'vview_si':vsip_vgetlength_si,
        'vview_uc':vsip_vgetlength_uc,
+       'vview_bl':vsip_vgetlength_bl,
        'vview_vi':vsip_vgetlength_vi,
        'cvview_f':vsip_cvgetlength_f,
        'cvview_d':vsip_cvgetlength_d,
@@ -1110,6 +1117,7 @@ def putlength(a,l):
         'vview_i':vsip_vputlength_i,
         'vview_si':vsip_vputlength_si,
         'vview_uc':vsip_vputlength_uc,
+        'vview_bl':vsip_vputlength_bl,
         'vview_vi':vsip_vputlength_vi,
         'cvview_f':vsip_cvputlength_f,
         'cvview_d':vsip_cvputlength_d,
@@ -1128,6 +1136,7 @@ def getrowstride(a):
         'mview_i':vsip_mgetrowstride_i,
         'mview_si':vsip_mgetrowstride_si,
         'mview_uc':vsip_mgetrowstride_uc,
+        'mview_bl':vsip_mgetrowstride_bl,
         'mview_vi':vsip_mgetrowstride_vi,
         'cmview_f':vsip_cmgetrowstride_f,
         'cmview_d':vsip_cmgetrowstride_d }
@@ -1146,6 +1155,7 @@ def getcolstride(a):
         'mview_i':vsip_mgetcolstride_i,
         'mview_si':vsip_mgetcolstride_si,
         'mview_uc':vsip_mgetcolstride_uc,
+        'mview_bl':vsip_mgetcolstride_bl,
         'mview_vi':vsip_mgetcolstride_vi,
         'cmview_f':vsip_cmgetcolstride_f,
         'cmview_d':vsip_cmgetcolstride_d }
@@ -1165,7 +1175,8 @@ def getrowlength(a):
         'mview_si':vsip_mgetrowlength_si,
         'mview_uc':vsip_mgetrowlength_uc,
         'cmview_f':vsip_cmgetrowlength_f,
-        'cmview_d':vsip_cmgetrowlength_d }
+        'cmview_d':vsip_cmgetrowlength_d, 
+        'mview_bl':vsip_mgetcollength_bl}
     if t[0]  and f.has_key(t[1]):
         return f[t[1]](a)
     else:
@@ -1182,7 +1193,8 @@ def getcollength(a):
         'mview_si':vsip_mgetcollength_si,
         'mview_uc':vsip_mgetcollength_uc,
         'cmview_f':vsip_cmgetcollength_f,
-        'cmview_d':vsip_cmgetcollength_d }
+        'cmview_d':vsip_cmgetcollength_d,
+        'mview_bl':vsip_mgetcollength_bl }
     if t[0]  and f.has_key(t[1]):
         return f[t[1]](a)
     else:
@@ -1234,6 +1246,7 @@ def putrowlength(a,l):
         'mview_i':vsip_mputrowlength_i,
         'mview_si':vsip_mputrowlength_si,
         'mview_uc':vsip_mputrowlength_uc,
+        'mview_bl':vsip_mputrowlength_bl,
         'cmview_f':vsip_cmputrowlength_f,
         'cmview_d':vsip_cmputrowlength_d }
     if t[0]  and f.has_key(t[1]):
@@ -1251,6 +1264,7 @@ def putcollength(a,l):
         'mview_i':vsip_mputcollength_i,
         'mview_si':vsip_mputcollength_si,
         'mview_uc':vsip_mputcollength_uc,
+        'mview_bl':vsip_mputcollength_bl,
         'cmview_f':vsip_cmputcollength_f,
         'cmview_d':vsip_cmputcollength_d }
     if t[0]  and f.has_key(t[1]):
@@ -1432,7 +1446,7 @@ def get(a,i):
        'mview_ftuple':'vsip_mget_f(a,i[0],i[1])',
        'mview_ituple':'vsip_mget_i(a,i[0],i[1])',
        'mview_situple':'vsip_mget_si(a,i[0],i[1])',
-       'mview_ucstuple':'vsip_mget_uc(a,i[0],i[1])',
+       'mview_uctuple':'vsip_mget_uc(a,i[0],i[1])',
        'mview_blstuple':'vsip_mget_bl(a,i[0],i[1])',
        'cmview_dscalar_mi':'vsip_cmget_d(a,i.r,i.c)',
        'cmview_fscalar_mi':'vsip_cmget_f(a,i.r,i.c)',
@@ -1447,12 +1461,14 @@ def get(a,i):
         t=getType(a)[1]
     if type(i) == tuple:
         t += 'tuple'
+    elif type(i) == list:  #Index i is indexed the same tuple or list
+        t += 'tuple'
     elif getType(i)[0]:
         t += getType(i)[1]
     if f.has_key(t):
         return eval(f[t])
     else:
-        print('Not a supported type')
+        print('Type <:' + t + ':> Not a supported type')
         return False
 def put(a,i,scl):
     """
@@ -1476,7 +1492,7 @@ def put(a,i,scl):
        'mview_ftuple':'vsip_mput_f(a,i[0],i[1],x)',
        'mview_ituple':'vsip_mput_i(a,i[0],i[1],x)',
        'mview_situple':'vsip_mput_si(a,i[0],i[1],x)',
-       'mview_ucstuple':'vsip_mput_uc(a,i[0],i[1],x)',
+       'mview_uctuple':'vsip_mput_uc(a,i[0],i[1],x)',
        'mview_blstuple':'vsip_mput_bl(a,i[0],i[1],x)',
        'cmview_dscalar_mi':'vsip_cmput_d(a,i.r,i.c,x)',
        'cmview_fscalar_mi':'vsip_cmput_f(a,i.r,i.c,x)',
@@ -1506,12 +1522,14 @@ def put(a,i,scl):
             x=vsip_cmplx_d(scl.real,scl.imag)
     if type(i) == tuple:
         t += 'tuple'
+    elif type(i) == list:
+        t += 'tuple' #Index i is indexed the same tuple or list
     elif getType(i)[0]:
         t += getType(i)[1]
     if f.has_key(t):
         eval(f[t])
     else:
-        print(t + 'Not a supported type')
+        print('Type <:' + t + ':> Not a supported type')
 
 # Block and View Destroy functions
 def viewDestroy(a):
@@ -2704,7 +2722,7 @@ def copy(a,b):
     elif f1m.has_key(t1) and f1m.has_key(t2):
         for i in range(getcollength(a)):
             for j in range(getrowlength(a)): 
-                put(b,[i,j],get(a,[i,j]))
+                put(b,(i,j),get(a,(i,j)))
         return b
     else:
         print('Type <:' + t1 + t2 + ':> not supported by copy')
@@ -3233,7 +3251,7 @@ def herm(a,b):
         print('Not a supported argument list for cmherm')
         return False
 def jdot(a,b):
-    f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_f}
+    f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_d}
     t=getType(a)
     if t[0] and t == getType(b) and f.has_key(t[1]):
         return f[t[1]](a,b)
@@ -3331,8 +3349,8 @@ def prod(A,B,C):
         'cmview_fcmview_f':vsip_cmprod_f,
         'mview_dvview_d':vsip_mvprod_d,
         'mview_fvview_f':vsip_mvprod_f,
-        'cmview_dcvview_f':vsip_cmvprod_d,
-        'cmview_dcvview_f':vsip_cmvprod_f,
+        'cmview_dcvview_d':vsip_cmvprod_d,
+        'cmview_fcvview_f':vsip_cmvprod_f,
         'vview_dmview_d':vsip_vmprod_d,
         'vview_fmview_f':vsip_vmprod_f,
         'cvview_dcmview_d':vsip_cvmprod_d,
@@ -3411,7 +3429,7 @@ def dot(a,b):
     f  = {  'vview_f':vsip_vdot_f,
             'vview_d':vsip_vdot_d,
             'cvview_f':vsip_cvdot_f,
-            'cvview_d':vsip_cvdot_f}
+            'cvview_d':vsip_cvdot_d}
     t=getType(a)
     if t[0] and t == getType(b) and f.has_key(t[1]):
         return f[t[1]](a,b)

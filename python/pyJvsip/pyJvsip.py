@@ -41,12 +41,28 @@ class Block (object):
             self.__vsipView = view
             self.__pyBlock   = block
             self.__type      =vsip.getType(view)[1]
-            self.__major     ='COL'
+            self.__major     ='EW'
         def __del__(self):
             del(self.__pyBlock)
             del(self.__jvsip)
             vsip.destroy(self.__vsipView)
         # Support functions
+        @property 
+        def EW(self):
+            self.__major = 'EW'
+            return self
+        @property 
+        def COL(self):
+            self.__major = 'COL'
+            return self
+        @property 
+        def ROW(self):
+            self.__major = 'ROW'
+            return self
+        @property
+        def MAT(self):
+            self.__major = 'MAT'
+            return self
         @classmethod
         def supported(cls):
             return cls.viewTypes
@@ -119,7 +135,7 @@ class Block (object):
         def subview(self,(atuple)):
             """usage:
                given view aView then
-                  anotherView = aView.sub(aTuple)
+                  anotherView = aView.subview(aTuple)
                where:
                   aTuple is (index, stride, length) for a vector
                   aTuple is ((rowindex,colindex), colstride, collength, rowstride, rowlength) for a matrix
@@ -204,15 +220,12 @@ class Block (object):
             else:
                 print('Type not a matrix or vector view')
                 return False
-  
         @property
         def major(self):
             """ This is an attribute that is used to determine certain functionality.
                 The major attribue does NOT necessarily agree with the smallest stride direction.
             """
             return self.__major
-        def setMajor(self,major):
-            self.__major = major
         @property
         def real(self):
             return self.realview.copy
@@ -422,9 +435,6 @@ class Block (object):
             else:
                 print('Type not a matrix or vector')
                 return False
-        @property
-        def mcopy_to_list(self):
-            return vsip.mList(self.__vsipView)
         def __getitem__(self,i):
             val=vsip.get(self.view,i)
             if 'cscalar' in repr(val):
@@ -695,6 +705,214 @@ class Block (object):
             """ returns a scalar
             """
             return sumsqval(self.view)
+        #linear algebra
+        def gemp(self,alpha,A,opA,B,opB,beta):
+            """
+            self=alpha* opA(A)*obB(B) + beta * self
+            op is one of 'NTRANS', 'TRANS','HERM','CONJ'
+            alpha and beta are scalars
+            A and B are float matrices (_d or _f) of type mview or cmview
+            """
+            op = {'NTRANS':0,'TRANS':1,'HERM':2,'CONJ':3}
+            if A.type == B.type and A.type == self.type and 'mview' in self.type:
+                chk = vsip.gemp(alpha,op[opA],A.view,op[opB],beta,self.view)
+                if chk == False:
+                    return chk
+                else:
+                    return self
+            else:
+                print('Views must be matrices of the same type')
+                return False
+        def gems(self,alpha,A,opA,beta):
+            """
+               self = alpha * op[opA](A) + beta*self
+            """
+            op = {'NTRANS':0,'TRANS':1,'HERM':2,'CONJ':3}
+            if A.type == self.type and 'mview' in self.type:
+                vsip.gems(alpha,A.view,op[opA],beta,self.view)
+                return self
+            else:
+                print('Views must ba matrices of the same type')
+                return False
+        def outer(self,aScalar,other):
+            if 'vview' in self.type and 'vview' in other.type:
+                if self.type == other.type:
+                    rl=other.length
+                    cl=self.length
+                    retval=self.block.otherBlock(self.block.type,rl*cl).bind((0,rl,cl,1,rl))
+                    vsip.outer(aScalar,self.view,other.view,retval.view)
+                    return retval
+                else:
+                    print('Input views must be vectors of the same type')
+                    return False
+            else:
+                print('Input views must be vectors')
+                return False
+        def prod(self,other):
+            if 'vview' in self.type and 'mview' in other.type:
+                l=other.rowlength
+                retval = self.block.otherBlock(self.block.type,l).bind((0,1,l))
+                vsip.prod(self.view,other.view,retval.view)
+                return retval
+            elif 'mview' in self.type and 'mview' in other.type:
+                n=other.rowlength
+                m=self.collength
+                retval = self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
+                if m == 3 and self.rowlength == 3:
+                    vsip.prod3(self.view,other.view,retval.view)
+                elif m == 4 and self.rowlength == 4:
+                    vsip.prod4(self.view,other.view,retval.view)
+                else:
+                    vsip.prod(self.view,other.view,retval.view)
+                return retval
+            elif 'mview' in self.type and 'vview' in other.type:
+                l=self.collength
+                retval = self.block.otherBlock(self.block.type,l).bind((0,1,l))
+                if l == 3 and self.rowlength == 3:
+                    vsip.prod3(self.view,other.view,retval.view)
+                elif l == 4 and self.rowlength == 4:
+                    vsip.prod4(self.view,other.view,retval.view)
+                else:
+                    vsip.prod(self.view,other.view,retval.view)
+                return retval
+            else:
+                print('Input views <:' + self.type + ':> and <:' + other.type + 
+                      ':> do not appear to be supported by function prod')
+                return False
+        def prodh(self,other):
+            if 'cmview' in self.type and 'cmview' in other.type:
+                n=other.collength
+                m=self.collength
+                retval = self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
+                vsip.prodh(self.view,other.view,retval.view)
+                return retval
+            else:
+                print('Views must be a complex matrices')
+                return False
+        def prodj(self,other):
+            if 'cmview' in self.type and 'cmview' in other.type:
+                m=self.collength
+                n=other.rowlength
+                retval = self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
+                vsip.prodj(self.view,other.view,retval.view)
+                return retval
+            else:
+                print('Views must be complex matrices')
+                return False
+        def prodt(self,other):
+            if 'mview' in self.type and 'mview' in other.type:
+                n=other.collength
+                m=self.collength
+                retval = self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
+                vsip.prodt(self.view,other.view,retval.view)
+                return retval
+            else:
+                print('Views must be matrices')
+                return False        
+        @property
+        def trans(self):
+            if 'mview' in self.type:
+                m=self.rowlength
+                n=self.collength
+                retval=self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
+                vsip.trans(self.view,retval.view)
+                return retval
+            else:
+                print('View must be a matrix')
+                return False
+        @property
+        def herm(self):
+            if 'cmview' in self.type:
+                m=self.rowlength
+                n=self.collength
+                retval=self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
+                vsip.herm(self.view,retval.view)
+                return retval
+            else:
+                print('View must be a complex matrix')
+                return False
+        def dot(self,other):
+            if 'vview' in self.type and 'vview' in other.type:
+                retval=vsip.dot(self.view,other.view)
+                if 'cscalar' in repr(retval):
+                    return complex(retval.r,retval.i)
+                else:
+                    return retval
+            else:
+                print('Input views must be vectors')
+                return False
+        def jdot(self,other):
+            if 'cvview' in self.type and 'cvview' in other.type:
+                retval = vsip.jdot(self.view,other.view)
+                if 'cscalar' in repr(retval):
+                    return complex(retval.r,retval.i)
+                else:
+                    return retval
+            else:
+                print('Input views must be complex vectors')
+                return False
+        #utility functions
+        def mstring(self,fmt):
+            """ 
+            This method returns a string suitable for printing the values as a vector or matrix.
+            usage:
+              mstring(<vsip matrix/vector>, fmt)
+            fmt is a string corresponding to a simple fmt statement. 
+            For instance '%6.5f' prints as 6 characters wide with 5 decimal digits.
+            Note format converts this statement to '% 6.5f' or '%+6.5f' so keep
+            the input simple.
+            """
+            def _fmt1(c):
+                if c != '%':
+                    return c
+                else:
+                    return '% '
+            def _fmt2(c):
+                if c != '%':
+                    return c
+                else:
+                    return '%+'
+            def _fmtfunc(fmt1,fmt2,y):
+                x = vsip.cscalarToComplex(y)
+                if type(x) == complex:
+                    s = fmt1 % x.real
+                    s += fmt2 % x.imag
+                    s += "i"
+                    return s
+                else:
+                    return fmt1 % x
+            tm=['mview_d','mview_f','cmview_d','cmview_f','mview_i','mview_uc',
+                 'mview_si','mview_bl']
+            tv=['vview_d','vview_f','cvview_d','cvview_f','vview_i','vview_uc',
+                 'vview_si','vview_bl','vview_vi','vview_mi']
+            t=self.type
+            tfmt=[_fmt1(c) for c in fmt]
+            fmt1 = "".join(tfmt)
+            tfmt=[_fmt2(c) for c in fmt]
+            fmt2 = "".join(tfmt)
+            if t in tm:
+                cl=self.collength
+                rl=self.rowlength
+                s=str()
+                for i in range(cl):
+                    M=[]
+                    for j in range(rl):
+                        M.append(_fmtfunc(fmt1,fmt2,self[i,j]))
+                    if i == 0:
+                        s += "["+" ".join(M) + ";\n"
+                    elif i < cl-1:
+                        s += " "+" ".join(M) + ";\n"
+                    else:
+                        s += " "+" ".join(M) + "]\n"
+                return s
+            elif t in tv:
+                l=self.length
+                V=[_fmtfunc(fmt1,fmt2,self[i]) for i in range(l)]
+                return "[" + " ".join(V) + "]\n"
+            else:
+                print('Object not VSIP vector or matrix')
+        def mprint(self,fmt):
+            print(self.mstring(fmt))
     #Block specific class below
     def __init__(self,block_type,length):
         other = ['real_f','imag_f','real_d','imag_d']
@@ -712,14 +930,12 @@ class Block (object):
     def __del__(self):
         if self.__type in Block.blockTypes:
             vsip.destroy(self.__vsipBlock)
-        del(self.__jvsip)            
+        del(self.__jvsip)
+    # major is 'EW' (elementwise), 'ROW', 'COL'            
     def bind(self,attr):
         view = vsip.bind(self.__vsipBlock,attr)
         retval = self.__View(view,self)
-        retval.setMajor('COL')
-        if len(attr) > 3:
-            if attr[3] < attr[1]:
-                retval.setMajor('ROW')
+        retval.EW
         return retval
     @classmethod
     def supported(cls):
