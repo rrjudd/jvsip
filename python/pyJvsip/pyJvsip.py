@@ -129,7 +129,21 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported for ramp')
                 return False
         def fill(self,aScalar):
-            vsip.fill(aScalar,self.view)
+            if self.type in Block.complexTypes:
+                if '_d' in self.type:
+                    if type(aScalar) is complex:
+                        vsip.fill(vsip_cmplx_d(aScalar.real,aScalar.imag),self.view)
+                    else:
+                        vsip.fill(vsip_cmplx_d(aScalar,0.0),self.view)
+                else:
+                    if type(aScalar) is complex:
+                        vsip.fill(vsip_cmplx_f(aScalar.real,aScalar.imag),self.view)
+                    else:
+                        vsip.fill(vsip_cmplx_f(aScalar,0.0),self.view)
+            elif type(aScalar) != complex:
+                vsip.fill(aScalar,self.view)
+            else:
+                print('aScalar must be a type which agrees with vector view')
             return self
         #support functions
         def subview(self,(atuple)):
@@ -440,10 +454,15 @@ class Block (object):
             if 'cscalar' in repr(val):
                 c=complex(val.r,val.i)
                 return c
-            else:
+            elif type(val) is int or type(val) is float:
                 return val
+            elif 'scalar_mi' in repr(val):
+                return {'row_index':val.r,'col_index':val.i}
+            else:
+                print('__getitem__ does not recognize<:' +repr(val)+ ':>')
+                return False
         def __setitem__(self,i,value):
-            return vsip.put(self.__vsipView,i,value)
+            vsip.put(self.__vsipView,i,value)
         def __len__(self):
             attr=vsip.size(self.__vsipView)
             n = attr[2]
@@ -705,6 +724,42 @@ class Block (object):
             """ returns a scalar
             """
             return sumsqval(self.view)
+        #ternary
+        def axpy(self,a,x):
+            """
+               this should be a saxpy (daxpy) y=a * x + y
+                  or
+               self += a * x
+               where self and x are vectors of the same type and a is a scalar
+            """
+            if 'cvview_d' in self.type:
+                t = self.type + 'cscalar_d' + x.type
+                if type(a) is complex:
+                    alpha=vsip_cmplx_d(a.real + a.imag)
+                else:
+                    alpha = vsip_cmplx_d(a,0)
+            elif 'cvview_f' in self.type:
+                t = self.type + 'cscalar_f' + x.type
+                if type(a) is complex:
+                    alpha=vsip_cmplx_f(a.real + a.imag)
+                else:
+                    alpha = vsip_cmplx_f(a,0)
+            elif type(a) is float or type(a) is int:
+                t = self.type + 'scalar' + x.type
+                alpha = float(a)
+            else:
+                print('Type combinations not recognized.')
+                return False              
+            f = {'cvview_dcscalar_dcvview_d':vsip_cvsma_d,
+                 'cvview_fcscalar_fcvview_f':vsip_cvsma_f,
+                 'vview_dscalarvview_d':vsip_vsma_d,
+                 'vview_fscalarvview_f':vsip_vsma_f}
+            if f.has_key(t):
+                f[t](x.view,alpha,self.view,self.view)
+                return self
+            else:
+                print('Type <:'+ t + ':> not a supported type string')
+                return False
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """
@@ -873,14 +928,13 @@ class Block (object):
                 else:
                     return '%+'
             def _fmtfunc(fmt1,fmt2,y):
-                x = vsip.cscalarToComplex(y)
-                if type(x) == complex:
-                    s = fmt1 % x.real
-                    s += fmt2 % x.imag
+                if type(y) is complex:
+                    s = fmt1 % y.real
+                    s += fmt2 % y.imag
                     s += "i"
                     return s
                 else:
-                    return fmt1 % x
+                    return fmt1 % y
             tm=['mview_d','mview_f','cmview_d','cmview_f','mview_i','mview_uc',
                  'mview_si','mview_bl']
             tv=['vview_d','vview_f','cvview_d','cvview_f','vview_i','vview_uc',
@@ -911,6 +965,7 @@ class Block (object):
                 return "[" + " ".join(V) + "]\n"
             else:
                 print('Object not VSIP vector or matrix')
+
         def mprint(self,fmt):
             print(self.mstring(fmt))
     #Block specific class below

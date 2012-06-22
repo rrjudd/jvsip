@@ -1430,16 +1430,16 @@ def get(a,i):
        corresponds to a tuple, a single integer, or a vsip_scalar_mi. The argument 
        must make sense for the input view. 
     """
-    f={'cvview_dscalar':'vsip_cvget_d(a,i)',
-       'cvview_fscalar':'vsip_cvget_f(a,i)',
-       'vview_dscalar':'vsip_vget_d(a,i)',
-       'vview_fscalar':'vsip_vget_f(a,i)',
-       'vview_iscalar':'vsip_vget_i(a,i)',
-       'vview_viscalar':'vsip_vget_vi(a,i)',
-       'vview_siscalar':'vsip_vget_si(a,i)',
-       'vview_ucscalar':'vsip_vget_uc(a,i)',
-       'vview_blscalar':'vsip_vget_bl(a,i)',
-       'vview_miscalar':'vsip_vget_mi(a,i)',
+    f={'cvview_dscalar':'vsip_cvget_d(a,int(i))',
+       'cvview_fscalar':'vsip_cvget_f(a,int(i))',
+       'vview_dscalar':'vsip_vget_d(a,int(i))',
+       'vview_fscalar':'vsip_vget_f(a,int(i))',
+       'vview_iscalar':'vsip_vget_i(a,int(i))',
+       'vview_viscalar':'vsip_vget_vi(a,int(i))',
+       'vview_siscalar':'vsip_vget_si(a,int(i))',
+       'vview_ucscalar':'vsip_vget_uc(a,int(i))',
+       'vview_blscalar':'vsip_vget_bl(a,int(i))',
+       'vview_miscalar':'vsip_vget_mi(a,int(i))',
        'cmview_dtuple':'vsip_cmget_d(a,i[0],i[1])',
        'cmview_ftuple':'vsip_cmget_f(a,i[0],i[1])',
        'mview_dtuple':'vsip_mget_d(a,i[0],i[1])',
@@ -1456,15 +1456,26 @@ def get(a,i):
        'mview_siscalar_mi':'vsip_mget_si(a,i.r,i.c)',
        'mview_ucscalar_mi':'vsip_mget_uc(a,i.r,i.c)',
        'mview_blscalar_mi':'vsip_mget_bl(a,i.r,i.c)'}
-    t=str()
-    if getType(a)[0]:
-        t=getType(a)[1]
-    if type(i) == tuple:
-        t += 'tuple'
-    elif type(i) == list:  #Index i is indexed the same tuple or list
-        t += 'tuple'
-    elif getType(i)[0]:
-        t += getType(i)[1]
+    t=getType(a)[1]
+    if 'vview' in t:
+        if type(i) is int or type(i) is float and i >=0:
+            t += 'scalar'
+        else:
+            print('In <:get:> function; index must be an integer >=0 for vector view')
+            return False
+    elif 'mview' in t:
+        if type(i) == tuple and len(i) == 2:
+            t += 'tuple'
+        elif type(i) == list and len(i) == 2:  #Index i is indexed the same tuple or list
+            t += 'tuple'
+        elif 'scalar_mi' in getType(i)[1]:
+            t += 'scalar_mi'
+        else:
+            print('In <:get:> function; index not recognized for matrix')
+            return False
+    else:
+        print('Input view not recognized as vector or matrix?')
+        return False
     if f.has_key(t):
         return eval(f[t])
     else:
@@ -1486,46 +1497,88 @@ def put(a,i,scl):
        'vview_ucscalar':'vsip_vput_uc(a,i,x)',
        'vview_blscalar':'vsip_vput_bl(a,i,x)',
        'vview_miscalar':'vsip_vput_mi(a,i,x)',
-       'cmview_dtuple':'vsip_cmput_d(a,i[0],i[1],x)',
-       'cmview_ftuple':'vsip_cmput_f(a,i[0],i[1],x)',
-       'mview_dtuple':'vsip_mput_d(a,i[0],i[1],x)',
-       'mview_ftuple':'vsip_mput_f(a,i[0],i[1],x)',
-       'mview_ituple':'vsip_mput_i(a,i[0],i[1],x)',
-       'mview_situple':'vsip_mput_si(a,i[0],i[1],x)',
-       'mview_uctuple':'vsip_mput_uc(a,i[0],i[1],x)',
-       'mview_blstuple':'vsip_mput_bl(a,i[0],i[1],x)',
-       'cmview_dscalar_mi':'vsip_cmput_d(a,i.r,i.c,x)',
-       'cmview_fscalar_mi':'vsip_cmput_f(a,i.r,i.c,x)',
-       'mview_dscalar_mi':'vsip_mput_d(a,i.r,i.c,x)',
-       'mview_fscalar_mi':'vsip_mput_f(a,i.r,i.c,x)',
-       'mview_iscalar_mi':'vsip_mput_i(a,i.r,i.c,x)',
-       'mview_siscalar_mi':'vsip_mput_si(a,i.r,i.c,x)',
-       'mview_ucscalar_mi':'vsip_mput_uc(a,i.r,i.c,x)',
-       'mview_blscalar_mi':'vsip_mput_bl(a,i.r,i.c,x)'}
-    t=str()
-    x=scl
-    if getType(a)[0]:
-        t=getType(a)[1]
-    if t == 'cmview_f' or t=='cvview_f':
-        if getType(scl)[1] == 'scalar':
-            x=vsip_cmplx_f(scl,0)
-        elif getType(scl)[1] == 'cscalar_f':
-            x=vsip_cmplx_f(scl.r,scl.i)
-        elif type(scl) == complex:
-            x=vsip_cmplx_f(scl.real,scl.imag)
-    if t == 'cmview_d' or t == 'cvview_d':
-        if getType(scl)[1] == 'scalar':
-            x=vsip_cmplx_d(scl,0)
-        elif getType(scl)[1] == 'cscalar_d':
-            x=vsip_cmplx_d(scl.r,scl.i)
-        elif type(scl) == complex:
-            x=vsip_cmplx_d(scl.real,scl.imag)
-    if type(i) == tuple:
-        t += 'tuple'
-    elif type(i) == list:
-        t += 'tuple' #Index i is indexed the same tuple or list
-    elif getType(i)[0]:
-        t += getType(i)[1]
+       'cmview_dscalar_mi':'vsip_cmput_d(a,r,c,x)',
+       'cmview_fscalar_mi':'vsip_cmput_f(a,r,c,x)',
+       'mview_dscalar_mi':'vsip_mput_d(a,r,c,x)',
+       'mview_fscalar_mi':'vsip_mput_f(a,r,c,x)',
+       'mview_iscalar_mi':'vsip_mput_i(a,r,c,x)',
+       'mview_siscalar_mi':'vsip_mput_si(a,r,c,x)',
+       'mview_ucscalar_mi':'vsip_mput_uc(a,r,c,x)',
+       'mview_blscalar_mi':'vsip_mput_bl(a,r,c,x)'}
+    t=getType(a)[1]
+    # figure out the scalar
+    if 'cvview' in t or 'cmview' in t:
+        if type(scl) is complex:
+            if '_d' in t:
+                x = vsip_cmplx_d(scl.real,scl.imag)
+            else:
+                x = vsip_cmplx_f(scl.real,scl.imag)
+        elif type(scl) is int or type(scl) is float:
+            if '_d' in t:
+                x = vsip_cmplx_d(scl,0.0)
+            else:
+                x = vsip_cmplx_f(scl,0.0)
+        elif 'cscalar' in getType(scl)[1]:
+            x = scl
+        else:
+            print('Input scalar type is not recognized for complex view')
+            return
+    elif '_mi' in t:
+        if 'scalar_mi' in getType(scl)[1]:
+            x=scl
+        else:
+            print('Input to vview_mi type must be scalar_mi')
+            return
+    elif '_i' in t or '_si' in t:
+        if type(scl) is int:
+            x = scl
+        elif type(scl) is float:
+            x = int(scl)
+        else:
+            print('Input to integer view must be float or integer')
+            return
+    elif '_vi' in t:
+        if type(scl) is float or type(scl) is int and scl >= 0:
+            x = int(scl)
+        else:
+            print('Type for _vi must be unsigned int')
+            return
+    elif '_uc' in t:
+        if type(scl) is float or type(scl) is int and scl >= 0:
+            x = int(scl)
+        else:
+            print('Type for _uc must be unsigned int')
+            return
+    elif '_d' or '_f' in t:
+        if type(scl) is float or type(scl) is int:
+            x = float(scl)
+        else:
+            print('Type must be float for _d or _f precision views')
+            return
+    else:
+        print('Precision type of scalar not recognized for function put')
+        return
+    #figure out the type
+    if 'vview' in t:
+        if type(i) is int:
+            t+='scalar'
+        else:
+            print('Index for function <:put:> must be an int for a vector')
+            return False
+    elif 'mview' in t:
+        if type(i) is tuple or type(i) is list and len(i) is 2:
+            r=i[0]; c = i[1]
+            t += 'scalar_mi'
+        elif 'scalar_mi' in getType(i)[1]:
+            r=i.r; c = i.c
+            t += 'scalar_mi'
+        else:
+            print('Index for function <:put:> not recognized for a matrix')
+            return
+    else:
+        print('Input argument not a vsip vector or matrix?')
+        return
+    #evaluate the function for type
     if f.has_key(t):
         eval(f[t])
     else:
@@ -2433,7 +2486,7 @@ def ma(a,b,c,d):
        'cvview_dcscalar_dcvview_d':vsip_cvsma_d,
        'cvview_fcscalar_fcscalar_f':vsip_cvsma_f,
        'vview_dscalarvview_d':vsip_vsma_d,
-       'vview_fscalar_fvview_f':vsip_vsma_f,
+       'vview_fscalarvview_f':vsip_vsma_f,
        'cvview_dcvview_dcvview_d':vsip_cvma_d,
        'cvview_fcvview_fcvview_f':vsip_cvma_f,
        'vview_dvview_dvview_d':vsip_vma_d,
