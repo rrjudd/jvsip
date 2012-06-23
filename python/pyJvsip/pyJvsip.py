@@ -442,7 +442,22 @@ class Block (object):
             return cls(v,b)
         @property
         def list(self):
-            if self.type in Block.vectorTypes:
+            f = {'cvview_f':'cvcopyToList_f(self.view)',
+                 'cvview_d':'cvcopyToList_d(self.view)',
+                 'vview_f':'vcopyToList_f(self.view)',
+                 'vview_d':'vcopyToList_d(self.view)',
+                 'vview_i':'vcopyToList_i(self.view)',
+                 'vview_si':'vcopyToList_si(self.view)',
+                 'vview_uc':'vcopyTolist_uc(self.view)',
+                 'vview_vi':'vcopyToList_vi(self.view)',
+                 'vview_mi':'vcopyToList_mi(self.view)'}
+            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view',
+                      'mview_f':'mcopyToListByRow_f(self.view'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            elif 'ROW' in self.major and f.has_key(self.type):
+                return eval(fByRow[self.type])
+            elif self.type in Block.vectorTypes:
                 return vsip.vList(self.view)
             elif self.type in Block.matrixTypes:
                 return vsip.mList(self.view)
@@ -986,7 +1001,7 @@ class Block (object):
         if self.__type in Block.blockTypes:
             vsip.destroy(self.__vsipBlock)
         del(self.__jvsip)
-    # major is 'EW' (elementwise), 'ROW', 'COL'            
+    # major for bind of matrix in attr is 'ROW', or 'COL'            
     def bind(self,attr):
         view = vsip.bind(self.__vsipBlock,attr)
         retval = self.__View(view,self)
