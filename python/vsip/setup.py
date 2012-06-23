@@ -5,9 +5,9 @@ setup.py file for tvcpp code and SWIG Wrapper
 from distutils.core import setup, Extension
 
 vsip_module = Extension('_vsip',
-                        sources=[         './c_src/indexptr.c',
+                        sources=[        './c_src/copyToList.c',
+                                          './c_src/indexptr.c',
                                           './c_src/py_jdot.c',
-                                          './c_src/copyToList.c',
                                           '../../c_VSIP_src/vsip_arg_d.c',
                                           '../../c_VSIP_src/vsip_arg_f.c',
                                           '../../c_VSIP_src/vsip_blockadmit_bl.c',

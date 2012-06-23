@@ -451,12 +451,20 @@ class Block (object):
                  'vview_uc':'vcopyTolist_uc(self.view)',
                  'vview_vi':'vcopyToList_vi(self.view)',
                  'vview_mi':'vcopyToList_mi(self.view)'}
-            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view',
-                      'mview_f':'mcopyToListByRow_f(self.view'}
+            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view)',
+                      'mview_f':'mcopyToListByRow_f(self.view)',
+                      'cmview_d':'cmcopyToListByRow_d(self.view)',
+                      'mview_d':'mcopyToListByRow_d(self.view)'}
+            fByCol = {'cmview_f':'cmcopyToListByCol_f(self.view)',
+                      'mview_f':'mcopyToListByCol_f(self.view)',
+                      'cmview_d':'cmcopyToListByCol_d(self.view)',
+                      'mview_d':'mcopyToListByCol_d(self.view)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
-            elif 'ROW' in self.major and f.has_key(self.type):
+            elif 'ROW' in self.major and fByRow.has_key(self.type):
                 return eval(fByRow[self.type])
+            elif 'COL' in self.major and fByCol.has_key(self.type):
+                return eval(fByCol[self.type])
             elif self.type in Block.vectorTypes:
                 return vsip.vList(self.view)
             elif self.type in Block.matrixTypes:

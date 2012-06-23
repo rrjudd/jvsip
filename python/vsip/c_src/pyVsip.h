@@ -33,4 +33,8 @@ PyObject *cmcopyToListByRow_f(vsip_cmview_f *);
 PyObject *mcopyToListByRow_f(vsip_mview_f *);
 PyObject *cmcopyToListByRow_d(vsip_cmview_d *);
 PyObject *mcopyToListByRow_d(vsip_mview_d *);
+PyObject *cmcopyToListByCol_f(vsip_cmview_f *);
+PyObject *mcopyToListByCol_f(vsip_mview_f *);
+PyObject *cmcopyToListByCol_d(vsip_cmview_d *);
+PyObject *mcopyToListByCol_d(vsip_mview_d *);
 #endif

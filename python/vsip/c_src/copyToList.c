@@ -172,4 +172,72 @@ PyObject *mcopyToListByRow_d(vsip_mview_d *v){
     }
     return retval;
 }
-
+/* matrix copy by col */
+PyObject *cmcopyToListByCol_f(vsip_cmview_f *v){
+    PyObject *cval;
+    vsip_length M = vsip_cmgetcollength_f(v);
+    vsip_length N = vsip_cmgetrowlength_f(v);
+    PyObject *retval = PyList_New(M);
+    vsip_index i,j;
+    for(j=0; j<N; j++){
+        PyObject *col = PyList_New(M);
+        for(i=0; i<M; i++){
+           vsip_cscalar_f x = vsip_cmget_f(v,i,j);
+           double re = (double)x.r;
+           double im = (double)x.i;
+           cval = PyComplex_FromDoubles(re,im);
+           PyList_SetItem(col,i,cval);
+        }
+        PyList_SetItem(retval,j,col);
+    }
+    return retval;
+}
+PyObject *mcopyToListByCol_f(vsip_mview_f *v){
+    vsip_length M = vsip_mgetcollength_f(v);
+    vsip_length N = vsip_mgetrowlength_f(v);
+    PyObject *retval = PyList_New(M);
+    vsip_index i,j;
+    for(j=0; j<N; j++){
+        PyObject *col = PyList_New(M);
+        for(i=0; i<M; i++){
+           double x = (double)vsip_mget_f(v,i,j);
+           PyList_SetItem(col,i,PyFloat_FromDouble(x));
+        }
+        PyList_SetItem(retval,j,col);
+    }
+    return retval;
+}
+PyObject *cmcopyToListByCol_d(vsip_cmview_d *v){
+    PyObject *cval;
+    vsip_length M = vsip_cmgetcollength_d(v);
+    vsip_length N = vsip_cmgetrowlength_d(v);
+    PyObject *retval = PyList_New(M);
+    vsip_index i,j;
+    for(j=0; j<N; j++){
+        PyObject *col = PyList_New(M);
+        for(i=0; i<M; i++){
+           vsip_cscalar_d x = vsip_cmget_d(v,i,j);
+           double re = (double)x.r;
+           double im = (double)x.i;
+           cval = PyComplex_FromDoubles(re,im);
+           PyList_SetItem(col,i,cval);
+        }
+        PyList_SetItem(retval,j,col);
+    }
+    return retval;
+}
+PyObject *mcopyToListByCol_d(vsip_mview_d *v){
+    vsip_length M = vsip_mgetcollength_d(v);
+    vsip_length N = vsip_mgetrowlength_d(v);
+    PyObject *retval = PyList_New(M);
+    vsip_index i,j;
+    for(j=0; j<N; j++){
+        PyObject *col = PyList_New(M);
+        for(i=0; i<M; i++){
+           double x = (double)vsip_mget_d(v,i,j);
+           PyList_SetItem(col,i,PyFloat_FromDouble(x));
+        }
+        PyList_SetItem(retval,j,col);
+    }
+    return retval;
+}
