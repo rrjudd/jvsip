@@ -124,8 +124,8 @@ PyObject *cmcopyToListByRow_f(vsip_cmview_f *v){
     return retval;
 }
 PyObject *mcopyToListByRow_f(vsip_mview_f *v){
-    vsip_length M = vsip_vgetcollength_f(v);
-    vsip_length N = vsip_vgetrowlength_f(v);
+    vsip_length M = vsip_mgetcollength_f(v);
+    vsip_length N = vsip_mgetrowlength_f(v);
     PyObject *retval = PyList_New(M);
     vsip_index i,j;
     for(i=0; i<M; i++){
@@ -158,8 +158,8 @@ PyObject *cmcopyToListByRow_d(vsip_cmview_d *v){
     return retval;
 }
 PyObject *mcopyToListByRow_d(vsip_mview_d *v){
-    vsip_length M = vsip_vgetcollength_d(v);
-    vsip_length N = vsip_vgetrowlength_d(v);
+    vsip_length M = vsip_mgetcollength_d(v);
+    vsip_length N = vsip_mgetrowlength_d(v);
     PyObject *retval = PyList_New(M);
     vsip_index i,j;
     for(i=0; i<M; i++){

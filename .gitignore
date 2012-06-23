@@ -1,5 +1,8 @@
 include/
 lib/
+build/
+vsip_wrap.c
+vsip.py
 *.[oa]
 *~
 .DS_Store
