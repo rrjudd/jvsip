@@ -454,11 +454,17 @@ class Block (object):
             fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view)',
                       'mview_f':'mcopyToListByRow_f(self.view)',
                       'cmview_d':'cmcopyToListByRow_d(self.view)',
-                      'mview_d':'mcopyToListByRow_d(self.view)'}
+                      'mview_d':'mcopyToListByRow_d(self.view)',
+                      'mview_i':'mcopyToListByRow_i(self.view)',
+                      'mview_si':'mcopyToListByRow_si(self.view)',
+                      'mview_uc':'mcopyToListByRow_uc(self.view)'}
             fByCol = {'cmview_f':'cmcopyToListByCol_f(self.view)',
                       'mview_f':'mcopyToListByCol_f(self.view)',
                       'cmview_d':'cmcopyToListByCol_d(self.view)',
-                      'mview_d':'mcopyToListByCol_d(self.view)'}
+                      'mview_d':'mcopyToListByCol_d(self.view)',
+                      'mview_i':'mcopyToListByCol_i(self.view)',
+                      'mview_si':'mcopyToListByCol_si(self.view)',
+                      'mview_uc':'mcopyToListByCol_uc(self.view)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             elif 'ROW' in self.major and fByRow.has_key(self.type):

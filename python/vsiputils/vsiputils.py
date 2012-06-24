@@ -316,7 +316,7 @@ def _mget(a,b): # used internal to this module
    attr = getattrib(a)
    f={ 'mview_f':vsip_mget_f,
        'mview_d':vsip_mget_d,
-       'mview_i':vsip_mget_f,
+       'mview_i':vsip_mget_i,
        'mview_si':vsip_mget_si,
        'mview_uc':vsip_mget_uc}
    for i in range(attr.col_length):
