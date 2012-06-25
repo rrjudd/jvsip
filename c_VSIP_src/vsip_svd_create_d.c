@@ -3,7 +3,6 @@
  *  VI_svd
  *
  *  Created by Randall Judd on 12/25/07.
- *  Copyright 2007 __MyCompanyName__. All rights reserved.
  *
  */
 

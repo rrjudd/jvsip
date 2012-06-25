@@ -145,6 +145,16 @@ class Block (object):
             else:
                 print('aScalar must be a type which agrees with vector view')
             return self
+        @property
+        def identity(self):
+            f=['cmview_d','cmview_f','mview_d','mview_f','mview_i','mview_si']
+            if self.type in f:
+                self.fill(0)
+                self.diagview(0).fill(1)
+                return self
+            else:
+                print('View of type <:'+self.type+':> not supported by identity')
+                return False
         #support functions
         def subview(self,(atuple)):
             """usage:

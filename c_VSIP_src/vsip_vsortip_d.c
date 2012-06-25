@@ -2,12 +2,21 @@
  *  vsip_vsortip_d.c
  *
  *  Created by Randall Judd on 10/26/07.
- *  Copyright 2007 __MyCompanyName__. All rights reserved.
  *  It uses private information and is compatible with the tvcpp 
  *  reference implementation of VSIPL; however the functions are not
  *  yet approved for official inclusion into VSIPL
  *
  */
+/*********************************************************************
+ // This code includes                                                 /
+ // no warranty, express or implied, including the warranties          /
+ // of merchantability and fitness for a particular purpose.           /
+ // No person or entity                                                /
+ // assumes any legal liability or responsibility for the accuracy,    /
+ // completeness, or usefulness of any information, apparatus,         /
+ // product, or process disclosed, or represents that its use would    /
+ // not infringe privately owned rights                                /
+ **********************************************************************/
 
 #include <vsip_blockattributes_d.h>
 #include <vsip_vviewattributes_d.h>

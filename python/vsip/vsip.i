@@ -794,6 +794,7 @@ void vsip_mfill_d ( vsip_scalar_d , const vsip_mview_d* ) ;
 void vsip_mfill_f ( vsip_scalar_f , const vsip_mview_f* ) ;
 void vsip_mfill_i ( vsip_scalar_i , const vsip_mview_i* ) ;
 void vsip_mfill_si ( vsip_scalar_si , const vsip_mview_si* ) ;
+void vsip_mfill_uc ( vsip_scalar_uc, const vsip_mview_uc* ) ;
 void vsip_mgather_d ( const vsip_mview_d* , const vsip_vview_mi* , const vsip_vview_d* ) ;
 void vsip_mgather_f ( const vsip_mview_f* , const vsip_vview_mi* , const vsip_vview_f* ) ;
 void vsip_mgetattrib_bl ( const vsip_mview_bl* , vsip_mattr_bl* ) ;

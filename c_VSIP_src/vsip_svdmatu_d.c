@@ -1,3 +1,15 @@
+/* Created RJudd */
+/*********************************************************************
+ // This code includes                                                 /
+ // no warranty, express or implied, including the warranties          /
+ // of merchantability and fitness for a particular purpose.           /
+ // No person or entity                                                /
+ // assumes any legal liability or responsibility for the accuracy,    /
+ // completeness, or usefulness of any information, apparatus,         /
+ // product, or process disclosed, or represents that its use would    /
+ // not infringe privately owned rights                                /
+ **********************************************************************/
+
 #include<vsip.h>
 #include<vsip_mviewattributes_d.h>
 #include<vsip_svdattributes_d.h>
