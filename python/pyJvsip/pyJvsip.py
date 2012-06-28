@@ -1,5 +1,38 @@
 from vsip import *
 import vsiputils as vsip
+
+def getType(v):
+    """
+        Returns a tuple with type information.
+        most of the time getType(v)[2] will be the information needed.
+        getType(v)[0] is the module (python, vsip, or pyJvsip)
+        getType(v)[1] is the class (scalar, View, Block, etc)
+        getType(v)[2] is the type which is dependent on the module and class.
+    """
+    if isinstance(v,int) or isinstance(v,float) or isinstance(v,complex):
+        return ('python','scalar',type(v))
+    elif 'Swig' in repr(v) and 'scalar' in repr(v):
+        if 'vsip_scalar_mi' in repr(v):
+            return ('vsip','scalar','scalar_mi')
+        if 'vsip_cscalar_f' in repr(v):
+            return ('vsip','scalar','cscalar_f')
+        if 'vsip_scalar_mi' in repr(v):
+            return ('vsip','scalar','cscalar_d')
+    elif 'pyJvsip' in repr(v):
+        if 'View' in repr(v):
+            return ('pyJvsip','View',v.type)
+        elif 'Block' in repr(v):
+            return ('pyJvsip','Block',v.type)
+        elif 'Rand' in repr(v):
+            return ('pyJvsip','Rand',v.type)
+        elif 'FFT' in repr(v):
+            return ('pyJvsip','FFT',v.type)
+        else:
+            print('Do not recognize object')
+            return
+    else:
+        print('Do not recognize object')
+        return
 class JVSIP (object):
     init = 0
     def __init__(self):
@@ -122,9 +155,13 @@ class Block (object):
         #data generators
         def ramp(self,start,increment):
             supported = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
+            extended = ['cvview_f','cvview_d']
             if self.type in supported:
-                vsip.ramp(start,increment,self.__vsipView)
+                vsip.ramp(start,increment,self.view)
                 return self
+            elif self.type in extended:
+                tmp=self.realview
+                vsip.ramp(start,increment,tmp.view)
             else:
                 print('Type <:'+self.type+':> not supported for ramp')
                 return False
@@ -601,8 +638,17 @@ class Block (object):
                 print('Object <:' + repr(other) +  ':> not supported for sub')
                 return False
         def __imul__(self,other):# *=other
-            if 'scalar' in vsip.getType(other)[1] :
-                vsip.mul(other,self.view,self.view)
+            if isinstance(other,int):
+                x = float(other)
+            elif isinstance(other,complex):
+                if '_d' in self.type:
+                    x = vsip_cmplx_d(other.real,other.imag)
+                elif '_f' in self.type:
+                    x = vsip_cmplx_f(other.real,other.imag)
+            else:
+                 x = other
+            if 'scalar' in getType(other)[1] :
+                vsip.mul(x,self.view,self.view)
                 return self
             elif 'pyJvsip.__View' in repr(other):
                 vsip.mul(other.view,self.view,self.view)
@@ -627,10 +673,19 @@ class Block (object):
                 print('Object <:' + repr(other) +  ':> not supported for mul')
                 return False
         def __idiv__(self,other):
-            if 'scalar' in vsip.getType(other):
-                vsip.div(self.view,other,self.view)
+            if isinstance(other,int):
+                x = float(other)
+            elif isinstance(other,complex):
+                if '_d' in self.type:
+                    x = vsip_cmplx_d(other.real,other.imag)
+                elif '_f' in self.type:
+                    x = vsip_cmplx_f(other.real,other.imag)
+            else:
+                 x = other
+            if 'scalar' in getType(other)[1]:
+                vsip.div(self.view,x,self.view)
                 return self
-            elif 'pyJvsip.__View' in repr(other):
+            elif 'View' in getType(other)[1]:
                 vsip.div(self.view,other.view,self.view)
                 return self
             else:
@@ -1084,7 +1139,7 @@ class Rand (object):
         del(self.__jvsip)
     @property
     def type(self):
-        return self__type;
+        return self.__type;
     @property
     def seed(self):
         return(self.__seed)
@@ -1180,6 +1235,7 @@ class FFT (object):
     def __del__(self):
         del (self.__jvsip)
         vsip.destroy(self.__fft)
+
     def dft(self,arg):
         """This method requires a single view or two views enclosed in a tuple.
            Input success depends upon How the FFT object was created.

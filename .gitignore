@@ -1,3 +1,8 @@
+c_VSIP_testing/output
+c_VSIP_testing/test_all
+c_VSIP_testing/test_all.c
+c_VSIP_testing/atest
+c_VSIP_testing/atest.c
 include/
 lib/
 build/

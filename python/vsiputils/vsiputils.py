@@ -2401,11 +2401,9 @@ def div(a,b,c):
         vsip_rscmdiv_d, vsip_rscmdiv_f, vsip_rscvdiv_d, vsip_rscvdiv_f, vsip_smdiv_d, vsip_smdiv_f,
         vsip_svdiv_d, vsip_svdiv_f, vsip_vdiv_d, vsip_vdiv_f, vsip_vsdiv_d, vsip_vsdiv_f
        """
-    t0=getType(a)
-    t1=getType(b)
-    t=str()
-    if(t0[0]) and t1[0]:
-        t=t0[1]+t1[1]
+    t0=getType(a)[1]
+    t1=getType(b)[1]
+    t=t0+t1 
     f = {'cmview_dcmview_d':vsip_cmdiv_d,
          'cmview_fcmview_f':vsip_cmdiv_f,
          'cmview_dscalar':vsip_cmrsdiv_d,
@@ -2420,8 +2418,8 @@ def div(a,b,c):
          'cscalar_fcvview_f':vsip_csvdiv_f,
          'cvview_dcvview_d':vsip_cvdiv_d,
          'cvview_fcvview_f':vsip_cvdiv_f,
-         'cvview_dscalar_d':vsip_cvrsdiv_d,
-         'cvview_fscalar_f':vsip_cvrsdiv_f,
+         'cvview_dscalar':vsip_cvrsdiv_d,
+         'cvview_fscalar':vsip_cvrsdiv_f,
          'mview_dmview_d':vsip_mdiv_d,
          'mview_fmview_d':vsip_mdiv_f,
          'mview_dscalar':vsip_msdiv_d,
@@ -2446,6 +2444,7 @@ def div(a,b,c):
         f[t](a,b,c)
         return c
     else:
+        print('Type <:' + t + ':> not recognized for div')
         return False
 
 # Ternary Operations
@@ -2692,18 +2691,18 @@ def ramp(a,b,c):
         Note the length is determined by the vector.
         returns the result as a convienience.
         """
-    t=getType(c)
+    t=getType(c)[1]
     f={'vview_f':vsip_vramp_f,
        'vview_d':vsip_vramp_d,
        'vview_i':vsip_vramp_i,
        'vview_si':vsip_vramp_si,
        'vview_uc':vsip_vramp_uc,
        'vview_vi':vsip_vramp_vi}
-    if t[0] and f.has_key(t[1]):
-        f[t[1]](a,b,c)
+    if f.has_key(t):
+        f[t](a,b,c)
         return c
     else:
-        print('Type ' + t + ' not supported by ramp')
+        print('Type <:' + t + ':> not supported by ramp')
         return False
 def copy(a,b):
     f={'cmview_dcmview_d':vsip_cmcopy_d_d,
