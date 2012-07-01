@@ -369,8 +369,8 @@ VI_ifft5_d(void *tfft) {
    /* step 2 */
    d1.r = c1.r * C5c1; d1.i = c1.i * C5c1; 
    e3.r = c3.r * C5c2; e3.i = c3.i * C5c2; 
-   e5.r = -(c5.r * C5c3); e5.i = -(c5.i * C5c3); 
-   d2.r = (b2.i * C5c4); d2.i = b2.r * C5c4;
+   e5.r = c5.r * (-C5c3); e5.i = c5.i * (-C5c3); 
+   d2.r = b2.i * (-C5c4); d2.i = b2.r * C5c4;
    d4.r = b4.i * C5c5; d4.i = -(b4.r * C5c5); 
    /* step 3 */
    e1.r = d1.r + d0.r; e1.i = d1.i + d0.i; 

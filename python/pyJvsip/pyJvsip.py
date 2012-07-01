@@ -160,8 +160,9 @@ class Block (object):
                 vsip.ramp(start,increment,self.view)
                 return self
             elif self.type in extended:
+                self.fill(0)
                 tmp=self.realview
-                vsip.ramp(start,increment,tmp.view)
+                tmp.ramp(start,increment)
             else:
                 print('Type <:'+self.type+':> not supported for ramp')
                 return False
@@ -883,7 +884,17 @@ class Block (object):
             else:
                 print('Views must ba matrices of the same type')
                 return False
-        def outer(self,aScalar,other):
+        def outer(self,*args):
+            if len(args) == 1:
+               aScalar = 1
+               other = args[0]
+            elif len(args) == 2:
+               aScalar = args[0]
+               other = args[1]
+            else:
+               print('To many arguments to outer')
+               print('Method for outer takes either a scalar and a vector, or a vector')
+               return False
             if 'vview' in self.type and 'vview' in other.type:
                 if self.type == other.type:
                     rl=other.length
@@ -1081,7 +1092,18 @@ class Block (object):
             vsip.destroy(self.__vsipBlock)
         del(self.__jvsip)
     # major for bind of matrix in attr is 'ROW', or 'COL'            
-    def bind(self,attr):
+    def bind(self,*args):
+        if isinstance(args[0],tuple):
+            attr=args[0]
+        elif len(args) is 3:
+            attr=(args[0],args[1],args[2])
+        elif len(args) is 5:
+            attr=(args[0],args[1],args[2],args[3],args[4])
+        else:
+            print('Argument list to bind must be either 3 or 5 integers')
+            print('For vector arguments are offset, stride, length')
+            print('For matrix arguments are offset, col_stride, col_length, row_stride, row_length')
+            return
         view = vsip.bind(self.__vsipBlock,attr)
         retval = self.__View(view,self)
         retval.EW
@@ -1215,14 +1237,19 @@ class FFT (object):
     fftFuncDict={'cvview_d':'vsip_ccfftip_d(self.fft,l[0].view)',
                  'cvview_f':'vsip_ccfftip_f(self.fft,l[0].view)',
                  'cvview_dcvview_d':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
-                 'cvview_fcvview_f':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
-                 'vview_dcvview_d':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
-                 'vview_fcvview_f':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
-                 'cvview_dvview_d':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
-                 'cvview_dvview_f':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
+                 'cvview_fcvview_f':'vsip_ccfftop_f(self.fft,l[0].view,l[1].view)',
+                 'vview_dcvview_d':'vsip_rcfftop_d(self.fft,l[0].view,l[1].view)',
+                 'vview_fcvview_f':'vsip_rcfftop_f(self.fft,l[0].view,l[1].view)',
+                 'cvview_dvview_d':'vsip_crfftop_d(self.fft,l[0].view,l[1].view)',
+                 'cvview_fvview_f':'vsip_crfftop_f(self.fft,l[0].view,l[1].view)',
                  'cmview_d':'vsip_ccfftmip_d(self.fft,l[0].view)',
-                 'cmview_f':'vsip_ccfftmip_d(self.fft,l[0].view)',
-                 'cmview_dcmview_d':'vsip_ccfftmop_d(self.fft,l[0].view,l[1].view)'}             
+                 'cmview_f':'vsip_ccfftmip_f(self.fft,l[0].view)',
+                 'cmview_dcmview_d':'vsip_ccfftmop_d(self.fft,l[0].view,l[1].view)',
+                 'cmview_fcmview_f':'vsip_ccfftmop_f(self.fft,l[0].view,l[1].view)',
+                 'mview_dcmview_d':'vsip_rcfftmop_d(sefl.fft,l[0].view,l[1].view)',
+                 'mview_fcmview_f':'vsip_rcfftmop_f(sefl.fft,l[0].view,l[1].view)',
+                 'mview_dcmview_d':'vsip_crfftmop_d(sefl.fft,l[0].view,l[1].view)',
+                 'mview_fcmview_f':'vsip_crfftmop_f(sefl.fft,l[0].view,l[1].view)'}             
     def __init__(self,t,arg):
         if FFT.fftCreateDict.has_key(t):
             self.__jvsip = JVSIP()
@@ -1277,103 +1304,125 @@ class FFT (object):
     def arg(self):
         return self.__arg
 # Functions
-def matrix(atype,cl,rl,major):
-    """
-       Convenience function to create a matrix. 
-       Usage:
-          m = matrix(atype, cl, rl, major)
-       where
-          atype is a string corresponding to a matrix view type:
-             'mview_f', 'mview_d','cmview_f,'cmview_f','mview_i','mview_si','mview_uc'
-             'mview_bl'
-          cl is an integer corresponding to the matrix column length
-          rl is an integer corresponding to the matrix row length
-          major is a string indicating the major direction. The must be or contain
-             'ROW'
-            or 
-             'COL'
-    """
-    f={'mview_f':'block_f',
-       'mview_d':'block_d',
-       'cmview_f':'cblock_f',
-       'cmview_d':'cblock_d',
-       'mview_i':'block_i',
-       'mview_si':'block_si',
-       'mview_uc':'block_uc',
-       'mview_bl':'block_bl'}
-    if f.has_key(atype):
-        l=cl * rl;
-        offset=0;
-        if 'ROW' in major:
-            row_stride=1
-            col_stride=rl
-        elif 'COL' in major:
-            row_stride=cl
-            col_stride=1
-        else:
-            print('major must be a string containing "ROW" or "COL"')
-            return False
-        return Block(f[atype],l).bind((offset,col_stride,cl,row_stride,rl))
-        
-    else:
-        print('Type ' + atype + ' Not a valid type for matrix')
-        return False
-
-def vector(atype,length):
-    """
-       Convenience function to create a column vector. 
-       Usage:
-          v = vector(atype, length)
-       where
-          atype is a string corresponding to a matrix view type:
-             'mview_f', 'mview_d','cmview_f,'cmview_f','mview_i','mview_si','mview_uc'
-             'mview_bl'
-          length is an integer corresponding to the vector length
-    """
-    f={'vview_f':'block_f',
-       'vview_d':'block_d',
-       'cvview_f':'cblock_f',
-       'cvview_d':'cblock_d',
-       'vview_i':'block_i',
-       'vview_si':'block_si',
-       'vview_uc':'block_uc',
-       'vview_bl':'block_bl',
-       'vview_vi':'block_vi',
-       'vview_mi':'block_mi'}
-    if f.has_key(atype):
-        return Block(f[atype],length).bind((0,1,length))
-    else:
-        print('Type <:' + atype + ':> Not a valid type for vector')
-        return False
-
-def create(atype,atuple):
-    """
-       usage:
-          anObject=create(aType,aTuple)
-       where:
-          aType corresponds to a valid type for the object being created and
-          aTuple is a tuple corresponding to the argument list for aType
-    """
-    fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
-                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
-                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
-                 'crfftmop_d']
-    if type(atuple) != tuple:
-        args=(atuple,)
-    else:
-        args = atuple
-    if atype in Block.vectorTypes:
-        return vector(atype,args[0])
-    elif atype in Block.matrixTypes:
-        return matrix(atype,args[0],args[1],args[2])
-    elif atype in fftTypes:
-        return FFT(atype,args)
-    elif 'rand' in atype:
-        return Rand(args[0],args[1])
-    else:
-        print('Type <:' + atype + ':> not supported by pyVsip')
-        return False
-
 def copy(input,to):
     vsip.copy(input.view,to.view)
     return to
+
+def create(atype,*vals):
+    """
+       usage:
+          anObject=create(aType,...)
+       where:
+          aType corresponds to a valid type for the object being created and
+          ... are a variable argument list associated with each supported create type
+    """
+    blockTypes = ['cblock_f','cblock_d','block_f','block_d','block_i','block_si','block_uc',
+                  'block_vi','block_mi','block_bl']
+    vectorTypes=['cvview_f','cvview_d','vview_f','vview_d','vview_i','vview_si','vview_uc'
+                 'vview_vi','vview_mi','vview_bl']
+    fVector = {'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f',
+               'cvview_d':'cblock_d','vview_i':'block_i','vview_si':'block_si',
+               'vview_uc':'block_uc','vview_bl':'block_bl','vview_vi':'block_vi',
+               'vview_mi':'block_mi'}
+    matrixTypes=['cmview_f','cmview_d','mview_f','mview_d','mview_i','mview_si','mview_uc'
+                 'mview_bl']
+    fMatrix = {'mview_f':'block_f','mview_d':'block_d','cmview_f':'cblock_f',
+               'cmview_d':'cblock_d','mview_i':'block_i','mview_si':'block_si',
+               'mview_uc':'block_uc','mview_bl':'block_bl'}
+    fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
+                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
+                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
+                'crfftmop_d']
+    mfftTypes = ['ccfftmip_f', 'ccfftmop_f', 'rcfftmop_f', 'crfftmop_f', 
+                 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 'crfftmop_d']
+    vfftTypes=['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f',
+               'ccfftip_d', 'ccfftop_d', 'rcfftop_d', 'crfftop_d']
+    if atype in blockTypes:
+        if isinstance(vals[0],int) and len(vals) == 1:
+            return Block(atype,vals[0])
+        else:
+            print('Input length for <:' + atype + 'must be a single integer value')
+            return
+    elif atype in vectorTypes:
+        if isinstance(vals[0],int) and len(vals) == 1:
+            return create(fVector[atype],vals[0]).bind(0,1,vals[0])
+        else:
+            print('Input length for <:' + atype + ':> must be a single integer value')
+            return
+    elif atype in matrixTypes:
+        if len(vals) >2 and isinstance('vals[0]',int) and isinstance('vals[0]',int):
+            cl=vals[0]
+            rl= vals[1]
+            l=rl * cl;
+            offset=0;
+            if (len(vals) == 3 and 'ROW' in vals[2]) or len(vals) == 2:
+                row_stride=1
+                col_stride=rl
+            elif len(vals) == 3 and 'COL' in vals[2]:
+                row_stride=cl
+                col_stride=1
+            else:
+                print('Input arguments for <:'+atype+':> must be (integers):')
+                print('\tcolumn length, row length,\n and optional major:')
+                print("\t'ROW' (default) or 'COL'")
+                return
+            return create(fMatrix[atype],l).bind(offset,col_stride,cl,row_stride,rl)
+        else:
+            print('Input arguments for <:'+atype+':> must be 2 (integers) and an optional major:')
+            print('\tcolumn length, row length,\n and optional major:')
+            print("\t'ROW' (default) or 'COL'")
+            return
+    elif atype in fftTypes:
+        nVals = len(vals)
+        hint = 0 # set to VSIP_ALG_TIME
+        ntimes = 0 # set to use a lot
+        if (atype in vfftTypes and nVals < 1) or (atype in mfftTypes and nVals < 2):
+            print('Usage requires a single length for vectors or the column and row length for matrices')
+            print('For vectors (matrices) the second (third) argument is a scalar indicating')
+            print('a scale. This value defaults to 1.0')
+            print('The argument list is searched for the string "INV" and if found the')
+            print('object is built for an inverse FFT. The default is a Forward FFT')
+            print('If a multiple FFT is specified the argument list is searched for a string')
+            print('of "COL". If found the fft is done for each column. The default is by row')
+            return
+        else:
+            if 'INV' in vals:
+                dir = 1 #VSIP_FFT_INV
+            else:
+                dir = -1 #VSIP_FFT_FWD
+            if atype in mfftTypes and nVals > 1:
+                M = vals[0]
+                N = vals[1]
+                if nVals > 2 and (isinstance(vals[2,int]) or isinstance(vals[2],float)):
+                    scaleFactor = vals[2] 
+                else:
+                    scaleFactor = 1.0   
+                if 'COL' in vals:
+                    major = 1 #'VSIP_COL'
+                else:
+                    major = 0 #'VSIP_ROW'
+            elif atype in vfftTypes and nVals > 0:
+                N = vals[0]
+                if nVals > 1 and (isinstance(vals[1],int) or isinstance(vals[1],float)):
+                    scaleFactor = vals[1]
+                else:
+                    scaleFactor = 1.0
+            else:
+                print('<:' + atype + ':> not recognized') #should not be able to get here
+                return
+        if ('ccfftip' in atype) or ('ccfftop' in atype):
+            arg = (N,scaleFactor,dir,ntimes,hint)
+        elif ('crfftop' in atype) or ('rcfftop' in atype):
+            arg = (N,scaleFactor,ntimes,hint)
+        elif ('ccfftmip' in atype) or ('ccfftmop' in atype):
+            arg = (M,N,scaleFactor,dir,major,ntimes,hint)
+        elif ('crfftmop' in atype) or ('rcfftmop' in atype):
+            arg = (M,N,scaleFactor,major,ntimes,hint)
+        else:
+            print('<:' + atype + ':> not recognized') #should not be able to get here
+            return
+        return FFT(atype,arg)
+    else:
+        print('Input argument <:'+atype+':> not recognzied for create')
+
+
