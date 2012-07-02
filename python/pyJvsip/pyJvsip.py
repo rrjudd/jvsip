@@ -150,6 +150,17 @@ class Block (object):
             vsip.copy(self.view,newView.view)
             return newView
         @property
+        def empty(self):
+            """
+               creates a new view, on a new block, of the same type and shape as 
+               the calling view. No copy or initialization takes place, so new view
+               is empty, so-to-speak.
+            """
+            attr=self.compactAttrib(0)
+            b = self.block.otherBlock(attr[0],attr[1])
+            newView = b.bind(attr[2])
+            return newView
+        @property
         def clone(self):
             return self.__clone(self)   
         #data generators
@@ -1071,7 +1082,6 @@ class Block (object):
                 return "[" + " ".join(V) + "]\n"
             else:
                 print('Object not VSIP vector or matrix')
-
         def mprint(self,fmt):
             print(self.mstring(fmt))
         # Signal Processing
@@ -1095,6 +1105,26 @@ class Block (object):
             obj=FFT(fCreate[self.type],arg)
             obj.dft(self)
             return self
+        def fftop(self):
+            retval = self.empty
+            f = {'cvview_d':'ccfftop_d',
+                 'cvview_f':'ccfftop_f',
+                 'cmview_d':'ccfftmop_d',
+                 'cmview_f':'ccfftmop_f'}
+            if self.type in ['cvview_d','cvview_f']:
+                arg = (self.length,1.0,-1,0,0)
+            elif self.type in ['cmview_d','cmview_f']:
+                if 'COL' in self.major:
+                    major = 1
+                else:
+                    major = 0
+                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+            else:
+                print('Type <:' +self.type+':> not supported for method fftip')
+                return
+            obj=FFT(f[self.type],arg)
+            obj.dft(self,retval)
+            return retval
         # Linear Algebra
     #Block specific class below
     def __init__(self,block_type,length):
