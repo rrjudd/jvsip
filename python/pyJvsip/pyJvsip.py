@@ -163,6 +163,7 @@ class Block (object):
                 self.fill(0)
                 tmp=self.realview
                 tmp.ramp(start,increment)
+                return self
             else:
                 print('Type <:'+self.type+':> not supported for ramp')
                 return False
@@ -1073,6 +1074,28 @@ class Block (object):
 
         def mprint(self,fmt):
             print(self.mstring(fmt))
+        # Signal Processing
+        @property
+        def fftip(self):
+            fCreate = {'cvview_d':'ccfftip_d',
+                       'cvview_f':'ccfftip_f',
+                       'cmview_d':'ccfftmip_d',
+                       'cmview_f':'ccfftmip_f'}
+            if self.type in ['cvview_d','cvview_f']:
+                arg = (self.length,1.0,-1,0,0)
+            elif self.type in ['cmview_d','cmview_f']:
+                if 'COL' in self.major:
+                    major = 1
+                else:
+                    major = 0
+                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+            else:
+                print('Type <:' +self.type+':> not supported for method fftip')
+                return
+            obj=FFT(fCreate[self.type],arg)
+            obj.dft(self)
+            return self
+        # Linear Algebra
     #Block specific class below
     def __init__(self,block_type,length):
         other = ['real_f','imag_f','real_d','imag_d']
@@ -1108,6 +1131,7 @@ class Block (object):
         retval = self.__View(view,self)
         retval.EW
         return retval
+    
     @classmethod
     def supported(cls):
         return {'blockTypes':Block.blockTypes,'viewTypes':Block.__View.supported()} 
@@ -1350,7 +1374,7 @@ def create(atype,*vals):
             print('Input length for <:' + atype + ':> must be a single integer value')
             return
     elif atype in matrixTypes:
-        if len(vals) >2 and isinstance('vals[0]',int) and isinstance('vals[0]',int):
+        if len(vals) >1 and isinstance(vals[0],int) and isinstance(vals[1],int):
             cl=vals[0]
             rl= vals[1]
             l=rl * cl;
