@@ -117,7 +117,7 @@ class Block (object):
             tdict={'block_f':'cblock_f','block_d':'cblock_d',
                    'cblock_f':'block_f','cblock_d':'block_d'}
             t = self.block.type
-            if t in Block.complexTypes and b != 0:
+            if t in Block.blockTypes and b != 0:
                 t=tdict[t]
             length = len(self)
             if self.type in Block.vectorTypes:
@@ -1105,6 +1105,27 @@ class Block (object):
             obj=FFT(fCreate[self.type],arg)
             obj.dft(self)
             return self
+        @property
+        def ifftip(self):
+            fCreate = {'cvview_d':'ccfftip_d',
+                       'cvview_f':'ccfftip_f',
+                       'cmview_d':'ccfftmip_d',
+                       'cmview_f':'ccfftmip_f'}
+            if self.type in ['cvview_d','cvview_f']:
+                arg = (self.length,1.0,1,0,0)
+            elif self.type in ['cmview_d','cmview_f']:
+                if 'COL' in self.major:
+                    major = 1
+                else:
+                    major = 0
+                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+            else:
+                print('Type <:' +self.type+':> not supported for method fftip')
+                return
+            obj=FFT(fCreate[self.type],arg)
+            obj.dft(self)
+            return self
+        @property
         def fftop(self):
             retval = self.empty
             f = {'cvview_d':'ccfftop_d',
@@ -1125,6 +1146,104 @@ class Block (object):
             obj=FFT(f[self.type],arg)
             obj.dft(self,retval)
             return retval
+        @property
+        def ifftop(self):
+            retval = self.empty
+            f = {'cvview_d':'ccfftop_d',
+                 'cvview_f':'ccfftop_f',
+                 'cmview_d':'ccfftmop_d',
+                 'cmview_f':'ccfftmop_f'}
+            if self.type in ['cvview_d','cvview_f']:
+                arg = (self.length,1.0,1,0,0)
+            elif self.type in ['cmview_d','cmview_f']:
+                if 'COL' in self.major:
+                    major = 1
+                else:
+                    major = 0
+                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+            else:
+                print('Type <:' +self.type+':> not supported for method fftip')
+                return
+            obj=FFT(f[self.type],arg)
+            obj.dft(self,retval)
+            return retval
+        @property
+        def rcfft(self):
+            fCreate = {'vview_d':'rcfftop_d', 'vview_f':'rcfftop_f',
+                       'mview_d':'rcfftmop_d', 'mview_f':'rcfftmop_f'}
+            t={'vview_f':'cblock_f','vview_d':'cblock_d',
+                   'mview_f':'cblock_f','mview_d':'cblock_d'}
+            if self.type in ['vview_d','vview_f']:
+                length = self.length
+            elif self.type in ['mview_d','mview_f']:
+                if 'COL' in self.major:
+                    length = self.collength
+                else:
+                    length = self.rowlength
+            else:
+                print('Type <:' + self.type + ':> is not supported for rcfft')
+                return
+            if (length % 2):
+                print('rcfft only supported for even length along fft direction ')
+                return
+            if t.has_key(self.type):
+                if self.type in ['vview_f','vview_d']:
+                    n=int(length/2)+1
+                    retval=Block(t[self.type],n).bind(0,1,n)
+                    arg = (length,1.0,1,0)
+                else:
+                    if 'COL' in self.major:
+                        m = int(length/2) + 1
+                        n = self.rowlength
+                        retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
+                        arg=(length,n,1.0,1,1,0)
+                    else:
+                        m=self.collength
+                        n=int(length/2) + 1
+                        retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
+                        arg=(m,length,1.0,0,1,0)
+                FFT(fCreate[self.type],arg).dft(self,retval)
+                return retval
+            else:
+                print('Type <:'+self.type+':> not supported for rcfft')
+                return
+        @property
+        def crfft(self):
+            fCreate = {'cvview_d':'crfftop_d', 'cvview_f':'crfftop_f',
+                       'cmview_d':'crfftmop_d', 'cmview_f':'crfftmop_f'}
+            t={'cvview_f':'block_f','cvview_d':'block_d',
+               'cmview_f':'block_f','cmview_d':'block_d'}
+            if self.type in ['cvview_d','cvview_f']:
+                length = self.length
+            elif self.type in ['cmview_d','cmview_f']:
+                if 'COL' in self.major:
+                    length = self.collength
+                else:
+                    length = self.rowlength
+            else:
+                print('Type <:' + self.type + ':> is not supported for rcfft')
+                return
+            if t.has_key(self.type):
+                if self.type in ['cvview_f','cvview_d']:
+                    n=2 * (length -1)
+                    retval=Block(t[self.type],n).bind(0,1,n)
+                    arg = (n,1.0,1,0)
+                else:
+                    if 'COL' in self.major:
+                        m = 2 * (length -1)
+                        n = self.rowlength
+                        retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
+                        arg=(m,n,1.0,1,1,0)
+                    else:
+                        m=self.collength
+                        n==2 * (length -1)
+                        retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
+                        arg=(m,n,1.0,0,1,0)
+                FFT(fCreate[self.type],arg).dft(self,retval)
+                return retval
+            else:
+                print('Type <:'+self.type+':> not supported for crfft')
+                return
         # Linear Algebra
     #Block specific class below
     def __init__(self,block_type,length):
@@ -1161,7 +1280,16 @@ class Block (object):
         retval = self.__View(view,self)
         retval.EW
         return retval
-    
+    @property
+    def vector(self):
+        """ Usage: 
+               b = Block(aBlockType,length)
+               v = b.vector
+            v is a unit stride compact one dimensional view reflecting all the data 
+            in the block. Since data in blocks is only accessible through a view this
+            is a convenience method to return the simplest view wich indexes all data.
+        """
+        return self.bind(0,1,self.length)
     @classmethod
     def supported(cls):
         return {'blockTypes':Block.blockTypes,'viewTypes':Block.__View.supported()} 
@@ -1252,6 +1380,17 @@ class Rand (object):
             print('Not a supported type')
 
 class FFT (object):
+    """
+       Usage:
+            fftObj=FFT(t,arg) where
+            t is one of 
+                ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
+                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
+                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
+                 'crfftmop_d']
+            arg is a tuple corresponding to one of the VSIPL arguments list for the associated t value.
+       If VSIPL enumerated types are used one must first import the type from the VSIPL library.
+    """
     fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
                 'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
                 'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
@@ -1300,10 +1439,10 @@ class FFT (object):
                  'cmview_f':'vsip_ccfftmip_f(self.fft,l[0].view)',
                  'cmview_dcmview_d':'vsip_ccfftmop_d(self.fft,l[0].view,l[1].view)',
                  'cmview_fcmview_f':'vsip_ccfftmop_f(self.fft,l[0].view,l[1].view)',
-                 'mview_dcmview_d':'vsip_rcfftmop_d(sefl.fft,l[0].view,l[1].view)',
-                 'mview_fcmview_f':'vsip_rcfftmop_f(sefl.fft,l[0].view,l[1].view)',
-                 'mview_dcmview_d':'vsip_crfftmop_d(sefl.fft,l[0].view,l[1].view)',
-                 'mview_fcmview_f':'vsip_crfftmop_f(sefl.fft,l[0].view,l[1].view)'}             
+                 'mview_dcmview_d':'vsip_rcfftmop_d(self.fft,l[0].view,l[1].view)',
+                 'mview_fcmview_f':'vsip_rcfftmop_f(self.fft,l[0].view,l[1].view)',
+                 'cmview_dmview_d':'vsip_crfftmop_d(self.fft,l[0].view,l[1].view)',
+                 'cmview_fmview_f':'vsip_crfftmop_f(self.fft,l[0].view,l[1].view)'}             
     def __init__(self,t,arg):
         if FFT.fftCreateDict.has_key(t):
             self.__jvsip = JVSIP()
@@ -1317,18 +1456,20 @@ class FFT (object):
         del (self.__jvsip)
         vsip.destroy(self.__fft)
 
-    def dft(self,arg):
+    def dft(self,*vars):
         """This method requires a single view or two views enclosed in a tuple.
            Input success depends upon How the FFT object was created.
            Some error checking is done but it is not all inclusive.
         """
-        l = arg
-        if type(arg) != tuple:
-            if 'pyJvsip.__View' in repr(arg):
-                l=(arg,)
-            else:
-                print('Argument type must be a pyJvsip.__View or a tuple of two pyJvsip.__Views')
-                return False
+        if isinstance(vars[0],tuple):
+            l = vars[0]
+        elif len(vars) == 1:
+            l=(vars[0],)
+        elif len(vars) == 2:
+            l=(vars[0],vars[1])
+        else:
+            print('To many arguments to dft method')
+            return
         chk = '__View' in repr(l[0])
         if chk:
             t = l[0].type
@@ -1337,7 +1478,7 @@ class FFT (object):
             if chk:
                 t = t + l[1].type
         if not chk:
-            print('Argument must be a single view or a tuple of one or two views.')
+            print('Argument must one or two views or a tuple of one or two views.')
             return False
         if FFT.fftFuncDict.has_key(t):
             eval(FFT.fftFuncDict[t])
