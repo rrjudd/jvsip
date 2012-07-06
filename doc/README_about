@@ -14,7 +14,7 @@ show up using other tools.
 
 I also include newer documents. All my documentation are under continuos review and modification. 
 I am currently using LibreOffice as my documentation tool but I (currently) publish in PDF. I have
-found LibreOffice allows embeding the LibreOffice Document inside the PDF. I have done this
+found LibreOffice allows embedding the LibreOffice Document inside the PDF. I have done this
 for some of my documents, and plan to do it for all documents developed with LibreOffice.
 
 Python documents are mine alone. Currently there is no "official" VSIPL python spec so I am 

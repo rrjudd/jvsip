@@ -34,7 +34,7 @@ I will call this new distribution JVSIP. "J" is the first letter of my last name
 distribution is support for Python. There is no VSIPL specification for a Python API but I may 
 develop one as time goes by. I don't know if there will ever be an "official" VSIPL Python API.
 
-Directorie (A short overview. Some folks won't be interested in everything)
+Directories (A short overview. Some folks won't be interested in everything)
 jvsip (top level directory, you may have cloned into something else)
    AppleXcode
       Stuff particular to an Apple Environment with the Xcode IDE
@@ -45,9 +45,9 @@ jvsip (top level directory, you may have cloned into something else)
    doc
       Most (but not all) documents. Includes how to make and use information
       These documents are PDF.
-      Many are done using Libre Office. If so they may have the LibreOffice data embeded.
+      Many are done using Libre Office. If so they may have the LibreOffice data embedded.
    examples
       Examples. Note c_VSIP_testing also may be examined for examples of how to do VSIPL code
    python
-      Python modules are in this directoy
+      Python modules are in this directory
 
