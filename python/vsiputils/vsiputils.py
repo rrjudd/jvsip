@@ -730,7 +730,7 @@ def size(a):
     def _vsize(attr):
         return (attr.offset,attr.stride,attr.length)
     def _msize(attr):
-        return (attr.offset,attr.col_stride,attr.col_length,attr.row_stride, attr.col_stride)
+        return (attr.offset,attr.col_stride,attr.col_length,attr.row_stride, attr.row_length)
     t=getType(a)
     if f.has_key(t[1]):
         return eval(f[t[1]])

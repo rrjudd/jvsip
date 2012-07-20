@@ -81,7 +81,7 @@ class Block (object):
             del(self.__jvsip)
             vsip.destroy(self.__vsipView)
         # Support functions
-        @property
+        @property  #scalar is a place to store a value which can be recovered from the view
         def scalar(self):
             val=self.__scalar
             if 'cscalar' in repr(val):
@@ -95,6 +95,7 @@ class Block (object):
                     return True
             else:
                 return self.__scalar
+        # EW, COL, ROW, MAT are indicators of how the view is to be used
         @property 
         def EW(self):
             self.__major = 'EW'
@@ -140,14 +141,14 @@ class Block (object):
             elif self.type in Block.matrixTypes:
                 size=vsip.size(self.view)
                 if size[1] < size[3]:
-                    attr=(0,1,size[2],size[2],size[4])
+                    attr=(0,      1,size[2],size[2],size[4])
                 else:
-                    attr=(0,size[4],size[2],1,size[4])
+                    attr=(0,size[4],size[2],      1,size[4])
             else:
                 print('Type <:' + self.type + ':> not supported for compactAttrib')
                 return False
             return (t,length,attr)
-        @property
+        @property # returns deep (view and block) copy of object
         def copy(self):
             """For vector or matrix A then
                B = A.copy will create a compact view B which is a copy
@@ -164,7 +165,7 @@ class Block (object):
             newView = b.bind(attr[2])
             vsip.copy(self.view,newView.view)
             return newView
-        @property
+        @property # A way to get a new view and data space of the same size but no copy penalty
         def empty(self):
             """
                creates a new view, on a new block, of the same type and shape as 
@@ -175,7 +176,7 @@ class Block (object):
             b = self.block.otherBlock(attr[0],attr[1])
             newView = b.bind(attr[2])
             return newView
-        @property
+        @property # A way to ge a new in-place view of the object
         def clone(self):
             return self.__clone(self)   
         #data generators
@@ -268,13 +269,16 @@ class Block (object):
                 o=attr.offset; l=attr.length; strd=attr.stride;
                 if len(vals) == 1 and isinstance(vals[0],slice):
                     slc=vals[0] # this is (start index, stop index, step)
+                    step=slc.step
+                    if step is None:
+                        step=1
                     #for VSIP we need start offset into block, new length, new stride
                     no=slc.start * strd + o                       #new offset
-                    ns=slc.step * strd                            #new stride stride
+                    ns=step * strd                            #new stride stride
                     stop = slc.stop
                     if stop > l:
                         stop = l
-                    nl=nlength(slc.start,stop,slc.step)  #new length
+                    nl=nlength(slc.start,stop,step)  #new length
                 elif len(vals) == 1 and isinstance(vals[0],int):
                     return vAttr(attr,(slice(vals[0],l,1),))
                 elif len(vals) == 2 and isinstance(vals[0],int) \
@@ -294,17 +298,22 @@ class Block (object):
                 rl=attr.row_length; rs=attr.row_stride;
                 if len(vals) == 2 and isinstance(vals[0],slice) and isinstance(vals[1],slice):
                     rslc=vals[1]; cslc=vals[0]
+                    cstep=cslc.step;rstep=rslc.step;
+                    if cstep is None:
+                        cstep=1
+                    if rstep is None:
+                        rstep=1
                     no=rslc.start * rs + cslc.start * cs + o
-                    ncs=cslc.step * cs
+                    ncs=cstep * cs
                     stop = cslc.stop
                     if stop > cl:
                         stop = cl
-                    ncl= nlength(cslc.start,stop,cslc.step)
-                    nrs=rslc.step * rs
+                    ncl= nlength(cslc.start,stop,cstep)
+                    nrs=rstep * rs
                     stop = rslc.stop
                     if stop > rl:
                         stop = rl
-                    nrl= nlength(rslc.start,stop,rslc.step)
+                    nrl= nlength(rslc.start,stop,rstep)
                 elif len(vals) == 2 and isinstance(vals[0],int) and isinstance(vals[1],int):
                     return mAttr(attr,(slice(vals[0],cl,1),slice(vals[1],rl,1)))
                 elif len(vals) == 4 and isinstance(vals[0],int) and isinstance(vals[1],int) \
@@ -454,7 +463,7 @@ class Block (object):
             b=vsip.getblock(v)
             newB = B.otherBlock(t,(b,l))
             return cls(v,newB)
-        #view attributes
+        #view attributeso.
         @property
         def offset(self):
             return vsip.getoffset(self.view)
@@ -936,10 +945,10 @@ class Block (object):
             """
             return vsip.sumval(self.view)
         @property
-        def sumsqval(input):
+        def sumsqval(self):
             """ returns a scalar
             """
-            return sumsqval(self.view)
+            return vsip.sumsqval(self.view)
         #ternary
         def axpy(self,a,x):
             """
@@ -1368,7 +1377,7 @@ class Block (object):
         # Linear Algebra
         # General Square Solver
         @property
-        def lud(self):
+        def lud(self): #Function not done. should return tuple of (L,U) where A=LU
             if 'mview' in self.type:
                 m=self.collength; n=self.rowlength
             else:
@@ -1384,14 +1393,14 @@ class Block (object):
                Calling view must be square and float
                return lu object
             """
-            if lu.luSel.has_key(self.type) and (self.rowlength == self.collength):
-                return lu(lu.luSel[self.type],self.rowlength).decompose(self)
+            if LU.luSel.has_key(self.type) and (self.rowlength == self.collength):
+                return LU(LU.luSel[self.type],self.rowlength).decompose(self)
         @property
         def luInv(self):
             if self.type in Block.matrixTypes:
-                if lu.luSel.has_key(self.type) and (self.rowlength == self.collength):
+                if LU.luSel.has_key(self.type) and (self.rowlength == self.collength):
                     retval=self.empty.identity
-                    lu(lu.luSel[self.type],self.rowlength).decompose(self).solve(0,retval)
+                    LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,retval)
                     return retval
                 else:
                     print('Type <:'+self.type+':> not supported for lu or not square matrix')
@@ -1405,8 +1414,8 @@ class Block (object):
             else:
                 X = XB
             if self.type in Block.matrixTypes and X.type == self.type:
-                if lu.luSel.has_key(self.type) and (self.rowlength == self.collength) and (self.collength == X.collength):
-                    lu(lu.luSel[self.type],self.rowlength).decompose(self).solve(0,X)
+                if LU.luSel.has_key(self.type) and (self.rowlength == self.collength) and (self.collength == X.collength):
+                    LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,X)
                     return XB
                 else:
                     print('Non-conformant views for luSolve')
@@ -1451,12 +1460,14 @@ class Block (object):
         return retval
     @property
     def vector(self):
-        """ Usage: 
+        """
+            Since data in blocks is only accessible through a view the vector method
+            is a convenience method to return the simplest view wich indexes all data.
+            Usage: 
                b = Block(aBlockType,length)
                v = b.vector
             v is a unit stride compact one dimensional view reflecting all the data 
-            in the block. Since data in blocks is only accessible through a view this
-            is a convenience method to return the simplest view wich indexes all data.
+            in the block. 
         """
         return self.bind(0,1,self.length)
     @classmethod
@@ -1547,7 +1558,6 @@ class Rand (object):
             return a
         else:
             print('Not a supported type')
-
 class FFT (object):
     """
        Usage:
@@ -1667,9 +1677,192 @@ class FFT (object):
     @property
     def arg(self):
         return self.__arg
+class LU(object):
+    tLu=['lu_f','lu_d','clu_f','clu_d']
+    luSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
+    supported=['cmview_d','cmview_f','mview_d','mview_f']
+    def __init__(self,t,luSize):
+        luCreate={'clu_f':vsip_clud_create_f,
+              'clu_d':vsip_clud_create_d,
+              'lu_f':vsip_lud_create_f,
+              'lu_d':vsip_lud_create_d}
+        self.__jvsip = JVSIP()
+        self.__type = t
+        self.__size = luSize
+        self.__m = {'matrix':0}
+        if luCreate.has_key(t) and luSize > 0 and isinstance(luSize,int):
+            self.__lu = luCreate[t](luSize)
+        else:
+            print('Type must be one of '+repr(tLu)+ \
+                  ' and size must be an integer greater than 0.')
+            return
+    def __del__(self):
+        del(self.__jvsip)
+        vsip.destroy(self.__lu)
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def size(self):
+        return self.__size
+    @property
+    def lud(self):
+        return self.__lu
+    def decompose(self,m):
+        tMatrix={'cmview_d':'clu_d','cmview_f':'clu_f','mview_d':'lu_d','mview_f':'lu_f'}
+        luDecompose={'lu_f':vsip_lud_f,
+                'lu_d':vsip_lud_d,
+                'clu_f':vsip_clud_f,
+                'clu_d':vsip_clud_d}
+        chk = (m.type in LU.supported) 
+        if chk:
+            chk = (m.rowlength == m.collength) and (self.size == m.rowlength) \
+                   and self.type == tMatrix[m.type]
+        if chk:
+            luDecompose[self.type](self.lud,m.view)
+            self.__m['matrix'] = m
+            return self
+        else:
+            print('Matrix must be square and compliant with calling object')
+            return
+    def solve(self,opM,XB):
+        luSol={'lu_d':vsip_lusol_d,'lu_f':vsip_lusol_f,\
+               'clu_d':vsip_clusol_d,'clu_f':vsip_clusol_f}
+        if (XB.type in LU.supported) and (XB.collength == self.size):
+            if self.__m['matrix'] == 0:
+                print('LU object has no matrix associated with it')
+                return
+            else:
+                luSol[self.type](self.lud,opM,XB.view)
+                return XB
+        else:
+            print('Input matrix must be conformant with lu')
+            return
+class QR(object):
+    """ qOpt is VSIP_QRD_NOSAVEQ => 0 (No Q)
+                VSIP_QRD_SAVEQ => 1  (Full Q)
+                VSIP_QRD_SAQVEQ1 =>2 (skinny Q)
+        opR, opQ
+                VSIP_MAT_NTRANS => 0,
+                VSIP_MAT_TRANS => 1,
+                VSIP_MAT_HERM => 2,
+        opSide
+                VSIP_MAT_LSIDE => 0, 
+                VSIP_MAT_RSIDE => 1
+        qrProb
+                VSIP_COV => 0,
+                VSIP_LLS => 1
+   """
+    tQr=['qr_f','qr_d','cqr_f','cqr_d']
+    qrSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
+    supported=['cmview_d','cmview_f','mview_d','mview_f']
+    def __init__(self,t,m,n,qOpt):
+        qrCreate={'cqr_f':vsip_cqrd_create_f,
+              'cqr_d':vsip_cqrd_create_d,
+              'qr_f':vsip_qrd_create_f,
+              'qr_d':vsip_qrd_create_d}
+        self.__jvsip = JVSIP()
+        if t in QR.tQr:
+            self.__type = t
+        else:
+            print('Type qr not found')
+            return
+        self.__qOpt = qOpt
+        self.__collength = m
+        self.__rowlength = n
+        self.__m = {'matrix':0}
+        if qrCreate.has_key(t) and (m > 0 and isinstance(m,int)) \
+                               and (n > 0 and isinstance(n,int)) \
+                               and (qOpt >= 0) and (qOpt <= 2) and isinstance(qOpt,int):
+            self.__qr = qrCreate[t](m,n,qOpt)
+        else:
+            print('Type must be one of '+repr(tQr)+' and m,n must be integers greater than 0.')
+            print('qOpt must be a valid member of vsip_qrd_qopt.')
+            return
+    def __del__(self):
+        del(self.__jvsip)
+        vsip.destroy(self.__qr)
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def size(self):
+        return {'ColumnLength':self.__collength,'RowLength':self.__rowlength}
+    @property
+    def args(self):
+        return (self.__collength,self.__rowlength,self.__qOpt)
+    @property
+    def qrd(self):
+        return self.__qr
+    def decompose(self,m):
+        tMatrix={'cmview_d':'cqr_d','cmview_f':'cqr_f','mview_d':'qr_d','mview_f':'qr_f'}
+        qrDecompose={'qr_f':vsip_qrd_f,
+                'qr_d':vsip_qrd_d,
+                'cqr_f':vsip_cqrd_f,
+                'cqr_d':vsip_cqrd_d}
+        if tMatrix[m.type] in self.type :
+            qrDecompose[self.type](self.qrd,m.view)
+            self.__m['matrix'] = m
+            return self
+        else:
+            print('View type <:' +m.type+':> not supported by qr object of type <:' \
+                   + self.type +':>')
+            return
+    def prodQ(self,opQ,opSide,X):
+        qrProd={'qr_d':vsip_qrdprodq_d,'qr_f':vsip_qrdprodq_f, \
+               'cqr_d':vsip_cqrdprodq_d,'cqr_f':vsip_cqrdprodq_f}
+        if QR.qrSel[X.type] in self.type:
+            qrProd[self.type](self.qrd,opQ,opSide,X.view)
+            return X
+        else:
+            print('QR Type not compatible with input')
+            return
+    def solveR(self,opR,alpha,XB):
+        qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
+               'cqr_d':vsip_cqrsolr_d,'cqr_f':vsip_cqrsolr_f}
+        if (QR.qrSel[XB.type] in self.type) and qrSol.has_key(self.type) and \
+           (opR >= 0 and opR <= 2) and isinstance(opR,int):
+            if self.__m['matrix'] == 0:
+                print('QR object has no matrix associated with it')
+                return
+            else:
+                qrSol[self.type](self.qrd,opR,alpha,XB.view)
+                return XB
+        else:
+            print('Input arguments must be conformant with qrsolr')
+            return
+    def solve(self,qrProb,XB):
+        qrSol={'qr_d':vsip_qrsol_d,'qr_f':vsip_qrsol_f,\
+               'cqr_d':vsip_cqrsol_d,'cqr_f':vsip_cqrsol_f}
+        if (QR.qrSel[XB.type] in self.type) and qrSol.has_key(self.type) and \
+           (opR >= 0 and opR <= 2) and isinstance(opR,int):
+            if self.__m['matrix'] == 0:
+                print('QR object has no matrix associated with it')
+                return
+            else:
+                qrSol[self.type](self.qrd,qrProf,XB.view)
+                return XB
+        else:
+            print('Input arguments must be conformant with qrsol')
+            return
+
 # Functions
+# copy is kind of brain dead. Need more functionality and performance
 def copy(input,to):
-    vsip.copy(input.view,to.view)
+    if isinstance(input,list):
+        if 'vview' in to.type and (len(input) == to.length):
+            for i in range(to.length):
+               to[i] = input[i]
+        elif 'mview' in to.type and \
+                     (len(input) == to.collength) and (len(input[0]) == to.rowlength):
+            for i in range(to.collength):
+                for j in range(to.rowlength):
+                    to[i,j] = input[i][j]
+        else: 
+            print('Error in copy list to type <:'+to.type+':>.')
+            return
+    else:
+        vsip.copy(input.view,to.view)
     return to
 
 def create(atype,*vals):
@@ -1788,162 +1981,3 @@ def create(atype,*vals):
         return FFT(atype,arg)
     else:
         print('Input argument <:'+atype+':> not recognzied for create')
-
-class LU(object):
-    tLu=['lu_f','lu_d','clu_f','clu_d']
-    luSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
-    supported=['cmview_d','cmview_f','mview_d','mview_f']
-    def __init__(self,t,luSize):
-        luCreate={'clu_f':vsip_clud_create_f,
-              'clu_d':vsip_clud_create_d,
-              'lu_f':vsip_lud_create_f,
-              'lu_d':vsip_lud_create_d}
-        self.__jvsip = JVSIP()
-        self.__type = t
-        self.__size = luSize
-        self.__m = {'matrix':0}
-        if luCreate.has_key(t) and luSize > 0 and isinstance(luSize,int):
-            self.__lu = luCreate[t](luSize)
-        else:
-            print('Type must be one of '+repr(tLu)+ \
-                  ' and size must be an integer greater than 0.')
-            return
-    def __del__(self):
-        del(self.__jvsip)
-        vsip.destroy(self.__lu)
-    @property
-    def type(self):
-        return self.__type
-    @property
-    def size(self):
-        return self.__size
-    @property
-    def lud(self):
-        return self.__lu
-    def decompose(self,m):
-        tMatrix={'cmview_d':'clu_d','cmview_f':'clu_f','mview_d':'lu_d','mview_f':'lu_f'}
-        luDecompose={'lu_f':vsip_lud_f,
-                'lu_d':vsip_lud_d,
-                'clu_f':vsip_clud_f,
-                'clu_d':vsip_clud_d}
-        chk = (m.type in lu.supported) 
-        if chk:
-            chk = (m.rowlength == m.collength) and (self.size == m.rowlength) \
-                   and self.type == tMatrix[m.type]
-        if chk:
-            luDecompose[self.type](self.lud,m.view)
-            self.__m['matrix'] = m
-            return self
-        else:
-            print('Matrix must be square and compliant with calling object')
-            return
-    def solve(self,opM,XB):
-        luSol={'lu_d':vsip_lusol_d,'lu_f':vsip_lusol_f,\
-               'clu_d':vsip_clusol_d,'clu_f':vsip_clusol_f}
-        if (XB.type in LU.supported) and (XB.collength == self.size):
-            if self.__m['matrix'] == 0:
-                print('LU object has no matrix associated with it')
-                return
-            else:
-                luSol[self.type](self.lud,opM,XB.view)
-                return XB
-        else:
-            print('Input matrix must be conformant with lu')
-            return
-
-class QR(object):
-    """ qOpt is VSIP_QRD_NOSAVEQ => 0 (No Q)
-                VSIP_QRD_SAVEQ => 1  (Full Q)
-                VSIP_QRD_SAQVEQ1 =>2 (skinny Q)
-        opR, opQ
-                VSIP_MAT_NTRANS = 0,
-                VSIP_MAT_TRANS = 1,
-                VSIP_MAT_HERM = 2,
-        opSide
-                VSIP_MAT_LSIDE = 0, 
-                VSIP_MAT_RSIDE = 1
-        qrProb
-                VSIP_COV = 0,
-                VSIP_LLS = 1
-   """
-    tQr=['qr_f','qr_d','cqr_f','cqr_d']
-    qrSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
-    supported=['cmview_d','cmview_f','mview_d','mview_f']
-    def __init__(self,t,m,n,qOpt):
-        qrCreate={'cqr_f':vsip_cqrd_create_f,
-              'cqr_d':vsip_cqrd_create_d,
-              'qr_f':vsip_qrd_create_f,
-              'qr_d':vsip_qrd_create_d}
-        self.__jvsip = JVSIP()
-        if t in tQr:
-            self.__type = t
-        else:
-            print('Type qr not found')
-            return
-        self.__qOpt = qOpt
-        self.__collength = m
-        self.__rowlength = n
-        self.__m = {'matrix':0}
-        if qrCreate.has_key(t) and (m > 0 and isinstance(m,int)) \
-                               and (n > 0 and isinstance(n,int)) \
-                               and (qOpt >= 0) and (qOpt <= 2) and isinstance(qOpt,int):
-            self.__qr = qrCreate[t](m,n,qOpt)
-        else:
-            print('Type must be one of '+repr(tQr)+' and m,n must be integers greater than 0.')
-            print('qOpt must be a valid member of vsip_qrd_qopt.')
-            return
-    def __del__(self):
-        del(self.__jvsip)
-        vsip.destroy(self.__lu)
-    @property
-    def type(self):
-        return self.__type
-    @property
-    def size(self):
-        return {'ColumnLength':self.__collength,'RowLength':self.__rowlength}
-    @property
-    def args(self):
-        return (self.__collength,self.__rowlength,self.__qOpt)
-    @property
-    def qrd(self):
-        return self.__qr
-    def decompose(self,m):
-        tMatrix={'cmview_d':'cqr_d','cmview_f':'cqr_f','mview_d':'qr_d','mview_f':'qr_f'}
-        qrDecompose={'qr_f':vsip_qrd_f,
-                'qr_d':vsip_qrd_d,
-                'cqr_f':vsip_cqrd_f,
-                'cqr_d':vsip_cqrd_d}
-        if tMatrix[m.type] in self.type :
-            qrDecompose[self.type](self.qrd,m.view)
-            self.__m['matrix'] = m
-            return self
-        else:
-            print('View type <:' +m.type+':> not supported by qr object of type <:' \
-                   + self.type +':>')
-            return
-    def prodQ(self,opQ,opSide,X):
-        qrProd={'qr_d':vsip_qrdprod_d,'qr_f':vsip_qrdsolr_f, \
-               'cqr_d':vsip_cqrdsolr_d,'cqr_f':vsip_cqdrsolr_f}
-        if QR.qrSel[X.type] in self.type:
-            qrProd[self.type](self.qrd,opQ,opSide,X.view)
-            return X
-        else:
-            print('QR Type not compatible with input')
-            return
-    def solveR(self,opR,alpha,XB):
-        qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
-               'cqr_d':vsip_cqrsolr_d,'cqr_f':vsip_cqrsolr_f}
-        if (QR.qrSel[XB.type] in self.type) and qrSol.has_key(self.type) and \
-           (opR >= 0 and opR <= 2) and isinstance(opR,int):
-            if self.__m['matrix'] == 0:
-                print('QR object has no matrix associated with it')
-                return
-            else:
-                qrSol[self.type](self.qrd,opR,alpha,XB.view)
-                return XB
-        else:
-            print('Input arguments must be conformant with qr')
-            return
-    def solve(self,qrProb,XB):
-        qrSol={'qr_d':vsip_qrsol_d,'qr_f':vsip_qrsol_f,\
-               'cqr_d':vsip_cqrsol_d,'cqr_f':vsip_cqrsol_f}
