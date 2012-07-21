@@ -62,6 +62,12 @@ class Block (object):
                  'vview_si','vview_i','vview_uc',
                  'vview_mi', 'vview_vi','vview_bl']
     complexTypes=['cvview_f','cmview_f','cvview_d','cmview_d','cblock_f','cblock_d']
+    blkSel={'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f',\
+            'cvview_d':'cblock_d', 'vview_si':'block_si','vview_i':'block_i',\
+            'vview_uc':'block_uc', 'vview_mi':'block_mi', 'vview_vi':'block_vi',\
+            'vview_bl':'block_bl','mview_f':'block_f','mview_d':'block_d',\
+            'cmview_f':'cblock_f','cmview_d':'cblock_d','mview_si':'block_si',\
+            'mview_i':'block_i','mview_uc':'block_uc','mview_bl':'block_bl'}
     #View Class defined here
     class __View(object):
         viewTypes=['mview_f','mview_d','cmview_f','cmview_d',
@@ -1153,67 +1159,6 @@ class Block (object):
             else:
                 print('Input views must be float vectors of the same precision')
                 return False
-        #utility functions
-        def mstring(self,fmt):
-            """ 
-            This method returns a string suitable for printing the values as a vector or matrix.
-            usage:
-              mstring(<vsip matrix/vector>, fmt)
-            fmt is a string corresponding to a simple fmt statement. 
-            For instance '%6.5f' prints as 6 characters wide with 5 decimal digits.
-            Note format converts this statement to '% 6.5f' or '%+6.5f' so keep
-            the input simple.
-            """
-            def _fmt1(c):
-                if c != '%':
-                    return c
-                else:
-                    return '% '
-            def _fmt2(c):
-                if c != '%':
-                    return c
-                else:
-                    return '%+'
-            def _fmtfunc(fmt1,fmt2,y):
-                if type(y) is complex:
-                    s = fmt1 % y.real
-                    s += fmt2 % y.imag
-                    s += "i"
-                    return s
-                else:
-                    return fmt1 % y
-            tm=['mview_d','mview_f','cmview_d','cmview_f','mview_i','mview_uc',
-                 'mview_si','mview_bl']
-            tv=['vview_d','vview_f','cvview_d','cvview_f','vview_i','vview_uc',
-                 'vview_si','vview_bl','vview_vi','vview_mi']
-            t=self.type
-            tfmt=[_fmt1(c) for c in fmt]
-            fmt1 = "".join(tfmt)
-            tfmt=[_fmt2(c) for c in fmt]
-            fmt2 = "".join(tfmt)
-            if t in tm:
-                cl=self.collength
-                rl=self.rowlength
-                s=str()
-                for i in range(cl):
-                    M=[]
-                    for j in range(rl):
-                        M.append(_fmtfunc(fmt1,fmt2,self[i,j]))
-                    if i == 0:
-                        s += "["+" ".join(M) + ";\n"
-                    elif i < cl-1:
-                        s += " "+" ".join(M) + ";\n"
-                    else:
-                        s += " "+" ".join(M) + "]\n"
-                return s
-            elif t in tv:
-                l=self.length
-                V=[_fmtfunc(fmt1,fmt2,self[i]) for i in range(l)]
-                return "[" + " ".join(V) + "]\n"
-            else:
-                print('Object not VSIP vector or matrix')
-        def mprint(self,fmt):
-            print(self.mstring(fmt))
         # Signal Processing
         @property
         def fftip(self):
@@ -1374,7 +1319,7 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported for crfft')
                 return
-        # Linear Algebra
+        #
         # General Square Solver
         @property
         def lud(self): #Function not done. should return tuple of (L,U) where A=LU
@@ -1423,6 +1368,124 @@ class Block (object):
             else:
                 print('Non-conformant views for luSolve')
                 return
+        #
+        #QR Decomposition; Over-Determined Linear System Solver
+        @property
+        def qr(self):
+            """
+               Usage:
+                  qr = view.qr
+               where view is of type float; real or complex
+               Return QR object and decomposition for calling view.
+               Input view is used by QR object is so use a copy if original is needed.
+               This returns a QR object for a Full Q. (qOpt => VSIP_QRD_SAVEQ)
+               NOTE for vector views:
+               If the input view is a vector then the vector is converted to a matrix matrix.
+               Vectors are treated as a column here.
+            """
+            if self.type in ['vview_f','vview_d','cvview_f','cvview_d']:
+                A=self.block.bind(self.offset,self.stride,self.length,0,1)
+            elif self.type in ['mview_f','mview_d','cmview_f','cmview_d']:
+                A = self
+            else:
+                print('Type <:' +self.type+ '<: not supported for QR')
+                return
+            retval=QR(QR.qrSel[self.type],A.collength,A.rowlength,VSIP_QRD_SAVEQ)
+            retval.decompose(A)
+            return retval
+        @property
+        def qrd(self):
+            """
+               Usage:
+                  Q,R=view.qrd
+               where view is of type float; real or complex
+               For this function self is not overwritten
+               Q.prod(R) should return (a matrix) equivalent to the input
+            """
+            if self.type not in ['vview_d','vview_f','mview_d','mview_f', \
+                                 'cvview_d','cvview_f','cmview_d','cmview_f']:
+                print('Type <:'+self.type+':> not supported by view qrd method')
+                return
+            if self.type in ['vview_f','vview_d','cvview_f','cvview_d']:
+                A=self.block.bind(self.offset,self.stride,self.length,0,1).copy
+            elif self.type in ['mview_f','mview_d','cmview_f','cmview_d']:
+                A = self.copy
+            else:
+                print('Type <:' +self.type+ '<: not supported for qrd')
+                return
+            if 'vview' in self.type:
+                n = self.length
+            else:
+                n = self.collength
+            Q = Block(Block.blkSel[self.type],n*n).bind(0,1,n,n,n).identity
+            qr = A.qr
+            qr.prodQ(0,0,Q)
+            if 'mview' in self.type:
+                R = Q.transview.prod(self)
+            else:
+                R = Q.transview.prod(self.block.bind(self.offset,self.stride,self.length,0,1))
+            return(Q,R)
+        #utility functions
+        def mstring(self,fmt):
+            """ 
+            This method returns a string suitable for printing the values as a vector or matrix.
+            usage:
+              mstring(<vsip matrix/vector>, fmt)
+            fmt is a string corresponding to a simple fmt statement. 
+            For instance '%6.5f' prints as 6 characters wide with 5 decimal digits.
+            Note format converts this statement to '% 6.5f' or '%+6.5f' so keep
+            the input simple.
+            """
+            def _fmt1(c):
+                if c != '%':
+                    return c
+                else:
+                    return '% '
+            def _fmt2(c):
+                if c != '%':
+                    return c
+                else:
+                    return '%+'
+            def _fmtfunc(fmt1,fmt2,y):
+                if type(y) is complex:
+                    s = fmt1 % y.real
+                    s += fmt2 % y.imag
+                    s += "i"
+                    return s
+                else:
+                    return fmt1 % y
+            tm=['mview_d','mview_f','cmview_d','cmview_f','mview_i','mview_uc',
+                 'mview_si','mview_bl']
+            tv=['vview_d','vview_f','cvview_d','cvview_f','vview_i','vview_uc',
+                 'vview_si','vview_bl','vview_vi','vview_mi']
+            t=self.type
+            tfmt=[_fmt1(c) for c in fmt]
+            fmt1 = "".join(tfmt)
+            tfmt=[_fmt2(c) for c in fmt]
+            fmt2 = "".join(tfmt)
+            if t in tm:
+                cl=self.collength
+                rl=self.rowlength
+                s=str()
+                for i in range(cl):
+                    M=[]
+                    for j in range(rl):
+                        M.append(_fmtfunc(fmt1,fmt2,self[i,j]))
+                    if i == 0:
+                        s += "["+" ".join(M) + ";\n"
+                    elif i < cl-1:
+                        s += " "+" ".join(M) + ";\n"
+                    else:
+                        s += " "+" ".join(M) + "]\n"
+                return s
+            elif t in tv:
+                l=self.length
+                V=[_fmtfunc(fmt1,fmt2,self[i]) for i in range(l)]
+                return "[" + " ".join(V) + "]\n"
+            else:
+                print('Object not VSIP vector or matrix')
+        def mprint(self,fmt):
+            print(self.mstring(fmt))
     #Block specific class below
     def __init__(self,block_type,length):
         other = ['real_f','imag_f','real_d','imag_d']
