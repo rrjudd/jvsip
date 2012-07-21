@@ -1936,26 +1936,26 @@ def create(atype,*vals):
           aType corresponds to a valid type for the object being created and
           ... are a variable argument list associated with each supported create type
     """
-    blockTypes = ['cblock_f','cblock_d','block_f','block_d','block_i','block_si','block_uc',
+    blockTypes = ['cblock_f','cblock_d','block_f','block_d','block_i','block_si','block_uc', \
                   'block_vi','block_mi','block_bl']
-    vectorTypes=['cvview_f','cvview_d','vview_f','vview_d','vview_i','vview_si','vview_uc'
+    vectorTypes=['cvview_f','cvview_d','vview_f','vview_d','vview_i','vview_si','vview_uc',\
                  'vview_vi','vview_mi','vview_bl']
-    fVector = {'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f',
-               'cvview_d':'cblock_d','vview_i':'block_i','vview_si':'block_si',
-               'vview_uc':'block_uc','vview_bl':'block_bl','vview_vi':'block_vi',
+    fVector = {'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f', \
+               'cvview_d':'cblock_d','vview_i':'block_i','vview_si':'block_si', \
+               'vview_uc':'block_uc','vview_bl':'block_bl','vview_vi':'block_vi', \
                'vview_mi':'block_mi'}
-    matrixTypes=['cmview_f','cmview_d','mview_f','mview_d','mview_i','mview_si','mview_uc'
+    matrixTypes=['cmview_f','cmview_d','mview_f','mview_d','mview_i','mview_si','mview_uc', \
                  'mview_bl']
-    fMatrix = {'mview_f':'block_f','mview_d':'block_d','cmview_f':'cblock_f',
-               'cmview_d':'cblock_d','mview_i':'block_i','mview_si':'block_si',
+    fMatrix = {'mview_f':'block_f','mview_d':'block_d','cmview_f':'cblock_f',\
+               'cmview_d':'cblock_d','mview_i':'block_i','mview_si':'block_si',\
                'mview_uc':'block_uc','mview_bl':'block_bl'}
-    fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
-                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
-                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
+    fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', \
+                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', \
+                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', \
                 'crfftmop_d']
-    mfftTypes = ['ccfftmip_f', 'ccfftmop_f', 'rcfftmop_f', 'crfftmop_f', 
+    mfftTypes = ['ccfftmip_f', 'ccfftmop_f', 'rcfftmop_f', 'crfftmop_f', \
                  'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 'crfftmop_d']
-    vfftTypes=['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f',
+    vfftTypes=['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', \
                'ccfftip_d', 'ccfftop_d', 'rcfftop_d', 'crfftop_d']
     if atype in blockTypes:
         if isinstance(vals[0],int) and len(vals) == 1:
