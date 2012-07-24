@@ -645,7 +645,7 @@ class Block (object):
             else:
                 print('Type not a matrix or vector')
                 return False
-        def __getitem__(self,index):
+        def __getitem__(self,index):          
             def scalarVal(val):
                 if 'cscalar' in vsip.getType(val)[1]:
                     c=complex(val.r,val.i)
@@ -671,6 +671,12 @@ class Block (object):
             elif 'mview' in self.type and (len(index) is 2) and \
                         isinstance(index[0],slice) and isinstance(index[1],slice):
                 return self.subview(index[0],index[1])
+            elif 'mview' in self.type and (len(index) is 2) and \
+                        isinstance(index[0],slice) and isinstance(index[1],int):
+                return self.subview(index[0],slice(index[1],index[1]+1,1))
+            elif 'mview' in self.type and (len(index) is 2) and \
+                        isinstance(index[0],int) and isinstance(index[1],slice):
+                return self.subview(slice(index[0],index[0]+1,1),index[1])
             else: 
                 print('Failed to parse index arguments')
                 return
