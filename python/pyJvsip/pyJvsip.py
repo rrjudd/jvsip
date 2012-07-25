@@ -681,7 +681,26 @@ class Block (object):
                 print('Failed to parse index arguments')
                 return
         def __setitem__(self,i,value):
-            vsip.put(self.__vsipView,i,value)
+            if 'vview' in self.type:
+                if isinstance(i,int):
+                    vsip.put(self.view,i,value)
+                elif 'vview' in self.type and isinstance(i,slice):
+                    copy(value,self.subview(i))
+                else:
+                    print('Failed to recognize index for vectro view')
+            elif 'mview' in self.type and isinstance(i,tuple) and len(i) == 2:
+                if isinstance(i[0],slice) and isinstance(i[1],slice):
+                    copy(value,self.subview(i[0],i[1]))
+                elif isinstance(i[0],slice) and isinstance(i[1],int):
+                    copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
+                elif (isinstance(i[0],int) and isinstance(i[1],slice)):
+                    copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
+                elif (isinstance(i[0],int) and isinstance(i[1],int)):
+                    vsip.put(self.view,i,value)
+                else:
+                    print('Failed to recognize index for matrix view')
+            else:
+                print('Failed to parse argument list for __setitem__') 
         def __len__(self):
             attr=vsip.size(self.__vsipView)
             n = attr[2]
