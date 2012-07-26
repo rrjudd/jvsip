@@ -1006,7 +1006,8 @@ class Block (object):
                 t = self.type + 'scalar' + x.type
                 alpha = float(a)
             else:
-                print('Type combinations not recognized.')
+                print('Type combination for axpy not recognized.')
+                print('Should be (scalar,vector view)')
                 return False              
             f = {'cvview_dcscalar_dcvview_d':vsip_cvsma_d,
                  'cvview_fcscalar_fcvview_f':vsip_cvsma_f,
@@ -1037,7 +1038,7 @@ class Block (object):
                 else: #do by col
                     for i in range(attr_A.row_length):
                         t=A.colview(i)
-                        self.axpy(t,x[i])
+                        self.axpy(x[i],t)
                 return self
             else:
                 print('Argument list for gaxpy does not appear to be compliant')
