@@ -687,7 +687,7 @@ class Block (object):
                 elif 'vview' in self.type and isinstance(i,slice):
                     copy(value,self.subview(i))
                 else:
-                    print('Failed to recognize index for vectro view')
+                    print('Failed to recognize index for vector view')
             elif 'mview' in self.type and isinstance(i,tuple) and len(i) == 2:
                 if isinstance(i[0],slice) and isinstance(i[1],slice):
                     copy(value,self.subview(i[0],i[1]))
@@ -980,13 +980,15 @@ class Block (object):
             """ returns a scalar
             """
             return vsip.sumsqval(self.view)
-        #ternary
+        #Basic Algorithms
         def axpy(self,a,x):
             """
                this should be a saxpy (daxpy) y=a * x + y
                   or
                self += a * x
                where self and x are vectors of the same type and a is a scalar
+               For C VSIPL this is implemented using 
+                  vector-scalar-multiply-(vector)-add (vsma)
             """
             if 'cvview_d' in self.type:
                 t = self.type + 'cscalar_d' + x.type
@@ -1016,6 +1018,49 @@ class Block (object):
             else:
                 print('Type <:'+ t + ':> not a supported type string')
                 return False
+        def gaxpy(self,A,x):
+            """
+            Generalized axpy:
+                y += Ax 
+                        where y is vector in R(n), x is vector in R(m), 
+                        A is matrix R(m,n); everything float of same precision
+            For more general case use gemp
+            """
+            if ('vview' in self.type) and ('vview' in x.type) and ('mview' in A.type) \
+                         and A.rowlength == x.length and A.collength is self.length:
+                attr_A=vsip.getattrib(A.view)
+                rs=attr_A.row_stride; cs=attr_A.col_stride
+                if rs < cs: #do by ROW
+                    for i in range(attr_A.col_length):
+                        t=A.rowview(i)
+                        self[i] += t.dot(x)
+                else: #do by col
+                    for i in range(attr_A.row_length):
+                        t=A.colview(i)
+                        self.axpy(t,x[i])
+                return self
+            else:
+                print('Argument list for gaxpy does not appear to be compliant')
+                return False
+        def opu(self,x,y):
+            """
+               Outer Product Update:
+                 A += x.outer(y)
+                 where:
+                    A in R(m,n); x in R(m), y in R(n)
+            """
+            if 'mview' not in self.type:
+                print('Calling view must be a matrix for opu')
+                return
+            if self.rowstride < self.colstride: #do by ROW
+                for i in range(self.collength):
+                    t = self.rowview(i) 
+                    t += x[i] * y
+            else: #do by COL
+                for i in range(self.rowlength):
+                    t = self.colview(i)
+                    t += y[i]*x
+            return self
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """

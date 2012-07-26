@@ -1137,7 +1137,6 @@ def getrowstride(a):
         'mview_si':vsip_mgetrowstride_si,
         'mview_uc':vsip_mgetrowstride_uc,
         'mview_bl':vsip_mgetrowstride_bl,
-        'mview_vi':vsip_mgetrowstride_vi,
         'cmview_f':vsip_cmgetrowstride_f,
         'cmview_d':vsip_cmgetrowstride_d }
     if t[0]  and f.has_key(t[1]):
@@ -1156,7 +1155,6 @@ def getcolstride(a):
         'mview_si':vsip_mgetcolstride_si,
         'mview_uc':vsip_mgetcolstride_uc,
         'mview_bl':vsip_mgetcolstride_bl,
-        'mview_vi':vsip_mgetcolstride_vi,
         'cmview_f':vsip_cmgetcolstride_f,
         'cmview_d':vsip_cmgetcolstride_d }
     if t[0]  and f.has_key(t[1]):
