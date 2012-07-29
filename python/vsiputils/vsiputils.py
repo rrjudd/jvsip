@@ -2089,10 +2089,10 @@ def recip(a,b):
        'mview_f':vsip_mrecip_f,
        'vview_d':vsip_vrecip_d,
        'vview_f':vsip_vrecip_f}
-    t = getType(input)[1]
+    t = getType(a)[1]
     if f.has_key(t):
-        f[t](input,output)
-        return output;
+        f[t](a,b)
+        return b;
     else:
         print(t + ' Is not a supported type for mag')
         return False
@@ -2101,10 +2101,10 @@ def rsqrt(a,b):
        'mview_f':vsip_mrsqrt_f,
        'vview_d':vsip_vrsqrt_d,
        'vview_f':vsip_vrsqrt_f} 
-    t = getType(input)[1]
+    t = getType(a)[1]
     if f.has_key(t):
-        f[t](input,output)
-        return output;
+        f[t](a,b)
+        return b;
     else:
         print(t + ' Is not a supported type for rsqrt')
         return False
@@ -2113,12 +2113,12 @@ def sq(a,b):
        'mview_f':vsip_msq_f,
        'vview_d':vsip_vsq_d,
        'vview_f':vsip_vsq_f}
-    t = getType(input)[1]
+    t = getType(a)[1]
     if f.has_key(t):
-        f[t](input,output)
-        return output;
+        f[t](a,b)
+        return b;
     else:
-        print(t + ' Is not a supported type for rsqrt')
+        print(t + ' Is not a supported type for sq')
         return False
 def sumval(input):
     f={'cmview_d':'cscalarToComplex(vsip_cmsumval_d ( input ))',

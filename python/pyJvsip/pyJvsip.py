@@ -58,9 +58,8 @@ class Block (object):
     derivedTypes = ['real_f','real_d']
     matrixTypes=['mview_f','mview_d','cmview_f','cmview_d',
                  'mview_si','mview_i','mview_uc','mview_bl']
-    vectorTypes=['vview_f','vview_d','cvview_f','cvview_d',
-                 'vview_si','vview_i','vview_uc',
-                 'vview_mi', 'vview_vi','vview_bl']
+    vectorTypes=['vview_f','vview_d','cvview_f','cvview_d', 'vview_si','vview_i',\
+                 'vview_uc','vview_mi', 'vview_vi','vview_bl']
     complexTypes=['cvview_f','cmview_f','cvview_d','cmview_d','cblock_f','cblock_d']
     blkSel={'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f',\
             'cvview_d':'cblock_d', 'vview_si':'block_si','vview_i':'block_i',\
@@ -163,14 +162,46 @@ class Block (object):
                and not the same block associated with A.
                This is an easy way to create a new data space for out of place
                operations.
-               For instance B = A.copy.sin will leave A alone, copy its elements to
-               new view (and block) B and then do an in-place sine operation on B.
+               For instance:
+                   B = A.copy.sin 
+               will leave A alone, copy its elements to new view (and block) B 
+               and then do an in-place sine operation on B.
             """
             attr=self.compactAttrib(0)
             b = self.block.otherBlock(attr[0],attr[1])
             newView = b.bind(attr[2])
             vsip.copy(self.view,newView.view)
             return newView
+        @property
+        def copyrm(self):
+            """ Same as copy method except if the view is a matrix it is created with
+                unit stride along the rows.
+            """
+            if 'mview' in self.type:     
+                attr=self.compactAttrib(0)
+                b = self.block.otherBlock(attr[0],attr[1])
+                cl=self.collength; rl=self.rowlength
+                o=0; rs=1;cs=rl
+                newView = b.bind(o,cs,cl,rs,rl)
+                vsip.copy(self.view,newView.view)
+                return newView
+            else:
+                return self.copy
+        @property
+        def copycm(self):
+            """ Same as copy method except if the view is a matrix it is created with
+                unit stride along the Columns.
+            """
+            if 'mview' in self.type:     
+                attr=self.compactAttrib(0)
+                b = self.block.otherBlock(attr[0],attr[1])
+                cl=self.collength; rl=self.rowlength
+                o=0; rs=cl;cs=1
+                newView = b.bind(o,cs,cl,rs,rl)
+                vsip.copy(self.view,newView.view)
+                return newView
+            else:
+                return self.copy
         @property # A way to get a new view and data space of the same size but no copy penalty
         def empty(self):
             """
@@ -980,15 +1011,141 @@ class Block (object):
             """ returns a scalar
             """
             return vsip.sumsqval(self.view)
+        
+        # Selection Operations
+        @property
+        def maxvalindx(self):
+            """
+            This method returns the index of the first maximum value found.
+            """
+            f={'mview_d':'vsip_mmaxval_d(self.view,idx)',
+              'vview_d':'vsip_vmaxval_d(self.view,idx)',
+              'mview_f':'vsip_mmaxval_f(self.view,idx)',
+              'vview_f':'vsip_vmaxval_f(self.view,idx)',
+              'mview_i':'vsip_mmaxval_i(self.view,idx)',
+              'vview_i':'vsip_vmaxval_i(self.view,idx)',
+              'mview_si':'vsip_mmaxval_si(self.view,idx)',
+              'vview_si':'vsip_vmaxval_si(self.view,idx)'}
+            if f.has_key(self.type):
+                if 'mview' in self.type:
+                    idx=vsip_scalar_mi()
+                    eval(f[self.type])
+                    return (idx.r,idx.c)
+                else:
+                    idx=vsip.vindexptr()
+                    eval(f[self.type])
+                    retval=vsip.vindexptrToInt(idx)
+                    vsip.vindexfree(idx)
+                    return retval
+            else:
+                print('Type <:'+self.type+':> not supported by maxval')
+                return
+        @property
+        def maxval(self):
+            """
+            This method returns the index of the first maximum value found.
+            """
+            f={'mview_d':'vsip_mmaxval_d(self.view,None)',
+              'vview_d':'vsip_vmaxval_d(self.view,None)',
+              'mview_f':'vsip_mmaxval_f(self.view,None)',
+              'vview_f':'vsip_vmaxval_f(self.view,None)',
+              'mview_i':'vsip_mmaxval_i(self.view,None)',
+              'vview_i':'vsip_vmaxval_i(self.view,None)',
+              'mview_si':'vsip_mmaxval_si(self.view,None)',
+              'vview_si':'vsip_vmaxval_si(self.view,None)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not supported by maxval')
+                return
+        @property
+        def maxmgvalindx(self):
+            """
+            This method returns the index of the first maximum value found.
+            """
+            f={'mview_d':'vsip_mmaxmgval_d(a,idx)',
+               'vview_d':'vsip_vmaxmgval_d(a,idx)',
+               'mview_f':'vsip_mmaxmgval_f(a,idx)',
+               'vview_f':'vsip_vmaxmgval_f(a,idx)'}
+            if f.has_key(self.type):
+                if 'mview' in self.type:
+                    idx=vsip_scalar_mi()
+                    eval(f[self.type])
+                    return (idx.r,idx.c)
+                else:
+                    idx=vsip.vindexptr()
+                    eval(f[self.type])
+                    retval=vsip.vindexptrToInt(idx)
+                    vsip.vindexfree(idx)
+                    return retval
+            else:
+                print('Type <:'+self.type+':> not supported by maxmgvalindx')
+                return
+        @property
+        def maxmgval(self):
+            """
+            This method returns the first maximum value found.
+            """
+            f={'mview_d':'vsip_mmaxmgval_d(a,None)',
+               'vview_d':'vsip_vmaxmgval_d(a,None)',
+               'mview_f':'vsip_mmaxmgval_f(a,None)',
+               'vview_f':'vsip_vmaxmgval_f(a,None)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not supported by maxmgval')
+                return
+        @property 
+        def maxmgsqvalindx(self):
+            """
+            This method returns the index of the first maximum complex magnitude squared 
+            value found.
+            """
+            f={'cmview_d':'vsip_mcmaxmgsqval_d(a,idx)',
+               'cvview_d':'vsip_vcmaxmgsqval_d(a,idx)',
+               'cmview_f':'vsip_mcmaxmgsqval_f(a,idx)',
+               'cvview_f':'vsip_vcmaxmgsqval_f(a,idx)'}
+            if f.has_key(self.type):
+                if 'mview' in self.type:
+                    idx=vsip_scalar_mi()
+                    eval(f[self.type])
+                    return (idx.r,idx.c)
+                else:
+                    idx=vsip.vindexptr()
+                    eval(f[self.type])
+                    retval=vsip.vindexptrToInt(idx)
+                    vsip.vindexfree(idx)
+                    return retval
+            else:
+                print('Type <:'+self.type+':> not supported by maxmgsqvalindx')
+                return
+
+        @property 
+        def maxmgsqval(self):
+            """
+            This method returns the  maximum complex magnitude squared 
+            value found..
+            """
+            f={'cmview_d':'vsip_mcmaxmgsqval_d(a,None)',
+               'cvview_d':'vsip_vcmaxmgsqval_d(a,None)',
+               'cmview_f':'vsip_mcmaxmgsqval_f(a,None)',
+               'cvview_f':'vsip_vcmaxmgsqval_f(a,None)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not supported by maxmgsqval')
+                return
         #Basic Algorithms
         def axpy(self,a,x):
             """
-               this should be a saxpy (daxpy) y=a * x + y
-                  or
-               self += a * x
-               where self and x are vectors of the same type and a is a scalar
-               For C VSIPL this is implemented using 
-                  vector-scalar-multiply-(vector)-add (vsma)
+               This is commonly called a saxpy (daxpy) for single (double) precision
+                      y = a * x + y
+               or (algorithmically)
+                      self += a * x
+               where self and x are vectors of the same type and a is a scalar.
+               This is an in-place operation
+               For C VSIPL this is implemented using functionality vsip_vsma_p
+                  vector-scalar-multiply-(vector)-add 
             """
             if 'cvview_d' in self.type:
                 t = self.type + 'cscalar_d' + x.type
@@ -1024,20 +1181,30 @@ class Block (object):
             Generalized axpy:
                 y += Ax 
                         where y is vector in R(n), x is vector in R(m), 
-                        A is matrix R(m,n); everything float of same precision
+                        A is matrix R(m,n); Views are float of same precision
             For more general case use gemp
+            Note:
+              Regular matrix multiply may be faster but gaxpy is an in-place operation. 
+              If instead you use y=Ax+y then Ax will create a new vector; add it to y into
+              another new vector; and then replace the y reference with the new reference.
             """
             if ('vview' in self.type) and ('vview' in x.type) and ('mview' in A.type) \
                          and A.rowlength == x.length and A.collength is self.length:
                 attr_A=vsip.getattrib(A.view)
                 rs=attr_A.row_stride; cs=attr_A.col_stride
                 if rs < cs: #do by ROW
+                    t=A.rowview(0)
+                    s=A.colstride
+                    o=A.offset
                     for i in range(attr_A.col_length):
-                        t=A.rowview(i)
+                        t.putoffset(s*i + o)
                         self[i] += t.dot(x)
                 else: #do by col
+                    t=A.colview(0)
+                    s=A.rowstride
+                    o=A.offset
                     for i in range(attr_A.row_length):
-                        t=A.colview(i)
+                        t.putoffset(s*i + o)
                         self.axpy(x[i],t)
                 return self
             else:
@@ -1049,17 +1216,32 @@ class Block (object):
                  A += x.outer(y)
                  where:
                     A in R(m,n); x in R(m), y in R(n)
+               Note:
+                 Doing a regular outer product such as
+                 A = A + x.outer(y)
+                 will create a new matrix for the outer product; create a new matrix
+                 for the addition results and then return this matrix into the reference 
+                 for A. Using A.opu(x,y) will do an in-place operation in A.
             """
             if 'mview' not in self.type:
                 print('Calling view must be a matrix for opu')
                 return
+            # we select a method with the += on the major stride.
+            # This may not necessarily be the fastest method if calling matrix
+            # has row length >> col length or vice versa
             if self.rowstride < self.colstride: #do by ROW
+                t=self.rowview(0)
+                s=self.colstride
+                o=t.offset
                 for i in range(self.collength):
-                    t = self.rowview(i) 
+                    t.putoffset(i*s+o) 
                     t += x[i] * y
             else: #do by COL
+                t=self.colview(0)
+                s=self.rowstride
+                o=t.offset
                 for i in range(self.rowlength):
-                    t = self.colview(i)
+                    t.putoffset(i*s+o)
                     t += y[i]*x
             return self
         #linear algebra
