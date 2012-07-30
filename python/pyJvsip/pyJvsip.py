@@ -1063,10 +1063,10 @@ class Block (object):
             """
             This method returns the index of the first maximum value found.
             """
-            f={'mview_d':'vsip_mmaxmgval_d(a,idx)',
-               'vview_d':'vsip_vmaxmgval_d(a,idx)',
-               'mview_f':'vsip_mmaxmgval_f(a,idx)',
-               'vview_f':'vsip_vmaxmgval_f(a,idx)'}
+            f={'mview_d':'vsip_mmaxmgval_d(self.view,idx)',
+               'vview_d':'vsip_vmaxmgval_d(self.view,idx)',
+               'mview_f':'vsip_mmaxmgval_f(self.view,idx)',
+               'vview_f':'vsip_vmaxmgval_f(self.view,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -1086,10 +1086,10 @@ class Block (object):
             """
             This method returns the first maximum value found.
             """
-            f={'mview_d':'vsip_mmaxmgval_d(a,None)',
-               'vview_d':'vsip_vmaxmgval_d(a,None)',
-               'mview_f':'vsip_mmaxmgval_f(a,None)',
-               'vview_f':'vsip_vmaxmgval_f(a,None)'}
+            f={'mview_d':'vsip_mmaxmgval_d(self.view,None)',
+               'vview_d':'vsip_vmaxmgval_d(self.view,None)',
+               'mview_f':'vsip_mmaxmgval_f(self.view,None)',
+               'vview_f':'vsip_vmaxmgval_f(self.view,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -1101,10 +1101,10 @@ class Block (object):
             This method returns the index of the first maximum complex magnitude squared 
             value found.
             """
-            f={'cmview_d':'vsip_mcmaxmgsqval_d(a,idx)',
-               'cvview_d':'vsip_vcmaxmgsqval_d(a,idx)',
-               'cmview_f':'vsip_mcmaxmgsqval_f(a,idx)',
-               'cvview_f':'vsip_vcmaxmgsqval_f(a,idx)'}
+            f={'cmview_d':'vsip_mcmaxmgsqval_d(self.view,idx)',
+               'cvview_d':'vsip_vcmaxmgsqval_d(self.view,idx)',
+               'cmview_f':'vsip_mcmaxmgsqval_f(self.view,idx)',
+               'cvview_f':'vsip_vcmaxmgsqval_f(self.view,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -1125,10 +1125,10 @@ class Block (object):
             This method returns the  maximum complex magnitude squared 
             value found..
             """
-            f={'cmview_d':'vsip_mcmaxmgsqval_d(a,None)',
-               'cvview_d':'vsip_vcmaxmgsqval_d(a,None)',
-               'cmview_f':'vsip_mcmaxmgsqval_f(a,None)',
-               'cvview_f':'vsip_vcmaxmgsqval_f(a,None)'}
+            f={'cmview_d':'vsip_mcmaxmgsqval_d(self.view,None)',
+               'cvview_d':'vsip_vcmaxmgsqval_d(self.view,None)',
+               'cmview_f':'vsip_mcmaxmgsqval_f(self.view,None)',
+               'cvview_f':'vsip_vcmaxmgsqval_f(self.view,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -1184,10 +1184,10 @@ class Block (object):
             """
             This method returns the index of the first minimum value found.
             """
-            f={'mview_d':'vsip_mminmgval_d(a,idx)',
-               'vview_d':'vsip_vminmgval_d(a,idx)',
-               'mview_f':'vsip_mminmgval_f(a,idx)',
-               'vview_f':'vsip_vminmgval_f(a,idx)'}
+            f={'mview_d':'vsip_mminmgval_d(self.view,idx)',
+               'vview_d':'vsip_vminmgval_d(self.view,idx)',
+               'mview_f':'vsip_mminmgval_f(self.view,idx)',
+               'vview_f':'vsip_vminmgval_f(self.view,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -1207,10 +1207,10 @@ class Block (object):
             """
             This method returns the first minimum value found.
             """
-            f={'mview_d':'vsip_mminmgval_d(a,None)',
-               'vview_d':'vsip_vminmgval_d(a,None)',
-               'mview_f':'vsip_mminmgval_f(a,None)',
-               'vview_f':'vsip_vminmgval_f(a,None)'}
+            f={'mview_d':'vsip_mminmgval_d(self.view,None)',
+               'vview_d':'vsip_vminmgval_d(self.view,None)',
+               'mview_f':'vsip_mminmgval_f(self.view,None)',
+               'vview_f':'vsip_vminmgval_f(self.view,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -1222,10 +1222,10 @@ class Block (object):
             This method returns the index of the first minimum complex magnitude squared 
             value found.
             """
-            f={'cmview_d':'vsip_mcminmgsqval_d(a,idx)',
-               'cvview_d':'vsip_vcminmgsqval_d(a,idx)',
-               'cmview_f':'vsip_mcminmgsqval_f(a,idx)',
-               'cvview_f':'vsip_vcminmgsqval_f(a,idx)'}
+            f={'cmview_d':'vsip_mcminmgsqval_d(self.view,idx)',
+               'cvview_d':'vsip_vcminmgsqval_d(self.view,idx)',
+               'cmview_f':'vsip_mcminmgsqval_f(self.view,idx)',
+               'cvview_f':'vsip_vcminmgsqval_f(self.view,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -1246,10 +1246,10 @@ class Block (object):
             This method returns the  minimum complex magnitude squared 
             value found..
             """
-            f={'cmview_d':'vsip_mcminmgsqval_d(a,None)',
-               'cvview_d':'vsip_vcminmgsqval_d(a,None)',
-               'cmview_f':'vsip_mcminmgsqval_f(a,None)',
-               'cvview_f':'vsip_vcminmgsqval_f(a,None)'}
+            f={'cmview_d':'vsip_mcminmgsqval_d(self.view,None)',
+               'cvview_d':'vsip_vcminmgsqval_d(self.view,None)',
+               'cmview_f':'vsip_mcminmgsqval_f(self.view,None)',
+               'cvview_f':'vsip_vcminmgsqval_f(self.view,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
