@@ -2779,7 +2779,6 @@ def copy(a,b):
         return False    
 
 # Selection Operations
-# Selection Operations
 def clip(a,t1,t2,c1,c2,r):
     f = {'mview_d':vsip_mclip_d, 
          'mview_f':vsip_mclip_f, 

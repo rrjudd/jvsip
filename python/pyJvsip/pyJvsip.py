@@ -1043,7 +1043,7 @@ class Block (object):
         @property
         def maxval(self):
             """
-            This method returns the index of the first maximum value found.
+            This method returns the maximum value found.
             """
             f={'mview_d':'vsip_mmaxval_d(self.view,None)',
               'vview_d':'vsip_vmaxval_d(self.view,None)',
@@ -1119,7 +1119,6 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported by maxmgsqvalindx')
                 return
-
         @property 
         def maxmgsqval(self):
             """
@@ -1134,6 +1133,127 @@ class Block (object):
                 return eval(f[self.type])
             else:
                 print('Type <:'+self.type+':> not supported by maxmgsqval')
+                return
+        @property
+        def minvalindx(self):
+            """
+            This method returns the index of the first minimum value found.
+            """
+            f={'mview_d':'vsip_mminval_d(self.view,idx)',
+              'vview_d':'vsip_vminval_d(self.view,idx)',
+              'mview_f':'vsip_mminval_f(self.view,idx)',
+              'vview_f':'vsip_vminval_f(self.view,idx)',
+              'mview_i':'vsip_mminval_i(self.view,idx)',
+              'vview_i':'vsip_vminval_i(self.view,idx)',
+              'mview_si':'vsip_mminval_si(self.view,idx)',
+              'vview_si':'vsip_vminval_si(self.view,idx)'}
+            if f.has_key(self.type):
+                if 'mview' in self.type:
+                    idx=vsip_scalar_mi()
+                    eval(f[self.type])
+                    return (idx.r,idx.c)
+                else:
+                    idx=vsip.vindexptr()
+                    eval(f[self.type])
+                    retval=vsip.vindexptrToInt(idx)
+                    vsip.vindexfree(idx)
+                    return retval
+            else:
+                print('Type <:'+self.type+':> not supported by minval')
+                return
+        @property
+        def minval(self):
+            """
+            This method returns the minimum value found.
+            """
+            f={'mview_d':'vsip_mminval_d(self.view,None)',
+              'vview_d':'vsip_vminval_d(self.view,None)',
+              'mview_f':'vsip_mminval_f(self.view,None)',
+              'vview_f':'vsip_vminval_f(self.view,None)',
+              'mview_i':'vsip_mminval_i(self.view,None)',
+              'vview_i':'vsip_vminval_i(self.view,None)',
+              'mview_si':'vsip_mminval_si(self.view,None)',
+              'vview_si':'vsip_vminval_si(self.view,None)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not supported by minval')
+                return
+        @property
+        def minmgvalindx(self):
+            """
+            This method returns the index of the first minimum value found.
+            """
+            f={'mview_d':'vsip_mminmgval_d(a,idx)',
+               'vview_d':'vsip_vminmgval_d(a,idx)',
+               'mview_f':'vsip_mminmgval_f(a,idx)',
+               'vview_f':'vsip_vminmgval_f(a,idx)'}
+            if f.has_key(self.type):
+                if 'mview' in self.type:
+                    idx=vsip_scalar_mi()
+                    eval(f[self.type])
+                    return (idx.r,idx.c)
+                else:
+                    idx=vsip.vindexptr()
+                    eval(f[self.type])
+                    retval=vsip.vindexptrToInt(idx)
+                    vsip.vindexfree(idx)
+                    return retval
+            else:
+                print('Type <:'+self.type+':> not supported by minmgvalindx')
+                return
+        @property
+        def minmgval(self):
+            """
+            This method returns the first minimum value found.
+            """
+            f={'mview_d':'vsip_mminmgval_d(a,None)',
+               'vview_d':'vsip_vminmgval_d(a,None)',
+               'mview_f':'vsip_mminmgval_f(a,None)',
+               'vview_f':'vsip_vminmgval_f(a,None)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not supported by minmgval')
+                return
+        @property 
+        def minmgsqvalindx(self):
+            """
+            This method returns the index of the first minimum complex magnitude squared 
+            value found.
+            """
+            f={'cmview_d':'vsip_mcminmgsqval_d(a,idx)',
+               'cvview_d':'vsip_vcminmgsqval_d(a,idx)',
+               'cmview_f':'vsip_mcminmgsqval_f(a,idx)',
+               'cvview_f':'vsip_vcminmgsqval_f(a,idx)'}
+            if f.has_key(self.type):
+                if 'mview' in self.type:
+                    idx=vsip_scalar_mi()
+                    eval(f[self.type])
+                    return (idx.r,idx.c)
+                else:
+                    idx=vsip.vindexptr()
+                    eval(f[self.type])
+                    retval=vsip.vindexptrToInt(idx)
+                    vsip.vindexfree(idx)
+                    return retval
+            else:
+                print('Type <:'+self.type+':> not supported by minmgsqvalindx')
+                return
+        @property 
+        def minmgsqval(self):
+            """
+            This method returns the  minimum complex magnitude squared 
+            value found..
+            """
+            f={'cmview_d':'vsip_mcminmgsqval_d(a,None)',
+               'cvview_d':'vsip_vcminmgsqval_d(a,None)',
+               'cmview_f':'vsip_mcminmgsqval_f(a,None)',
+               'cvview_f':'vsip_vcminmgsqval_f(a,None)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not supported by minmgsqval')
                 return
         #Basic Algorithms
         def axpy(self,a,x):
