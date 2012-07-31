@@ -1,6 +1,6 @@
 from vsip import *
+from vsipElementwiseElementary import *
 import vsiputils as vsip
-
 def getType(v):
     """
         Returns a tuple with type information.
@@ -2300,7 +2300,6 @@ def copy(input,to):
     else:
         vsip.copy(input.view,to.view)
     return to
-
 def create(atype,*vals):
     """
        usage:
