@@ -1,5 +1,6 @@
 from vsip import *
 from vsipElementwiseElementary import *
+from vsipElementwiseManipulation import *
 import vsiputils as vsip
 def getType(v):
     """
@@ -1256,6 +1257,7 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported by minmgsqval')
                 return
         #Basic Algorithms
+
         def axpy(self,a,x):
             """
                This is commonly called a saxpy (daxpy) for single (double) precision
@@ -1364,6 +1366,34 @@ class Block (object):
                     t.putoffset(i*s+o)
                     t += y[i]*x
             return self
+        def eroa(self,rFrom,rTo):
+            """Elementary Row Operation Add (rows)
+            """
+            if 'mview' not in self.type:
+                print('Elementary row operations only work with matrix views')
+                return
+            a1 = self.rowview(rTo)
+            a1 += self.rowview(rFrom)
+            return ('eroa',(rFrom,rTo))
+        def eros(self,r0,r1):
+            """Elementary Row Operations Switch (rows)
+            """
+            if 'mview' not in self.type:
+                print('Elementary row operations only work with matrix views')
+                return
+            a0=self.rowview(r0)
+            a1=self.rowview(r1)
+            swap(a0,a1)
+            return ('eros',(r0,r1))
+        def erom(self,alpha,r):
+            """Elementary Row Operation (scalar) Multiply
+            """
+            if 'mview' not in self.type:
+                print('Elementary row operations only work with matrix views')
+                return
+            a=self.rowview(r)
+            a *= alpha
+            return('erom',(alpha,r))
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """
