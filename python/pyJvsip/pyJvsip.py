@@ -311,12 +311,15 @@ class Block (object):
                     if step is None:
                         step=1
                     #for VSIP we need start offset into block, new length, new stride
-                    no=slc.start * strd + o                       #new offset
+                    start=slc.start
+                    if start is None:
+                        start=0
+                    no=start * strd + o                       #new offset
                     ns=step * strd                            #new stride stride
                     stop = slc.stop
-                    if stop > l:
+                    if (stop is None) or (stop > l):
                         stop = l
-                    nl=nlength(slc.start,stop,step)  #new length
+                    nl=nlength(start,stop,step)  #new length
                 elif len(vals) == 1 and isinstance(vals[0],int):
                     return vAttr(attr,(slice(vals[0],l,1),))
                 elif len(vals) == 2 and isinstance(vals[0],int) \
@@ -341,17 +344,22 @@ class Block (object):
                         cstep=1
                     if rstep is None:
                         rstep=1
-                    no=rslc.start * rs + cslc.start * cs + o
+                    rstart=rslc.start;cstart=cslc.start
+                    if rstart is None:
+                        rstart = 0
+                    if cstart is None:
+                        cstart = 0
+                    no=rstart * rs + cstart * cs + o
                     ncs=cstep * cs
                     stop = cslc.stop
-                    if stop > cl:
+                    if (stop > cl) or (stop is None):
                         stop = cl
-                    ncl= nlength(cslc.start,stop,cstep)
+                    ncl= nlength(cstart,stop,cstep)
                     nrs=rstep * rs
                     stop = rslc.stop
-                    if stop > rl:
+                    if (stop > rl) or (stop is None):
                         stop = rl
-                    nrl= nlength(rslc.start,stop,rstep)
+                    nrl= nlength(rstart,stop,rstep)
                 elif len(vals) == 2 and isinstance(vals[0],int) and isinstance(vals[1],int):
                     return mAttr(attr,(slice(vals[0],cl,1),slice(vals[1],rl,1)))
                 elif len(vals) == 4 and isinstance(vals[0],int) and isinstance(vals[1],int) \
@@ -854,18 +862,10 @@ class Block (object):
             retval = self.copy
             retval *= other
             return retval
-        def __rmul__(self,other):
-            if 'scalar' in vsip.getType(other)[1]:
-                retval = self.copy
-                vsip.mul(other,retval.view,retval.view)
-                return retval
-            elif 'pyJvsip.__View' in repr(other):
-                retval = other.copy
-                vsip.mul(retval.view,self.view,retval.view)
-                return retval
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for mul')
-                return False
+        def __rmul__(self,other): # other * self
+            retval = self.copy
+            retval *= other
+            return retval
         def __idiv__(self,other):
             if isinstance(other,int):
                 x = float(other)
@@ -1011,8 +1011,7 @@ class Block (object):
         def sumsqval(self):
             """ returns a scalar
             """
-            return vsip.sumsqval(self.view)
-        
+            return vsip.sumsqval(self.view)   
         # Selection Operations
         @property
         def maxvalindx(self):
@@ -1257,7 +1256,6 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported by minmgsqval')
                 return
         #Basic Algorithms
-
         def axpy(self,a,x):
             """
                This is commonly called a saxpy (daxpy) for single (double) precision
@@ -1366,8 +1364,45 @@ class Block (object):
                     t.putoffset(i*s+o)
                     t += y[i]*x
             return self
+        def nopu(self,x,y):
+            """
+               Outer Product Update where you want a minus instead of a +:
+                 A -= x.outer(y)
+                 where:
+                    A in R(m,n); x in R(m), y in R(n)
+               Note:
+                 Doing a regular outer product such as
+                 A = A - x.outer(y)
+                 will create a new matrix for the outer product; create a new matrix
+                 for the addition results and then return this matrix into the reference 
+                 for A. Using A.opu(x,y) will do an in-place operation in A.
+            """
+            if 'mview' not in self.type:
+                print('Calling view must be a matrix for opu')
+                return
+            # we select a method with the -= on the major stride.
+            # This may not necessarily be the fastest method if calling matrix
+            # has row length >> col length or vice versa
+            if self.rowstride < self.colstride: #do by ROW
+                t=self.rowview(0)
+                s=self.colstride
+                o=t.offset
+                for i in range(self.collength):
+                    t.putoffset(i*s+o) 
+                    t -= x[i] * y
+            else: #do by COL
+                t=self.colview(0)
+                s=self.rowstride
+                o=t.offset
+                for i in range(self.rowlength):
+                    t.putoffset(i*s+o)
+                    t -= y[i]*x
+            return self
         def eroa(self,rFrom,rTo):
             """Elementary Row Operation Add (rows)
+               For Matrix A
+               A.eroa(i,j)
+               will add row 'i' to row 'j' and replace row 'j' with the result
             """
             if 'mview' not in self.type:
                 print('Elementary row operations only work with matrix views')
@@ -1377,6 +1412,9 @@ class Block (object):
             return ('eroa',(rFrom,rTo))
         def eros(self,r0,r1):
             """Elementary Row Operations Switch (rows)
+               For Matrix A
+                   A.eros(i,j)
+                   will switch row 'i' and row'j' in-place
             """
             if 'mview' not in self.type:
                 print('Elementary row operations only work with matrix views')
@@ -1385,8 +1423,24 @@ class Block (object):
             a1=self.rowview(r1)
             swap(a0,a1)
             return ('eros',(r0,r1))
+        def ecos(self,r0,r1):
+            """Elementary Column Operations Switch (columns)
+               For Matrix A
+                   A.eros(i,j)
+                   will switch column 'i' and column 'j' in-place
+            """
+            if 'mview' not in self.type:
+                print('Elementary row operations only work with matrix views')
+                return
+            a0=self.colview(r0)
+            a1=self.colview(r1)
+            swap(a0,a1)
+            return ('ecos',(r0,r1))
         def erom(self,alpha,r):
             """Elementary Row Operation (scalar) Multiply
+               For Matrix A
+               A.erom(aScalar,aRowIndex)
+               will multiply aScalar times the row of A indexed by aRowIndex in-place
             """
             if 'mview' not in self.type:
                 print('Elementary row operations only work with matrix views')
@@ -1394,6 +1448,85 @@ class Block (object):
             a=self.rowview(r)
             a *= alpha
             return('erom',(alpha,r))
+        @property
+        def det(self):
+            """ Calculate the determinant of a real matrix.
+                Uses elementary row operations and axpy to produce an upper diagonal 
+                matrix. Done in place.
+                The determinant is the product of the diagonal entries.
+                Note:
+                  Done in place and the input is used up so use a copy if the input
+                  matrix is needed.
+            """
+            supported = ['mview_f','mview_d']
+            if self.type not in supported:
+                print('Matrix must be of type mview_f or mview_d')
+                return
+            n=self.rowlength
+            m=self.collength
+            if m != n:
+                print('Matrix must be square')
+                return
+            retval=1.0
+            for i in range(n):
+                T=self[i:n,i:n]
+                k=T.colview(0).maxmgvalindx
+                if k != 0:
+                    retval = -retval
+                    T.eros(0,k)
+                pvt=T[0,0]
+                if pvt == 0.0:
+                    return 0.0
+                else:
+                    retval *= pvt 
+                vp=T.rowview(0)
+                for j in range(1,T.rowlength):
+                    scl=-T[j,0]/pvt
+                    T.rowview(j).axpy(scl,vp)
+            return retval
+        @property
+        def plu(self):
+            """ Calculate an LU decomposition with a row permutation vector
+               for square Matrix A of size 'n' and type real, float.
+               This operation is done out of place
+                A.plu will return (a tuple)
+                  an permutation (index) vector of length n (call it p)
+                  a lower triangular matrix of size n (call it L)
+                  an upper triangular matrix of size n (call it U)
+                such that A.permute(p) will be equal to L.prod(U)
+            """
+            p=Block('block_vi',self.collength).vector.ramp(0,1)
+            L=self.empty.identity
+            U=self.copy
+            supported = ['mview_f','mview_d']
+            if U.type not in supported:
+                print('Matrix must be of type mview_f or mview_d')
+                return
+            n=U.rowlength
+            m=U.collength
+            if m != n:
+                print('Matrix must be square')
+                return
+            for k in range(n-1):
+                pk=U.colview(k)[k:n].maxmgvalindx
+                if pk != 0:
+                    U.eros(k,k+pk)
+                    t=p[k]
+                    p[k]=p[k+pk]
+                    p[k+pk]=t
+                pvt=U[k,k]
+                if pvt == 0.0:
+                    return 0.0 
+                U[k+1:n,k] /= pvt
+                uc=U.colview(k)[k+1:n];ur=U.rowview(k)[k+1:n]
+                # to do in place use nopu else use product.
+                U[k+1:n,k+1:n].nopu(uc,ur)
+                # U[k+1:n,k+1:n] -= U[k+1:n,k].prod(U[k,k+1:n])
+            for i in range(1,n):
+                for j in range(i):
+                    L[i,j]=U[i,j]
+                    U[i,j]=0
+            return (p,L,U)
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """
@@ -1562,6 +1695,40 @@ class Block (object):
             else:
                 print('Input views must be float vectors of the same precision')
                 return False
+        def permute(self,p,*major):
+            f={'mview_f':vsip_mpermute_once_f,'mview_d':vsip_mpermute_once_d}
+            if p.type != 'vview_vi':
+                print('First input argument must be of type vview_vi')
+                return
+            pc=p.copy
+            if self.type not in ['mview_d','mview_f']:
+                print('permute currently only supported for real, float, matrix')
+                return
+            if len(major) == 1 and major[0] == 'COL':
+                if p.length != self.rowlength:
+                    print('Length of permutation vector must be equal to row length')
+                    return
+                f[self.type](self.view,VSIP_COL,pc.view,self.view)
+            else: #do by ROW
+                if p.length != self.collength:
+                    print('Length of permutation vector must be equal to column length')
+                    return
+                f[self.type](self.view,VSIP_ROW,pc.view,self.view)
+            return self
+        @property
+        def permuteTranspose(self):
+            """Return a permutation vector which is the equivalent of a transpose
+               of the permutation matrix represented by the calling view. 
+               Done out-of-place. Input vector not modified.
+               Input and output vectors both of type vview_vi
+            """
+            if self.type != 'vview_vi':
+                print('permuteTranspose method only works for vectors of type vview_vi')
+                return
+            p=self.empty
+            for i in range(p.length):
+                p[self[i]]=i
+            return p
         # Signal Processing
         @property
         def fftip(self):
@@ -1724,16 +1891,6 @@ class Block (object):
                 return
         #
         # General Square Solver
-        @property
-        def lud(self): #Function not done. should return tuple of (L,U) where A=LU
-            if 'mview' in self.type:
-                m=self.collength; n=self.rowlength
-            else:
-                print('Input must be a matrix')
-                return
-            if m != n:
-                print('Matrix must be square')
-                return
         @property
         def lu(self):
             """
