@@ -260,6 +260,28 @@ class Block (object):
                 print('View of type <:'+self.type+':> not supported by identity')
                 return False
         #support functions
+        def gather(self,v,indx):
+            if 'vview' not in self.type:
+                print('Gather only works with a vector calling view')
+                return
+            f = {'cmview_d':vsip_cmgather_d, 'cmview_f':vsip_cmgather_f, 
+                 'cvview_d':vsip_cvgather_d, 'cvview_f':vsip_cvgather_f,
+                 'mview_d':vsip_mgather_d, 'mview_f':vsip_mgather_f,
+                 'vview_d':vsip_vgather_d, 'vview_f':vsip_vgather_f,
+                 'vview_i':vsip_vgather_i, 'vview_si':vsip_vgather_si,
+                 'vview_uc':vsip_vgather_uc,
+                 'vview_mi':vsip_vgather_mi, 'vview_vi':vsip_vgather_vi}
+            if 'vview_vi' == indx.type and 'vview' in v.type:
+                f[v.type](v.view,indx.view,self.view)
+                return self
+            elif 'vview_mi' == indx.type and 'mview' in v.type:
+                f[v.type](v.view,indx.view,self.view)
+                return self
+            else:
+                print('Argument list of types<:'+
+                self.type+':>,<:'+v.type+':>,<:'+indx.type+\
+                ':> not supported for gather')
+                return          
         def subview(self,*vals):
             """usage:
                Using Slice (pyJvsip slice does not support negatives at this time):
@@ -380,6 +402,34 @@ class Block (object):
             else: #should not be able to get here
                 print('object not supported for subview')
                 return False
+        def submatrix(self,rows,cols,*vals):
+            if isinstance(rows,int) and isinstance(cols,int):
+                m=self.collength-1
+                n=self.rowlength-1
+                if len(vals) > 0 and 'COL' in vals[0]:
+                    retval=Block(self.block.type,m*n).bind(0,1,m,m,n)
+                else:
+                    retval=Block(self.block.type,m*n).bind(0,n,m,1,n)
+                retval[0:rows,0:cols]=self[0:rows,0:cols]
+                retval[rows:m,0:cols]=self[rows+1:m+1,0:cols]
+                retval[0:rows,cols:n]=self[0:rows,cols+1:n+1]
+                retval[rows:m,cols:n]=self[rows+1:m+1,cols+1:n+1]
+                return retval
+            elif 'vview_vi' == rows.type and 'vview_vi' == cols.type:
+                m = rows.length
+                n = cols.length
+                if len(vals) > 0 and 'COL' in vals[0]:
+                    retval=Block(self.block.type,m*n).bind(0,1,m,m,n)
+                else:
+                    retval=Block(self.block.type,m*n).bind(0,n,m,1,n)
+                for i in range(n):
+                    v=retval.colview(i)
+                    v.gather(self.colview(i),rows)
+                return retval
+            
+            else:
+                print('Submatrix uses vector views of type vector index')
+                return
         @property
         def attrib(self):
             attr=vsip.getattrib(self.view)
@@ -509,7 +559,21 @@ class Block (object):
             b=vsip.getblock(v)
             newB = B.otherBlock(t,(b,l))
             return cls(v,newB)
-        #view attributeso.
+        @property
+        def mrowview(self):
+            if 'vview' in self.type:
+                return self.block.bind(self.offset,1,1,self.stride,self.length)
+            else:
+                print('The mrowview method only works with a vview input')
+                return
+        @property
+        def mcolview(self):
+            if 'vview' in self.type:
+                return self.block.bind(self.offset,self.stride,self.length,1,1)
+            else:
+                print('The mcolview method only works with a vview input')
+                return
+        #view attributes.
         @property
         def offset(self):
             return vsip.getoffset(self.view)
@@ -1355,14 +1419,14 @@ class Block (object):
                 o=t.offset
                 for i in range(self.collength):
                     t.putoffset(i*s+o) 
-                    t += x[i] * y
+                    t.axpy(x[i],y)
             else: #do by COL
                 t=self.colview(0)
                 s=self.rowstride
                 o=t.offset
                 for i in range(self.rowlength):
                     t.putoffset(i*s+o)
-                    t += y[i]*x
+                    t.axpy(y[i],x)
             return self
         def nopu(self,x,y):
             """
@@ -1389,14 +1453,14 @@ class Block (object):
                 o=t.offset
                 for i in range(self.collength):
                     t.putoffset(i*s+o) 
-                    t -= x[i] * y
+                    t.axpy(-x[i],y)
             else: #do by COL
                 t=self.colview(0)
                 s=self.rowstride
                 o=t.offset
                 for i in range(self.rowlength):
                     t.putoffset(i*s+o)
-                    t -= y[i]*x
+                    t.axpy(-y[i],x)
             return self
         def eroa(self,rFrom,rTo):
             """Elementary Row Operation Add (rows)
@@ -1527,6 +1591,38 @@ class Block (object):
                     L[i,j]=U[i,j]
                     U[i,j]=0
             return (p,L,U)
+        def lsolve(self,xy):
+            if 'mview' in xy.type:
+                print('Method usolve only works with vector argument')
+                return
+            if 'vview' in self.type:
+                print('Calling view must be a (upper diagonal) matrix')
+                return
+            if self.rowlength != self.collength or self.rowlength != xy.length:
+                print('Calling view must be square with size equal to argument length')
+                return
+            n=self.rowlength
+            xy[0] /= self[0,0]
+            for i in range(1,n):
+                y0=xy[i]
+                xy[i] = (y0 - self.rowview(i)[0:i].dot(xy[0:i]))/self[i,i]
+            return xy             
+        def usolve(self,xy):
+            if 'mview' in xy.type:
+                print('Method usolve only works with vector argument')
+                return
+            if 'vview' in self.type:
+                print('Calling view must be a (upper diagonal) matrix')
+                return
+            if self.rowlength != self.collength or self.rowlength != xy.length:
+                print('Calling view must be square with size equal to argument length')
+                return
+            n=self.rowlength-1
+            xy[n] /= self[n,n]
+            for i in range(n-1,-1,-1):
+                y0=xy[i]
+                xy[i] = (y0 - self.rowview(i)[i+1:n+1].dot(xy[i+1:n+1]))/self[i,i]
+            return xy            
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """
@@ -1701,10 +1797,13 @@ class Block (object):
                 print('First input argument must be of type vview_vi')
                 return
             pc=p.copy
-            if self.type not in ['mview_d','mview_f']:
-                print('permute currently only supported for real, float, matrix')
+            if self.type not in ['vview_f','vview_d','mview_d','mview_f']:
+                print('permute currently only supported for real, float, views')
                 return
-            if len(major) == 1 and major[0] == 'COL':
+            if 'vview' in self.type:
+                self.mcolview.permute(p,'ROW')
+                return self
+            elif len(major) == 1 and major[0] == 'COL':
                 if p.length != self.rowlength:
                     print('Length of permutation vector must be equal to row length')
                     return
@@ -2031,7 +2130,9 @@ class Block (object):
                     M=[]
                     for j in range(rl):
                         M.append(_fmtfunc(fmt1,fmt2,self[i,j]))
-                    if i == 0:
+                    if i == 0 and cl==1:
+                        s += "["+" ".join(M) + "]\n"
+                    elif i== 0:
                         s += "["+" ".join(M) + ";\n"
                     elif i < cl-1:
                         s += " "+" ".join(M) + ";\n"
@@ -2118,7 +2219,7 @@ class Block (object):
     def __len__(self):
         return self.length
 
-class Rand (object):
+class Rand(object):
     """ 
        Usage
             randObj=Rand(aType,aSeed)
