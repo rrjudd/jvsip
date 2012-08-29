@@ -2,6 +2,7 @@ from vsip import *
 from vsipElementwiseElementary import *
 from vsipElementwiseManipulation import *
 import vsiputils as vsip
+from math import sqrt as pv_sqrt
 def getType(v):
     """
         Returns a tuple with type information.
@@ -138,9 +139,13 @@ class Block (object):
             """
             tdict={'block_f':'cblock_f','block_d':'cblock_d',
                    'cblock_f':'block_f','cblock_d':'block_d'}
+            cdict={'real_d':'block_d','real_f':'block_f',\
+                   'imag_d':'block_d','imag_f':'block_f'}
             t = self.block.type
             if t in Block.blockTypes and b != 0:
                 t=tdict[t]
+            elif cdict.has_key(t):
+                t=cdict[t]
             length = len(self)
             if self.type in Block.vectorTypes:
                 attr=(0,1,length)
@@ -403,6 +408,20 @@ class Block (object):
                 print('object not supported for subview')
                 return False
         def submatrix(self,rows,cols,*vals):
+            """ Ussage for matrix m:
+                   s = m.submatrix(rows, cols) 
+                or 
+                   s=m.submatrix(rows,cols,'COL')
+                The method submatrix will create a new data space and copy the indicated
+                submatrix values into the new matrix.
+                The default submatrix is row major. If the last argument is a string
+                which contains 'COL' then the submatrix will be column major. 
+                If the index entries (rows,cols) are an integer then the submatrix will
+                be the input matrix values minus the row and column crossing at (rows,cols).
+                If rows and cols are vectors of type vector index then the submatrix will
+                of size (rows.length, cols.length) and will consist of the entries contained
+                in the rows and columns indicated by the indices in the index vector.
+            """
             if isinstance(rows,int) and isinstance(cols,int):
                 m=self.collength-1
                 n=self.rowlength-1
@@ -1027,7 +1046,7 @@ class Block (object):
         @property
         def conj(self):
             vsip.conj(self.view,self.view)
-            return self  
+            return self
         @property   
         def cumsum(self):
             vsip.cumsum(self.view,self.view)
@@ -1040,7 +1059,44 @@ class Block (object):
             attrs=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
             vsip.euler(self.view,out.view)
-            return out      
+            return out 
+        @property
+        def mag(self):
+            f = {'cmview_d':'vsip_cmmag_d(self.view,out.view)',
+                 'cmview_f':'vsip_cmmag_f(self.view,out.view)',
+                 'cvview_d':'vsip_cvmag_d(self.view,out.view)',
+                 'cvview_f':'vsip_cvmag_f(self.view,out.view)',
+                 'mview_d': 'vsip_mmag_d(self.view,out.view)',
+                 'mview_f': 'vsip_mmag_f(self.view,out.view)',
+                 'vview_d': 'vsip_vmag_d(self.view,out.view)',
+                 'vview_f': 'vsip_vmag_f(self.view,out.view)',
+                 'vview_i': 'vsip_vmag_i(self.view,out.view)',
+                 'vview_si':'vsip_vmag_si(self.view,out.view)'}
+            if f.has_key(self.type):
+                if 'cmview' in self.type or 'cvview' in self.type:
+                    attr=self.compactAttrib(1)
+                else:
+                    attr=self.compactAttrib(0)
+                out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
+                eval(f[self.type])
+                return out
+            else:
+                print('Type <:'+self.type+':> not recognized for magsq')
+                return
+        @property
+        def magsq(self):
+            f={'cvview_f':'vsip_vcmagsq_f(self.view,out.view)',
+               'cvview_d':'vsip_vcmagsq_d(self.view,out.view)',
+               'cmview_f':'vsip_mcmagsq_f(self.view,out.view)',
+               'cmview_d':'vsip_mcmagsq_d(self.view,out.view)'}
+            if f.has_key(self.type):
+                attr=self.compactAttrib(1)
+                out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
+                eval(f[self.type])
+                return out
+            else:
+                print('Type <:'+self.type+':> not recognized for magsq')
+                return
         def __neg__(self):
             vsip.neg(self.view,self.view)
         @property
@@ -1622,7 +1678,96 @@ class Block (object):
             for i in range(n-1,-1,-1):
                 y0=xy[i]
                 xy[i] = (y0 - self.rowview(i)[i+1:n+1].dot(xy[i+1:n+1]))/self[i,i]
-            return xy            
+            return xy 
+        @property
+        def norm2(self):
+            """This method is a property which returns the two norm norm
+            """
+            def eigB(A): #find Biggest eigenvalue
+                small=A.frobenius/1e16 
+                vk=0;   
+                xk=A.colview(0).empty.fill(0.0)
+                xk[0]=1 
+                for i in range(1000):
+                    axk=A.prod(xk)
+                    n=axk.norm2
+                    vkn=xk.jdot(axk).real
+                    chk=vkn-vk
+                    if chk < 0:
+                        chk = -chk
+                    if chk < small:
+                        return vkn
+                    else:
+                        vk = vkn
+                    xk=axk / n
+                return vkn
+            vSup=['vview_f','cvview_f','vview_d','cvview_d']
+            mSup=['mview_f','cmview_f','mview_d','cmview_d']
+            if self.type in vSup:
+                return pv_sqrt(self.jdot(self).real)
+            if self.type in mSup:
+                if self.collength >= self.rowlength:
+                    t=self.transview
+                    M=t.prodh(t)
+                else:
+                    M=self.prodh(self)
+                return pv_sqrt(eigB(M))
+            else:
+                print('Type <:'+self.type+':> not supported by norm2');
+                return
+        @property
+        def normFro(self):
+            """This method is a property which returns the Frobenius norm
+            """
+            f={'vview_f': 'pv_sqrt(self.sumsqval)',
+               'vview_d': 'pv_sqrt(self.sumsqval)',
+               'mview_f': 'pv_sqrt(self.sumsqval)',
+               'mview_d': 'pv_sqrt(self.sumsqval)',
+               'cvview_f':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)',
+               'cvview_d':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)',
+               'cmview_f':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)',
+               'cmview_d':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            else:
+                print('Type <:'+self.type+':> not recognized for frobenius')
+                return
+        @property
+        def norm1(self):
+            """This method is a property which returns the one norm
+            """
+            vSup=['vview_f','cvview_f','vview_d','cvview_d']
+            mSup=['mview_f','cmview_f','mview_d','cmview_d']
+            if self.type in vSup:
+                return self.mag.sumval
+            elif self.type in mSup:
+                mx=0
+                for i in range(self.rowlength):
+                    t=self.colview(i).norm1
+                    if t > mx:
+                        mx=t
+                return mx
+            else:
+                print('Type <:'+self.type+':> not supported by norm1')
+                return
+        @property
+        def normInf(self):
+            """This method is a property which returns the Infinity norm
+            """
+            vSup=['vview_f','cvview_f','vview_d','cvview_d']
+            mSup=['mview_f','cmview_f','mview_d','cmview_d']
+            if self.type in vSup:
+                return self.magval
+            elif self.type in mSup:
+                mx=0
+                for j in range(self.collength):
+                    t=self.rowview(j).norm1
+                    if t > mx:
+                        mx=t
+                return mx
+            else:
+                print('Type <:'+self.type+':> not supported by norm1')
+                return                          
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """
@@ -1708,14 +1853,18 @@ class Block (object):
                       ':> do not appear to be supported by function prod')
                 return False
         def prodh(self,other):
-            if 'cmview' in self.type and 'cmview' in other.type:
+            cSup=['cmview_f','cmview_d']
+            rSup=['mview_f','mview_d']
+            if (self.type in cSup) and (other.type in cSup):
                 n=other.collength
                 m=self.collength
                 retval = self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
                 vsip.prodh(self.view,other.view,retval.view)
                 return retval
+            elif (self.type in rSup) and (other.type in rSup):
+                return self.prodt(other)
             else:
-                print('Views must be a complex matrices')
+                print('Views must be both complex, or both real matrices')
                 return False
         def prodj(self,other):
             if 'cmview' in self.type and 'cmview' in other.type:
@@ -1736,7 +1885,7 @@ class Block (object):
                 return retval
             else:
                 print('Views must be matrices')
-                return False        
+                return False 
         @property
         def trans(self):
             if 'mview' in self.type:
