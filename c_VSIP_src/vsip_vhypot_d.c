@@ -10,31 +10,30 @@
 // product, or process disclosed, or represents that its use would    /
 // not infringe privately owned rights                                /
 **********************************************************************/
-/* $Id: vsip_vhypot_d.c,v 2.0 2003/02/22 15:19:14 judd Exp $ */
-/* Modified RJudd January 2, 1999 */
-/* to add rstride */
-/* Removed Tisdale error checking Sept 00 */
-
 #include<vsip.h>
 #include<vsip_vviewattributes_d.h>
 
-void (vsip_vhypot_d)(
-  const vsip_vview_d *a,
-  const vsip_vview_d *b,
-  const vsip_vview_d *r) {
-    {
-      /*define variables*/
-      /* register */ vsip_length n = r->length;
-      /* register */ vsip_stride ast = a->stride * a->block->rstride,
-                         bst = b->stride * b->block->rstride,
-                         rst = r->stride * r->block->rstride;
-      vsip_scalar_d *ap = (a->block->array) + a->offset * a->block->rstride,
-                    *bp = (b->block->array) + b->offset * b->block->rstride,
-                    *rp = (r->block->array) + r->offset * r->block->rstride;
-      /*end define*/
-      while(n-- > 0){
-        *rp = sqrt(*ap * *ap + *bp * *bp);
-        ap += ast; bp += bst; rp += rst; 
-      }
-    }
+void vsip_vhypot_d(
+     const vsip_vview_d *a,
+     const vsip_vview_d *b,
+     const vsip_vview_d *r) {
+   vsip_length n = r->length;
+   vsip_stride ast = a->stride * a->block->rstride,
+               bst = b->stride * b->block->rstride,
+               rst = r->stride * r->block->rstride;
+   vsip_scalar_d *ap = (a->block->array) + a->offset * a->block->rstride,
+                 *bp = (b->block->array) + b->offset * b->block->rstride,
+                 *rp = (r->block->array) + r->offset * r->block->rstride;
+   while(n-- > 0){
+      vsip_scalar_d a=fabs(*ap), b=fabs(*bp);
+      if (a == 0.0)
+         *rp = b;
+      else if (b == 0.0)
+         *rp = a;
+      else if (b < a)
+         *rp = a * (vsip_scalar_d)sqrt(1.0 + (b/a) * (b/a));
+      else
+         *rp = b * (vsip_scalar_d)sqrt(1.0 + (a/b) * (a/b));
+      ap += ast; bp += bst; rp += rst; 
+   }
 }

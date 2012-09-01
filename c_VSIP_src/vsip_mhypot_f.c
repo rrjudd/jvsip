@@ -10,8 +10,6 @@
 // product, or process disclosed, or represents that its use would    /
 // not infringe privately owned rights                                /
 **********************************************************************/
-/* $Id: vsip_mhypot_f.c,v 2.0 2003/02/22 15:18:57 judd Exp $ */
-
 #include<vsip.h>
 #include<vsip_mviewattributes_f.h>
 
@@ -54,7 +52,15 @@ void (vsip_mhypot_f)(
     while(n_mn-- > 0){
        vsip_length n = n_mj;
        while(n-- >0){
-         *rp = (vsip_scalar_f)sqrt(*ap * *ap + *bp * *bp);
+          vsip_scalar_f a=fabs(*ap), b=fabs(*bp);
+          if (a == 0.0)
+             *rp = b;
+          else if (b == 0.0)
+             *rp = a;
+          else if (b < a)
+             *rp = a * (vsip_scalar_f)sqrt(1.0 + (b/a) * (b/a));
+          else
+             *rp = b * (vsip_scalar_f)sqrt(1.0 + (a/b) * (a/b));
          ap += ast_mj; bp += bst_mj; rp += rst_mj;
        }
        ap0 += ast_mn; bp0 += bst_mn; rp0 += rst_mn;
