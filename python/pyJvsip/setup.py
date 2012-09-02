@@ -5,5 +5,5 @@ setup(name='pyJvsip',
       description='vector/matrix signal processing VSIP module',
       author='Randall Judd',
       author_email='rrjudd@me.com',
-      py_modules=['pyJvsip','vsipElementwiseElementary','vsipElementwiseManipulation'],
+      py_modules=['pyJvsip','vsipElementwiseElementary','vsipElementwiseManipulation','view.py'],
       )

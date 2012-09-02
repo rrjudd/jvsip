@@ -2,6 +2,7 @@
 %{
 #include "../../c_VSIP_src/vsip.h"
 #include "./c_src/pyVsip.h"
+#include "./c_src/vsipScalarFunctions.h"
 %}
 typedef enum { VSIP_MEM_NONE          = 0, VSIP_MEM_RDONLY        = 1, VSIP_MEM_CONST         = 2, VSIP_MEM_SHARED        = 3, VSIP_MEM_SHARED_RDONLY = 4, VSIP_MEM_SHARED_CONST  = 5 } vsip_memory_hint;
 typedef enum{ VSIP_TVX = 0, VSIP_TVY = 1, VSIP_TVZ = 2 }vsip_tvslice;
@@ -1735,6 +1736,50 @@ void vsip_cvfreqswap_f( const vsip_cvview_f*);
 void vsip_vfreqswap_f( const vsip_vview_f*);
 void vsip_cmfreqswap_f( const vsip_cmview_f*);
 void vsip_mfreqswap_f( const vsip_mview_f*);
+vsip_scalar_d vsip_acos_d(vsip_scalar_d);
+vsip_scalar_f vsip_acos_f(vsip_scalar_f);
+vsip_scalar_d vsip_asin_d(vsip_scalar_d);
+vsip_scalar_f vsip_asin_f(vsip_scalar_f);
+vsip_scalar_d vsip_atan_d(vsip_scalar_d);
+vsip_scalar_f vsip_atan_f(vsip_scalar_f);
+vsip_scalar_d vsip_ceil_d(vsip_scalar_d);
+vsip_scalar_f vsip_ceil_f(vsip_scalar_f);
+vsip_scalar_d vsip_cos_d(vsip_scalar_d);
+vsip_scalar_f vsip_cos_f(vsip_scalar_f);
+vsip_scalar_d vsip_cosh_d(vsip_scalar_d);
+vsip_scalar_f vsip_cosh_f(vsip_scalar_f);
+vsip_scalar_d vsip_sin_d(vsip_scalar_d);
+vsip_scalar_f vsip_sin_f(vsip_scalar_f);
+vsip_scalar_d vsip_sinh_d(vsip_scalar_d);
+vsip_scalar_f vsip_sinh_f(vsip_scalar_f);
+vsip_scalar_d vsip_atan2_d(vsip_scalar_d, vsip_scalar_d);
+vsip_scalar_f vsip_atan2_f(vsip_scalar_f, vsip_scalar_f);
+vsip_scalar_d vsip_hypot_d(vsip_scalar_d, vsip_scalar_d);
+vsip_scalar_f vsip_hypot_f(vsip_scalar_f, vsip_scalar_f);
+vsip_scalar_d vsip_exp_d(vsip_scalar_d);
+vsip_scalar_f vsip_exp_f(vsip_scalar_f);
+vsip_scalar_d vsip_floor_d(vsip_scalar_d);
+vsip_scalar_f vsip_floor_f(vsip_scalar_f);
+vsip_scalar_d vsip_log_d(vsip_scalar_d);
+vsip_scalar_f vsip_log_f(vsip_scalar_f);
+vsip_scalar_d vsip_log10_d(vsip_scalar_d);
+vsip_scalar_f vsip_log10_f(vsip_scalar_f);
+vsip_scalar_d vsip_mag_d(vsip_scalar_d);
+vsip_scalar_f vsip_mag_f(vsip_scalar_f);
+vsip_scalar_d vsip_pow_d(vsip_scalar_d,vsip_scalar_d);
+vsip_scalar_f vsip_pow_f(vsip_scalar_f, vsip_scalar_f);
+vsip_scalar_d vsip_sqrt_d(vsip_scalar_d);
+vsip_scalar_f vsip_sqrt_f(vsip_scalar_f);
+vsip_scalar_d vsip_tan_d(vsip_scalar_d);
+vsip_scalar_f vsip_tan_f(vsip_scalar_f);
+vsip_scalar_d vsip_tanh_d(vsip_scalar_d);
+vsip_scalar_f vsip_tanh_f(vsip_scalar_f);
+vsip_scalar_d vsip_exp10_d(vsip_scalar_d);
+vsip_scalar_f vsip_exp10_f(vsip_scalar_f);
+vsip_scalar_d vsip_min_d(vsip_scalar_d,vsip_scalar_d);
+vsip_scalar_f vsip_min_f(vsip_scalar_f,vsip_scalar_f);
+vsip_scalar_d vsip_max_d(vsip_scalar_d,vsip_scalar_d);
+vsip_scalar_f vsip_max_f(vsip_scalar_f,vsip_scalar_f);
 vsip_index* vindexptr();
 void vindexfree(vsip_index*);
 vsip_index vindexptrToInt(vsip_index*);
