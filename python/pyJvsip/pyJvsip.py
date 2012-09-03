@@ -2,7 +2,6 @@ from vsip import *
 from vsipElementwiseElementary import *
 from vsipElementwiseManipulation import *
 import vsiputils as vsip
-from math import sqrt as pv_sqrt
 def getType(v):
     """
         Returns a tuple with type information.
@@ -1684,7 +1683,7 @@ class Block (object):
             """This method is a property which returns the two norm norm
             """
             def eigB(A): #find Biggest eigenvalue
-                small=A.frobenius/1e16 
+                small=A.normFro/1e16 
                 vk=0;   
                 xk=A.colview(0).empty.fill(0.0)
                 xk[0]=1 
@@ -1704,14 +1703,14 @@ class Block (object):
             vSup=['vview_f','cvview_f','vview_d','cvview_d']
             mSup=['mview_f','cmview_f','mview_d','cmview_d']
             if self.type in vSup:
-                return pv_sqrt(self.jdot(self).real)
+                return vsip_sqrt_d(self.jdot(self).real)
             if self.type in mSup:
                 if self.collength >= self.rowlength:
                     t=self.transview
                     M=t.prodh(t)
                 else:
                     M=self.prodh(self)
-                return pv_sqrt(eigB(M))
+                return vsip_sqrt_d(eigB(M))
             else:
                 print('Type <:'+self.type+':> not supported by norm2');
                 return
@@ -1719,14 +1718,14 @@ class Block (object):
         def normFro(self):
             """This method is a property which returns the Frobenius norm
             """
-            f={'vview_f': 'pv_sqrt(self.sumsqval)',
-               'vview_d': 'pv_sqrt(self.sumsqval)',
-               'mview_f': 'pv_sqrt(self.sumsqval)',
-               'mview_d': 'pv_sqrt(self.sumsqval)',
-               'cvview_f':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)',
-               'cvview_d':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)',
-               'cmview_f':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)',
-               'cmview_d':'pv_sqrt(self.realview.sumsqval + self.imagview.sumsqval)'}
+            f={'vview_f': 'vsip_sqrt_d(self.sumsqval)',
+               'vview_d': 'vsip_sqrt_d(self.sumsqval)',
+               'mview_f': 'vsip_sqrt_d(self.sumsqval)',
+               'mview_d': 'vsip_sqrt_d(self.sumsqval)',
+               'cvview_f':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
+               'cvview_d':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
+               'cmview_f':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
+               'cmview_d':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
