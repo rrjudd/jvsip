@@ -108,10 +108,10 @@ vsip_scalar_f vsip_log10_f(vsip_scalar_f a){
     return (vsip_scalar_f)log10(a);
 }
 vsip_scalar_d vsip_mag_d(vsip_scalar_d a){
-    return (vsip_scalar_d)abs(a);
+    return (vsip_scalar_d)fabs(a);
 }
 vsip_scalar_f vsip_mag_f(vsip_scalar_f a){
-    return (vsip_scalar_f)abs(a);
+    return (vsip_scalar_f)fabs(a);
 }
 vsip_scalar_d vsip_pow_d(vsip_scalar_d x, vsip_scalar_d y){
     return (vsip_scalar_d)pow(x,y);
