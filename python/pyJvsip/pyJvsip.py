@@ -253,6 +253,14 @@ class Block (object):
             else:
                 print('aScalar must be a type which agrees with vector view')
             return self
+        def randn(self,seed):
+            gen=Rand('PRNG',seed)
+            gen.randn(self)
+            return self   
+        def randu(self,seed):
+            gen=Rand('PRNG',seed)
+            gen.randu(self)
+            return self   
         @property
         def identity(self):
             f=['cmview_d','cmview_f','mview_d','mview_f','mview_i','mview_si']
@@ -2418,7 +2426,7 @@ class Rand(object):
             f[t](self.rng,a.view)
             return a
         else:
-            print('Not a supported type')
+            print('Not a supported type for rand')
     def randu(self,a):
         t=vsip.getType(a.view)[1]
         f = {'cvview_d':vsip_cvrandu_d,
@@ -2429,7 +2437,7 @@ class Rand(object):
             f[t](self.rng,a.view)
             return a
         else:
-            print('Not a supported type')
+            print('Not a supported type for rand')
 class FFT (object):
     """
        Usage:
