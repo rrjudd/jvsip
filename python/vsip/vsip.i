@@ -3,6 +3,7 @@
 #include "../../c_VSIP_src/vsip.h"
 #include "./c_src/pyVsip.h"
 #include "./c_src/vsipScalarFunctions.h"
+#include "./c_src/jvsip.h"
 %}
 typedef enum { VSIP_MEM_NONE          = 0, VSIP_MEM_RDONLY        = 1, VSIP_MEM_CONST         = 2, VSIP_MEM_SHARED        = 3, VSIP_MEM_SHARED_RDONLY = 4, VSIP_MEM_SHARED_CONST  = 5 } vsip_memory_hint;
 typedef enum{ VSIP_TVX = 0, VSIP_TVY = 1, VSIP_TVZ = 2 }vsip_tvslice;
@@ -902,7 +903,7 @@ void vsip_mvprod_d ( const vsip_mview_d * , const vsip_vview_d * , const vsip_vv
 void vsip_mvprod_f ( const vsip_mview_f * , const vsip_vview_f * , const vsip_vview_f * ) ;
 void vsip_permute_destroy ( vsip_permute* ) ;
 void vsip_polar_d ( vsip_cscalar_d , vsip_scalar_d* , vsip_scalar_d* ) ;
-void vsip_polar_f ( vsip_cscalar_f a , vsip_scalar_f* , vsip_scalar_f* ) ;
+void vsip_polar_f ( vsip_cscalar_f, vsip_scalar_f* , vsip_scalar_f* ) ;
 void vsip_qrd_getattr_d ( const vsip_qr_d * , vsip_qr_attr_d * ) ;
 void vsip_qrd_getattr_f ( const vsip_qr_f * , vsip_qr_attr_f * ) ;
 void vsip_rcfftmop_d ( const vsip_fftm_d* , const vsip_mview_d* , const vsip_cmview_d* ) ;
@@ -1787,6 +1788,10 @@ vsip_cscalar_f py_rcvjdot_f(const vsip_vview_f*, const vsip_cvview_f*);
 vsip_cscalar_f py_crvjdot_f(const vsip_cvview_f* , const vsip_vview_f*);
 vsip_cscalar_d py_rcvjdot_d(const vsip_vview_d*, const vsip_cvview_d*);
 vsip_cscalar_d py_crvjdot_d(const vsip_cvview_d* , const vsip_vview_d*);
+void jvsip_mprod2_d( const vsip_mview_d*, const vsip_mview_d*b, const vsip_mview_d*);
+void jvsip_mprod2_f( const vsip_mview_f*, const vsip_mview_f*b, const vsip_mview_f*);
+void jvsip_cmprod2_d( const vsip_cmview_d*, const vsip_cmview_d*b, const vsip_cmview_d*);
+void jvsip_cmprod2_f( const vsip_cmview_f*, const vsip_cmview_f*, const vsip_cmview_f*);
 PyObject *cvcopyToList_f(vsip_cvview_f *);
 PyObject *cvcopyToList_d(vsip_cvview_d *);
 PyObject *vcopyToList_f(vsip_vview_f *);
