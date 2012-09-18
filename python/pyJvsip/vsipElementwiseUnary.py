@@ -35,7 +35,7 @@ def arg(a,b):
        'cmview_dmview_d':vsip_marg_d}
     t=a.type+b.type
     if f.has_key(t):
-        if isSizeCompatible(a,b): 
+        if __isSizeCompatible(a,b): 
             f[t](a.view,b.view)
             return b
         else:

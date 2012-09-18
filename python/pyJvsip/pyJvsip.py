@@ -1,6 +1,7 @@
 from vsip import *
 from vsipElementwiseElementary import *
 from vsipElementwiseManipulation import *
+from vsipElementwiseUnary import *
 import vsiputils as vsip
 def getType(v):
     """
@@ -307,7 +308,7 @@ class Block (object):
                    vs=v.subview(slice(2,len(v),1)) is the same as
                    vs=v.subview(2) or vs=v.subview(2,len(v)-1) or vs=v.subview(2,len(v),1)
                    and
-                   vs=v.subview(slice(2,8,2) is the same as 
+                   vs=v.subview(slice(2,8,2) is the same ags 
                    vs=v.subview(2,7,2)
                For matrix first pair is top left corner (row,col)
                For matrix second pair is bottom right corner (row,col) inclusive
@@ -1805,26 +1806,29 @@ class Block (object):
                 print('Views must ba matrices of the same type')
                 return False
         def outer(self,*args):
+            f={'cvview_f':'vsip_cvouter_f(vsip_cmplx_f(a.real,a.imag),\
+                           self.view,other.view, retval.view)',
+               'cvview_d':'vsip_cvouter_d(vsip_cmplx_d(a.real,a.imag),\
+                           self.view,other.view, retval.view)',
+               'vview_f':'vsip_vouter_f(a,self.view,other.view,retval.view)',
+               'vview_d':'vsip_vouter_d(a,self.view,other.view,retval.view)'}
             if len(args) == 1:
-               aScalar = 1
-               other = args[0]
+                a = 1.0
+                other = args[0]
             elif len(args) == 2:
-               aScalar = args[0]
-               other = args[1]
+                a = args[0]
+                other = args[1]
             else:
-               print('To many arguments to outer')
-               print('Method for outer takes either a scalar and a vector, or a vector')
-               return False
-            if 'vview' in self.type and 'vview' in other.type:
-                if self.type == other.type:
-                    rl=other.length
-                    cl=self.length
-                    retval=self.block.otherBlock(self.block.type,rl*cl).bind((0,rl,cl,1,rl))
-                    vsip.outer(aScalar,self.view,other.view,retval.view)
-                    return retval
-                else:
-                    print('Input views must be vectors of the same type')
-                    return False
+                print('To many arguments to outer')
+                print('Method for outer takes either a scalar and a vector, or a vector')
+                return False
+            if (self.type == other.type) and \
+                  ('vview' in self.type) and \
+                    f.has_key(self.type):
+                cl=self.length; rl=other.length
+                retval=self.block.otherBlock(self.block.type,rl*cl).bind(0,rl,cl,1,rl)
+                eval(f[self.type])
+                return retval
             else:
                 print('Input views must be vectors')
                 return False
