@@ -2399,6 +2399,10 @@ def div(a,b,c):
         vsip_rscmdiv_d, vsip_rscmdiv_f, vsip_rscvdiv_d, vsip_rscvdiv_f, vsip_smdiv_d, vsip_smdiv_f,
         vsip_svdiv_d, vsip_svdiv_f, vsip_vdiv_d, vsip_vdiv_f, vsip_vsdiv_d, vsip_vsdiv_f
        """
+    def _cOverCscalar(v,s,r):
+        m=s.r * s.r + s.i * s.i
+        s.r /= m; s.i /= -m
+        mul(s,v,r)
     t0=getType(a)[1]
     t1=getType(b)[1]
     t=t0+t1 
@@ -2438,8 +2442,15 @@ def div(a,b,c):
          'vview_fvview_f':vsip_vdiv_f,
          'vview_dscalar':vsip_vsdiv_d,
          'vview_fscalar':vsip_vsdiv_f}
+    g = {'cvview_fcscalar_f': _cOverCscalar,
+         'cvview_dcscalar_d': _cOverCscalar,
+         'cmview_fcscalar_f': _cOverCscalar,
+         'cmview_dcscalar_d': _cOverCscalar}
     if f.has_key(t):
         f[t](a,b,c)
+        return c
+    elif g.has_key(t):
+        g[t](a,b,c)
         return c
     else:
         print('Type <:' + t + ':> not recognized for div')

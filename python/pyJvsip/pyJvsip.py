@@ -838,7 +838,7 @@ class Block (object):
             if len(attr) > 3:
                 n *= attr[4]
             return n
-        # window functions
+        # window (data taper) functions
         def cheby(self,ripple):
             t=vsip.getType(self.view)[1]
             f={'vview_f':vsip_vcreate_cheby_f,
@@ -978,7 +978,7 @@ class Block (object):
                 return False                 
         def __div__(self,other):
             retval=self.copy
-            retval /=other
+            retval /= other
             return retval
         def __rdiv__(self,other): # other / self
             if 'scalar' in vsip.getType(other):
@@ -1053,10 +1053,16 @@ class Block (object):
             return out      
         @property
         def conj(self):
+            """
+            Done In Place. For out of place use self.copy.conj.
+            """
             vsip.conj(self.view,self.view)
             return self
         @property   
         def cumsum(self):
+            """
+            Done In Place
+            """
             vsip.cumsum(self.view,self.view)
             return self
         @property
@@ -1494,7 +1500,7 @@ class Block (object):
             return self
         def nopu(self,x,y):
             """
-               Outer Product Update where you want a minus instead of a +:
+               Outer Product Update where you want a minus instead of a :
                  A -= x.outer(y)
                  where:
                     A in R(m,n); x in R(m), y in R(n)
@@ -1910,6 +1916,9 @@ class Block (object):
                 return False
         @property
         def herm(self):
+            """
+            Done out of place. For in place use transview + conj
+            """
             if 'cmview' in self.type:
                 m=self.rowlength
                 n=self.collength
