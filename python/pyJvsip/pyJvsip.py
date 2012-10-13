@@ -1395,7 +1395,7 @@ class Block (object):
                This is commonly called a saxpy (daxpy) for single (double) precision
                       y = a * x + y
                or (algorithmically)
-                      self += a * x
+                      y += a * x
                where self and x are vectors of the same type and a is a scalar.
                This is an in-place operation
                For C VSIPL this is implemented using functionality vsip_vsma_p
@@ -1404,13 +1404,13 @@ class Block (object):
             if 'cvview_d' in self.type:
                 t = self.type + 'cscalar_d' + x.type
                 if type(a) is complex:
-                    alpha=vsip_cmplx_d(a.real + a.imag)
+                    alpha=vsip_cmplx_d(a.real, a.imag)
                 else:
                     alpha = vsip_cmplx_d(a,0)
             elif 'cvview_f' in self.type:
                 t = self.type + 'cscalar_f' + x.type
                 if type(a) is complex:
-                    alpha=vsip_cmplx_f(a.real + a.imag)
+                    alpha=vsip_cmplx_f(a.real, a.imag)
                 else:
                     alpha = vsip_cmplx_f(a,0)
             elif type(a) is float or type(a) is int:
