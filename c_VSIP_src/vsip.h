@@ -1301,6 +1301,7 @@ void vsip_vfill_f ( vsip_scalar_f, const vsip_vview_f* ) ;
 void vsip_vfill_i ( vsip_scalar_i, const vsip_vview_i* ) ;
 void vsip_vfill_si ( vsip_scalar_si, const vsip_vview_si* ) ;
 void vsip_vfill_uc ( vsip_scalar_uc, const vsip_vview_uc* ) ;
+void vsip_vfill_vi ( vsip_scalar_vi, const vsip_vview_vi* ) ;
 void vsip_vgather_d ( const vsip_vview_d*, const vsip_vview_vi*, const vsip_vview_d* ) ;
 void vsip_vgather_f ( const vsip_vview_f*, const vsip_vview_vi*, const vsip_vview_f* ) ;
 void vsip_vgather_i ( const vsip_vview_i* x, const vsip_vview_vi*, const vsip_vview_i* ) ;
