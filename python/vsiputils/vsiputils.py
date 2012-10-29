@@ -2548,7 +2548,7 @@ def alltrue(a):
        'vview_bl':vsip_valltrue_bl}
     t=getType(a)[1]
     if f.has_key(t):
-        return 1 == f[1](a)
+        return 1 == f[t](a)
     else:
         print('Type ' + t + ' not a defined type for alltrue')
         return False
@@ -2557,7 +2557,7 @@ def anytrue(a):
        'vview_bl':vsip_vanytrue_bl}
     t=getType(a)[1]
     if f.has_key(t):
-        return 1 == f[1](a)
+        return 1 == f[t](a)
     else:
         print('Type ' + t + ' not a defined type for anytrue')
         return False
@@ -2676,7 +2676,7 @@ def fill(a_scalar,a_view):
             'scalarvview_d':vsip_vfill_d,
             'scalarvview_f':vsip_vfill_f,
             'scalarvview_i':vsip_vfill_i,
-            'scalarvview_vi':vsip_vfill_si,
+            'scalarvview_vi':vsip_vfill_vi,
             'scalarvview_uc':vsip_vfill_uc}
     if t2[1] in ct: #do complex
         myType=str()
