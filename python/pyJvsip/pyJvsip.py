@@ -1076,6 +1076,17 @@ class Block (object):
             return out 
         @property
         def mag(self):
+            """
+              View property mag is an out-of-place operation
+              Usage:
+                 y=x.mag
+              Where:
+                 x is a view object
+                 y is a view object of type real and precision and size the same as x
+              Note:
+                 y is created internal to the property. If x is real then y.type 
+                 is the same as x.type. If x is complex then y is real.
+            """
             f = {'cmview_d':'vsip_cmmag_d(self.view,out.view)',
                  'cmview_f':'vsip_cmmag_f(self.view,out.view)',
                  'cvview_d':'vsip_cvmag_d(self.view,out.view)',
@@ -1095,10 +1106,20 @@ class Block (object):
                 eval(f[self.type])
                 return out
             else:
-                print('Type <:'+self.type+':> not recognized for magsq')
+                print('Type <:'+self.type+':> not recognized for mag')
                 return
         @property
         def magsq(self):
+            """
+              View property magsq is an out-of-place operation
+              Usage:
+                 y=x.magsq
+              Where:
+                 x is a complex view object
+                 y is a view object of type real and precision and size the same as x
+              Note:
+                 y is created internal to the property.
+            """
             f={'cvview_f':'vsip_vcmagsq_f(self.view,out.view)',
                'cvview_d':'vsip_vcmagsq_d(self.view,out.view)',
                'cmview_f':'vsip_mcmagsq_f(self.view,out.view)',
@@ -1146,7 +1167,235 @@ class Block (object):
             """ returns a scalar
             """
             return vsip.sumsqval(self.view)   
+        #logical operations
+        @property
+        def alltrue(self):
+            f={'mview_bl':vsip_malltrue_bl,
+               'vview_bl':vsip_valltrue_bl}
+            t=self.type
+            if f.has_key(t):
+                return 1 == f[t](self.view)
+            else:
+                print('Type ' + t + ' not a defined type for alltrue')
+        @property
+        def anytrue(self):
+            f={'mview_bl':vsip_malltrue_bl,
+               'vview_bl':vsip_valltrue_bl}
+            t=self.type
+            if f.has_key(t):
+                return 1 == f[t](self.view)
+            else:
+                print('View type must be boolean for alltrue')
+        def leq(self,other):
+            if 'mview' in self.type:
+                m=self.collength
+                n=self.rowlength
+                out=create('mview_bl',m,n)
+            else: #must be vector
+                out=create('vview_bl',self.length)
+            t=self.type+other.type
+            f={'mview_dmview_d':vsip_mleq_d,
+               'mview_fmview_f':vsip_mleq_f,
+               'vview_dvview_d':vsip_vleq_d,
+               'vview_fvview_f':vsip_vleq_f,
+               'vview_ivview_i':vsip_vleq_i,
+               'vview_sivview_si':vsip_vleq_si,
+               'vview_ucvview_uc':vsip_vleq_uc}
+            if f.has_key(t):
+                f[t](self.view,other.view,out.view)
+                return out
+            else:
+                print('Argument type <:'+t+':> not recognized for leq')
+            return
+        def lge(self,other):
+            if 'mview' in self.type:
+                m=self.collength
+                n=self.rowlength
+                out=create('mview_bl',m,n)
+            else: #must be vector
+                out=create('vview_bl',self.length)
+            t=self.type+other.type
+            f={'mview_dmview_d':vsip_mlge_d,
+               'mview_fmview_f':vsip_mlge_f,
+               'vview_dvview_d':vsip_vlge_d,
+               'vview_fvview_f':vsip_vlge_f,
+               'vview_ivview_i':vsip_vlge_i,
+               'vview_sivview_si':vsip_vlge_si,
+               'vview_ucvview_uc':vsip_vlge_uc}
+            if f.has_key(t):
+                f[t](self.view,other.view,out.view)
+                return out
+            else:
+                print('Argument type <:'+t+':> not recognized for lge')
+            return
+        def lgt(self,other):
+            if 'mview' in self.type:
+                m=self.collength
+                n=self.rowlength
+                out=create('mview_bl',m,n)
+            else: #must be vector
+                out=create('vview_bl',self.length)
+            t=self.type+other.type
+            f={'mview_dmview_d':vsip_mlgt_d,
+               'mview_fmview_f':vsip_mlgt_f,
+               'vview_dvview_d':vsip_vlgt_d,
+               'vview_fvview_f':vsip_vlgt_f,
+               'vview_ivview_i':vsip_vlgt_i,
+               'vview_sivview_si':vsip_vlgt_si,
+               'vview_ucvview_uc':vsip_vlgt_uc}
+            if f.has_key(t):
+                f[t](self.view,other.view,out.view)
+                return out
+            else:
+                print('Argument type <:'+t+':> not recognized for lgt')
+            return
+        def lle(self,other):
+            if 'mview' in self.type:
+                m=self.collength
+                n=self.rowlength
+                out=create('mview_bl',m,n)
+            else: #must be vector
+                out=create('vview_bl',self.length)
+            f={'mview_dmview_d':vsip_mlle_d,
+               'mview_fmview_f':vsip_mlle_f,
+               'vview_dvview_d':vsip_vlle_d,
+               'vview_fvview_f':vsip_vlle_f,
+               'vview_ivview_i':vsip_vlle_i,
+               'vview_sivview_si':vsip_vlle_si,
+               'vview_ucvview_uc':vsip_vlle_uc}
+            t=self.type+other.type
+            if f.has_key(t):
+                f[t](self.view,other.view,out.view)
+                return out
+            else:
+                print('Argument type <:'+t+':> not recognized for lle')
+            return
+        def llt(self,other):
+            if 'mview' in self.type:
+                m=self.collength
+                n=self.rowlength
+                out=create('mview_bl',m,n)
+            else: #must be vector
+                out=create('vview_bl',self.length)
+            t=self.type+other.type
+            f={'mview_dmview_d':vsip_mllt_d,
+               'mview_fmview_f':vsip_mllt_f,
+               'vview_dvview_d':vsip_vllt_d,
+               'vview_fvview_f':vsip_vllt_f,
+               'vview_ivview_i':vsip_vllt_i,
+               'vview_sivview_si':vsip_vllt_si,
+               'vview_ucvview_uc':vsip_vllt_uc}
+            if f.has_key(t):
+                f[t](self.view,other.view,out.view)
+                return out
+            else:
+                print('Argument type <:'+t+':> not recognized for llt')
+            return
+        def lne(self,other):   
+            if 'mview' in self.type:
+                m=self.collength
+                n=self.rowlength
+                out=create('mview_bl',m,n)
+            else: #must be vector
+                out=create('vview_bl',self.length)
+            f={'mview_dmview_d':vsip_mlne_d,
+               'mview_fmview_f':vsip_mlne_f,
+               'vview_dvview_d':vsip_vlne_d,
+               'vview_fvview_f':vsip_vlne_f,
+               'vview_ivview_i':vsip_vlne_i,
+               'vview_sivview_si':vsip_vlne_si,
+               'vview_ucvview_uc':vsip_vlne_uc}
+            t=self.type+other.type
+            if f.has_key(t):
+                f[t](self.view,other.view,out.view)
+                return out
+            else:
+                print('Argument type <:'+t+':> not recognized for lne')
+            return
         # Selection Operations
+        @property
+        def indexbool(self):
+            if 'mview_bl' in self.type:
+                out = create('vview_mi',self.rowlength*self.collength)
+            elif 'vview_bl' in self.type:
+                out = create('vview_vi',self.length)
+            else:
+                print('Method indexbool is only defined for views of type mview_bl or vview_bl')
+                return
+            if self.anytrue:
+                f={'mview_bl':vsip_mindexbool,'vview_bl':vsip_vindexbool}
+                f[self.type](self.view,out.view)
+                return out
+            else:
+                print('Method indexbool should only be called if there is at least one true entry')
+                return
+        def scatter(self,other,indx):
+            """
+              Usage:
+                  self.scatter(other,indx)
+              This function scatters self into other governed by indx
+              View other is returned as a convienience
+            """
+            t=self.type+other.type+indx.type
+            f={'cvview_dcmview_dvview_mi': vsip_cmscatter_d, 
+               'cvview_fcmview_fvview_mi': vsip_cmscatter_f, 
+               'cvview_dcvview_dvview_vi': vsip_cvscatter_d, 
+               'cvview_fcvview_fvview_fi': vsip_cvscatter_f, 
+               'vview_dmview_dvview_mi':   vsip_mscatter_d, 
+               'vview_fmview_fvview_mi':   vsip_mscatter_f, 
+               'vview_dvview_dvview_vi':   vsip_vscatter_d, 
+               'vview_fvview_fvview_vi':   vsip_vscatter_f, 
+               'vview_ivview_ivview_vi':   vsip_vscatter_i, 
+               'vview_sivview_sivview_vi': vsip_vscatter_si, 
+               'vview_ucvview_ucvview_vi': vsip_vscatter_uc}
+            if f.has_key(t):
+                f[t](self.view,other.view,indx.view)
+                return other
+            else:
+                print('Input types <:'+t+':> not recognized for scatter')
+                return;
+        def gather(self,indx,other):
+            """
+              Usage:
+                  self.gather(other,indx)
+              This function gathers self into other governed by indx
+              View other is returned as a convienience
+            """
+            t=self.type+other.type+indx.type
+            f={'cmview_dvview_micvview_d': vsip_cmgather_d,
+               'cmview_fvview_micvview_f': vsip_cmgather_f,
+               'cvview_dvview_vicvview_d': vsip_cvgather_d,
+               'cvview_fvview_vicvview_f': vsip_cvgather_f,
+               'mview_dvview_mivview_d':   vsip_mgather_d,
+               'mview_fvview_mivview_f':   vsip_mgather_f,
+               'vview_dvview_vivview_d':   vsip_vgather_d,
+               'vview_fvview_vivview_f':   vsip_vgather_f,
+               'vview_ivview_vivview_d':   vsip_vgather_i,
+               'vview_sivview_vivview_si': vsip_vgather_si,
+               'vview_ucvview_vivview_uc': vsip_vgather_uc,
+               'vview_mivview_vivview_mi': vsip_vgather_mi,
+               'vview_vivview_vivview_vi': vsip_vgather_vi}
+            if f.has_key(t):
+                f[t](self.view,indx.view,other.view)
+                return other
+            else:
+                print('Input types <:'+t+':> not recognized for other')
+                return;
+        def indxFill(self,indx,alpha):
+            if 'mview' in self.type:
+                lnth = self.rowlength * self.collength
+                x=create(self.type,1,1)
+                x[0,0]=alpha
+                x.putrowlength(self.rowlength); x.putcollength(self.collength)
+                x.putrowstride(0);x.putcolstride(0)
+            else:
+                lnth = self.length
+                x=create(self.type,1)
+                x[0]=alpha
+                x.putlength(self.length)
+                x.putstride(0)
+            x.scatter(self,indx)
+            return self
         @property
         def maxvalindx(self):
             """
@@ -1997,6 +2246,69 @@ class Block (object):
             for i in range(p.length):
                 p[self[i]]=i
             return p
+        def sort(self,*vals):
+            """
+              Usage:
+                indx=self.sort(mode,dir,fill,indx)
+              Default:
+                indx=self.sort() -is the same as-  indx = self.sort('BYVALUE','ASCENDING')
+                indx=self.sort(mode) -is the same as- index = self.sort(mode,'ASCENDING')
+              Where:
+                self is a vector
+                mode is a string 'BYVALUE' or 'BYMAGNITUDE'
+                dir is a string 'ASCENDING' or 'DESCENDING'
+                fill is a bool True or False
+                indx is an index vector the same length as self
+              All arguments are optional but must be entered in order; for instance if 
+              dir is included then mode must be included. 
+              The bool fill indicates whether the indx vector is initialized or not. 
+              If no indx vector is included and fill is False then no indx vector is returned. 
+              If no indx vector is included and fill is True (or not included) then an indx vector 
+              is created and initialized and returned (with the sorted indices).
+              If an indx vector is included then it is initialized (or not depending on fill), and the
+              indices are sorted. If an index is included, indx is returned as a convenience.   
+            """
+            t=self.type
+            f={'vview_f':vsip_vsortip_f,'vview_d':vsip_vsortip_d}
+            m={'BYVALUE':0,'BYMAGNITUDE':1}
+            d={'DESCENDING':1,'ASCENDING':0}
+            nvals=len(vals)
+            if nvals > 4:
+                print('Maximum number of arguments for sort is 4');
+                return
+            if nvals > 0:
+                mode=m[vals[0]]
+            else:
+                mode=m['BYVALUE']
+            if nvals > 1:
+                dir=d[vals[1]]
+            else:
+                dir=d['ASCENDING']
+            if nvals > 2:
+                if vals[2]:
+                    fill=1
+                else:
+                    fill=0
+            else:
+                fill = 1
+            if nvals == 4:
+                if vals[3].type == 'vview_vi':
+                    idx = vals[3]
+                    if fill:
+                        idx.ramp(0,1)
+                else:
+                    print('index vector for sort must be of type vview_vi')
+                    return
+            elif fill:
+                idx = create('vview_vi',self.length)
+            else:
+                idx = None
+            if f.has_key(t):
+                f[t](self.view,mode,dir,fill,idx.view)
+                return idx
+            else:
+                print('Type <:' + t + ':> not supported by sort')
+                return        
         # Signal Processing
         @property
         def fftip(self):
