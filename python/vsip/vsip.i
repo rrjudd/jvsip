@@ -5,7 +5,9 @@
 #include "./c_src/vsipScalarFunctions.h"
 #include "./c_src/jvsip.h"
 %}
-typedef enum { VSIP_MEM_NONE          = 0, VSIP_MEM_RDONLY        = 1, VSIP_MEM_CONST         = 2, VSIP_MEM_SHARED        = 3, VSIP_MEM_SHARED_RDONLY = 4, VSIP_MEM_SHARED_CONST  = 5 } vsip_memory_hint;
+typedef enum { VSIP_SORT_ASCENDING = 0, VSIP_SORT_DESCENDING = 1 } vsip_sort_dir;
+typedef enum { VSIP_SORT_BYVALUE = 0, VSIP_SORT_BYMAGNITUDE = 1 } vsip_sort_mode;
+typedef enum { VSIP_MEM_NONE = 0, VSIP_MEM_RDONLY = 1, VSIP_MEM_CONST = 2, VSIP_MEM_SHARED = 3, VSIP_MEM_SHARED_RDONLY = 4, VSIP_MEM_SHARED_CONST  = 5 } vsip_memory_hint;
 typedef enum{ VSIP_TVX = 0, VSIP_TVY = 1, VSIP_TVZ = 2 }vsip_tvslice;
 typedef enum { VSIP_TMYX = 0, VSIP_TMZX = 1, VSIP_TMZY = 2 } vsip_tmslice;
 typedef enum{ VSIP_TTRANS_NOP = 0, VSIP_TTRANS_YX = 1, VSIP_TTRANS_ZY = 2, VSIP_TTRANS_ZX = 3, VSIP_TTRANS_YXZY = 4, VSIP_TTRANS_YXZX = 5 }vsip_ttrans;
@@ -20,7 +22,7 @@ typedef enum { VSIP_FFT_IP = 0, VSIP_FFT_OP = 1 } vsip_fft_place;
 typedef enum { VSIP_ALG_SPACE = 0, VSIP_ALG_TIME  = 1, VSIP_ALG_NOISE = 2 } vsip_alg_hint;
 typedef enum { VSIP_TR_LOW = 0, VSIP_TR_UPP = 1 } vsip_mat_uplo;
 typedef enum { VSIP_SVD_UVNOS = 0, VSIP_SVD_UVFULL = 1, VSIP_SVD_UVPART = 2 } vsip_svd_uv;
-typedef enum { VSIP_NONSYM = 0, VSIP_SYM_EVEN_LEN_ODD   = 1, VSIP_SYM_EVEN_LEN_EVEN  = 2 } vsip_symmetry;
+typedef enum { VSIP_NONSYM = 0, VSIP_SYM_EVEN_LEN_ODD = 1, VSIP_SYM_EVEN_LEN_EVEN  = 2 } vsip_symmetry;
 typedef enum { VSIP_SUPPORT_FULL  = 0, VSIP_SUPPORT_SAME = 1, VSIP_SUPPORT_MIN  = 2 } vsip_support_region;
 typedef enum { VSIP_BIASED = 0, VSIP_UNBIASED = 1 } vsip_bias;
 typedef enum { VSIP_STATE_NO_SAVE = 1, VSIP_STATE_SAVE = 2 } vsip_obj_state;
@@ -1099,6 +1101,7 @@ void vsip_vfill_f ( vsip_scalar_f , const vsip_vview_f* ) ;
 void vsip_vfill_i ( vsip_scalar_i , const vsip_vview_i* ) ;
 void vsip_vfill_si ( vsip_scalar_si , const vsip_vview_si* ) ;
 void vsip_vfill_uc ( vsip_scalar_uc , const vsip_vview_uc* ) ;
+void vsip_vfill_vi ( vsip_scalar_vi , const vsip_vview_vi* ) ;
 void vsip_vgather_d ( const vsip_vview_d* , const vsip_vview_vi* , const vsip_vview_d* ) ;
 void vsip_vgather_f ( const vsip_vview_f* , const vsip_vview_vi* , const vsip_vview_f* ) ;
 void vsip_vgather_i ( const vsip_vview_i* x , const vsip_vview_vi* , const vsip_vview_i* ) ;
