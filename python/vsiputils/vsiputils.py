@@ -2190,7 +2190,7 @@ def add(a,b,c):
           'vview_fcvview_f': vsip_rcvadd_f,
           'vview_dcvview_d':vsip_rcvadd_d,
           'mview_fcmview_f': vsip_rcmadd_f,
-          'vview_dcvview_d':vsip_rcmadd_d,
+          'mview_dcmview_d':vsip_rcmadd_d,
           'cscalar_dcmview_d':vsip_csmadd_d,
           'cscalar_fcmview_f':vsip_csmadd_f,
           'cscalar_dcvview_d':vsip_csvadd_d,
