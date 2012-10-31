@@ -1,0 +1,24 @@
+This directory contains development code for decomposition routines. 
+While jvsip has most (VSIPL Defined) decomposition routines they can probably be 
+improved and there is curently an incomplete SVD implementation. 
+In addition eigenvalue decompositions would be useful in pyJvsip although though
+they are not defined in the VSIPL specification.
+
+Although I am working on development the code is also useful as examples for pyJvsip
+as well
+
+Note I have started using notebooks
+http://ipython.org/ipython-doc/dev/interactive/htmlnotebook.html
+Notebooks supports better documentation and an enhanced development environment. 
+Notebook files are Those named <file-name>NB.ipynb. Generally I will export the python content 
+if it is usefull to a  <file-name>.py file for regular imports, and I may print the notebook
+files to <file-name.pdf> so the rendered metadata can be displayed for users without notebook installed.
+
+Note that I have overwriten a notebook file by mistake using the .py file. If you drag a .py into the notebook
+dashboard it will import it using the same name and store it over the notebook file; probably not what you
+want. So I started placing a NB as part of the file name to ensure I don't overwright the docmentation 
+version with the module version. (I was saved by time machine; but better to not do this).
+
+Note underneath notebook has support for markdown 
+http://daringfireball.net/projects/markdown/
+which supports, among other things, some math notation using latex.
