@@ -18,7 +18,7 @@ def getType(v):
             return ('vsip','scalar','scalar_mi')
         if 'vsip_cscalar_f' in repr(v):
             return ('vsip','scalar','cscalar_f')
-        if 'vsip_scalar_mi' in repr(v):
+        if 'vsip_cscalar_d' in repr(v):
             return ('vsip','scalar','cscalar_d')
     elif 'pyJvsip' in repr(v):
         if 'View' in repr(v):
@@ -1179,34 +1179,47 @@ class Block (object):
                 print('Type ' + t + ' not a defined type for alltrue')
         @property
         def anytrue(self):
-            f={'mview_bl':vsip_malltrue_bl,
-               'vview_bl':vsip_valltrue_bl}
+            f={'mview_bl':vsip_manytrue_bl,
+               'vview_bl':vsip_vanytrue_bl}
             t=self.type
             if f.has_key(t):
                 return 1 == f[t](self.view)
             else:
                 print('View type must be boolean for alltrue')
         def leq(self,other):
+            if isinstance(other,complex) or 'cscalar' in repr(other):
+                print('complex scalars not supported at this time for leq')
+                return
+            t0=getType(other)
+            if 'scalar' in t0[1]:
+                t = self.type+t0[1]
+            else:
+                t=self.type+other.type
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
-            t=self.type+other.type
             f={'mview_dmview_d':vsip_mleq_d,
                'mview_fmview_f':vsip_mleq_f,
                'vview_dvview_d':vsip_vleq_d,
                'vview_fvview_f':vsip_vleq_f,
                'vview_ivview_i':vsip_vleq_i,
                'vview_sivview_si':vsip_vleq_si,
-               'vview_ucvview_uc':vsip_vleq_uc}
+               'vview_ucvview_uc':vsip_vleq_uc
+               }
+            fs={'vview_fscalar':vsip_svleq_f,
+                'vview_dscalar':vsip_svleq_d}
             if f.has_key(t):
                 f[t](self.view,other.view,out.view)
                 return out
+            elif fs.has_key(t):
+                fs[t](other,self.view,out.view)
+                return out
             else:
                 print('Argument type <:'+t+':> not recognized for leq')
-            return
+                return
         def lge(self,other):
             if 'mview' in self.type:
                 m=self.collength

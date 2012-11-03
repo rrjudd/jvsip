@@ -1131,8 +1131,10 @@ void vsip_vinvclip_f ( const vsip_vview_f* , vsip_scalar_f , vsip_scalar_f , vsi
 void vsip_vinvclip_i ( const vsip_vview_i* , vsip_scalar_i , vsip_scalar_i , vsip_scalar_i , vsip_scalar_i , vsip_scalar_i , const vsip_vview_i* ) ;
 void vsip_vinvclip_si ( const vsip_vview_si* , vsip_scalar_si , vsip_scalar_si , vsip_scalar_si , vsip_scalar_si , vsip_scalar_si , const vsip_vview_si* ) ;
 void vsip_vinvclip_uc ( const vsip_vview_uc* , vsip_scalar_uc , vsip_scalar_uc , vsip_scalar_uc , vsip_scalar_uc , vsip_scalar_uc , const vsip_vview_uc* ) ;
-void vsip_vkron_d ( vsip_scalar_d , const vsip_vview_d * , const vsip_vview_d * , const vsip_mview_d * ) ;
-void vsip_vkron_f ( vsip_scalar_f , const vsip_vview_f * , const vsip_vview_f * , const vsip_mview_f * ) ;
+void vsip_vkron_d ( vsip_scalar_d, const vsip_vview_d * , const vsip_vview_d * , const vsip_mview_d * ) ;
+void vsip_vkron_f ( vsip_scalar_f, const vsip_vview_f * , const vsip_vview_f * , const vsip_mview_f * ) ;
+void vsip_svleq_d ( vsip_scalar_d, const vsip_vview_d* , const vsip_vview_bl* ) ;
+void vsip_svleq_f ( vsip_scalar_f, const vsip_vview_f* , const vsip_vview_bl* ) ;
 void vsip_vleq_d ( const vsip_vview_d* , const vsip_vview_d* , const vsip_vview_bl* ) ;
 void vsip_vleq_f ( const vsip_vview_f* , const vsip_vview_f* , const vsip_vview_bl* ) ;
 void vsip_vleq_i ( const vsip_vview_i* , const vsip_vview_i* , const vsip_vview_bl* ) ;
