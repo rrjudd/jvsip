@@ -1421,7 +1421,8 @@ class Block (object):
               'mview_i':'vsip_mmaxval_i(self.view,idx)',
               'vview_i':'vsip_vmaxval_i(self.view,idx)',
               'mview_si':'vsip_mmaxval_si(self.view,idx)',
-              'vview_si':'vsip_vmaxval_si(self.view,idx)'}
+              'vview_si':'vsip_vmaxval_si(self.view,idx)',
+              'vview_vi':'vsip_vmaxval_vi(self.view.idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -1448,7 +1449,8 @@ class Block (object):
               'mview_i':'vsip_mmaxval_i(self.view,None)',
               'vview_i':'vsip_vmaxval_i(self.view,None)',
               'mview_si':'vsip_mmaxval_si(self.view,None)',
-              'vview_si':'vsip_vmaxval_si(self.view,None)'}
+              'vview_si':'vsip_vmaxval_si(self.view,None)',
+              'vview_vi':'vsip_vmaxval_vi(self.view,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -1542,7 +1544,8 @@ class Block (object):
               'mview_i':'vsip_mminval_i(self.view,idx)',
               'vview_i':'vsip_vminval_i(self.view,idx)',
               'mview_si':'vsip_mminval_si(self.view,idx)',
-              'vview_si':'vsip_vminval_si(self.view,idx)'}
+              'vview_si':'vsip_vminval_si(self.view,idx)',
+              'vview_vi':'vsip_vminval_vi(self.view,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -1569,7 +1572,8 @@ class Block (object):
               'mview_i':'vsip_mminval_i(self.view,None)',
               'vview_i':'vsip_vminval_i(self.view,None)',
               'mview_si':'vsip_mminval_si(self.view,None)',
-              'vview_si':'vsip_vminval_si(self.view,None)'}
+              'vview_si':'vsip_vminval_si(self.view,None)',
+              'vview_vi':'vsip_vminval_vi(self.view,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
