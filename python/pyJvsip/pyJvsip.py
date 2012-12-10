@@ -988,6 +988,35 @@ class Block (object):
                 retval=other.copy
                 vsip.div(retval.view,self.view,retval.view)
                 return retval
+        #vector-matrix elementwise multiply by row or col
+        def mmul(self,other):
+            """
+            mmul(A) expects the calling view to be of type float vector and A to be of 
+            the same precision and type float matrix. Matrix A is returned as a convenience.
+            Note that view A has an a major attribute. If it is set to COL then the calling vector
+            is multiplied elementwise by COL, otherwise it is multiplied by ROW
+            Note lengths must be conformant.
+            If one is unsure of the state of the major attribute it should be set
+            For instance
+            v.mmul(A.ROW)
+            or
+            v.mmul(A.COL)
+            """
+            f={'cvview_dcmview_d':vsip_cvmmul_d,
+               'cvview_fcmview_f':vsip_cvmmul_f,
+               'vview_dcmview_d':vsip_rvcmmul_d,
+               'vview_fcmview_f':vsip_rvcmmul_f,
+               'vview_dmview_d':vsip_vmmul_d,
+               'vview_fmview_f':vsip_vmmul_f}
+            t=self.type+other.type
+            if f.has_key(t):
+                if other.__major is 'COL':
+                    f[t](self.view,other.view,VSIP_COL,other.view)
+                else:
+                    f[t](self.view,other.view,VSIP_ROW,other.view)
+                return other
+            else:
+                print('Type <:' + t + ':> not recognized for method mmul')
         # Elementary math functions
         @property
         def acos(self):

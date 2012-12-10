@@ -204,7 +204,6 @@ def prodGT(A,i,j,c,s):
     A.colview(i)[:] = c * a1 + s * a2
     A.colview(j)[:] = c * a2 -s.conjugate() * a1
     return A
-
 # householder routines
 def QRD_inPlace(A):
     """
@@ -547,21 +546,142 @@ def grs_corners(b1):
     while i >= 0 and v_bool[i] == 0:
         i -= 1
     return(i+1,j+1)
-def grs_zeroChase(L,B,R):
-    b=B.diagview(0)
-    bm=B.diagview(-1)
-    bp=B.diagview(1) 
-    for i in range(0,bp.length):
-        c,s,r=givensCoef(b[i],bp[i])
-        b[i] = r
-        bp[i]=0
-        bm[i]=s*b[i+1]
-        b[i+1]*=c
-        gtProd(i,i+1,c,s,R)
-    for i in range(0,bm.length-1):
-        c,s,r=givensCoef(b[i],bm[i])
-        b[i]=r
-        bm[i]=0
-        bp[i] = b[i+1] * s
-        b[i+1] *= c
-        prodG(L,i,i+1,c,s)
+def diagPhaseToZero(L,B):
+    """ 
+        To phase shift Just the main diagonal entries of a matrix B so they are real (imaginary zero)
+        use this routine.
+    """
+    d = B.diagview(0)
+    for i in range(d.length):
+        ps=d[i] #phase shift
+        if ps.imag != 0.0: #ignore if already real
+            m = pv.vsip_hypot_d(ps.real,ps.imag)
+            ps /= m
+            L.colview(i)[:] *= ps
+            B.rowview(i)[:] *= ps # if B is strictly diagonal don't need this step
+            d[i] = m # to clean up any non-zero residue
+def biDiagPhaseToZero(L,d,f,R,eps0):
+    """ 
+    For a Bidiagonal matrix B This routine uses subview vectors
+      `d=B.diagview(0)`
+    and 
+      `f=B.diagview(1)`
+    and phase shifts vectors d and f so that B has zero complex part.
+    Matrices L and R are the update matrices.
+    """
+    for i in range(d.length):
+        ps=d[i]
+        m=pv.vsip_hypot_d(ps.real,ps.imag)
+        if m > eps0:
+            ps /= m
+            L.colview(i)[:] *= ps
+            d[i] = m
+            if i < f.length:
+                f[i] *= ps.conjugate()
+        else:
+            d[i] = 0.0;
+    grs_zero_checkAndSet(eps0,d,f)          
+    for i in range(f.length-1):
+        j=i+1
+        ps = f[i]
+        if ps.imag != 0.0:
+            m=pv.vsip_hypot_d(ps.real,ps.imag)
+            ps /= m
+            L.colview(j)[:] *= ps.conjugate()
+            R.rowview(j)[:] *= ps
+            f[i] = m;
+            f[j] *= ps
+    i=f.length -1
+    ps=f[i]
+    j=i+1
+    if ps.imag != 0.0:
+        m=pv.vsip_hypot_d(ps.real,ps.imag)
+        ps /= m
+        f[i]=m
+        L.colview(j)[:] *= ps.conjugate()
+        R.rowview(j)[:] *= ps
+def grs_zeroRow(L,d,f):
+    """
+    To use this we assume a matrix B with a zero on the diagonal(0).
+    d is a subview of the diagonal starting with a nonzero entry
+    f is a subview of the first superdiagonal (diagonal(1)) and has no zeros.
+    L is a subview of the the left update matrix we call L0 here.
+    if B.diagview(0) has a zero entry at index j let i = j+1.
+    and if B.diagview(1) has a zero entry at index k then
+    d = B.diagview(0)[i:k+1]
+    f = B.diagview(1)[i-1:k]
+    Note: if k is the last entry then f=B.diagview(1)[i=1:] and k is the length of f
+    Note we expect no zero entries in the subviews d and f.
+    The subview L is then
+    L=L0[:,i-1:k+1]
+    """
+    if 'cvview' in d.type or 'cvview' in f.type:
+        print('grs_zeroRow only works for real vectors')
+        return
+    c,s,r=givensCoef(d[0],f[0])
+    f[0]=0;d[0]=r
+    t= - f[1] * s; f[1] *= c
+    prodG(L,1,0,c,s)
+    for i in range(1,d.length-1):
+        c,s,r=givensCoef(d[i],t)
+        prodG(L,i+1,0,c,s)
+        d[i]=r; t=-f[i+1] * s; f[i+1] *= c
+    c,s,r=givensCoef(d[d.length-1],t)
+    d[d.length-1] = r
+    prodG(L,d.length,0,c,s)
+def gks_mu(d2,f1,d3,f2):
+    """
+    For this algorithm we expect float or double, real numbers
+    """
+    cu=d2 * d2 + f1 * f1
+    cl=d3 * d3 + f2 * f2
+    cd = d2 * f2
+    D = (cu * cl - cd * cd)
+    T = (cu + cl)
+    root = pv.vsip_sqrt_d(T*T - 4 * D)
+    lambda1 = (T + root)/(2.); lambda2 = (T - root)/(2.)
+    if abs(lambda1 - cl) < abs(lambda2 - cl):
+        mu = lambda1
+    else:
+        mu = lambda2
+    return mu 
+def gks_Step(L,d,f,R):
+    if 'cvview' in d.type or 'cvview' in f.type:
+        print('Input vector views must be of type real; Fail for gks_Step')
+        return     
+    n=d.length
+    #initial step
+    if n >= 3:
+        mu = gks_mu(d[n-2],f[n-3],d[n-1],f[n-2])
+    elif n == 2:
+        mu = gks_mu(d[n-2],0.0,d[n-1],f[n-2])
+    else:
+        mu = gks_mu(d[0],0.0,0.0,0.0)
+    x1=d[0]; x1 *= x1; x1 -= mu
+    x2 = d[0] * f[0]
+    c,s,r=givensCoef(x1,x2)
+    t=d[0] * c + s * f[0]; f[0] *= c; f[0] -= s * d[0]; d[0] = t;
+    t=s * d[1]; d[1] *= c;
+    gtProd(0,1,c,s,R)
+    for i in range(n-2):
+        j=i+1; k=i+2
+        #step
+        c,s,r = givensCoef(d[i],t)
+        d[i]=r;
+        t=c * d[j] - s * f[i]; f[i] *=c ;f[i]+=s*d[j];d[j]=t
+        t=s * f[j]; f[j] *= c;
+        prodG(L,i,j,c,s)
+        #step
+        c,s,r=givensCoef(f[i],t)
+        f[i]=r
+        t=c * d[j] + s * f[j]; f[j] *= c; f[j] -= s * d[j]; d[j] = t
+        t=s * d[k]; d[k] *= c;
+        gtProd(j,k,c,s,R)
+    #final step
+    i=n-2; j=n-1
+    c,s,r = givensCoef(d[i],t)
+    d[i]=r; 
+    t= c * d[j] - s * f[i];
+    f[i] *= c; f[i] += s * d[j]; 
+    d[j]=t
+    prodG(L,i,j,c,s)
