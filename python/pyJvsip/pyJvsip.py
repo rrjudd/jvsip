@@ -1270,13 +1270,27 @@ class Block (object):
             else:
                 print('Argument type <:'+t+':> not recognized for lge')
             return
-        def lgt(self,other):
+        def lgt(self,input):
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
+            if isinstance(input,float):
+                if 'mview' in self.type:
+                    other = create(self.type,1,1)
+                    other[0,0]=input
+                    attr=other.attrib
+                    attr['rowstride']=0; attr['colstride']=0
+                    attr['rowlength']=n; attr['collength']=m
+                    other.putattrib(attr)
+                else:
+                    other = create(self.type,1)
+                    other[0]=input
+                    other.putstride=0;other.putlength=self.length
+            else:
+                other=input
             t=self.type+other.type
             f={'mview_dmview_d':vsip_mlgt_d,
                'mview_fmview_f':vsip_mlgt_f,
@@ -1291,13 +1305,27 @@ class Block (object):
             else:
                 print('Argument type <:'+t+':> not recognized for lgt')
             return
-        def lle(self,other):
+        def lle(self,input):
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
+            if isinstance(input,float):
+                if 'mview' in self.type:
+                    other = create(self.type,1,1)
+                    other[0,0]=input
+                    attr=other.attrib
+                    attr['rowstride']=0; attr['colstride']=0
+                    attr['rowlength']=n; attr['collength']=m
+                    other.putattrib(attr)
+                else:
+                    other = create(self.type,1)
+                    other[0]=input
+                    other.putstride=0;other.putlength=self.length
+            else:
+                other=input
             f={'mview_dmview_d':vsip_mlle_d,
                'mview_fmview_f':vsip_mlle_f,
                'vview_dvview_d':vsip_vlle_d,
@@ -1312,13 +1340,27 @@ class Block (object):
             else:
                 print('Argument type <:'+t+':> not recognized for lle')
             return
-        def llt(self,other):
+        def llt(self,input):
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
+            if isinstance(input,float):
+                if 'mview' in self.type:
+                    other = create(self.type,1,1)
+                    other[0,0]=input
+                    attr=other.attrib
+                    attr['rowstride']=0; attr['colstride']=0
+                    attr['rowlength']=n; attr['collength']=m
+                    other.putattrib(attr)
+                else:
+                    other = create(self.type,1)
+                    other[0]=input
+                    other.putstride=0;other.putlength=self.length
+            else:
+                other=input
             t=self.type+other.type
             f={'mview_dmview_d':vsip_mllt_d,
                'mview_fmview_f':vsip_mllt_f,

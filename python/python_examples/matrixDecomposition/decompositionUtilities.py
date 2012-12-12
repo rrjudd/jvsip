@@ -518,8 +518,11 @@ def givensBidiag(A):
 def grs_zero_checkAndSet(e,b0,b1):
     s=e * (b0[0:b1.length].mag + b0[1:].mag)
     indx_bool = b1.mag.llt(s)
-    if indx_bool.anytrue:
+    if indx_bool.anytrue: #check super diagonal
         b1.indxFill(indx_bool.indexbool,0.0)
+    indx_bool = b0.mag.llt(e)
+    if indx_bool.anytrue: #check main diagonal
+        b0.indxFill(indx_bool.indexbool,0.0)
 def grs_corners(b1):
     """
        Functionality
@@ -528,12 +531,10 @@ def grs_corners(b1):
            v is a real vector of type float or double
            i,j are indices into the vector
        result of 
-           v[i,j] will be vector with no zero elements
+           v[i:j] will be vector with no zero elements
            v[j:] will be a vector with all zero elements
-       Note:
-          to use with complex v use
-          i,j=grs_corners(v.mag)
-       
+       Note v is the first super-diagonal of a bidiagonal matrix.
+       The corresponding main diagonal, d, will be d[i:j+1]
     """
     v_bool=b1.leq(0.0)
     j=v_bool.length-1
@@ -605,6 +606,7 @@ def grs_zeroRow(L,d,f):
     To use this we assume a matrix B with a zero on the diagonal(0).
     d is a subview of the diagonal starting with a nonzero entry
     f is a subview of the first superdiagonal (diagonal(1)) and has no zeros.
+    If d[0] is at (i,i) in B then f[0] is at (i-1,i) in B
     L is a subview of the the left update matrix we call L0 here.
     if B.diagview(0) has a zero entry at index j let i = j+1.
     and if B.diagview(1) has a zero entry at index k then
