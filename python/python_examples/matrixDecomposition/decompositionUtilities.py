@@ -515,33 +515,40 @@ def givensBidiag(A):
             prodG(U,i,j+i,c,s)
             gProd(0,j,c,s,TC)
     return (U,B,VH)
-def grs_zero_checkAndSet(e,b0,b1):
+def svdZeroCheckAndSet(e,b0,b1):
+    """ 
+     Usage:
+        svdZeroCheckAndSet(eps,d,f)
+     Where:
+        eps0 is a small number we consider to be (close to) zero
+        d is a vector view representing the main diagonal of an upper bidiagonal matrix
+        f is a vector view representing the superdiagonal in an upper bidiagonal matrix.
+      In the svd algorithm this checks the superdiagonal for small numbers which 
+      may be set to zero. If found, set to zero.
+    """
     s=e * (b0[0:b1.length].mag + b0[1:].mag)
     indx_bool = b1.mag.llt(s)
     if indx_bool.anytrue: #check super diagonal
         b1.indxFill(indx_bool.indexbool,0.0)
-    indx_bool = b0.mag.llt(e)
-    if indx_bool.anytrue: #check main diagonal
-        b0.indxFill(indx_bool.indexbool,0.0)
-def grs_corners(b1):
+def svdCorners(b1):
     """
        Functionality
-           i,j = grs_corners(v)
+           i,j = svdCorners(v)
        where 
            v is a real vector of type float or double
-           i,j are indices into the vector
-       result of 
-           v[i:j] will be vector with no zero elements
-           v[j:] will be a vector with all zero elements
+           i,j are indices. 
+       i,j; as returned 
+           v[i:j-1] will be vector with no zero elements
+           v[j-1:] will be a vector with all zero elements
        Note v is the first super-diagonal of a bidiagonal matrix.
-       The corresponding main diagonal, d, will be d[i:j+1]
+       The corresponding main diagonal, d, will be d[i:j]
     """
     v_bool=b1.leq(0.0)
     j=v_bool.length-1
     while j >= 0 and v_bool[j] == 1:
         j -= 1
     if j == -1:
-        return(0,0)
+        return(0,0) #all of b1 is zero
     i=j  #index of non-zero
     j+=1 #index of zero
     while i >= 0 and v_bool[i] == 0:
@@ -549,8 +556,8 @@ def grs_corners(b1):
     return(i+1,j+1)
 def diagPhaseToZero(L,B):
     """ 
-        To phase shift Just the main diagonal entries of a matrix B so they are real (imaginary zero)
-        use this routine.
+       To phase shift the main diagonal entries of a matrix B so entries 
+       are real (imaginary zero) use this routine.
     """
     d = B.diagview(0)
     for i in range(d.length):
@@ -560,7 +567,7 @@ def diagPhaseToZero(L,B):
             ps /= m
             L.colview(i)[:] *= ps
             B.rowview(i)[:] *= ps # if B is strictly diagonal don't need this step
-            d[i] = m # to clean up any non-zero residue
+            d[i] = m 
 def biDiagPhaseToZero(L,d,f,R,eps0):
     """ 
     For a Bidiagonal matrix B This routine uses subview vectors
@@ -568,7 +575,9 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
     and 
       `f=B.diagview(1)`
     and phase shifts vectors d and f so that B has zero complex part.
-    Matrices L and R are the update matrices.
+    Matrices L and R are update matrices.
+    eps0 is a small real number used to check for zero. If an element meets a zero
+    check then that element is set to zero.
     """
     for i in range(d.length):
         ps=d[i]
@@ -581,7 +590,7 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
                 f[i] *= ps.conjugate()
         else:
             d[i] = 0.0;
-    grs_zero_checkAndSet(eps0,d,f)          
+    svdZeroCheckAndSet(eps0,d,f)          
     for i in range(f.length-1):
         j=i+1
         ps = f[i]
@@ -592,7 +601,7 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
             R.rowview(j)[:] *= ps
             f[i] = m;
             f[j] *= ps
-    i=f.length -1
+    i=f.length - 1
     ps=f[i]
     j=i+1
     if ps.imag != 0.0:
@@ -601,37 +610,96 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
         f[i]=m
         L.colview(j)[:] *= ps.conjugate()
         R.rowview(j)[:] *= ps
-def grs_zeroRow(L,d,f):
+def zeroRow(L,d,f):
     """
-    To use this we assume a matrix B with a zero on the diagonal(0).
-    d is a subview of the diagonal starting with a nonzero entry
+    To use this we assume a matrix B that is bi-diagonalized.
+        Note i,j = svdCorners(B) => i, j=n+1
+
+    Let d0 be B.diagview(0); f0 be B.diagview(1)
+    d is a subview of the main diagonal
     f is a subview of the first superdiagonal (diagonal(1)) and has no zeros.
-    If d[0] is at (i,i) in B then f[0] is at (i-1,i) in B
-    L is a subview of the the left update matrix we call L0 here.
-    if B.diagview(0) has a zero entry at index j let i = j+1.
-    and if B.diagview(1) has a zero entry at index k then
-    d = B.diagview(0)[i:k+1]
-    f = B.diagview(1)[i-1:k]
-    Note: if k is the last entry then f=B.diagview(1)[i=1:] and k is the length of f
-    Note we expect no zero entries in the subviews d and f.
-    The subview L is then
-    L=L0[:,i-1:k+1]
+    if f = f0[i:n] then d = d0[i:n+1]
+
+    L is a subview of the left update matrix we call L0 here.
+    for the indices shown above
+    L = L0[:,i:n+1]
+    
+    If d contains a zero entry, and the zero entry is not at the end of d,
+    then zeroRow is used to zero out the corresponding superdiagonal entry
+    in the row. Vector d may contain more than one zero. We zero out the zero 
+    with the largest index (we designate k). So d[k] = d0[i+k] is the zero 
+    of interest. 
+        Note if d[k] is the last entry then the corresponding superdiagonal entry
+        in the row is already zero. Use zeroCol to zero out the column.
+
+    Usage:
+        zeroRow(L[:,k:],d[k+1:],f[k:])
     """
     if 'cvview' in d.type or 'cvview' in f.type:
-        print('grs_zeroRow only works for real vectors')
+        print('zeroRow only works for real vectors')
         return
-    c,s,r=givensCoef(d[0],f[0])
-    f[0]=0;d[0]=r
-    t= - f[1] * s; f[1] *= c
-    prodG(L,1,0,c,s)
-    for i in range(1,d.length-1):
-        c,s,r=givensCoef(d[i],t)
-        prodG(L,i+1,0,c,s)
-        d[i]=r; t=-f[i+1] * s; f[i+1] *= c
-    c,s,r=givensCoef(d[d.length-1],t)
-    d[d.length-1] = r
-    prodG(L,d.length,0,c,s)
-def gks_mu(d2,f1,d3,f2):
+    if d.length == 1:
+        c,s,r=givensCoef(d[0],f[0])
+        f[0]=0.0;d[0]=r
+    else:
+        c,s,r=givensCoef(d[0],f[0])
+        f[0]=0;d[0]=r
+        t= - f[1] * s; f[1] *= c
+        prodG(L,1,0,c,s)
+        for i in range(1,d.length-1):
+            c,s,r=givensCoef(d[i],t)
+            prodG(L,i+1,0,c,s)
+            d[i]=r; t=-f[i+1] * s; f[i+1] *= c
+        c,s,r=givensCoef(d[d.length-1],t)
+        d[d.length-1] = r
+        prodG(L,d.length,0,c,s)
+def zeroCol(d,f,R):
+    """
+    To use this we assume a matrix B that is bi-diagonalized.
+        Note i,j = svdCorners(B) => i, j=n+1
+
+    Let d0 be B.diagview(0); f0 be B.diagview(1)
+    d is a subview of the main diagonal
+    f is a subview of the first superdiagonal (diagonal(1)) and has no zeros.
+    if f = f0[i:n] then d = d0[i:n+1]
+
+    R is a subview of the right update matrix we call R0 here.
+    for the indices shown above
+    R = R0[i:n+1,:]
+
+    We assume matrix B has all zeros on row n.
+    Usage:
+        zeroCol(d,f,R)
+    """
+    if 'cvview' in d.type or 'cvview' in f.type:
+        print('zeroCol only works for real vectors')
+        return
+    if f.length == 1:
+        c,s,r=givensCoef(d[0],f[0])
+        d[0]=r; f[0]=0.0
+        gtProd(0,1,c,s,R)
+    elif f.length == 2:
+        c,s,r=givensCoef(d[1],f[1])
+        d[1]=r; f[1]=0;
+        t= - f[0] * s; f[0] *= c
+        gtProd(1,2,c,s,R)
+        c,s,r=givensCoef(d[0],t)
+        d[0]=r;
+        gtProd(0,2,c,s,R)
+    else:
+        i=f.length-1; j=i-1; k=i
+        c,s,r=givensCoef(d[i],f[i])
+        f[i]=0; d[i]=r; t=-f[j]*s; f[j]*=c;
+        gtProd(i,k+1,c,s,R)
+        while i > 1:
+            i = j; j = i-1
+            c,s,r=givensCoef(d[i],t)
+            d[i]=r; t= - f[j] * s; f[j] *= c
+            gtProd(i,k+1,c,s,R)
+        c,s,r=givensCoef(d[0],t)
+        d[0] = r
+        gtProd(0,k+1,c,s,R)
+def svdMu(d2,f1,d3,f2):
     """
     For this algorithm we expect float or double, real numbers
     """
@@ -647,18 +715,18 @@ def gks_mu(d2,f1,d3,f2):
     else:
         mu = lambda2
     return mu 
-def gks_Step(L,d,f,R):
+def svdStep(L,d,f,R):
     if 'cvview' in d.type or 'cvview' in f.type:
-        print('Input vector views must be of type real; Fail for gks_Step')
+        print('Input vector views must be of type real; Fail for svdStep')
         return     
     n=d.length
     #initial step
     if n >= 3:
-        mu = gks_mu(d[n-2],f[n-3],d[n-1],f[n-2])
+        mu = svdMu(d[n-2],f[n-3],d[n-1],f[n-2])
     elif n == 2:
-        mu = gks_mu(d[n-2],0.0,d[n-1],f[n-2])
+        mu = svdMu(d[n-2],0.0,d[n-1],f[n-2])
     else:
-        mu = gks_mu(d[0],0.0,0.0,0.0)
+        mu = svdMu(d[0],0.0,0.0,0.0)
     x1=d[0]; x1 *= x1; x1 -= mu
     x2 = d[0] * f[0]
     c,s,r=givensCoef(x1,x2)
@@ -687,3 +755,94 @@ def gks_Step(L,d,f,R):
     f[i] *= c; f[i] += s * d[j]; 
     d[j]=t
     prodG(L,i,j,c,s)
+def zeroFind(d,eps0):
+    """
+       zeroFind(d) takes vector d and finds the zero element with the 
+       largest index and returns the index. If an element is less than
+       eps0 the element is considered to be zero and is set to 0.0.
+       If no index is found returns -1
+    """
+    j=d.length - 1
+    while d[j] > eps0 and j > 0:
+        j -= 1
+    if j == 0 and d[j] > eps0:
+        return -1
+    else:
+        d[j]=0.0
+        return j
+def svd(A):
+    """
+       The bidiag routine is used in the svd and bidiag is defined out of place, 
+       so svd is also out of place. The bidiag routine can be done in-place with
+       a simple change, so the svd can also be done in-place.
+       Usage:
+           U,S,VH = svd(A)
+           A is a matrix with column length >= row length
+           where U is a unitary matrix of size A.columnlength
+           S is a real vector of size A.rowlength containing the singular values of A 
+              Note: S is considered here to be a diagonal matrix
+           VH is a unitary matrix of size A.rowlength
+       Note:
+           A = U S VH = U.prod(S.mmul(VH.ROW)) 
+    """
+    def svdP1(A):
+        if 'mview_f' not in A.type and 'mview_d' not in A.type:
+            print('Input must be a matrix of type float for function svd.')
+            return
+        if A.rowlength > A.collength:
+            print('For svd function input matrix A of size (M,N) must have N >= M')
+            return(0,0,0,0,0)
+        eps0 = A.normFro/A.rowlength * 1E15
+        if eps0 == 0.0:
+            print('Input matrix appears to be zero')
+            return(0,0,0,0,0)
+        else:
+            eps0 = 1.0/eps0
+        B=bidiag(A)
+        L=UmatExtract(B)
+        R=VHmatExtract(B)
+        biDiagPhaseToZero(L,B.diagview(0),B.diagview(1),R,eps0)
+        if 'cmview' in B.type:
+            d0=B.diagview(0).realview.copy
+            f0=B.diagview(1).realview.copy
+        else:
+            d0=B.diagview(0).copy
+            f0=B.diagview(1).copy
+        return (L,d0,f0,R,eps0)
+    def svdP2(L0,d0,f0,R0,eps0):
+        cntr=0
+        maxcntr=20*d0.length
+        while cntr < maxcntr:
+            biDiagPhaseToZero(L0,d0,f0,R0,eps0)
+            cntr += 1
+            i,j=svdCorners(f0)
+            if j == 0:
+                break
+            d=d0[i:j]
+            f=f0[i:j-1]
+            L=L0[:,i:j]
+            R=R0[i:j,:]
+            n=f.length
+            k=zeroFind(d,eps0)
+            if k >=0:
+                if d[n] == 0.0:
+                    zeroCol(d,f,R)
+                else:
+                    zeroRow(L[:,k:],d[k+1:],f[k:])
+            else:
+                svdStep(L,d,f,R)
+                svdZeroCheckAndSet(eps0,d,f)
+    def svdP3(L,d,R):
+        indx=d.sort('BYVALUE','DESCENDING')
+        if 'cmview' in R.type:
+            R.realview.permute(indx,'ROW')
+            R.imagview.permute(indx,'ROW')
+            U[:,0:d.length].realview.permute(indx,'COL')
+            U[:,0:d.length].imagview.permute(indx,'COL')
+        else:
+            R.permute(indx,'ROW')
+            U[:,0:d.length].permute(indx,'COL')
+    U,S,f0,VH,eps0 = svdP1(A)
+    svdP2(U,S,f0,VH,eps0)
+    svdP3(U,S,VH)
+    return(U,S,VH)
