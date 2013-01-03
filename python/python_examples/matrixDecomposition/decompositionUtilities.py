@@ -581,35 +581,57 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
     """
     for i in range(d.length):
         ps=d[i]
-        m=pv.vsip_hypot_d(ps.real,ps.imag)
-        if m > eps0:
+        if ps.imag == 0.0:
+            m = ps.real
+            if m < 0.0:
+                ps=-1.0
+            else:
+                ps= 1.0
+            m = abs(m) 
+        else:
+            m=pv.vsip_hypot_d(ps.real,ps.imag)
             ps /= m
+        if m > eps0:
             L.colview(i)[:] *= ps
             d[i] = m
             if i < f.length:
                 f[i] *= ps.conjugate()
         else:
-            d[i] = 0.0;
+            d[i] = 0.0
     svdZeroCheckAndSet(eps0,d,f)          
     for i in range(f.length-1):
         j=i+1
         ps = f[i]
-        if ps.imag != 0.0:
+        if ps.imag == 0.0:
+            m = ps.real
+            if m < 0.0:
+                ps=-1.0
+            else:
+                ps= 1.0
+            m = abs(m) 
+        else:
             m=pv.vsip_hypot_d(ps.real,ps.imag)
             ps /= m
-            L.colview(j)[:] *= ps.conjugate()
-            R.rowview(j)[:] *= ps
-            f[i] = m;
-            f[j] *= ps
-    i=f.length - 1
-    ps=f[i]
-    j=i+1
-    if ps.imag != 0.0:
-        m=pv.vsip_hypot_d(ps.real,ps.imag)
-        ps /= m
-        f[i]=m
         L.colview(j)[:] *= ps.conjugate()
         R.rowview(j)[:] *= ps
+        f[i] = m;
+        f[j] *= ps
+    j=f.length
+    i=j-1
+    ps=f[i]
+    if ps.imag == 0.0:
+        m = ps.real
+        if m < 0.0:
+            ps=-1.0
+        else:
+            ps= 1.0
+        m = abs(m) 
+    else:
+        m=pv.vsip_hypot_d(ps.real,ps.imag)
+        ps /= m
+    f[i]=m
+    L.colview(j)[:] *= ps.conjugate()
+    R.rowview(j)[:] *= ps
 def zeroRow(L,d,f):
     """
     To use this we assume a matrix B that is bi-diagonalized.
@@ -831,7 +853,6 @@ def svd(A):
                     zeroRow(L[:,k:],d[k+1:],f[k:])
             else:
                 svdStep(L,d,f,R)
-                svdZeroCheckAndSet(eps0,d,f)
     def svdP3(L,d,R):
         indx=d.sort('BYVALUE','DESCENDING')
         if 'cmview' in R.type:
