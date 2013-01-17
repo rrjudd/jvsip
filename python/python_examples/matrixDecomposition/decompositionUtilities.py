@@ -807,14 +807,17 @@ def svd(A):
        Note:
            A = U S VH = U.prod(S.mmul(VH.ROW)) 
     """
-    def svdP1(A):
+    def svdBidiagonal(A):
         if 'mview_f' not in A.type and 'mview_d' not in A.type:
             print('Input must be a matrix of type float for function svd.')
             return
         if A.rowlength > A.collength:
             print('For svd function input matrix A of size (M,N) must have N >= M')
             return(0,0,0,0,0)
-        eps0 = A.normFro/A.rowlength * 1E15
+        if 'mview_d' in A.type:
+            eps0 = A.normFro/A.rowlength * 1.0E16
+        else:
+            eps0 = A.normFro/A.rowlength * 1.0E7
         if eps0 == 0.0:
             print('Input matrix appears to be zero')
             return(0,0,0,0,0)
@@ -863,7 +866,7 @@ def svd(A):
         else:
             R.permute(indx,'ROW')
             U[:,0:d.length].permute(indx,'COL')
-    U,S,f0,VH,eps0 = svdP1(A)
+    U,S,f0,VH,eps0 = svdBidiagonal(A)
     svdP2(U,S,f0,VH,eps0)
     svdP3(U,S,VH)
     return(U,S,VH)
