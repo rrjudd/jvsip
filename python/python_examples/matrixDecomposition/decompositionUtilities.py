@@ -834,7 +834,7 @@ def svd(A):
             d0=B.diagview(0).copy
             f0=B.diagview(1).copy
         return (L,d0,f0,R,eps0)
-    def svdP2(L0,d0,f0,R0,eps0):
+    def svdIteration(L0,d0,f0,R0,eps0):
         cntr=0
         maxcntr=20*d0.length
         while cntr < maxcntr:
@@ -856,7 +856,7 @@ def svd(A):
                     zeroRow(L[:,k:],d[k+1:],f[k:])
             else:
                 svdStep(L,d,f,R)
-    def svdP3(L,d,R):
+    def svdSort(L,d,R):
         indx=d.sort('BYVALUE','DESCENDING')
         if 'cmview' in R.type:
             R.realview.permute(indx,'ROW')
@@ -867,6 +867,6 @@ def svd(A):
             R.permute(indx,'ROW')
             U[:,0:d.length].permute(indx,'COL')
     U,S,f0,VH,eps0 = svdBidiagonal(A)
-    svdP2(U,S,f0,VH,eps0)
-    svdP3(U,S,VH)
+    svdIteration(U,S,f0,VH,eps0)
+    svdSort(U,S,VH)
     return(U,S,VH)
