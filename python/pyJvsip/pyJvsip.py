@@ -2032,7 +2032,7 @@ class Block (object):
             return xy 
         @property
         def norm2(self):
-            """This method is a property which returns the two norm norm
+            """This method is a property which returns the two norm
             """
             def eigB(A): #find Biggest eigenvalue
                 small=A.normFro/1e16 
