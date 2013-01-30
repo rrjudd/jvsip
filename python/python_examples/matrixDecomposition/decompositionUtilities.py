@@ -62,18 +62,6 @@ def houseProd(v,A):
     A -= v.outer(beta,w)
     return A
 def prodHouse(A,v):
-    """
-    Usage:
-        prodHouse(A,v)
-        using a householder vector V with a matrix of the proper size return AH
-        Note A is modified in-place; but there are create/destroy penalties with this function
-        Note a convenience reference to A is returned
-    """
-
-    beta = 2.0/v.jdot(v)
-    w=A.prod(v)
-    A-=w.outer(beta,v)
-    return A
 #Givens
 def givensCoef(x1_in,x2_in):
     """ Code adapted from Algorithm 1 of LAPACK working Notes lawn148
@@ -395,7 +383,7 @@ def VHmatExtract(B):
         j=i+1
         v=B[i:,j:].rowview(0).copy
         v[0]=1
-        prodHouse(V[j:,j:],v)#=V[j:,j:].prod(house(v))
+        prodHouse(V[j:,j:],v)
     return V
 def givensCoef(x1_in,x2_in):
     """ Code adapted from Algorithm 1 of LAPACK working Notes lawn148

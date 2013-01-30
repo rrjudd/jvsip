@@ -6386,7 +6386,7 @@
 		06307E3A150BB71E00EF9D00 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Independent Consultant";
 			};
 			buildConfigurationList = 06307E3D150BB71E00EF9D00 /* Build configuration list for PBXProject "jvsipF" */;
@@ -8154,6 +8154,7 @@
 		06307E5A150BB71E00EF9D00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -8174,6 +8175,7 @@
 		06307E5B150BB71E00EF9D00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;

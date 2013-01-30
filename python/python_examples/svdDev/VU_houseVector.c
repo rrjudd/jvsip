@@ -12,67 +12,55 @@
 #include"VU_svdUtils.h"
 vsip_vview_f *
 houseVector_f(vsip_vview_f* x){
-    vsip_length n = vsip_vgetlength_f(x);
-    vsip_scalar_f nrm=0.0;
-    vsip_scalar_f s = vsip_vget_f(x,0) +  sign_f(vsip_vget_f(x,0)) * vnorm2_f(x);
-    vsip_vview_f *v=vsip_vcreate_f(n,VSIP_MEM_NONE);
-    vsip_vcopy_f_f(x,v);
-    vsip_vput_f(v,0,s); 
-    n = vnorm2_f(v);
-    if (n == 0.0)
-        vsip_vput_f(v,0,1.0); 
+    vsip_scalar_f nrm=vnorm2_f(x);
+    vsip_scalar_f t = vsip_vget_f(x,0);
+    vsip_scalar_f s = t +  sign_f(t) * nrm;
+    vsip_vput_f(x,0,s); 
+    nrm = vnorm2_f(x);
+    if (nrm == 0.0)
+        vsip_vput_f(x,0,1.0); 
     else
-        vsip_svmul_f(1.0/n,v,v);
-    return v;
+        vsip_svmul_f(1.0/nrm,x,x);
+    return x;
 }
 vsip_vview_d *
 houseVector_d(vsip_vview_d* x){
-    vsip_length n = vsip_vgetlength_d(x);
-    vsip_scalar_d nrm=0.0;
-    vsip_vview_d *v=vsip_vcreate_d(n,VSIP_MEM_NONE);
-    vsip_scalar_d s = vsip_vget_d(x,0) +  sign_d(vsip_vget_d(x,0)) * vnorm2_d(x);
-    vsip_vcopy_d_d(x,v);
-    vsip_vput_d(v,0,s);
-    nrm = vnorm2_d(v);
+    vsip_scalar_d nrm=vnorm2_d(x);
+    vsip_scalar_d t = vsip_vget_d(x,0);
+    vsip_scalar_d s = t +  sign_d(t) * nrm;
+    vsip_vput_d(x,0,s); 
+    nrm = vnorm2_d(x);
     if (nrm == 0.0)
-        vsip_vput_d(v,0,1.0);
+        vsip_vput_d(x,0,1.0); 
     else
-        vsip_svmul_d(1.0/nrm,v,v);
-    return v;
+        vsip_svmul_d(1.0/nrm,x,x);
+    return x;
 }
 vsip_cvview_f *
 chouseVector_f(vsip_cvview_f* x){
-    vsip_length n = vsip_cvgetlength_f(x);
-    vsip_scalar_f nrm;
-    vsip_cvview_f *v=vsip_cvcreate_f(n,VSIP_MEM_NONE);
-    vsip_cscalar_f s = vsip_cadd_f(vsip_cvget_f(x,0),
-                                   vsip_cmul_f(csign_f(vsip_cvget_f(x,0)),
-                                               vsip_cmplx_f(cvnorm2_f(x),0.0)));
-    vsip_cvcopy_f_f(x,v);
-    vsip_cvput_f(v,0,s);
-    nrm = cvnorm2_f(v);
+    vsip_cscalar_f t = vsip_cvget_f(x,0); /*x[0]*/
+    vsip_scalar_f nrm=cvnorm2_f(x); /* x.norm2 */
+    vsip_cscalar_f s = vsip_cadd_f(t, vsip_cmul_f(csign_f(t), vsip_cmplx_f(nrm, 0.0)));
+    vsip_cvput_f(x,0,s);
+    nrm = cvnorm2_f(x);
     if (nrm == 0.0)
-        vsip_cvput_f(v,0,vsip_cmplx_f(1.0,0.0));
+        vsip_cvput_f(x,0,vsip_cmplx_f(1.0,0.0));
     else
-        vsip_rscvmul_f(1.0/nrm,v,v);
-    return v;
+        vsip_rscvmul_f(1.0/nrm,x,x);
+    return x;
 }
 vsip_cvview_d *
 chouseVector_d(vsip_cvview_d* x){
-    vsip_length n = vsip_cvgetlength_d(x);
-    vsip_scalar_d nrm;
-    vsip_cvview_d *v=vsip_cvcreate_d(n,VSIP_MEM_NONE);
-    vsip_cscalar_d s = vsip_cadd_d(vsip_cvget_d(x,0),
-                                   vsip_cmul_d(csign_d(vsip_cvget_d(x,0)),
-                                               vsip_cmplx_d(cvnorm2_d(x),0.0)));
-    vsip_cvcopy_d_d(x,v);
-    vsip_cvput_d(v,0,s);
-    nrm = cvnorm2_d(v);
+    vsip_cscalar_d t = vsip_cvget_d(x,0);
+    vsip_scalar_d nrm=cvnorm2_d(x);
+    vsip_cscalar_d s = vsip_cadd_d(t, vsip_cmul_d(csign_d(t), vsip_cmplx_d(nrm, 0.0)));
+    vsip_cvput_d(x,0,s);
+    nrm = cvnorm2_d(x);
     if (nrm == 0.0)
-        vsip_cvput_d(v,0,vsip_cmplx_d(1.0,0.0));
+        vsip_cvput_d(x,0,vsip_cmplx_d(1.0,0.0));
     else
-        vsip_rscvmul_d(1.0/nrm,v,v);
-    return v;
+        vsip_rscvmul_d(1.0/nrm,x,x);
+    return x;
 }
 void
 houseProd_f(vsip_vview_f *v, vsip_mview_f *A){
@@ -109,14 +97,14 @@ chouseProd_f(vsip_cvview_f *v, vsip_cmview_f *A){
     vsip_cmattr_f a_atr; 
     vsip_cvview_f *w;
     vsip_cmview_f *B;
+    vsip_scalar_f beta = 2.0/vsip_cvjdot_f(v,v).r;
     vsip_cmgetattrib_f(A,&a_atr);
     B=vsip_cmcreate_f(a_atr.col_length,a_atr.row_length,VSIP_ROW,VSIP_MEM_NONE);
     w = vsip_cvcreate_f(a_atr.row_length,VSIP_MEM_NONE);
-    vsip_scalar_f beta = 2.0/vsip_cvjdot_f(v,v).r;
     vsip_cvconj_f(v,v);
-    vsip_cvmprod_f(v,A,w);
+    vsip_cvmprod_f(v,A,w);vsip_cvconj_f(w,w);
     vsip_cvconj_f(v,v);
-    vsip_cvouter_f(vsip_cmplx_f(1.0/beta,0.0),v,w,B);
+    vsip_cvouter_f(vsip_cmplx_f(beta,0.0),v,w,B);
     vsip_cmsub_f(A,B,A);
     vsip_cvalldestroy_f(w);
     vsip_cmalldestroy_f(B);
@@ -126,14 +114,12 @@ cprodHouse_f(vsip_cmview_f *A, vsip_cvview_f *v){
     vsip_cmattr_f a_atr; 
     vsip_cvview_f *w;
     vsip_cmview_f *B;
+    vsip_scalar_f beta = 2.0/vsip_cvjdot_f(v,v).r;
     vsip_cmgetattrib_f(A,&a_atr);
     B=vsip_cmcreate_f(a_atr.col_length,a_atr.row_length,VSIP_ROW,VSIP_MEM_NONE);
     w = vsip_cvcreate_f(a_atr.col_length,VSIP_MEM_NONE);
-    vsip_scalar_f beta = 2.0/vsip_cvjdot_f(v,v).r;
-    vsip_cvconj_f(v,v);
     vsip_cmvprod_f(A,v,w);
-    vsip_cvconj_f(v,v);
-    vsip_cvouter_f(vsip_cmplx_f(1.0/beta,0.0),w,v,B);
+    vsip_cvouter_f(vsip_cmplx_f(beta,0.0),w,v,B);
     vsip_cmsub_f(A,B,A);
     vsip_cvalldestroy_f(w);
     vsip_cmalldestroy_f(B);
@@ -180,7 +166,7 @@ chouseProd_d(vsip_cvview_d *v, vsip_cmview_d *A){
     vsip_cvconj_d(v,v);
     vsip_cvmprod_d(v,A,w);
     vsip_cvconj_d(v,v);
-    vsip_cvouter_d(vsip_cmplx_d(1.0/beta,0.0),v,w,B);
+    vsip_cvouter_d(vsip_cmplx_d(beta,0.0),v,w,B);
     vsip_cmsub_d(A,B,A);
     vsip_cvalldestroy_d(w);
     vsip_cmalldestroy_d(B);
@@ -197,7 +183,7 @@ cprodHouse_d(vsip_cmview_d *A, vsip_cvview_d *v){
     vsip_cvconj_d(v,v);
     vsip_cmvprod_d(A,v,w);
     vsip_cvconj_d(v,v);
-    vsip_cvouter_d(vsip_cmplx_d(1.0/beta,0.0),w,v,B);
+    vsip_cvouter_d(vsip_cmplx_d(beta,0.0),w,v,B);
     vsip_cmsub_d(A,B,A);
     vsip_cvalldestroy_d(w);
     vsip_cmalldestroy_d(B);
