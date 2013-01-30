@@ -89,3 +89,5 @@ vsip_cmview_d* cmclone_d(vsip_cmview_d*);
 vsip_cvview_d* cvclone_d(vsip_cvview_d*);
 vsip_mview_f *UmatExtract_f(vsip_mview_f*);
 vsip_mview_f *VHmatExtract_f(vsip_mview_f*);
+vsip_cmview_f *cUmatExtract_f(vsip_cmview_f*);
+vsip_cmview_f *cVHmatExtract_f(vsip_cmview_f*);

@@ -418,24 +418,51 @@ vsip_mview_f *UmatExtract_f(vsip_mview_f*B){
     vsip_mview_f *Bs, *Us;
     vsip_vview_f *v;
     vsip_scalar_f t;
-    v = vsip_mrowview_f(B,0);
+    v = vsip_mcolview_f(B,0);
     Bs=vsip_mcloneview_f(B);
     Us=vsip_mcloneview_f(U);
     if (m > n){
         i=n-1;
-        row_sv_f(msv_f(B,Bs,i,i),v,0);
+        col_sv_f(msv_f(B,Bs,i,i),v,0);
         t=vsip_vget_f(v,0); vsip_vput_f(v,0,1.0);
         houseProd_f(v,msv_f(U,Us,i,i));
         vsip_vput_f(v,0,t);
     }
     for(i=n-2; i>=0; i--){
-        row_sv_f(msv_f(B,Bs,i,i),v,0);
+        col_sv_f(msv_f(B,Bs,i,i),v,0);
         t=vsip_vget_f(v,0); vsip_vput_f(v,0,1.0);
         houseProd_f(v,msv_f(U,Us,i,i));
         vsip_vput_f(v,0,t);
     } 
     return U;
 }
+vsip_cmview_f *cUmatExtract_f(vsip_cmview_f*B){
+    vsip_stride i;
+    vsip_length m = vsip_cmgetcollength_f(B);
+    vsip_length n = vsip_cmgetrowlength_f(B);
+    vsip_cmview_f *U=cmeye_f(m);
+    vsip_cmview_f *Bs, *Us;
+    vsip_cvview_f *v;
+    vsip_cscalar_f t;
+    v = vsip_cmcolview_f(B,0);
+    Bs=vsip_cmcloneview_f(B);
+    Us=vsip_cmcloneview_f(U);
+    if (m > n){
+        i=n-1;
+        ccol_sv_f(cmsv_f(B,Bs,i,i),v,0);
+        t=vsip_cvget_f(v,0); vsip_cvput_f(v,0,vsip_cmplx_f(1.0,0.0));
+        chouseProd_f(v,cmsv_f(U,Us,i,i));
+        vsip_cvput_f(v,0,t);
+    }
+    for(i=n-2; i>=0; i--){
+        ccol_sv_f(cmsv_f(B,Bs,i,i),v,0);
+        t=vsip_cvget_f(v,0); vsip_cvput_f(v,0,vsip_cmplx_f(1.0,0.0));
+        chouseProd_f(v,cmsv_f(U,Us,i,i));
+        vsip_cvput_f(v,0,t);
+    } 
+    return U;
+}
+
 vsip_mview_f *VHmatExtract_f(vsip_mview_f*B){
     vsip_stride i;
     vsip_length n = vsip_mgetrowlength_f(B);
@@ -461,8 +488,31 @@ vsip_mview_f *VHmatExtract_f(vsip_mview_f*B){
     vsip_mdestroy_f(Bs);
     return V;
 }
-
-
+vsip_cmview_f *cVHmatExtract_f(vsip_cmview_f*B){
+    vsip_stride i;
+    vsip_length n = vsip_cmgetrowlength_f(B);
+    vsip_cmview_f *Bs; 
+    vsip_cmview_f *V=cmeye_f(n);
+    vsip_cmview_f *Vs;
+    vsip_cvview_f *v;
+    vsip_cscalar_f t;
+    if(n < 3)
+        return V;
+    v = vsip_cmrowview_f(B,0);
+    Vs=vsip_cmcloneview_f(V);
+    Bs=vsip_cmcloneview_f(B);
+    for(i=n-3; i>=0; i--){
+        vsip_stride j=i+1;
+        crow_sv_f(cmsv_f(B,Bs,i,j),v,0);
+        t=vsip_cvget_f(v,0);vsip_cvput_f(v,0,vsip_cmplx_f(1.0,0.0));
+        cprodHouse_f(cmsv_f(V,Vs,j,j),v);
+        vsip_cvput_f(v,0,t);
+    }      
+    vsip_cvdestroy_f(v);
+    vsip_cmdestroy_f(Vs);
+    vsip_cmdestroy_f(Bs);
+    return V;
+}
 
 
 

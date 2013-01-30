@@ -11,11 +11,12 @@ C VSIPL routine, is to serve as a demonstration of converting from pyJvsip
 code to C VSIPL code. In addition it demonstrates how to test C VSIPL 
 code using swig and python VSIPL modules in tandem with the C code. 
 
-NOTE
+NOTE make.sh
 The make.sh file is a /bin/sh file to run swig and create the wrapper
 code, compile the C VSIPL code and the wrapper code to object files, and to
 create a library and python module suitable for loading into python.
-The loaded library allows easy runring of the C VSIPL routines
+This file is system dependent and will probably require editing for a new system.
+The loaded library allows easy runing of the C VSIPL routines
 without writing special main routines. This should simplify testing
 and comparison between the C routines and the corresponding python 
 routines.
