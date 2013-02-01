@@ -48,5 +48,13 @@
 
 vsip_scalar_f (vsip_cmag_f)(
   vsip_cscalar_f x) {				/* |x|	*/
-  return (vsip_scalar_f)sqrt(x.r * x.r + x.i * x.i);}
+   vsip_scalar_f retval;
+   vsip_scalar_f re=fabs(x.r);
+   vsip_scalar_f im=fabs(x.i);
+   if(re == 0.0) retval = im;
+   else if (im == 0.0) retval = re;
+   else if (im < re) retval = re * (vsip_scalar_f)sqrt(1.0 + (im/re) * (im/re));
+   else retval = im * (vsip_scalar_f)sqrt(1.0 + (re/im) * (re/im));
+   return retval;
+}
 
