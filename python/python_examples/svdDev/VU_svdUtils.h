@@ -14,6 +14,11 @@
 // http://opensource.org/licenses/MIT
 **********************************************************************/
 #include<vsip.h>
+typedef struct {vsip_mview_f* L;vsip_vview_f* d;vsip_vview_f* f;vsip_mview_f* R;vsip_scalar_f eps0;int init;} svdObj_f;
+typedef struct {vsip_mview_d* L;vsip_vview_d* d;vsip_vview_d* f;vsip_mview_d* R;vsip_scalar_d eps0;int init;} svdObj_d;
+typedef struct {vsip_cmview_f* L;vsip_vview_f* d;vsip_vview_f* f;vsip_cmview_f* R;vsip_scalar_f eps0;int init;} csvdObj_f;
+typedef struct {vsip_cmview_d* L;vsip_vview_d* d;vsip_vview_d* f;vsip_cmview_d* R;vsip_scalar_d eps0;int init;} csvdObj_d;
+
 vsip_mview_f* meye_f(vsip_length);
 vsip_cmview_f* cmeye_f(vsip_length);
 vsip_mview_d* meye_d(vsip_length);
@@ -90,3 +95,7 @@ void biDiagPhaseToZero_f(vsip_mview_f*,vsip_vview_f*,vsip_vview_f*,vsip_mview_f*
 void biDiagPhaseToZero_d(vsip_mview_d*,vsip_vview_d*,vsip_vview_d*,vsip_mview_d*,vsip_scalar_d);
 void cbiDiagPhaseToZero_f( vsip_cmview_f*, vsip_cvview_f*, vsip_cvview_f*,vsip_cmview_f*,vsip_scalar_f);
 void cbiDiagPhaseToZero_d( vsip_cmview_d*, vsip_cvview_d*, vsip_cvview_d*,vsip_cmview_d*,vsip_scalar_d);
+svdObj_f svdBidiag_f(vsip_mview_f*);
+csvdObj_f csvdBidiag_f(vsip_cmview_f*);
+svdObj_d svdBidiag_d(vsip_mview_d*);
+csvdObj_d csvdBidiag_d(vsip_cmview_d*);

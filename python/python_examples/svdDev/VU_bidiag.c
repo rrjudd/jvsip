@@ -264,7 +264,8 @@ vsip_vview_d* vclone_d(vsip_vview_d*x){
     return v;
 }
 vsip_mview_d *bidiag_d(
-    vsip_mview_d *A){
+    vsip_mview_d *A)
+    {
     vsip_length m = vsip_mgetcollength_d(A);
     vsip_length n = vsip_mgetrowlength_d(A);
     vsip_mview_d *B = mclone_d(A);
@@ -654,7 +655,8 @@ void biDiagPhaseToZero_f(
       vsip_vview_f *d,
       vsip_vview_f *f,
       vsip_mview_f *R,
-      vsip_scalar_f eps0){
+      vsip_scalar_f eps0)
+{
    vsip_length n_d=vsip_vgetlength_f(d);
    vsip_length n_f=vsip_vgetlength_f(f);
    vsip_index i,j;
@@ -693,14 +695,15 @@ void biDiagPhaseToZero_f(
     ps=sign_f(ps);
     vsip_vput_f(f,i,m);
     col_sv_f(L, l, j);vsip_svmul_f(ps,l,l);
-    col_sv_f(L, l, j);vsip_svmul_f(ps,l,l);
+    row_sv_f(R,r,j);vsip_svmul_f(ps,r,r);
 }
 void cbiDiagPhaseToZero_f(
       vsip_cmview_f *L,
       vsip_cvview_f *d,
       vsip_cvview_f *f,
       vsip_cmview_f *R,
-      vsip_scalar_f eps0){
+      vsip_scalar_f eps0)
+{
    vsip_length n_d=vsip_cvgetlength_f(d);
    vsip_length n_f=vsip_cvgetlength_f(f);
    vsip_index i,j;
@@ -766,14 +769,15 @@ void cbiDiagPhaseToZero_f(
     }
     vsip_cvput_f(f,i,vsip_cmplx_f(m,0.0));
     ccol_sv_f(L, l, j);vsip_csvmul_f(vsip_conj_f(ps),l,l);
-    ccol_sv_f(L, l, j);vsip_csvmul_f(vsip_conj_f(ps),l,l);
+    crow_sv_f(R,r,j);vsip_csvmul_f(ps,r,r);
 }
 void biDiagPhaseToZero_d(
       vsip_mview_d *L,
       vsip_vview_d *d,
       vsip_vview_d *f,
       vsip_mview_d *R,
-      vsip_scalar_d eps0){
+      vsip_scalar_d eps0)
+{
    vsip_length n_d=vsip_vgetlength_d(d);
    vsip_length n_f=vsip_vgetlength_d(f);
    vsip_index i,j;
@@ -812,14 +816,15 @@ void biDiagPhaseToZero_d(
     ps=sign_d(ps);
     vsip_vput_d(f,i,m);
     col_sv_d(L, l, j);vsip_svmul_d(ps,l,l);
-    col_sv_d(L, l, j);vsip_svmul_d(ps,l,l);
+    row_sv_d(R,r,j);vsip_svmul_d(ps,r,r);
 }
 void cbiDiagPhaseToZero_d(
       vsip_cmview_d *L,
       vsip_cvview_d *d,
       vsip_cvview_d *f,
       vsip_cmview_d *R,
-      vsip_scalar_d eps0){
+      vsip_scalar_d eps0)
+{
    vsip_length n_d=vsip_cvgetlength_d(d);
    vsip_length n_f=vsip_cvgetlength_d(f);
    vsip_index i,j;
@@ -885,5 +890,108 @@ void cbiDiagPhaseToZero_d(
     }
     vsip_cvput_d(f,i,vsip_cmplx_d(m,0.0));
     ccol_sv_d(L, l, j);vsip_csvmul_d(vsip_conj_d(ps),l,l);
-    ccol_sv_d(L, l, j);vsip_csvmul_d(vsip_conj_d(ps),l,l);
+    crow_sv_d(R,r,j);vsip_csvmul_d(ps,r,r);
+}
+
+svdObj_f svdBidiag_f(vsip_mview_f* A)
+{
+    svdObj_f retval;
+    /* sv is a number < maximum singular value */
+    vsip_scalar_f sv = mnormFro_f(A)/(vsip_scalar_f)vsip_mgetrowlength_f(A);
+    vsip_mview_f *B=bidiag_f(A); 
+    vsip_vview_f *d0=NULL,*f0=NULL;
+    retval.init=0;
+    if(!B) retval.init++;
+    if(B) d0=vsip_mdiagview_f(B,0); if(!d0) retval.init++;
+    if(B) f0=vsip_mdiagview_f(B,1); if(!f0) retval.init++;
+    retval.d=vclone_f(d0); if(!retval.d) retval.init++;
+    retval.f=vclone_f(f0); if(!retval.f) retval.init++;
+    if(B) retval.L=UmatExtract_f(B); else retval.L=NULL; if(!retval.L) retval.init++;
+    if(B) retval.R=VHmatExtract_f(B); else retval.R=NULL; if(!retval.R) retval.init++;
+    /* eps0 is a number << maximum singular value */
+    retval.eps0=sv*1E-7;
+    vsip_vdestroy_f(d0);
+    vsip_vdestroy_f(f0);
+    vsip_malldestroy_f(B);
+    biDiagPhaseToZero_f(retval.L,retval.d,retval.f,retval.R,retval.eps0);
+    return retval;
+}
+csvdObj_f csvdBidiag_f(vsip_cmview_f* A)
+{
+    csvdObj_f retval;
+    /* sv is a number < maximum singular value */
+    vsip_scalar_f sv = cmnormFro_f(A)/(vsip_scalar_f)vsip_cmgetrowlength_f(A);
+    vsip_cmview_f *B=cbidiag_f(A);
+    vsip_cvview_f *dc=NULL,*fc=NULL;
+    vsip_vview_f *d0=NULL, *f0=NULL;
+    retval.init=0;
+    if(!B) retval.init++;
+    if(B) dc=vsip_cmdiagview_f(B,0); if(!dc) retval.init++;
+    if(dc) d0=vsip_vrealview_f(dc); if(!d0) retval.init++;
+    if(B) fc=vsip_cmdiagview_f(B,1); if(!fc) retval.init++;
+    if(fc) f0 = vsip_vrealview_f(fc); if(!f0) retval.init++;
+    if(B) retval.L=cUmatExtract_f(B); else retval.L=NULL; if(!retval.L) retval.init++;
+    if(B) retval.R=cVHmatExtract_f(B); else retval.R=NULL; if(!retval.R) retval.init++;
+    /* eps0 is a number << maximum singular value */
+    retval.eps0=sv*1E-7;
+    cbiDiagPhaseToZero_f(retval.L,dc,fc,retval.R,retval.eps0);
+    retval.d=vclone_f(d0); if(!retval.d) retval.init++;
+    retval.f=vclone_f(f0); if(!retval.f) retval.init++;
+    vsip_vdestroy_f(d0);
+    vsip_vdestroy_f(f0);
+    vsip_cvdestroy_f(dc);
+    vsip_cvdestroy_f(fc);
+    vsip_cmalldestroy_f(B);
+    return retval;
+}
+svdObj_d svdBidiag_d(vsip_mview_d* A)
+{
+    svdObj_d retval;
+    /* sv is a number < maximum singular value */
+    vsip_scalar_d sv = mnormFro_d(A)/(vsip_scalar_d)vsip_mgetrowlength_d(A);
+    vsip_mview_d *B=bidiag_d(A); 
+    vsip_vview_d *d0=NULL,*f0=NULL;
+    retval.init=0;
+    if(!B) retval.init++;
+    if(B) d0=vsip_mdiagview_d(B,0); if(!d0) retval.init++;
+    if(B) f0=vsip_mdiagview_d(B,1); if(!f0) retval.init++;
+    retval.d=vclone_d(d0); if(!retval.d) retval.init++;
+    retval.f=vclone_d(f0); if(!retval.f) retval.init++;
+    if(B) retval.L=UmatExtract_d(B); else retval.L=NULL; if(!retval.L) retval.init++;
+    if(B) retval.R=VHmatExtract_d(B); else retval.R=NULL; if(!retval.R) retval.init++;
+    /* eps0 is a number << maximum singular value */
+    retval.eps0=sv*1E-7;
+    vsip_vdestroy_d(d0);
+    vsip_vdestroy_d(f0);
+    vsip_malldestroy_d(B);
+    biDiagPhaseToZero_d(retval.L,retval.d,retval.f,retval.R,retval.eps0);
+    return retval;
+}
+csvdObj_d csvdBidiag_d(vsip_cmview_d* A)
+{
+    csvdObj_d retval;
+    /* sv is a number < maximum singular value */
+    vsip_scalar_d sv = cmnormFro_d(A)/(vsip_scalar_d)vsip_cmgetrowlength_d(A);
+    vsip_cmview_d *B=cbidiag_d(A);
+    vsip_cvview_d *dc=NULL,*fc=NULL;
+    vsip_vview_d *d0=NULL, *f0=NULL;
+    retval.init=0;
+    if(!B) retval.init++;
+    if(B) dc=vsip_cmdiagview_d(B,0); if(!dc) retval.init++;
+    if(dc) d0=vsip_vrealview_d(dc); if(!d0) retval.init++;
+    if(B) fc=vsip_cmdiagview_d(B,1); if(!fc) retval.init++;
+    if(fc) f0 = vsip_vrealview_d(fc); if(!f0) retval.init++;
+    if(B) retval.L=cUmatExtract_d(B); else retval.L=NULL; if(!retval.L) retval.init++;
+    if(B) retval.R=cVHmatExtract_d(B); else retval.R=NULL; if(!retval.R) retval.init++;
+    /* eps0 is a number << maximum singular value */
+    retval.eps0=sv*1E-7;
+    cbiDiagPhaseToZero_d(retval.L,dc,fc,retval.R,retval.eps0);
+    retval.d=vclone_d(d0); if(!retval.d) retval.init++;
+    retval.f=vclone_d(f0); if(!retval.f) retval.init++;
+    vsip_vdestroy_d(d0);
+    vsip_vdestroy_d(f0);
+    vsip_cvdestroy_d(dc);
+    vsip_cvdestroy_d(fc);
+    vsip_cmalldestroy_d(B);
+    return retval;
 }
