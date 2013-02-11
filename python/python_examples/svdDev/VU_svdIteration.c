@@ -284,7 +284,7 @@ void zeroCol_f(vsip_vview_f *d,vsip_vview_f *f, vsip_mview_f* R)
 void zeroRow_d(vsip_mview_d* L,vsip_vview_d *d,vsip_vview_d *f)
 {
 }
-void zeroCol_fd(vsip_vview_d *d,vsip_vview_d *f, vsip_mview_d* R)
+void zeroCol_d(vsip_vview_d *d,vsip_vview_d *f, vsip_mview_d* R)
 {
 }
 void czeroRow_f(vsip_cmview_f* L,vsip_vview_f *d,vsip_vview_f *f)
@@ -296,7 +296,7 @@ void czeroCol_f(vsip_vview_f *d,vsip_vview_f *f, vsip_cmview_f* R)
 void czeroRow_d(vsip_cmview_d* L,vsip_vview_d *d,vsip_vview_d *f)
 {
 }
-void czeroCol_fd(vsip_vview_d *d,vsip_vview_d *f, vsip_cmview_d* R)
+void czeroCol_d(vsip_vview_d *d,vsip_vview_d *f, vsip_cmview_d* R)
 {
 }
 
