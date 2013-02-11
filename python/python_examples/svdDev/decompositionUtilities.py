@@ -746,7 +746,7 @@ def svdStep(L,d,f,R):
     if n >= 3:
         mu = svdMu(d[n-2],f[n-3],d[n-1],f[n-2])
     elif n == 2:
-        mu = svdMu(d[n-2],0.0,d[n-1],f[n-2])
+        mu = svdMu(d[0],0.0,d[1],f[0])
     else:
         mu = svdMu(d[0],0.0,0.0,0.0)
     x1=d[0]; x1 *= x1; x1 -= mu

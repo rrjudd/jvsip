@@ -18,7 +18,9 @@ typedef struct {vsip_mview_f* L;vsip_vview_f* d;vsip_vview_f* f;vsip_mview_f* R;
 typedef struct {vsip_mview_d* L;vsip_vview_d* d;vsip_vview_d* f;vsip_mview_d* R;vsip_scalar_d eps0;int init;} svdObj_d;
 typedef struct {vsip_cmview_f* L;vsip_vview_f* d;vsip_vview_f* f;vsip_cmview_f* R;vsip_scalar_f eps0;int init;} csvdObj_f;
 typedef struct {vsip_cmview_d* L;vsip_vview_d* d;vsip_vview_d* f;vsip_cmview_d* R;vsip_scalar_d eps0;int init;} csvdObj_d;
-
+typedef struct {vsip_scalar_f c; vsip_scalar_f s; vsip_scalar_f r;}givensObj_f ;
+typedef struct {vsip_scalar_d c; vsip_scalar_d s; vsip_scalar_d r;}givensObj_d;
+typedef struct {vsip_index i; vsip_index j;} svdCorner;
 vsip_mview_f* meye_f(vsip_length);
 vsip_cmview_f* cmeye_f(vsip_length);
 vsip_mview_d* meye_d(vsip_length);
@@ -83,6 +85,14 @@ vsip_cvview_d* ccol_sv_d(vsip_cmview_d*,vsip_cvview_d*,vsip_index);
 vsip_cvview_d* crow_sv_d(vsip_cmview_d*,vsip_cvview_d*,vsip_index);
 vsip_cmview_d* cmclone_d(vsip_cmview_d*);
 vsip_cvview_d* cvclone_d(vsip_cvview_d*);
+vsip_mview_f* imsv_f(vsip_mview_f*,vsip_mview_f*,vsip_index,vsip_index,vsip_index,vsip_index);
+vsip_vview_f* ivsv_f(vsip_vview_f*,vsip_vview_f*,vsip_index,vsip_index);
+vsip_cmview_f* cimsv_f(vsip_cmview_f*,vsip_cmview_f*,vsip_index,vsip_index,vsip_index,vsip_index);
+vsip_cvview_f *civsv_f(vsip_cvview_f*,vsip_cvview_f*,vsip_index,vsip_index);
+vsip_mview_d* imsv_d(vsip_mview_d*,vsip_mview_d*,vsip_index,vsip_index,vsip_index,vsip_index);
+vsip_vview_d* ivsv_d(vsip_vview_d*,vsip_vview_d*,vsip_index,vsip_index);
+vsip_cmview_d* cimsv_d(vsip_cmview_d*,vsip_cmview_d*,vsip_index,vsip_index,vsip_index,vsip_index);
+vsip_cvview_d *civsv_d(vsip_cvview_d*,vsip_cvview_d*,vsip_index,vsip_index);
 vsip_mview_f *UmatExtract_f(vsip_mview_f*);
 vsip_mview_f *VHmatExtract_f(vsip_mview_f*);
 vsip_cmview_f *cUmatExtract_f(vsip_cmview_f*);
@@ -99,3 +109,35 @@ svdObj_f svdBidiag_f(vsip_mview_f*);
 csvdObj_f csvdBidiag_f(vsip_cmview_f*);
 svdObj_d svdBidiag_d(vsip_mview_d*);
 csvdObj_d csvdBidiag_d(vsip_cmview_d*);
+svdCorner svdCorners_f(vsip_vview_f*);
+svdCorner svdCorners_d(vsip_vview_d*);
+givensObj_f givensCoef_f(vsip_scalar_f, vsip_scalar_f);
+givensObj_d givensCoef_d(vsip_scalar_d, vsip_scalar_d);
+void phaseCheck_f(vsip_mview_f*,vsip_vview_f*,vsip_vview_f*,vsip_mview_f*,vsip_scalar_f);
+void cphaseCheck_f(vsip_cmview_f*, vsip_vview_f*, vsip_vview_f*,vsip_cmview_f*,vsip_scalar_f);
+void phaseCheck_d(vsip_mview_d*,vsip_vview_d*,vsip_vview_d*,vsip_mview_d*,vsip_scalar_d);
+void cphaseCheck_d(vsip_cmview_d*, vsip_vview_d*, vsip_vview_d*,vsip_cmview_d*,vsip_scalar_d);
+vsip_index zeroFind_f(vsip_vview_f*, vsip_scalar_f);
+vsip_index zeroFind_d(vsip_vview_d*, vsip_scalar_d);
+
+vsip_scalar_f svdMu_f(vsip_scalar_f,vsip_scalar_f,vsip_scalar_f,vsip_scalar_f);
+vsip_scalar_d svdMu_d(vsip_scalar_d,vsip_scalar_d,vsip_scalar_d,vsip_scalar_d);
+
+void gtProd_f(vsip_index, vsip_index, vsip_scalar_f,vsip_scalar_f, vsip_mview_f*);
+void gtProd_d(vsip_index,vsip_index,vsip_scalar_d,vsip_scalar_d,vsip_mview_d*);
+void cgtProd_f(vsip_index,vsip_index,vsip_scalar_f,vsip_scalar_f,vsip_cmview_f*);
+void cgtProd_d(vsip_index,vsip_index,vsip_scalar_d,vsip_scalar_d,vsip_cmview_d*);
+
+void prodG_f(vsip_mview_f*,vsip_index,vsip_index,vsip_scalar_f,vsip_scalar_f);
+void prodG_d(vsip_mview_d*,vsip_index,vsip_index,vsip_scalar_d,vsip_scalar_d);
+void cprodG_f(vsip_cmview_f*,vsip_index,vsip_index,vsip_scalar_f,vsip_scalar_f);
+void cprodG_d(vsip_cmview_d*,vsip_index,vsip_index,vsip_scalar_d,vsip_scalar_d);
+
+void svdStep_f(vsip_mview_f*, vsip_vview_f*, vsip_vview_f*, vsip_mview_f*);
+void svdStep_d(vsip_mview_d*, vsip_vview_d*, vsip_vview_d*, vsip_mview_d*);
+void csvdStep_f(vsip_cmview_f*, vsip_vview_f*, vsip_vview_f*, vsip_cmview_f*);
+
+void csvdStep_d(vsip_cmview_d*, vsip_vview_d*, vsip_vview_d*, vsip_cmview_d*);
+void zeroRow_f(vsip_mview_f*,vsip_vview_f*,vsip_vview_f*);
+void zeroCol_f(vsip_vview_f*,vsip_vview_f*, vsip_mview_f*);
+void svdIteration_f(vsip_mview_f*, vsip_vview_f*, vsip_vview_f*, vsip_mview_f*, vsip_scalar_f);

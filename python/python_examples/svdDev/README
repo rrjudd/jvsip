@@ -1,4 +1,6 @@
-This code is a proof of concept and is under development.
+This code is a proof of concept and is under development. The c code 
+represents the counterpoint of the SVD python code in decompositionUtilities.py
+developed in the matrixDecompostion example.
 
 In this directory is svd code developed using the C VSIPL library. It is 
 proof of concept and development code toward a native C VSIPL svd routine as 
@@ -15,8 +17,9 @@ NOTE make.sh
 The make.sh file is a /bin/sh file to run swig and create the wrapper
 code, compile the C VSIPL code and the wrapper code to object files, and to
 create a library and python module suitable for loading into python.
-This file is system dependent and will probably require editing for a new system.
-The loaded library allows easy runing of the C VSIPL routines
+This make is very system dependent and will probably require editing 
+for each system. The result is a loadable python module.
+The loaded module allows easy execution of the C VSIPL subroutines
 without writing special main routines. This should simplify testing
 and comparison between the C routines and the corresponding python 
 routines.
