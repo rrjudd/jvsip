@@ -166,24 +166,30 @@ void cphaseCheck_d(vsip_cmview_d* L, vsip_vview_d* d, vsip_vview_d* f,vsip_cmvie
 }
 vsip_index zeroFind_f(vsip_vview_f* d, vsip_scalar_f eps0){
     vsip_index j = vsip_vgetlength_f(d) - 1;
-    while(vsip_vget_f(d,j) > eps0){
-        if (j > 0) 
+    vsip_scalar_f xd = vsip_vget_f(d,j);
+    while(xd > eps0){
+        if (j > 0){
             j -= 1;
-        if (j == 0)
+            xd = vsip_vget_f(d,j);
+        }else
             break;
     }
-    vsip_vput_f(d,j,0.0);
+    if(xd <= eps0) 
+        vsip_vput_f(d,j,0.0);
     return j;
 }
 vsip_index zeroFind_d(vsip_vview_d* d, vsip_scalar_d eps0){
     vsip_index j = vsip_vgetlength_d(d) - 1;
-    while(vsip_vget_d(d,j) > eps0){
-        if (j > 0) 
+    vsip_scalar_d xd = vsip_vget_d(d,j);
+    while(xd > eps0){
+        if (j > 0){
             j -= 1;
-        if (j == 0)
+            xd = vsip_vget_d(d,j);
+        }else
             break;
     }
-    vsip_vput_d(d,j,0.0);
+    if(xd <= eps0) 
+        vsip_vput_d(d,j,0.0);
     return j;
 }
 
