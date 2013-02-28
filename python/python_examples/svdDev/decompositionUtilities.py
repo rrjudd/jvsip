@@ -861,11 +861,11 @@ def svd(A):
         if 'cmview' in R.type:
             R.realview.permute(indx,'ROW')
             R.imagview.permute(indx,'ROW')
-            U[:,0:d.length].realview.permute(indx,'COL')
-            U[:,0:d.length].imagview.permute(indx,'COL')
+            L[:,0:d.length].realview.permute(indx,'COL')
+            L[:,0:d.length].imagview.permute(indx,'COL')
         else:
             R.permute(indx,'ROW')
-            U[:,0:d.length].permute(indx,'COL')
+            L[:,0:d.length].permute(indx,'COL')
     U,S,f0,VH,eps0 = svdBidiagonal(A)
     svdIteration(U,S,f0,VH,eps0)
     svdSort(U,S,VH)

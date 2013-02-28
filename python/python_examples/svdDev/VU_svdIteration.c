@@ -30,49 +30,59 @@ givensObj_d givensCoef_d(vsip_scalar_d x1, vsip_scalar_d x2)
 }
 svdCorner svdCorners_f(vsip_vview_f* f)
 {
-    svdCorner retval;
-    vsip_index j;
-    j=vsip_vgetlength_f(f)-1;
-    while(vsip_vget_f(f,j) == 0.0){
-         if(j > 0) j--;
-         else{
-             retval.i=0; retval.j=0;
-             return retval;
-         }
-    }
-    retval.j = j;
-    while(vsip_vget_f(f,j) != 0.0){
-        if(j > 0) j--;
-        else{
-            retval.i = 0;
-            return retval;
+    svdCorner crnr;
+    vsip_index j=vsip_vgetlength_f(f)-1;
+    vsip_index i;
+    while((j > 0) && (vsip_vget_f(f,j) == 0.0))
+        j-=1;
+    if(j == 0 && vsip_vget_f(f,0) == 0.0){
+        crnr.i=0;
+        crnr.j=0;
+    } else {
+        i = j;
+        j += 1;
+        while((i > 0) && (vsip_vget_f(f,i) != 0.0))
+            i -= 1;
+        if((i == 0) && (vsip_vget_f(f,0)== 0.0)){
+            crnr.i=1;
+            crnr.j=j+1;
+        } else if (i==0){
+            crnr.i=0;
+            crnr.j=j+1;
+        } else {
+            crnr.i=i+1;
+            crnr.j=j+1;
         }
     }
-    retval.i = j+1;
-    return retval;
+    return crnr;
 }
 svdCorner svdCorners_d(vsip_vview_d* f)
 {
-    svdCorner retval;
-    vsip_index j;
-    j=vsip_vgetlength_d(f)-1;
-    while(vsip_vget_d(f,j) == 0.0){
-         if(j > 0) j--;
-         else{
-             retval.i=0; retval.j=0;
-             return retval;
-         }
-    }
-    retval.j = j;
-    while(vsip_vget_d(f,j) != 0.0){
-        if(j > 0) j--;
-        else{
-            retval.i = 0;
-            return retval;
+    svdCorner crnr;
+    vsip_index j=vsip_vgetlength_d(f)-1;
+    vsip_index i;
+    while((j > 0) && (vsip_vget_d(f,j) == 0.0))
+        j-=1;
+    if(j == 0 && vsip_vget_d(f,0) == 0.0){
+        crnr.i=0;
+        crnr.j=0;
+    } else {
+        i = j;
+        j += 1;
+        while((i > 0) && (vsip_vget_d(f,i) != 0.0))
+            i -= 1;
+        if((i == 0) && (vsip_vget_d(f,0)== 0.0)){
+            crnr.i=1;
+            crnr.j=j+1;
+        } else if (i==0){
+            crnr.i=0;
+            crnr.j=j+1;
+        } else {
+            crnr.i=i+1;
+            crnr.j=j+1;
         }
     }
-    retval.i = j+1;
-    return retval;
+    return crnr;
 }
 void phaseCheck_f(vsip_mview_f* L,vsip_vview_f* d,vsip_vview_f* f,vsip_mview_f* R,vsip_scalar_f eps0)
 {
@@ -165,31 +175,38 @@ void cphaseCheck_d(vsip_cmview_d* L, vsip_vview_d* d, vsip_vview_d* f,vsip_cmvie
     crow_sv_d(R,r,j);vsip_rscvmul_d(ps,r,r);
 }
 vsip_index zeroFind_f(vsip_vview_f* d, vsip_scalar_f eps0){
-    vsip_index j = vsip_vgetlength_f(d) - 1;
-    vsip_scalar_f xd = vsip_vget_f(d,j);
+    vsip_index j = vsip_vgetlength_f(d);
+    vsip_scalar_f xd=vsip_vget_f(d,j-1);
     while(xd > eps0){
-        if (j > 0){
+        if (j > 1){ 
             j -= 1;
-            xd = vsip_vget_f(d,j);
-        }else
+            xd=vsip_vget_f(d,j-1);
+        }else{
             break;
+        }
     }
-    if(xd <= eps0) 
-        vsip_vput_f(d,j,0.0);
+    if(xd <= eps0)
+        vsip_vput_f(d,j-1,0.0);
+    if (j == 1)
+        j=0;
     return j;
 }
+
 vsip_index zeroFind_d(vsip_vview_d* d, vsip_scalar_d eps0){
-    vsip_index j = vsip_vgetlength_d(d) - 1;
-    vsip_scalar_d xd = vsip_vget_d(d,j);
+    vsip_index j = vsip_vgetlength_d(d);
+    vsip_scalar_d xd=vsip_vget_d(d,j-1);
     while(xd > eps0){
-        if (j > 0){
+        if (j > 1){ 
             j -= 1;
-            xd = vsip_vget_d(d,j);
-        }else
+            xd=vsip_vget_d(d,j-1);
+        }else{
             break;
+        }
     }
-    if(xd <= eps0) 
-        vsip_vput_d(d,j,0.0);
+    if(xd <= eps0)
+        vsip_vput_d(d,j-1,0.0);
+    if (j == 1)
+        j=0;
     return j;
 }
 
@@ -299,8 +316,6 @@ void czeroRow_d(vsip_cmview_d* L,vsip_vview_d *d,vsip_vview_d *f)
 void czeroCol_d(vsip_vview_d *d,vsip_vview_d *f, vsip_cmview_d* R)
 {
 }
-
-
 vsip_scalar_f svdMu_f(vsip_scalar_f d2,vsip_scalar_f f1,vsip_scalar_f d3,vsip_scalar_f f2)
 {
     vsip_scalar_f mu;
@@ -666,6 +681,7 @@ void csvdStep_d(vsip_cmview_d* L, vsip_vview_d* d, vsip_vview_d* f, vsip_cmview_
     vsip_vput_d(d,j,t);
     cprodG_d(L,i, j, g.c, g.s);
 }
+
 void svdIteration_f(vsip_mview_f* L0, vsip_vview_f* d0, vsip_vview_f* f0, vsip_mview_f* R0, vsip_scalar_f eps0)
 {
     vsip_vview_f *d=vsip_vcloneview_f(d0);
@@ -688,17 +704,207 @@ void svdIteration_f(vsip_mview_f* L0, vsip_vview_f* d0, vsip_vview_f* f0, vsip_m
         imsv_f(R0,R,cnr.i,cnr.j,0,0);
         n=vsip_vgetlength_f(f);
         k=zeroFind_f(d,eps0);
-        if (k >=0){
+        if (k > 0){
             if(vsip_vget_f(d,n) == 0.0){
                 zeroCol_f(d,f,R);
             }else{
-                imsv_f(L,L,0,0,k,0);
-                ivsv_f(d,d,k+1,0);
-                ivsv_f(f,f,k,0);
+                imsv_f(L,L,0,0,k-1,0);
+                ivsv_f(d0,d,k,0);
+                ivsv_f(f0,f,k-1,0);
                 zeroRow_f(L,d,f);
             }
         }else{
             svdStep_f(L,d,f,R);
         }
     }
+}
+void svdIteration_d(vsip_mview_d* L0, vsip_vview_d* d0, vsip_vview_d* f0, vsip_mview_d* R0, vsip_scalar_d eps0)
+{
+    vsip_vview_d *d=vsip_vcloneview_d(d0);
+    vsip_vview_d *f=vsip_vcloneview_d(f0);
+    vsip_mview_d *L=vsip_mcloneview_d(L0);
+    vsip_mview_d *R=vsip_mcloneview_d(R0);
+    vsip_length n;
+    svdCorner cnr;
+    vsip_index k;
+    vsip_length cntr=0;
+    vsip_length maxcntr=20*vsip_vgetlength_d(d0);
+    while (cntr++ < maxcntr){
+        phaseCheck_d(L0,d0,f0,R0,eps0);
+        cnr=svdCorners_d(f0);
+        if (cnr.j == 0)
+            break;
+        ivsv_d(d0,d,cnr.i,cnr.j);
+        ivsv_d(f0,f,cnr.i,cnr.j-1);
+        imsv_d(L0,L,0,0,cnr.i,cnr.j);
+        imsv_d(R0,R,cnr.i,cnr.j,0,0);
+        n=vsip_vgetlength_d(f);
+        k=zeroFind_d(d,eps0);
+        if (k > 0){
+            if(vsip_vget_d(d,n) == 0.0){
+                zeroCol_d(d,f,R);
+            }else{
+                imsv_d(L,L,0,0,k-1,0);
+                ivsv_d(d0,d,k,0);
+                ivsv_d(f0,f,k-1,0);
+                zeroRow_d(L,d,f);
+            }
+        }else{
+            svdStep_d(L,d,f,R);
+        }
+    }
+}
+void csvdIteration_f(vsip_cmview_f* L0, vsip_vview_f* d0, vsip_vview_f* f0, vsip_cmview_f* R0, vsip_scalar_f eps0)
+{
+    vsip_vview_f *d=vsip_vcloneview_f(d0);
+    vsip_vview_f *f=vsip_vcloneview_f(f0);
+    vsip_cmview_f *L=vsip_cmcloneview_f(L0);
+    vsip_cmview_f *R=vsip_cmcloneview_f(R0);
+    vsip_length n;
+    svdCorner cnr;
+    vsip_index k;
+    vsip_length cntr=0;
+    vsip_length maxcntr=20*vsip_vgetlength_f(d0);
+    while (cntr++ < maxcntr){
+        cphaseCheck_f(L0,d0,f0,R0,eps0);
+        cnr=svdCorners_f(f0);
+        if (cnr.j == 0)
+            break;
+        ivsv_f(d0,d,cnr.i,cnr.j);
+        ivsv_f(f0,f,cnr.i,cnr.j-1);
+        cimsv_f(L0,L,0,0,cnr.i,cnr.j);
+        cimsv_f(R0,R,cnr.i,cnr.j,0,0);
+        n=vsip_vgetlength_f(f);
+        k=zeroFind_f(d,eps0);
+        if (k > 0){
+            if(vsip_vget_f(d,n) == 0.0){
+                czeroCol_f(d,f,R);
+            }else{
+                cimsv_f(L,L,0,0,k-1,0);
+                ivsv_f(d0,d,k,0);
+                ivsv_f(f0,f,k-1,0);
+                czeroRow_f(L,d,f);
+            }
+        }else{
+            csvdStep_f(L,d,f,R);
+        }
+    }
+}
+void csvdIteration_d(vsip_cmview_d* L0, vsip_vview_d* d0, vsip_vview_d* f0, vsip_cmview_d* R0, vsip_scalar_d eps0)
+{
+    vsip_vview_d *d=vsip_vcloneview_d(d0);
+    vsip_vview_d *f=vsip_vcloneview_d(f0);
+    vsip_cmview_d *L=vsip_cmcloneview_d(L0);
+    vsip_cmview_d *R=vsip_cmcloneview_d(R0);
+    vsip_length n;
+    svdCorner cnr;
+    vsip_index k;
+    vsip_length cntr=0;
+    vsip_length maxcntr=20*vsip_vgetlength_d(d0);
+    while (cntr++ < maxcntr){
+        cphaseCheck_d(L0,d0,f0,R0,eps0);
+        cnr=svdCorners_d(f0);
+        if (cnr.j == 0)
+            break;
+        ivsv_d(d0,d,cnr.i,cnr.j);
+        ivsv_d(f0,f,cnr.i,cnr.j-1);
+        cimsv_d(L0,L,0,0,cnr.i,cnr.j);
+        cimsv_d(R0,R,cnr.i,cnr.j,0,0);
+        n=vsip_vgetlength_d(f);
+        k=zeroFind_d(d,eps0);
+        if (k > 0){
+            if(vsip_vget_d(d,n) == 0.0){
+                czeroCol_d(d,f,R);
+            }else{
+                cimsv_d(L,L,0,0,k-1,0);
+                ivsv_d(d0,d,k,0);
+                ivsv_d(f0,f,k-1,0);
+                czeroRow_d(L,d,f);
+            }
+        }else{
+            csvdStep_d(L,d,f,R);
+        }
+    }
+}
+
+void svdSort_f(vsip_mview_f* L0,vsip_vview_f* d,vsip_mview_f* R0){
+    vsip_length n=vsip_vgetlength_f(d);
+    vsip_vview_vi* indx_L = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_vview_vi* indx_R = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_mview_f *L=vsip_mcloneview_f(L0);
+    vsip_vsortip_f(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_TRUE,indx_L);
+    vsip_vcopy_vi_vi(indx_L,indx_R);
+    imsv_f( L0, L, 0,0, 0, n);
+    vsip_mpermute_once_f(L,VSIP_COL,indx_L,L);
+    vsip_mpermute_once_f(R0,VSIP_ROW,indx_R,R0);
+    vsip_valldestroy_vi(indx_L);
+    vsip_valldestroy_vi(indx_R);
+    vsip_mdestroy_f(L);   
+}
+void csvdSort_f(vsip_cmview_f* L0,vsip_vview_f* d,vsip_cmview_f* R0){
+    vsip_length n=vsip_vgetlength_f(d);
+    vsip_vview_vi* indx_L = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_vview_vi* indx_R = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_cmview_f *L=vsip_cmcloneview_f(L0);
+    vsip_vsortip_f(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_TRUE,indx_L);
+    vsip_vcopy_vi_vi(indx_L,indx_R);
+    cimsv_f( L0, L, 0,0, 0, n);
+    vsip_cmpermute_once_f(L,VSIP_COL,indx_L,L);
+    vsip_cmpermute_once_f(R0,VSIP_ROW,indx_R,R0);
+    vsip_valldestroy_vi(indx_L);
+    vsip_valldestroy_vi(indx_R);
+    vsip_cmdestroy_f(L);
+}
+void svdSort_d(vsip_mview_d* L0,vsip_vview_d* d,vsip_mview_d* R0){
+    vsip_length n=vsip_vgetlength_d(d);
+    vsip_vview_vi* indx_L = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_vview_vi* indx_R = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_mview_d *L=vsip_mcloneview_d(L0);
+    vsip_vsortip_d(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_TRUE,indx_L);
+    vsip_vcopy_vi_vi(indx_L,indx_R);
+    imsv_d( L0, L, 0,0, 0, n);
+    vsip_mpermute_once_d(L,VSIP_COL,indx_L,L);
+    vsip_mpermute_once_d(R0,VSIP_ROW,indx_R,R0);
+    vsip_valldestroy_vi(indx_L);
+    vsip_valldestroy_vi(indx_R);
+    vsip_mdestroy_d(L);
+}
+void csvdSort_d(vsip_cmview_d* L0,vsip_vview_d* d,vsip_cmview_d* R0){
+    vsip_length n=vsip_vgetlength_d(d);
+    vsip_vview_vi* indx_L = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_vview_vi* indx_R = vsip_vcreate_vi(n,VSIP_MEM_NONE);
+    vsip_cmview_d *L=vsip_cmcloneview_d(L0);
+    vsip_vsortip_d(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_TRUE,indx_L);
+    vsip_vcopy_vi_vi(indx_L,indx_R);
+    cimsv_d( L0, L, 0,0, 0, n);
+    vsip_cmpermute_once_d(L,VSIP_COL,indx_L,L);
+    vsip_cmpermute_once_d(R0,VSIP_ROW,indx_R,R0);
+    vsip_valldestroy_vi(indx_L);
+    vsip_valldestroy_vi(indx_R);
+    vsip_cmdestroy_d(L);
+}
+
+svdObj_f svd_f(vsip_mview_f *A){
+    svdObj_f svd = svdBidiag_f(A);
+    svdIteration_f(svd.L,svd.d,svd.f,svd.R,svd.eps0);
+    svdSort_f(svd.L,svd.d,svd.R);
+    return svd;
+}
+csvdObj_f csvd_f(vsip_cmview_f *A){
+    csvdObj_f svd = csvdBidiag_f(A);
+    csvdIteration_f(svd.L,svd.d,svd.f,svd.R,svd.eps0);
+    csvdSort_f(svd.L,svd.d,svd.R);
+    return svd;
+}
+svdObj_d svd_d(vsip_mview_d *A){
+    svdObj_d svd = svdBidiag_d(A);
+    svdIteration_d(svd.L,svd.d,svd.f,svd.R,svd.eps0);
+    svdSort_d(svd.L,svd.d,svd.R);
+    return svd;
+}
+csvdObj_d csvd_d(vsip_cmview_d *A){
+    csvdObj_d svd = csvdBidiag_d(A);
+    csvdIteration_d(svd.L,svd.d,svd.f,svd.R,svd.eps0);
+    csvdSort_d(svd.L,svd.d,svd.R);
+    return svd;
 }

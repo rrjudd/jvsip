@@ -101,6 +101,10 @@ vsip_mview_d *UmatExtract_d(vsip_mview_d*);
 vsip_mview_d *VHmatExtract_d(vsip_mview_d*);
 vsip_cmview_d *cUmatExtract_d(vsip_cmview_d*);
 vsip_cmview_d *cVHmatExtract_d(vsip_cmview_d*);
+void svdZeroCheckAndSet_f(vsip_scalar_f, vsip_vview_f*, vsip_vview_f*);
+void svdZeroCheckAndSet_d(vsip_scalar_d, vsip_vview_d*, vsip_vview_d*);
+void csvdZeroCheckAndSet_f(vsip_scalar_f, vsip_cvview_f*, vsip_cvview_f*);
+void csvdZeroCheckAndSet_d(vsip_scalar_d, vsip_cvview_d*, vsip_cvview_d*);
 void biDiagPhaseToZero_f(vsip_mview_f*,vsip_vview_f*,vsip_vview_f*,vsip_mview_f*,vsip_scalar_f);
 void biDiagPhaseToZero_d(vsip_mview_d*,vsip_vview_d*,vsip_vview_d*,vsip_mview_d*,vsip_scalar_d);
 void cbiDiagPhaseToZero_f( vsip_cmview_f*, vsip_cvview_f*, vsip_cvview_f*,vsip_cmview_f*,vsip_scalar_f);
@@ -141,3 +145,16 @@ void csvdStep_d(vsip_cmview_d*, vsip_vview_d*, vsip_vview_d*, vsip_cmview_d*);
 void zeroRow_f(vsip_mview_f*,vsip_vview_f*,vsip_vview_f*);
 void zeroCol_f(vsip_vview_f*,vsip_vview_f*, vsip_mview_f*);
 void svdIteration_f(vsip_mview_f*, vsip_vview_f*, vsip_vview_f*, vsip_mview_f*, vsip_scalar_f);
+void svdIteration_d(vsip_mview_d*, vsip_vview_d*, vsip_vview_d*, vsip_mview_d*, vsip_scalar_d);
+void csvdIteration_f(vsip_cmview_f*, vsip_vview_f*, vsip_vview_f*, vsip_cmview_f*, vsip_scalar_f);
+void csvdIteration_d(vsip_cmview_d*, vsip_vview_d*, vsip_vview_d*, vsip_cmview_d*, vsip_scalar_d);
+
+void svdSort_f(vsip_mview_f*,vsip_vview_f*,vsip_mview_f*);
+void csvdSort_f(vsip_cmview_f*,vsip_vview_f*,vsip_cmview_f*);
+void svdSort_d(vsip_mview_d*,vsip_vview_d*,vsip_mview_d*);
+void csvdSort_d(vsip_cmview_d*,vsip_vview_d*,vsip_cmview_d*);
+
+svdObj_f svd_f(vsip_mview_f*);
+csvdObj_f csvd_f(vsip_cmview_f*);
+svdObj_d svd_d(vsip_mview_d*);
+csvdObj_d csvd_d(vsip_cmview_d*);

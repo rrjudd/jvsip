@@ -188,11 +188,11 @@ vsip_mview_f* imsv_f( vsip_mview_f *B, vsip_mview_f *BS, vsip_index i1,vsip_inde
 {
     vsip_mattr_f attr;
     vsip_mgetattrib_f(B,&attr);
-    if(j1 == 0) j1 =attr.row_length;
+    if(j1 == 0) j1 =attr.col_length;
     if(j2 == 0) j2 =attr.row_length;
-    attr.row_length = (j1 - i1);
-    attr.col_length = (j2 - i2);
-    attr.offset += j1 * attr.row_stride + i1 * attr.col_stride;
+    attr.col_length = (j1 - i1);
+    attr.row_length = (j2 - i2);
+    attr.offset += i2 * attr.row_stride + i1 * attr.col_stride;
     vsip_mputattrib_f(BS,&attr);
     return BS;
 }
@@ -210,11 +210,11 @@ vsip_cmview_f* cimsv_f( vsip_cmview_f *B, vsip_cmview_f *BS, vsip_index i1,vsip_
 {
     vsip_cmattr_f attr;
     vsip_cmgetattrib_f(B,&attr);
-    if(j1 == 0) j1 =attr.row_length;
+    if(j1 == 0) j1 =attr.col_length;
     if(j2 == 0) j2 =attr.row_length;
-    attr.row_length = (j1 - i1);
-    attr.col_length = (j2 - i2);
-    attr.offset += j1 * attr.row_stride + i1 * attr.col_stride;
+    attr.col_length = (j1 - i1);
+    attr.row_length = (j2 - i2);
+    attr.offset += i2 * attr.row_stride + i1 * attr.col_stride;
     vsip_cmputattrib_f(BS,&attr);
     return BS;
 }
@@ -232,11 +232,11 @@ vsip_mview_d* imsv_d( vsip_mview_d *B, vsip_mview_d *BS, vsip_index i1,vsip_inde
 {
     vsip_mattr_d attr;
     vsip_mgetattrib_d(B,&attr);
-    if(j1 == 0) j1 =attr.row_length;
+    if(j1 == 0) j1 =attr.col_length;
     if(j2 == 0) j2 =attr.row_length;
-    attr.row_length = (j1 - i1);
-    attr.col_length = (j2 - i2);
-    attr.offset += j1 * attr.row_stride + i1 * attr.col_stride;
+    attr.col_length = (j1 - i1);
+    attr.row_length = (j2 - i2);
+    attr.offset += i2 * attr.row_stride + i1 * attr.col_stride;
     vsip_mputattrib_d(BS,&attr);
     return BS;
 }
@@ -254,11 +254,11 @@ vsip_cmview_d* cimsv_d( vsip_cmview_d *B, vsip_cmview_d *BS, vsip_index i1,vsip_
 {
     vsip_cmattr_d attr;
     vsip_cmgetattrib_d(B,&attr);
-    if(j1 == 0) j1 =attr.row_length;
+    if(j1 == 0) j1 =attr.col_length;
     if(j2 == 0) j2 =attr.row_length;
-    attr.row_length = (j1 - i1);
-    attr.col_length = (j2 - i2);
-    attr.offset += j1 * attr.row_stride + i1 * attr.col_stride;
+    attr.col_length = (j1 - i1);
+    attr.row_length = (j2 - i2);
+    attr.offset += i2 * attr.row_stride + i1 * attr.col_stride;
     vsip_cmputattrib_d(BS,&attr);
     return BS;
 }
