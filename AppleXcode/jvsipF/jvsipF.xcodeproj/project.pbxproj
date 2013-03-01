@@ -1992,6 +1992,8 @@
 		0672482E15978A22002AD475 /* vsip_mfill_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0672482D15978A22002AD475 /* vsip_mfill_uc.c */; };
 		06917BB41519049A0044F7F9 /* vsip_mcmplx_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */; };
 		06917BB51519049A0044F7F9 /* vsip_mcmplx_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */; };
+		06BA61A116DEBB5600C78C00 /* vsip_cmpermute_once_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */; };
+		06BA61A316DEBB6500C78C00 /* vsip_cmpermute_once_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */; };
 		06E047641518F56A001765DF /* vsip_mpolar_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047621518F56A001765DF /* vsip_mpolar_d.c */; };
 		06E047651518F56A001765DF /* vsip_mpolar_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047631518F56A001765DF /* vsip_mpolar_f.c */; };
 /* End PBXBuildFile section */
@@ -3985,6 +3987,8 @@
 		0672482D15978A22002AD475 /* vsip_mfill_uc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mfill_uc.c; sourceTree = "<group>"; };
 		06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_d.c; sourceTree = "<group>"; };
 		06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_f.c; sourceTree = "<group>"; };
+		06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmpermute_once_f.c; sourceTree = "<group>"; };
+		06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmpermute_once_d.c; sourceTree = "<group>"; };
 		06E047621518F56A001765DF /* vsip_mpolar_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_d.c; sourceTree = "<group>"; };
 		06E047631518F56A001765DF /* vsip_mpolar_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_f.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4461,6 +4465,8 @@
 				06307FF7150BB7E700EF9D00 /* vsip_cjmul_f.c */,
 				06307FF8150BB7E700EF9D00 /* vsip_cllsqsol_d.c */,
 				06307FF9150BB7E700EF9D00 /* vsip_cllsqsol_f.c */,
+				06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */,
+				06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */,
 				06307FFA150BB7E700EF9D00 /* vsip_clog_d.c */,
 				06307FFB150BB7E700EF9D00 /* vsip_clog_f.c */,
 				06307FFC150BB7E700EF9D00 /* vsip_clud_create_d.c */,
@@ -8088,6 +8094,8 @@
 				0604AC28151A630B00DF6A91 /* vsip_rcfir_create_d.c in Sources */,
 				0604AC2A151A631C00DF6A91 /* vsip_rcfir_getattr_d.c in Sources */,
 				0672482E15978A22002AD475 /* vsip_mfill_uc.c in Sources */,
+				06BA61A116DEBB5600C78C00 /* vsip_cmpermute_once_f.c in Sources */,
+				06BA61A316DEBB6500C78C00 /* vsip_cmpermute_once_d.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

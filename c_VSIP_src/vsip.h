@@ -1058,6 +1058,8 @@ void vsip_mpermute_d ( const vsip_mview_d*, const vsip_permute*, const vsip_mvie
 void vsip_mpermute_f ( const vsip_mview_f*, const vsip_permute*, const vsip_mview_f* ) ;
 void vsip_mpermute_once_d ( const vsip_mview_d*, vsip_major, const vsip_vview_vi*, const vsip_mview_d* ) ;
 void vsip_mpermute_once_f ( const vsip_mview_f*, vsip_major, const vsip_vview_vi*, const vsip_mview_f* ) ;
+void vsip_cmpermute_once_d ( const vsip_cmview_d*, vsip_major, const vsip_vview_vi*, const vsip_cmview_d* ) ;
+void vsip_cmpermute_once_f ( const vsip_cmview_f*, vsip_major, const vsip_vview_vi*, const vsip_cmview_f* ) ;
 void vsip_mprod3_d ( const vsip_mview_d *, const vsip_mview_d *, const vsip_mview_d * ) ;
 void vsip_mprod3_f ( const vsip_mview_f *, const vsip_mview_f *, const vsip_mview_f * ) ;
 void vsip_mprod4_d ( const vsip_mview_d *, const vsip_mview_d *, const vsip_mview_d * ) ;
