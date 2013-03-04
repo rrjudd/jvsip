@@ -572,7 +572,7 @@ void biDiagPhaseToZero_d(
         }
     }
     svdZeroCheckAndSet_d(eps0,d,f);          
-    for (i=0; i<n_d-1; i++){
+    for (i=0; i<n_f-1; i++){
         j=i+1;
         ps = vsip_vget_d(f,i);
         m = vsip_mag_d(ps);
@@ -582,7 +582,7 @@ void biDiagPhaseToZero_d(
         vsip_vput_d(f,i,m);
         vsip_vput_d(f,j,ps * vsip_vget_d(f,j));
     }
-    j=n_d;
+    j=n_f;
     i=j-1;
     ps=vsip_vget_d(f,i);
     m=vsip_mag_d(ps);
