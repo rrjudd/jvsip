@@ -479,11 +479,10 @@ static void gtProd_f(vsip_index i, vsip_index j, vsip_scalar_f c,vsip_scalar_f s
     vsip_vview_f *a1= vsip_mrowview_f(R,i);
     vsip_vview_f *a2= vsip_mrowview_f(R,j);
     vsip_vview_f *a1c=vclone_f(a1);
-    vsip_vview_f *a2c=vclone_f(a2);
-    vsip_svmul_f(c,a1c,a1); vsip_vsma_f(a2c,s,a1,a1); 
-    vsip_svmul_f(c,a2c,a2); vsip_vsma_f(a1c,-s,a2,a2);
+    vsip_svmul_f(c,a1c,a1); vsip_vsma_f(a2,s,a1,a1);
+    vsip_svmul_f(-s,a1c,a1c); vsip_vsma_f(a2,c,a1c,a2); 
     vsip_vdestroy_f(a1);vsip_vdestroy_f(a2);
-    vsip_valldestroy_f(a1c); vsip_valldestroy_f(a2c);
+    vsip_valldestroy_f(a1c);
 }
 static void gtProd_d(vsip_index i, vsip_index j,vsip_scalar_d c, vsip_scalar_d s,vsip_mview_d*R)
 {
@@ -526,11 +525,10 @@ static void prodG_f(vsip_mview_f* L,vsip_index i, vsip_index j,vsip_scalar_f c, 
     vsip_vview_f *a1= vsip_mcolview_f(L,i);
     vsip_vview_f *a2= vsip_mcolview_f(L,j);
     vsip_vview_f *a1c=vclone_f(a1);
-    vsip_vview_f *a2c=vclone_f(a2);
     vsip_svmul_f(c,a1c,a1); vsip_vsma_f(a2,s,a1,a1);
-    vsip_svmul_f(c,a2c,a2); vsip_vsma_f(a1c,-s,a2,a2);
+    vsip_svmul_f(-s,a1c,a1c);vsip_vsma_f(a2,c,a1c,a2);
     vsip_vdestroy_f(a1);vsip_vdestroy_f(a2);
-    vsip_valldestroy_f(a1c); vsip_valldestroy_f(a2c);
+    vsip_valldestroy_f(a1c);
 }
 static void prodG_d(vsip_mview_d* L,vsip_index i, vsip_index j,vsip_scalar_d c, vsip_scalar_d s)
 {
@@ -1193,6 +1191,8 @@ static void biDiagPhaseToZero_f(
     vsip_vput_f(f,i,m);
     col_sv_f(L, l, j);vsip_svmul_f(ps,l,l);
     row_sv_f(R,r,j);vsip_svmul_f(ps,r,r);
+    vsip_vdestroy_f(l);
+    vsip_vdestroy_f(r);
 }
 static void cbiDiagPhaseToZero_f(
       vsip_cmview_f *L,
@@ -1267,6 +1267,8 @@ static void cbiDiagPhaseToZero_f(
     vsip_cvput_f(f,i,vsip_cmplx_f(m,0.0));
     ccol_sv_f(L, l, j);vsip_csvmul_f(vsip_conj_f(ps),l,l);
     crow_sv_f(R,r,j);vsip_csvmul_f(ps,r,r);
+    vsip_cvdestroy_f(l);
+    vsip_cvdestroy_f(r);
 }
 static void biDiagPhaseToZero_d(
       vsip_mview_d *L,
@@ -1314,6 +1316,8 @@ static void biDiagPhaseToZero_d(
     vsip_vput_d(f,i,m);
     col_sv_d(L, l, j);vsip_svmul_d(ps,l,l);
     row_sv_d(R,r,j);vsip_svmul_d(ps,r,r);
+    vsip_vdestroy_d(l);
+    vsip_vdestroy_d(r);
 }
 static void cbiDiagPhaseToZero_d(
       vsip_cmview_d *L,
@@ -1388,6 +1392,8 @@ static void cbiDiagPhaseToZero_d(
     vsip_cvput_d(f,i,vsip_cmplx_d(m,0.0));
     ccol_sv_d(L, l, j);vsip_csvmul_d(vsip_conj_d(ps),l,l);
     crow_sv_d(R,r,j);vsip_csvmul_d(ps,r,r);
+    vsip_cvdestroy_d(l);
+    vsip_cvdestroy_d(r);
 }
 
 static svdObj_f svdBidiag_f(vsip_mview_f* A)
@@ -1406,7 +1412,7 @@ static svdObj_f svdBidiag_f(vsip_mview_f* A)
     if(B) retval.L=UmatExtract_f(B); else retval.L=NULL; if(!retval.L) retval.init++;
     if(B) retval.R=VHmatExtract_f(B); else retval.R=NULL; if(!retval.R) retval.init++;
     /* eps0 is a number << maximum singular value */
-    retval.eps0=sv*1E-7;
+    retval.eps0=sv*1E-10;
     vsip_vdestroy_f(d0);
     vsip_vdestroy_f(f0);
     vsip_malldestroy_f(B);
@@ -1430,7 +1436,7 @@ static csvdObj_f csvdBidiag_f(vsip_cmview_f* A)
     if(B) retval.L=cUmatExtract_f(B); else retval.L=NULL; if(!retval.L) retval.init++;
     if(B) retval.R=cVHmatExtract_f(B); else retval.R=NULL; if(!retval.R) retval.init++;
     /* eps0 is a number << maximum singular value */
-    retval.eps0=sv*1E-7;
+    retval.eps0=sv*1E-10;
     cbiDiagPhaseToZero_f(retval.L,dc,fc,retval.R,retval.eps0);
     retval.d=vclone_f(d0); if(!retval.d) retval.init++;
     retval.f=vclone_f(f0); if(!retval.f) retval.init++;
@@ -1457,7 +1463,7 @@ static svdObj_d svdBidiag_d(vsip_mview_d* A)
     if(B) retval.L=UmatExtract_d(B); else retval.L=NULL; if(!retval.L) retval.init++;
     if(B) retval.R=VHmatExtract_d(B); else retval.R=NULL; if(!retval.R) retval.init++;
     /* eps0 is a number << maximum singular value */
-    retval.eps0=sv*1E-7;
+    retval.eps0=sv*1E-10;
     vsip_vdestroy_d(d0);
     vsip_vdestroy_d(f0);
     vsip_malldestroy_d(B);
@@ -1481,7 +1487,7 @@ static csvdObj_d csvdBidiag_d(vsip_cmview_d* A)
     if(B) retval.L=cUmatExtract_d(B); else retval.L=NULL; if(!retval.L) retval.init++;
     if(B) retval.R=cVHmatExtract_d(B); else retval.R=NULL; if(!retval.R) retval.init++;
     /* eps0 is a number << maximum singular value */
-    retval.eps0=sv*1E-7;
+    retval.eps0=sv*1E-10;
     cbiDiagPhaseToZero_d(retval.L,dc,fc,retval.R,retval.eps0);
     retval.d=vclone_d(d0); if(!retval.d) retval.init++;
     retval.f=vclone_d(f0); if(!retval.f) retval.init++;
@@ -2117,6 +2123,10 @@ static void svdIteration_f(vsip_mview_f* L0, vsip_vview_f* d0, vsip_vview_f* f0,
             svdStep_f(L,d,f,R);
         }
     }
+    vsip_vdestroy_f(d);
+    vsip_vdestroy_f(f);
+    vsip_mdestroy_f(L);
+    vsip_mdestroy_f(R);
 }
 static void svdIteration_d(vsip_mview_d* L0, vsip_vview_d* d0, vsip_vview_d* f0, vsip_mview_d* R0, vsip_scalar_d eps0)
 {
@@ -2153,6 +2163,10 @@ static void svdIteration_d(vsip_mview_d* L0, vsip_vview_d* d0, vsip_vview_d* f0,
             svdStep_d(L,d,f,R);
         }
     }
+    vsip_vdestroy_d(d);
+    vsip_vdestroy_d(f);
+    vsip_mdestroy_d(L);
+    vsip_mdestroy_d(R);
 }
 static void csvdIteration_f(vsip_cmview_f* L0, vsip_vview_f* d0, vsip_vview_f* f0, vsip_cmview_f* R0, vsip_scalar_f eps0)
 {
@@ -2189,6 +2203,10 @@ static void csvdIteration_f(vsip_cmview_f* L0, vsip_vview_f* d0, vsip_vview_f* f
             csvdStep_f(L,d,f,R);
         }
     }
+    vsip_vdestroy_f(d);
+    vsip_vdestroy_f(f);
+    vsip_cmdestroy_f(L);
+    vsip_cmdestroy_f(R);
 }
 static void csvdIteration_d(vsip_cmview_d* L0, vsip_vview_d* d0, vsip_vview_d* f0, vsip_cmview_d* R0, vsip_scalar_d eps0)
 {
@@ -2225,6 +2243,10 @@ static void csvdIteration_d(vsip_cmview_d* L0, vsip_vview_d* d0, vsip_vview_d* f
             csvdStep_d(L,d,f,R);
         }
     }
+    vsip_vdestroy_d(d);
+    vsip_vdestroy_d(f);
+    vsip_cmdestroy_d(L);
+    vsip_cmdestroy_d(R);
 }
 
 static void svdSort_f(vsip_mview_f* L0,vsip_vview_f* d,vsip_mview_f* R0){
