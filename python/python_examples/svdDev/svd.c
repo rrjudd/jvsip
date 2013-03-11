@@ -1799,21 +1799,268 @@ static void zeroCol_f(vsip_vview_f *d,vsip_vview_f *f, vsip_mview_f* R)
 }
 static void zeroRow_d(vsip_mview_d* L,vsip_vview_d *d,vsip_vview_d *f)
 {
+    vsip_length n = vsip_vgetlength_d(d);
+    givensObj_d g;
+    vsip_scalar_d xd,xf,t;
+    vsip_index i;
+    xd=vsip_vget_d(d,0);
+    xf=vsip_vget_d(f,0);
+    g=givensCoef_d(xd,xf);
+    if (n == 1){
+        vsip_vput_d(f,0,0.0);
+        vsip_vput_d(d,0,g.r);
+    }else{
+        vsip_vput_d(f,0,0.0);
+        vsip_vput_d(d,0,g.r);
+        xf=vsip_vget_d(f,1);
+        t= -xf * g.s; xf *= g.c;
+        vsip_vput_d(f,1,xf);
+        prodG_d(L,1,0,g.c,g.s);
+        for(i=1; i<n-1; i++){
+            xd=vsip_vget_d(d,i);
+            g=givensCoef_d(xd,t);
+            prodG_d(L,i+1,0,g.c,g.s);
+            vsip_vput_d(d,i,g.r);
+            xf=vsip_vget_d(f,i+1);
+            t=-xf * g.s; xf *= g.c;
+            vsip_vput_d(f,i+1,xf);
+        }
+        xd=vsip_vget_d(d,n-1);
+        g=givensCoef_d(xd,t);
+        vsip_vput_d(d,n-1,g.r);
+        prodG_d(L,n,0,g.c,g.s);
+    }
 }
 static void zeroCol_d(vsip_vview_d *d,vsip_vview_d *f, vsip_mview_d* R)
 {
+    vsip_length n = vsip_vgetlength_d(f);
+    givensObj_d g;
+    vsip_scalar_d xd,xf,t;
+    vsip_index i,j,k;
+    if (n == 1){
+        xd=vsip_vget_d(d,0);
+        xf=vsip_vget_d(f,0);
+        g=givensCoef_d(xd,xf);
+        vsip_vput_d(d,0,g.r);
+        vsip_vput_d(f,0,0.0);
+        gtProd_d(0,1,g.c,g.s,R);
+    }else if (n == 2){
+        xd=vsip_vget_d(d,1);
+        xf=vsip_vget_d(f,1);
+        g=givensCoef_d(xd,xf);
+        vsip_vput_d(d,1,g.r);
+        vsip_vput_d(f,1,0.0);
+        xf=vsip_vget_d(f,0);
+        t= -xf * g.s; xf *= g.c;
+        vsip_vput_d(f,0,xf);
+        gtProd_d(1,2,g.c,g.s,R);
+        xd=vsip_vget_d(d,0);
+        g=givensCoef_d(xd,t);
+        vsip_vput_d(d,0,g.r);
+        gtProd_d(0,2,g.c,g.s,R);
+    }else{
+        i=n-1; j=i-1; k=i;
+        xd=vsip_vget_d(d,i);
+        xf=vsip_vget_d(f,i);
+        g=givensCoef_d(xd,xf);
+        xf=vsip_vget_d(f,j);
+        vsip_vput_d(f,i,0.0);
+        vsip_vput_d(d,i,g.r);
+        t=-xf*g.s; xf*=g.c;
+        vsip_vput_d(f,j,xf);
+        gtProd_d(i,k+1,g.c,g.s,R);
+        while (i > 1){
+            i = j; j = i-1;
+            xd=vsip_vget_d(d,i);
+            g=givensCoef_d(xd,t);
+            vsip_vput_d(d,i,g.r);
+            xf=vsip_vget_d(f,j);
+            t= -xf * g.s; xf *= g.c;
+            vsip_vput_d(f,j,xf);
+            gtProd_d(i,k+1,g.c,g.s,R);
+        }
+        xd=vsip_vget_d(d,0);
+        g=givensCoef_d(xd,t);
+        vsip_vput_d(d,0,g.r);
+        gtProd_d(0,k+1,g.c,g.s,R);
+    }
 }
 static void czeroRow_f(vsip_cmview_f* L,vsip_vview_f *d,vsip_vview_f *f)
 {
+    vsip_length n = vsip_vgetlength_f(d);
+    givensObj_f g;
+    vsip_scalar_f xd,xf,t;
+    vsip_index i;
+    xd=vsip_vget_f(d,0);
+    xf=vsip_vget_f(f,0);
+    g=givensCoef_f(xd,xf);
+    if (n == 1){
+        vsip_vput_f(f,0,0.0);
+        vsip_vput_f(d,0,g.r);
+    }else{
+        vsip_vput_f(f,0,0.0);
+        vsip_vput_f(d,0,g.r);
+        xf=vsip_vget_f(f,1);
+        t= -xf * g.s; xf *= g.c;
+        vsip_vput_f(f,1,xf);
+        cprodG_f(L,1,0,g.c,g.s);
+        for(i=1; i<n-1; i++){
+            xd=vsip_vget_f(d,i);
+            g=givensCoef_f(xd,t);
+            cprodG_f(L,i+1,0,g.c,g.s);
+            vsip_vput_f(d,i,g.r);
+            xf=vsip_vget_f(f,i+1);
+            t=-xf * g.s; xf *= g.c;
+            vsip_vput_f(f,i+1,xf);
+        }
+        xd=vsip_vget_f(d,n-1);
+        g=givensCoef_f(xd,t);
+        vsip_vput_f(d,n-1,g.r);
+        cprodG_f(L,n,0,g.c,g.s);
+    }
 }
 static void czeroCol_f(vsip_vview_f *d,vsip_vview_f *f, vsip_cmview_f* R)
 {
+    vsip_length n = vsip_vgetlength_f(f);
+    givensObj_f g;
+    vsip_scalar_f xd,xf,t;
+    vsip_index i,j,k;
+    if (n == 1){
+        xd=vsip_vget_f(d,0);
+        xf=vsip_vget_f(f,0);
+        g=givensCoef_f(xd,xf);
+        vsip_vput_f(d,0,g.r);
+        vsip_vput_f(f,0,0.0);
+        gtProd_f(0,1,g.c,g.s,R);
+    }else if (n == 2){
+        xd=vsip_vget_f(d,1);
+        xf=vsip_vget_f(f,1);
+        g=givensCoef_f(xd,xf);
+        vsip_vput_f(d,1,g.r);
+        vsip_vput_f(f,1,0.0);
+        xf=vsip_vget_f(f,0);
+        t= -xf * g.s; xf *= g.c;
+        vsip_vput_f(f,0,xf);
+        cgtProd_f(1,2,g.c,g.s,R);
+        xd=vsip_vget_f(d,0);
+        g=givensCoef_f(xd,t);
+        vsip_vput_f(d,0,g.r);
+        cgtProd_f(0,2,g.c,g.s,R);
+    }else{
+        i=n-1; j=i-1; k=i;
+        xd=vsip_vget_f(d,i);
+        xf=vsip_vget_f(f,i);
+        g=givensCoef_f(xd,xf);
+        xf=vsip_vget_f(f,j);
+        vsip_vput_f(f,i,0.0);
+        vsip_vput_f(d,i,g.r);
+        t=-xf*g.s; xf*=g.c;
+        vsip_vput_f(f,j,xf);
+        cgtProd_f(i,k+1,g.c,g.s,R);
+        while (i > 1){
+            i = j; j = i-1;
+            xd=vsip_vget_f(d,i);
+            g=givensCoef_f(xd,t);
+            vsip_vput_f(d,i,g.r);
+            xf=vsip_vget_f(f,j);
+            t= -xf * g.s; xf *= g.c;
+            vsip_vput_f(f,j,xf);
+            cgtProd_f(i,k+1,g.c,g.s,R);
+        }
+        xd=vsip_vget_f(d,0);
+        g=givensCoef_f(xd,t);
+        vsip_vput_f(d,0,g.r);
+        cgtProd_f(0,k+1,g.c,g.s,R);
+    }
 }
 static void czeroRow_d(vsip_cmview_d* L,vsip_vview_d *d,vsip_vview_d *f)
 {
+    vsip_length n = vsip_vgetlength_d(d);
+    givensObj_d g;
+    vsip_scalar_d xd,xf,t;
+    vsip_index i;
+    xd=vsip_vget_d(d,0);
+    xf=vsip_vget_d(f,0);
+    g=givensCoef_d(xd,xf);
+    if (n == 1){
+        vsip_vput_d(f,0,0.0);
+        vsip_vput_d(d,0,g.r);
+    }else{
+        vsip_vput_d(f,0,0.0);
+        vsip_vput_d(d,0,g.r);
+        xf=vsip_vget_d(f,1);
+        t= -xf * g.s; xf *= g.c;
+        vsip_vput_d(f,1,xf);
+        cprodG_d(L,1,0,g.c,g.s);
+        for(i=1; i<n-1; i++){
+            xd=vsip_vget_d(d,i);
+            g=givensCoef_d(xd,t);
+            cprodG_d(L,i+1,0,g.c,g.s);
+            vsip_vput_d(d,i,g.r);
+            xf=vsip_vget_d(f,i+1);
+            t=-xf * g.s; xf *= g.c;
+            vsip_vput_d(f,i+1,xf);
+        }
+        xd=vsip_vget_d(d,n-1);
+        g=givensCoef_d(xd,t);
+        vsip_vput_d(d,n-1,g.r);
+        cprodG_d(L,n,0,g.c,g.s);
+    }
 }
 static void czeroCol_d(vsip_vview_d *d,vsip_vview_d *f, vsip_cmview_d* R)
 {
+    vsip_length n = vsip_vgetlength_d(f);
+    givensObj_d g;
+    vsip_scalar_d xd,xf,t;
+    vsip_index i,j,k;
+    if (n == 1){
+        xd=vsip_vget_d(d,0);
+        xf=vsip_vget_d(f,0);
+        g=givensCoef_d(xd,xf);
+        vsip_vput_d(d,0,g.r);
+        vsip_vput_d(f,0,0.0);
+        gtProd_d(0,1,g.c,g.s,R);
+    }else if (n == 2){
+        xd=vsip_vget_d(d,1);
+        xf=vsip_vget_d(f,1);
+        g=givensCoef_d(xd,xf);
+        vsip_vput_d(d,1,g.r);
+        vsip_vput_d(f,1,0.0);
+        xf=vsip_vget_d(f,0);
+        t= -xf * g.s; xf *= g.c;
+        vsip_vput_d(f,0,xf);
+        cgtProd_d(1,2,g.c,g.s,R);
+        xd=vsip_vget_d(d,0);
+        g=givensCoef_d(xd,t);
+        vsip_vput_d(d,0,g.r);
+        cgtProd_d(0,2,g.c,g.s,R);
+    }else{
+        i=n-1; j=i-1; k=i;
+        xd=vsip_vget_d(d,i);
+        xf=vsip_vget_d(f,i);
+        g=givensCoef_d(xd,xf);
+        xf=vsip_vget_d(f,j);
+        vsip_vput_d(f,i,0.0);
+        vsip_vput_d(d,i,g.r);
+        t=-xf*g.s; xf*=g.c;
+        vsip_vput_d(f,j,xf);
+        cgtProd_d(i,k+1,g.c,g.s,R);
+        while (i > 1){
+            i = j; j = i-1;
+            xd=vsip_vget_d(d,i);
+            g=givensCoef_d(xd,t);
+            vsip_vput_d(d,i,g.r);
+            xf=vsip_vget_d(f,j);
+            t= -xf * g.s; xf *= g.c;
+            vsip_vput_d(f,j,xf);
+            cgtProd_d(i,k+1,g.c,g.s,R);
+        }
+        xd=vsip_vget_d(d,0);
+        g=givensCoef_d(xd,t);
+        vsip_vput_d(d,0,g.r);
+        cgtProd_d(0,k+1,g.c,g.s,R);
+    }
+
 }
 static vsip_scalar_f svdMu_f(vsip_scalar_f d2,vsip_scalar_f f1,vsip_scalar_f d3,vsip_scalar_f f2)
 {
