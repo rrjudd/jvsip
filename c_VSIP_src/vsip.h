@@ -263,7 +263,9 @@ typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_qr_att
 typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_cqr_attr_f;
 typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_cqr_attr_d;
 typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_sv_attr_f;
+typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_csv_attr_f;
 typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_sv_attr_d;
+typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_csv_attr_d;
 typedef struct { vsip_scalar_vi input; vsip_scalar_vi output; vsip_fft_place place; vsip_scalar_d scale; vsip_fft_dir dir; } vsip_fft_attr_d;
 typedef struct { vsip_scalar_vi input; vsip_scalar_vi output; vsip_fft_place place; vsip_scalar_f scale; vsip_fft_dir dir; } vsip_fft_attr_f;
 typedef struct { vsip_scalar_mi input; vsip_scalar_mi output; vsip_fft_place place; vsip_scalar_d scale; vsip_fft_dir dir; vsip_major major; } vsip_fftm_attr_d;
