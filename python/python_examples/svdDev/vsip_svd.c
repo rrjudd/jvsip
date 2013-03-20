@@ -12,7 +12,7 @@
 // apparatus, product, or process disclosed, or represents that      /
 // its use would not infringe privately owned rights.                /
 *********************************************************************/
-#include"VI_svd_f.h"
+#include<VI_svd_f.h>
 #include"vsip_svd.h"
 
 /* Real SVD */
@@ -76,7 +76,6 @@ jvsip_svd_f(jvsip_sv_f *svd, const vsip_mview_f *A, vsip_vview_f *sv)
 void
 jvsip_svd_getattr_f(const jvsip_sv_f *svd, vsip_sv_attr_f *attrib)
 {
-    svdObj_f *s = (svdObj_f*) svd->svd;
     attrib->Usave = svd->attr.Usave;
     attrib->Vsave = svd->attr.Vsave;
     attrib->m = svd->attr.m;
@@ -129,7 +128,7 @@ jvsip_svdmatu_f(const jvsip_sv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, 
     svdObj_f *s = (svdObj_f*) svd->svd;
     if(svd->transpose){
         vsip_mview_f *L = s->R;
-        vsip_mview_f *Ls = s->Rs;
+        vsip_mview_f *Ls = &s->Rs;
         vsip_mgetattrib_f(L,&attr);
         sattr.offset=attr.offset + attr.col_stride * low; 
         sattr.row_stride=attr.col_stride; sattr.col_stride=attr.row_stride;
@@ -138,7 +137,7 @@ jvsip_svdmatu_f(const jvsip_sv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, 
         vsip_mcopy_f_f(Ls,C);
     } else {
         vsip_mview_f *L = s->L;
-        vsip_mview_f *Ls = s->Ls;
+        vsip_mview_f *Ls = &s->Ls;
         vsip_mgetattrib_f(L,&attr);vsip_mgetattrib_f(L,&sattr);
         sattr.offset = attr.offset + attr.row_stride * low;
         sattr.row_length = (high-low) + 1;
@@ -155,7 +154,7 @@ jvsip_svdmatv_f(const jvsip_sv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, 
     svdObj_f *s = (svdObj_f*) svd->svd;
     if(svd->transpose){
         vsip_mview_f *R  = s->L;
-        vsip_mview_f *Rs = s->Ls;
+        vsip_mview_f *Rs = &s->Ls;
         vsip_mgetattrib_f(R,&attr);
         tattr=attr;
         tattr.offset += tattr.row_stride * low;
@@ -164,7 +163,7 @@ jvsip_svdmatv_f(const jvsip_sv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, 
         vsip_mcopy_f_f(Rs,C);
     } else {
         vsip_mview_f *R  = s->R;
-        vsip_mview_f *Rs = s->Rs;
+        vsip_mview_f *Rs = &s->Rs;
         vsip_mgetattrib_f(R,&attr);
         tattr.offset=attr.offset;
         tattr.row_stride=attr.col_stride;
@@ -232,7 +231,6 @@ jvsip_csvd_f(jvsip_csv_f *svd, const vsip_cmview_f *A, vsip_vview_f *sv)
 void 
 jvsip_csvd_getattr_f(const jvsip_csv_f *svd, vsip_csv_attr_f *attrib)
 {
-    csvdObj_f *s = (csvdObj_f*) svd->svd;
     attrib->Usave = svd->attr.Usave;
     attrib->Vsave = svd->attr.Vsave;
     attrib->m = svd->attr.m;
@@ -259,7 +257,7 @@ jvsip_csvdmatu_f(const jvsip_csv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high
     vsip_cmattr_f attr,sattr;
     if(svd->transpose){
         vsip_cmview_f *L = s->R;
-        vsip_cmview_f *Ls = s->Rs; 
+        vsip_cmview_f *Ls = &s->Rs; 
         vsip_cmgetattrib_f(L,&attr);
         sattr.offset=attr.offset + attr.col_stride * low; 
         sattr.row_stride=attr.col_stride; sattr.col_stride=attr.row_stride;
@@ -269,7 +267,7 @@ jvsip_csvdmatu_f(const jvsip_csv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high
         vsip_cmconj_f(C,C);
     } else {
         vsip_cmview_f *L = s->L;
-        vsip_cmview_f *Ls = s->Ls;
+        vsip_cmview_f *Ls = &s->Ls;
         vsip_cmgetattrib_f(L,&attr);vsip_cmgetattrib_f(L,&sattr);
         sattr.offset = attr.offset + attr.row_stride * low;
         sattr.row_length = (high-low) + 1;
@@ -286,7 +284,7 @@ jvsip_csvdmatv_f(const jvsip_csv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high
     csvdObj_f *s = (csvdObj_f*) svd->svd;
     if(svd->transpose){
         vsip_cmview_f *R  = s->L;
-        vsip_cmview_f *Rs = s->Ls;
+        vsip_cmview_f *Rs = &s->Ls;
         vsip_cmgetattrib_f(R,&attr);
         tattr=attr;
         tattr.offset += tattr.row_stride * low;
@@ -295,8 +293,8 @@ jvsip_csvdmatv_f(const jvsip_csv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high
         vsip_cmcopy_f_f(Rs,C);
     } else {
         vsip_cmview_f *R  = s->R;
-        vsip_cmview_f *Rs = s->Rs;
-        vsip_cmgetattrib_f(Rs,&attr);
+        vsip_cmview_f *Rs = &s->Rs;
+        vsip_cmgetattrib_f(R,&attr);
         tattr.offset=attr.offset;
         tattr.row_stride=attr.col_stride;
         tattr.col_stride=attr.row_stride;

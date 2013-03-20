@@ -28,7 +28,6 @@ static vsip_scalar_f checkBack_f(vsip_mview_f* A,vsip_mview_f* U, vsip_vview_f* 
     vsip_mview_f *VH=vsip_mtransview_f(V);
     vsip_mview_f *R=vsip_mcreate_f(vsip_mgetcollength_f(VH),vsip_mgetrowlength_f(VH),VSIP_ROW,VSIP_MEM_NONE);
     vsip_mview_f *Ac=vsip_mcreate_f(vsip_mgetcollength_f(A),vsip_mgetrowlength_f(A),VSIP_ROW,VSIP_MEM_NONE);
-    vsip_mview_f *L = U;
     vsip_vmmul_f(d,VH,VSIP_COL,R);
     vsip_mprod_f(U,R,Ac);
     vsip_msub_f(A,Ac,Ac);
