@@ -33,6 +33,7 @@ vsip_scalar_f scl = p[0];p[0]=1.0;vsip_index k;for(k=std; k<n; k+=std) p[k] /= s
 typedef struct {vsip_index i; vsip_index j;} svdCorner;
 typedef struct {vsip_scalar_f c; vsip_scalar_f s; vsip_scalar_f r;}givensObj_f ;
 typedef struct {vsip_vview_f* t; vsip_vview_f ts;
+                vsip_vview_f* w;
                 vsip_mview_f* B; vsip_mview_f Bs; vsip_vview_f bs;
                 vsip_mview_f* L; vsip_mview_f Ls; vsip_vview_f ls_one; vsip_vview_f ls_two;
                 vsip_vview_f* d; vsip_vview_f ds;
@@ -41,6 +42,7 @@ typedef struct {vsip_vview_f* t; vsip_vview_f ts;
                 vsip_scalar_f eps0;int init;
                 vsip_vview_vi *indx_L; vsip_vview_vi *indx_R;} svdObj_f;
 typedef struct {vsip_cvview_f* t; vsip_cvview_f ts;
+                vsip_cvview_f* w;
                 vsip_cmview_f* B; vsip_cmview_f Bs; vsip_cvview_f bs; vsip_cvview_f bfs; vsip_vview_f rbs;
                 vsip_cmview_f* L; vsip_cmview_f Ls; vsip_cvview_f ls_one; vsip_cvview_f ls_two;
                 vsip_vview_f* d; vsip_vview_f ds;
@@ -166,10 +168,7 @@ static void svdZeroCheckAndSet_f(vsip_scalar_f e, vsip_vview_f *b0, vsip_vview_f
 /* sign function as defined in http://www.netlib.org/lapack/lawnspdf/lawn148.pdf */
 static vsip_scalar_f sign_f(vsip_scalar_f a_in)
 {
-    if(a_in < 0.0)
-       return -1.0;
-    else 
-       return 1.0;
+    return (a_in < 0.0) ? -1.0:1.0;
 }
 static vsip_cscalar_f csign_f(vsip_cscalar_f a_in)
 {
@@ -278,36 +277,47 @@ static void phaseCheck_f(svdObj_f *svd)
     biDiagPhaseToZero_f(svd);
 } 
 
-static void houseProd_f(vsip_vview_f *v, vsip_mview_f *A)
+static void opu_f(
+    vsip_mview_f *A,
+    vsip_vview_f *x,
+    vsip_vview_f *y)
 {
-    vsip_mattr_f a_atr; 
-    vsip_vview_f *w;
-    vsip_mview_f *B;
-    vsip_mgetattrib_f(A,&a_atr);
-    B=vsip_mcreate_f(a_atr.col_length,a_atr.row_length,VSIP_ROW,VSIP_MEM_NONE);
-    w = vsip_vcreate_f(a_atr.row_length,VSIP_MEM_NONE);
+     vsip_length m = A->col_length;
+     vsip_length n = A->row_length;
+     vsip_index i,ii,j,jj;
+     vsip_scalar_f *ap=A->block->array + A->offset * A->block->rstride;
+     vsip_scalar_f *xp=x->block->array + x->offset * x->block->rstride;
+     vsip_scalar_f *yp=y->block->array + y->offset * y->block->rstride;
+     vsip_stride xstd = x->block->rstride * x->stride;
+     vsip_stride ystd = y->block->rstride * y->stride;
+     vsip_stride r_std = A->block->rstride * A->row_stride;
+     vsip_stride c_std = A->block->rstride * A->col_stride;
+     m *= c_std;
+     n *= r_std;
+     for(i=0, ii=0; i<m; i+=c_std, ii+=xstd){
+         vsip_scalar_f c = xp[ii];
+         vsip_scalar_f *app=ap+i;
+         for(j=0, jj=0; j<n; j+=r_std, jj+=ystd){
+             app[j] = app[j] + c * yp[jj];
+         }
+     }
+}
+static void houseProd_f(vsip_vview_f *v, vsip_mview_f *A,vsip_vview_f *w)
+{
+    w->length = A->row_length;
     vsip_scalar_f beta = 2.0/vsip_vdot_f(v,v);
     vsip_vmprod_f(v,A,w);
-    vsip_vouter_f(beta,v,w,B);
-    vsip_msub_f(A,B,A);
-    vsip_valldestroy_f(w);
-    vsip_malldestroy_f(B);
-} /* need to remove create */
-static void prodHouse_f(vsip_mview_f *A, vsip_vview_f *v)
+    vsip_svmul_f(-beta,w,w);
+    opu_f(A,v,w);
+} 
+static void prodHouse_f(vsip_mview_f *A, vsip_vview_f *v, vsip_vview_f *w)
 {
-    vsip_mattr_f a_atr; 
-    vsip_vview_f *w;
-    vsip_mview_f *B;
-    vsip_mgetattrib_f(A,&a_atr);
-    B=vsip_mcreate_f(a_atr.col_length,a_atr.row_length,VSIP_ROW,VSIP_MEM_NONE);
-    w = vsip_vcreate_f(a_atr.col_length,VSIP_MEM_NONE);
+    w->length = A->col_length;
     vsip_scalar_f beta = 2.0/vsip_vdot_f(v,v);
     vsip_mvprod_f(A,v,w);
-    vsip_vouter_f(beta,w,v,B);
-    vsip_msub_f(A,B,A);
-    vsip_valldestroy_f(w);
-    vsip_malldestroy_f(B);
-} /* need to remove create */
+    vsip_svmul_f(-beta,w,w);
+    opu_f(A,w,v);
+} 
 static vsip_vview_f *houseVector_f(vsip_vview_f* x)
 {
     vsip_scalar_f nrm=vnorm2_f(x);
@@ -343,12 +353,12 @@ static void VHmatExtract_f(svdObj_f *svd)
         j=i+1;
         row_sv_f(msv_f(B,Bs,i,j),v,0);
         t=VI_VGET_F(v,0);vsip_vput_f(v,0,1.0);
-        prodHouse_f(msv_f(V,Vs,j,j),v);
+        prodHouse_f(msv_f(V,Vs,j,j),v,svd->w);
         vsip_vput_f(v,0,t);
     }
     row_sv_f(msv_f(B,Bs,0,1),v,0);
     t=VI_VGET_F(v,0);vsip_vput_f(v,0,1.0);
-    prodHouse_f(msv_f(V,Vs,1,1),v);
+    prodHouse_f(msv_f(V,Vs,1,1),v,svd->w);
     vsip_vput_f(v,0,t);      
 }
 static void UmatExtract_f(svdObj_f *svd)
@@ -367,18 +377,18 @@ static void UmatExtract_f(svdObj_f *svd)
         i=n-1;
         col_sv_f(msv_f(B,Bs,i,i),v,0);
         t=VI_VGET_F(v,0); vsip_vput_f(v,0,1.0);
-        houseProd_f(v,msv_f(U,Us,i,i));
+        houseProd_f(v,msv_f(U,Us,i,i),svd->w);
         vsip_vput_f(v,0,t);
     }
     for(i=n-2; i>0; i--){
         col_sv_f(msv_f(B,Bs,i,i),v,0);
         t=VI_VGET_F(v,0); vsip_vput_f(v,0,1.0);
-        houseProd_f(v,msv_f(U,Us,i,i));
+        houseProd_f(v,msv_f(U,Us,i,i),svd->w);
         vsip_vput_f(v,0,t);
     }
     col_sv_f(msv_f(B,Bs,0,0),v,0);
     t=VI_VGET_F(v,0); vsip_vput_f(v,0,1.0);
-    houseProd_f(v,msv_f(U,Us,0,0));
+    houseProd_f(v,msv_f(U,Us,0,0),svd->w);
     vsip_vput_f(v,0,t);
 }
 
@@ -398,7 +408,7 @@ static void bidiag_f(svdObj_f *svd)
         VI_vcopy_f_f(col_sv_f(msv_f(B,Bs,i,i),x,0),v);
         houseVector_f(v);
         scaleV(v)         /*vsip_svmul_f(1.0/VI_VGET_F(v,0),v,v);*/
-        houseProd_f(v,Bs);
+        houseProd_f(v,Bs,svd->w);
         VI_vcopy_f_f(vsv_f(v,vs,1),vsv_f(x,x,1));
         if(i < n-2){
             j = i+1;
@@ -406,7 +416,7 @@ static void bidiag_f(svdObj_f *svd)
             VI_vcopy_f_f(row_sv_f(msv_f(B,Bs,i,j),x,0),v);
             houseVector_f(v);
             scaleV(v)         /*   vsip_svmul_f(1.0/VI_VGET_F(v,0),v,v);*/
-            prodHouse_f(Bs,v);
+            prodHouse_f(Bs,v,svd->w);
             VI_vcopy_f_f(vsv_f(v,vs,1),vsv_f(x,x,1));
         }
     }
@@ -416,7 +426,7 @@ static void bidiag_f(svdObj_f *svd)
         vsip_vcopy_f_f(col_sv_f(msv_f(B,Bs,i,i),x,0),v);
         houseVector_f(v);
         scaleV(v)         /*vsip_svmul_f(1.0/VI_VGET_F(v,0),v,v); */
-        houseProd_f(v,Bs);
+        houseProd_f(v,Bs,svd->w);
         VI_vcopy_f_f(vsv_f(v,vs,1),vsv_f(x,x,1));
     }
 }
@@ -494,22 +504,22 @@ static void zeroCol_f(svdObj_f *svd)
         xd=VI_VGET_F(d,0);
         xf=VI_VGET_F(f,0);
         g=givensCoef_f(xd,xf);
-        vsip_vput_f(d,0,g.r);
-        vsip_vput_f(f,0,0.0);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
+        *(f->block->array + f->offset * f->block->rstride)=0.0;/*vsip_vput_f(f,0,0.0);*/
         gtProd_f(0,1,g.c,g.s,svd);
     }else if (n == 2){
         xd=VI_VGET_F(d,1);
         xf=VI_VGET_F(f,1);
         g=givensCoef_f(xd,xf);
-        vsip_vput_f(d,1,g.r);
-        vsip_vput_f(f,1,0.0);
+        *(d->block->array + (d->offset+1) * d->block->rstride)=g.r;/*vsip_vput_f(d,1,g.r);*/
+        *(f->block->array + (f->offset+1) * f->block->rstride)=0.0;/*vsip_vput_f(f,1,0.0);*/
         xf=VI_VGET_F(f,0);
         t= -xf * g.s; xf *= g.c;
-        vsip_vput_f(f,0,xf);
+        *(f->block->array + (f->offset) * f->block->rstride)=xf;/*vsip_vput_f(f,0,xf);*/
         gtProd_f(1,2,g.c,g.s,svd);
         xd=VI_VGET_F(d,0);
         g=givensCoef_f(xd,t);
-        vsip_vput_f(d,0,g.r);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
         gtProd_f(0,2,g.c,g.s,svd);
     }else{
         i=n-1; j=i-1; k=i;
@@ -517,24 +527,24 @@ static void zeroCol_f(svdObj_f *svd)
         xf=VI_VGET_F(f,i);
         g=givensCoef_f(xd,xf);
         xf=VI_VGET_F(f,j);
-        vsip_vput_f(f,i,0.0);
-        vsip_vput_f(d,i,g.r);
+        *(d->block->array + (d->offset+i) * d->block->rstride)=g.r;/*vsip_vput_f(d,i,g.r);*/
+        *(f->block->array + (f->offset+i) * f->block->rstride)=0.0;/*vsip_vput_f(f,i,0.0);*/
         t=-xf*g.s; xf*=g.c;
-        vsip_vput_f(f,j,xf);
+        *(f->block->array + (f->offset+j) * f->block->rstride)=xf;/*vsip_vput_f(f,j,xf);*/
         gtProd_f(i,k+1,g.c,g.s,svd);
         while (i > 1){
             i = j; j = i-1;
             xd=VI_VGET_F(d,i);
             g=givensCoef_f(xd,t);
-            vsip_vput_f(d,i,g.r);
+            *(d->block->array + (d->offset+i) * d->block->rstride)=g.r;/*vsip_vput_f(d,i,g.r);*/
             xf=VI_VGET_F(f,j);
             t= -xf * g.s; xf *= g.c;
-            vsip_vput_f(f,j,xf);
+            *(f->block->array + (f->offset+j) * f->block->rstride)=xf;/*vsip_vput_f(f,j,xf);*/
             gtProd_f(i,k+1,g.c,g.s,svd);
         }
         xd=VI_VGET_F(d,0);
         g=givensCoef_f(xd,t);
-        vsip_vput_f(d,0,g.r);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
         gtProd_f(0,k+1,g.c,g.s,svd);
     }
 } 
@@ -550,11 +560,11 @@ static void zeroRow_f(svdObj_f *svd)
     xf=VI_VGET_F(f,0);
     g=givensCoef_f(xd,xf);
     if (n == 1){
-        vsip_vput_f(f,0,0.0);
-        vsip_vput_f(d,0,g.r);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
+        *(f->block->array + f->offset * f->block->rstride)=0.0;/*vsip_vput_f(f,0,0.0);*/
     }else{
-        vsip_vput_f(f,0,0.0);
-        vsip_vput_f(d,0,g.r);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
+        *(f->block->array + f->offset * f->block->rstride)=0.0;/*vsip_vput_f(f,0,0.0);*/
         xf=VI_VGET_F(f,1);
         t= -xf * g.s; xf *= g.c;
         vsip_vput_f(f,1,xf);
@@ -1119,23 +1129,48 @@ static void cgtProd_f(vsip_index i, vsip_index j,vsip_scalar_f c, vsip_scalar_f 
     vsip_cmview_f* R=svd->R;
     vsip_cvview_f *a1= crow_sv_f(R,&svd->rs_one,i);
     vsip_cvview_f *a2= crow_sv_f(R,&svd->rs_two,j);
-    vsip_cvview_f *a1c=cvclone_f(a1,&svd->ts);
-    vsip_cvattr_f a1attr,tsattr;
-    vsip_cvgetattrib_f(a1, &a1attr);
-    vsip_cvgetattrib_f(a1c,&tsattr);
-    vsip_rscvmul_f(c,a1c,a1);
-    vsip_cvsma_f(a2,vsip_cmplx_f(s,0.0),a1,a1);
-    vsip_rscvmul_f(-s,a1c,a1c);
-    vsip_cvsma_f(a2,vsip_cmplx_f(c,0.0),a1c,a2);
+    vsip_index k;
+    vsip_offset o = a1->block->cstride * a1->offset;
+    vsip_stride std=a1->stride * a1->block->cstride;
+    vsip_length n = a1->length * std;
+    vsip_scalar_f *a1r= a1->block->R->array;
+    vsip_scalar_f *a1i= a1->block->I->array;
+    vsip_scalar_f *a2r= a1r;
+    vsip_scalar_f *a2i= a1i;
+    a1r+=o; a1i+=o;
+    o=a2->block->cstride * a2->offset;
+    a2r+=o; a2i+=o;
+    for(k=0; k<n; k+=std){
+       vsip_scalar_f b1r = a1r[k], b1i=a1i[k], b2r=a2r[k], b2i=a2i[k];
+       a1r[k] =c * b1r + s * b2r;
+       a1i[k] =c * b1i + s * b2i;
+       a2r[k] =c * b2r - s * b1r;
+       a2i[k] =c * b2i - s * b1i;
+    }
 }
 static void cprodG_f(csvdObj_f *svd,vsip_index i, vsip_index j,vsip_scalar_f c, vsip_scalar_f s)
 {
     vsip_cmview_f* L=svd->L;
     vsip_cvview_f *a1= ccol_sv_f(L,&svd->ls_one,i);
     vsip_cvview_f *a2= ccol_sv_f(L,&svd->ls_two,j);
-    vsip_cvview_f *a1c=cvclone_f(a1,&svd->ts);
-    vsip_rscvmul_f(c,a1c,a1); vsip_cvsma_f(a2,vsip_cmplx_f(s,0.0),a1,a1);
-    vsip_rscvmul_f(-s,a1c,a1c);vsip_cvsma_f(a2,vsip_cmplx_f(c,0.0),a1c,a2);
+    vsip_index k;
+    vsip_offset o = a1->block->cstride * a1->offset;
+    vsip_stride std=a1->stride * a1->block->cstride;
+    vsip_length n = a1->length * std;
+    vsip_scalar_f *a1r= a1->block->R->array;
+    vsip_scalar_f *a1i= a1->block->I->array;
+    vsip_scalar_f *a2r= a1r;
+    vsip_scalar_f *a2i= a1i;
+    a1r+=o; a1i+=o;
+    o=a2->block->cstride * a2->offset;
+    a2r+=o; a2i+=o;
+    for(k=0; k<n; k+=std){
+       vsip_scalar_f b1r = a1r[k], b1i=a1i[k], b2r=a2r[k], b2i=a2i[k];
+       a1r[k] =c * b1r + s * b2r;
+       a1i[k] =c * b1i + s * b2i;
+       a2r[k] =c * b2r - s * b1r;
+       a2i[k] =c * b2i - s * b1i;
+    }
 }
 static void czeroCol_f(csvdObj_f *svd)
 {
@@ -1367,6 +1402,7 @@ static void csvdSort_f(csvdObj_f *svd)
 static void svdFinalize_f(svdObj_f *s)
 {
     vsip_valldestroy_f(s->t);
+    vsip_valldestroy_f(s->w);
     vsip_malldestroy_f(s->B);
     vsip_malldestroy_f(s->R);
     vsip_malldestroy_f(s->L);
@@ -1390,6 +1426,7 @@ static svdObj_f* svdInit_f(vsip_length m, vsip_length n)
     }
     s->init=0;
     if(!(s->t = vsip_vcreate_f(m,VSIP_MEM_NONE))) s->init++;
+    if(!(s->w = vsip_vcreate_f(m,VSIP_MEM_NONE))) s->init++;
     if(!(s->B=vsip_mcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE))) s->init++; 
     if(!(s->L=meye_f(m)))s->init++;
     if(!(s->R=meye_f(n)))s->init++;
@@ -1410,6 +1447,7 @@ static void svd_f(svdObj_f *s)
 static void csvdFinalize_f(csvdObj_f *s)
 {
     vsip_cvalldestroy_f(s->t);
+    vsip_cvalldestroy_f(s->w);
     vsip_cmalldestroy_f(s->B);
     vsip_cmalldestroy_f(s->R);
     vsip_cmalldestroy_f(s->L);
@@ -1433,6 +1471,7 @@ static csvdObj_f* csvdInit_f(vsip_length m, vsip_length n)
     }
     s->init=0;
     if(!(s->t = vsip_cvcreate_f(m,VSIP_MEM_NONE)))s->init++;
+    if(!(s->w = vsip_cvcreate_f(m,VSIP_MEM_NONE)))s->init++;
     if(!(s->B=vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE)))s->init++;
     if(!(s->L=cmeye_f(m)))s->init++;
     if(!(s->R=cmeye_f(n)))s->init++;
