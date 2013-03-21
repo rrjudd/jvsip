@@ -1931,7 +1931,7 @@ static void czeroCol_f(vsip_vview_f *d,vsip_vview_f *f, vsip_cmview_f* R)
         g=givensCoef_f(xd,xf);
         vsip_vput_f(d,0,g.r);
         vsip_vput_f(f,0,0.0);
-        gtProd_f(0,1,g.c,g.s,R);
+        cgtProd_f(0,1,g.c,g.s,R);
     }else if (n == 2){
         xd=vsip_vget_f(d,1);
         xf=vsip_vget_f(f,1);
@@ -2019,7 +2019,7 @@ static void czeroCol_d(vsip_vview_d *d,vsip_vview_d *f, vsip_cmview_d* R)
         g=givensCoef_d(xd,xf);
         vsip_vput_d(d,0,g.r);
         vsip_vput_d(f,0,0.0);
-        gtProd_d(0,1,g.c,g.s,R);
+        cgtProd_d(0,1,g.c,g.s,R);
     }else if (n == 2){
         xd=vsip_vget_d(d,1);
         xf=vsip_vget_d(f,1);
