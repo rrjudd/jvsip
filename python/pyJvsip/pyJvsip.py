@@ -1424,7 +1424,7 @@ class Block (object):
             f={'cvview_dcmview_dvview_mi': vsip_cmscatter_d, 
                'cvview_fcmview_fvview_mi': vsip_cmscatter_f, 
                'cvview_dcvview_dvview_vi': vsip_cvscatter_d, 
-               'cvview_fcvview_fvview_fi': vsip_cvscatter_f, 
+               'cvview_fcvview_fvview_vi': vsip_cvscatter_f, 
                'vview_dmview_dvview_mi':   vsip_mscatter_d, 
                'vview_fmview_fvview_mi':   vsip_mscatter_f, 
                'vview_dvview_dvview_vi':   vsip_vscatter_d, 
