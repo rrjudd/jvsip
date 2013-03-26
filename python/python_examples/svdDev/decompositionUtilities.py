@@ -331,7 +331,7 @@ def bidiag(A): # m >= n
         print('for matrices where rowlength > collength work with the transpose')
     for i in range(n-1):
         x=B[i:,i:].colview(0)
-        v=houseVector(x)
+        v=houseVector(x).conj
         v /= v[0]
         houseProd(v,B[i:,i:])
         x[1:]=v[1:]
@@ -346,7 +346,7 @@ def bidiag(A): # m >= n
     if m > n: #do last column if matrix not square
         i=n-1
         x=B[i:,i:].colview(0)
-        v=houseVector(x)
+        v=houseVector(x).conj
         v /= v[0]
         houseProd(v,B[i:,i:])
         x[1:]=v[1:]
@@ -817,7 +817,7 @@ def svd(A):
         if 'mview_d' in A.type:
             eps0 = A.normFro/A.rowlength * 1.0E16
         else:
-            eps0 = A.normFro/A.rowlength * 1.0E7
+            eps0 = A.normFro/A.rowlength * 1.0E10
         if eps0 == 0.0:
             print('Input matrix appears to be zero')
             return(0,0,0,0,0)

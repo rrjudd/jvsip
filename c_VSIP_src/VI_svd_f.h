@@ -25,7 +25,8 @@
 #include"VI_vget_f.h"
 #include"VI_cvfill_f.h"
 
-#define scaleV(v) { vsip_scalar_f *p = v->block->array + v->offset * v->block->rstride;\
+#define scaleV(v) { \
+vsip_scalar_f *p = v->block->array + v->offset * v->block->rstride;\
 vsip_stride std = v->stride * v->block->rstride;vsip_length n = v->length * std;\
 vsip_scalar_f scl = p[0];p[0]=1.0;vsip_index k;for(k=std; k<n; k+=std) p[k] /= scl; \
 }
@@ -125,6 +126,51 @@ static vsip_vview_f *diag_sv_f(vsip_mview_f* Am,vsip_vview_f* a, vsip_stride i)
     }
     return a;
 }
+
+static vsip_cmview_f* cimsv_f( vsip_cmview_f *B, vsip_cmview_f *BS, vsip_index i1,vsip_index j1, 
+                                                                    vsip_index i2, vsip_index j2)
+{
+    *BS=*B;
+    if(j1 == 0) j1 =B->col_length;
+    if(j2 == 0) j2 =B->row_length;
+    BS->col_length = (j1 - i1);
+    BS->row_length = (j2 - i2);
+    BS->offset += i2 * B->row_stride + i1 * B->col_stride;
+    return BS;
+}
+static vsip_cvview_f *ccol_sv_f(vsip_cmview_f*Am,vsip_cvview_f* vv,vsip_index col)
+{
+    vv->block = Am->block;
+    vv->offset = Am->offset + col * Am->row_stride;
+    vv->stride = Am->col_stride;
+    vv->length = Am->col_length;
+    return vv;
+}
+static vsip_cvview_f *crow_sv_f(vsip_cmview_f*Am,vsip_cvview_f* vv,vsip_index row)
+{
+    vv->block=Am->block;
+    vv->offset = Am->offset + row * Am->col_stride;
+    vv->stride = Am->row_stride;
+    vv->length = Am->row_length;
+    return vv;
+}
+static vsip_cvview_f *cdiag_sv_f(vsip_cmview_f* Am,vsip_cvview_f* a, vsip_stride i)
+{
+    a->block = Am->block;
+    a->stride=Am->row_stride + Am->col_stride;
+    if(i==0){
+       a->length = Am->row_length;
+       a->offset = Am->offset;
+    } else if (i == 1){
+        a->offset = Am->offset + Am->row_stride;
+        a->length = Am->row_length - 1;
+    } else {
+        printf("Failed in diag_sv_f\n");
+        exit(0);
+    }
+    return a;
+}
+
 static vsip_vview_f* vclone_f(vsip_vview_f*x, vsip_vview_f *v)
 {
     v->length = x->length;
@@ -392,7 +438,6 @@ static void UmatExtract_f(svdObj_f *svd)
     vsip_vput_f(v,0,t);
 }
 
-
 static void bidiag_f(svdObj_f *svd)
 {
     vsip_mview_f *B = svd->B; 
@@ -500,6 +545,7 @@ static void zeroCol_f(svdObj_f *svd)
     givensObj_f g;
     vsip_scalar_f xd,xf,t;
     vsip_index i,j,k;
+    printf("In zeroCol\n");
     if (n == 1){
         xd=VI_VGET_F(d,0);
         xf=VI_VGET_F(f,0);
@@ -614,9 +660,11 @@ static vsip_index zeroFind_f(vsip_vview_f* d, vsip_scalar_f eps0)
             break;
         }
     }
-    if(xd <= eps0)
+    if(xd <= eps0){
         vsip_vput_f(d,j-1,0.0);
-    if (j == 1)
+        xd =0.0;
+    }
+    if ((j == 1) && (xd != 0.0))
         j=0;
     return j;
 } /* same */
@@ -733,13 +781,16 @@ static void svdIteration_f(svdObj_f* svd)
         imsv_f(R0,R,cnr.i,cnr.j,0,0);
         n=f->length;
         k=zeroFind_f(d,eps0);
-        if (k > 0){
+        if (k > 0 ){
+            k=k-1;
             if(VI_VGET_F(d,n) == 0.0){
                 zeroCol_f(svd);
             }else{
-                imsv_f(L,L,0,0,k-1,0);
-                ivsv_f(d0,d,k,0);
-                ivsv_f(f0,f,k-1,0);
+                imsv_f(L,L,0,0,k,0);
+                d->length-=(k+1);
+                d->offset += (k+1) * d->stride*d->block->rstride;
+                f->length -= k;
+                f->offset += k * f->stride*f->block->rstride;
                 zeroRow_f(svd);
             }
         }else{
@@ -763,49 +814,7 @@ static vsip_cmview_f* cmsv_f(vsip_cmview_f *B, vsip_cmview_f *BS, vsip_index i,v
     BS->offset += j * BS->row_stride + i * BS->col_stride;
     return BS;
 }
-static vsip_cmview_f* cimsv_f( vsip_cmview_f *B, vsip_cmview_f *BS, vsip_index i1,vsip_index j1, 
-                                                                    vsip_index i2, vsip_index j2)
-{
-    *BS=*B;
-    if(j1 == 0) j1 =BS->col_length;
-    if(j2 == 0) j2 =BS->row_length;
-    BS->col_length = (j1 - i1);
-    BS->row_length = (j2 - i2);
-    BS->offset += i2 * BS->row_stride + i1 * BS->col_stride;
-    return BS;
-}
-static vsip_cvview_f *ccol_sv_f(vsip_cmview_f*Am,vsip_cvview_f* vv,vsip_index col)
-{
-    vv->block = Am->block;
-    vv->offset = Am->offset + col * Am->row_stride;
-    vv->stride = Am->col_stride;
-    vv->length = Am->col_length;
-    return vv;
-}
-static vsip_cvview_f *crow_sv_f(vsip_cmview_f*Am,vsip_cvview_f* vv,vsip_index row)
-{
-    vv->block=Am->block;
-    vv->offset = Am->offset + row * Am->col_stride;
-    vv->stride = Am->row_stride;
-    vv->length = Am->row_length;
-    return vv;
-}
-static vsip_cvview_f *cdiag_sv_f(vsip_cmview_f* Am,vsip_cvview_f* a, vsip_stride i)
-{
-    a->block = Am->block;
-    a->stride=Am->row_stride + Am->col_stride;
-    if(i==0){
-       a->length = Am->row_length;
-       a->offset = Am->offset;
-    } else if (i == 1){
-        a->offset = Am->offset + Am->row_stride;
-        a->length = Am->row_length - 1;
-    } else {
-        printf("Failed in diag_sv_f\n");
-        exit(0);
-    }
-    return a;
-}
+
 static vsip_cvview_f* cvclone_f(vsip_cvview_f*x, vsip_cvview_f *v)
 {
     v->length = x->length;
@@ -1126,7 +1135,7 @@ static void csvdBidiag_f(csvdObj_f *svd)
 
 static void cgtProd_f(vsip_index i, vsip_index j,vsip_scalar_f c, vsip_scalar_f s,csvdObj_f *svd)
 {
-    vsip_cmview_f* R=svd->R;
+    vsip_cmview_f* R=&svd->Rs;
     vsip_cvview_f *a1= crow_sv_f(R,&svd->rs_one,i);
     vsip_cvview_f *a2= crow_sv_f(R,&svd->rs_two,j);
     vsip_index k;
@@ -1150,7 +1159,7 @@ static void cgtProd_f(vsip_index i, vsip_index j,vsip_scalar_f c, vsip_scalar_f 
 }
 static void cprodG_f(csvdObj_f *svd,vsip_index i, vsip_index j,vsip_scalar_f c, vsip_scalar_f s)
 {
-    vsip_cmview_f* L=svd->L;
+    vsip_cmview_f* L=&svd->Ls;
     vsip_cvview_f *a1= ccol_sv_f(L,&svd->ls_one,i);
     vsip_cvview_f *a2= ccol_sv_f(L,&svd->ls_two,j);
     vsip_index k;
@@ -1240,11 +1249,11 @@ static void czeroRow_f(csvdObj_f *svd)
     xf=VI_VGET_F(f,0);
     g=givensCoef_f(xd,xf);
     if (n == 1){
-        vsip_vput_f(f,0,0.0);
-        vsip_vput_f(d,0,g.r);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
+        *(f->block->array + f->offset * f->block->rstride)=0.0;/*vsip_vput_f(f,0,0.0);*/
     }else{
-        vsip_vput_f(f,0,0.0);
-        vsip_vput_f(d,0,g.r);
+        *(d->block->array + d->offset * d->block->rstride)=g.r;/*vsip_vput_f(d,0,g.r);*/
+        *(f->block->array + f->offset * f->block->rstride)=0.0;/*vsip_vput_f(f,0,0.0);*/
         xf=VI_VGET_F(f,1);
         t= -xf * g.s; xf *= g.c;
         vsip_vput_f(f,1,xf);
@@ -1355,12 +1364,15 @@ static void csvdIteration_f(csvdObj_f *svd)
         n=f->length;
         k=zeroFind_f(d,eps0);
         if (k > 0){
+            k=k-1;
             if(VI_VGET_F(d,n) == 0.0){
                 czeroCol_f(svd);
             }else{
-                cimsv_f(L,L,0,0,k-1,0);
-                ivsv_f(d0,d,k,0);
-                ivsv_f(f0,f,k-1,0);
+                cimsv_f(L,L,0,0,k,0);
+                d->length-=(k+1);
+                d->offset += (k+1) * d->stride*d->block->rstride;
+                f->length -= k;
+                f->offset += k * f->stride*f->block->rstride;
                 czeroRow_f(svd);
             }
         }else{

@@ -34,11 +34,7 @@ static vsip_scalar_f ccheckBack_f(vsip_cmview_f* A,vsip_cmview_f* U, vsip_vview_
     vsip_mview_f *Rr=vsip_mrealview_f(R);
     vsip_mview_f *Ri=vsip_mimagview_f(R);
     vsip_cmview_f *Ac=vsip_cmcreate_f(vsip_cmgetcollength_f(A),vsip_cmgetrowlength_f(A),VSIP_ROW,VSIP_MEM_NONE);
-    vsip_cmview_f *L=U;
     vsip_cmherm_f(V,R);
-    printf("V=");cmprint_f(V);
-    printf("L=");cmprint_f(L);
-    printf("R=");cmprint_f(R);
     vsip_vmmul_f(d,Rr,VSIP_COL,Rr);
     vsip_vmmul_f(d,Ri,VSIP_COL,Ri);
     vsip_cmprod_f(U,R,Ac);
@@ -58,13 +54,24 @@ int main(int argc, char* argv[]){
     vsip_mview_f *Ai=vsip_mimagview_f(A);
     vsip_vview_f *ar = vsip_vbind_f(vsip_mgetblock_f(Ar),0,1,m*n);
     vsip_vview_f *ai = vsip_vbind_f(vsip_mgetblock_f(Ai),0,1,m*n);
+    /*vsip_vview_f *ar = vsip_mdiagview_f(Ar, 0);
+    vsip_vview_f *ai = vsip_mdiagview_f(Ai, 0);*/
     vsip_cmview_f *V=vsip_cmcreate_f(n,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
     vsip_cmview_f *U=vsip_cmcreate_f(m,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
     vsip_vview_f *sv = vsip_vcreate_f((m < n ? m:n),VSIP_MEM_NONE);
     vsip_randstate *rnd=vsip_randcreate(5,1,1,VSIP_PRNG);
     if(init) exit(0);
-    vsip_vrandn_f(rnd,ar);
-    vsip_vrandn_f(rnd,ai);
+    vsip_mfill_f(0.0, Ar);vsip_mfill_f(0.0, Ai);
+    vsip_vrandn_f(rnd,ar); vsip_vrandn_f(rnd,ai);
+    vsip_vdestroy_f(ar);vsip_vdestroy_f(ai);
+    ar = vsip_mdiagview_f(Ar, 1); ai = vsip_mdiagview_f(Ai, 1);
+    vsip_vrandn_f(rnd,ar); vsip_vrandn_f(rnd,ai);
+    vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0));
+    vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0));
+    vsip_cmput_f(A, 5, 5, vsip_cmplx_f(0.0, 0.0));
+    vsip_cmput_f(A,1,2,vsip_cmplx_f(0.0,0.0));
+    vsip_cmput_f(A,3,4,vsip_cmplx_f(0.0,0.0));
+    vsip_cmput_f(A,0,1,vsip_cmplx_f(0.0,0.0));
     printf("A = ");cmprint_f(A); printf("\n");
     if(jvsip_csvd_f(s,A,sv)){
         printf("svd failed\n");
