@@ -30,3 +30,22 @@ svdUtilsTestNB notebook when testing. It contains the python code being
 converted to C VSIPL. This file is a copy of the file with the same name
 in  python/python_examples/matrixDecomposition of the jvsip distribution.
 It is only included here for convenience. Probably should use a link.
+
+Notes on debugging and development
+The VI_svd_f.h file includes the low-level svd routines. The file in this directory
+(svdDev) is written using just VSIP User code. The VI_svd_f.h file in the c_VSIP_src
+directory is being converted to library code using private information. This allows
+us to debug the files in tandem. The svd code in decomposition utilities may also be
+used to write python user routines to mirror the testVsip routines. Results and accuracy
+can be compared and bugs sorted out. For the below to work you need C VSIPL to be built
+so libvsip.a is in lib and vsip.h is in include. 
+
+To compile testVsipSvd.c useing VI_svd_f.h c_VSIP_src directory 
+cc -o testVsipSvd testVsipSvd.c vsip_svd.c -I../../../c_VSIP_src -L../../../lib -lvsip
+
+and to compile for VI_svd_f.h in svdTest directory use
+cc -o testVsipSvd testVsipSvd.c VU_svd.c -I../../../include -L../../../lib -lvsip
+
+for complex use testVsipCsvd.c instead of testVsipSvd.c
+
+Modify testVsip*.c for various test cases.
