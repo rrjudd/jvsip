@@ -519,15 +519,32 @@ static void zeroRow_f(svdObj_f *svd)
         prodG_f(svd,n,0,g.c,g.s);
     }
 }
-
 static vsip_scalar_f svdMu_f(vsip_scalar_f d2,vsip_scalar_f f1,vsip_scalar_f d3,vsip_scalar_f f2)
 {
     vsip_scalar_f mu;
     vsip_scalar_f cu=d2 * d2 + f1 * f1;
     vsip_scalar_f cl=d3 * d3 + f2 * f2;
     vsip_scalar_f cd = d2 * f2;
-    vsip_scalar_f D = (cu * cl - cd * cd);
     vsip_scalar_f T = (cu + cl);
+    vsip_scalar_f D = (cu * cl - cd * cd)/(T*T);
+    vsip_scalar_f root = T * vsip_sqrt_f(1.0 - ((4 * D)>1.0 ? 1.0:4*D));
+    vsip_scalar_f lambda1 = (T + root)/(2.);
+    vsip_scalar_f lambda2 = (T - root)/(2.);
+    if(vsip_mag_f(lambda1 - cl) < vsip_mag_f(lambda2 - cl))
+        mu = lambda1;
+    else
+        mu = lambda2;
+    return mu;
+}
+
+static vsip_scalar_f tsvdMu_f(vsip_scalar_f d2,vsip_scalar_f f1,vsip_scalar_f d3,vsip_scalar_f f2)
+{
+    vsip_scalar_f mu;
+    vsip_scalar_f cu=d2 * d2 + f1 * f1;
+    vsip_scalar_f cl=d3 * d3 + f2 * f2;
+    vsip_scalar_f cd = d2 * f2;
+    vsip_scalar_f T = (cu + cl);
+    vsip_scalar_f D = (cu * cl - cd * cd);
     vsip_scalar_f root = vsip_sqrt_f(T*T - 4 * D);
     vsip_scalar_f lambda1 = (T + root)/(2.);
     vsip_scalar_f lambda2 = (T - root)/(2.);
@@ -536,7 +553,7 @@ static vsip_scalar_f svdMu_f(vsip_scalar_f d2,vsip_scalar_f f1,vsip_scalar_f d3,
     else
         mu = lambda2;
     return mu;
-} /* same */
+}
 static vsip_index zeroFind_f(vsip_vview_f* d, vsip_scalar_f eps0)
 {
     vsip_index j = vsip_vgetlength_f(d);
@@ -1046,14 +1063,6 @@ static void cbidiag_f(csvdObj_f *svd)
     vsip_cvview_f *vs = svd->ts;
     vsip_index i,j;
     for(i=0; i<n-1; i++){
-        {
-            vsip_index _k;
-            vsip_cvview_f *d = vsip_cmdiagview_f(svd->B,0);
-            for (_k=0; _k<vsip_cvgetlength_f(d);_k++)
-                printf("%.4f%+.4fi ",vsip_cvget_f(d, _k).r,vsip_cvget_f(d, _k).i);
-            printf("\n");
-            vsip_cvdestroy_f(d);
-        }
         vsip_cvputlength_f(v,m-i);
         vsip_cvcopy_f_f(ccol_sv_f(cmsv_f(B,Bs,i,i),x,0),v);
         chouseVector_f(v); /* along column;lower diag; no conj */
@@ -1199,7 +1208,7 @@ static void czeroRow_f(csvdObj_f *svd)
             cprodG_f(svd,i+1,0,g.c,g.s);
             vsip_vput_f(d,i,g.r);
             xf=vsip_vget_f(f,i+1);
-            t=-xf * g.s; xf *= g.c;
+             t=-xf * g.s; xf *= g.c;
             vsip_vput_f(f,i+1,xf);
         }
         xd=vsip_vget_f(d,n-1);
@@ -1301,17 +1310,14 @@ static void csvdIteration_f(csvdObj_f *svd)
         if (k > 0){
             k=k-1;
             if(vsip_vget_f(d,n) == 0.0){
-                printf("Col\n");
                 czeroCol_f(svd);
             }else{
-                printf("Row\n");
                 cimsv_f(L,L,0,0,k,0);
                 ivsv_f(d0,d,k+1,0);
                 ivsv_f(f0,f,k,0);
                 czeroRow_f(svd);
             }
         }else{
-            printf("step\n");
             csvdStep_f(svd);
         }
     }
