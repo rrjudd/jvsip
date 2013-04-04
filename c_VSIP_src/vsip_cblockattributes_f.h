@@ -44,7 +44,7 @@ struct vsip_cblockattributes_f {
                *I;            /* blocks holding data arrays      */
   int           kind;         /* 0 ==> private, 1 ==> public     */
   int           admit;        /* 0 ==> No,      1 ==> Yes        */
-  int           cstride;      /* 1 for split, 2 for interleaved  */
+  vsip_stride   cstride;      /* 1 for split, 2 for interleaved  */
   size_t        size;         /* block size in elements          */
   int           bindings;     /* reference counter               */
   int           markings;     /* valid|destoyed block object     */

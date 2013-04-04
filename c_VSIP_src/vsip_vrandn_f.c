@@ -26,11 +26,11 @@ void vsip_vrandn_f(
                       c = state->c,
                       X = state->X;
       vsip_length n = r->length;
-      /* register */ vsip_stride rst = r->stride * r->block->rstride;
+      vsip_stride rst = r->stride * r->block->rstride;
       vsip_scalar_f *rp = (r->block->array) + r->offset * r->block->rstride;
       /*end define*/
       while(n-- > 0){
-         *rp = 0;
+         *rp = 0.0;
          for(i=0; i<12; i++){
             X    = a * X + c;
             *rp  += (vsip_scalar_f)X/(vsip_scalar_f)4294967296.0;
@@ -42,11 +42,11 @@ void vsip_vrandn_f(
    } else { /* portable generator */
       vsip_scalar_ue32 itemp;
       vsip_length n = r->length;
-      /* register */ vsip_stride rst = r->stride * r->block->rstride;
+      vsip_stride rst = r->stride * r->block->rstride;
       vsip_scalar_f *rp = (r->block->array) + r->offset * r->block->rstride;
       /*end define*/
       while(n-- > 0){
-         *rp = 0;
+         *rp = 0.0;
          for(i=0; i<12; i++){
             state->X  = state->X * state->a + state->c;
             state->X1 = state->X1 * state->a1 + state->c1;

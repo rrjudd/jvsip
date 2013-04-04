@@ -1008,7 +1008,7 @@ static void cVHmatExtract_f(csvdObj_f *svd)
 static void cUmatExtract_f(csvdObj_f *svd)
 {
     vsip_cmview_f* B=svd->B;
-    vsip_cmview_f *U=svd->L;
+    vsip_cmview_f* U=svd->L;
     vsip_index i;
     vsip_length m = vsip_cmgetcollength_f(B);
     vsip_length n = vsip_cmgetrowlength_f(B);
@@ -1046,9 +1046,17 @@ static void cbidiag_f(csvdObj_f *svd)
     vsip_cvview_f *vs = svd->ts;
     vsip_index i,j;
     for(i=0; i<n-1; i++){
+        {
+            vsip_index _k;
+            vsip_cvview_f *d = vsip_cmdiagview_f(svd->B,0);
+            for (_k=0; _k<vsip_cvgetlength_f(d);_k++)
+                printf("%.4f%+.4fi ",vsip_cvget_f(d, _k).r,vsip_cvget_f(d, _k).i);
+            printf("\n");
+            vsip_cvdestroy_f(d);
+        }
         vsip_cvputlength_f(v,m-i);
         vsip_cvcopy_f_f(ccol_sv_f(cmsv_f(B,Bs,i,i),x,0),v);
-        chouseVector_f(v);vsip_cvconj_f(v, v);
+        chouseVector_f(v); /* along column;lower diag; no conj */
         vsip_csvmul_f(vsip_cdiv_f(vsip_cmplx_f(1.0,0.0),vsip_cvget_f(v,0)),v,v);
         chouseProd_f(v,Bs);
         vsip_cvcopy_f_f(cvsv_f(v,vs,1),cvsv_f(x,x,1));
@@ -1056,7 +1064,7 @@ static void cbidiag_f(csvdObj_f *svd)
             j = i+1;
             vsip_cvputlength_f(v,n-j);
             vsip_cvcopy_f_f(crow_sv_f(cmsv_f(B,Bs,i,j),x,0),v);
-            chouseVector_f(v);vsip_cvconj_f(v,v);
+            chouseVector_f(v);vsip_cvconj_f(v,v); /* along row; upper diag; need conj */
             vsip_csvmul_f(vsip_cdiv_f(vsip_cmplx_f(1.0,0.0),vsip_cvget_f(v,0)),v,v);
             cprodHouse_f(Bs,v);
             vsip_cvcopy_f_f(cvsv_f(v,vs,1),cvsv_f(x,x,1));
@@ -1066,7 +1074,7 @@ static void cbidiag_f(csvdObj_f *svd)
         i=n-1;
         vsip_cvputlength_f(v,m-i);
         vsip_cvcopy_f_f(ccol_sv_f(cmsv_f(B,Bs,i,i),x,0),v);
-        chouseVector_f(v);vsip_cvconj_f(v, v);
+        chouseVector_f(v);
         vsip_csvmul_f(vsip_cdiv_f(vsip_cmplx_f(1.0,0.0),vsip_cvget_f(v,0)),v,v);
         chouseProd_f(v,Bs);
         vsip_cvcopy_f_f(cvsv_f(v,vs,1),cvsv_f(x,x,1));
@@ -1074,8 +1082,7 @@ static void cbidiag_f(csvdObj_f *svd)
 }
 static void csvdBidiag_f(csvdObj_f *svd)
 {
-    vsip_cmview_f *B = svd->B;
-    svd->eps0=(cmnormFro_f(B)/(vsip_scalar_f)vsip_cmgetrowlength_f(B))*1E-10;
+    svd->eps0=(cmnormFro_f(svd->B)/(vsip_scalar_f)vsip_cmgetrowlength_f(svd->B))*1E-10;
     cbidiag_f(svd);
     cUmatExtract_f(svd);
     cVHmatExtract_f(svd);
@@ -1294,14 +1301,17 @@ static void csvdIteration_f(csvdObj_f *svd)
         if (k > 0){
             k=k-1;
             if(vsip_vget_f(d,n) == 0.0){
+                printf("Col\n");
                 czeroCol_f(svd);
             }else{
+                printf("Row\n");
                 cimsv_f(L,L,0,0,k,0);
                 ivsv_f(d0,d,k+1,0);
                 ivsv_f(f0,f,k,0);
                 czeroRow_f(svd);
             }
         }else{
+            printf("step\n");
             csvdStep_f(svd);
         }
     }
