@@ -46,7 +46,7 @@ static vsip_scalar_f ccheckBack_f(vsip_cmview_f* A,vsip_cmview_f* U, vsip_vview_
 }
 
 int main(int argc, char* argv[]){
-    vsip_length n=8,m=6;
+    vsip_length n=150,m=100;
     int init=vsip_init((void*)0);
     jvsip_csv_f *s=jvsip_csvd_create_f(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
     vsip_cmview_f *A = vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
@@ -66,24 +66,23 @@ int main(int argc, char* argv[]){
     vsip_vdestroy_f(ar);vsip_vdestroy_f(ai);
     ar = vsip_mdiagview_f(Ar, 1); ai = vsip_mdiagview_f(Ai, 1);
     vsip_vrandn_f(rnd,ar); vsip_vrandn_f(rnd,ai);
-    vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0));
-    vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0));
+    vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0)); 
     vsip_cmput_f(A, 5, 5, vsip_cmplx_f(0.0, 0.0));
     vsip_cmput_f(A,1,2,vsip_cmplx_f(0.0,0.0));
     vsip_cmput_f(A,3,4,vsip_cmplx_f(0.0,0.0));
     vsip_cmput_f(A,0,1,vsip_cmplx_f(0.0,0.0));
-    printf("A = ");cmprint_f(A); printf("\n");
+    //printf("A = ");cmprint_f(A); printf("\n");
     if(jvsip_csvd_f(s,A,sv)){
         printf("svd failed\n");
         exit(0);
     }
     jvsip_csvdmatv_f(s,0,(m < n) ? n-1:m-1,V);
     jvsip_csvdmatu_f(s,0,(m < n) ? m-1:n-1,U);
-    cmprint_f(U);
+    //cmprint_f(U);
     printf("\n");
     vprint_f(sv);
     printf("\n");
-    cmprint_f(V);
+    //cmprint_f(V);
     printf("Check value %f\n",ccheckBack_f(A,U,sv,V)); 
     vsip_cmalldestroy_f(U);vsip_cmalldestroy_f(V);
     vsip_valldestroy_f(sv);

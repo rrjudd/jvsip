@@ -38,7 +38,7 @@ static vsip_scalar_f checkBack_f(vsip_mview_f* A,vsip_mview_f* U, vsip_vview_f* 
 
 int main(int argc, char* argv[]){
     int init=vsip_init((void*)0);
-    vsip_length m=8,n=6;
+    vsip_length m=150,n=100;
     jvsip_sv_f *s=jvsip_svd_create_f(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);  
     vsip_mview_f *A = vsip_mcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
     vsip_mview_f *V=vsip_mcreate_f(n,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
@@ -55,18 +55,18 @@ int main(int argc, char* argv[]){
     vsip_vrandn_f(rnd, a);
     //vsip_mput_f(A, 2, 2, 0.0);
     //vsip_mput_f(A,1,2,0.0);
-    printf("A=");mprint_f(A); printf("\n");
+   // printf("A=");mprint_f(A); printf("\n");
     if(jvsip_svd_f(s,A,sv)){
         printf("svd failed\n");
         exit(0);
     }
     jvsip_svdmatv_f(s,0,(m < n) ? n-1:m-1,V);
     jvsip_svdmatu_f(s,0,(m < n) ? m-1:n-1,U);
-    mprint_f(U);
+   // mprint_f(U);
     printf("\n");
     vprint_f(sv);
     printf("\n");
-    mprint_f(V);
+   // mprint_f(V);
     printf("Check value %f\n",checkBack_f(A,U,sv,V));
     vsip_malldestroy_f(U);vsip_malldestroy_f(V);
     vsip_valldestroy_f(sv);
