@@ -72,7 +72,7 @@ jvsip_svd_f(jvsip_sv_f *svd, const vsip_mview_f *A, vsip_vview_f *sv)
     svd_f(s);
     vsip_vcopy_f_f(s->d,sv);
     return 0;
-}
+}/* need to replace cloneview*/
 void
 jvsip_svd_getattr_f(const jvsip_sv_f *svd, vsip_sv_attr_f *attrib)
 {
@@ -83,8 +83,7 @@ jvsip_svd_getattr_f(const jvsip_sv_f *svd, vsip_sv_attr_f *attrib)
 }
 
 int 
-jvsip_svdprodu_f(const jvsip_sv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU,
-const vsip_mview_f *C)
+jvsip_svdprodu_f(const jvsip_sv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const vsip_mview_f *C)
 {
     if((OpU != VSIP_MAT_NTRANS) || (OpU != VSIP_MAT_TRANS)) return 1;
     if( (ApU != VSIP_MAT_LSIDE) || (ApU != VSIP_MAT_RSIDE)) return 1;
