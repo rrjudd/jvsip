@@ -46,50 +46,64 @@ static vsip_scalar_f ccheckBack_f(vsip_cmview_f* A,vsip_cmview_f* U, vsip_vview_
 }
 
 int main(int argc, char* argv[]){
-    vsip_length n=150,m=100;
     int init=vsip_init((void*)0);
-    jvsip_csv_f *s=jvsip_csvd_create_f(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
-    vsip_cmview_f *A = vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
-    vsip_mview_f *Ar=vsip_mrealview_f(A);
-    vsip_mview_f *Ai=vsip_mimagview_f(A);
-    vsip_vview_f *ar = vsip_vbind_f(vsip_mgetblock_f(Ar),0,1,m*n);
-    vsip_vview_f *ai = vsip_vbind_f(vsip_mgetblock_f(Ai),0,1,m*n);
-    /*vsip_vview_f *ar = vsip_mdiagview_f(Ar, 0);
-    vsip_vview_f *ai = vsip_mdiagview_f(Ai, 0);*/
-    vsip_cmview_f *V=vsip_cmcreate_f(n,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
-    vsip_cmview_f *U=vsip_cmcreate_f(m,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
-    vsip_vview_f *sv = vsip_vcreate_f((m < n ? m:n),VSIP_MEM_NONE);
-    vsip_randstate *rnd=vsip_randcreate(5,1,1,VSIP_PRNG);
-    if(init) exit(0);
-    vsip_mfill_f(0.0, Ar);vsip_mfill_f(0.0, Ai);
-    vsip_vrandn_f(rnd,ar); vsip_vrandn_f(rnd,ai);
-    vsip_vdestroy_f(ar);vsip_vdestroy_f(ai);
-    ar = vsip_mdiagview_f(Ar, 1); ai = vsip_mdiagview_f(Ai, 1);
-    vsip_vrandn_f(rnd,ar); vsip_vrandn_f(rnd,ai);
-    vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0)); 
-    vsip_cmput_f(A, 5, 5, vsip_cmplx_f(0.0, 0.0));
-    vsip_cmput_f(A,1,2,vsip_cmplx_f(0.0,0.0));
-    vsip_cmput_f(A,3,4,vsip_cmplx_f(0.0,0.0));
-    vsip_cmput_f(A,0,1,vsip_cmplx_f(0.0,0.0));
-    //printf("A = ");cmprint_f(A); printf("\n");
-    if(jvsip_csvd_f(s,A,sv)){
-        printf("svd failed\n");
-        exit(0);
+    vsip_length in,im;
+    for(in=5; in<100; in++){
+        for(im=5; im<in; im++){
+            vsip_length n=in,m=im;
+            jvsip_csv_f *s=jvsip_csvd_create_f(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
+            vsip_cmview_f *A = vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
+            vsip_mview_f *Ar=vsip_mrealview_f(A);
+            vsip_mview_f *Ai=vsip_mimagview_f(A);
+            vsip_vview_f *ar = vsip_vbind_f(vsip_mgetblock_f(Ar),0,1,m*n);
+            vsip_vview_f *ai = vsip_vbind_f(vsip_mgetblock_f(Ai),0,1,m*n);
+            //vsip_vview_f *ar = vsip_mdiagview_f(Ar, 0);
+            //vsip_vview_f *ai = vsip_mdiagview_f(Ai, 0);
+            vsip_cmview_f *V=vsip_cmcreate_f(n,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
+            vsip_cmview_f *U=vsip_cmcreate_f(m,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
+            vsip_vview_f *sv = vsip_vcreate_f((m < n ? m:n),VSIP_MEM_NONE);
+            vsip_randstate *rnd=vsip_randcreate(7,1,1,VSIP_PRNG);
+            vsip_randstate *rnd1=vsip_randcreate(8, 1, 1, VSIP_PRNG);
+            printf("size %lu %lu\n",m,n);
+            if(init) exit(0);
+            vsip_mfill_f(0.0, Ar);vsip_mfill_f(0.0, Ai);
+            vsip_vrandn_f(rnd,ar); vsip_vrandn_f(rnd,ai);
+            vsip_vdestroy_f(ar);vsip_vdestroy_f(ai);
+            ar = vsip_mdiagview_f(Ar, 1);
+            ai = vsip_mdiagview_f(Ai, 1);
+            vsip_vrandn_f(rnd1,ar); vsip_vrandn_f(rnd1,ai);
+            if (in > 2 && im > 2) vsip_cmput_f(A, 2, 2, vsip_cmplx_f(0.0, 0.0));
+            if (in > 4 && im > 4) vsip_cmput_f(A, 4, 4, vsip_cmplx_f(0.0, 0.0));
+            if (in > 2 && im > 2) vsip_cmput_f(A,1,2,vsip_cmplx_f(0.0,0.0));
+            if (in > 4 && im > 3) vsip_cmput_f(A,3,4,vsip_cmplx_f(0.0,0.0));
+            if (in > 1 && im > 2) vsip_cmput_f(A,0,1,vsip_cmplx_f(0.0,0.0));
+           // printf("A = ");cmprint_f(A); printf("\n");
+            if(jvsip_csvd_f(s,A,sv)){
+                printf("svd failed\n");
+                exit(0);
+            }
+            jvsip_csvdmatv_f(s,0,(m < n) ? n-1:m-1,V);
+            jvsip_csvdmatu_f(s,0,(m < n) ? m-1:n-1,U);
+            //cmprint_f(U);
+            //printf("\n");
+            //vprint_f(sv);
+            //printf("\n");
+            //cmprint_f(V);
+            printf("Check value %f\n-----------------------------\n",ccheckBack_f(A,U,sv,V));
+            vsip_cmalldestroy_f(U);
+            vsip_cmalldestroy_f(V);
+            vsip_valldestroy_f(sv);
+            vsip_vdestroy_f(ai);
+            vsip_vdestroy_f(ar);
+            vsip_mdestroy_f(Ar);
+            vsip_mdestroy_f(Ai);
+            vsip_cmalldestroy_f(A);
+            vsip_randdestroy(rnd);
+            vsip_randdestroy(rnd1);
+            jvsip_csvd_destroy_f(s);
+ 
+        }
     }
-    jvsip_csvdmatv_f(s,0,(m < n) ? n-1:m-1,V);
-    jvsip_csvdmatu_f(s,0,(m < n) ? m-1:n-1,U);
-    //cmprint_f(U);
-    printf("\n");
-    vprint_f(sv);
-    printf("\n");
-    //cmprint_f(V);
-    printf("Check value %f\n",ccheckBack_f(A,U,sv,V)); 
-    vsip_cmalldestroy_f(U);vsip_cmalldestroy_f(V);
-    vsip_valldestroy_f(sv);
-    vsip_vdestroy_f(ai);vsip_vdestroy_f(ar);
-    vsip_mdestroy_f(Ar);vsip_mdestroy_f(Ai);
-    vsip_randdestroy(rnd);
-    jvsip_csvd_destroy_f(s);
     vsip_finalize((void*)0);
     return 1;
 }
