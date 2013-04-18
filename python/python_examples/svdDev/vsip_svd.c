@@ -55,11 +55,9 @@ jvsip_svd_f(jvsip_sv_f *svd, const vsip_mview_f *A, vsip_vview_f *sv)
 {
     svdObj_f *s = (svdObj_f*) svd->svd;
     if(svd->transpose){
-        printf("use mtrans\n");
         vsip_mtrans_f(A,s->B);
     } else {
         printf("use mcopy\n");
-        vsip_mcopy_f_f(A,s->B);
     }
     svd_f(s);
     vsip_vcopy_f_f(s->d,sv);

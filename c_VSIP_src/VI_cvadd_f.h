@@ -28,7 +28,7 @@ VI_cvadd_f(
       /* register */ vsip_length n = r->length;
       vsip_stride cast = a->block->cstride;
       vsip_stride cbst = b->block->cstride;
-      int crst = r->block->cstride;
+      vsip_stride crst = r->block->cstride;
       vsip_scalar_f *apr = (vsip_scalar_f *)((a->block->R->array) + cast * a->offset),
                     *bpr = (vsip_scalar_f *)((b->block->R->array) + cbst * b->offset),
                     *rpr = (vsip_scalar_f *)((r->block->R->array) + crst * r->offset);
