@@ -25,7 +25,7 @@ static void VI_rscvjmprod_d( /* r = beta * conj(a) * B */
   const vsip_cvview_d* r) {
   { 
       vsip_length nx = 0, mx = 0;
-      int cast = a->block->cstride, crst = r->block->cstride, cBst = B->block->cstride;
+      vsip_stride cast = a->block->cstride, crst = r->block->cstride, cBst = B->block->cstride;
       vsip_scalar_d  *ap_r  = (vsip_scalar_d*)(a->block->R->array + cast * a->offset),
                      *ap_i  = (vsip_scalar_d*)(a->block->I->array + cast * a->offset),
                      *rp_r  = (vsip_scalar_d*)(r->block->R->array + crst * r->offset),
@@ -146,7 +146,7 @@ static void VI_cvsubvmprodIP_d(
    vsip_scalar_d temp_r; 
    vsip_scalar_d temp_i;
    vsip_length nx = 0, mx = 0;   
-   int cast = a->block->cstride, crst = r->block->cstride, cBst = B->block->cstride;
+   vsip_stride cast = a->block->cstride, crst = r->block->cstride, cBst = B->block->cstride;
    vsip_scalar_d  *ap_r  = (vsip_scalar_d*)(a->block->R->array + cast * a->offset), 
                   *ap_i  = (vsip_scalar_d*)(a->block->I->array + cast * a->offset), 
                   *rp_r  = (vsip_scalar_d*)(r->block->R->array + crst * r->offset), 

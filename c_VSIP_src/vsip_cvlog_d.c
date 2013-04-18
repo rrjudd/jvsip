@@ -20,7 +20,7 @@ void (vsip_cvlog_d)(
   {
      /* register */ unsigned int n = (unsigned int) r->length;
      vsip_stride cast = a->block->cstride;
-     int crst = r->block->cstride;
+     vsip_stride crst = r->block->cstride;
      vsip_scalar_d *apr = (vsip_scalar_d*) ((a->block->R->array) + cast * a->offset),
                    *rpr = (vsip_scalar_d*) ((r->block->R->array) + crst * r->offset);
      vsip_scalar_d *api = (vsip_scalar_d*) ((a->block->I->array) + cast * a->offset),

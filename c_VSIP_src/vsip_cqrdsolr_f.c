@@ -60,7 +60,7 @@ static void VI_cvsubvmprodIP_f(
    vsip_scalar_f temp_r; 
    vsip_scalar_f temp_i;
    vsip_length nx = 0, mx = 0;   
-   int cast = a->block->cstride, crst = r->block->cstride, cBst = B->block->cstride;
+   vsip_stride cast = a->block->cstride, crst = r->block->cstride, cBst = B->block->cstride;
    vsip_scalar_f  *ap_r  = (vsip_scalar_f*)(a->block->R->array + cast * a->offset), 
                   *ap_i  = (vsip_scalar_f*)(a->block->I->array + cast * a->offset), 
                   *rp_r  = (vsip_scalar_f*)(r->block->R->array + crst * r->offset), 
