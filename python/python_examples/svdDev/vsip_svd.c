@@ -55,24 +55,16 @@ jvsip_svd_f(jvsip_sv_f *svd, const vsip_mview_f *A, vsip_vview_f *sv)
 {
     svdObj_f *s = (svdObj_f*) svd->svd;
     if(svd->transpose){
-        vsip_mview_f *t=vsip_mcloneview_f(A);
-        vsip_mattr_f attr0,attr;
-        vsip_mgetattrib_f(t,&attr0);
-        attr.offset=attr0.offset;
-        attr.row_stride=attr0.col_stride;
-        attr.col_stride = attr0.row_stride;
-        attr.row_length=attr0.col_length;
-        attr.col_length=attr0.row_length;
-        vsip_mputattrib_f(t,&attr);
-        vsip_mcopy_f_f(t,s->B);
-        vsip_mdestroy_f(t);
+        printf("use mtrans\n");
+        vsip_mtrans_f(A,s->B);
     } else {
+        printf("use mcopy\n");
         vsip_mcopy_f_f(A,s->B);
     }
     svd_f(s);
     vsip_vcopy_f_f(s->d,sv);
     return 0;
-}/* need to replace cloneview*/
+}
 void
 jvsip_svd_getattr_f(const jvsip_sv_f *svd, vsip_sv_attr_f *attrib)
 {
@@ -184,6 +176,7 @@ jvsip_csvd_destroy_f(jvsip_csv_f* s)
     if(s){
        csvdObj_f* svd=(csvdObj_f*)s->svd;
        csvdFinalize_f(svd);
+        s->svd=NULL;
        free((void*)s);
        s=NULL;
     }
@@ -208,6 +201,7 @@ jvsip_csvd_create_f(vsip_length M, vsip_length N, vsip_svd_uv Usave, vsip_svd_uv
             s->transpose = M < N ? 1:0;
         } else {
             jvsip_svd_destroy_f(s);
+            s=NULL;
         }
     }
     return s;
