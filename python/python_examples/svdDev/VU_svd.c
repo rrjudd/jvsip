@@ -55,17 +55,7 @@ jvsip_svd_f(jvsip_sv_f *svd, const vsip_mview_f *A, vsip_vview_f *sv)
 {
     svdObj_f *s = (svdObj_f*) svd->svd;
     if(svd->transpose){
-        vsip_mview_f *t=vsip_mcloneview_f(A);
-        vsip_mattr_f attr0,attr;
-        vsip_mgetattrib_f(t,&attr0);
-        attr.offset=attr0.offset;
-        attr.row_stride=attr0.col_stride;
-        attr.col_stride = attr0.row_stride;
-        attr.row_length=attr0.col_length;
-        attr.col_length=attr0.row_length;
-        vsip_mputattrib_f(t,&attr);
-        vsip_mcopy_f_f(t,s->B);
-        vsip_mdestroy_f(t);
+        vsip_mtrans_f(A,s->B);
     } else {
         vsip_mcopy_f_f(A,s->B);
     }
