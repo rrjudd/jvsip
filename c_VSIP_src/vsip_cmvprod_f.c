@@ -24,7 +24,7 @@ void (vsip_cmvprod_f)(
   const vsip_cvview_f* r) {
    if((A->block->cstride == 2) && (b->block->cstride == 2) && (r->block->cstride == 2)){
       vsip_length nx = 0, mx = 0;
-      int cbst = b->block->cstride, crst = b->block->cstride, cAst = A->block->cstride;
+      vsip_stride cbst = b->block->cstride, crst = b->block->cstride, cAst = A->block->cstride;
       vsip_scalar_f  *bp_r  = (vsip_scalar_f*)(b->block->R->array + cbst * b->offset),
                      *rp_r  = (vsip_scalar_f*)(r->block->R->array + crst * r->offset),
                      *Axp_r = (vsip_scalar_f*)(A->block->R->array + cAst * A->offset),
@@ -48,7 +48,7 @@ void (vsip_cmvprod_f)(
       }   
    } else { 
       vsip_length nx = 0, mx = 0;
-      int cbst = b->block->cstride, crst = r->block->cstride, cAst = A->block->cstride;
+      vsip_stride cbst = b->block->cstride, crst = r->block->cstride, cAst = A->block->cstride;
       vsip_scalar_f  *bp_r  = (vsip_scalar_f*)(b->block->R->array + cbst * b->offset),
                      *bp_i  = (vsip_scalar_f*)(b->block->I->array + cbst * b->offset),
                      *rp_r  = (vsip_scalar_f*)(r->block->R->array + crst * r->offset),

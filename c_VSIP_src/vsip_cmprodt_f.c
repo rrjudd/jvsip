@@ -26,7 +26,7 @@ void (vsip_cmprodt_f)(
   { 
     vsip_length M = A->col_length,
                 N = B->col_length;
-    int cRst = R->block->cstride;
+    vsip_stride cRst = R->block->cstride;
     vsip_cscalar_f tmp;
     vsip_length i,j;
     vsip_cvview_f aa,bb,rr,*a,*b,*r;

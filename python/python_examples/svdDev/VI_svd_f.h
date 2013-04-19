@@ -584,7 +584,7 @@ static svdCorner svdCorners_f(vsip_vview_f* f)
         }
     }
     return crnr;
-} 
+}
 
 static void svdStep_f(svdObj_f *svd)
 {
@@ -1194,7 +1194,7 @@ static void czeroRow_f(csvdObj_f *svd)
             cprodG_f(svd,i+1,0,g.c,g.s);
             vsip_vput_f(d,i,g.r);
             xf=vsip_vget_f(f,i+1);
-             t=-xf * g.s; xf *= g.c;
+            t=-xf * g.s; xf *= g.c;
             vsip_vput_f(f,i+1,xf);
         }
         xd=vsip_vget_f(d,n-1);
@@ -1362,6 +1362,7 @@ static void svdFinalize_f(svdObj_f *s)
     vsip_valldestroy_f(s->d);
     vsip_vdestroy_f(s->fs);
     vsip_valldestroy_f(s->f);
+    free((void*)s);
     s=NULL;
 }
 static svdObj_f* svdInit_f(vsip_length m, vsip_length n)
@@ -1446,6 +1447,7 @@ static void csvdFinalize_f(csvdObj_f *s)
     vsip_valldestroy_f(s->d);
     vsip_vdestroy_f(s->fs);
     vsip_valldestroy_f(s->f);
+    free((void*)s);
     s=NULL;
 }
 static csvdObj_f* csvdInit_f(vsip_length m, vsip_length n)
