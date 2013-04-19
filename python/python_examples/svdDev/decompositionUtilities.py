@@ -331,7 +331,7 @@ def bidiag(A): # m >= n
         print('for matrices where rowlength > collength work with the transpose')
     for i in range(n-1):
         x=B[i:,i:].colview(0)
-        v=houseVector(x).conj
+        v=houseVector(x)
         v /= v[0]
         houseProd(v,B[i:,i:])
         x[1:]=v[1:]
@@ -346,7 +346,7 @@ def bidiag(A): # m >= n
     if m > n: #do last column if matrix not square
         i=n-1
         x=B[i:,i:].colview(0)
-        v=houseVector(x).conj
+        v=houseVector(x)
         v /= v[0]
         houseProd(v,B[i:,i:])
         x[1:]=v[1:]
@@ -674,7 +674,7 @@ def zeroRow(L,d,f):
             d[i]=r; t=-f[i+1] * s; f[i+1] *= c
         c,s,r=givensCoef(d[d.length-1],t)
         d[d.length-1] = r
-        prodG(L,d.length,0,c,s)
+    prodG(L,d.length,0,c,s)
 def zeroCol(d,f,R):
     """
     To use this we assume a matrix B that is bi-diagonalized.
@@ -723,14 +723,29 @@ def zeroCol(d,f,R):
         gtProd(0,k+1,c,s,R)
 def svdMu(d2,f1,d3,f2):
     """
-    For this algorithm we expect float or double, real numbers
+    Complex is removed from bidiagonal so for this algorithm we expect real numbers.
     """
-    cu=d2 * d2 + f1 * f1
-    cl=d3 * d3 + f2 * f2
+    td=d2*d2; tf=f1*f1
+    if td == 0.0:
+       cu = tf
+    elif (td < tf):
+       cu=tf * (1.+td/tf)
+    else:
+       cu=td * (1.+tf/td);
+    td=d3*d3; tf=f2*f2
+    if td == 0.0:
+       cl = tf
+    elif (td < tf):
+       cl=tf * (1.+td/tf)
+    else:
+       cl=td * (1.+tf/td);
     cd = d2 * f2
-    D = (cu * cl - cd * cd)
     T = (cu + cl)
-    root = pv.vsip_sqrt_d(T*T - 4 * D)
+    D = (cu * cl - cd * cd)/(T*T)
+    if 4.*D > 1.0:
+        root = 0.0
+    else: 
+        root = T * pv.vsip_sqrt_d(1.0 - 4. * D)
     lambda1 = (T + root)/(2.); lambda2 = (T - root)/(2.)
     if abs(lambda1 - cl) < abs(lambda2 - cl):
         mu = lambda1
@@ -778,20 +793,17 @@ def svdStep(L,d,f,R):
     d[j]=t
     prodG(L,i,j,c,s)
 def zeroFind(d,eps0):
-    """
-       zeroFind(d) takes vector d and finds the zero element with the 
-       largest index and returns the index. If an element is less than
-       eps0 the element is considered to be zero and is set to 0.0.
-       If no index is found returns -1
-    """
-    j=d.length - 1
-    while d[j] > eps0 and j > 0:
-        j -= 1
-    if j == 0 and d[j] > eps0:
-        return -1
-    else:
-        d[j]=0.0
-        return j
+    j = d.length
+    xd=d[j-1]
+    while(xd > eps0):
+        if (j > 1):
+            j -= 1;
+            xd=d[j-1]
+        elif(j==1):
+            return 0;
+    d[j-1]=0.0
+    return j
+
 def svd(A):
     """
        The bidiag routine is used in the svd and bidiag is defined out of place, 
@@ -817,7 +829,7 @@ def svd(A):
         if 'mview_d' in A.type:
             eps0 = A.normFro/A.rowlength * 1.0E16
         else:
-            eps0 = A.normFro/A.rowlength * 1.0E10
+            eps0 = A.normFro/A.rowlength * 1.0E8
         if eps0 == 0.0:
             print('Input matrix appears to be zero')
             return(0,0,0,0,0)
@@ -836,7 +848,7 @@ def svd(A):
         return (L,d0,f0,R,eps0)
     def svdIteration(L0,d0,f0,R0,eps0):
         cntr=0
-        maxcntr=20*d0.length
+        maxcntr=5*d0.length
         while cntr < maxcntr:
             biDiagPhaseToZero(L0,d0,f0,R0,eps0)
             cntr += 1
@@ -849,7 +861,8 @@ def svd(A):
             R=R0[i:j,:]
             n=f.length
             k=zeroFind(d,eps0)
-            if k >=0:
+            if k >0:
+                k -= 1;
                 if d[n] == 0.0:
                     zeroCol(d,f,R)
                 else:

@@ -723,7 +723,7 @@ def zeroCol(d,f,R):
         gtProd(0,k+1,c,s,R)
 def svdMu(d2,f1,d3,f2):
     """
-    For this algorithm we expect float or double, real numbers
+    Complex is removed from bidiagonal so for this algorithm we expect real numbers.
     """
     td=d2*d2; tf=f1*f1
     if td == 0.0:
@@ -744,9 +744,7 @@ def svdMu(d2,f1,d3,f2):
     D = (cu * cl - cd * cd)/(T*T)
     if 4.*D > 1.0:
         root = 0.0
-        print('root1')
-    else:
-        print('root2')  
+    else: 
         root = T * pv.vsip_sqrt_d(1.0 - 4. * D)
     lambda1 = (T + root)/(2.); lambda2 = (T - root)/(2.)
     if abs(lambda1 - cl) < abs(lambda2 - cl):
@@ -794,24 +792,6 @@ def svdStep(L,d,f,R):
     f[i] *= c; f[i] += s * d[j]; 
     d[j]=t
     prodG(L,i,j,c,s)
-def tzeroFind(d,eps0):
-    """
-       zeroFind(d) takes vector d and finds the zero element with the 
-       largest index and returns the index plus one. The index plus one is
-       the length of a sub vector ending at the zero, or the index of the
-       nonzero element after the zero. If an element is less than
-       eps0 the element is considered to be zero and is set to 0.0.
-       If no index is found then zero is returned.
-    """
-    j=d.length
-    while d[j-1] > eps0 and j > 1:
-        j -= 1
-    if j == 1:
-        return 0
-    else:
-        d[j-1]=0.0
-        return j
-        
 def zeroFind(d,eps0):
     j = d.length
     xd=d[j-1]
@@ -873,7 +853,6 @@ def svd(A):
             biDiagPhaseToZero(L0,d0,f0,R0,eps0)
             cntr += 1
             i,j=svdCorners(f0)
-            print("corners %d, %d"%(i,j))
             if j == 0:
                 break
             d=d0[i:j]
@@ -885,13 +864,10 @@ def svd(A):
             if k >0:
                 k -= 1;
                 if d[n] == 0.0:
-                    print('zeroCol')
                     zeroCol(d,f,R)
                 else:
-                    print('zeroRow')
                     zeroRow(L[:,k:],d[k+1:],f[k:])
             else:
-                print('svdStep')
                 svdStep(L,d,f,R)
     def svdSort(L,d,R):
         indx=d.sort('BYVALUE','DESCENDING')
