@@ -1628,6 +1628,7 @@ static void csvdSort_f(csvdObj_f *svd)
 
 static void svdFinalize_f(svdObj_f *s)
 {
+    if(s) {
     vsip_valldestroy_f(s->t);
     vsip_valldestroy_f(s->w);
     vsip_malldestroy_f(s->B);
@@ -1637,7 +1638,8 @@ static void svdFinalize_f(svdObj_f *s)
     vsip_valldestroy_vi(s->indx_R);
     vsip_valldestroy_f(s->d);
     vsip_valldestroy_f(s->f);
-    if(s) free(s);
+    free(s);
+    }
     s=NULL;
 }
 static svdObj_f* svdInit_f(vsip_length m, vsip_length n)
@@ -1676,6 +1678,7 @@ static void svd_f(svdObj_f *s)
 
 static void csvdFinalize_f(csvdObj_f *s)
 {
+    if(s) {
     vsip_cvalldestroy_f((s)->t);
     vsip_cvalldestroy_f((s)->w);
     vsip_cmalldestroy_f((s)->B);
@@ -1685,7 +1688,8 @@ static void csvdFinalize_f(csvdObj_f *s)
     vsip_valldestroy_vi((s)->indx_R);
     vsip_valldestroy_f((s)->d);
     vsip_valldestroy_f((s)->f);
-    if(s) free(s);
+    free(s);
+    }
     s=NULL;
 }
 static csvdObj_f* csvdInit_f(vsip_length m, vsip_length n)
