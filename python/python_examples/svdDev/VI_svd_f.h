@@ -785,8 +785,9 @@ static vsip_scalar_f cmnormFro_f(vsip_cmview_f *v)
 {
     vsip_mview_f* re=vsip_mrealview_f(v);
     vsip_mview_f* im=vsip_mimagview_f(v);
-    return vsip_sqrt_f(vsip_msumsqval_f(re)+vsip_msumsqval_f(im));
+    vsip_scalar_f retval = vsip_sqrt_f(vsip_msumsqval_f(re)+vsip_msumsqval_f(im));
     vsip_mdestroy_f(re);vsip_mdestroy_f(im);
+    return retval;
 }
 static vsip_cmview_f* cmeye_f(vsip_length n)
 {
