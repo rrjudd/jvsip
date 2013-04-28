@@ -113,7 +113,7 @@ bpr += bst; bpi += bst;}}
     rst_mn *= r->block->cstride; rst_mj *= r->block->cstride; ast_mn *= a->block->cstride; ast_mj *= a->block->cstride; \
     } while(n_mn-- > 0){ vsip_length _n = n_mj; while(_n-- >0){ \
     *rp_r = *ap_r; *rp_i = - *ap_i; ap_r += ast_mj; rp_r += rst_mj; ap_i += ast_mj; rp_i += rst_mj; \
-    } ap0_r += ast_mn; rp0_r += rst_mn; ap_r = ap0_r;    rp_r = rp0_r; ap0_i += ast_mn; rp0_i += rst_mn; ap_i = ap0_i;    rp_i = rp0_i; } }
+    } ap0_r += ast_mn; rp0_r += rst_mn; ap_r = ap0_r;    rp_r = rp0_r; ap0_i += ast_mn; rp0_i += rst_mn; ap_i = ap0_i;rp_i = rp0_i;}}
 
 #define mpermute_onceCol_f(in, p){ vsip_scalar_f *ptr,t;vsip_length n_dta, n_ind; vsip_stride in_dta_strd, in_ind_strd; \
     register vsip_index to0; register vsip_index from0; vsip_index _i,_j,*b,from,to;\
@@ -201,7 +201,6 @@ static vsip_scalar_f hypot_f(vsip_scalar_f a0,vsip_scalar_f b0){
     else
         return b * (vsip_scalar_f)sqrt(1.0 + (a/b) * (a/b));
 }
-
 
 static vsip_vview_f *vsv_f(vsip_vview_f *v, vsip_vview_f *vs, vsip_index i)
 {
@@ -314,13 +313,34 @@ static vsip_cvview_f *cdiag_sv_f(vsip_cmview_f* Am,vsip_cvview_f* a, vsip_stride
     return a;
 }
 
-static vsip_scalar_f vnorm2_f(vsip_vview_f *v)
+static vsip_scalar_f vnorm2_f(vsip_vview_f *a)
 {
-    return vsip_sqrt_f(vsip_vsumsqval_f(v));
+    vsip_length n = a->length;
+    vsip_stride ast = a->stride * a->block->rstride;
+    vsip_scalar_f *ap = (a->block->array) + a->offset * a->block->rstride,t = 0;
+    while(n-- > 0){
+        t  += (*ap * *ap);
+        ap += ast;
+    }
+    return (vsip_scalar_f)sqrt(t);
 }
 static vsip_scalar_f mnormFro_f(vsip_mview_f *v)
 {
-    return vsip_sqrt_f(vsip_msumsqval_f(v));
+    vsip_length m=v->col_length,n=v->row_length;
+    vsip_index i,j;
+    vsip_stride rstrd=v->row_stride*v->block->rstride;
+    vsip_stride cstrd=v->col_stride*v->block->rstride;
+    vsip_scalar_f *vre=v->block->array+v->offset*v->block->rstride;
+    vsip_scalar_f re=0.0;
+    for(i=0; i<m; i++){
+        vsip_offset o=i*cstrd;
+        vsip_scalar_f *rp=vre+o;
+        for(j=0; j<n; j++){
+            re += *rp * *rp;
+            rp += rstrd;
+        }
+    }
+    return sqrt(re);
 }
 static void meye_f(vsip_mview_f *v)
 {
@@ -480,31 +500,15 @@ static void biDiagPhaseToZero_f( svdObj_f *svd)
     phaseCheck_f(svd);
 }
 
-static void opu_f(
-                  vsip_mview_f *A,
-                  vsip_vview_f *x,
-                  vsip_vview_f *y)
-{
-    vsip_length m = A->col_length;
-    vsip_length n = A->row_length;
-    vsip_index i,ii,j,jj;
-    vsip_scalar_f *ap=A->block->array + A->offset * A->block->rstride;
-    vsip_scalar_f *xp=x->block->array + x->offset * x->block->rstride;
-    vsip_scalar_f *yp=y->block->array + y->offset * y->block->rstride;
-    vsip_stride xstd = x->block->rstride * x->stride;
-    vsip_stride ystd = y->block->rstride * y->stride;
-    vsip_stride r_std = A->block->rstride * A->row_stride;
-    vsip_stride c_std = A->block->rstride * A->col_stride;
-    m *= c_std;
-    n *= r_std;
-    for(i=0, ii=0; i<m; i+=c_std, ii+=xstd){
-        vsip_scalar_f c = xp[ii];
-        vsip_scalar_f *app=ap+i;
-        for(j=0, jj=0; j<n; j+=r_std, jj+=ystd){
-            app[j] = app[j] + c * yp[jj];
-        }
-    }
-}
+#define opu_f(A,x,y) {\
+    vsip_length m = A->col_length,n = A->row_length;vsip_index i,ii,j,jj;\
+    vsip_scalar_f *ap=A->block->array + A->offset * A->block->rstride, \
+    *xp=x->block->array + x->offset * x->block->rstride,*yp=y->block->array + y->offset * y->block->rstride;\
+    vsip_stride xstd = x->block->rstride * x->stride,ystd = y->block->rstride * y->stride,\
+    r_std = A->block->rstride * A->row_stride,c_std = A->block->rstride * A->col_stride;\
+    m *= c_std; n *= r_std;\
+    for(i=0, ii=0; i<m; i+=c_std, ii+=xstd){vsip_scalar_f c = xp[ii], *app=ap+i;\
+    for(j=0, jj=0; j<n; j+=r_std, jj+=ystd){ app[j] = app[j] + c * yp[jj];}}}
 
 static void houseProd_f(vsip_vview_f *v, vsip_mview_f *A,vsip_vview_f *w)
 {
@@ -512,7 +516,7 @@ static void houseProd_f(vsip_vview_f *v, vsip_mview_f *A,vsip_vview_f *w)
     w->length = A->row_length;
     vsip_vmprod_f(v,A,w);
     vsip_svmul_f(-beta,w,w);
-    opu_f(A,v,w);
+    opu_f(A,v,w)
 }
 static void prodHouse_f(vsip_mview_f *A, vsip_vview_f *v, vsip_vview_f *w)
 {
@@ -520,7 +524,7 @@ static void prodHouse_f(vsip_mview_f *A, vsip_vview_f *v, vsip_vview_f *w)
     w->length = A->col_length;
     vsip_mvprod_f(A,v,w);
     vsip_svmul_f(-beta,w,w);
-    opu_f(A,w,v);
+    opu_f(A,w,v)
 }
 static vsip_vview_f *houseVector_f(vsip_vview_f* x)
 {
@@ -998,12 +1002,6 @@ static vsip_cmview_f* cmsv_f(vsip_cmview_f *B, vsip_cmview_f *BS, vsip_index i,v
     return BS;
 }
 
-static vsip_cvview_f* cvclone_f(vsip_cvview_f*x, vsip_cvview_f *v)
-{
-    v->length = x->length;
-    cvcopy_f(x,v);
-    return v;
-}
 static vsip_vview_f *vreal_sv_f(vsip_cvview_f *cv,vsip_vview_f*v)
 {
     v->block=cv->block->R;
@@ -1012,10 +1010,22 @@ static vsip_vview_f *vreal_sv_f(vsip_cvview_f *cv,vsip_vview_f*v)
     return v;
 }
 
-static vsip_scalar_f cvnorm2_f(vsip_cvview_f *v)
+static vsip_scalar_f cvnorm2_f(vsip_cvview_f *a)
 {
-    return vsip_sqrt_f(vsip_cvjdot_f(v,v).r);
+    vsip_length n = a->length;
+    vsip_stride cast = a->block->cstride;
+    vsip_scalar_f *apr = (vsip_scalar_f*) ((a->block->R->array) + cast * a->offset);
+    vsip_scalar_f *api = (vsip_scalar_f*) ((a->block->I->array) + cast * a->offset);
+    vsip_stride ast = (cast * a->stride);
+    vsip_scalar_f t1=0,t2=0;
+    while(n-- > 0){
+        t1 += *apr * *apr;
+        t2 += *api * *api;
+        apr += ast; api += ast;
+    }
+    return (vsip_scalar_f)sqrt(t1+t2);
 }
+
 static vsip_scalar_f cmnormFro_f(vsip_cmview_f *v)
 {
     vsip_length m=v->col_length,n=v->row_length;
@@ -1036,7 +1046,7 @@ static vsip_scalar_f cmnormFro_f(vsip_cmview_f *v)
             rp += rstrd; ip += rstrd;
         }
     }
-    return hypot_f(re,im);
+    return (vsip_scalar_f)sqrt(re+im);
 }
 static void cmeye_f(vsip_cmview_f *v)
 {
@@ -1432,11 +1442,13 @@ static void cbidiag_f(csvdObj_f *svd)
     vsip_length m = B->col_length;
     vsip_length n = B->row_length;
     vsip_cvview_f *x=ccol_sv_f(B,&svd->bs,0);
-    vsip_cvview_f *v=cvclone_f(x,svd->t);
+    vsip_cvview_f *v=svd->t;
     vsip_cvview_f *vs = &svd->ts;
     vsip_index i,j;
     vsip_cscalar_f z;
     vsip_scalar_f re,im;
+    v->length = x->length;
+    cvcopy_f(x,v);
     for(i=0; i<n-1; i++){
         v->length=m-i;
         ccol_sv_f(cmsv_f(B,Bs,i,i),x,0);
