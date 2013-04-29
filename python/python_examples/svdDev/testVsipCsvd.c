@@ -1,4 +1,4 @@
-#include"vsip_svd.h"
+#include<vsip.h>
 
 static void cmprint_f(vsip_cmview_f *A){
     vsip_length n=vsip_cmgetrowlength_f(A);
@@ -25,8 +25,9 @@ static void vprint_f(vsip_vview_f *v){
 static vsip_scalar_f cmnormFro_f(vsip_cmview_f *v){
     vsip_mview_f* re=vsip_mrealview_f(v);
     vsip_mview_f* im=vsip_mimagview_f(v);
-    return vsip_sqrt_f(vsip_msumsqval_f(re)+vsip_msumsqval_f(im));
+    vsip_scalar_f retval= vsip_sqrt_f(vsip_msumsqval_f(re)+vsip_msumsqval_f(im));
     vsip_mdestroy_f(re);vsip_mdestroy_f(im);
+    return retval;
 }
 static vsip_scalar_f ccheckBack_f(vsip_cmview_f* A,vsip_cmview_f* U, vsip_vview_f* d, vsip_cmview_f* V){
     vsip_scalar_f c;
@@ -77,18 +78,20 @@ int main(int argc, char* argv[]){
             if (in > 2 && im > 2) vsip_cmput_f(A,1,2,vsip_cmplx_f(0.0,0.0));
             if (in > 4 && im > 3) vsip_cmput_f(A,3,4,vsip_cmplx_f(0.0,0.0));
             if (in > 1 && im > 2) vsip_cmput_f(A,0,1,vsip_cmplx_f(0.0,0.0));
-           // printf("A = ");cmprint_f(A); printf("\n");
             if(jvsip_csvd_f(s,A,sv)){
                 printf("svd failed\n");
                 exit(0);
             }
             jvsip_csvdmatv_f(s,0,(m < n) ? n-1:m-1,V);
             jvsip_csvdmatu_f(s,0,(m < n) ? m-1:n-1,U);
-            //cmprint_f(U);
-            //printf("\n");
-            //vprint_f(sv);
-            //printf("\n");
-            //cmprint_f(V);
+            if(in==6 && im == 5){
+                printf("A = ");cmprint_f(A); printf("\n");
+                cmprint_f(U);
+                printf("\n");
+                vprint_f(sv);
+                printf("\n");
+                cmprint_f(V);
+            }
             printf("Check value %f\n-----------------------------\n",ccheckBack_f(A,U,sv,V));
             vsip_cmalldestroy_f(U);
             vsip_cmalldestroy_f(V);
@@ -101,7 +104,7 @@ int main(int argc, char* argv[]){
             vsip_randdestroy(rnd);
             vsip_randdestroy(rnd1);
             jvsip_csvd_destroy_f(s);
- 
+            
         }
     }
     vsip_finalize((void*)0);
