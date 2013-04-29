@@ -40,11 +40,15 @@ used to write python user routines to mirror the testVsip routines. Results and 
 can be compared and bugs sorted out. For the below to work you need C VSIPL to be built
 so libvsip.a is in lib and vsip.h is in include. 
 
-To compile testVsipSvd.c using VI_svd_f.h c_VSIP_src directory 
-cc -o testVsipSvd testVsipSvd.c vsip_svd.c -I../../../c_VSIP_src -L../../../lib -lvsip
+NOTE: INFO BELOW IS NOT STRICTLY VALID ANYMORE. Testing routines are changed to support
+testing jvsip_svd_f.c . These routines are built into libvsip.a now so can be built without
+the addition of vsip_svd.c. Some header file modifications have also been made.
+I keep this info incase I need to backup.
+   To compile testVsipSvd.c using VI_svd_f.h c_VSIP_src directory 
+   cc -o testVsipSvd testVsipSvd.c vsip_svd.c -I../../../c_VSIP_src -L../../../lib -lvsip
 
-and to compile for VI_svd_f.h in svdTest directory use
-cc -o testVsipSvd testVsipSvd.c VU_svd.c -I../../../include -L../../../lib -lvsip
+   and to compile for VI_svd_f.h in svdTest directory use
+   cc -o testVsipSvd testVsipSvd.c VU_svd.c -I../../../include -L../../../lib -lvsip
 
 for complex use testVsipCsvd.c instead of testVsipSvd.c
 
