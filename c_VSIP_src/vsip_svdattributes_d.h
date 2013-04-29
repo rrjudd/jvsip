@@ -1,6 +1,7 @@
 /*
  *  vsip_svdattributes_d.h
  *  Created by Randall Judd on 9/5/08.
+ *  Copyright 2008 Home. All rights reserved.
  *
  */
 /*********************************************************************
@@ -21,35 +22,36 @@
 #include<vsip_vviewattributes_d.h>
 #include<vsip_mviewattributes_d.h>
 #include<vsip_mviewattributes_d.h>
+#include<vsip_cmviewattributes_d.h>
+#include<vsip_cvviewattributes_d.h>
+#include<vsip_vviewattributes_vi.h>
 
-struct vsip_svdattributes_d{
-   vsip_svd_uv optU;
-   vsip_svd_uv optV;
-   vsip_length M;   /* size of U */
-   vsip_length N;   /* size of V */
-   vsip_length L;   /* diagonal length */
-   /* Aval will hold the attributes of the input matrix */
-   vsip_mview_d Aval; /* matrix view object */
-   vsip_mview_d *A;   /* pointer to Aval */
-   vsip_scalar_d *U; /* M by M */
-   vsip_mview_d *mU;
-   vsip_scalar_d *V; /* N by N */
-   vsip_mview_d *mV;
-   vsip_vview_d *buf; /* working space of size max(M,N) */
-   vsip_vview_vi *vi; /* working space of size max(M,N) */
-   vsip_vview_vi *ui; /* working space of size max(M,N) */
-   vsip_scalar_d *v; /* used by householder */
-   vsip_scalar_d *w; /* used by householder */
-   vsip_scalar_d *betaR; /* beta for upper part */
-   vsip_scalar_d *betaL; /* beta for lower part */
-   vsip_scalar_d *d; /* diagonal of Bidiagonal */
-   vsip_vview_d *vd;
-   vsip_scalar_d *f; /* supper diagonal of Bidiagnal */
-   vsip_scalar_d *c_l;
-   vsip_scalar_d *s_l;
-   vsip_scalar_d *c_r;
-   vsip_scalar_d *s_r;
-   
+typedef vsip_sv_attr_d sv_attr;
+struct vsip_svd{
+    void *svd;
+    sv_attr attr;
+    int transpose;
 };
+typedef struct {vsip_vview_d* t; vsip_vview_d ts;
+    vsip_vview_d* w;
+    vsip_mview_d* B; vsip_mview_d Bs; vsip_vview_d bs;
+    vsip_mview_d* L; vsip_mview_d Ls; vsip_vview_d ls_one; vsip_vview_d ls_two;
+    vsip_vview_d* d; vsip_vview_d ds;
+    vsip_vview_d* f; vsip_vview_d fs;
+    vsip_mview_d* R; vsip_mview_d Rs; vsip_vview_d rs_one; vsip_vview_d rs_two;
+    vsip_scalar_d eps0;int init;
+    vsip_vview_vi *indx_L; vsip_vview_vi *indx_R;} svdObj_d;
+
+typedef struct {vsip_cvview_d* t; vsip_cvview_d ts;
+    vsip_cvview_d* w;
+    vsip_cmview_d* B; vsip_cmview_d Bs; vsip_cvview_d bs; vsip_cvview_d bfs; vsip_vview_d rbs;
+    vsip_cmview_d* L; vsip_cmview_d Ls; vsip_cvview_d ls_one; vsip_cvview_d ls_two;
+    vsip_vview_d* d; vsip_vview_d ds;
+    vsip_vview_d* f; vsip_vview_d fs;
+    vsip_cmview_d* R; vsip_cmview_d Rs; vsip_cvview_d rs_one; vsip_cvview_d rs_two;
+    vsip_scalar_d eps0;int init;
+    vsip_vview_vi *indx_L; vsip_vview_vi *indx_R;} csvdObj_d;
+
+
 
 #endif /*_vsip_svd_d_h */
