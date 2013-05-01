@@ -453,7 +453,7 @@ static void phaseCheck_d(svdObj_d *svd)
     }
     svdZeroCheckAndSet_d(eps0,d,f);
     fptr=f->block->array + f->offset * f->block->rstride;
-    for (i=0; i<nd-1; i++){
+    for (i=0; i<nf-1; i++){
         j=i+1;
         ps = *fptr;
         m = (ps<0) ? -ps:ps;
@@ -478,7 +478,7 @@ static void phaseCheck_d(svdObj_d *svd)
         fptr+=fstrd;
         *fptr *= ps;
     }
-    j=nd;
+    j=nf;
     ps=*fptr;
     m=(ps<0) ? -ps:ps;
     ps=sign_d(ps);
@@ -675,7 +675,7 @@ static void svdBidiag_d(svdObj_d *svd)
 {
     vsip_mview_d *B = svd->B;
     /* eps0 is a number << maximum singular value */
-    svd->eps0=mnormFro_d(B)/(vsip_scalar_d)B->row_length * 1E-10;
+    svd->eps0=(mnormFro_d(B)/(vsip_scalar_d)B->row_length)*DBL_EPSILON;/* 1E-10;*/
     bidiag_d(svd);
     UmatExtract_d(svd);
     VHmatExtract_d(svd);

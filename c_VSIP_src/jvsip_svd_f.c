@@ -675,7 +675,7 @@ static void svdBidiag_f(svdObj_f *svd)
 {
     vsip_mview_f *B = svd->B;
     /* eps0 is a number << maximum singular value */
-    svd->eps0=mnormFro_f(B)/(vsip_scalar_f)B->row_length * 1E-10;
+    svd->eps0=(mnormFro_f(B)/(vsip_scalar_f)B->row_length)*FLT_EPSILON;/* 1E-10;*/
     bidiag_f(svd);
     UmatExtract_f(svd);
     VHmatExtract_f(svd);
