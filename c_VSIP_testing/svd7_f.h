@@ -36,7 +36,7 @@ static void svd7_f(void){
       vsip_mview_f *B = vsip_mcreate_f(M,N,VSIP_ROW,VSIP_MEM_NONE);
       vsip_blockadmit_f(block,VSIP_TRUE);
       vsip_mcopy_f_f(A0,A);
-      printf("in = ");VU_mprintm_f("6.3",A);
+      printf("in = ");VU_mprintm_f("6.10",A);
       if(vsip_svd_f(svd,A,s)){
          printf("svd error\n");
          return;

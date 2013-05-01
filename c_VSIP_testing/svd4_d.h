@@ -47,9 +47,8 @@ printf("B = ");VU_mprintm_d("12.10",B);
 printf("V = ");VU_mprintm_d("12.10",V);
 VU_vprintm_d("12.10",s);
 {  /* check that A0 = U * B * V' */
-   vsip_scalar_mi mi;
    vsip_scalar_d chk = 1.0;
-   vsip_scalar_d lim = 5 * DBL_EPSILON * fabs(vsip_mmaxmgval_d(A0,&mi));
+   vsip_scalar_d lim = 5 * DBL_EPSILON * sqrt(vsip_msumsqval_d(A0));
    vsip_mview_d *dif=vsip_mcreate_d(M,N,VSIP_ROW,VSIP_MEM_NONE);
    vsip_mview_d *out = vsip_mcreate_d(M,N,VSIP_ROW,VSIP_MEM_NONE);
    vsip_mview_d *Vt = vsip_mtransview_d(V);

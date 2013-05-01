@@ -23,6 +23,7 @@ static void svd6_d(void){
       vsip_mview_d *V = vsip_mcreate_d(N,N,VSIP_ROW,VSIP_MEM_NONE);
       vsip_mview_d *B = vsip_mcreate_d(M,N,VSIP_ROW,VSIP_MEM_NONE);
       vsip_vrandn_d(state,va0);
+      vsip_svmul_d(1E-10,va0,va0);
       vsip_mcopy_d_d(A0,A);
       if(vsip_svd_d(svd,A,s)){
          printf("svd error\n");
@@ -35,9 +36,8 @@ static void svd6_d(void){
       vsip_svdmatv_d(svd, 0, N-1, V);
       VU_vprintm_d("12.10",s);
       {  /* check that A0 = U * B * V' */
-         vsip_scalar_mi mi;
          vsip_scalar_d chk = 1.0;
-         vsip_scalar_d lim = 5 * DBL_EPSILON * fabs(vsip_mmaxmgval_d(A0,&mi));
+         vsip_scalar_d lim = 5 * DBL_EPSILON * sqrt(vsip_msumsqval_d(A0));
          vsip_mview_d *dif=vsip_mcreate_d(M,N,VSIP_ROW,VSIP_MEM_NONE);
          vsip_mview_d *out = vsip_mcreate_d(M,N,VSIP_ROW,VSIP_MEM_NONE);
          vsip_mview_d *Vt = vsip_mtransview_d(V);
