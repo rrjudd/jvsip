@@ -3671,7 +3671,9 @@ def qrsol(qr,op,XB):
 # Singular Value Decomposition
 def svd_create(t,M,N,Usave,Vsave):
     f={'sv_f':vsip_svd_create_f,
-       'sv_d':vsip_svd_create_d}
+       'sv_d':vsip_svd_create_d,
+       'csv_f':vsip_csvd_create_f,
+       'csv_d':vsip_csvd_create_f}
     if f.has_key(t):
         return f[t](M,N,Usave,Vsave)
     else:
@@ -3679,7 +3681,9 @@ def svd_create(t,M,N,Usave,Vsave):
         return False
 def svd_destroy(sv):
     f={'sv_f':vsip_svd_destroy_f,
-       'sv_d':vsip_svd_destroy_d}
+       'sv_d':vsip_svd_destroy_d,
+       'csv_f':vsip_csvd_destroy_f,
+       'csv_d':vsip_csvd_destroy_d}
     t=getType(sv)
     if f.has_key(t):
         return f[t](sv)
@@ -3688,7 +3692,9 @@ def svd_destroy(sv):
         return False
 def svd(sv,A,s):
     f={'sv_f':vsip_svd_f,
-       'sv_d':vsip_svd_d}
+       'sv_d':vsip_svd_d,
+       'csv_f':vsip_csvd_f,
+       'csv_d':vsip_csvd_f}
     t=getType(sv)
     if f.has_key(t):
         ret= f[t](sv,A,s)
@@ -3698,7 +3704,9 @@ def svd(sv,A,s):
         return False
 def svdmatu(sv,low,high,C):
     f={'sv_f':vsip_svdmatu_f,
-       'sv_d':vsip_svdmatu_d}
+       'sv_d':vsip_svdmatu_d,
+       'csv_f':vsip_csvdmatu_f,
+       'csv_d':vsip_cvsdmatu_d}
     t=getType(sv)
     if f.has_key(t):
         ret= f[t](sv,low,high,C)
@@ -3708,7 +3716,9 @@ def svdmatu(sv,low,high,C):
         return False
 def svdmatv(svd,low,high,C):
     f={'sv_f':vsip_svdmatv_f,
-       'sv_d':vsip_svdmatv_d}
+       'sv_d':vsip_svdmatv_d,
+       'csv_f':vsip_csvdmatv_f,
+       'csv_d':vsip_cvsdmatv_d}
     t=getType(sv)
     if f.has_key(t):
         ret= f[t](sv,low,high,C)

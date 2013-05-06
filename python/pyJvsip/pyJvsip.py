@@ -1001,6 +1001,7 @@ class Block (object):
             v.mmul(A.ROW)
             or
             v.mmul(A.COL)
+            Done in place. v.mmul(A) returns the result in A.
             """
             f={'cvview_dcmview_d':vsip_cvmmul_d,
                'cvview_fcmview_f':vsip_cvmmul_f,
@@ -1017,6 +1018,36 @@ class Block (object):
                 return other
             else:
                 print('Type <:' + t + ':> not recognized for method mmul')
+        def Mmul(self,other):
+            """
+            Mmul(A) expects the calling view to be of type float vector and A to be of 
+            the same precision and type float matrix. Matrix A is returned as a convenience.
+            Note that view A has an a major attribute. If it is set to COL then the calling vector
+            is multiplied elementwise by COL, otherwise it is multiplied by ROW
+            Note lengths must be conformant.
+            If one is unsure of the state of the major attribute it should be set
+            For instance
+            v.Mmul(A.ROW)
+            or
+            v.Mmul(A.COL)
+            Done out of place. B=v.Mmul(A) returns a new matrix with the result.
+            """
+            f={'cvview_dcmview_d':vsip_cvmmul_d,
+               'cvview_fcmview_f':vsip_cvmmul_f,
+               'vview_dcmview_d':vsip_rvcmmul_d,
+               'vview_fcmview_f':vsip_rvcmmul_f,
+               'vview_dmview_d':vsip_vmmul_d,
+               'vview_fmview_f':vsip_vmmul_f}
+            t=self.type+other.type
+            if f.has_key(t):
+                retval=other.empty.fill(0.0)
+                if other.__major is 'COL':
+                    f[t](self.view,other.view,VSIP_COL,retval.view)
+                else:
+                    f[t](self.view,other.view,VSIP_ROW,retval.view)
+                return retval
+            else:
+                print('Type <:' + t + ':> not recognized for method Mmul')
         # Elementary math functions
         @property
         def acos(self):
@@ -2242,6 +2273,12 @@ class Block (object):
                 return False 
         @property
         def trans(self):
+            """
+            Done out of place. A new view is created and the transpose of the calling
+            view is copied into it.
+            Usage:
+                B=A.trans
+            """
             if 'mview' in self.type:
                 m=self.rowlength
                 n=self.collength
@@ -3138,7 +3175,78 @@ class QR(object):
         else:
             print('Input arguments must be conformant with qrsol')
             return
-
+class SV(object):
+    """
+    """
+    tSv=['sv_f','sv_d','csv_f','csv_d']
+    svSel={'sv_f':'mview_f','sv_d':'mview_d','csv_f':'cmview_f','csv_d':'cmview_d'}
+    def __init__(self,t,m,n,opU,opV):
+        svCreate={'sv_f':vsip_svd_create_f,
+              'sv_d':vsip_svd_create_d,
+              'csv_f':vsip_csvd_create_f,
+              'csv_d':vsip_csvd_create_d}
+        op={'NOS':VSIP_SVD_UVNOS,'FULL':VSIP_SVD_UVFULL,'PART':VSIP_SVD_UVPART}
+        self.__jvsip = JVSIP()
+        if t in SV.tSv:
+            self.__type = t
+        else:
+            printf('type <:' + t + ':>not found for SVD')
+            return
+        self.opU=opU
+        self.opV=opV
+        self.m=m
+        self.n=n
+        self.__sv=svCreate[t](m,n,op[opU],op[opV])
+    def __del__(self):
+        svDestroy={'sv_f':vsip_svd_destroy_f,
+              'sv_d':vsip_svd_destroy_d,
+              'csv_f':vsip_csvd_destroy_f,
+              'csv_d':vsip_csvd_destroy_d}
+        svdDestroy[self.__type](self.__sv)
+        del(self.__jvsip)
+    @property
+    def type(self):
+        return self.__type
+    def svd(self,other,s):
+        svdD={'sv_f':vsip_svd_f,
+              'sv_d':vsip_svd_d,
+              'csv_f':vsip_csvd_f,
+              'csv_d':vsip_csvd_d}
+        if self.type in SV.tSv and SV.svSel[self.type] in other.type:
+            svdD[self.type](self.__sv,other.view,s.view)
+            return s
+        else:
+            print('svd does not understand argument list\n')
+            return
+    def matv(self,*args):
+        """
+        valid arguments are (low,high,outView)
+        """
+        svMatV={'sv_f':vsip_svdmatv_f,
+              'sv_d':vsip_svdmatv_d,
+              'csv_f':vsip_csvdmatv_f,
+              'csv_d':vsip_csvdmatv_d}
+        if 'NOS' in self.opV:
+            return
+        if len(args) is 3:
+            svMatV[self.__type](low,high,view.view)
+            return view
+        else:
+            print('matv does not understand the argument list\n')
+            return
+    def matu(self,low,high,other):
+        svMatU={'sv_f':vsip_svdmatu_f,
+              'sv_d':vsip_svdmatu_d,
+              'csv_f':vsip_csvdmatu_f,
+              'csv_d':vsip_csvdmatu_d}
+        if 'NOS' in self.opU:
+            return
+        if len(args) is 3:
+            svMatU[self.__type](low,high,view.view)
+            return view
+        else:
+            print('matU does not understand the argument list\n')
+            return
 # Functions
 # copy is kind of brain dead. Need more functionality and performance
 def copy(input,to):
