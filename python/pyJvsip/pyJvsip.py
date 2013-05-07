@@ -2690,6 +2690,49 @@ class Block (object):
             else:
                 R = Q.transview.prod(self.block.bind(self.offset,self.stride,self.length,0,1))
             return(Q,R)
+        #SVD Decomposition
+        @property
+        def sv(self):
+            """
+            For a matrix view 'A' of type float or double, real or complex,
+            A.sv will return a vector of singular values for matrix A
+            """
+            A=self.copy
+            svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
+            vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
+            n=A.rowlength
+            m=A.collength
+            svObj=SV(svtSel[self.type],m,n,'NOS','NOS')
+            if n < m:
+                s=create(vtSel[self.type],n)
+            else:
+                s=create(vtSel[self.type],m)
+            return svObj.svd(A,s)
+        @property
+        def svd(self):
+            """
+            For matrix A:
+                D=A.svd 
+            returns a tuple into D.
+            D[0] will be matrix U, D[1] will be (real) vector of singular values, and
+            D[2] will be matrix V
+            """
+            A=self.copy
+            svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
+            vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
+            n=A.rowlength
+            m=A.collength
+            svObj=SV(svtSel[self.type],m,n,'FULL','FULL')
+            if n < m:
+                s=create(vtSel[self.type],n)
+            else:
+                s=create(vtSel[self.type],m)
+            svObj.svd(A,s)
+            U=create(self.type,m,m)
+            V=create(self.type,n,n)
+            svObj.matv(0,n,V)
+            svObj.matu(0,m,U)
+            return (U,s,V)
         #utility functions
         def mstring(self,fmt):
             """ 
@@ -3178,8 +3221,11 @@ class QR(object):
 class SV(object):
     """
     """
-    tSv=['sv_f','sv_d','csv_f','csv_d']
+    tSv=['sv_f','sv_d','csv_f','csv_d','mview_d','cmview_d','mview_f','cmview_f']
     svSel={'sv_f':'mview_f','sv_d':'mview_d','csv_f':'cmview_f','csv_d':'cmview_d'}
+    svvSel={'sv_f':'vview_f','sv_d':'vview_d','csv_f':'vview_f','csv_d':'vview_d'}
+    tSel={'sv_f':'sv_f','mview_f':'sv_f','sv_d':'sv_d','mview_d':'sv_d',
+          'csv_f':'csv_f','cmview_f':'csv_f','csv_d':'csv_d','cmview_d':'csv_d'}
     def __init__(self,t,m,n,opU,opV):
         svCreate={'sv_f':vsip_svd_create_f,
               'sv_d':vsip_svd_create_d,
@@ -3188,7 +3234,7 @@ class SV(object):
         op={'NOS':VSIP_SVD_UVNOS,'FULL':VSIP_SVD_UVFULL,'PART':VSIP_SVD_UVPART}
         self.__jvsip = JVSIP()
         if t in SV.tSv:
-            self.__type = t
+            self.__type = SV.tSel[t]
         else:
             printf('type <:' + t + ':>not found for SVD')
             return
@@ -3196,29 +3242,39 @@ class SV(object):
         self.opV=opV
         self.m=m
         self.n=n
-        self.__sv=svCreate[t](m,n,op[opU],op[opV])
+        self.__sv=svCreate[SV.tSel[t]](m,n,op[opU],op[opV])
     def __del__(self):
         svDestroy={'sv_f':vsip_svd_destroy_f,
               'sv_d':vsip_svd_destroy_d,
               'csv_f':vsip_csvd_destroy_f,
               'csv_d':vsip_csvd_destroy_d}
-        svdDestroy[self.__type](self.__sv)
+        svDestroy[self.type](self.vsip)
         del(self.__jvsip)
     @property
     def type(self):
+        """
+        SV property returning type string.
+        """
         return self.__type
+    @property
+    def vsip(self):
+        """
+        SV property returning VSIPL svd object. 
+        Must retain reference to containing SV object to use.
+        """
+        return self.__sv
     def svd(self,other,s):
         svdD={'sv_f':vsip_svd_f,
               'sv_d':vsip_svd_d,
               'csv_f':vsip_csvd_f,
               'csv_d':vsip_csvd_d}
-        if self.type in SV.tSv and SV.svSel[self.type] in other.type:
-            svdD[self.type](self.__sv,other.view,s.view)
+        if SV.svSel[self.type] in other.type and SV.svvSel[self.type] in s.type:
+            svdD[self.type](self.vsip,other.view,s.view)
             return s
         else:
             print('svd does not understand argument list\n')
             return
-    def matv(self,*args):
+    def matv(self,low,high,other):
         """
         valid arguments are (low,high,outView)
         """
@@ -3228,25 +3284,22 @@ class SV(object):
               'csv_d':vsip_csvdmatv_d}
         if 'NOS' in self.opV:
             return
-        if len(args) is 3:
-            svMatV[self.__type](low,high,view.view)
-            return view
         else:
-            print('matv does not understand the argument list\n')
-            return
+            svMatV[self.type](self.vsip,low,high,other.view)
+            return other
     def matu(self,low,high,other):
+        """
+        valid arguments are (low,high,outView)
+        """
         svMatU={'sv_f':vsip_svdmatu_f,
               'sv_d':vsip_svdmatu_d,
               'csv_f':vsip_csvdmatu_f,
               'csv_d':vsip_csvdmatu_d}
         if 'NOS' in self.opU:
-            return
-        if len(args) is 3:
-            svMatU[self.__type](low,high,view.view)
-            return view
+            return     
         else:
-            print('matU does not understand the argument list\n')
-            return
+            svMatU[self.type](self.vsip,low,high,other.view)
+            return other
 # Functions
 # copy is kind of brain dead. Need more functionality and performance
 def copy(input,to):
