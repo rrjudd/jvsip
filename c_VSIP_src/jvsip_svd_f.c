@@ -543,10 +543,10 @@ static void phaseCheck0_f(svdObj_f *svd)
 static void biDiagPhaseToZero_f( svdObj_f *svd)
 {
     vsip_vview_f *x=&svd->bs,*v=svd->d;
-    diag_sv_f(svd->B,x,0);
+    diag_sv_f(&svd->B,x,0);
     vcopy_f(x,v);
 
-    diag_sv_f(svd->B,x,1); v=svd->f;
+    diag_sv_f(&svd->B,x,1); v=svd->f;
     vcopy_f(x,v);
     
     phaseCheck_f(svd);
@@ -554,10 +554,10 @@ static void biDiagPhaseToZero_f( svdObj_f *svd)
 static void biDiagPhaseToZero0_f( svdObj_f *svd)
 {
     vsip_vview_f *x=&svd->bs,*v=svd->d;
-    diag_sv_f(svd->B,x,0);
+    diag_sv_f(&svd->B,x,0);
     vcopy_f(x,v);
 
-    diag_sv_f(svd->B,x,1); v=svd->f;
+    diag_sv_f(&svd->B,x,1); v=svd->f;
     vcopy_f(x,v);
     
     phaseCheck0_f(svd);
@@ -617,7 +617,7 @@ static vsip_vview_f *houseVector_f(vsip_vview_f* x)
 }
 static void VHmatExtract_f(svdObj_f *svd)
 {
-    vsip_mview_f*B = svd->B;
+    vsip_mview_f*B = &svd->B;
     vsip_index i,j;
     vsip_length n = B->row_length;
     vsip_mview_f *Bs=&svd->Bs;
@@ -644,7 +644,7 @@ static void VHmatExtract_f(svdObj_f *svd)
 }
 static void UmatExtract_f(svdObj_f *svd)
 {
-    vsip_mview_f* B=svd->B;
+    vsip_mview_f* B=&svd->B;
     vsip_mview_f *U=svd->L;
     vsip_index i;
     vsip_length m = B->col_length;
@@ -677,7 +677,7 @@ static void UmatExtract_f(svdObj_f *svd)
 }
 static void bidiag_f(svdObj_f *svd)
 {
-    vsip_mview_f *B = svd->B;
+    vsip_mview_f *B = &svd->B;
     vsip_mview_f *Bs = &svd->Bs;
     vsip_length m = B->col_length;
     vsip_length n = B->row_length;
@@ -1253,8 +1253,8 @@ static void csvdZeroCheckAndSet_f(vsip_scalar_f e, vsip_cvview_f *d, vsip_cvview
 static void cbiDiagPhaseToZero_f( csvdObj_f *svd)
 {
     vsip_cmview_f *L = svd->L;
-    vsip_cvview_f *d = cdiag_sv_f(svd->B,&svd->bs,0);
-    vsip_cvview_f *f = cdiag_sv_f(svd->B,&svd->bfs,1);
+    vsip_cvview_f *d = cdiag_sv_f(&svd->B,&svd->bs,0);
+    vsip_cvview_f *f = cdiag_sv_f(&svd->B,&svd->bfs,1);
     vsip_cmview_f *R = svd->R;
     vsip_scalar_f eps0 = svd->eps0;
     vsip_length n_d=d->length;
@@ -1355,8 +1355,8 @@ static void cbiDiagPhaseToZero_f( csvdObj_f *svd)
 }
 static void cbiDiagPhaseToZero0_f( csvdObj_f *svd)
 {
-    vsip_cvview_f *d = cdiag_sv_f(svd->B,&svd->bs,0);
-    vsip_cvview_f *f = cdiag_sv_f(svd->B,&svd->bfs,1);
+    vsip_cvview_f *d = cdiag_sv_f(&svd->B,&svd->bs,0);
+    vsip_cvview_f *f = cdiag_sv_f(&svd->B,&svd->bfs,1);
     vsip_scalar_f eps0 = svd->eps0;
     vsip_length n_d=d->length;
     vsip_length n_f=f->length;
@@ -1689,7 +1689,7 @@ static vsip_cvview_f *chouseVector_f(vsip_cvview_f* x)
 }
 static void cVHmatExtract_f(csvdObj_f *svd)
 {
-    vsip_cmview_f*B = svd->B;
+    vsip_cmview_f*B = &svd->B;
     vsip_index i,j;
     vsip_length n = B->row_length;
     vsip_cmview_f *Bs=&svd->Bs;
@@ -1721,7 +1721,7 @@ static void cVHmatExtract_f(csvdObj_f *svd)
 }
 static void cUmatExtract_f(csvdObj_f *svd)
 {
-    vsip_cmview_f* B=svd->B;
+    vsip_cmview_f* B=&svd->B;
     vsip_cmview_f* U=svd->L;
     vsip_index i;
     vsip_length m = B->col_length;
@@ -1762,7 +1762,7 @@ static void cUmatExtract_f(csvdObj_f *svd)
 }
 static void cbidiag_f(csvdObj_f *svd)
 {
-    vsip_cmview_f *B = svd->B;
+    vsip_cmview_f *B = &svd->B;
     vsip_cmview_f *Bs = &svd->Bs;
     vsip_length m = B->col_length;
     vsip_length n = B->row_length;
@@ -2215,7 +2215,6 @@ static void svdFinalize_f(svdObj_f *s)
     if(s) {
         vsip_valldestroy_f(s->t);
         vsip_valldestroy_f(s->w);
-        vsip_malldestroy_f(s->B);
         vsip_malldestroy_f(s->R);
         vsip_malldestroy_f(s->L);
         vsip_valldestroy_vi(s->indx_L);
@@ -2240,7 +2239,6 @@ static svdObj_f* svdInit_f(vsip_length m, vsip_length n,int Usave,int Vsave)
     s->init=0;
     if(!(s->t = vsip_vcreate_f(m,VSIP_MEM_NONE))) s->init++; else s->ts = *s->t;
     if(!(s->w = vsip_vcreate_f(m,VSIP_MEM_NONE))) s->init++;
-    if(!(s->B=vsip_mcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE))) s->init++;
     if(Usave  || Vsave){
         if(!(s->L=vsip_mcreate_f(m,m,VSIP_ROW,VSIP_MEM_NONE)))s->init++;
         if(!(s->indx_L=vsip_vcreate_vi(n,VSIP_MEM_NONE))) s->init++;
@@ -2267,7 +2265,7 @@ static svdObj_f* svdInit_f(vsip_length m, vsip_length n,int Usave,int Vsave)
 }
 static void svdBidiag_f(svdObj_f *svd)
 {
-    vsip_mview_f *B = svd->B;
+    vsip_mview_f *B = &svd->B;
     /* eps0 is a number << maximum singular value */
     svd->eps0=(mnormFro_f(B)/(vsip_scalar_f)B->row_length)*FLT_EPSILON;/* 1E-10;*/
     bidiag_f(svd);
@@ -2277,7 +2275,7 @@ static void svdBidiag_f(svdObj_f *svd)
 }
 static void svdBidiag0_f(svdObj_f *svd)
 {
-    vsip_mview_f *B = svd->B;
+    vsip_mview_f *B = &svd->B;
     /* eps0 is a number << maximum singular value */
     svd->eps0=(mnormFro_f(B)/(vsip_scalar_f)B->row_length)*FLT_EPSILON;/* 1E-10;*/
     bidiag_f(svd);
@@ -2403,7 +2401,6 @@ static void csvdFinalize_f(csvdObj_f *s)
     if(s) {
         vsip_cvalldestroy_f((s)->t);
         vsip_cvalldestroy_f((s)->w);
-        vsip_cmalldestroy_f((s)->B);
         vsip_cmalldestroy_f((s)->R);
         vsip_cmalldestroy_f((s)->L);
         vsip_valldestroy_vi((s)->indx_L);
@@ -2428,7 +2425,6 @@ static csvdObj_f* csvdInit_f(vsip_length m, vsip_length n,int Usave,int Vsave)
     s->init=0;
     if(!(s->t = vsip_cvcreate_f(m,VSIP_MEM_NONE)))s->init++;else s->ts = *s->t;
     if(!(s->w = vsip_cvcreate_f(m,VSIP_MEM_NONE)))s->init++;
-    if(!(s->B=vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE)))s->init++;
     if(Usave  || Vsave){
         if(!(s->L=vsip_cmcreate_f(m,m,VSIP_ROW,VSIP_MEM_NONE)))s->init++;
         if(!(s->indx_L=vsip_vcreate_vi(n,VSIP_MEM_NONE))) s->init++;
@@ -2457,27 +2453,27 @@ static csvdObj_f* csvdInit_f(vsip_length m, vsip_length n,int Usave,int Vsave)
 static void csvdBidiag_f(csvdObj_f *svd)
 {
     vsip_vview_f*rbs;
-    svd->eps0=cmnormFro_f(svd->B)/(vsip_scalar_f)(svd->B->row_length) * 1E-10;
+    svd->eps0=cmnormFro_f(&svd->B)/(vsip_scalar_f)(svd->B.row_length) * 1E-10;
     cbidiag_f(svd);
     cUmatExtract_f(svd);
     cVHmatExtract_f(svd);
     cbiDiagPhaseToZero_f(svd);
     rbs=&svd->rbs;
-    vreal_sv_f(cdiag_sv_f(svd->B, &svd->bs, 0),&svd->rbs);
+    vreal_sv_f(cdiag_sv_f(&svd->B, &svd->bs, 0),&svd->rbs);
     vcopy_f(rbs,svd->d);
-    vreal_sv_f(cdiag_sv_f(svd->B, &svd->bs, 1),&svd->rbs);
+    vreal_sv_f(cdiag_sv_f(&svd->B, &svd->bs, 1),&svd->rbs);
     vcopy_f(rbs,svd->f);
 }
 static void csvdBidiag0_f(csvdObj_f *svd)
 {
     vsip_vview_f*rbs;
-    svd->eps0=cmnormFro_f(svd->B)/(vsip_scalar_f)(svd->B->row_length) * 1E-10;
+    svd->eps0=cmnormFro_f(&svd->B)/(vsip_scalar_f)(svd->B.row_length) * 1E-10;
     cbidiag_f(svd);
     cbiDiagPhaseToZero0_f(svd);
     rbs=&svd->rbs;
-    vreal_sv_f(cdiag_sv_f(svd->B, &svd->bs, 0),&svd->rbs);
+    vreal_sv_f(cdiag_sv_f(&svd->B, &svd->bs, 0),&svd->rbs);
     vcopy_f(rbs,svd->d);
-    vreal_sv_f(cdiag_sv_f(svd->B, &svd->bs, 1),&svd->rbs);
+    vreal_sv_f(cdiag_sv_f(&svd->B, &svd->bs, 1),&svd->rbs);
     vcopy_f(rbs,svd->f);
 }
 static void csvdIteration_f(csvdObj_f *svd)
@@ -2642,9 +2638,13 @@ vsip_svd_f(vsip_sv_f *svd, const vsip_mview_f *A, vsip_vview_f *sv)
 {
     svdObj_f *s = (svdObj_f*) svd->svd;
     if(svd->transpose){
-        mtrans_f(A,s->B)
+        s->B = *A;
+        s->B.col_length=A->row_length;
+        s->B.row_length=A->col_length;
+        s->B.col_stride=A->row_stride;
+        s->B.row_stride=A->col_stride;
     } else {
-        mcopy_f(A,s->B)
+        s->B=*A;
     }
     svd_f(s,svd->attr.Usave,svd->attr.Vsave);
     vcopy_f(s->d,sv)
@@ -2782,9 +2782,14 @@ vsip_csvd_f(vsip_csv_f *svd, const vsip_cmview_f *A, vsip_vview_f *sv)
 {
     csvdObj_f *s = (csvdObj_f*) svd->svd;
     if(svd->transpose){
-        cmherm_f(A,s->B);
+        s->B=*A;
+        s->B.row_length=A->col_length;
+        s->B.col_length=A->row_length;
+        s->B.row_stride=A->col_stride;
+        s->B.col_stride=A->row_stride;
+        cmconj_f(A, A);
     } else {
-        cmcopy_f(A,s->B);
+        s->B=*A;
     }
     csvd_f(s,svd->attr.Usave,svd->attr.Vsave);
     vcopy_f(s->d,sv);

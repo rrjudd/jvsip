@@ -1,4 +1,4 @@
-#include"vsip.h"
+#include<vsip.h>
 #include"../../../c_VSIP_testing/svd2_f.h"
 #include"../../../c_VSIP_testing/svd2_d.h"
 #include"../../../c_VSIP_testing/svd3_f.h"
@@ -97,6 +97,7 @@ int main(int argc, char* argv[]){
         for(in=2; in<im; in++){
             vsip_length m=im,n=in;
             vsip_sv_f *s=vsip_svd_create_f(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
+            vsip_mview_f *A0= vsip_mcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_f *A = vsip_mcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_f *V=vsip_mcreate_f(n,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_f *U=vsip_mcreate_f(m,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
@@ -123,7 +124,8 @@ int main(int argc, char* argv[]){
             if(m>4 && n > 4)vsip_mput_f(A, 3, 4, 0.0);
             if(m>2 && n > 2)vsip_mput_f(A, 1, 2, 0.0);
             if(m>2 && n > 2)vsip_mput_f(A,1,2,0.0);
-            if(vsip_svd_f(s,A,sv)){
+            vsip_mcopy_f_f(A,A0);
+            if(vsip_svd_f(s,A0,sv)){
                 printf("svd failed\n");
                 exit(0);
             }
@@ -149,6 +151,7 @@ int main(int argc, char* argv[]){
             vsip_malldestroy_f(U);vsip_malldestroy_f(V);
             vsip_valldestroy_f(sv);
             vsip_malldestroy_f(A);
+            vsip_malldestroy_f(A0);
             vsip_randdestroy(rnd);
             vsip_randdestroy(rnd1);
             vsip_svd_destroy_f(s);
@@ -159,6 +162,7 @@ int main(int argc, char* argv[]){
         for(in=2; in<im; in++){
             vsip_length m=im,n=in;
             vsip_sv_d *s=vsip_svd_create_d(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
+            vsip_mview_d *A0 = vsip_mcreate_d(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_d *A = vsip_mcreate_d(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_d *V=vsip_mcreate_d(n,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_d *U=vsip_mcreate_d(m,(m < n) ? m:n,VSIP_ROW,VSIP_MEM_NONE);
@@ -185,7 +189,8 @@ int main(int argc, char* argv[]){
             if(m>4 && n > 4)vsip_mput_d(A, 3, 4, 0.0);
             if(m>2 && n > 2)vsip_mput_d(A, 1, 2, 0.0);
             if(m>2 && n > 2)vsip_mput_d(A,1,2,0.0);
-            if(vsip_svd_d(s,A,sv)){
+            vsip_mcopy_d_d(A,A0);
+            if(vsip_svd_d(s,A0,sv)){
                 printf("svd failed\n");
                 exit(0);
             }
@@ -211,6 +216,7 @@ int main(int argc, char* argv[]){
             vsip_malldestroy_d(U);vsip_malldestroy_d(V);
             vsip_valldestroy_d(sv);
             vsip_malldestroy_d(A);
+            vsip_malldestroy_d(A0);
             vsip_randdestroy(rnd);
             vsip_randdestroy(rnd1);
             vsip_svd_destroy_d(s);

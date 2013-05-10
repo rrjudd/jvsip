@@ -101,6 +101,7 @@ int main(int argc, char* argv[]){
         for(im=5; im<in; im++){
             vsip_length n=in,m=im;
             vsip_csv_f *s=vsip_csvd_create_f(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
+            vsip_cmview_f *A0 = vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_cmview_f *A = vsip_cmcreate_f(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_f *Ar=vsip_mrealview_f(A);
             vsip_mview_f *Ai=vsip_mimagview_f(A);
@@ -126,7 +127,8 @@ int main(int argc, char* argv[]){
             if (in > 2 && im > 2) vsip_cmput_f(A,1,2,vsip_cmplx_f(0.0,0.0));
             if (in > 4 && im > 3) vsip_cmput_f(A,3,4,vsip_cmplx_f(0.0,0.0));
             if (in > 1 && im > 2) vsip_cmput_f(A,0,1,vsip_cmplx_f(0.0,0.0));
-            if(vsip_csvd_f(s,A,sv)){
+            vsip_cmcopy_f_f(A,A0);
+            if(vsip_csvd_f(s,A0,sv)){
                 printf("svd failed\n");
                 exit(0);
             }
@@ -160,6 +162,7 @@ int main(int argc, char* argv[]){
         for(im=5; im<in; im++){
             vsip_length n=in,m=im;
             vsip_csv_d *s=vsip_csvd_create_d(m,n,VSIP_SVD_UVFULL,VSIP_SVD_UVFULL);
+            vsip_cmview_d *A0 = vsip_cmcreate_d(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_cmview_d *A = vsip_cmcreate_d(m,n,VSIP_ROW,VSIP_MEM_NONE);
             vsip_mview_d *Ar=vsip_mrealview_d(A);
             vsip_mview_d *Ai=vsip_mimagview_d(A);
@@ -185,7 +188,8 @@ int main(int argc, char* argv[]){
             if (in > 2 && im > 2) vsip_cmput_d(A,1,2,vsip_cmplx_d(0.0,0.0));
             if (in > 4 && im > 3) vsip_cmput_d(A,3,4,vsip_cmplx_d(0.0,0.0));
             if (in > 1 && im > 2) vsip_cmput_d(A,0,1,vsip_cmplx_d(0.0,0.0));
-            if(vsip_csvd_d(s,A,sv)){
+            vsip_cmcopy_d_d(A,A0);
+            if(vsip_csvd_d(s,A0,sv)){
                 printf("svd failed\n");
                 exit(0);
             }
@@ -208,6 +212,7 @@ int main(int argc, char* argv[]){
             vsip_mdestroy_d(Ar);
             vsip_mdestroy_d(Ai);
             vsip_cmalldestroy_d(A);
+            vsip_cmalldestroy_d(A0);
             vsip_randdestroy(rnd);
             vsip_randdestroy(rnd1);
             vsip_csvd_destroy_d(s);

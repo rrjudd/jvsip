@@ -34,7 +34,7 @@ struct vsip_svd{
 };
 typedef struct {vsip_vview_f* t; vsip_vview_f ts;
     vsip_vview_f* w;
-    vsip_mview_f* B; vsip_mview_f Bs; vsip_vview_f bs;
+    vsip_mview_f B; vsip_mview_f Bs; vsip_vview_f bs;
     vsip_mview_f* L; vsip_mview_f Ls; vsip_vview_f ls_one; vsip_vview_f ls_two;
     vsip_vview_f* d; vsip_vview_f ds;
     vsip_vview_f* f; vsip_vview_f fs;
@@ -44,7 +44,7 @@ typedef struct {vsip_vview_f* t; vsip_vview_f ts;
 
 typedef struct {vsip_cvview_f* t; vsip_cvview_f ts;
     vsip_cvview_f* w;
-    vsip_cmview_f* B; vsip_cmview_f Bs; vsip_cvview_f bs; vsip_cvview_f bfs; vsip_vview_f rbs;
+    vsip_cmview_f B; vsip_cmview_f Bs; vsip_cvview_f bs; vsip_cvview_f bfs; vsip_vview_f rbs;
     vsip_cmview_f* L; vsip_cmview_f Ls; vsip_cvview_f ls_one; vsip_cvview_f ls_two;
     vsip_vview_f* d; vsip_vview_f ds;
     vsip_vview_f* f; vsip_vview_f fs;
