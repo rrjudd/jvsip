@@ -1355,20 +1355,10 @@
 		06308B3C150BB7EC00EF9D00 /* vsip_svadd_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630838E150BB7E900EF9D00 /* vsip_svadd_si.c */; };
 		06308B3D150BB7EC00EF9D00 /* vsip_svadd_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630838F150BB7E900EF9D00 /* vsip_svadd_uc.c */; };
 		06308B3E150BB7EC00EF9D00 /* vsip_svadd_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308390150BB7E900EF9D00 /* vsip_svadd_vi.c */; };
-		06308B3F150BB7EC00EF9D00 /* vsip_svd_create_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308391150BB7E900EF9D00 /* vsip_svd_create_d.c */; };
-		06308B40150BB7EC00EF9D00 /* vsip_svd_create_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308392150BB7E900EF9D00 /* vsip_svd_create_f.c */; };
-		06308B41150BB7EC00EF9D00 /* vsip_svd_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308393150BB7E900EF9D00 /* vsip_svd_d.c */; };
-		06308B42150BB7EC00EF9D00 /* vsip_svd_destroy_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308394150BB7E900EF9D00 /* vsip_svd_destroy_d.c */; };
-		06308B43150BB7EC00EF9D00 /* vsip_svd_destroy_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308395150BB7E900EF9D00 /* vsip_svd_destroy_f.c */; };
-		06308B44150BB7EC00EF9D00 /* vsip_svd_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308396150BB7E900EF9D00 /* vsip_svd_f.c */; };
 		06308B45150BB7EC00EF9D00 /* vsip_svdattributes_d.h in Headers */ = {isa = PBXBuildFile; fileRef = 06308397150BB7E900EF9D00 /* vsip_svdattributes_d.h */; };
 		06308B46150BB7EC00EF9D00 /* vsip_svdattributes_f.h in Headers */ = {isa = PBXBuildFile; fileRef = 06308398150BB7E900EF9D00 /* vsip_svdattributes_f.h */; };
 		06308B47150BB7EC00EF9D00 /* vsip_svdiv_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308399150BB7E900EF9D00 /* vsip_svdiv_d.c */; };
 		06308B48150BB7EC00EF9D00 /* vsip_svdiv_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839A150BB7E900EF9D00 /* vsip_svdiv_f.c */; };
-		06308B49150BB7EC00EF9D00 /* vsip_svdmatu_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839B150BB7E900EF9D00 /* vsip_svdmatu_d.c */; };
-		06308B4A150BB7EC00EF9D00 /* vsip_svdmatu_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839C150BB7E900EF9D00 /* vsip_svdmatu_f.c */; };
-		06308B4B150BB7EC00EF9D00 /* vsip_svdmatv_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839D150BB7E900EF9D00 /* vsip_svdmatv_d.c */; };
-		06308B4C150BB7EC00EF9D00 /* vsip_svdmatv_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839E150BB7E900EF9D00 /* vsip_svdmatv_f.c */; };
 		06308B4D150BB7EC00EF9D00 /* vsip_svmul_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839F150BB7E900EF9D00 /* vsip_svmul_d.c */; };
 		06308B4E150BB7EC00EF9D00 /* vsip_svmul_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 063083A0150BB7E900EF9D00 /* vsip_svmul_f.c */; };
 		06308B4F150BB7EC00EF9D00 /* vsip_svmul_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 063083A1150BB7E900EF9D00 /* vsip_svmul_i.c */; };
@@ -1989,6 +1979,7 @@
 		06308DB6150BB7EC00EF9D00 /* vsip_vxor_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308608150BB7EB00EF9D00 /* vsip_vxor_i.c */; };
 		06308DB7150BB7EC00EF9D00 /* vsip_vxor_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308609150BB7EB00EF9D00 /* vsip_vxor_si.c */; };
 		06308DB8150BB7EC00EF9D00 /* vsip_vxor_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630860A150BB7EB00EF9D00 /* vsip_vxor_uc.c */; };
+		0651FB21172F7DE800155AEB /* jvsip_svd_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF696D172EF232008B99BB /* jvsip_svd_d.c */; };
 		065307F2172849B000E76D26 /* vsip_rcfir_reset_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0604AC17151A424600DF6A91 /* vsip_rcfir_reset_f.c */; };
 		065307F3172849B000E76D26 /* vsip_mfill_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0672482D15978A22002AD475 /* vsip_mfill_uc.c */; };
 		065307F4172849B000E76D26 /* jvsip_svd_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 061C291917249E8200773972 /* jvsip_svd_f.c */; };
@@ -3039,18 +3030,8 @@
 		06530C0917284C1000E76D26 /* vsip_svadd_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630838E150BB7E900EF9D00 /* vsip_svadd_si.c */; };
 		06530C0A17284C1000E76D26 /* vsip_svadd_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630838F150BB7E900EF9D00 /* vsip_svadd_uc.c */; };
 		06530C0B17284C1000E76D26 /* vsip_svadd_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308390150BB7E900EF9D00 /* vsip_svadd_vi.c */; };
-		06530C0C17284C1000E76D26 /* vsip_svd_create_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308391150BB7E900EF9D00 /* vsip_svd_create_d.c */; };
-		06530C0D17284C1000E76D26 /* vsip_svd_create_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308392150BB7E900EF9D00 /* vsip_svd_create_f.c */; };
-		06530C0E17284C1000E76D26 /* vsip_svd_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308393150BB7E900EF9D00 /* vsip_svd_d.c */; };
-		06530C0F17284C1000E76D26 /* vsip_svd_destroy_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308394150BB7E900EF9D00 /* vsip_svd_destroy_d.c */; };
-		06530C1017284C1000E76D26 /* vsip_svd_destroy_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308395150BB7E900EF9D00 /* vsip_svd_destroy_f.c */; };
-		06530C1117284C1000E76D26 /* vsip_svd_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308396150BB7E900EF9D00 /* vsip_svd_f.c */; };
 		06530C1217284C1000E76D26 /* vsip_svdiv_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06308399150BB7E900EF9D00 /* vsip_svdiv_d.c */; };
 		06530C1317284C1000E76D26 /* vsip_svdiv_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839A150BB7E900EF9D00 /* vsip_svdiv_f.c */; };
-		06530C1417284C1000E76D26 /* vsip_svdmatu_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839B150BB7E900EF9D00 /* vsip_svdmatu_d.c */; };
-		06530C1517284C1000E76D26 /* vsip_svdmatu_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839C150BB7E900EF9D00 /* vsip_svdmatu_f.c */; };
-		06530C1617284C1000E76D26 /* vsip_svdmatv_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839D150BB7E900EF9D00 /* vsip_svdmatv_d.c */; };
-		06530C1717284C1000E76D26 /* vsip_svdmatv_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839E150BB7E900EF9D00 /* vsip_svdmatv_f.c */; };
 		06530C1817284C1000E76D26 /* vsip_svmul_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630839F150BB7E900EF9D00 /* vsip_svmul_d.c */; };
 		06530C1917284C1000E76D26 /* vsip_svmul_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 063083A0150BB7E900EF9D00 /* vsip_svmul_f.c */; };
 		06530C1A17284C1000E76D26 /* vsip_svmul_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 063083A1150BB7E900EF9D00 /* vsip_svmul_i.c */; };
@@ -3660,13 +3641,31 @@
 		06530E7617284D7600E76D26 /* vsip_vxor_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0630860A150BB7EB00EF9D00 /* vsip_vxor_uc.c */; };
 		06530E7717284E2D00E76D26 /* vsip.h in Headers */ = {isa = PBXBuildFile; fileRef = 06307F59150BB7E700EF9D00 /* vsip.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		06530E7B17285C2800E76D26 /* VI_cblockcreate_f.h in Headers */ = {isa = PBXBuildFile; fileRef = 06307E82150BB7E700EF9D00 /* VI_cblockcreate_f.h */; };
-		06530E85172C3BC100E76D26 /* VI_svd_f.h in Headers */ = {isa = PBXBuildFile; fileRef = 06530E84172C3BC100E76D26 /* VI_svd_f.h */; };
-		06530E86172C3BC100E76D26 /* VI_svd_f.h in Headers */ = {isa = PBXBuildFile; fileRef = 06530E84172C3BC100E76D26 /* VI_svd_f.h */; };
 		0672482E15978A22002AD475 /* vsip_mfill_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0672482D15978A22002AD475 /* vsip_mfill_uc.c */; };
 		06917BB41519049A0044F7F9 /* vsip_mcmplx_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */; };
 		06917BB51519049A0044F7F9 /* vsip_mcmplx_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */; };
 		06BA61A116DEBB5600C78C00 /* vsip_cmpermute_once_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */; };
 		06BA61A316DEBB6500C78C00 /* vsip_cmpermute_once_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */; };
+		06BF696E172EF232008B99BB /* jvsip_svd_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF696D172EF232008B99BB /* jvsip_svd_d.c */; };
+		06BF6970172EF2DE008B99BB /* vsip_svdattributes_d.h in Headers */ = {isa = PBXBuildFile; fileRef = 06BF696F172EF2DE008B99BB /* vsip_svdattributes_d.h */; };
+		06BF6985172F3214008B99BB /* vsip_vminval_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF6979172F3214008B99BB /* vsip_vminval_vi.c */; };
+		06BF6986172F3214008B99BB /* vsip_vminval_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF6979172F3214008B99BB /* vsip_vminval_vi.c */; };
+		06BF6987172F3214008B99BB /* vsip_vminval_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697A172F3214008B99BB /* vsip_vminval_i.c */; };
+		06BF6988172F3214008B99BB /* vsip_vminval_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697A172F3214008B99BB /* vsip_vminval_i.c */; };
+		06BF6989172F3214008B99BB /* vsip_vminval_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697B172F3214008B99BB /* vsip_vminval_si.c */; };
+		06BF698A172F3214008B99BB /* vsip_vminval_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697B172F3214008B99BB /* vsip_vminval_si.c */; };
+		06BF698B172F3214008B99BB /* vsip_minval_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697C172F3214008B99BB /* vsip_minval_si.c */; };
+		06BF698C172F3214008B99BB /* vsip_minval_si.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697C172F3214008B99BB /* vsip_minval_si.c */; };
+		06BF698D172F3214008B99BB /* vsip_minval_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697D172F3214008B99BB /* vsip_minval_i.c */; };
+		06BF698E172F3214008B99BB /* vsip_minval_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697D172F3214008B99BB /* vsip_minval_i.c */; };
+		06BF698F172F3214008B99BB /* vsip_vmaxval_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697E172F3214008B99BB /* vsip_vmaxval_vi.c */; };
+		06BF6990172F3214008B99BB /* vsip_vmaxval_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697E172F3214008B99BB /* vsip_vmaxval_vi.c */; };
+		06BF6991172F3214008B99BB /* vsip_svleq_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697F172F3214008B99BB /* vsip_svleq_f.c */; };
+		06BF6992172F3215008B99BB /* vsip_svleq_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF697F172F3214008B99BB /* vsip_svleq_f.c */; };
+		06BF6993172F3215008B99BB /* vsip_svleq_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF6980172F3214008B99BB /* vsip_svleq_d.c */; };
+		06BF6994172F3215008B99BB /* vsip_svleq_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF6980172F3214008B99BB /* vsip_svleq_d.c */; };
+		06BF6996172F3265008B99BB /* vsip_vfill_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF6995172F3265008B99BB /* vsip_vfill_vi.c */; };
+		06BF6997172F3265008B99BB /* vsip_vfill_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF6995172F3265008B99BB /* vsip_vfill_vi.c */; };
 		06E047641518F56A001765DF /* vsip_mpolar_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047621518F56A001765DF /* vsip_mpolar_d.c */; };
 		06E047651518F56A001765DF /* vsip_mpolar_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047631518F56A001765DF /* vsip_mpolar_f.c */; };
 /* End PBXBuildFile section */
@@ -5030,20 +5029,10 @@
 		0630838E150BB7E900EF9D00 /* vsip_svadd_si.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svadd_si.c; sourceTree = "<group>"; };
 		0630838F150BB7E900EF9D00 /* vsip_svadd_uc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svadd_uc.c; sourceTree = "<group>"; };
 		06308390150BB7E900EF9D00 /* vsip_svadd_vi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svadd_vi.c; sourceTree = "<group>"; };
-		06308391150BB7E900EF9D00 /* vsip_svd_create_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svd_create_d.c; sourceTree = "<group>"; };
-		06308392150BB7E900EF9D00 /* vsip_svd_create_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svd_create_f.c; sourceTree = "<group>"; };
-		06308393150BB7E900EF9D00 /* vsip_svd_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svd_d.c; sourceTree = "<group>"; };
-		06308394150BB7E900EF9D00 /* vsip_svd_destroy_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svd_destroy_d.c; sourceTree = "<group>"; };
-		06308395150BB7E900EF9D00 /* vsip_svd_destroy_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svd_destroy_f.c; sourceTree = "<group>"; };
-		06308396150BB7E900EF9D00 /* vsip_svd_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svd_f.c; sourceTree = "<group>"; };
 		06308397150BB7E900EF9D00 /* vsip_svdattributes_d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_svdattributes_d.h; sourceTree = "<group>"; };
 		06308398150BB7E900EF9D00 /* vsip_svdattributes_f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_svdattributes_f.h; sourceTree = "<group>"; };
 		06308399150BB7E900EF9D00 /* vsip_svdiv_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svdiv_d.c; sourceTree = "<group>"; };
 		0630839A150BB7E900EF9D00 /* vsip_svdiv_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svdiv_f.c; sourceTree = "<group>"; };
-		0630839B150BB7E900EF9D00 /* vsip_svdmatu_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svdmatu_d.c; sourceTree = "<group>"; };
-		0630839C150BB7E900EF9D00 /* vsip_svdmatu_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svdmatu_f.c; sourceTree = "<group>"; };
-		0630839D150BB7E900EF9D00 /* vsip_svdmatv_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svdmatv_d.c; sourceTree = "<group>"; };
-		0630839E150BB7E900EF9D00 /* vsip_svdmatv_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svdmatv_f.c; sourceTree = "<group>"; };
 		0630839F150BB7E900EF9D00 /* vsip_svmul_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svmul_d.c; sourceTree = "<group>"; };
 		063083A0150BB7E900EF9D00 /* vsip_svmul_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svmul_f.c; sourceTree = "<group>"; };
 		063083A1150BB7E900EF9D00 /* vsip_svmul_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svmul_i.c; sourceTree = "<group>"; };
@@ -5664,12 +5653,24 @@
 		06308608150BB7EB00EF9D00 /* vsip_vxor_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_i.c; sourceTree = "<group>"; };
 		06308609150BB7EB00EF9D00 /* vsip_vxor_si.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_si.c; sourceTree = "<group>"; };
 		0630860A150BB7EB00EF9D00 /* vsip_vxor_uc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_uc.c; sourceTree = "<group>"; };
-		06530E84172C3BC100E76D26 /* VI_svd_f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_svd_f.h; sourceTree = "<group>"; };
 		0672482D15978A22002AD475 /* vsip_mfill_uc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mfill_uc.c; sourceTree = "<group>"; };
 		06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_d.c; sourceTree = "<group>"; };
 		06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_f.c; sourceTree = "<group>"; };
 		06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmpermute_once_f.c; sourceTree = "<group>"; };
 		06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmpermute_once_d.c; sourceTree = "<group>"; };
+		06BF696D172EF232008B99BB /* jvsip_svd_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_svd_d.c; sourceTree = "<group>"; };
+		06BF696F172EF2DE008B99BB /* vsip_svdattributes_d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_svdattributes_d.h; sourceTree = "<group>"; };
+		06BF6977172F3214008B99BB /* vsip_mminval_si.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_mminval_si.c; path = ../../../c_VSIP_src/vsip_mminval_si.c; sourceTree = "<group>"; };
+		06BF6978172F3214008B99BB /* vsip_mminval_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_mminval_i.c; path = ../../../c_VSIP_src/vsip_mminval_i.c; sourceTree = "<group>"; };
+		06BF6979172F3214008B99BB /* vsip_vminval_vi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_vminval_vi.c; path = ../../../c_VSIP_src/vsip_vminval_vi.c; sourceTree = "<group>"; };
+		06BF697A172F3214008B99BB /* vsip_vminval_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_vminval_i.c; path = ../../../c_VSIP_src/vsip_vminval_i.c; sourceTree = "<group>"; };
+		06BF697B172F3214008B99BB /* vsip_vminval_si.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_vminval_si.c; path = ../../../c_VSIP_src/vsip_vminval_si.c; sourceTree = "<group>"; };
+		06BF697C172F3214008B99BB /* vsip_minval_si.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_minval_si.c; path = ../../../c_VSIP_src/vsip_minval_si.c; sourceTree = "<group>"; };
+		06BF697D172F3214008B99BB /* vsip_minval_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_minval_i.c; path = ../../../c_VSIP_src/vsip_minval_i.c; sourceTree = "<group>"; };
+		06BF697E172F3214008B99BB /* vsip_vmaxval_vi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_vmaxval_vi.c; path = ../../../c_VSIP_src/vsip_vmaxval_vi.c; sourceTree = "<group>"; };
+		06BF697F172F3214008B99BB /* vsip_svleq_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_svleq_f.c; path = ../../../c_VSIP_src/vsip_svleq_f.c; sourceTree = "<group>"; };
+		06BF6980172F3214008B99BB /* vsip_svleq_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_svleq_d.c; path = ../../../c_VSIP_src/vsip_svleq_d.c; sourceTree = "<group>"; };
+		06BF6995172F3265008B99BB /* vsip_vfill_vi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vsip_vfill_vi.c; path = ../../../c_VSIP_src/vsip_vfill_vi.c; sourceTree = "<group>"; };
 		06E047621518F56A001765DF /* vsip_mpolar_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_d.c; sourceTree = "<group>"; };
 		06E047631518F56A001765DF /* vsip_mpolar_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_f.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -5714,6 +5715,17 @@
 		061C292C172845EB00773972 /* jvsipD */ = {
 			isa = PBXGroup;
 			children = (
+				06BF6995172F3265008B99BB /* vsip_vfill_vi.c */,
+				06BF6977172F3214008B99BB /* vsip_mminval_si.c */,
+				06BF6978172F3214008B99BB /* vsip_mminval_i.c */,
+				06BF6979172F3214008B99BB /* vsip_vminval_vi.c */,
+				06BF697A172F3214008B99BB /* vsip_vminval_i.c */,
+				06BF697B172F3214008B99BB /* vsip_vminval_si.c */,
+				06BF697C172F3214008B99BB /* vsip_minval_si.c */,
+				06BF697D172F3214008B99BB /* vsip_minval_i.c */,
+				06BF697E172F3214008B99BB /* vsip_vmaxval_vi.c */,
+				06BF697F172F3214008B99BB /* vsip_svleq_f.c */,
+				06BF6980172F3214008B99BB /* vsip_svleq_d.c */,
 				061C292D172845EB00773972 /* Supporting Files */,
 			);
 			path = jvsipD;
@@ -5771,6 +5783,7 @@
 				0604AC17151A424600DF6A91 /* vsip_rcfir_reset_f.c */,
 				0672482D15978A22002AD475 /* vsip_mfill_uc.c */,
 				061C291917249E8200773972 /* jvsip_svd_f.c */,
+				06BF696D172EF232008B99BB /* jvsip_svd_d.c */,
 				0604AC1F151A62CC00DF6A91 /* vsip_rcfir_reset_d.c */,
 				0604AC18151A424600DF6A91 /* vsip_rcfirattributes_f.h */,
 				0604AC21151A62DC00DF6A91 /* vsip_rcfirattributes_d.h */,
@@ -6268,7 +6281,6 @@
 				06308041150BB7E700EF9D00 /* vsip_cmgetrowstride_f.c */,
 				06308042150BB7E700EF9D00 /* vsip_cmherm_d.c */,
 				06308043150BB7E700EF9D00 /* vsip_cmherm_f.c */,
-				06530E84172C3BC100E76D26 /* VI_svd_f.h */,
 				06308044150BB7E700EF9D00 /* vsip_cmjmul_d.c */,
 				06308045150BB7E700EF9D00 /* vsip_cmjmul_f.c */,
 				06308046150BB7E700EF9D00 /* vsip_cmkron_d.c */,
@@ -7124,20 +7136,11 @@
 				0630838E150BB7E900EF9D00 /* vsip_svadd_si.c */,
 				0630838F150BB7E900EF9D00 /* vsip_svadd_uc.c */,
 				06308390150BB7E900EF9D00 /* vsip_svadd_vi.c */,
-				06308391150BB7E900EF9D00 /* vsip_svd_create_d.c */,
-				06308392150BB7E900EF9D00 /* vsip_svd_create_f.c */,
-				06308393150BB7E900EF9D00 /* vsip_svd_d.c */,
-				06308394150BB7E900EF9D00 /* vsip_svd_destroy_d.c */,
-				06308395150BB7E900EF9D00 /* vsip_svd_destroy_f.c */,
-				06308396150BB7E900EF9D00 /* vsip_svd_f.c */,
 				06308397150BB7E900EF9D00 /* vsip_svdattributes_d.h */,
 				06308398150BB7E900EF9D00 /* vsip_svdattributes_f.h */,
+				06BF696F172EF2DE008B99BB /* vsip_svdattributes_d.h */,
 				06308399150BB7E900EF9D00 /* vsip_svdiv_d.c */,
 				0630839A150BB7E900EF9D00 /* vsip_svdiv_f.c */,
-				0630839B150BB7E900EF9D00 /* vsip_svdmatu_d.c */,
-				0630839C150BB7E900EF9D00 /* vsip_svdmatu_f.c */,
-				0630839D150BB7E900EF9D00 /* vsip_svdmatv_d.c */,
-				0630839E150BB7E900EF9D00 /* vsip_svdmatv_f.c */,
 				0630839F150BB7E900EF9D00 /* vsip_svmul_d.c */,
 				063083A0150BB7E900EF9D00 /* vsip_svmul_f.c */,
 				063083A1150BB7E900EF9D00 /* vsip_svmul_i.c */,
@@ -7772,7 +7775,6 @@
 			files = (
 				06530E7717284E2D00E76D26 /* vsip.h in Headers */,
 				06530E7B17285C2800E76D26 /* VI_cblockcreate_f.h in Headers */,
-				06530E86172C3BC100E76D26 /* VI_svd_f.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8100,7 +8102,7 @@
 				06308DB4150BB7EC00EF9D00 /* vsip_vviewattributes_vi.h in Headers */,
 				0604AC1B151A424600DF6A91 /* vsip_rcfirattributes_f.h in Headers */,
 				0604AC22151A62DC00DF6A91 /* vsip_rcfirattributes_d.h in Headers */,
-				06530E85172C3BC100E76D26 /* VI_svd_f.h in Headers */,
+				06BF6970172EF2DE008B99BB /* vsip_svdattributes_d.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9242,18 +9244,8 @@
 				06530C0917284C1000E76D26 /* vsip_svadd_si.c in Sources */,
 				06530C0A17284C1000E76D26 /* vsip_svadd_uc.c in Sources */,
 				06530C0B17284C1000E76D26 /* vsip_svadd_vi.c in Sources */,
-				06530C0C17284C1000E76D26 /* vsip_svd_create_d.c in Sources */,
-				06530C0D17284C1000E76D26 /* vsip_svd_create_f.c in Sources */,
-				06530C0E17284C1000E76D26 /* vsip_svd_d.c in Sources */,
-				06530C0F17284C1000E76D26 /* vsip_svd_destroy_d.c in Sources */,
-				06530C1017284C1000E76D26 /* vsip_svd_destroy_f.c in Sources */,
-				06530C1117284C1000E76D26 /* vsip_svd_f.c in Sources */,
 				06530C1217284C1000E76D26 /* vsip_svdiv_d.c in Sources */,
 				06530C1317284C1000E76D26 /* vsip_svdiv_f.c in Sources */,
-				06530C1417284C1000E76D26 /* vsip_svdmatu_d.c in Sources */,
-				06530C1517284C1000E76D26 /* vsip_svdmatu_f.c in Sources */,
-				06530C1617284C1000E76D26 /* vsip_svdmatv_d.c in Sources */,
-				06530C1717284C1000E76D26 /* vsip_svdmatv_f.c in Sources */,
 				06530C1817284C1000E76D26 /* vsip_svmul_d.c in Sources */,
 				06530C1917284C1000E76D26 /* vsip_svmul_f.c in Sources */,
 				06530C1A17284C1000E76D26 /* vsip_svmul_i.c in Sources */,
@@ -9861,6 +9853,16 @@
 				06530E7417284D7600E76D26 /* vsip_vxor_i.c in Sources */,
 				06530E7517284D7600E76D26 /* vsip_vxor_si.c in Sources */,
 				06530E7617284D7600E76D26 /* vsip_vxor_uc.c in Sources */,
+				06BF6986172F3214008B99BB /* vsip_vminval_vi.c in Sources */,
+				06BF6988172F3214008B99BB /* vsip_vminval_i.c in Sources */,
+				06BF698A172F3214008B99BB /* vsip_vminval_si.c in Sources */,
+				06BF698C172F3214008B99BB /* vsip_minval_si.c in Sources */,
+				06BF698E172F3214008B99BB /* vsip_minval_i.c in Sources */,
+				06BF6990172F3214008B99BB /* vsip_vmaxval_vi.c in Sources */,
+				06BF6992172F3215008B99BB /* vsip_svleq_f.c in Sources */,
+				06BF6994172F3215008B99BB /* vsip_svleq_d.c in Sources */,
+				06BF6997172F3265008B99BB /* vsip_vfill_vi.c in Sources */,
+				0651FB21172F7DE800155AEB /* jvsip_svd_d.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10894,18 +10896,8 @@
 				06308B3C150BB7EC00EF9D00 /* vsip_svadd_si.c in Sources */,
 				06308B3D150BB7EC00EF9D00 /* vsip_svadd_uc.c in Sources */,
 				06308B3E150BB7EC00EF9D00 /* vsip_svadd_vi.c in Sources */,
-				06308B3F150BB7EC00EF9D00 /* vsip_svd_create_d.c in Sources */,
-				06308B40150BB7EC00EF9D00 /* vsip_svd_create_f.c in Sources */,
-				06308B41150BB7EC00EF9D00 /* vsip_svd_d.c in Sources */,
-				06308B42150BB7EC00EF9D00 /* vsip_svd_destroy_d.c in Sources */,
-				06308B43150BB7EC00EF9D00 /* vsip_svd_destroy_f.c in Sources */,
-				06308B44150BB7EC00EF9D00 /* vsip_svd_f.c in Sources */,
 				06308B47150BB7EC00EF9D00 /* vsip_svdiv_d.c in Sources */,
 				06308B48150BB7EC00EF9D00 /* vsip_svdiv_f.c in Sources */,
-				06308B49150BB7EC00EF9D00 /* vsip_svdmatu_d.c in Sources */,
-				06308B4A150BB7EC00EF9D00 /* vsip_svdmatu_f.c in Sources */,
-				06308B4B150BB7EC00EF9D00 /* vsip_svdmatv_d.c in Sources */,
-				06308B4C150BB7EC00EF9D00 /* vsip_svdmatv_f.c in Sources */,
 				06308B4D150BB7EC00EF9D00 /* vsip_svmul_d.c in Sources */,
 				06308B4E150BB7EC00EF9D00 /* vsip_svmul_f.c in Sources */,
 				06308B4F150BB7EC00EF9D00 /* vsip_svmul_i.c in Sources */,
@@ -11537,6 +11529,16 @@
 				06BA61A116DEBB5600C78C00 /* vsip_cmpermute_once_f.c in Sources */,
 				06BA61A316DEBB6500C78C00 /* vsip_cmpermute_once_d.c in Sources */,
 				061C291A17249E8200773972 /* jvsip_svd_f.c in Sources */,
+				06BF696E172EF232008B99BB /* jvsip_svd_d.c in Sources */,
+				06BF6985172F3214008B99BB /* vsip_vminval_vi.c in Sources */,
+				06BF6987172F3214008B99BB /* vsip_vminval_i.c in Sources */,
+				06BF6989172F3214008B99BB /* vsip_vminval_si.c in Sources */,
+				06BF698B172F3214008B99BB /* vsip_minval_si.c in Sources */,
+				06BF698D172F3214008B99BB /* vsip_minval_i.c in Sources */,
+				06BF698F172F3214008B99BB /* vsip_vmaxval_vi.c in Sources */,
+				06BF6991172F3214008B99BB /* vsip_svleq_f.c in Sources */,
+				06BF6993172F3215008B99BB /* vsip_svleq_d.c in Sources */,
+				06BF6996172F3265008B99BB /* vsip_vfill_vi.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
