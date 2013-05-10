@@ -950,7 +950,6 @@ static void zeroRow0_f(svdObj_f *svd)
         *(dptr+dstd*(n-1))=g.r;
     }
 }
-
 static vsip_scalar_f svdMu_f(vsip_scalar_f d2,vsip_scalar_f f1,vsip_scalar_f d3,vsip_scalar_f* f2)
 {
     vsip_scalar_f mu;
@@ -2069,7 +2068,6 @@ static void czeroRow0_f(csvdObj_f *svd)
         *(dptr+(n-1)*dstrd)=g.r;
     }
 }
-
 static void csvdStep_f(csvdObj_f *svd)
 {
     vsip_vview_f *d = &svd->ds;
