@@ -662,16 +662,6 @@ static void bidiag_d(svdObj_d *svd)
         vcopy_d(vs,x);/*5*/
     }
 }
-static void svdBidiag_d(svdObj_d *svd)
-{
-    vsip_mview_d *B = svd->B;
-    /* eps0 is a number << maximum singular value */
-    svd->eps0=(mnormFro_d(B)/(vsip_scalar_d)B->row_length)*DBL_EPSILON;/* 1E-10;*/
-    bidiag_d(svd);
-    UmatExtract_d(svd);
-    VHmatExtract_d(svd);
-    biDiagPhaseToZero_d(svd);
-}
 static void gtProd_d(vsip_index i, vsip_index j, vsip_scalar_d c,vsip_scalar_d s, svdObj_d* svd)
 {
     vsip_mview_d* R = &svd->Rs;
@@ -952,50 +942,6 @@ static void svdStep_d(svdObj_d *svd)
     *(f->block->array+(i*f->stride+f->offset)*f->block->rstride) = x1+x2;
     *(d->block->array+(j*d->stride+d->offset)*d->block->rstride) = t;
     prodG_d(svd,i, j, g.c, g.s);
-}
-static void svdIteration_d(svdObj_d* svd)
-{
-    vsip_mview_d *L0 = svd->L; vsip_mview_d *L = &svd->Ls;
-    vsip_vview_d *d0 = svd->d; vsip_vview_d *d = &svd->ds;
-    vsip_vview_d *f0 = svd->f; vsip_vview_d *f = &svd->fs;
-    vsip_mview_d *R0 = svd->R; vsip_mview_d *R= &svd->Rs;
-    vsip_scalar_d eps0 = svd->eps0;
-    vsip_length n;
-    svdCorner cnr;
-    vsip_index k;
-    vsip_length cntr=0;
-    vsip_length maxcntr=5*d0->length;
-    while (cntr++ < maxcntr){
-        phaseCheck_d(svd);
-        cnr=svdCorners_d(f0);
-        if (cnr.j == 0)
-            break;
-        ivsv_d(d0,d,cnr.i,cnr.j);
-        ivsv_d(f0,f,cnr.i,cnr.j-1);
-        imsv_d(L0,L,0,0,cnr.i,cnr.j);
-        imsv_d(R0,R,cnr.i,cnr.j,0,0);
-        n=f->length;
-        k=zeroFind_d(d,eps0);
-        if (k > 0 ){
-            k=k-1;
-            if(VI_VGET_F(d,n) == 0.0){
-                zeroCol_d(svd);           
-            }else{
-                imsv_d(L,L,0,0,k,0);
-                d->length-=k+1;
-                d->offset += k+1;
-                f->length -= k;
-                f->offset += k;
-                zeroRow_d(svd);
-            }
-        }else{
-            svdStep_d(svd);
-        }
-        
-    }
-#ifdef DEBUG
-    printf("maxcounter %lu, count %lu\n",maxcntr,cntr);
-#endif
 }
 static vsip_cvview_d *cvsv_d(vsip_cvview_d *v,vsip_cvview_d *vs,vsip_index i)
 {
@@ -1768,20 +1714,6 @@ static void csvdStep_d(csvdObj_d *svd)
     *(dptr+j*dstd)=t;
     cprodG_d(svd,i, j, g.c, g.s);
 }
-static void svdSort_d(svdObj_d *svd)
-{
-    vsip_vview_d *d = svd->d;
-    vsip_length n=d->length;
-    vsip_vview_vi* indx_L = svd->indx_L;
-    vsip_vview_vi* indx_R = svd->indx_R;
-    vsip_mview_d *L0 = svd->L; vsip_mview_d *L=&svd->Ls;
-    vsip_mview_d *R0 = svd->R;
-    vsip_vsortip_d(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_TRUE,indx_L);
-    vcopy_vi(indx_L,indx_R);
-    imsv_d( L0, L, 0,0, 0, n);
-    mpermute_onceCol_d(L,indx_L);
-    mpermute_onceRow_d(R0,indx_R);
-}
 static void svdFinalize_d(svdObj_d *s)
 {
     if(s) {
@@ -1826,6 +1758,74 @@ static svdObj_d* svdInit_d(vsip_length m, vsip_length n)
     meye_d(s->L);
     meye_d(s->R);
     return s;
+}
+static void svdBidiag_d(svdObj_d *svd)
+{
+    vsip_mview_d *B = svd->B;
+    /* eps0 is a number << maximum singular value */
+    svd->eps0=(mnormFro_d(B)/(vsip_scalar_d)B->row_length)*DBL_EPSILON;/* 1E-10;*/
+    bidiag_d(svd);
+    UmatExtract_d(svd);
+    VHmatExtract_d(svd);
+    biDiagPhaseToZero_d(svd);
+}
+static void svdIteration_d(svdObj_d* svd)
+{
+    vsip_mview_d *L0 = svd->L; vsip_mview_d *L = &svd->Ls;
+    vsip_vview_d *d0 = svd->d; vsip_vview_d *d = &svd->ds;
+    vsip_vview_d *f0 = svd->f; vsip_vview_d *f = &svd->fs;
+    vsip_mview_d *R0 = svd->R; vsip_mview_d *R= &svd->Rs;
+    vsip_scalar_d eps0 = svd->eps0;
+    vsip_length n;
+    svdCorner cnr;
+    vsip_index k;
+    vsip_length cntr=0;
+    vsip_length maxcntr=5*d0->length;
+    *d=*d0;*f=*f0;*L=*L0; *R=*R0;
+    while (cntr++ < maxcntr){
+        cnr=svdCorners_d(f0);
+        if (cnr.j == 0)
+            break;
+        ivsv_d(d0,d,cnr.i,cnr.j);
+        ivsv_d(f0,f,cnr.i,cnr.j-1);
+        imsv_d(L0,L,0,0,cnr.i,cnr.j);
+        imsv_d(R0,R,cnr.i,cnr.j,0,0);
+        n=f->length;
+        k=zeroFind_d(d,eps0);
+        if (k > 0 ){
+            k=k-1;
+            if(VI_VGET_F(d,n) == 0.0){
+                zeroCol_d(svd);           
+            }else{
+                imsv_d(L,L,0,0,k,0);
+                d->length-=k+1;
+                d->offset += k+1;
+                f->length -= k;
+                f->offset += k;
+                zeroRow_d(svd);
+            }
+        }else{
+            svdStep_d(svd);
+        }
+        phaseCheck_d(svd);
+    }
+#ifdef DEBUG
+    printf("maxcounter %lu, count %lu\n",maxcntr,cntr);
+#endif
+}
+static void svdSort_d(svdObj_d *svd)
+{
+    vsip_vview_d *d = svd->d;
+    vsip_length n=d->length;
+    vsip_vview_vi* indx_L = svd->indx_L;
+    vsip_vview_vi* indx_R = svd->indx_R;
+    vsip_mview_d *L0 = svd->L; vsip_mview_d *L=&svd->Ls;
+    vsip_mview_d *R0 = svd->R;
+    vsip_vsortip_d(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_TRUE,indx_L);
+    vcopy_vi(indx_L,indx_R);
+    imsv_d( L0, L, 0,0, 0, n);
+    mpermute_onceCol_d(L,indx_L);
+    mpermute_onceRow_d(R0,indx_R);
 }
 static void svd_d(svdObj_d *s)
 {
