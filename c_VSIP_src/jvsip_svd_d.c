@@ -1229,28 +1229,6 @@ static void cmeye_d(vsip_cmview_d *v)
         }
     }
 }
-static void csvdZeroCheckAndSet_d(vsip_scalar_d e, vsip_cvview_d *d, vsip_cvview_d *f)
-{
-    vsip_index i;
-    vsip_stride std = f->stride * f->block->R->rstride;
-    vsip_length n = f->length * std;
-    vsip_scalar_d *f_i = f->block->I->array + f->offset * f->block->R->rstride;
-    vsip_scalar_d *f_r = f->block->R->array + f->offset * f->block->R->rstride;
-    vsip_scalar_d *d_i = d->block->I->array + d->offset * d->block->R->rstride;
-    vsip_scalar_d *d_r = d->block->R->array + d->offset * d->block->R->rstride;
-    vsip_scalar_d f_re, d_re, f_im, d_im,a0,a1,a,b;
-    d_re=fabs(*d_r); d_im=fabs(*d_i);
-    a0=CMAG_F(d_re,d_im);
-    d_r+=std; d_i+=std;
-    for(i=0; i<n; i+=std){
-        f_re=fabs(f_r[i]); f_im=fabs(f_i[i]);
-        d_re=fabs(d_r[i]), d_im=fabs(d_i[i]);
-        b = CMAG_F(f_re,f_im);
-        a1=CMAG_F(d_re,d_im);
-        a = e*(a0+a1);a0=a1;
-        if( b < a ){ *f_r = 0.0; *f_i = 0.0;}
-    }
-}
 static void cbiDiagPhaseToZero_d( csvdObj_d *svd)
 {
     vsip_cmview_d *L = svd->L;
@@ -1303,7 +1281,6 @@ static void cbiDiagPhaseToZero_d( csvdObj_d *svd)
             *(dptr_i+i*dstrd)=0.0;
         }
     }
-    csvdZeroCheckAndSet_d(eps0,d,f);
     for (i=0; i<nf-1; i++){
         j=i+1;
         ps.r=*(fptr_r+i*fstrd);
@@ -1401,7 +1378,6 @@ static void cbiDiagPhaseToZero0_d( csvdObj_d *svd)
             *(dptr_i+i*dstrd)=0.0;
         }
     }
-    csvdZeroCheckAndSet_d(eps0,d,f);
     for (i=0; i<n_f-1; i++){
         j=i+1;
         ps.r=*(fptr_r+i*fstrd);
@@ -1528,45 +1504,6 @@ static void cphaseCheck_d(csvdObj_d *svd)
         re[k]*=ps;
         im[k]*=ps;
     }
-}
-static void cphaseCheck0_d(csvdObj_d *svd)
-{
-    vsip_vview_d *d = &svd->ds;
-    vsip_vview_d *f = &svd->fs;
-    vsip_scalar_d eps0 = svd->eps0;
-    vsip_length nf=f->length;
-    vsip_index i,j;
-    vsip_scalar_d ps;
-    vsip_scalar_d m;
-    vsip_scalar_d*fptr=f->block->array;
-    vsip_scalar_d*dptr=d->block->array;
-       for(i=0; i<d->length; i++){
-        ps=dptr[i];
-        m = (ps<0) ? -ps:ps;
-        ps=sign_d(ps);
-        if(m > eps0){
-            dptr[i]=m;
-            if (i < nf)
-                fptr[i]*=ps;
-        } else {
-            dptr[i]=0.0;
-        }
-    }
-    svdZeroCheckAndSet_d(eps0,d,f);
-    for (i=0; i<nf-1; i++){
-        j=i+1;
-        ps = fptr[i];
-        m = (ps<0) ? -ps:ps;
-        ps=sign_d(ps);
-        fptr[i]=m;
-        fptr[j]*=ps;
-    }
-    j=nf;
-    i=j-1;
-    ps=fptr[i];
-    m=(ps<0) ? -ps:ps;
-    ps=sign_d(ps);
-    fptr[i]=m;
 }
 static void chouseProd_d(vsip_cvview_d *v, vsip_cmview_d *A, vsip_cvview_d*w)
 {
@@ -1978,97 +1915,6 @@ static void czeroRow_d(csvdObj_d *svd)
         cprodG_d(svd,n,0,g.c,g.s);
     }
 }
-static void czeroCol0_d(csvdObj_d *svd)
-{
-    vsip_vview_d *d = &svd->ds;
-    vsip_vview_d *f = &svd->fs;
-    vsip_length n = f->length;
-    givensObj_d g;
-    vsip_scalar_d xd,xf,t;
-    vsip_index i,j,k;
-    vsip_scalar_d *dptr=d->block->array + d->offset*d->block->rstride;
-    vsip_scalar_d *fptr=f->block->array + f->offset*f->block->rstride;
-    vsip_stride dstd=d->stride*d->block->rstride,fstd=f->stride*f->block->rstride;
-    if (n == 1){
-        xd=*dptr;
-        xf=*fptr;
-        g=givensCoef_d(xd,xf);
-        *dptr=g.r;
-        *fptr=0.0;
-    }else if (n == 2){
-        xd=*(dptr+dstd);
-        xf=*(fptr+fstd);
-        g=givensCoef_d(xd,xf);
-        *(dptr+dstd)=g.r;
-        *(fptr+fstd)=0.0;
-        xf=*fptr;
-        t= -xf * g.s; xf *= g.c;
-        *fptr=xf;
-        xd=*dptr;
-        g=givensCoef_d(xd,t);
-        *dptr=g.r;
-    }else{
-        i=n-1; j=i-1; k=i;
-        xd=*(dptr+i*dstd);
-        xf=*(fptr+i*fstd);
-        g=givensCoef_d(xd,xf);
-        xf=*(fptr+j*fstd);
-        *(fptr+i*fstd)=0.0;
-        *(dptr+i*dstd)=g.r;
-        t=-xf*g.s; xf*=g.c;
-        *(fptr+j*fstd)=xf;
-        while (i > 1){
-            i = j; j = i-1;
-            xd=*(dptr+i*dstd);
-            g=givensCoef_d(xd,t);
-            *(dptr+i*dstd)=g.r;
-            xf=*(fptr+j*fstd);
-            t= -xf * g.s; xf *= g.c;
-            xf=*(fptr+j*fstd);
-            cgtProd_d(i,k+1,g.c,g.s,svd);
-        }
-        xd=*dptr;
-        g=givensCoef_d(xd,t);
-        *dptr=g.r;
-    }
-}
-static void czeroRow0_d(csvdObj_d *svd)
-{
-    vsip_vview_d *d = &svd->ds;
-    vsip_vview_d *f = &svd->fs;
-    vsip_length n = d->length;
-    givensObj_d g;
-    vsip_scalar_d xd,xf,t;
-    vsip_index i;
-    vsip_scalar_d *dptr=d->block->array+d->block->rstride*d->offset;
-    vsip_scalar_d *fptr=f->block->array+f->block->rstride*f->offset;
-    vsip_stride dstrd=d->stride*d->block->rstride;
-    vsip_stride fstrd=f->stride*f->block->rstride;
-    xd=*dptr;
-    xf=*fptr;
-    g=givensCoef_d(xd,xf);
-    if (n == 1){
-        *dptr=g.r;
-        *fptr=0.0;
-    }else{
-        *dptr=g.r;
-        *fptr=0.0;
-        xf=*(fptr+fstrd);
-        t= -xf * g.s; xf *= g.c;
-        *(fptr+fstrd)=xf;
-        for(i=1; i<n-1; i++){
-            xd=*(dptr+i*dstrd);
-            g=givensCoef_d(xd,t);
-            *(dptr+i*dstrd)=g.r;
-            xf=*(fptr+(i+1)*fstrd);
-            t=-xf * g.s; xf *= g.c;
-            *(fptr+(i+1)*fstrd)=xf;
-        }
-        xd=*(dptr+(n-1)*dstrd);
-        g=givensCoef_d(xd,t);
-        *(dptr+(n-1)*dstrd)=g.r;
-    }
-}
 static void csvdStep_d(csvdObj_d *svd)
 {
     vsip_vview_d *d = &svd->ds;
@@ -2141,75 +1987,6 @@ static void csvdStep_d(csvdObj_d *svd)
     *(fptr+i*fstd)=x1+x2;
     *(dptr+j*dstd)=t;
     cprodG_d(svd,i, j, g.c, g.s);
-}
-static void csvdStep0_d(csvdObj_d *svd)
-{
-    vsip_vview_d *d = &svd->ds;
-    vsip_vview_d *f = &svd->fs;
-    givensObj_d g;
-    vsip_length n = d->length;
-    vsip_scalar_d mu=0.0, x1=0.0, x2=0.0;
-    vsip_scalar_d t=0.0;
-    vsip_index i,j,k;
-    vsip_scalar_d d2=0.0,f1=0.0,d3=0.0,f2=0.0;
-    vsip_scalar_d *fptr,*dptr,*tdptr,*tfptr;
-    vsip_stride fstd=f->stride*f->block->rstride, dstd=d->stride*d->block->rstride;
-    dptr=d->block->array+d->offset*d->block->rstride;
-    fptr=f->block->array+f->offset*f->block->rstride;
-    if(n >= 3){
-        d2=*(dptr+dstd*(n-2));f1= *(fptr+fstd*(n-3));d3 = *(dptr+dstd*(n-1));f2= *(fptr+fstd*(n-2));
-    } else if(n == 2){
-        d2=*dptr; d3=*(dptr+dstd); f1=0; f2=*fptr;
-    } else {
-        printf("should not be here (see svdStep_d");
-        exit(-1);
-    }
-    mu = svdMu_d(d2,f1,d3,&f2);
-    if(f2 == 0.0) *(fptr+fstd*(n-2)) = 0.0;
-    x1=*dptr;
-    x2 = x1 * *fptr;
-    x1 *= x1; x1 -= mu;
-    g=givensCoef_d(x1,x2);
-    x1=*dptr;x2=*fptr;
-    *fptr=g.c * x2 - g.s * x1;
-    *dptr=x1 * g.c + x2 * g.s;
-    tdptr=dptr+dstd;
-    t=*tdptr; *tdptr=t*g.c;
-    t*=g.s;
-    for(i=0; i<n-2; i++){
-        j=i+1; k=i+2;
-        tdptr=dptr+i*dstd;
-        tfptr=fptr+i*fstd;
-        g = givensCoef_d(*tdptr,t);
-        *tdptr=g.r;
-        x1 = *(tdptr+dstd)*g.c;
-        x2=*tfptr*g.s;
-        t= x1 - x2;
-        x1=*(fptr+i*fstd) * g.c;
-        x2=*(dptr+j*dstd) * g.s ;
-        *(fptr+i*fstd)= x1+x2;
-        *(dptr+j*dstd) = t;
-        x1=*(fptr+j*fstd);
-        t=g.s * x1;
-        *(fptr+j*fstd) = x1*g.c;
-        g=givensCoef_d(*(fptr+i*fstd),t);
-        *(fptr+i*fstd)=g.r;
-        x1=*(dptr+j*dstd); x2=*(fptr+j*fstd);
-        *(dptr+j*dstd)=g.c * x1 + g.s * x2;
-        *(fptr+j*fstd)=g.c * x2 - g.s * x1;
-        x1=*(dptr+k*dstd);
-        t=g.s * x1;
-        *(dptr+k*dstd)=x1*g.c;
-    }
-    i=n-2; j=n-1;
-    g = givensCoef_d(*(dptr+i*dstd),t);
-    *(dptr+i*dstd)=g.r;
-    x1=*(dptr+j*dstd)*g.c;
-    x2=*(fptr+i*fstd)*g.s;
-    t=x1 - x2;
-    x1 = *(fptr+i*fstd) * g.c; x2=*(dptr+j*dstd) * g.s;
-    *(fptr+i*fstd)=x1+x2;
-    *(dptr+j*dstd)=t;
 }
 static void svdFinalize_d(svdObj_d *s)
 {
@@ -2320,7 +2097,7 @@ static void svdIteration_d(svdObj_d* svd)
         }else{
             svdStep_d(svd);
         }
-        phaseCheck_d(svd);
+        phaseCheck0_d(svd); 
     }
 #ifdef DEBUG
     printf("maxcounter %lu, count %lu\n",maxcntr,cntr);
@@ -2511,60 +2288,16 @@ static void csvdIteration_d(csvdObj_d *svd)
             }else{
                 cimsv_d(L,L,0,0,k,0);
                 d->length-=(k+1);
-                d->offset += (k+1) * d->stride*d->block->rstride;
+                d->offset += (k+1);
                 f->length -= k;
-                f->offset += k * f->stride*f->block->rstride;
+                f->offset += k;
                 czeroRow_d(svd);
             }
         }else{
             csvdStep_d(svd);
+            cphaseCheck_d(svd);
         }
-        cphaseCheck_d(svd);
     }
-#ifdef DEBUG
-    printf("maxcounter %lu, count %lu\n",maxcntr,cntr);
-#endif
-}
-static void csvdIteration0_d(csvdObj_d *svd)
-{
-    vsip_vview_d *d0 = svd->d;
-    vsip_vview_d *f0 = svd->f;
-    vsip_scalar_d eps0 = svd->eps0;
-    vsip_vview_d *d=&svd->ds;
-    vsip_vview_d *f=&svd->fs;
-    vsip_length n;
-    svdCorner cnr;
-    vsip_index k;
-    vsip_length cntr=0;
-    vsip_length maxcntr=5*d0->length;
-    *d=*d0;*f=*f0;
-    while (cntr++ < maxcntr){
-        cnr=svdCorners_d(f0);
-        if (cnr.j == 0)
-            break;
-        ivsv_d(d0,d,cnr.i,cnr.j);
-        ivsv_d(f0,f,cnr.i,cnr.j-1);
-        n=f->length;
-        k=zeroFind_d(d,eps0);
-        if (k > 0){
-            k=k-1;
-            if(VI_VGET_F(d,n) == 0.0){
-                czeroCol0_d(svd);
-            }else{
-                d->length-=(k+1);
-                d->offset += (k+1) * d->stride*d->block->rstride;
-                f->length -= k;
-                f->offset += k * f->stride*f->block->rstride;
-                czeroRow0_d(svd);
-            }
-        }else{
-            csvdStep0_d(svd);
-        }
-        cphaseCheck0_d(svd);
-    }
-#ifdef DEBUG
-    printf("maxcounter %lu, count %lu\n",maxcntr,cntr);
-#endif
 }
 static void csvdSort_d(csvdObj_d *svd)
 {
@@ -2581,11 +2314,6 @@ static void csvdSort_d(csvdObj_d *svd)
     cmpermute_onceCol_d(L,indx_L);
     cmpermute_onceRow_d(R0,indx_R);
 }
-static void csvdSort0_d(csvdObj_d *svd)
-{
-    vsip_vview_d *d = svd->d;
-    vsip_vsortip_d(d,VSIP_SORT_BYVALUE,VSIP_SORT_DESCENDING,VSIP_FALSE,NULL);
-}
 static void csvd_d(csvdObj_d *s,int Usave,int Vsave)
 {
     if(Usave || Vsave){
@@ -2593,11 +2321,13 @@ static void csvd_d(csvdObj_d *s,int Usave,int Vsave)
         csvdIteration_d(s);
         csvdSort_d(s);
     }else{
+        svdObj_d t;
         csvdBidiag0_d(s);
-        csvdIteration0_d(s);
-        csvdSort0_d(s);
+        t.eps0=s->eps0;
+        t.d=s->d;t.ds=s->ds;t.f=s->f;t.fs=s->fs;
+        svdIteration0_d(&t);
+        svdSort0_d(&t);
     }
-
 }
 
 /* Real */
