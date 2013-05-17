@@ -2274,8 +2274,10 @@ class Block (object):
         @property
         def trans(self):
             """
-            Done out of place. A new view is created and the transpose of the calling
-            view is copied into it.
+            Done out of place. 
+            A new block and view and view are created and the transpose 
+            of the calling view is copied into it. See transview for a transpose view on 
+            the same block.
             Usage:
                 B=A.trans
             """
@@ -2291,7 +2293,11 @@ class Block (object):
         @property
         def herm(self):
             """
-            Done out of place. For in place use transview + conj
+            Done out of place.
+            Usage: Given matrix view A
+                B = A.herm
+                returns new matrix B which is hermitian of A.
+            For an in place equivalent one can do A.transview.conj or use the hermitian function call conj(A,A).
             """
             if 'cmview' in self.type:
                 m=self.rowlength
@@ -2299,8 +2305,10 @@ class Block (object):
                 retval=self.block.otherBlock(self.block.type,m*n).bind((0,n,m,1,n))
                 vsip.herm(self.view,retval.view)
                 return retval
+            elif 'mview' in self.type:
+                return self.trans
             else:
-                print('View must be a complex matrix')
+                print('View must be a matrix')
                 return False
         def dot(self,other):
             if 'vview' in self.type and 'vview' in other.type:
@@ -2695,39 +2703,43 @@ class Block (object):
         def sv(self):
             """
             For a matrix view 'A' of type float or double, real or complex,
-            A.sv will return a vector of singular values for matrix A
+            s = A.sv will return a vector of singular values for matrix A
+            Note Matrix A is overwritten by the decomposition. To retain A use
+            s = A.copy.sv
             """
-            A=self.copy
             svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
             vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
-            n=A.rowlength
-            m=A.collength
+            n=self.rowlength
+            m=self.collength
             svObj=SV(svtSel[self.type],m,n,'NOS','NOS')
             if n < m:
                 s=create(vtSel[self.type],n)
             else:
                 s=create(vtSel[self.type],m)
-            return svObj.svd(A,s)
+            return svObj.svd(self,s)
         @property
         def svd(self):
             """
+            For SVD decomposition where
+                A = U s V^H
             For matrix A:
                 D=A.svd 
+            Matrix A is overwritten by the SVD. To retain A use
+                D = A.copy.svd
             returns a tuple into D.
-            D[0] will be matrix U, D[1] will be (real) vector of singular values, and
+            D[0] will be matrix U, D[1] will be (real) vector s of singular values, and
             D[2] will be matrix V
             """
-            A=self.copy
             svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
             vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
-            n=A.rowlength
-            m=A.collength
+            n=self.rowlength
+            m=self.collength
             svObj=SV(svtSel[self.type],m,n,'FULL','FULL')
             if n < m:
                 s=create(vtSel[self.type],n)
             else:
                 s=create(vtSel[self.type],m)
-            svObj.svd(A,s)
+            svObj.svd(self,s)
             U=create(self.type,m,m)
             V=create(self.type,n,n)
             svObj.matv(0,n,V)
