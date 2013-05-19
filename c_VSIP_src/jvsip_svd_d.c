@@ -3388,7 +3388,7 @@ static void svdSort0_d(svdObj_d *svd)
 }
 static void svd_d(svdObj_d *s,int Usave, int Vsave)
 {
-    if(Usave || Vsave){
+    if(Usave && Vsave){
         svdBidiag_d(s);
         svdIteration_d(s);
         svdSort_d(s);
@@ -3741,7 +3741,11 @@ vsip_svd_d(vsip_sv_d *svd, const vsip_mview_d *A, vsip_vview_d *sv)
     } else {
         s->B=*A;
     }
-    svd_d(s,svd->attr.Usave,svd->attr.Vsave);
+    if(svd->transpose){
+        svd_d(s,svd->attr.Vsave,svd->attr.Usave);
+    } else {
+        svd_d(s,svd->attr.Usave,svd->attr.Vsave);
+    }
     vcopy_d(s->d,sv)
     return 0;
 }
@@ -3899,7 +3903,11 @@ vsip_csvd_d(vsip_csv_d *svd, const vsip_cmview_d *A, vsip_vview_d *sv)
     } else {
         s->B=*A;
     }
-    csvd_d(s,svd->attr.Usave,svd->attr.Vsave);
+    if(svd->transpose){
+        csvd_d(s,svd->attr.Vsave,svd->attr.Usave);
+    } else {
+        csvd_d(s,svd->attr.Usave,svd->attr.Vsave);
+    }
     vcopy_d(s->d,sv);
     return 0;
 }

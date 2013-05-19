@@ -2,6 +2,7 @@ from vsip import *
 from vsipElementwiseElementary import *
 from vsipElementwiseManipulation import *
 from vsipElementwiseUnary import *
+
 import vsiputils as vsip
 def getType(v):
     """
@@ -2720,6 +2721,7 @@ class Block (object):
         @property
         def svd(self):
             """
+            This method is a full svd decompostion.
             For SVD decomposition where
                 A = U s V^H
             For matrix A:
@@ -2729,6 +2731,7 @@ class Block (object):
             returns a tuple into D.
             D[0] will be matrix U, D[1] will be (real) vector s of singular values, and
             D[2] will be matrix V
+            Note that this method returns the full U and V matrix including any NULL space.
             """
             svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
             vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
@@ -2745,6 +2748,90 @@ class Block (object):
             svObj.matv(0,n,V)
             svObj.matu(0,m,U)
             return (U,s,V)
+        @property
+        def svdP(self):
+            """
+            This method returns the partial svd decomposition.
+            For SVD decomposition where
+                A = U s V^H
+            For matrix A:
+                D=A.svd 
+            Matrix A is overwritten by the SVD. To retain A use
+                D = A.copy.svd
+            returns a tuple into D.
+            D[0] will be matrix U, D[1] will be (real) vector s of singular values, and
+            D[2] will be matrix V
+            Note that this method returns the partial U and V matrix without the NULL space.
+            """
+            svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
+            vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
+            n=self.rowlength
+            m=self.collength
+            svObj=SV(svtSel[self.type],m,n,'PART','PART')
+            if n < m:
+                s=create(vtSel[self.type],n)
+                rl=n
+            else:
+                s=create(vtSel[self.type],m)
+                rl=m
+            svObj.svd(self,s)
+            U=create(self.type,m,rl)
+            V=create(self.type,n,rl)
+            svObj.matv(0,rl,V)
+            svObj.matu(0,rl,U)
+            return (U,s,V)
+        @property
+        def svdU(self):
+            """
+            For SVD decomposition where
+                A = U s V^H
+            For matrix A:
+                D=A.svd 
+            Matrix A is overwritten by the SVD. To retain A use
+                D = A.copy.svd
+            returns a tuple into D.
+            D[0] will be matrix U, D[1] will be (real) vector s of singular values
+            This method returns the Full matrix U.
+            """
+            svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
+            vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
+            n=self.rowlength
+            m=self.collength
+            svObj=SV(svtSel[self.type],m,n,'FULL','NOS')
+            if n < m:
+                s=create(vtSel[self.type],n)
+            else:
+                s=create(vtSel[self.type],m)
+            svObj.svd(self,s)
+            U=create(self.type,m,m)
+            svObj.matu(0,m,U)
+            return (U,s)
+        @property
+        def svdV(self):
+            """
+            For SVD decomposition where
+                A = U s V^H
+            For matrix A:
+                D=A.svd 
+            Matrix A is overwritten by the SVD. To retain A use
+                D = A.copy.svd
+            returns a tuple into D.
+            D[0] will be (real) vector s of singular values, and D[1] will be matrix V
+            Matrix V is the Full V matrix.
+            """
+            svtSel={'mview_d':'sv_d','mview_f':'sv_f','cmview_d':'csv_d','cmview_f':'csv_f'}
+            vtSel={'mview_d':'vview_d','mview_f':'vview_f','cmview_d':'vview_d','cmview_f':'vview_f'}
+            n=self.rowlength
+            m=self.collength
+            svObj=SV(svtSel[self.type],m,n,'NOS','FULL')
+            if n < m:
+                s=create(vtSel[self.type],n)
+            else:
+                s=create(vtSel[self.type],m)
+            svObj.svd(self,s)
+            V=create(self.type,n,n)
+            svObj.matv(0,n,V)
+            return (s,V)
         #utility functions
         def mstring(self,fmt):
             """ 
@@ -2826,7 +2913,7 @@ class Block (object):
         if self.__type in Block.blockTypes:
             vsip.destroy(self.__vsipBlock)
         del(self.__jvsip)
-    # major for bind of matrix in attr is 'ROW', or 'COL'            
+    # major for bind of matrix in attr is 'ROW', or 'COL'
     def bind(self,*args):
         if isinstance(args[0],tuple):
             attr=args[0]
@@ -3232,6 +3319,16 @@ class QR(object):
             return
 class SV(object):
     """
+    Usage:
+       svObj=SV(type, colLength,rowLength,opU,opV)
+    Where:
+       type is a string; one of 'sv_f', 'sv_d', 'csv_f', csf_d'
+       colLength and rowLength are the sizes of the expected matrix,
+       opU and opV are strings; one of 'NOS', 'FULL', 'PART' indicating
+       what part of the U and S matrices are to be retained.
+    Note you may also use the string coresponding to the target matrix for type.
+    For instance if singular values of matrix A are required then you could do
+    sv=SV(A.type,A.collength,A.rowlength,'NOS','NOS')
     """
     tSv=['sv_f','sv_d','csv_f','csv_d','mview_d','cmview_d','mview_f','cmview_f']
     svSel={'sv_f':'mview_f','sv_d':'mview_d','csv_f':'cmview_f','csv_d':'cmview_d'}
@@ -3255,6 +3352,7 @@ class SV(object):
         self.m=m
         self.n=n
         self.__sv=svCreate[SV.tSel[t]](m,n,op[opU],op[opV])
+        self.View=0.0
     def __del__(self):
         svDestroy={'sv_f':vsip_svd_destroy_f,
               'sv_d':vsip_svd_destroy_d,
@@ -3276,10 +3374,21 @@ class SV(object):
         """
         return self.__sv
     def svd(self,other,s):
+        """
+        Usage:
+            given matrix view A of type real or complex, float or double
+            and real vector view s of equivalent precision to A (float or double)
+            and s of length min(A.collength, A.rowlength)
+            and SV Object sv then
+            sv.svd(A,s) will calculate the singular values of A and place them in s.
+        Note that the matrix A is overwritten by the singular value calculation. To keep
+        A use sv.svd(A.copy,s).
+        """
         svdD={'sv_f':vsip_svd_f,
               'sv_d':vsip_svd_d,
               'csv_f':vsip_csvd_f,
               'csv_d':vsip_csvd_d}
+        self.View=other
         if SV.svSel[self.type] in other.type and SV.svvSel[self.type] in s.type:
             svdD[self.type](self.vsip,other.view,s.view)
             return s
@@ -3312,9 +3421,22 @@ class SV(object):
         else:
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
+def svdCompose(d,indx):
+    return
 # Functions
 # copy is kind of brain dead. Need more functionality and performance
 def copy(input,to):
+    """
+    Usage:
+        for A => list or view and  B=> view
+        copy(A,B) will copy the data from A into B
+    The copy function allows one to copy data from a list into a VSIP vector or matrix view.
+    If the list is 2D the list is copied as row major into a matrix.
+    If the list is 1D it is copied into a vector.
+    I would not call this function efficient or robust; just handy.
+    Note if both input and output are views then a standard VSIP copy takes place.
+    The views must be compliant.
+    """
     if isinstance(input,list):
         if 'vview' in to.type and (len(input) == to.length):
             for i in range(to.length):
