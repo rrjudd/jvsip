@@ -101,10 +101,10 @@ void jvsip_cmprod2_d( const vsip_cmview_d* a, const vsip_cmview_d* b, const vsip
 
     /* some additional pointers to store initial data */
     vsip_scalar_d *ap0_r = ap_r, *ap0_i = ap_i, *bp0_r, *bp0_i, *cp0_r, *cp0_i;
-    register vsip_scalar_d a00_r, a01_r, a02_r, a00_i, a01_i, a02_i;
-    register vsip_scalar_d a10_r, a11_r, a12_r, a10_i, a11_i, a12_i;
-    register vsip_scalar_d a20_r, a21_r, a22_r, a20_i, a21_i, a22_i;
+    register vsip_scalar_d a00_r, a01_r, a00_i, a01_i;
+    register vsip_scalar_d a10_r, a11_r, a10_i, a11_i;
 
+    
     /* we need local storage for a column of b */
     register vsip_scalar_d b0_r, b1_r;
     register vsip_scalar_d b0_i, b1_i;
@@ -157,9 +157,8 @@ void jvsip_cmprod2_f( const vsip_cmview_f* a, const vsip_cmview_f* b, const vsip
 
     /* some additional pointers to store initial data */
     vsip_scalar_f *ap0_r = ap_r, *ap0_i = ap_i, *bp0_r, *bp0_i, *cp0_r, *cp0_i;
-    register vsip_scalar_f a00_r, a01_r, a02_r, a00_i, a01_i, a02_i;
-    register vsip_scalar_f a10_r, a11_r, a12_r, a10_i, a11_i, a12_i;
-    register vsip_scalar_f a20_r, a21_r, a22_r, a20_i, a21_i, a22_i;
+    register vsip_scalar_f a00_r, a01_r, a00_i, a01_i;
+    register vsip_scalar_f a10_r, a11_r, a10_i, a11_i;
 
     /* we need local storage for a column of b */
     register vsip_scalar_f b0_r, b1_r;
