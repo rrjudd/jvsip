@@ -3422,7 +3422,19 @@ class SV(object):
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
 def svdCompose(d,indx):
-    return
+    """
+    Return a matrix reconstituted from selected singular values.
+    """
+    assert 'vview_vi' in getType(indx)[2]
+    assert type(d) is tuple
+    assert 'mview' in getType(d[0])[2]
+    assert 'vview' in getType(d[1])[2]
+    assert 'mview' in getType(d[2])[2]
+    r=create(d[0].type,d[0].collength,d[2].collength).fill(0.0)
+    for i in range(indx.length):
+        j=indx[i]
+        r += d[0].colview(j).outer(d[1][j],d[2].colview(j))
+    return r
 # Functions
 # copy is kind of brain dead. Need more functionality and performance
 def copy(input,to):
