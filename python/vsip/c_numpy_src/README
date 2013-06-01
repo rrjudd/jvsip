@@ -1,0 +1,6 @@
+This directory contains code to enable use of copy to and from numpy arrays and
+pyJvsip views of type _f and _d, complex or real.
+To make you must do
+swig -python jvsipNumpyUtils.i
+python setup.py build
+python setup.py install
