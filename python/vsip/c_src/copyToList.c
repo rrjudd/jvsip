@@ -1,5 +1,3 @@
-#include<vsip.h>
-#include"Python.h"
 #include"pyVsip.h"
 
 PyObject *cvcopyToList_f(vsip_cvview_f *v){

@@ -11,7 +11,9 @@
 **********************************************************************/
 #ifndef _PYVSIP_H
 #define _PYVSIP_H
-
+#include<vsip.h>
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#include"Python.h"
 /* extra functions for python */
 vsip_index *vindexptr(void);
 void vindexfree(vsip_index*);

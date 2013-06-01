@@ -3423,7 +3423,23 @@ class SV(object):
             return other
 def svdCompose(d,indx):
     """
-    Return a matrix reconstituted from selected singular values.
+    Usage:
+       import pyJvsip as pv
+       # get pyJvsip matrix A from some process
+       d=A.svd
+       # create an index vector (indx) of singular values of interest.
+       C=svdCompose(d,indx)
+    Returns a matrix reconstituted from selected singular values.
+    Note:
+     d above is a tuble. See svd method info.
+    Note:
+     the indices in indx should be less than the length of d[1]
+    Note:
+     you can create a new tuple, say g=(d[0],s,d[2]) if you want
+    to create a new matrix but not use the original singular values.
+    Note:
+      C=svdCompose(d,pv.create('vview_vi),d[0].length).ramp(0,1))
+    will return (an estimate of) the original matrix A.
     """
     assert 'vview_vi' in getType(indx)[2]
     assert type(d) is tuple
