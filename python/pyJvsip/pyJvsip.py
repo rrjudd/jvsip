@@ -1248,6 +1248,11 @@ class Block (object):
             else:
                 print('View type must be boolean for alltrue')
         def leq(self,other):
+            """
+            Logical Equal
+            Usage:
+               b=x.leq(y)
+            """
             if isinstance(other,complex) or 'cscalar' in repr(other):
                 print('complex scalars not supported at this time for leq')
                 return
@@ -1282,6 +1287,9 @@ class Block (object):
                 print('Argument type <:'+t+':> not recognized for leq')
                 return
         def lge(self,other):
+            """
+            Logical Greater Than or Equal
+            """
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
@@ -1303,6 +1311,9 @@ class Block (object):
                 print('Argument type <:'+t+':> not recognized for lge')
             return
         def lgt(self,input):
+            """
+            Logical Greater Than
+            """
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
@@ -1758,6 +1769,60 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported by minmgsqval')
                 return
+        #Bitwise and Boolean Logical Operators
+        #use bb at fron to avoid conflicts
+        def bband(self,other):
+            """
+            bitwise/boolean and
+            """
+            f={'mview_i':vsip_mand_i, 'mview_si':vsip_mand_si, 'vview_bl':vsip_vand_bl,
+               'vview_i':vsip_vand_i, 'vview_si':vsip_vand_si, 'vview_uc':vsip_vand_uc}
+            sptd=['mview_i','mview_si','vview_bl','vview_i','vview_si','vview_uc']
+            assert self.length is other.length
+            assert self.type in other.type
+            assert self.type in sptd
+            out=self.empty
+            f[self.type](self.view,other.view,out.view)
+            return out
+        def bbnot(self,other):
+            """
+            bitwise/boolean and
+            """
+            f={'mview_i':vsip_mnot_i, 'mview_si':vsip_mnot_si, 'vview_bl':vsip_vnot_bl,
+               'vview_i':vsip_vnot_i, 'vview_si':vsip_vnot_si, 'vview_uc':vsip_vnot_uc}
+            sptd=['vview_bl','vview_i','vview_si','vview_uc']
+            assert self.length is other.length
+            assert self.type in other.type
+            assert self.type in sptd
+            out=self.empty
+            f[self.type](self.view,other.view,out.view)
+            return out 
+        def bbor(self,other):
+            """
+            bitwise/boolean and
+            """
+            f={'mview_i':vsip_mor_i, 'mview_si':vsip_mor_si, 'vview_bl':vsip_vor_bl,
+               'vview_i':vsip_vor_i, 'vview_si':vsip_vor_si, 'vview_uc':vsip_vor_uc}
+            sptd=['vview_bl','vview_i','vview_si','vview_uc']
+            assert self.length is other.length
+            assert self.type in other.type
+            assert self.type in sptd
+            out=self.empty
+            f[self.type](self.view,other.view,out.view)
+            return out
+        def bbxor(self,other):
+            """
+            bitwise/boolean and
+            """
+            f={'mview_i':vsip_mxor_i, 'mview_si':vsip_mxor_si, 'vview_bl':vsip_vxor_bl,
+               'vview_i':vsip_vxor_i, 'vview_si':vsip_vxor_si, 'vview_uc':vsip_vxor_uc}
+            sptd=['vview_bl','vview_i','vview_si','vview_uc']
+            assert self.length is other.length
+            assert self.type in other.type
+            assert self.type in sptd
+            out=self.empty
+            f[self.type](self.view,other.view,out.view)
+            return out       
         #Basic Algorithms
         def axpy(self,a,x):
             """
@@ -2402,8 +2467,11 @@ class Block (object):
               If an indx vector is included then it is initialized (or not depending on fill), and the
               indices are sorted. If an index is included, indx is returned as a convenience.   
             """
+            sptd=['vview_f','vview_d','vview_i','vview_vi']
             t=self.type
-            f={'vview_f':vsip_vsortip_f,'vview_d':vsip_vsortip_d}
+            assert t in sptd,'Type <:' + t + ':> not supported by sort'
+            f={'vview_f':vsip_vsortip_f,'vview_d':vsip_vsortip_d,
+               'vview_i':vsip_vsortip_i,'vview_vi':vsip_vsortip_vi}
             m={'BYVALUE':0,'BYMAGNITUDE':1}
             d={'DESCENDING':1,'ASCENDING':0}
             nvals=len(vals)

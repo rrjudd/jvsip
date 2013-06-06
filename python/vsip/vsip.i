@@ -1279,6 +1279,8 @@ void vsip_vsmsa_d ( const vsip_vview_d* , vsip_scalar_d , vsip_scalar_d , const 
 void vsip_vsmsa_f ( const vsip_vview_f* , vsip_scalar_f , vsip_scalar_f , const vsip_vview_f* ) ;
 void vsip_vsortip_d ( const vsip_vview_d* , vsip_sort_mode , vsip_sort_dir , vsip_bool , const vsip_vview_vi* ) ;
 void vsip_vsortip_f ( const vsip_vview_f* , vsip_sort_mode , vsip_sort_dir , vsip_bool , const vsip_vview_vi* ) ;
+void vsip_vsortip_i ( const vsip_vview_i* , vsip_sort_mode , vsip_sort_dir , vsip_bool , const vsip_vview_vi* ) ;
+void vsip_vsortip_vi ( const vsip_vview_vi* , vsip_sort_mode , vsip_sort_dir , vsip_bool , const vsip_vview_vi* ) ;
 void vsip_vsq_d ( const vsip_vview_d* , const vsip_vview_d* ) ;
 void vsip_vsq_f ( const vsip_vview_f* , const vsip_vview_f* ) ;
 void vsip_vsqrt_d ( const vsip_vview_d* , const vsip_vview_d* ) ;
