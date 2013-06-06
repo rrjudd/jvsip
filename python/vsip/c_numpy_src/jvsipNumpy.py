@@ -1,28 +1,35 @@
-import numpy as np
-import pyJvsip as pv
+from numpy import complex128, complex64, float64, float32, empty
+from pyJvsip import getType, create
 from jvsipNumpyUtils import *
 
 def jvCopyToNp(v):
+    """
+    Usage:
+       from jvsipNumpy import jvCopyToNp
+       # get a vsip view 'V' of type (c)vview_f, (c)vview_d, (c)mview_f, (c)mview_d
+       ar=jvCopyToNp(V)
+    This should produce a new numpy array ar of the proper type with a copy of the data in V.
+    """
     def myarray(v):
         if ('cmview_d' in v.type) or ('cvview_d' in v.type):
-            p = np.complex128
+            p = complex128
         elif ('cmview_f' in v.type) or ('cvview_f' in v.type):
-            p = np.complex64
+            p = complex64
         elif ('mview_d' in v.type) or ('vview_d' in v.type):
-            p = np.float64
+            p = float64
         else:
-            p = np.float32
+            p = float32
         aryt='C'
         mjr=0
         if('mview' in v.type):
             if 'COL' in v.major:
                 aryt='F'
                 mjr=1
-            ary=np.empty([v.collength,v.rowlength],p,aryt)
+            ary=empty([v.collength,v.rowlength],p,aryt)
         else:
-            ary=np.empty(v.length,p)
+            ary=empty(v.length,p)
         return (ary,mjr)
-    assert 'pyJvsip' in pv.getType(v)[0], "Input does not appear to be a pyJvsip type."
+    assert 'pyJvsip' in getType(v)[0], "Input does not appear to be a pyJvsip type."
     assert ('view_d' in v.type) or ('view_f' in v.type), v.type + " not supported by jvCopyToNp"
     f= {'vview_f':vcopyToNParray_f,'vview_d':vcopyToNParray_d,
     'cvview_f':cvcopyToNParray_f,'cvview_d':cvcopyToNParray_d,
@@ -36,18 +43,25 @@ def jvCopyToNp(v):
     return ary
     
 def npCopyToJv(a):
+    """
+    Usage:
+       from jvsipNumpy import npCopyToJv
+       # get a numpy array 'ar' of type float32, float64, complex64, complex128
+       V=npCopyToJv(ar)
+    This should produce a new pyJvsip vector or matrix 'V' with a copy of the data in ar.
+    """
     def myView(a):
         fv={'float32':'vview_f','float64':'vview_d','complex64':'cvview_f','complex128':'cvview_d'}
         fm={'float32':'mview_f','float64':'mview_d','complex64':'cmview_f','complex128':'cmview_d'}
         ashp=a.shape
         t=a.dtype.name
         if len(a.shape) is 1: # create a vector
-            v=pv.create(fv[t],ashp[0])
+            v=create(fv[t],ashp[0])
         else: #create a matrix
             if a.flags.f_contiguous:
-                v=pv.create(fm[t],ashp[0],ashp[1],'COL')
+                v=create(fm[t],ashp[0],ashp[1],'COL')
             else:
-                v=pv.create(fm[t],ashp[0],ashp[1])
+                v=create(fm[t],ashp[0],ashp[1])
         return v
     sptd=['float32','float64','complex64','complex128']
     assert a.dtype.name in sptd, a.dtype.name + ' not supported by npCopyToJv.'
