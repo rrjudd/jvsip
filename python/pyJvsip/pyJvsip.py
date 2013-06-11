@@ -1105,7 +1105,8 @@ class Block (object):
         # Unary Operations
         @property
         def arg(self):
-            """ Input vector of type complex
+            """ Cone out of place
+                Input vector of type complex
                 arg creates and returns a new vector of type real 
             """
             attrs=self.compactAttrib(1)
@@ -1195,6 +1196,19 @@ class Block (object):
                 return
         def __neg__(self):
             vsip.neg(self.view,self.view)
+        @property
+        def neg(self):
+            """
+            Done In place
+            Returns a convenience copy.
+            For out of place, for view x, do y = x.copy.neg
+            """
+            f= {'cmview_f':vsip_cmneg_d,'cmview_f':vsip_cmneg_f,'cvview_d':vsip_cvneg_d,
+                'cvview_f':vsip_cvneg_f,'mview_d':vsip_mneg_d,'mview_f':vsip_mneg_f,
+                'vview_d':vsip_vneg_d,'vview_f':vsip_vneg_f,'vview_i':vsip_vneg_i,'vview_si':vsip_vneg_si}
+            assert f.has_key(self.type),'Method neg does not support <:'+self.type +':>.'
+            f[self.type](self.view,self.view)
+            return self
         @property
         def meansqval(self):
             """ returns scalar value
