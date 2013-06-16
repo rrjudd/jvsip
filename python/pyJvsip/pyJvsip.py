@@ -1266,6 +1266,10 @@ class Block (object):
             Logical Equal
             Usage:
                b=x.leq(y)
+               y may be of type x.type or a scalar.
+               b is a boolean. if x[i] == y[i] the b[i]=1 (true) else 0 (false)
+               if y is a scalar if x[i] == y then b[i] = 1
+            Note this works for a matrix also. The index changes to (i,j)
             """
             if isinstance(other,complex) or 'cscalar' in repr(other):
                 print('complex scalars not supported at this time for leq')
@@ -1300,16 +1304,38 @@ class Block (object):
             else:
                 print('Argument type <:'+t+':> not recognized for leq')
                 return
-        def lge(self,other):
+        def lge(self,input):
             """
             Logical Greater Than or Equal
+            Usage:
+               b=x.lge(y)
+               y may be of type x.type or a scalar.
+               b is a boolean. if x[i] >= y[i] the b[i]=1 (true) else 0 (false)
+               if y is a scalar if x[i] >= y then b[i] = 1
+            Note this works for a matrix also. The index changes to (i,j)
+            Note this is not equivalent to a C VSIP vsip_svlge_p for the scalar case as the
+            scalar is on the wrong side of the test.
             """
+            t0=getType(input)
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
+            if 'scalar' in t0[1]:
+                if 'mview' in self.type:
+                    other = create(self.type,1,1).fill(input)
+                    attr=self.attrib
+                    attr['offset']=0
+                    attr['rowstride']=0; attr['colstride']=0
+                    other.putattrib(attr)
+                else:
+                    attr=self.attrib
+                    other = create(self.type,1).fill(input)
+                    attr['offset']=0;attr['stride']=0;other.putattrib(attr)
+            else:
+                other=input
             t=self.type+other.type
             f={'mview_dmview_d':vsip_mlge_d,
                'mview_fmview_f':vsip_mlge_f,
@@ -1323,29 +1349,37 @@ class Block (object):
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lge')
-            return
+                return
         def lgt(self,input):
             """
             Logical Greater Than
+            Usage:
+               b=x.lgt(y)
+               y may be of type x.type or a scalar.
+               b is a boolean. if x[i] > y[i] the b[i]=1 (true) else 0 (false)
+               if y is a scalar if x[i] > y then b[i] = 1
+            Note this works for a matrix also. The index changes to (i,j)
+            Note this is not equivalent to a C VSIP vsip_svlgt_p for the scalar case as the
+            scalar is on the wrong side of the test.
             """
+            t0=getType(input)
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
-            if isinstance(input,float):
+            if 'scalar' in t0[1]:
                 if 'mview' in self.type:
-                    other = create(self.type,1,1)
-                    other[0,0]=input
-                    attr=other.attrib
+                    other = create(self.type,1,1).fill(input)
+                    attr=self.attrib
+                    attr['offset']=0
                     attr['rowstride']=0; attr['colstride']=0
-                    attr['rowlength']=n; attr['collength']=m
                     other.putattrib(attr)
                 else:
-                    other = create(self.type,1)
-                    other[0]=input
-                    other.putstride=0;other.putlength=self.length
+                    attr=self.attrib
+                    other = create(self.type,1).fill(input)
+                    attr['offset']=0;attr['stride']=0;other.putattrib(attr)
             else:
                 other=input
             t=self.type+other.type
@@ -1361,26 +1395,37 @@ class Block (object):
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lgt')
-            return
+                return
         def lle(self,input):
+            """
+            Logical less than or equal
+            Usage:
+               b=x.lle(y)
+               y may be of type x.type or a scalar.
+               b is a boolean. If x[i] <= y[i] then b[i]=1 (true) else 0 (false)
+               If y is a scalar if x[i] <= y then b[i] = 1
+            Note this works for a matrix also. The index changes to (i,j)
+            Note this is not equivalent to a C VSIP vsip_svlle_p for the scalar case as the
+            scalar is on the wrong side of the test.
+            """
+            t0=getType(input)
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
-            if isinstance(input,float):
+            if 'scalar' in t0[1]:
                 if 'mview' in self.type:
-                    other = create(self.type,1,1)
-                    other[0,0]=input
-                    attr=other.attrib
+                    other = create(self.type,1,1).fill(input)
+                    attr=self.attrib
+                    attr['offset']=0
                     attr['rowstride']=0; attr['colstride']=0
-                    attr['rowlength']=n; attr['collength']=m
                     other.putattrib(attr)
                 else:
-                    other = create(self.type,1)
-                    other[0]=input
-                    other.putstride=0;other.putlength=self.length
+                    attr=self.attrib
+                    other = create(self.type,1).fill(input)
+                    attr['offset']=0;attr['stride']=0;other.putattrib(attr)
             else:
                 other=input
             f={'mview_dmview_d':vsip_mlle_d,
@@ -1396,26 +1441,37 @@ class Block (object):
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lle')
-            return
+                return
         def llt(self,input):
+            """
+            Logical less than
+            Usage:
+               b=x.llt(y)
+               y may be of type x.type or a scalar.
+               b is a boolean. If x[i] < y[i] then b[i]=1 (true) else 0 (false)
+               If y is a scalar if x[i] < y then b[i] = 1
+            Note this works for a matrix also. The index changes to (i,j)
+            Note this is not equivalent to a C VSIP vsip_svllt_p for the scalar case as the
+            scalar is on the wrong side of the test.
+            """
+            t0=getType(input)
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
                 out=create('mview_bl',m,n)
             else: #must be vector
                 out=create('vview_bl',self.length)
-            if isinstance(input,float):
+            if 'scalar' in t0[1]:
                 if 'mview' in self.type:
-                    other = create(self.type,1,1)
-                    other[0,0]=input
-                    attr=other.attrib
+                    other = create(self.type,1,1).fill(input)
+                    attr=self.attrib
+                    attr['offset']=0
                     attr['rowstride']=0; attr['colstride']=0
-                    attr['rowlength']=n; attr['collength']=m
                     other.putattrib(attr)
                 else:
-                    other = create(self.type,1)
-                    other[0]=input
-                    other.putstride=0;other.putlength=self.length
+                    attr=self.attrib
+                    other = create(self.type,1).fill(input)
+                    attr['offset']=0;attr['stride']=0;other.putattrib(attr)
             else:
                 other=input
             t=self.type+other.type
@@ -1431,8 +1487,17 @@ class Block (object):
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for llt')
-            return
-        def lne(self,other):   
+                return
+        def lne(self,other): 
+            """
+            Logical Not Equal
+            Usage:
+               b=x.lne(y)
+               y may be of type x.type or a scalar.
+               b is a boolean. if x[i] != y[i] the b[i]=1 (true) else 0 (false)
+               if y is a scalar if x[i] != y then b[i] = 1
+            Note this works for a matrix also. The index changes to (i,j)
+            """  
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
@@ -1495,14 +1560,27 @@ class Block (object):
             else:
                 print('Input types <:'+t+':> not recognized for scatter')
                 return;
-        def gather(self,indx,other):
+        def gather(self,indx,*vars):
             """
               Usage:
-                  self.gather(other,indx)
-              This function gathers self into other governed by indx
+                  self.gather(indx,other)
+              or
+                  self.gather(indx)
+              This function gathers self into other governed by indx.
+              If other is not provided the function creates one.
               View other is returned as a convienience
             """
-            t=self.type+other.type+indx.type
+            ot={'cmview_f':'cvview_f','cmview_d':'cvview_d','mview_f':'vview_f',
+               'mview_d':'vview_d','cvview_f':'cvview_f','cvview_d':'cvview_d',
+               'vview_f':'vview_f','vview_d':'vview_d','vview_i':'vview_i',
+               'vview_si':'vview_si','vview_uc':'vview_uc','vview_mi':'vview_mi',
+               'vview_vi':'vview_vi'}
+            assert len(vars) < 2, 'Gather only supports two arguments'
+            if len(vars) is 1:
+                other = vars[0]
+            else:
+                other = create(ot[self.type],indx.length)
+            t=self.type+indx.type+other.type
             f={'cmview_dvview_micvview_d': vsip_cmgather_d,
                'cmview_fvview_micvview_f': vsip_cmgather_f,
                'cvview_dvview_vicvview_d': vsip_cvgather_d,
@@ -1511,7 +1589,7 @@ class Block (object):
                'mview_fvview_mivview_f':   vsip_mgather_f,
                'vview_dvview_vivview_d':   vsip_vgather_d,
                'vview_fvview_vivview_f':   vsip_vgather_f,
-               'vview_ivview_vivview_d':   vsip_vgather_i,
+               'vview_ivview_vivview_i':   vsip_vgather_i,
                'vview_sivview_vivview_si': vsip_vgather_si,
                'vview_ucvview_vivview_uc': vsip_vgather_uc,
                'vview_mivview_vivview_mi': vsip_vgather_mi,
@@ -2710,6 +2788,15 @@ class Block (object):
                 print('Property luInv only works on matrices of type float')
                 return
         def luSolve(self,XB):
+            """
+            Usage:
+                X = A.luSolve(X)
+                A is a matrix of type float or double; real or complex.
+                On input X is a vector or matrix of the same precision as A
+            luSolve solve overwrites input data with output data
+            """
+            sptd=['mview_f','cmview_f','mview_d','cmview_d']
+            assert self.type in sptd, "Solve method only works with matrices"
             if 'vview' in XB.type:
                 X=XB.block.bind(XB.offset,XB.stride,XB.length,1,1)
             else:
