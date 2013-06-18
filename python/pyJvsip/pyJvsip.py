@@ -3590,6 +3590,97 @@ class SV(object):
         else:
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
+class FIR(object):
+    
+    def __init__(self,t,filt,sym,N,D,state):
+        """
+        Usage:
+           firObj = FIR(t,filt,sym,N,D,state,ntimes,hint)
+        t is a type string; one of: 
+              'rcfir_f','cfir_f','fir_f','rcfir_d','cfir_d','fir_d'
+        filt is a vector view of filter coefficients
+        sym is a string; one of 'NONE','ODD','EVEN'
+        state (save state) is 'NO' or 'YES'
+        """
+        filtSptd = {'fir_f':'vview_f',
+                     'fir_d':'vview_d',
+                     'cfir_f':'cvview_f',
+                     'cfir_d':'cvview_d',
+                     'rcfir_f':'vview_f',
+                     'rcfir_d':'vview_d'}
+        firCreate = {'fir_f':vsip_fir_create_f,
+                     'fir_d':vsip_fir_create_d,
+                     'cfir_f':vsip_cfir_create_f,
+                     'cfir_d':vsip_cfir_create_d,
+                     'rcfir_f':vsip_rcfir_create_f,
+                     'rcfir_d':vsip_rcfir_create_d}
+        symType={'NONE':0,'ODD':1,'EVEN':2}
+        stateType={'NO':1,'YES':2}
+        assert filt.type == filtSptd[t],\
+                  'Filter Coefficients in wrong view type for filter of type ' + t
+        assert firCreate.has_key(t), 'Filter type not recognized'
+        assert sym in ['NONE','ODD','EVEN'],'Sym flag not recognized'
+        assert state in ['NO','YES'],'State flag not recognized'
+        self.__jvsip = JVSIP()
+        self.__type = t
+        self.__fir = firCreate[t](filt.view,symType[sym],N,D,stateType[state],0,0)
+        self.__length = N
+        self.__decimation=D
+        self.__state = state
+        
+    def __del__(self):
+        firDestroy = {'fir_f':vsip_fir_destroy_f,
+                     'fir_d':vsip_fir_destroy_d,
+                     'cfir_f':vsip_cfir_destroy_f,
+                     'cfir_d':vsip_cfir_destroy_d,
+                     'rcfir_f':vsip_rcfir_destroy_f,
+                     'rcfir_d':vsip_rcfir_destroy_d}
+        firDestroy[self.type](self.fir)
+        del(self.__jvsip)
+    def flt(self,x,y):
+        """
+        Usage:
+             fir = FIR(...)
+             fir.flt(x,y)
+             x is input view of data to be filtered
+             y is output view of filtered data
+        """
+        filtSptd = {'fir_f':'vview_f','fir_d':'vview_d',
+                     'cfir_f':'cvview_f','cfir_d':'cvview_d',
+                     'rcfir_f':'cvview_f','rcfir_d':'cvview_d'}
+        firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,
+                  'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,
+                  'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d} 
+        assert x.type == y.type
+        assert filtSptd[self.type] == x.type
+        firflt[self.type](self.fir,x.view,y.view)
+        return y
+    def reset(self):
+        fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
+                  'cfir_f':vsip_cfir_reset_f,'cfir_d':vsip_cfir_reset_d,
+                  'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d} 
+        if self.state:
+            fir_reset[self.type](self.fir)
+        return self
+    @property
+    def state(self):
+        if self.__state == 'YES':
+            return True
+        else:
+            return False
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def fir(self):
+        return self.__fir
+    @property
+    def length(self):
+        return self.__length
+    @property
+    def decimation(self):
+        return self.__decimation
+    
 def svdCompose(d,indx):
     """
     Usage:
