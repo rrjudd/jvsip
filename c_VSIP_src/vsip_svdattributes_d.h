@@ -1,7 +1,7 @@
 /*
  *  vsip_svdattributes_d.h
- *  Created by Randall Judd on 9/5/08.
- *  Copyright 2008 Home. All rights reserved.
+ *  Created by Randall Judd  5/2013.
+ *  Copyright 2013 All rights reserved.
  *
  */
 /*********************************************************************
