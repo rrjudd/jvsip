@@ -50,68 +50,68 @@ while(_n-- > 0){temp = alpha.r * *bpr - *bpi * alpha.i;*bpi = alpha.r * *bpi + a
 bpr += bst; bpi += bst;}}
 
 #define cvcopy_f(a, r) {\
-    vsip_length _n =  r->length;vsip_stride cast = a->block->cstride,crst = r->block->cstride;\
-    vsip_scalar_f *apr = a->block->R->array + cast * a->offset,*rpr = r->block->R->array + crst * r->offset;\
-    vsip_scalar_f *api = a->block->I->array + cast * a->offset,*rpi = r->block->I->array + crst * r->offset;\
-    vsip_stride ast = (cast * a->stride),rst = (crst * r->stride);\
+    vsip_length _n =  (r)->length;vsip_stride cast = (a)->block->cstride,crst = (r)->block->cstride;\
+    vsip_scalar_f *apr = (a)->block->R->array + cast * (a)->offset,*rpr = (r)->block->R->array + crst * (r)->offset;\
+    vsip_scalar_f *api = (a)->block->I->array + cast * (a)->offset,*rpi = (r)->block->I->array + crst * (r)->offset;\
+    vsip_stride ast = (cast * (a)->stride),rst = (crst * (r)->stride);\
     while(_n-- > 0){*rpr = *apr;*rpi = *api;apr += ast; api += ast;rpr += rst; rpi += rst;}}
 
-#define vcopy_f(a,r) {vsip_length _n   = r->length;\
-    vsip_stride ast = a->stride * a->block->rstride,rst = r->stride * r->block->rstride;\
-    vsip_scalar_f *ap = a->block->array + a->offset * a->block->rstride,*rp = r->block->array+r->offset * r->block->rstride;\
+#define vcopy_f(a,r) {vsip_length _n   = (r)->length;\
+    vsip_stride ast = (a)->stride * (a)->block->rstride,rst = (r)->stride * (r)->block->rstride;\
+    vsip_scalar_f *ap = (a)->block->array + (a)->offset * (a)->block->rstride,*rp = (r)->block->array+(r)->offset * (r)->block->rstride;\
     while(_n-- > 0){*rp = *ap;ap += ast; rp += rst;}}
 
-#define vcopy_vi(a,r) {vsip_length _n   = r->length;\
-    vsip_stride ast = a->stride,rst = r->stride;\
-    vsip_scalar_vi *ap = a->block->array + a->offset,*rp = r->block->array+r->offset;\
+#define vcopy_vi(a,r) {vsip_length _n   = (r)->length;\
+    vsip_stride ast = (a)->stride,rst = (r)->stride;\
+    vsip_scalar_vi *ap = (a)->block->array + (a)->offset,*rp = (r)->block->array+(r)->offset;\
     while(_n-- > 0){*rp = *ap;ap += ast; rp += rst;}}
 
 #define mcopy_f(a,r) {vsip_length n_mj,n_mn;vsip_stride ast_mj, ast_mn,rst_mj, rst_mn;\
-    vsip_scalar_f *rp = (r->block->array) + r->offset * r->block->rstride,\
-    *ap = (a->block->array) + a->offset * a->block->rstride;vsip_scalar_f *rp0 = rp,*ap0 = ap;\
-    if(r->row_stride < r->col_stride){n_mj   = r->row_length; n_mn = r->col_length;\
-    rst_mj = r->row_stride; rst_mn = r->col_stride;ast_mj = a->row_stride; ast_mn = a->col_stride;\
-    rst_mj *= r->block->rstride; rst_mn *= r->block->rstride;ast_mj *= a->block->rstride; ast_mn *= a->block->rstride;\
-    } else {n_mn = r->row_length; n_mj = r->col_length;\
-    rst_mn = r->row_stride; rst_mj = r->col_stride;ast_mn = a->row_stride; ast_mj = a->col_stride;\
-    rst_mn *= r->block->rstride; rst_mj *= r->block->rstride;ast_mn *= a->block->rstride; ast_mj *= a->block->rstride;\
+    vsip_scalar_f *rp = ((r)->block->array) + (r)->offset * (r)->block->rstride,\
+    *ap = ((a)->block->array) + (a)->offset * (a)->block->rstride;vsip_scalar_f *rp0 = rp,*ap0 = ap;\
+    if((r)->row_stride < (r)->col_stride){n_mj   = (r)->row_length; n_mn = (r)->col_length;\
+    rst_mj = (r)->row_stride; rst_mn = (r)->col_stride;ast_mj = (a)->row_stride; ast_mn = (a)->col_stride;\
+    rst_mj *= (r)->block->rstride; rst_mn *= (r)->block->rstride;ast_mj *= (a)->block->rstride; ast_mn *= (a)->block->rstride;\
+    } else {n_mn = (r)->row_length; n_mj = (r)->col_length;\
+    rst_mn = (r)->row_stride; rst_mj = (r)->col_stride;ast_mn = (a)->row_stride; ast_mj = (a)->col_stride;\
+    rst_mn *= (r)->block->rstride; rst_mj *= (r)->block->rstride;ast_mn *= (a)->block->rstride; ast_mj *= (a)->block->rstride;\
     } while(n_mn-- > 0){vsip_length n = n_mj;while(n-- >0){*rp = *ap;ap += ast_mj;  rp += rst_mj;\
     }ap0 += ast_mn; rp0 += rst_mn;ap = ap0; rp = rp0;}}
 
 #define cmcopy_f(a,r) {vsip_length n_mj, n_mn; vsip_stride ast_mj, ast_mn,rst_mj, rst_mn; \
-    vsip_scalar_f *ap_r = a->block->R->array + a->offset * a->block->cstride,*rp_r = r->block->R->array + r->offset * r->block->cstride;\
-    vsip_scalar_f *ap_i = a->block->I->array + a->offset * a->block->cstride,*rp_i = r->block->I->array + r->offset * r->block->cstride;\
+    vsip_scalar_f *ap_r = (a)->block->R->array + (a)->offset * (a)->block->cstride,*rp_r = (r)->block->R->array + (r)->offset * (r)->block->cstride;\
+    vsip_scalar_f *ap_i = (a)->block->I->array + (a)->offset * (a)->block->cstride,*rp_i = (r)->block->I->array + (r)->offset * (r)->block->cstride;\
     vsip_scalar_f *ap0_r = ap_r,*rp0_r = rp_r,*ap0_i = ap_i,*rp0_i = rp_i;\
-    if(r->row_stride < r->col_stride){n_mj = r->row_length; n_mn = r->col_length;\
-    rst_mj = r->row_stride; rst_mn = r->col_stride;ast_mj = a->row_stride; ast_mn = a->col_stride;\
-    rst_mj *= r->block->cstride; rst_mn *= r->block->cstride;ast_mj *= a->block->cstride; ast_mn *= a->block->cstride;\
-    } else {n_mn = r->row_length; n_mj = r->col_length;\
-    rst_mn = r->row_stride; rst_mj = r->col_stride;ast_mn = a->row_stride; ast_mj = a->col_stride;\
-    rst_mn *= r->block->cstride; rst_mj *= r->block->cstride;ast_mn *= a->block->cstride; ast_mj *= a->block->cstride;}\
+    if((r)->row_stride < (r)->col_stride){n_mj = (r)->row_length; n_mn = (r)->col_length;\
+    rst_mj = (r)->row_stride; rst_mn = (r)->col_stride;ast_mj = (a)->row_stride; ast_mn = (a)->col_stride;\
+    rst_mj *= (r)->block->cstride; rst_mn *= (r)->block->cstride;ast_mj *= (a)->block->cstride; ast_mn *= (a)->block->cstride;\
+    } else {n_mn = (r)->row_length; n_mj = (r)->col_length;\
+    rst_mn = (r)->row_stride; rst_mj = (r)->col_stride;ast_mn = (a)->row_stride; ast_mj = (a)->col_stride;\
+    rst_mn *= (r)->block->cstride; rst_mj *= (r)->block->cstride;ast_mn *= (a)->block->cstride; ast_mj *= (a)->block->cstride;}\
     while(n_mn-- > 0){vsip_length n = n_mj;while(n-- >0){*rp_r = *ap_r;*rp_i = *ap_i;ap_r += ast_mj;  rp_r += rst_mj;\
     ap_i += ast_mj;  rp_i += rst_mj;}ap0_r += ast_mn; rp0_r += rst_mn;ap0_i += ast_mn; rp0_i += rst_mn;\
     ap_r = ap0_r; rp_r = rp0_r; ap_i = ap0_i; rp_i = rp0_i;}}
 
 #define cmherm_f(_A,_R) {	\
-    vsip_length  lx = _A->row_length,ly = _A->col_length;vsip_stride cAst = _A->block->cstride,cRst = _R->block->cstride;\
-    vsip_scalar_f *a_p_r = _A->block->R->array + cAst * _A->offset,\
-    *a_p_i = _A->block->I->array + cAst * _A->offset,*r_p_r = _R->block->R->array + cRst * _R->offset, *r_p_i;vsip_length i, j;\
-    vsip_stride stAx = cAst * _A->row_stride, stAy = cAst *_A->col_stride, stRx = cRst * _R->row_stride,stRy = cRst *_R->col_stride;\
+    vsip_length  lx = (_A)->row_length,ly = (_A)->col_length;vsip_stride cAst = (_A)->block->cstride,cRst = (_R)->block->cstride;\
+    vsip_scalar_f *a_p_r = (_A)->block->R->array + cAst * (_A)->offset,\
+    *a_p_i = (_A)->block->I->array + cAst * (_A)->offset,*r_p_r = (_R)->block->R->array + cRst * (_R)->offset, *r_p_i;vsip_length i, j;\
+    vsip_stride stAx = cAst * (_A)->row_stride, stAy = cAst *(_A)->col_stride, stRx = cRst * (_R)->row_stride,stRy = cRst *(_R)->col_stride;\
     for(i=0; i<ly; i++){\
-    r_p_r = _R->block->R->array + cRst * _R->offset + i * stRx;r_p_i = _R->block->I->array + cRst * _R->offset + i * stRx;\
-    a_p_r = _A->block->R->array + cAst * _A->offset + i * stAy;a_p_i = _A->block->I->array + cAst * _A->offset + i * stAy;\
+    r_p_r = (_R)->block->R->array + cRst * (_R)->offset + i * stRx;r_p_i = (_R)->block->I->array + cRst * (_R)->offset + i * stRx;\
+    a_p_r = (_A)->block->R->array + cAst * (_A)->offset + i * stAy;a_p_i = (_A)->block->I->array + cAst * (_A)->offset + i * stAy;\
     for(j=0; j<lx; j++){*r_p_r = *a_p_r;*r_p_i = - *a_p_i;r_p_r += stRy; a_p_r += stAx;r_p_i += stRy; a_p_i += stAx;}}}
 
 #define cmconj_f( a, r) { vsip_length n_mj, n_mn; vsip_stride ast_mj, ast_mn, rst_mj, rst_mn; \
-    vsip_scalar_f *ap_r = a->block->R->array + a->offset * a->block->cstride, *rp_r = r->block->R->array + r->offset * r->block->cstride, \
-    *ap_i = a->block->I->array + a->offset * a->block->cstride, *rp_i = r->block->I->array + r->offset * r->block->cstride, \
+    vsip_scalar_f *ap_r = (a)->block->R->array + (a)->offset * (a)->block->cstride, *rp_r = (r)->block->R->array + (r)->offset * (r)->block->cstride, \
+    *ap_i = (a)->block->I->array + (a)->offset * (a)->block->cstride, *rp_i = (r)->block->I->array + (r)->offset * (r)->block->cstride, \
     *ap0_r = ap_r, *rp0_r = rp_r, *ap0_i = ap_i, *rp0_i = rp_i; \
-    if(r->row_stride < r->col_stride){ n_mj = r->row_length; n_mn = r->col_length; \
-    rst_mj = r->row_stride; rst_mn = r->col_stride; ast_mj = a->row_stride; ast_mn = a->col_stride; \
-    rst_mj *= r->block->cstride; rst_mn *= r->block->cstride; ast_mj *= a->block->cstride; ast_mn *= a->block->cstride; \
-    } else { n_mn = r->row_length; n_mj = r->col_length; \
-    rst_mn = r->row_stride; rst_mj = r->col_stride; ast_mn = a->row_stride; ast_mj = a->col_stride; \
-    rst_mn *= r->block->cstride; rst_mj *= r->block->cstride; ast_mn *= a->block->cstride; ast_mj *= a->block->cstride; \
+    if((r)->row_stride < (r)->col_stride){ n_mj = (r)->row_length; n_mn = (r)->col_length; \
+    rst_mj = (r)->row_stride; rst_mn = (r)->col_stride; ast_mj = (a)->row_stride; ast_mn = (a)->col_stride; \
+    rst_mj *= (r)->block->cstride; rst_mn *= (r)->block->cstride; ast_mj *= (a)->block->cstride; ast_mn *= (a)->block->cstride; \
+    } else { n_mn = (r)->row_length; n_mj = (r)->col_length; \
+    rst_mn = (r)->row_stride; rst_mj = (r)->col_stride; ast_mn = (a)->row_stride; ast_mj = (a)->col_stride; \
+    rst_mn *= (r)->block->cstride; rst_mj *= (r)->block->cstride; ast_mn *= (a)->block->cstride; ast_mj *= (a)->block->cstride; \
     } while(n_mn-- > 0){ vsip_length _n = n_mj; while(_n-- >0){ \
     *rp_r = *ap_r; *rp_i = - *ap_i; ap_r += ast_mj; rp_r += rst_mj; ap_i += ast_mj; rp_i += rst_mj; \
     } ap0_r += ast_mn; rp0_r += rst_mn; ap_r = ap0_r;    rp_r = rp0_r; ap0_i += ast_mn; rp0_i += rst_mn; ap_i = ap0_i;rp_i = rp0_i;}}
@@ -163,33 +163,75 @@ bpr += bst; bpi += bst;}}
     }_j=_i; while(_i != b[_j * p->stride]){ _j++; if(_j > n_ind) exit(-1); } b[_j * p->stride] = r_or_c;}}}
 
 #define vmprod_f(a,B,r) {vsip_length nx=0,mx=0;\
-    vsip_scalar_f *ap=a->block->array+a->offset * a->block->rstride,*ap0=ap,\
-    *rp=r->block->array+r->offset * r->block->rstride, *Byp=B->block->array+B->offset * B->block->rstride,*Bxp = Byp;\
-    vsip_stride BCst = B->col_stride * B->block->rstride,BRst=B->row_stride * B->block->rstride,\
-    rst  = r->stride * r->block->rstride; while(nx++ < B->row_length){*rp=0;mx=0;\
-    while(mx++ < B->col_length){ *rp += *ap * *Byp; ap += a->stride; Byp += BCst; }ap = ap0; Byp = (Bxp += BRst); rp += rst;}}
+    vsip_scalar_f *ap=(a)->block->array+(a)->offset * (a)->block->rstride,*ap0=ap,\
+    *rp=(r)->block->array+(r)->offset * (r)->block->rstride, *Byp=(B)->block->array+(B)->offset * (B)->block->rstride,*Bxp = Byp;\
+    vsip_stride BCst = (B)->col_stride * (B)->block->rstride,BRst=(B)->row_stride * (B)->block->rstride,\
+    rst  = (r)->stride * (r)->block->rstride; while(nx++ < (B)->row_length){*rp=0;mx=0;\
+    while(mx++ < (B)->col_length){ *rp += *ap * *Byp; ap += (a)->stride; Byp += BCst; }ap = ap0; Byp = (Bxp += BRst); rp += rst;}}
 
 #define mvprod_f(A, b, r) {vsip_length nx=0, mx=0;\
     vsip_scalar_f  *bp=b->block->array+b->offset * b->block->rstride,\
-    *rp=r->block->array+r->offset * r->block->rstride, *Ayp=A->block->array+A->offset * A->block->rstride, *Axp=Ayp;\
-    vsip_stride rst=r->stride * r->block->rstride, ARst=A->row_stride * A->block->rstride,\
-    ACst=A->col_stride * A->block->rstride, bst=b->stride * b->block->rstride;\
-    while(nx++ < A->col_length){ *rp=0; mx=0; while(mx++ < A->row_length){ *rp += *bp * *Axp; bp += bst; Axp += ARst; }\
+    *rp=(r)->block->array+(r)->offset * (r)->block->rstride, *Ayp=(A)->block->array+(A)->offset * (A)->block->rstride, *Axp=Ayp;\
+    vsip_stride rst=(r)->stride * (r)->block->rstride, ARst=(A)->row_stride * (A)->block->rstride,\
+    ACst=(A)->col_stride * (A)->block->rstride, bst=b->stride * b->block->rstride;\
+    while(nx++ < (A)->col_length){ *rp=0; mx=0; while(mx++ < (A)->row_length){ *rp += *bp * *Axp; bp += bst; Axp += ARst; }\
     bp=b->block->array+b->offset * b->block->rstride; Axp=(Ayp += ACst); rp += rst; } }
 
-#define svmul_f(alpha, b, r) {vsip_length n = r->length;\
-    vsip_stride bst=b->stride * b->block->rstride, rst = r->stride * r->block->rstride;\
-    vsip_scalar_f *bp=b->block->array+b->offset * b->block->rstride, *rp=r->block->array+r->offset * r->block->rstride;\
+#define cvmprod_f(_a,_B,_r) { vsip_length nx = 0, mx = 0; \
+    vsip_stride cast = (_a)->block->cstride, crst = (_r)->block->cstride, cBst = (_B)->block->cstride;\
+    vsip_scalar_f *ap_r = (vsip_scalar_f*)((_a)->block->R->array + cast * (_a)->offset),\
+    *ap_i = (vsip_scalar_f*)((_a)->block->I->array + cast * (_a)->offset),\
+    *rp_r = (vsip_scalar_f*)((_r)->block->R->array + crst * (_r)->offset),\
+    *rp_i = (vsip_scalar_f*)((_r)->block->I->array + crst * (_r)->offset),\
+    *Byp_r = (vsip_scalar_f*)((_B)->block->R->array + cBst * (_B)->offset),\
+    *Byp_i = (vsip_scalar_f*)((_B)->block->I->array + cBst * (_B)->offset),\
+    *Bxpr = Byp_r, *Bxpi = Byp_i; vsip_stride sta = cast * (_a)->stride, str = crst * (_r)->stride, stB = cBst * (_B)->col_stride;\
+    while(nx++ < (_B)->row_length){ *rp_r = 0; *rp_i = 0; mx = 0;\
+    while(mx++ < (_B)->col_length){ *rp_r += *ap_r * *Byp_r - *ap_i * *Byp_i; *rp_i += *ap_r * *Byp_i + *ap_i * *Byp_r;\
+    ap_r += sta; Byp_r += stB; ap_i += sta; Byp_i += stB; } \
+    ap_r = (vsip_scalar_f*)((_a)->block->R->array + cast * (_a)->offset); ap_i = (vsip_scalar_f*)((_a)->block->I->array + cast * (_a)->offset);\
+    Byp_r = (Bxpr += (cBst * (_B)->row_stride)); Byp_i = (Bxpi += (cBst * (_B)->row_stride)); rp_r += str; rp_i += str;}}
+
+#define cmvprod_f(_A,_b,_r){ \
+    if(((_A)->block->cstride == 2) && ((_b)->block->cstride == 2) && ((_r)->block->cstride == 2)){\
+    vsip_length nx = 0, mx = 0; vsip_stride cbst = (_b)->block->cstride, crst = (_b)->block->cstride, cAst = (_A)->block->cstride;\
+    vsip_scalar_f *bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset),\
+    *rp_r = (vsip_scalar_f*)((_r)->block->R->array + crst * (_r)->offset),\
+    *Axp_r = (vsip_scalar_f*)((_A)->block->R->array + cAst * (_A)->offset),\
+    *Aypr = Axp_r; vsip_stride stb = cbst * (_b)->stride, str = crst * (_r)->stride, stA = cAst * (_A)->row_stride;\
+    vsip_scalar_f dot_r, dot_i; while(nx++ < (_A)->col_length){ mx = 0; dot_r = 0; dot_i = 0;\
+    while(mx++ < (_A)->row_length){ vsip_scalar_f Ar = *Axp_r, Ai = *(Axp_r + 1); vsip_scalar_f br = *bp_r, bi = *(bp_r + 1);\
+    dot_r += br * Ar - bi * Ai; dot_i += br * Ai + bi * Ar; bp_r += stb; Axp_r += stA; } *rp_r = dot_r; *(rp_r + 1) = dot_i;\
+    bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset); Axp_r = (Aypr += (cAst * (_A)->col_stride));rp_r += str;}\
+    } else { vsip_length nx = 0, mx = 0;\
+    vsip_stride cbst = (_b)->block->cstride, crst = (_r)->block->cstride, cAst = (_A)->block->cstride;\
+    vsip_scalar_f *bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset),\
+    *bp_i = (vsip_scalar_f*)((_b)->block->I->array + cbst * (_b)->offset),\
+    *rp_r = (vsip_scalar_f*)((_r)->block->R->array + crst * (_r)->offset),\
+    *rp_i = (vsip_scalar_f*)((_r)->block->I->array + crst * (_r)->offset),\
+    *Axp_r = (vsip_scalar_f*)((_A)->block->R->array + cAst * (_A)->offset),\
+    *Axp_i = (vsip_scalar_f*)((_A)->block->I->array + cAst * (_A)->offset),\
+    *Aypr = Axp_r, *Aypi = Axp_i; vsip_stride stb = cbst * (_b)->stride, str = crst * (_r)->stride, stA = cAst * (_A)->row_stride;\
+    vsip_scalar_f dot_r, dot_i; while(nx++ < (_A)->col_length){ dot_r = 0; dot_i = 0; mx = 0;\
+    while(mx++ < (_A)->row_length){ dot_r += *bp_r * *Axp_r - *bp_i * *Axp_i; dot_i += *bp_r * *Axp_i + *bp_i * *Axp_r;\
+    bp_r += stb; Axp_r += stA; bp_i += stb; Axp_i += stA; }\
+    *rp_r = dot_r; *rp_i = dot_i; bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset);\
+    bp_i = (vsip_scalar_f*)((_b)->block->I->array + cbst * (_b)->offset); Axp_r = (Aypr += (cAst * (_A)->col_stride));\
+    Axp_i = (Aypi += (cAst * (_A)->col_stride)); rp_r += str; rp_i += str; }}}
+
+#define svmul_f(alpha, b, r) {vsip_length n = (r)->length;\
+    vsip_stride bst=b->stride * b->block->rstride, rst = (r)->stride * (r)->block->rstride;\
+    vsip_scalar_f *bp=b->block->array+b->offset * b->block->rstride, *rp=(r)->block->array+(r)->offset * (r)->block->rstride;\
     while(n-- > 0){ *rp = alpha * *bp; bp += bst; rp += rst;}}
 
-#define mtrans_f(A, R) { vsip_length  lx = A->row_length, ly = A->col_length; vsip_index i, j; vsip_scalar_f tmp;\
-    vsip_scalar_f *a_p = A->block->array + A->offset * A->block->rstride, *r_p = R->block->array + R->offset * R->block->rstride;\
-    vsip_stride stAx = A->row_stride * A->block->rstride, stAy = A->col_stride * A->block->rstride,\
-    stRx = R->row_stride * R->block->rstride, stRy = R->col_stride * R->block->rstride;\
+#define mtrans_f(A, R) { vsip_length  lx = (A)->row_length, ly = (A)->col_length; vsip_index i, j; vsip_scalar_f tmp;\
+    vsip_scalar_f *a_p = (A)->block->array + (A)->offset * (A)->block->rstride, *r_p = R->block->array + R->offset * R->block->rstride;\
+    vsip_stride stAx = (A)->row_stride * (A)->block->rstride, stAy = (A)->col_stride * (A)->block->rstride,\
+    stRx = (R)->row_stride * (R)->block->rstride, stRy = (R)->col_stride * (R)->block->rstride;\
     if((lx == ly) && (a_p == r_p)){ for(i=1; i<lx; i++){ for(j=0; j<i; j++){ tmp = *(a_p + j * stAy + i * stAx);\
     *(a_p + j * stAy + i * stAx) = *(a_p + j * stAx + i * stAy); *(a_p + j * stAx + i * stAy) = tmp; } }\
-    } else { for(i=0; i<ly; i++){ r_p = R->block->array + R->offset * R->block->rstride + i * stRx;\
-    a_p = A->block->array + A->offset * A->block->rstride + i * stAy; for(j=0; j<lx; j++){ *r_p = *a_p;\
+    } else { for(i=0; i<ly; i++){ r_p = (R)->block->array + (R)->offset * (R)->block->rstride + i * stRx;\
+    a_p = (A)->block->array + (A)->offset * (A)->block->rstride + i * stAy; for(j=0; j<lx; j++){ *r_p = *a_p;\
     r_p += stRy; a_p += stAx; } } } }
 
 typedef struct {vsip_index i; vsip_index j;} svdCorner;
@@ -3820,32 +3862,72 @@ vsip_svdmatv_f(const vsip_sv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, co
 int
 vsip_svdprodu_f(const vsip_sv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const vsip_mview_f *C)
 {
-    if((OpU != VSIP_MAT_NTRANS) || (OpU != VSIP_MAT_TRANS)) return 1;
-    if( (ApU != VSIP_MAT_LSIDE) || (ApU != VSIP_MAT_RSIDE)) return 1;
-    if( svd->attr.Usave == VSIP_SVD_UVPART){
-        if (ApU == VSIP_MAT_LSIDE){
-            if(OpU == VSIP_MAT_NTRANS){
-            } else {
-            }
-        } else { /* must be MAT_RSIDE */
-            if(OpU == VSIP_MAT_NTRANS){
-            } else {
-            }
-        }
-    } else if(svd->attr.Usave == VSIP_SVD_UVFULL){
-        if (ApU == VSIP_MAT_LSIDE){
-            if(OpU == VSIP_MAT_NTRANS){
-            } else {
-            }
-        } else { /* must be MAT_RSIDE */
-            if(OpU == VSIP_MAT_NTRANS){
-            } else {
-            }
-        }
+    svdObj_f* svdObj=(svdObj_f*)svd->svd;
+    vsip_mview_f c = *C;
+    vsip_index i;
+    vsip_vview_f y;
+    vsip_mview_f U;
+    if(svd->attr.Usave == VSIP_SVD_UVNOS) return 1;
+    if((OpU != VSIP_MAT_NTRANS) && (OpU != VSIP_MAT_TRANS)) return 2;
+    if( (ApU != VSIP_MAT_LSIDE) && (ApU != VSIP_MAT_RSIDE)) return 3;
+    if(svd->transpose){
+        U = *(svdObj->R);
+        U.row_stride = svdObj->R->col_stride; U.col_stride=svdObj->R->row_stride;
+        U.row_length = svdObj->R->col_length; U.col_length=svdObj->R->row_length;
     } else {
-        return 1;
+        U = *(svdObj->L);
     }
-    return 1;
+    /* UVPART and UVFULL operate the same */
+    if (ApU == VSIP_MAT_LSIDE){
+        if(OpU == VSIP_MAT_NTRANS){
+            vsip_vview_f *x = svdObj->w;
+            x->offset=0;x->length=U.col_length;x->stride=1;
+            c.col_length=U.col_length;
+            for(i=0; i<c.row_length; i++){
+                    mvprod_f(&U,col_sv_f(&c,&y,i),x);
+                    vcopy_f(x,&y)
+                }
+        } else { /* must be TRANS */
+            vsip_vview_f *x = svdObj->w;
+            vsip_length rl=U.row_length;
+            vsip_stride rs=U.row_stride;
+            U.row_length = U.col_length;
+            U.col_length = rl;
+            U.row_stride = U.col_stride;
+            U.col_stride = rs;
+            x->offset=0;x->length=U.col_length;x->stride=1;
+            c.col_length=U.col_length;
+            for(i=0; i<c.row_length; i++){
+                mvprod_f(&U,col_sv_f(&c,&y,i),x);
+                vcopy_f(x,&y)
+            }
+        }
+    } else { /* must be MAT_RSIDE */
+        if(OpU == VSIP_MAT_NTRANS){
+            vsip_vview_f *x = svdObj->w;
+            x->offset=0;x->length=U.row_length;x->stride=1;
+            c.row_length = U.row_length;
+            for(i=0; i<c.col_length; i++){
+                vmprod_f(row_sv_f(&c,&y,i),&U,x);
+                vcopy_f(x,&y)
+            }
+        } else {
+            vsip_vview_f *x = svdObj->w;
+            vsip_length rl=U.row_length;
+            vsip_stride rs=U.row_stride;
+            U.row_length = U.col_length;
+            U.col_length = rl;
+            U.row_stride = U.col_stride;
+            U.col_stride = rs;
+            x->offset=0;x->length=U.row_length;x->stride=1;
+            c.row_length=U.row_length;
+            for(i=0; i<c.col_length; i++){
+                vmprod_f(row_sv_f(&c,&y,i),&U,x);
+                vcopy_f(x,&y)
+            }
+        }
+    }
+    return 0;
 }
 int
 vsip_svdprodv_f(const vsip_sv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const vsip_mview_f *C)
@@ -3980,10 +4062,81 @@ vsip_csvdmatv_f(const vsip_csv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, 
     return retval;
 }
 int
-vsip_csvdprodu_f(const vsip_sv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const vsip_mview_f *C)
+vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const vsip_cmview_f *C)
 {
-    return 1;
+    csvdObj_f* svdObj=(csvdObj_f*)svd->svd;
+    vsip_cmview_f c = *C;
+    vsip_index i;
+    vsip_cvview_f y;
+    vsip_cmview_f U;
+    if(svd->attr.Usave == VSIP_SVD_UVNOS) return 1;
+    if((OpU != VSIP_MAT_NTRANS) && (OpU != VSIP_MAT_HERM)) return 2;
+    if( (ApU != VSIP_MAT_LSIDE) && (ApU != VSIP_MAT_HERM)) return 3;
+    if(svd->transpose){
+        U = *(svdObj->R);
+        U.row_stride = svdObj->R->col_stride; U.col_stride=svdObj->R->row_stride;
+        U.row_length = svdObj->R->col_length; U.col_length=svdObj->R->row_length;
+    } else {
+        U = *(svdObj->L);
+    }
+    /* UVPART and UVFULL operate the same */
+    if (ApU == VSIP_MAT_LSIDE){
+        if(OpU == VSIP_MAT_NTRANS){
+            vsip_cvview_f *x = svdObj->w;
+            x->offset=0;x->length=U.col_length;x->stride=1;
+            c.col_length=U.col_length;
+            for(i=0; i<c.row_length; i++){
+                    cmvprod_f(&U,ccol_sv_f(&c,&y,i),x);
+                    cvcopy_f(x,&y)
+                }
+        } else { /* must be HERM */
+            vsip_cvview_f *x = svdObj->w;
+            vsip_length rl=U.row_length;
+            vsip_stride rs=U.row_stride;
+            U.row_length = U.col_length;
+            U.col_length = rl;
+            U.row_stride = U.col_stride;
+            U.col_stride = rs;
+            x->offset=0;x->length=U.col_length;x->stride=1;
+            c.col_length=U.col_length;
+            cmconj_f(&U,&U)
+            for(i=0; i<c.row_length; i++){
+                cmvprod_f(&U,ccol_sv_f(&c,&y,i),x);
+                cvcopy_f(x,&y)
+            }
+            cmconj_f(&U,&U)
+        }
+    } else { /* must be MAT_RSIDE */
+        if(OpU == VSIP_MAT_NTRANS){
+            vsip_cvview_f *x = svdObj->w;
+            x->offset=0;x->length=U.row_length;x->stride=1;
+            c.row_length = U.row_length;
+            for(i=0; i<c.col_length; i++){
+                cvmprod_f(crow_sv_f(&c,&y,i),&U,x);
+                cvcopy_f(x,&y)
+            }
+        } else {/* must be herm */
+            vsip_cvview_f *x = svdObj->w;
+            vsip_length rl=U.row_length;
+            vsip_stride rs=U.row_stride;
+            U.row_length = U.col_length;
+            U.col_length = rl;
+            U.row_stride = U.col_stride;
+            U.col_stride = rs;
+            x->offset=0;x->length=U.row_length;x->stride=1;
+            c.row_length=U.row_length;
+            cmconj_f(&U,&U)
+            for(i=0; i<c.col_length; i++){
+                cvmprod_f(crow_sv_f(&c,&y,i),&U,x);
+                cvcopy_f(x,&y)
+            }
+            cmconj_f(&U,&U)
+        }
+    }
+    return 0;
+
 }
+
 int
 vsip_csvdprodv_f(const vsip_csv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const vsip_cmview_f *C)
 {
