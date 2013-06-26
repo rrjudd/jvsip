@@ -333,14 +333,14 @@ class Block (object):
                strides through blocks.)
             """
             def nlength(b,e,s): #begin(start),end(stop),step(step)=>b,e,s
-                d=e-b
-                chk=d%s
+                d=int(e)-int(b)
+                chk=d%int(s)
                 if chk is 0:
-                    return d//s
+                    return d//int(s)
                 else:
-                    return (d//s) + 1
+                    return (d//int(s)) + 1
             def vAttr(attr,vals):
-                o=attr.offset; l=attr.length; strd=attr.stride;
+                o=int(attr.offset); l=int(attr.length); strd=int(attr.stride);
                 if len(vals) == 1 and isinstance(vals[0],slice):
                     slc=vals[0] # this is (start index, stop index, step)
                     step=slc.step
@@ -355,7 +355,7 @@ class Block (object):
                     stop = slc.stop
                     if (stop is None) or (stop > l):
                         stop = l
-                    nl=nlength(start,stop,step)  #new length
+                    nl=int(nlength(start,stop,step))  #new length
                 elif len(vals) == 1 and isinstance(vals[0],int):
                     return vAttr(attr,(slice(vals[0],l,1),))
                 elif len(vals) == 2 and isinstance(vals[0],int) \
@@ -370,9 +370,9 @@ class Block (object):
                     return False
                 return (no,ns,nl)
             def mAttr(attr,vals):
-                o=attr.offset
-                cl=attr.col_length; cs=attr.col_stride
-                rl=attr.row_length; rs=attr.row_stride;
+                o=int(attr.offset)
+                cl=int(attr.col_length); cs=int(attr.col_stride)
+                rl=int(attr.row_length); rs=int(attr.row_stride);
                 if len(vals) == 2 and isinstance(vals[0],slice) and isinstance(vals[1],slice):
                     rslc=vals[1]; cslc=vals[0]
                     cstep=cslc.step;rstep=rslc.step;
@@ -386,16 +386,16 @@ class Block (object):
                     if cstart is None:
                         cstart = 0
                     no=rstart * rs + cstart * cs + o
-                    ncs=cstep * cs
+                    ncs=int(cstep * cs)
                     stop = cslc.stop
                     if (stop > cl) or (stop is None):
                         stop = cl
-                    ncl= nlength(cstart,stop,cstep)
+                    ncl= int(nlength(cstart,stop,cstep))
                     nrs=rstep * rs
                     stop = rslc.stop
                     if (stop > rl) or (stop is None):
                         stop = rl
-                    nrl= nlength(rstart,stop,rstep)
+                    nrl= int(nlength(rstart,stop,rstep))
                 elif len(vals) == 2 and isinstance(vals[0],int) and isinstance(vals[1],int):
                     return mAttr(attr,(slice(vals[0],cl,1),slice(vals[1],rl,1)))
                 elif len(vals) == 4 and isinstance(vals[0],int) and isinstance(vals[1],int) \
@@ -604,14 +604,14 @@ class Block (object):
         #view attributes.
         @property
         def offset(self):
-            return vsip.getoffset(self.view)
+            return int(vsip.getoffset(self.view))
         def putoffset(self,o):
             vsip.putoffset(self.view,o)
             return self
         @property
         def length(self):
             if self.type in Block.vectorTypes:
-                return vsip.getlength(self.view)
+                return int(vsip.getlength(self.view))
             elif self.type in Block.matrixTypes:
                 print('View not a vector type')
                 return False
@@ -631,7 +631,7 @@ class Block (object):
         @property
         def stride(self):
             if self.type in Block.vectorTypes:
-                return vsip.getstride(self.view)
+                return int(vsip.getstride(self.view))
             elif self.type in Block.matrixTypes:
                 print('View not a vector type')
                 return False
@@ -654,7 +654,7 @@ class Block (object):
                 print('View not a matrix type')
                 return False
             elif self.type in Block.matrixTypes:
-                return vsip.getrowlength(self.view)
+                return int(vsip.getrowlength(self.view))
             else:
                 print('Object not of the proper type')
                 return False
@@ -674,7 +674,7 @@ class Block (object):
                 print('View not a matrix type')
                 return False
             elif self.type in Block.matrixTypes:
-                return vsip.getcollength(self.view)
+                return int(vsip.getcollength(self.view))
             else:
                 print('Object not of the proper type')
                 return False
@@ -694,7 +694,7 @@ class Block (object):
                 print('View not a matrix type')
                 return False
             elif self.type in Block.matrixTypes:
-                return vsip.getrowstride(self.view)
+                return int(vsip.getrowstride(self.view))
             else:
                 print('Object not of the proper type')
                 return False
@@ -714,7 +714,7 @@ class Block (object):
                 print('View not a matrix type')
                 return False
             elif self.type in Block.matrixTypes:
-                return vsip.getcolstride(self.view)
+                return int(vsip.getcolstride(self.view))
             else:
                 print('Object not of the proper type')
                 return False
@@ -838,7 +838,7 @@ class Block (object):
             n = attr[2]
             if len(attr) > 3:
                 n *= attr[4]
-            return n
+            return int(n)
         # window (data taper) functions
         def cheby(self,ripple):
             t=vsip.getType(self.view)[1]

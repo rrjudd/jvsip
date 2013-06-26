@@ -1635,7 +1635,6 @@ vsip_vview_bl* vsip_vputlength_bl( vsip_vview_bl*, vsip_length);
 vsip_vview_i* vsip_vputlength_i( vsip_vview_i*, vsip_length);
 vsip_vview_si* vsip_vputlength_si( vsip_vview_si*, vsip_length);
 vsip_vview_vi* vsip_vputlength_vi( vsip_vview_vi*, vsip_length);
-vsip_vview_bl* vsip_vputlength_bl( vsip_vview_bl*, vsip_length);
 vsip_vview_uc* vsip_vputlength_uc( vsip_vview_uc*, vsip_length);
 void vsip_vinterp_nearest_d( const vsip_vview_d *, const vsip_vview_d *, const vsip_vview_d *, const vsip_vview_d *);
 void vsip_minterp_linear_d ( const vsip_vview_d * , const vsip_mview_d * , vsip_major , const vsip_vview_d * , const vsip_mview_d * ) ;
