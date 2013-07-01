@@ -1,0 +1,7 @@
+In this directory are notebooks I developed to do simple
+'feel good' tests on vsip_svdprodu and vsip_svdprodv functions.
+
+Note these notebooks also demonstrate mixed code between
+pyJvsip module and vsip module to test vsip functions
+directly in python.  This eases testing and reduces 
+development time.

@@ -1,16 +1,15 @@
 This directory includes documentation.
-Some documents I have copied directly from TVCPP. These older documents should be updated 
-but are a low priority for now.
+Some documents I have copied directly from TVCPP. 
+These older documents should be updated but are a low priority for now.
 
-The official VSIPL (through 2012) specification is available at http://www.vsipl.org/
-I include an annotated copy here. The annotations are mistakes I know are in the official 
-document; or changes to the pdf document I would like to see. Fixing errors in the official 
-document is painful and getting fixes finally approved seems to be impossible. For now I 
-am looking for an easy way to publish (and document) problems. If somebody picks up editing 
-the official document then they can use this as a resource.
+A version of the VSIPL (through 2012) specification is included. There are a few
+errors but overall it is a good document.
 
-Note that the OMG specification group is adopting VSIPL as an official OMG specification. Newer specification documents may become available. I will not include them here and will stay pretty
-much with the older C VSIPL document, at least for the time being.
+Note that the OMG specification group is adopting VSIPL as an official OMG specification. 
+For the C++ spec (not part of jvsip) see
+    http://www.omg.org/spec/VSIPL++/ 
+and for the C spec (jvsip will try to keep up) see
+    http://www.omg.org/spec/VSIPL/
 
 I also include newer documents I am writing for the JVSIP distribution. All my documentation 
 are under continuous (although not necessarily frequent) review and modification. 
@@ -18,12 +17,17 @@ I have been using LibreOffice as my documentation tool but I publish in PDF. I h
 found LibreOffice allows embedding the LibreOffice Document inside the PDF. I have done this
 for some of my documents, and plan to do it for all documents developed with LibreOffice.
 
-Recently I have started doing some documentation within the python notebook environment.
+Recently I have started doing some documentation within the ipython notebook environment.
+See
+    http://ipython.org/notebook.html
 This environment allows use of the markdown documentation method which allows use of LaTeX
-type math. Consequently I have started using TeX (LaTeX) for documentation. The final product
-will still be PDF.
+type math.  I will still try to do documents as PDF but the ability to do notebooks would
+be helpful. 
 
-Python documents, and any pyJvsip specification, are mine alone. Currently there is no "official" VSIPL python spec. If OMG does a VSIPL specification for python I probably will stay with what I have done 
+Python documents, and any pyJvsip specification, are mine alone. Currently there is no "official" 
+VSIPL python spec. If OMG does a VSIPL specification for python I probably will stay with what I have done 
 and not try to implement to their spec.
 
-Currently I am doing more of a proof of concept so decisions may change frequently. When I get something that I like for python VSIPL I may document it more fully.
+Currently I am doing more of a proof of concept so decisions may change frequently. When I get something 
+that I like for python VSIPL I may document it more fully.
+
