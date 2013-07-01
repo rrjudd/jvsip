@@ -219,6 +219,54 @@ bpr += bst; bpi += bst;}}
     bp_i = (vsip_scalar_f*)((_b)->block->I->array + cbst * (_b)->offset); Axp_r = (Aypr += (cAst * (_A)->col_stride));\
     Axp_i = (Aypi += (cAst * (_A)->col_stride)); rp_r += str; rp_i += str; }}}
 
+#define cmvjprod_f(_A,_b,_r){ \
+    if(((_A)->block->cstride == 2) && ((_b)->block->cstride == 2) && ((_r)->block->cstride == 2)){\
+    vsip_length nx = 0, mx = 0; vsip_stride cbst = (_b)->block->cstride, crst = (_b)->block->cstride, cAst = (_A)->block->cstride;\
+    vsip_scalar_f *bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset),\
+    *rp_r = (vsip_scalar_f*)((_r)->block->R->array + crst * (_r)->offset),\
+    *Axp_r = (vsip_scalar_f*)((_A)->block->R->array + cAst * (_A)->offset),\
+    *Aypr = Axp_r; vsip_stride stb = cbst * (_b)->stride, str = crst * (_r)->stride, stA = cAst * (_A)->row_stride;\
+    vsip_scalar_f dot_r, dot_i; while(nx++ < (_A)->col_length){ mx = 0; dot_r = 0; dot_i = 0;\
+    while(mx++ < (_A)->row_length){ vsip_scalar_f Ar = *Axp_r, Ai = *(Axp_r + 1); vsip_scalar_f br = *bp_r, bi = *(bp_r + 1);\
+    dot_r += br * Ar + bi * Ai; \
+    dot_i += bi * Ar - br * Ai ; \
+    bp_r += stb; Axp_r += stA; } *rp_r = dot_r; *(rp_r + 1) = dot_i;\
+    bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset); Axp_r = (Aypr += (cAst * (_A)->col_stride));rp_r += str;}\
+    } else { vsip_length nx = 0, mx = 0;\
+    vsip_stride cbst = (_b)->block->cstride, crst = (_r)->block->cstride, cAst = (_A)->block->cstride;\
+    vsip_scalar_f *bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset),\
+    *bp_i = (vsip_scalar_f*)((_b)->block->I->array + cbst * (_b)->offset),\
+    *rp_r = (vsip_scalar_f*)((_r)->block->R->array + crst * (_r)->offset),\
+    *rp_i = (vsip_scalar_f*)((_r)->block->I->array + crst * (_r)->offset),\
+    *Axp_r = (vsip_scalar_f*)((_A)->block->R->array + cAst * (_A)->offset),\
+    *Axp_i = (vsip_scalar_f*)((_A)->block->I->array + cAst * (_A)->offset),\
+    *Aypr = Axp_r, *Aypi = Axp_i; vsip_stride stb = cbst * (_b)->stride, str = crst * (_r)->stride, stA = cAst * (_A)->row_stride;\
+    vsip_scalar_f dot_r, dot_i; while(nx++ < (_A)->col_length){ dot_r = 0; dot_i = 0; mx = 0;\
+    while(mx++ < (_A)->row_length){ \
+    dot_r += *bp_r * *Axp_r + *bp_i * *Axp_i; \
+    dot_i += *bp_i * *Axp_r - *bp_r * *Axp_i; \
+    bp_r += stb; Axp_r += stA; bp_i += stb; Axp_i += stA; }\
+    *rp_r = dot_r; *rp_i = dot_i; bp_r = (vsip_scalar_f*)((_b)->block->R->array + cbst * (_b)->offset);\
+    bp_i = (vsip_scalar_f*)((_b)->block->I->array + cbst * (_b)->offset); Axp_r = (Aypr += (cAst * (_A)->col_stride));\
+    Axp_i = (Aypi += (cAst * (_A)->col_stride)); rp_r += str; rp_i += str; }}}
+
+#define cvmprodj_f(_a,_B,_r) { vsip_length nx = 0, mx = 0; \
+    vsip_stride cast = (_a)->block->cstride, crst = (_r)->block->cstride, cBst = (_B)->block->cstride;\
+    vsip_scalar_f *ap_r = (vsip_scalar_f*)((_a)->block->R->array + cast * (_a)->offset),\
+    *ap_i = (vsip_scalar_f*)((_a)->block->I->array + cast * (_a)->offset),\
+    *rp_r = (vsip_scalar_f*)((_r)->block->R->array + crst * (_r)->offset),\
+    *rp_i = (vsip_scalar_f*)((_r)->block->I->array + crst * (_r)->offset),\
+    *Byp_r = (vsip_scalar_f*)((_B)->block->R->array + cBst * (_B)->offset),\
+    *Byp_i = (vsip_scalar_f*)((_B)->block->I->array + cBst * (_B)->offset),\
+    *Bxpr = Byp_r, *Bxpi = Byp_i; vsip_stride sta = cast * (_a)->stride, str = crst * (_r)->stride, stB = cBst * (_B)->col_stride;\
+    while(nx++ < (_B)->row_length){ *rp_r = 0; *rp_i = 0; mx = 0;\
+    while(mx++ < (_B)->col_length){ \
+    *rp_r += *ap_r * *Byp_r + *ap_i * *Byp_i; \
+    *rp_i += *ap_i * *Byp_r - *ap_r * *Byp_i;\
+    ap_r += sta; Byp_r += stB; ap_i += sta; Byp_i += stB; } \
+    ap_r = (vsip_scalar_f*)((_a)->block->R->array + cast * (_a)->offset); ap_i = (vsip_scalar_f*)((_a)->block->I->array + cast * (_a)->offset);\
+    Byp_r = (Bxpr += (cBst * (_B)->row_stride)); Byp_i = (Bxpi += (cBst * (_B)->row_stride)); rp_r += str; rp_i += str;}}
+
 #define svmul_f(alpha, b, r) {vsip_length n = (r)->length;\
     vsip_stride bst=b->stride * b->block->rstride, rst = (r)->stride * (r)->block->rstride;\
     vsip_scalar_f *bp=b->block->array+b->offset * b->block->rstride, *rp=(r)->block->array+(r)->offset * (r)->block->rstride;\
@@ -3930,9 +3978,75 @@ vsip_svdprodu_f(const vsip_sv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const 
     return 0;
 }
 int
-vsip_svdprodv_f(const vsip_sv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const vsip_mview_f *C)
+vsip_svdprodv_f(const vsip_sv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const vsip_mview_f *In)
 {
-    return 1;
+    svdObj_f* svdObj=(svdObj_f*)svd->svd;
+    vsip_mview_f c = *In;
+    vsip_mview_f C = *In;
+    vsip_index i;
+    vsip_vview_f y;
+    vsip_mview_f V;
+    if(svd->attr.Vsave == VSIP_SVD_UVNOS) return 1;
+    if((OpV != VSIP_MAT_NTRANS) && (OpV != VSIP_MAT_TRANS)) return 2;
+    if( (ApV != VSIP_MAT_LSIDE) && (ApV != VSIP_MAT_RSIDE)) return 3;
+    if(svd->transpose){
+        V = *(svdObj->L);       
+    } else {
+        V = *(svdObj->R);
+        V.row_stride = svdObj->R->col_stride; V.col_stride=svdObj->R->row_stride;
+        V.row_length = svdObj->R->col_length; V.col_length=svdObj->R->row_length;
+    }
+    /* UVPART and UVFULL operate the same */
+    if (ApV == VSIP_MAT_LSIDE){
+        if(OpV == VSIP_MAT_NTRANS){
+            vsip_vview_f x = *(svdObj->w);
+            x.offset=0;x.length=V.row_length;x.stride=1;
+            c.col_length=V.col_length;
+            for(i=0; i<c.row_length; i++){
+                    mvprod_f(&V,col_sv_f(&C,&y,i),&x);
+                    vcopy_f(&x,col_sv_f(&c,&y,i))
+                }
+        } else { /* must be TRANS */
+            vsip_vview_f x = *(svdObj->w);
+            vsip_length rl=V.row_length;
+            vsip_stride rs=V.row_stride;
+            V.row_length = V.col_length;
+            V.col_length = rl;
+            V.row_stride = V.col_stride;
+            V.col_stride = rs;
+            x.offset=0;x.length=V.col_length;x.stride=1;
+            c.col_length=V.col_length;
+            for(i=0; i<c.row_length; i++){
+                mvprod_f(&V,col_sv_f(&C,&y,i),&x);
+                vcopy_f(&x,col_sv_f(&c,&y,i))
+            }
+        }
+    } else { /* must be MAT_RSIDE */
+        if(OpV == VSIP_MAT_NTRANS){
+            vsip_vview_f x = *(svdObj->w);
+            x.offset=0;x.length=V.row_length;x.stride=1;
+            c.row_length = V.row_length;
+            for(i=0; i<c.col_length; i++){
+                vmprod_f(row_sv_f(&C,&y,i),&V,&x);
+                vcopy_f(&x,row_sv_f(&c,&y,i))
+            }
+        } else {
+            vsip_vview_f x = *(svdObj->w);
+            vsip_length rl=V.row_length;
+            vsip_stride rs=V.row_stride;
+            V.row_length = V.col_length;
+            V.col_length = rl;
+            V.row_stride = V.col_stride;
+            V.col_stride = rs;
+            x.offset=0;x.length=V.row_length;x.stride=1;
+            c.row_length=V.row_length;
+            for(i=0; i<c.col_length; i++){
+                vmprod_f(row_sv_f(&C,&y,i),&V,&x);
+                vcopy_f(&x,row_sv_f(&c,&y,i))
+            }
+        }
+    }
+    return 0;
 }
 
 /* Complex */
@@ -4062,16 +4176,17 @@ vsip_csvdmatv_f(const vsip_csv_f *svd, vsip_scalar_vi low, vsip_scalar_vi high, 
     return retval;
 }
 int
-vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const vsip_cmview_f *C)
+vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, const vsip_cmview_f *In)
 {
     csvdObj_f* svdObj=(csvdObj_f*)svd->svd;
-    vsip_cmview_f c = *C;
+    vsip_cmview_f c = *In;
+    vsip_cmview_f C = *In;
     vsip_index i;
     vsip_cvview_f y;
     vsip_cmview_f U;
     if(svd->attr.Usave == VSIP_SVD_UVNOS) return 1;
     if((OpU != VSIP_MAT_NTRANS) && (OpU != VSIP_MAT_HERM)) return 2;
-    if( (ApU != VSIP_MAT_LSIDE) && (ApU != VSIP_MAT_HERM)) return 3;
+    if( (ApU != VSIP_MAT_LSIDE) && (ApU != VSIP_MAT_RSIDE)) return 3;
     if(svd->transpose){
         U = *(svdObj->R);
         U.row_stride = svdObj->R->col_stride; U.col_stride=svdObj->R->row_stride;
@@ -4086,10 +4201,11 @@ vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, cons
             x->offset=0;x->length=U.col_length;x->stride=1;
             c.col_length=U.col_length;
             for(i=0; i<c.row_length; i++){
-                    cmvprod_f(&U,ccol_sv_f(&c,&y,i),x);
-                    cvcopy_f(x,&y)
+                    cmvprod_f(&U,ccol_sv_f(&C,&y,i),x);
+                    cvcopy_f(x,ccol_sv_f(&c,&y,i))
                 }
-        } else { /* must be HERM */
+             if(svd->transpose) cmconj_f(&c,&c);
+        } else { /* must be HERM */ 
             vsip_cvview_f *x = svdObj->w;
             vsip_length rl=U.row_length;
             vsip_stride rs=U.row_stride;
@@ -4099,12 +4215,18 @@ vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, cons
             U.col_stride = rs;
             x->offset=0;x->length=U.col_length;x->stride=1;
             c.col_length=U.col_length;
-            cmconj_f(&U,&U)
-            for(i=0; i<c.row_length; i++){
-                cmvprod_f(&U,ccol_sv_f(&c,&y,i),x);
-                cvcopy_f(x,&y)
+            if(svd->transpose){
+                U = *(svdObj->R);
+                for(i=0; i<c.row_length; i++){
+                    cmvprod_f(&U,ccol_sv_f(&C,&y,i),x)
+                    cvcopy_f(x,ccol_sv_f(&c,&y,i))
+                }
+            } else {
+                for(i=0; i<c.row_length; i++){
+                    cmvjprod_f(&U,ccol_sv_f(&C,&y,i),x)
+                    cvcopy_f(x,ccol_sv_f(&c,&y,i))
+                }
             }
-            cmconj_f(&U,&U)
         }
     } else { /* must be MAT_RSIDE */
         if(OpU == VSIP_MAT_NTRANS){
@@ -4112,9 +4234,10 @@ vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, cons
             x->offset=0;x->length=U.row_length;x->stride=1;
             c.row_length = U.row_length;
             for(i=0; i<c.col_length; i++){
-                cvmprod_f(crow_sv_f(&c,&y,i),&U,x);
-                cvcopy_f(x,&y)
+                cvmprod_f(crow_sv_f(&C,&y,i),&U,x);
+                cvcopy_f(x,crow_sv_f(&c,&y,i))
             }
+            if(svd->transpose) cmconj_f(&c,&c);
         } else {/* must be herm */
             vsip_cvview_f *x = svdObj->w;
             vsip_length rl=U.row_length;
@@ -4125,20 +4248,109 @@ vsip_csvdprodu_f(const vsip_csv_f *svd, vsip_mat_op OpU, vsip_mat_side ApU, cons
             U.col_stride = rs;
             x->offset=0;x->length=U.row_length;x->stride=1;
             c.row_length=U.row_length;
-            cmconj_f(&U,&U)
-            for(i=0; i<c.col_length; i++){
-                cvmprod_f(crow_sv_f(&c,&y,i),&U,x);
-                cvcopy_f(x,&y)
+            if(svd->transpose){
+                U = *(svdObj->R);
+                for(i=0; i<c.row_length; i++){
+                    cvmprod_f(crow_sv_f(&C,&y,i),&U,x)
+                    cvcopy_f(x,crow_sv_f(&c,&y,i))
+                }
+            } else {
+                for(i=0; i<c.col_length; i++){
+                    cvmprodj_f(crow_sv_f(&C,&y,i),&U,x);
+                    cvcopy_f(x,crow_sv_f(&c,&y,i))
+                }
             }
-            cmconj_f(&U,&U)
         }
     }
     return 0;
-
 }
 
 int
-vsip_csvdprodv_f(const vsip_csv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const vsip_cmview_f *C)
+vsip_csvdprodv_f(const vsip_csv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const vsip_cmview_f *In)
 {
-    return 1;
+    csvdObj_f* svdObj=(csvdObj_f*)svd->svd;
+    vsip_cmview_f c = *In;
+    vsip_cmview_f C = *In;
+    vsip_index i;
+    vsip_cvview_f y;
+    vsip_cmview_f V;
+    if(svd->attr.Vsave == VSIP_SVD_UVNOS) return 1;
+    if((OpV != VSIP_MAT_NTRANS) && (OpV != VSIP_MAT_HERM)) return 2;
+    if( (ApV != VSIP_MAT_LSIDE) && (ApV != VSIP_MAT_RSIDE)) return 3;
+    if(svd->transpose){
+        V = *(svdObj->L);       
+    } else {
+        V = *(svdObj->R);
+        V.row_stride = svdObj->R->col_stride; V.col_stride=svdObj->R->row_stride;
+        V.row_length = svdObj->R->col_length; V.col_length=svdObj->R->row_length;
+    }
+    /* UVPART and UVFULL operate the same */
+    if (ApV == VSIP_MAT_LSIDE){
+        if(OpV == VSIP_MAT_NTRANS){
+            vsip_cvview_f x = *(svdObj->w);
+            x.offset=0;x.length=V.row_length;x.stride=1;
+            c.col_length=V.col_length;
+            for(i=0; i<c.row_length; i++){
+                if(svd->transpose)
+                    cmvprod_f(&V,ccol_sv_f(&C,&y,i),&x)
+                else
+                    cmvjprod_f(&V,ccol_sv_f(&C,&y,i),&x)
+                cvcopy_f(&x,ccol_sv_f(&c,&y,i))
+            }
+        } else { /* must be HERM */
+            vsip_cvview_f x = *(svdObj->w);
+            if(!svd->transpose) V=*(svdObj->R);
+            else {
+                vsip_length rl=V.row_length;
+                vsip_stride rs=V.row_stride;
+                V.row_length = V.col_length;
+                V.col_length = rl;
+                V.row_stride = V.col_stride;
+                V.col_stride = rs;
+            }
+            x.offset=0;x.length=V.col_length;x.stride=1;
+            c.col_length=V.col_length;     
+            for(i=0; i<c.row_length; i++){
+                if(!svd->transpose)
+                    cmvprod_f(&V,ccol_sv_f(&C,&y,i),&x)
+                else
+                    cmvjprod_f(&V,ccol_sv_f(&C,&y,i),&x)
+                cvcopy_f(&x,ccol_sv_f(&c,&y,i))
+            }
+        }
+    } else { /* must be MAT_RSIDE */
+        if(OpV == VSIP_MAT_NTRANS){
+            vsip_cvview_f x = *(svdObj->w);
+            x.offset=0;x.length=V.row_length;x.stride=1;
+            c.row_length = V.row_length;
+            for(i=0; i<c.col_length; i++){
+                if(svd->transpose)
+                    cvmprod_f(crow_sv_f(&C,&y,i),&V,&x)
+                else
+                    cvmprodj_f(crow_sv_f(&C,&y,i),&V,&x)
+                cvcopy_f(&x,crow_sv_f(&c,&y,i))
+            }
+        } else { /* must be HERM */
+            vsip_cvview_f x = *(svdObj->w);
+            if(!svd->transpose) V=*(svdObj->R);
+            else {
+                vsip_length rl=V.row_length;
+                vsip_stride rs=V.row_stride;
+                V.row_length = V.col_length;
+                V.col_length = rl;
+                V.row_stride = V.col_stride;
+                V.col_stride = rs;
+            }
+            x.offset=0;x.length=V.row_length;x.stride=1;
+            c.row_length=V.row_length;
+            for(i=0; i<c.col_length; i++){
+                if(!svd->transpose)
+                    cvmprod_f(crow_sv_f(&C,&y,i),&V,&x)
+                else
+                    cvmprodj_f(crow_sv_f(&C,&y,i),&V,&x)
+                cvcopy_f(&x,crow_sv_f(&c,&y,i))
+            }
+        }
+    }
+    return 0;
 }

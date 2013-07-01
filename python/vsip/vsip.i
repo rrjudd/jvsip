@@ -272,9 +272,11 @@ int vsip_csvdmatv_f ( const vsip_csv_f* , vsip_scalar_vi , vsip_scalar_vi , cons
 int vsip_svdprodu_d(const vsip_sv_d*, vsip_mat_op, vsip_mat_side, const vsip_mview_d*);
 int vsip_csvdprodu_d(const vsip_csv_d*, vsip_mat_op, vsip_mat_side, const vsip_cmview_d*);
 int vsip_csvdprodv_d(const vsip_csv_d*, vsip_mat_op, vsip_mat_side, const vsip_cmview_d*);
+int vsip_csvdprodv_f(const vsip_csv_f*, vsip_mat_op, vsip_mat_side, const vsip_cmview_f*);
 int vsip_svdprodu_f(const vsip_sv_f*, vsip_mat_op, vsip_mat_side, const vsip_mview_f*);
 int vsip_csvdprodu_f(const vsip_csv_f*, vsip_mat_op, vsip_mat_side, const vsip_cmview_f*);
 int vsip_svdprodv_d(const vsip_sv_d*, vsip_mat_op, vsip_mat_side, const vsip_mview_d*);
+int vsip_svdprodv_f(const vsip_sv_f*, vsip_mat_op, vsip_mat_side, const vsip_mview_f*);
 int vsip_toepsol_d ( const vsip_vview_d* , const vsip_vview_d* , const vsip_vview_d* , const vsip_vview_d* ) ;
 int vsip_toepsol_f ( const vsip_vview_f* , const vsip_vview_f* , const vsip_vview_f* , const vsip_vview_f* ) ;
 vsip_cmview_d* vsip_cmbind_d(const vsip_cblock_d* ,vsip_offset ,vsip_stride , vsip_length ,vsip_stride , vsip_length );
