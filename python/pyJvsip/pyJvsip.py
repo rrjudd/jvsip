@@ -1633,11 +1633,11 @@ class Block (object):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
                     eval(f[self.type])
-                    return (idx.r,idx.c)
+                    return (int(idx.r),int(idx.c))
                 else:
                     idx=vsip.vindexptr()
                     eval(f[self.type])
-                    retval=vsip.vindexptrToInt(idx)
+                    retval=int(vsip.vindexptrToInt(idx))
                     vsip.vindexfree(idx)
                     return retval
             else:
@@ -1675,11 +1675,11 @@ class Block (object):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
                     eval(f[self.type])
-                    return (idx.r,idx.c)
+                    return (int(idx.r),int(idx.c))
                 else:
                     idx=vsip.vindexptr()
                     eval(f[self.type])
-                    retval=vsip.vindexptrToInt(idx)
+                    retval=int(vsip.vindexptrToInt(idx))
                     vsip.vindexfree(idx)
                     return retval
             else:
@@ -1713,11 +1713,11 @@ class Block (object):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
                     eval(f[self.type])
-                    return (idx.r,idx.c)
+                    return (int(idx.r),int(idx.c))
                 else:
                     idx=vsip.vindexptr()
                     eval(f[self.type])
-                    retval=vsip.vindexptrToInt(idx)
+                    retval=int(vsip.vindexptrToInt(idx))
                     vsip.vindexfree(idx)
                     return retval
             else:
@@ -1756,11 +1756,11 @@ class Block (object):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
                     eval(f[self.type])
-                    return (idx.r,idx.c)
+                    return (int(idx.r),int(idx.c))
                 else:
                     idx=vsip.vindexptr()
                     eval(f[self.type])
-                    retval=vsip.vindexptrToInt(idx)
+                    retval=int(vsip.vindexptrToInt(idx))
                     vsip.vindexfree(idx)
                     return retval
             else:
@@ -1798,12 +1798,12 @@ class Block (object):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
                     eval(f[self.type])
-                    return (idx.r,idx.c)
+                    return (int(idx.r),int(idx.c))
                 else:
                     idx=vsip.vindexptr()
                     eval(f[self.type])
-                    retval=vsip.vindexptrToInt(idx)
-                    vsip.vindexfree(idx)
+                    retval=int(vsip.vindexptrToInt(idx))
+                    int(vsip.vindexfree(idx))
                     return retval
             else:
                 print('Type <:'+self.type+':> not supported by minmgvalindx')
@@ -1836,11 +1836,11 @@ class Block (object):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
                     eval(f[self.type])
-                    return (idx.r,idx.c)
+                    return (int(idx.r),int(idx.c))
                 else:
                     idx=vsip.vindexptr()
                     eval(f[self.type])
-                    retval=vsip.vindexptrToInt(idx)
+                    retval=int(vsip.vindexptrToInt(idx))
                     vsip.vindexfree(idx)
                     return retval
             else:
