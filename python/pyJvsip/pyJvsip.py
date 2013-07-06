@@ -12,7 +12,7 @@ def getType(v):
         getType(v)[1] is the class (scalar, View, Block, etc)
         getType(v)[2] is the type which is dependent on the module and class.
     """
-    if isinstance(v,int) or isinstance(v,float) or isinstance(v,complex):
+    if isinstance(v,int) or isinstance(v,long) or isinstance(v,float) or isinstance(v,complex):
         return ('python','scalar',type(v))
     elif 'Swig' in repr(v) and 'scalar' in repr(v):
         if 'vsip_scalar_mi' in repr(v):
@@ -782,7 +782,9 @@ class Block (object):
                 if 'cscalar' in vsip.getType(val)[1]:
                     c=complex(val.r,val.i)
                     return c
-                elif isinstance(val,int) or isinstance(val,float) or isinstance(val,complex):
+                elif isinstance(val,int) or isinstance(val,long):
+                    return int(val)
+                elif isinstance(val,float) or isinstance(val,complex):
                     return val
                 elif 'scalar_mi' in vsip.getType(val)[1]:
                     return {'row_index':val.r,'col_index':val.i}
