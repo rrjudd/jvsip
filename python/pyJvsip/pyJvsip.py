@@ -2191,7 +2191,7 @@ class Block (object):
             return (p,L,U)
         def lsolve(self,xy):
             if 'mview' in xy.type:
-                print('Method usolve only works with vector argument')
+                print('Method lsolve only works with vector argument')
                 return
             if 'vview' in self.type:
                 print('Calling view must be a (upper diagonal) matrix')
@@ -3368,16 +3368,38 @@ class LU(object):
         else:
             print('Matrix must be square and compliant with calling object')
             return
-    def solve(self,opM,XB):
+    def solve(self,opIn,inOut):
+        """
+           sv.solve(opA,XB)
+           opA should be a string equal to 'NTRANS', 'TRANS', or 'HERM'
+           XB is a matrix. Solve is done in place.
+           For pyJvsip if a vector is passed in for XB it will work as a matrix with a
+           single column.
+        """
+        assert ('TRANS' in opIn) or ('HERM' in opIn)
+        if 'vview' in inOut.type:
+            XB=inOut.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
+        else:
+            XB=inOut
+        op = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM}
         luSol={'lu_d':vsip_lusol_d,'lu_f':vsip_lusol_f,\
                'clu_d':vsip_clusol_d,'clu_f':vsip_clusol_f}
+        if 'NTRANS' in opIn:
+            opM=op['NTRANS']
+        elif 'HERM' in opIn:
+            if 'clu' in self.type:
+                opM=opn['HERM']
+            else:
+                opM=np['TRANS']
+        else:
+            opM=op['TRANS']
         if (XB.type in LU.supported) and (XB.collength == self.size):
             if self.__m['matrix'] == 0:
                 print('LU object has no matrix associated with it')
                 return
             else:
                 luSol[self.type](self.lud,opM,XB.view)
-                return XB
+                return inOut
         else:
             print('Input matrix must be conformant with lu')
             return
@@ -3592,6 +3614,10 @@ class SV(object):
         else:
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
+    def prodv(self):
+        return
+    def produ(self):
+        return
 class FIR(object):
     
     def __init__(self,t,filt,sym,N,D,state):

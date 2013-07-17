@@ -1,6 +1,7 @@
 This directory contains development code for decomposition routines.
 While jvsip has most (VSIPL Defined) decomposition routines they can probably be
 improved and there is currently an incomplete SVD implementation.
+(have a complete SVD now)
 In addition eigenvalue decompositions would be useful in pyJvsip although
 they are not defined in the VSIPL specification.
 
