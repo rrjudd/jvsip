@@ -36,6 +36,7 @@ def getType(v):
     else:
         print('Do not recognize object')
         return
+
 class JVSIP (object):
     init = 0
     def __init__(self):
@@ -2804,7 +2805,8 @@ class Block (object):
             else:
                 X = XB
             if self.type in Block.matrixTypes and X.type == self.type:
-                if LU.luSel.has_key(self.type) and (self.rowlength == self.collength) and (self.collength == X.collength):
+                if LU.luSel.has_key(self.type) and \
+                (self.rowlength == self.collength) and (self.collength == X.collength):
                     LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,X)
                     return XB
                 else:
@@ -3201,6 +3203,7 @@ class Rand(object):
             return a
         else:
             print('Not a supported type for rand')
+
 class FFT (object):
     """
        Usage:
@@ -3320,6 +3323,7 @@ class FFT (object):
     @property
     def arg(self):
         return self.__arg
+
 class LU(object):
     tLu=['lu_f','lu_d','clu_f','clu_d']
     luSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
@@ -3352,11 +3356,18 @@ class LU(object):
     def lud(self):
         return self.__lu
     def decompose(self,m):
+        """
+        Usage:
+            luObj.decompose(A)
+            A is a square matrix of type real or complex float or double
+        decompose method for LU object atta
+        """
         tMatrix={'cmview_d':'clu_d','cmview_f':'clu_f','mview_d':'lu_d','mview_f':'lu_f'}
         luDecompose={'lu_f':vsip_lud_f,
                 'lu_d':vsip_lud_d,
                 'clu_f':vsip_clud_f,
                 'clu_d':vsip_clud_d}
+        assert m.rowlength == m.collength
         chk = (m.type in LU.supported) 
         if chk:
             chk = (m.rowlength == m.collength) and (self.size == m.rowlength) \
@@ -3372,27 +3383,38 @@ class LU(object):
         """
            sv.solve(opA,XB)
            opA should be a string equal to 'NTRANS', 'TRANS', or 'HERM'
+        or
+           opA should be a C VSIPL Flag
            XB is a matrix. Solve is done in place.
            For pyJvsip if a vector is passed in for XB it will work as a matrix with a
            single column.
-        """
-        assert ('TRANS' in opIn) or ('HERM' in opIn)
+        I have tried to make this generic but it is probably possible to pass in arguments
+        which will cause a failure when calling the underlying VSIPL functions.
+        """ 
+        op = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM}  
         if 'vview' in inOut.type:
             XB=inOut.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
         else:
             XB=inOut
-        op = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM}
         luSol={'lu_d':vsip_lusol_d,'lu_f':vsip_lusol_f,\
                'clu_d':vsip_clusol_d,'clu_f':vsip_clusol_f}
-        if 'NTRANS' in opIn:
-            opM=op['NTRANS']
-        elif 'HERM' in opIn:
-            if 'clu' in self.type:
-                opM=opn['HERM']
-            else:
-                opM=np['TRANS']
+        assert (type(opIn) is str) or (type(opIn) is int), "LU solve: Matrix Operator must be string or int."
+        if type(opIn) is str:
+            assert ('TRANS' in opIn) or ('HERM' in opIn), "LU solve: Flag type %s not recognized."%opIn
+            if 'NTRANS' in opIn:
+                opM=op['NTRANS']
+            elif 'HERM' in opIn:
+                if 'clu' in self.type:
+                    opM=opn['HERM']
+                else:
+                    opM=np['TRANS']
+            else: 
+                opM=op['TRANS']
         else:
-            opM=op['TRANS']
+            assert (opIn >= 0) and (opIn < 3), "LU solve: Flag %d not recognized"%opIn
+            opM = opIn
+            if 'clu' not in self.type and opM == 2:
+                opM = 1
         if (XB.type in LU.supported) and (XB.collength == self.size):
             if self.__m['matrix'] == 0:
                 print('LU object has no matrix associated with it')
@@ -3403,6 +3425,7 @@ class LU(object):
         else:
             print('Input matrix must be conformant with lu')
             return
+
 class QR(object):
     """ qOpt is VSIP_QRD_NOSAVEQ => 0 (No Q)
                 VSIP_QRD_SAVEQ => 1  (Full Q)
@@ -3510,6 +3533,7 @@ class QR(object):
         else:
             print('Input arguments must be conformant with qrsol')
             return
+
 class SV(object):
     """
     Usage:
@@ -3618,8 +3642,8 @@ class SV(object):
         return
     def produ(self):
         return
+
 class FIR(object):
-    
     def __init__(self,t,filt,sym,N,D,state):
         """
         Usage:
@@ -3673,11 +3697,11 @@ class FIR(object):
              x is input view of data to be filtered
              y is output view of filtered data
         """
-        filtSptd = {'fir_f':'vview_f','fir_d':'vview_d',
-                     'cfir_f':'cvview_f','cfir_d':'cvview_d',
+        filtSptd = {'fir_f':'vview_f','fir_d':'vview_d',\
+                     'cfir_f':'cvview_f','cfir_d':'cvview_d',\
                      'rcfir_f':'cvview_f','rcfir_d':'cvview_d'}
-        firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,
-                  'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,
+        firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,\
+                  'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,\
                   'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d} 
         assert x.type == y.type
         assert filtSptd[self.type] == x.type

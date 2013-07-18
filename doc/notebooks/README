@@ -1,0 +1,4 @@
+This directory uses notebooks to document some of the pyJvsip module by 
+example. A similar named pdf file for each notebook file should allow 
+one to browse the notebook even if you don't have ipython and notebooks 
+working on your platform.
