@@ -1,6 +1,8 @@
 # Elementary Math functions
 from vsip import *
 def __iscompatible(a,b):
+    """
+    """
     chk = True
     msg='None'
     if ('pyJvsip.__View' not in repr(a)) or ('pyJvsip.__View' not in repr(b)):
@@ -70,6 +72,23 @@ def tan(a,b):
         print(msg + ' for tan')
         return
 
+def tanh(a,b):
+    vf={'vview_f':vsip_vtanh_f,'vview_d':vsip_vtanh_d}
+    mf={'mview_f':vsip_mtanh_f,'mview_d':vsip_mtanh_d}
+    chk, msg = __iscompatible(a,b)
+    if chk:
+        if vf.has_key(a.type):
+            vf[a.type](a.view,b.view)
+        elif mf.has_key(a.type):
+            mf[a.type](a.view,b.view)
+        else:
+            print('Type <:'+a.type+':> not supported for tanh')
+            return
+        return b
+    else:
+        print(msg + ' for tanh')
+        return
+
 def asin(a,b):
     vf={'vview_f':vsip_vasin_f,'vview_d':vsip_vasin_d}
     mf={'mview_f':vsip_masin_f,'mview_d':vsip_masin_d}
@@ -119,6 +138,25 @@ def atan(a,b):
         return b
     else:
         print(msg + ' for atan')
+        return
+        
+def atan2(a,b,c):
+    vf={'vview_f':vsip_vatan2_f,'vview_d':vsip_vatan2_d}
+    mf={'mview_f':vsip_matan2_f,'mview_d':vsip_matan2_d}
+    chk, msg = __iscompatible(a,b)
+    if chk:
+        chk, msg =__iscompatible(a,c)
+    if chk:
+        if vf.has_key(a.type):
+            vf[a.type](a.view,b.view,c.view)
+        elif mf.has_key(a.type):
+            mf[a.type](a.view,b.view,c.view)
+        else:
+            print('Type <:'+a.type+':> not supported for atan2')
+            return
+        return c
+    else:
+        print(msg + ' for atan2')
         return
 
 def exp(a,b):
@@ -192,3 +230,60 @@ def log10(a,b):
     else:
         print(msg + ' for log10')
         return
+
+def cosh(a,b):
+    vf={'vview_f':vsip_vcosh_f,'vview_d':vsip_vcosh_d}
+    mf={'mview_f':vsip_mcosh_f,'mview_d':vsip_mcosh_d}
+    chk, msg = __iscompatible(a,b)
+    if chk:
+        if vf.has_key(a.type):
+            vf[a.type](a.view,b.view)
+        elif mf.has_key(a.type):
+            mf[a.type](a.view,b.view)
+        else:
+            print('Type <:'+a.type+':> not supported for cosh')
+            return
+        return b
+    else:
+        print(msg + ' for cosh')
+        return
+    
+def sinh(a,b):
+    vf={'vview_f':vsip_vsinh_f,'vview_d':vsip_vsinh_d}
+    mf={'mview_f':vsip_msinh_f,'mview_d':vsip_msinh_d}
+    chk, msg = __iscompatible(a,b)
+    if chk:
+        if vf.has_key(a.type):
+            vf[a.type](a.view,b.view)
+        elif mf.has_key(a.type):
+            mf[a.type](a.view,b.view)
+        else:
+            print('Type <:'+a.type+':> not supported for sinh')
+            return
+        return b
+    else:
+        print(msg + ' for sinh')
+        return
+        
+def sqrt(a,b):
+    f={'cmview_dcmview_d':vsip_cmsqrt_d,
+        'cmview_fcmview_f':vsip_cmsqrt_f,
+        'cvview_dcvview_d':vsip_cvsqrt_d,
+        'cvview_fcvview_f':vsip_cvsqrt_f,
+        'mview_dmview_d':vsip_msqrt_d,
+        'mview_fmview_f':vsip_msqrt_f,
+        'vview_dvview_d':vsip_vsqrt_d,
+        'vview_fvview_f':vsip_vsqrt_f}
+    chk, msg = __iscompatible(a,b)
+    if chk:
+        t=a.type+b.type
+        if f.has_key(t):
+            f[t](a.view,b.view)
+        else:
+            print('Type <:'+t+':> not supported for sinh')
+            return
+        return b
+    else:
+        print(msg + ' for sqrt')
+        return
+
