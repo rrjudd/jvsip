@@ -4,3 +4,36 @@ To make you must do
 swig -python jvsipNumpyUtils.i
 python setup.py build
 python setup.py install
+
+IMPORTANT
+Just because you have the numpy module does not mean you can compile code to the numpy C api.
+You need to make sure the header files are available where the compiler can find them.
+Search around in your numpy distribution until you find them and then set a link.
+
+For Instance On a Mac with OS X and Xcode:
+EXAMPLE 1
+After installing python, numpy, scipy, etc. on my mac using brew and pip and instructions at
+
+http://www.lowindata.com/2013/installing-scientific-python-on-mac-os-x/
+
+I found numpy headers at
+
+/usr/local/Cellar/python/2.7.5/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/numpy/core/include/numpy
+
+and did in a terminal (directory at /usr/local/include)
+
+ln -s /usr/local/Cellar/python/2.7.5/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/numpy/core/include/numpy numpy
+
+Then the above instructions worked fine.
+
+EXAMPLE 2
+Before doing the install of an environment in /usr/local (and changing my paths so /usr/local/bin is searched first) my python environment was in /Library/Frameworks.
+
+For this case I did in a terminal (directory at /usr/local/include)
+
+ln -s /Library/Frameworks/Python.framework/Versions/2.7/Headers/numpy numpy 
+
+The jvsipNumpyUtils module is only needed to interface to numpy module and only supports data copies with some performance.
+If you can't get it to install properly its not a show stopper. Just a minor inconvenience.
+
+In the future I may add more to this module; but I will keep it separate from the vsip and pyJvsip modules so that numpy is not a requirement for pyJvsip.
