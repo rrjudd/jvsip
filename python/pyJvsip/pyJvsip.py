@@ -11,9 +11,9 @@ __version__='0.2'
 def getType(v):
     """
         Returns a tuple with type information.
-        most of the time getType(v)[2] will be the information needed.
-        getType(v)[0] is the module (python, vsip, or pyJvsip)
-        getType(v)[1] is the class (scalar, View, Block, etc)
+        Most of the time getType(v)[2] will be the information needed.
+        getType(v)[0] is the module (python, vsip, or pyJvsip).
+        getType(v)[1] is the class (scalar, View, Block, etc).
         getType(v)[2] is the type which is dependent on the module and class.
     """
     if isinstance(v,int) or isinstance(v,long) or isinstance(v,float) or isinstance(v,complex):
@@ -34,12 +34,16 @@ def getType(v):
             return ('pyJvsip','Rand',v.type)
         elif 'FFT' in repr(v):
             return ('pyJvsip','FFT',v.type)
+        elif 'LU' in repr(v):
+            return('pyJvsip','LU',v.type)
+        elif 'QR' in repr(v):
+            return('pyJvsip','QR',v.type)
         else:
             print('Do not recognize object')
-            return
+            return (repr(v),None,None)
     else:
         print('Do not recognize object')
-        return
+        return (repr(v),None,None)
 
 class JVSIP (object):
     init = 0
@@ -2779,6 +2783,8 @@ class Block (object):
                Calling view must be square and float
                return lu object
             """
+            assert self.type in ['mview_f','mview_d','cmview_f','cmview_d'], "LU for %s not supported"%self.type
+            assert self.rowlength == self.collength,"LU only supports square matrices"
             if LU.luSel.has_key(self.type) and (self.rowlength == self.collength):
                 return LU(LU.luSel[self.type],self.rowlength).decompose(self)
         @property
@@ -2835,12 +2841,13 @@ class Block (object):
                Vectors are treated as a column here.
             """
             if self.type in ['vview_f','vview_d','cvview_f','cvview_d']:
-                A=self.block.bind(self.offset,self.stride,self.length,0,1)
+                A=self.block.bind(self.offset,self.stride,self.length,1,1)
             elif self.type in ['mview_f','mview_d','cmview_f','cmview_d']:
                 A = self
             else:
                 print('Type <:' +self.type+ '<: not supported for QR')
                 return
+            assert A.collength >= A.rowlength,"QR requires column length less than row length"
             retval=QR(QR.qrSel[self.type],A.collength,A.rowlength,VSIP_QRD_SAVEQ)
             retval.decompose(A)
             return retval
@@ -3453,6 +3460,8 @@ class QR(object):
               'cqr_d':vsip_cqrd_create_d,
               'qr_f':vsip_qrd_create_f,
               'qr_d':vsip_qrd_create_d}
+        assert type(m) is int and type(n) is int,"Row and column sizes must be integers"
+        assert m >= n, "For QR column length is >= row length"
         self.__jvsip = JVSIP()
         if t in QR.tQr:
             self.__type = t
