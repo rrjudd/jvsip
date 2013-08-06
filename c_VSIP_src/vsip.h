@@ -13,7 +13,7 @@
 #define _VSIP_H
 #define JVSIP_VSIPL 1
 #define JVSIP_VERSION_MAJOR 1.0
-#define JVSIP_VERSION_MINOR 0.1
+#define JVSIP_VERSION_MINOR 0.2.1
 #include<stdio.h>
 #include<stdlib.h>
 #include<float.h>
@@ -848,8 +848,8 @@ void vsip_cvdiv_d ( const vsip_cvview_d*, const vsip_cvview_d*, const vsip_cvvie
 void vsip_cvdiv_f ( const vsip_cvview_f*, const vsip_cvview_f*, const vsip_cvview_f* ) ;
 void vsip_cvexp_d ( const vsip_cvview_d*, const vsip_cvview_d* ) ;
 void vsip_cvexp_f ( const vsip_cvview_f*, const vsip_cvview_f* ) ;
-void vsip_cvexpoavg_d ( vsip_scalar_d, const vsip_cvview_d*, const vsip_cvview_d* c ) ;
-void vsip_cvexpoavg_f ( vsip_scalar_f, const vsip_cvview_f*, const vsip_cvview_f* c ) ;
+void vsip_cvexpoavg_d ( vsip_scalar_d, const vsip_cvview_d*, const vsip_cvview_d* ) ;
+void vsip_cvexpoavg_f ( vsip_scalar_f, const vsip_cvview_f*, const vsip_cvview_f* ) ;
 void vsip_cvfill_d ( vsip_cscalar_d, const vsip_cvview_d* ) ;
 void vsip_cvfill_f ( vsip_cscalar_f, const vsip_cvview_f* ) ;
 void vsip_cvgather_d ( const vsip_cvview_d*, const vsip_vview_vi*, const vsip_cvview_d* ) ;
@@ -1294,8 +1294,8 @@ void vsip_vexp10_d ( const vsip_vview_d*, const vsip_vview_d* ) ;
 void vsip_vexp10_f ( const vsip_vview_f*, const vsip_vview_f* ) ;
 void vsip_vexp_d ( const vsip_vview_d*, const vsip_vview_d* ) ;
 void vsip_vexp_f ( const vsip_vview_f*, const vsip_vview_f* ) ;
-void vsip_vexpoavg_d ( vsip_scalar_d, const vsip_vview_d*, const vsip_vview_d* c ) ;
-void vsip_vexpoavg_f ( vsip_scalar_f, const vsip_vview_f*, const vsip_vview_f* c ) ;
+void vsip_vexpoavg_d ( vsip_scalar_d, const vsip_vview_d*, const vsip_vview_d* ) ;
+void vsip_vexpoavg_f ( vsip_scalar_f, const vsip_vview_f*, const vsip_vview_f* ) ;
 void vsip_vfill_d ( vsip_scalar_d, const vsip_vview_d* ) ;
 void vsip_vfill_f ( vsip_scalar_f, const vsip_vview_f* ) ;
 void vsip_vfill_i ( vsip_scalar_i, const vsip_vview_i* ) ;

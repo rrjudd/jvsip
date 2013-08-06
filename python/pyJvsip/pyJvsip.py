@@ -2,8 +2,12 @@ from vsip import *
 from vsipElementwiseElementary import *
 from vsipElementwiseManipulation import *
 from vsipElementwiseUnary import *
+from vsipElementwiseBinary import *
 
 import vsiputils as vsip
+
+__version__='0.2'
+
 def getType(v):
     """
         Returns a tuple with type information.
