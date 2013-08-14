@@ -6,5 +6,7 @@ setup(name='pyJvsip',
       author='Randall Judd',
       author_email='rrjudd@me.com',
       license='MIT ( http://opensource.org/licenses/MIT )',
-      py_modules=['pyJvsip','vsipElementwiseElementary','vsipElementwiseManipulation','vsipElementwiseUnary','vsipElementwiseBinary','vsipElementwiseTernary'],
+      py_modules=['pyJvsip','vsipElementwiseElementary','vsipElementwiseManipulation',\
+            'vsipElementwiseUnary','vsipElementwiseBinary','vsipElementwiseTernary',\
+            'vsipElementwiseLogical'],
       )

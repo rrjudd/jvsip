@@ -3,10 +3,12 @@ from vsipElementwiseElementary import *
 from vsipElementwiseManipulation import *
 from vsipElementwiseUnary import *
 from vsipElementwiseBinary import *
+from vsipElementwiseTernary import *
+from vsipElementwiseLogical import *
 
 import vsiputils as vsip
 
-__version__='0.2'
+__version__='0.2.2'
 
 def getType(v):
     """
