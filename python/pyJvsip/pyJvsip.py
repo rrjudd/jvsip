@@ -6,10 +6,11 @@ from vsipElementwiseBinary import *
 from vsipElementwiseTernary import *
 from vsipElementwiseLogical import *
 from vsipElementwiseSelection import *
+from vsipElementwiseBandB import *
 
 import vsiputils as vsip
 
-__version__='0.2.3'
+__version__='0.2.4'
 
 def getType(v):
     """

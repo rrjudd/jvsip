@@ -127,9 +127,9 @@ def maxmg(a,b,c):
        'vview_fvview_fvview_f':vsip_vmaxmg_f}
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in maxmg'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(b),\
            'Argument two must be a pyJvsip view object in maxmg'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(c),\
            'Argument three must be a pyJvsip view object in maxmg'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in maxmg'
@@ -148,9 +148,9 @@ def cmaxmgsq(a,b,c):
        'cvview_fcvview_fvview_f':vsip_vcmaxmgsq_f}
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in cmaxmgsq'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(b),\
            'Argument two must be a pyJvsip view object in cmaxmgsq'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(c),\
            'Argument three must be a pyJvsip view object in cmaxmgsq'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in cmaxmgsq'
@@ -169,9 +169,9 @@ def min(a,b,c):
        'vview_fvview_fvview_f':vsip_vmin_f}
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in min'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(b),\
            'Argument two must be a pyJvsip view object in min'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(c),\
            'Argument three must be a pyJvsip view object in min'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in min'
@@ -190,9 +190,9 @@ def minmg(a,b,c):
        'vview_fvview_fvview_f':vsip_vminmg_f}
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in minmg'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(b),\
            'Argument two must be a pyJvsip view object in minmg'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(c),\
            'Argument three must be a pyJvsip view object in minmg'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in minmg'
@@ -211,9 +211,9 @@ def cminmgsq(a,b,c):
        'cvview_fcvview_fvview_f':vsip_vcminmgsq_f}
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in cminmgsq'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(b),\
            'Argument two must be a pyJvsip view object in cminmgsq'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip.__View' in repr(c),\
            'Argument three must be a pyJvsip view object in cminmgsq'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in minmgsq'
