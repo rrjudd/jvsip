@@ -5,6 +5,7 @@
 #include "./c_src/vsipScalarFunctions.h"
 #include "./c_src/jvsip.h"
 %}
+
 typedef enum { VSIP_SORT_ASCENDING = 0, VSIP_SORT_DESCENDING = 1 } vsip_sort_dir;
 typedef enum { VSIP_SORT_BYVALUE = 0, VSIP_SORT_BYMAGNITUDE = 1 } vsip_sort_mode;
 typedef enum { VSIP_MEM_NONE = 0, VSIP_MEM_RDONLY = 1, VSIP_MEM_CONST = 2, VSIP_MEM_SHARED = 3, VSIP_MEM_SHARED_RDONLY = 4, VSIP_MEM_SHARED_CONST  = 5 } vsip_memory_hint;
@@ -38,6 +39,8 @@ typedef double vsip_scalar_d;
 typedef int vsip_scalar_i;
 typedef signed int vsip_scalar_bl;
 typedef vsip_scalar_bl vsip_bool;
+#define VSIP_FALSE=(vsip_bool)0
+#define VSIP_TRUE=!VSIP_FALSE
 
 typedef struct { vsip_scalar_vi r,c; } vsip_scalar_mi;
 typedef   signed short  int     vsip_scalar_si;
@@ -1151,6 +1154,8 @@ void vsip_vhypot_d ( const vsip_vview_d* , const vsip_vview_d* , const vsip_vvie
 void vsip_vhypot_f ( const vsip_vview_f* , const vsip_vview_f* , const vsip_vview_f* ) ;
 void vsip_vimag_d ( const vsip_cvview_d* , const vsip_vview_d* ) ;
 void vsip_vimag_f ( const vsip_cvview_f* , const vsip_vview_f* ) ;
+void vsip_mimag_d ( const vsip_cmview_d*, const vsip_mview_d* ) ;
+void vsip_mimag_f ( const vsip_cmview_f*, const vsip_mview_f* ) ;
 void vsip_vinterp_linear_f ( const vsip_vview_f * , const vsip_vview_f * , const vsip_vview_f * , const vsip_vview_f * ) ;
 void vsip_vinterp_nearest_f ( const vsip_vview_f * , const vsip_vview_f * , const vsip_vview_f * , const vsip_vview_f * ) ;
 void vsip_vinterp_spline_d ( const vsip_vview_d * , const vsip_vview_d * , vsip_spline_d * , const vsip_vview_d * , const vsip_vview_d * ) ;
@@ -1251,6 +1256,8 @@ void vsip_vouter_d ( vsip_scalar_d , const vsip_vview_d * , const vsip_vview_d *
 void vsip_vouter_f ( vsip_scalar_f , const vsip_vview_f * , const vsip_vview_f * , const vsip_mview_f * ) ;
 void vsip_vpolar_d ( const vsip_cvview_d* , const vsip_vview_d* r , const vsip_vview_d* t ) ;
 void vsip_vpolar_f ( const vsip_cvview_f* , const vsip_vview_f* , const vsip_vview_f* t ) ;
+void vsip_mpolar_d ( const vsip_cmview_d* , const vsip_mview_d* r , const vsip_mview_d* t ) ;
+void vsip_mpolar_f ( const vsip_cmview_f* , const vsip_mview_f* , const vsip_mview_f* t ) ;
 void vsip_vput_bl ( const vsip_vview_bl* , vsip_index , vsip_scalar_bl ) ;
 void vsip_vput_d ( const vsip_vview_d* , vsip_index , vsip_scalar_d ) ;
 void vsip_vput_f ( const vsip_vview_f* , vsip_index , vsip_scalar_f ) ;
@@ -1271,10 +1278,14 @@ void vsip_vrandu_d ( vsip_randstate *state , const vsip_vview_d* ) ;
 void vsip_vrandu_f ( vsip_randstate *state , const vsip_vview_f* ) ;
 void vsip_vreal_d ( const vsip_cvview_d* , const vsip_vview_d* ) ;
 void vsip_vreal_f ( const vsip_cvview_f* , const vsip_vview_f* ) ;
+void vsip_mreal_d ( const vsip_cmview_d*, const vsip_mview_d* ) ;
+void vsip_mreal_f ( const vsip_cmview_f*, const vsip_mview_f* ) ;
 void vsip_vrecip_d ( const vsip_vview_d* , const vsip_vview_d* ) ;
 void vsip_vrecip_f ( const vsip_vview_f* , const vsip_vview_f* ) ;
 void vsip_vrect_d ( const vsip_vview_d* , const vsip_vview_d* t , const vsip_cvview_d* ) ;
 void vsip_vrect_f ( const vsip_vview_f* , const vsip_vview_f* t , const vsip_cvview_f* ) ;
+void vsip_mrect_d ( const vsip_mview_d*, const vsip_mview_d*, const vsip_cmview_d* ) ;
+void vsip_mrect_f ( const vsip_mview_f*, const vsip_mview_f*, const vsip_cmview_f* ) ;
 void vsip_vrsqrt_d ( const vsip_vview_d* , const vsip_vview_d* ) ;
 void vsip_vrsqrt_f ( const vsip_vview_f* , const vsip_vview_f* ) ;
 void vsip_vsam_d ( const vsip_vview_d* , vsip_scalar_d , const vsip_vview_d* , const vsip_vview_d* ) ;
