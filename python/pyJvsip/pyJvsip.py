@@ -3032,6 +3032,7 @@ class Block (object):
             Note format converts this statement to '% 6.5f' or '%+6.5f' so keep
             the input simple.
             """
+            assert isinstance(fmt,str), 'Format must be a string'
             def _fmt1(c):
                 if c != '%':
                     return c
@@ -3083,6 +3084,7 @@ class Block (object):
             else:
                 print('Object not VSIP vector or matrix')
         def mprint(self,fmt):
+            assert isinstance(fmt,str), 'Format for mprint is a string'
             print(self.mstring(fmt))
     #Block specific class below
     def __init__(self,block_type,length):
