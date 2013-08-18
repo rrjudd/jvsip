@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from distutils.core import setup
 setup(name='pyJvsip',
-      version='0.2.6',
+      version='0.2.7',
       description='pyJvsip is a vector/matrix signal processing module bassed on the VSIPL C Library',
       author='Randall Judd',
       author_email='rrjudd@me.com',
@@ -9,5 +9,5 @@ setup(name='pyJvsip',
       py_modules=['pyJvsip','vsipElementwiseElementary','vsipElementwiseManipulation',\
             'vsipElementwiseUnary','vsipElementwiseBinary','vsipElementwiseTernary',\
             'vsipElementwiseLogical','vsipElementwiseSelection','vsipElementwiseBandB',
-            'vsipElementwiseCopy'],
+            'vsipElementwiseCopy','vsipSignalProcessing'],
       )

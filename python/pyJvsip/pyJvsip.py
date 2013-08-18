@@ -8,10 +8,11 @@ from vsipElementwiseLogical import *
 from vsipElementwiseSelection import *
 from vsipElementwiseBandB import *
 from vsipElementwiseCopy import *
+from vsipSignalProcessing import *
 
 import vsiputils as vsip
 
-__version__='0.2.6'
+__version__='0.2.7'
 
 def getType(v):
     """
