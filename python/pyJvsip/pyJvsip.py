@@ -9,10 +9,11 @@ from vsipElementwiseSelection import *
 from vsipElementwiseBandB import *
 from vsipElementwiseCopy import *
 from vsipSignalProcessing import *
+from vsipLinearAlgebra import *
 
 import vsiputils as vsip
 
-__version__='0.2.7'
+__version__='0.2.8'
 
 def getType(v):
     """
@@ -2468,11 +2469,11 @@ class Block (object):
         @property
         def herm(self):
             """
-            Done out of place.
+            Done out of place. For square matrices in-place is possible using the herm function.
             Usage: Given matrix view A
                 B = A.herm
                 returns new matrix B which is hermitian of A.
-            For an in place equivalent one can do A.transview.conj or use the hermitian function call conj(A,A).
+            For an in place equivalent one can do A.transview.conj.
             """
             if 'cmview' in self.type:
                 m=self.rowlength
@@ -3343,6 +3344,102 @@ class FFT (object):
     def arg(self):
         return self.__arg
 
+class FIR(object):
+    def __init__(self,t,filt,sym,N,D,state):
+        """
+        Usage:
+           firObj = FIR(t,filt,sym,N,D,state,ntimes,hint)
+        t is a type string; one of: 
+              'rcfir_f','cfir_f','fir_f','rcfir_d','cfir_d','fir_d'
+        filt is a vector view of filter coefficients
+        sym is a string; one of 'NONE','ODD','EVEN'
+        state (save state) is 'NO' or 'YES'
+        """
+        filtSptd = {'fir_f':'vview_f',
+                     'fir_d':'vview_d',
+                     'cfir_f':'cvview_f',
+                     'cfir_d':'cvview_d',
+                     'rcfir_f':'vview_f',
+                     'rcfir_d':'vview_d'}
+        firCreate = {'fir_f':vsip_fir_create_f,
+                     'fir_d':vsip_fir_create_d,
+                     'cfir_f':vsip_cfir_create_f,
+                     'cfir_d':vsip_cfir_create_d,
+                     'rcfir_f':vsip_rcfir_create_f,
+                     'rcfir_d':vsip_rcfir_create_d}
+        symType={'NONE':0,'ODD':1,'EVEN':2}
+        stateType={'NO':1,'YES':2}
+        assert filt.type == filtSptd[t],\
+                  'Filter Coefficients in wrong view type for filter of type ' + t
+        assert firCreate.has_key(t), 'Filter type not recognized'
+        assert sym in ['NONE','ODD','EVEN'],'Sym flag not recognized'
+        assert state in ['NO','YES'],'State flag not recognized'
+        self.__jvsip = JVSIP()
+        self.__type = t
+        self.__fir = firCreate[t](filt.view,symType[sym],N,D,stateType[state],0,0)
+        self.__length = N
+        self.__decimation=D
+        self.__state = state
+        
+    def __del__(self):
+        firDestroy = {'fir_f':vsip_fir_destroy_f,
+                     'fir_d':vsip_fir_destroy_d,
+                     'cfir_f':vsip_cfir_destroy_f,
+                     'cfir_d':vsip_cfir_destroy_d,
+                     'rcfir_f':vsip_rcfir_destroy_f,
+                     'rcfir_d':vsip_rcfir_destroy_d}
+        firDestroy[self.type](self.fir)
+        del(self.__jvsip)
+    def flt(self,x,y):
+        """
+        Usage:
+             fir = FIR(...)
+             fir.flt(x,y)
+             x is input view of data to be filtered
+             y is output view of filtered data
+        """
+        filtSptd = {'fir_f':'vview_f','fir_d':'vview_d',\
+                     'cfir_f':'cvview_f','cfir_d':'cvview_d',\
+                     'rcfir_f':'cvview_f','rcfir_d':'cvview_d'}
+        firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,\
+                  'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,\
+                  'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d} 
+        assert x.type == y.type
+        assert filtSptd[self.type] == x.type
+        firflt[self.type](self.fir,x.view,y.view)
+        return y
+    def reset(self):
+        fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
+                  'cfir_f':vsip_cfir_reset_f,'cfir_d':vsip_cfir_reset_d,
+                  'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d} 
+        if self.state:
+            fir_reset[self.type](self.fir)
+        return self
+    @property
+    def state(self):
+        if self.__state == 'YES':
+            return True
+        else:
+            return False
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def fir(self):
+        return self.__fir
+    @property
+    def length(self):
+        return self.__length
+    @property
+    def decimation(self):
+        return self.__decimation
+
+# Linear Algebra Classes
+# vsip_dlud_p
+# vsip_dlud_create_p
+# vsip_dlud_destroy_p
+# vsip_dlud_getattr_p
+# vsip_dlusol_p
 class LU(object):
     tLu=['lu_f','lu_d','clu_f','clu_d']
     luSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
@@ -3444,6 +3541,108 @@ class LU(object):
         else:
             print('Input matrix must be conformant with lu')
             return
+
+# vsip_dchold_p 
+# vsip_dchold_create_p 
+# vsip_dchold_destroy_p 
+# vsip_dchold_getattr_p 
+# vsip_dcholsol_p
+class CHOL(object):
+    """
+    Cholesky Decompossition
+    """
+    tChol=['chol_f','chol_d','cchol_f','cchol_d']
+    cholSel={'mview_f':'chol_f','mview_d':'chol_d','cmview_f':'cchol_f','cmview_d':'cchol_d'}
+    uplowSel={0:VSIP_TR_LOW,1:VSIP_TR_UPP,'UPP':VSIP_TR_UPP,'LOW':VSIP_TR_LOW}
+    supported=['cmview_d','cmview_f','mview_d','mview_f']
+    def __init__(self,t,uplow,cholSize):
+        """
+        See C VSIP specification for more info.
+        Usage:
+          chol=CHOL(t,upOrLow,N)
+        Where:
+          t is the cholesky type ('cchol_f','cchol_d','chol_f','chol_d'
+          upOrLow is a string 'UPP' to indicate the upper triangular portion of the matrix
+                 is to be used or 'LOW' if the lower triangular portion.
+          N is the size of the square matrix.
+
+        """
+        cholCreate={'cchol_f':vsip_cchold_create_f,
+                    'cchol_d':vsip_cchold_create_d,
+                    'chol_f':vsip_chold_create_f,
+                    'chol_d':vsip_chold_create_d}
+        self.__jvsip = JVSIP()
+        self.__type = t
+        self.__size = cholSize
+        self.__m = {'matrix':0}
+        assert cholCreate.has_key(t) and cholSize > 0 and isinstance(cholSize,int), \
+               'CHOL create error. Check type, and size. Size must be an int greater than 0.'
+        assert uplowSel.has_key(uplow),'Flag for upper or lower matrix not recognized'
+        self.__chol = cholCreate[t](uplowSel[uplow],cholSize)
+    def __del__(self):
+        cholDestroy={'cchol_f':vsip_cchold_destroy_f,
+                    'cchol_d':vsip_cchold_destroy_d,
+                    'chol_f':vsip_chold_destroy_f,
+                    'chol_d':vsip_chold_destroy_d}
+        del(self.__jvsip)  
+        cholDestroy[self.__type](self.__chol)
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def size(self):
+        return self.__size
+    @property
+    def chold(self):
+        return self.__chol
+    def decompose(self,m):
+        """
+        Decompose method for CHOL object
+        Usage for cholesky object chold:
+            chold.decompose(A)
+        Where:
+            A is a square matrix of type real or complex float or double
+        """
+        tMatrix={'cmview_d':'cchol_d','cmview_f':'cchol_f',
+                 'mview_d':'chol_d','mview_f':'chol_f'}
+        cholDecompose={'chol_f':vsip_chold_f,
+                'chol_d':vsip_chold_d,
+                'cchol_f':vsip_cchold_f,
+                'cchol_d':vsip_cchold_d}
+        assert 'pyJvsip.__View' in repr(m), \
+              'Input for CHOL decompose method must be a pyJvsip view'
+        assert tMatrix[m.type] == self.type, 'Type <:'+m.type+':> not supported by CHOL object'
+        assert m.rowlength == m.collength and m.rowlength == self.size,\
+            'For chold object (decomposition) matrix must be square and of size '+repr(self.size)
+        cholDecompose[self.type](self.chold,m.view)
+        self.__m['matrix'] = m
+        return self
+    def solve(self,inOut):
+        """
+        Usage for cholesky object chold:       
+           chold.solve(XB)
+           XB is a matrix. Solve is done in place.
+           For pyJvsip if a vector is passed in for XB it will work as a matrix with a
+           single column.
+        I have tried to make this generic but it is probably possible to pass in arguments
+        which will cause a failure when calling the underlying VSIPL functions.
+        """ 
+        cholSol={'chol_d':vsip_cholsol_d,'chol_f':vsip_cholsol_f,\
+               'cchol_d':vsip_ccholsol_d,'cchol_f':vsip_ccholsol_f}
+        tMatrix={'cmview_d':'cchol_d','cmview_f':'cchol_f',
+                 'mview_d':'chol_d','mview_f':'chol_f'}
+        assert 'pyJvsip.__View' in repr(inOut), \
+              'Input for CHOL decompose method must be a pyJvsip view'
+        if 'vview' in inOut.type:
+            a=inOut.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
+        else:
+            a=inOut
+        assert a.collength == self.size,'Size error in CHOL solve'
+        assert tMatrix.has_key(a.type), 'Type <:'+inOut.type+':> not supported by CHOL solve'
+        assert tMatrix[a.type] == self.type, 'Cholesky object does not match input view'
+        assert self.__m['matrix'] != 0, 'Cholesky object not associated with a matrix'
+        cholSol[self.type](a.view)
+        return inOut
 
 class QR(object):
     """ qOpt is VSIP_QRD_NOSAVEQ => 0 (No Q)
@@ -3663,156 +3862,10 @@ class SV(object):
         return
     def produ(self):
         return
-
-class FIR(object):
-    def __init__(self,t,filt,sym,N,D,state):
-        """
-        Usage:
-           firObj = FIR(t,filt,sym,N,D,state,ntimes,hint)
-        t is a type string; one of: 
-              'rcfir_f','cfir_f','fir_f','rcfir_d','cfir_d','fir_d'
-        filt is a vector view of filter coefficients
-        sym is a string; one of 'NONE','ODD','EVEN'
-        state (save state) is 'NO' or 'YES'
-        """
-        filtSptd = {'fir_f':'vview_f',
-                     'fir_d':'vview_d',
-                     'cfir_f':'cvview_f',
-                     'cfir_d':'cvview_d',
-                     'rcfir_f':'vview_f',
-                     'rcfir_d':'vview_d'}
-        firCreate = {'fir_f':vsip_fir_create_f,
-                     'fir_d':vsip_fir_create_d,
-                     'cfir_f':vsip_cfir_create_f,
-                     'cfir_d':vsip_cfir_create_d,
-                     'rcfir_f':vsip_rcfir_create_f,
-                     'rcfir_d':vsip_rcfir_create_d}
-        symType={'NONE':0,'ODD':1,'EVEN':2}
-        stateType={'NO':1,'YES':2}
-        assert filt.type == filtSptd[t],\
-                  'Filter Coefficients in wrong view type for filter of type ' + t
-        assert firCreate.has_key(t), 'Filter type not recognized'
-        assert sym in ['NONE','ODD','EVEN'],'Sym flag not recognized'
-        assert state in ['NO','YES'],'State flag not recognized'
-        self.__jvsip = JVSIP()
-        self.__type = t
-        self.__fir = firCreate[t](filt.view,symType[sym],N,D,stateType[state],0,0)
-        self.__length = N
-        self.__decimation=D
-        self.__state = state
-        
-    def __del__(self):
-        firDestroy = {'fir_f':vsip_fir_destroy_f,
-                     'fir_d':vsip_fir_destroy_d,
-                     'cfir_f':vsip_cfir_destroy_f,
-                     'cfir_d':vsip_cfir_destroy_d,
-                     'rcfir_f':vsip_rcfir_destroy_f,
-                     'rcfir_d':vsip_rcfir_destroy_d}
-        firDestroy[self.type](self.fir)
-        del(self.__jvsip)
-    def flt(self,x,y):
-        """
-        Usage:
-             fir = FIR(...)
-             fir.flt(x,y)
-             x is input view of data to be filtered
-             y is output view of filtered data
-        """
-        filtSptd = {'fir_f':'vview_f','fir_d':'vview_d',\
-                     'cfir_f':'cvview_f','cfir_d':'cvview_d',\
-                     'rcfir_f':'cvview_f','rcfir_d':'cvview_d'}
-        firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,\
-                  'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,\
-                  'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d} 
-        assert x.type == y.type
-        assert filtSptd[self.type] == x.type
-        firflt[self.type](self.fir,x.view,y.view)
-        return y
-    def reset(self):
-        fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
-                  'cfir_f':vsip_cfir_reset_f,'cfir_d':vsip_cfir_reset_d,
-                  'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d} 
-        if self.state:
-            fir_reset[self.type](self.fir)
-        return self
-    @property
-    def state(self):
-        if self.__state == 'YES':
-            return True
-        else:
-            return False
-    @property
-    def type(self):
-        return self.__type
-    @property
-    def fir(self):
-        return self.__fir
-    @property
-    def length(self):
-        return self.__length
-    @property
-    def decimation(self):
-        return self.__decimation
     
-def svdCompose(d,indx):
-    """
-    Usage:
-       import pyJvsip as pv
-       # get pyJvsip matrix A from some process
-       d=A.svd
-       # create an index vector (indx) of singular values of interest.
-       C=svdCompose(d,indx)
-    Returns a matrix reconstituted from selected singular values.
-    Note:
-     d above is a tuble. See svd method info.
-    Note:
-     the indices in indx should be less than the length of d[1]
-    Note:
-     you can create a new tuple, say g=(d[0],s,d[2]) if you want
-    to create a new matrix but not use the original singular values.
-    Note:
-      C=svdCompose(d,pv.create('vview_vi),d[0].length).ramp(0,1))
-    will return (an estimate of) the original matrix A.
-    """
-    assert 'vview_vi' in getType(indx)[2]
-    assert type(d) is tuple
-    assert 'mview' in getType(d[0])[2]
-    assert 'vview' in getType(d[1])[2]
-    assert 'mview' in getType(d[2])[2]
-    r=create(d[0].type,d[0].collength,d[2].collength).fill(0.0)
-    for i in range(indx.length):
-        j=indx[i]
-        r += d[0].colview(j).outer(d[1][j],d[2].colview(j))
-    return r
-# Functions
+
+# pyJvsip Functions
 # copy is kind of brain dead. Need more functionality and performance
-def copy(input,to):
-    """
-    Usage:
-        for A => list or view and  B=> view
-        copy(A,B) will copy the data from A into B
-    The copy function allows one to copy data from a list into a VSIP vector or matrix view.
-    If the list is 2D the list is copied as row major into a matrix.
-    If the list is 1D it is copied into a vector.
-    I would not call this function efficient or robust; just handy.
-    Note if both input and output are views then a standard VSIP copy takes place.
-    The views must be compliant.
-    """
-    if isinstance(input,list):
-        if 'vview' in to.type and (len(input) == to.length):
-            for i in range(to.length):
-               to[i] = input[i]
-        elif 'mview' in to.type and \
-                     (len(input) == to.collength) and (len(input[0]) == to.rowlength):
-            for i in range(to.collength):
-                for j in range(to.rowlength):
-                    to[i,j] = input[i][j]
-        else: 
-            print('Error in copy list to type <:'+to.type+':>.')
-            return
-    else:
-        vsip.copy(input.view,to.view)
-    return to
 def create(atype,*vals):
     """
        usage:
@@ -3929,3 +3982,33 @@ def create(atype,*vals):
         return FFT(atype,arg)
     else:
         print('Input argument <:'+atype+':> not recognzied for create')
+def svdCompose(d,indx):
+    """
+    Usage:
+       import pyJvsip as pv
+       # get pyJvsip matrix A from some process
+       d=A.svd
+       # create an index vector (indx) of singular values of interest.
+       C=svdCompose(d,indx)
+    Returns a matrix reconstituted from selected singular values.
+    Note:
+     d above is a tuble. See svd method info.
+    Note:
+     the indices in indx should be less than the length of d[1]
+    Note:
+     you can create a new tuple, say g=(d[0],s,d[2]) if you want
+    to create a new matrix but not use the original singular values.
+    Note:
+      C=svdCompose(d,pv.create('vview_vi),d[0].length).ramp(0,1))
+    will return (an estimate of) the original matrix A.
+    """
+    assert 'vview_vi' in getType(indx)[2]
+    assert type(d) is tuple
+    assert 'mview' in getType(d[0])[2]
+    assert 'vview' in getType(d[1])[2]
+    assert 'mview' in getType(d[2])[2]
+    r=create(d[0].type,d[0].collength,d[2].collength).fill(0.0)
+    for i in range(indx.length):
+        j=indx[i]
+        r += d[0].colview(j).outer(d[1][j],d[2].colview(j))
+    return r

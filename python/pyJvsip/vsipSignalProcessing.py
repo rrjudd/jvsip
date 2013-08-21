@@ -13,7 +13,7 @@ def __isSizeCompatible(a,b):
 # vsip_shisto_p 
 def histo(a,b_min,b_max,op,b):
     """
-    See VSIP specification for mor info.
+    See VSIP specification for more details.
     Usage:
        histo(in,b_min,b_max,op,out)
     where:
