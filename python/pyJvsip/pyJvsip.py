@@ -13,7 +13,7 @@ from vsipLinearAlgebra import *
 
 import vsiputils as vsip
 
-__version__='0.2.8'
+__version__='0.2.9'
 
 def getType(v):
     """
@@ -176,6 +176,16 @@ class Block (object):
                 print('Type <:' + self.type + ':> not supported for compactAttrib')
                 return False
             return (t,length,attr)
+        @property # A way to get a new view and data space of the same size.
+        def empty(self):
+            """
+               creates a new view, on a new block, of the same type and shape as 
+               the calling view. No copy or initialization takes place, so new view
+               is empty, so-to-speak.
+            """
+            attr=self.compactAttrib(0)
+            b = self.block.otherBlock(attr[0],attr[1])
+            return b.bind(attr[2])
         @property # returns deep (view and block) copy of object
         def copy(self):
             """For vector or matrix A then
@@ -190,11 +200,7 @@ class Block (object):
                will leave A alone, copy its elements to new view (and block) B 
                and then do an in-place sine operation on B.
             """
-            attr=self.compactAttrib(0)
-            b = self.block.otherBlock(attr[0],attr[1])
-            newView = b.bind(attr[2])
-            vsip.copy(self.view,newView.view)
-            return newView
+            return copy(self,self.empty)
         @property
         def copyrm(self):
             """ Same as copy method except if the view is a matrix it is created with
@@ -225,17 +231,6 @@ class Block (object):
                 return newView
             else:
                 return self.copy
-        @property # A way to get a new view and data space of the same size but no copy penalty
-        def empty(self):
-            """
-               creates a new view, on a new block, of the same type and shape as 
-               the calling view. No copy or initialization takes place, so new view
-               is empty, so-to-speak.
-            """
-            attr=self.compactAttrib(0)
-            b = self.block.otherBlock(attr[0],attr[1])
-            newView = b.bind(attr[2])
-            return newView
         @property # A way to ge a new in-place view of the object
         def clone(self):
             return self.__clone(self)   
@@ -3106,6 +3101,9 @@ class Block (object):
         if self.__type in Block.blockTypes:
             vsip.destroy(self.__vsipBlock)
         del(self.__jvsip)
+    @property
+    def vsip(self):
+        return self.__vsipBlock
     # major for bind of matrix in attr is 'ROW', or 'COL'
     def bind(self,*args):
         if isinstance(args[0],tuple):
@@ -3224,6 +3222,37 @@ class Rand(object):
         else:
             print('Not a supported type for rand')
 
+# Signal Processing Classes
+
+
+# Not Implemented
+# vsip_fft_setwindow_f 
+# vsip_dfft2dx_create_f
+# vsip_ccfft2dx_f
+# vsip_crfft2dop_f
+# vsip_rcfft2dop_f 
+
+# vsip_conv2d_create_f
+# vsip_conv2d_destroy_f
+# vsip_conv2d_getattr_f
+# vsip_convolve2d_f
+# vsip_dcorr2d_create_f
+# vsip_dcorr2d_destroy_f
+# vsip_dcorr2d_getattr_f
+# vsip_dcorrelate2d_f
+
+# FFT Class for 1 d and FFTM
+# vsip_ccfftx_f
+# vsip_crfftop_f
+# vsip_rcfftop_f
+# vsip_dfftx_create_f
+# vsip_ccfftmx_f
+# vsip_crfftmop_f
+# vsip_rcfftmop_f
+# vsip_dfftmx_create_f
+# vsip_fftm_setwindow_f
+# vsip_fftn_destroy_f
+# vsip_fftn_getattr_f
 class FFT (object):
     """
        Usage:
@@ -3335,7 +3364,7 @@ class FFT (object):
             print('Type <:' + t + ':> not a supported type for FFT')
             return False     
     @property
-    def fft(self):
+    def vsip(self):
         return self.__fft
     @property
     def type(self):
@@ -3344,6 +3373,198 @@ class FFT (object):
     def arg(self):
         return self.__arg
 
+# Convolution/Correlation Classes
+# vsip_dconv1d_create_f
+# vsip_dconv1d_destroy_f
+# vsip_dconv1d_getattr_f
+# vsip_dconvolve1d_f
+#VSIP_NONSYM = 0, VSIP_SYM_EVEN_LEN_ODD = 1, VSIP_SYM_EVEN_LEN_EVEN = 2
+class CONV(object):
+    """
+    See VSIPL specification for more information on convolution.
+    """
+    tConv=['conv1d_f','conv1d_d']
+    convSel={'vview_f':'conv1d_f','vview_d':'conv1d_d'}
+    supported=['vview_f','vview_d']
+    support = {0:VSIP_SUPPORT_FULL,1:VSIP_SUPPORT_SAME,2:VSIP_SUPPORT_MIN,
+              'FULL':VSIP_SUPPORT_FULL,'SAME':VSIP_SUPPORT_SAME,'MIN':VSIP_SUPPORT_MIN}
+    symmetry = {0:VSIP_NONSYM,1:VSIP_SYM_EVEN_LEN_ODD, 2:VSIP_SYM_EVEN_LEN_EVEN,
+        'NON':VSIP_NONSYM,'0DD':VSIP_SYM_EVEN_LEN_ODD,'EVEN':VSIP_SYM_EVEN_LEN_EVEN}
+    algHint={0:VSIP_ALG_TIME, 1:VSIP_ALG_SPACE, 2:VSIP_ALG_NOISE,
+             'TIME':VSIP_ALG_TIME,'SPACE':VSIP_ALG_SPACE,'NOISE':VSIP_ALG_NOISE}
+    supportStrings={0:'FULL',1:'SAME',2:'MIN'}
+    symmStrings={0:'NON',1:'ODD',2:'EVEN'}
+    algStrings={0:'TIME',1:'SPACE',2:'NOISE'}
+    def __init__(self,t,h,symm,dtaLength,dec,sup,ntimes,hint):
+        f={'conv1d_d':vsip_conv1d_create_d,'conv1d_f':vsip_conv1d_create_f}
+        assert isinstance(t,str),'Type argument must be a string for function conv'
+        assert f.has_key(t), 'Type <:'+t+':> not recognized by function conv'
+        assert CONV.algHint.has_key(hint), 'Argument hint not recognized by function conv'
+        assert CONV.support.has_key(sup), 'Argument for support region not recognized by function conv'
+        assert isinstance(dec,int) and isinstance(dtaLength,int) and isinstance(ntimes,int),\
+               'Arguments decimation and data size must be integers, and ntimes is an integer'
+        assert dec > 0, 'Decimation must be an integer greater than zero '
+        assert 'pyJvsip.__View' in repr(h), 'The kernel must be a pyJvsip view'
+        assert CONV.convSel.has_key(h.type) and t == CONV.convSel[h.type],\
+              'Kernel type <:' + h.type + ':> not recognized for convolution.'
+        assert CONV.symmetry.has_key(symm), 'Symmetry flag not recognized'       
+        mySym=CONV.symmStrings[CONV.symmetry[symm]]
+        # calculate kernel length
+        if mySym == 'NON':
+            M=h.length
+        elif mySym == 'EVEN':
+            M=h.length * 2
+        else:
+            M=h.length * 2 - 1
+        assert M <= dtaLength, 'The kernel length is to long for the data length'
+        self.__jvsip = JVSIP()
+        self.__type = t
+        self.__conv = f[t](t,h,CONV.symmetry[symm],dtaLength,dec,CONV.support[sup],ntimes,CONV.algHit[hint])
+        self.__kernel_len = int(M)
+        self.__dtaLength = int(dtaLength)
+        self.__decimation = int(dec)
+        if CONV.support[sup]==VSIP_SUPPORT_FULL:
+            self.__outLen = (self.__dtaLength + self.__kernel_len - 2) // self.__decimation + 1
+        elif CONV.support[sup]==VSIP_SUPPORT_MIN:
+            self.__outLen = (self.__dtaLength -1 ) // self.__decimation + 1
+        else:
+            self.__outLen = (self.__dtaLength - 1) // self.__decimation - (self.__kernel_len - 1) // self.__decimation + 1
+        self.__symm = CONV.symmetry[symm]
+        self.__support = CORR.supportStrings[CORR.support[sup]]
+    def __del__(self):
+        f={'conv1d_d':vsip_conv1d_destroy_d,'conv1d_f':vsip_conv1d_destroy_f}
+        f[self.type](self.vsip)
+        del(self.__jvsip)
+    @property
+    def vsip(self):
+        return self.__conv
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def kernel_len(self):
+        return self.__kernel_len
+    @property
+    def symm(self):
+        return CONV.symmStrings[self.__symm]
+    @property
+    def support(self):
+        return self.__support
+    @property
+    def out_len(self):
+        return self.__outLen
+    @property
+    def decimation(self):
+        return self.__decimation
+    def convolve(self,x,y):
+        f={'conv1d_dvview_dvview_d':vsip_convolve1d_d, 'conv1d_fvview_fvview_f':vsip_convolve1d_f}
+        assert 'pyJvsip.__View' in repr(x) and 'pyJvsip.__View' in repr(y),'Arguments to convolve must be pyJvsip views'
+        t=self.type+x.type+y.type
+        assert f.has_key(t),'Type <:' + t + ':> not recognized by convolve method'
+        assert y.length == self.out_len, 'Output vector length not equal to calculated output length'
+        f[t](self.vsip,x.view,y.view)
+        return y
+
+# vsip_dcorr1d_create_f
+# vsip_dcorr1d_destroy_f
+# vsip_dcorr1d_getattr_f
+# vsip_dcorrelate1d_f
+class CORR(object):
+    """
+    See VSIPL specification for more information on correlation.
+    """
+    tCorr=['corr1d_f','corr1d_d','ccorr1d_f','ccorr1d_d']
+    corrSel={'mview_f':'corr1d_f','mview_d':'corr1d_d','cmview_f':'ccorr1d_f','cmview_d':'ccorr1d_d'}
+    supported=['cmview_d','cmview_f','mview_d','mview_f']
+    supReg = {0:VSIP_SUPPORT_FULL,1:VSIP_SUPPORT_SAME,2:VSIP_SUPPORT_MIN,
+              'FULL':VSIP_SUPPORT_FULL,'SAME':VSIP_SUPPORT_SAME,'MIN':VSIP_SUPPORT_MIN}
+    supportStrings={0:'FULL',1:'SAME',2:'MIN'}
+    algHint={0:VSIP_ALG_TIME, 1:VSIP_ALG_SPACE, 2:VSIP_ALG_NOISE,
+             'TIME':VSIP_ALG_TIME,'SPACE':VSIP_ALG_SPACE,'NOISE':VSIP_ALG_NOISE}
+    def __init__(self,t,repSize,dtaSize,region,ntimes,hint):
+        f={'ccorr1d_d':vsip_ccorr1d_create_d,'ccorr1d_f':vsip_ccorr1d_create_f,
+           'corr1d_d':vsip_corr1d_create_d,'corr1d_f':vsip_corr1d_create_f}
+        assert isinstance(t,str),'Type argument must be a string for function corr'
+        assert f.has_key(t), 'Type <:'+t+':> not recognized by function corr'
+        assert CORR.algHint.has_key(hint), 'Argument hint not recognized by function corr'
+        assert CORR.supReg.has_key(region), 'Argument for support region not recognized by function corr'
+        assert isinstance(repSize,int) and isinstance(dtaSize,int) and isinstance(ntimes,int),\
+               'Arguments two, three and five must be integers'
+        assert repSize > 0 and repSize <= dtaSize, \
+          'The replica vector length must be > 0 and <= to the length of the data vector'
+        self.__jvsip = JVSIP()
+        self.__type = t
+        self.__corr = f[t](repSize,dtaSize,CORR.supReg[region],ntimes,CORR.algHint[hint])
+        self.__repLength = repSize
+        self.__dtaLength = dtaSize
+        if CORR.supReg[region]==VSIP_SUPPORT_FULL:
+            self.__lagLength = dtaSize + repSize - 1
+        elif CORR.supReg[region]==VSIP_SUPPORT_MIN:
+            self.__lagLength = dtaSize - repSize + 1
+        else:
+            self.__lagLength = dtaSize
+        self.__support = CORR.supportStrings[CORR.supReg[region]]
+    def __del__(self):
+        f={'ccor1d_d':vsip_ccorr1d_destroy_f, 'ccor1d_f':vsip_ccorr1d_destroy_f,
+           'corr1d_d': vsip_corr1d_destroy_d, 'corr1d_f': vsip_corr1d_destroy_f}
+        f[self.type](self.vsip)
+        del(self.__jvsip)
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def vsip(self):
+        return self.__corr 
+    @property
+    def support(self):
+        """ Support attribute
+        """
+        return self.__support
+    @property
+    def lag_len(self):
+        return self.__lagLength
+    @property
+    def ref_len(self):
+        """ Reference vector length attribute
+        """
+        return self.__repLength
+    @property
+    def data_len(self):
+        """ Data Length attribute
+        """
+        return self.__dtaLength
+    def correlate(self,bias,ref,x,y):
+        """
+        See VSIP specification document for more Information.
+        Usage:
+            correlate(bias, ref, x, y)
+        Where:
+            bias 'BIASED' or 'UNBIASED' to select correlation normalization.
+            ref  reference vector
+            x    input view
+            y    output view
+        """
+        biasSelect={0:VSIP_BIASED,1:VSIP_UNBIASED, 'BIASED':VSIP_BIASED,
+              'UNBIASED':VSIP_UNBIASED}
+        f={'ccorr1d_dcvview_dcvview_dcvview_d':vsip_ccorrelate1d_d,                                                     
+           'ccorr1d_fcvview_fcvview_fcvview_f':vsip_ccorrelate1d_f,                                                
+           'corr1d_dvview_dvview_dvview_d':vsip_correlate1d_d,                                                     
+           'corr1d_fvview_fvview_fvview_f':vsip_correlate1d_f} 
+        assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
+           and 'pyJvsip.__View' in repr(c),\
+           'The last three arguments of method correlate must be pyJvsip views'
+        t = self.type+ref.type+x.type+y.type
+        assert f.has_key(t),'Type<:'+t+' not recognized for correlate object'
+        assert biasSelect(bias).has_key(bias), \
+                'Bias key not recogonized for correlate method'
+        assert ref.length == self.ref_len, \
+            'Reference vector length not in correlate object'
+        assert x.length == self.data_len, \
+            'data vector length not in correlate object'
+        f[t](self.vsip,biasSelect[bias],ref.view,x.view,y.view)
+        return y
+       
+# filter Class
 class FIR(object):
     def __init__(self,t,filt,sym,N,D,state):
         """
@@ -3388,7 +3609,7 @@ class FIR(object):
                      'cfir_d':vsip_cfir_destroy_d,
                      'rcfir_f':vsip_rcfir_destroy_f,
                      'rcfir_d':vsip_rcfir_destroy_d}
-        firDestroy[self.type](self.fir)
+        firDestroy[self.type](self.vsip)
         del(self.__jvsip)
     def flt(self,x,y):
         """
@@ -3425,7 +3646,7 @@ class FIR(object):
     def type(self):
         return self.__type
     @property
-    def fir(self):
+    def vsip(self):
         return self.__fir
     @property
     def length(self):
@@ -3469,7 +3690,7 @@ class LU(object):
     def size(self):
         return self.__size
     @property
-    def lud(self):
+    def vsip(self):
         return self.__lu
     def decompose(self,m):
         """
@@ -3593,7 +3814,7 @@ class CHOL(object):
     def size(self):
         return self.__size
     @property
-    def chold(self):
+    def vsip(self):
         return self.__chol
     def decompose(self,m):
         """
@@ -3700,7 +3921,7 @@ class QR(object):
     def args(self):
         return (self.__collength,self.__rowlength,self.__qOpt)
     @property
-    def qrd(self):
+    def vsip(self):
         return self.__qr
     def decompose(self,m):
         tMatrix={'cmview_d':'cqr_d','cmview_f':'cqr_f','mview_d':'qr_d','mview_f':'qr_f'}
@@ -3754,6 +3975,7 @@ class QR(object):
             print('Input arguments must be conformant with qrsol')
             return
 
+# To Do; make vsip enums work as well as strings
 class SV(object):
     """
     Usage:
@@ -3764,7 +3986,7 @@ class SV(object):
        opU and opV are strings; one of 'NOS', 'FULL', 'PART' indicating
        what part of the U and S matrices are to be retained.
     Note you may also use the string coresponding to the target matrix for type.
-    For instance if singular values of matrix A are required then you could do
+    For instance if only singular values of matrix A are required then you could do
     sv=SV(A.type,A.collength,A.rowlength,'NOS','NOS')
     """
     tSv=['sv_f','sv_d','csv_f','csv_d','mview_d','cmview_d','mview_f','cmview_f']

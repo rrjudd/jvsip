@@ -286,6 +286,17 @@ def trans(a,b):
 
 # vsip_cmprodh_p
 def prodh(a,b,c):
+    """
+    Matrix Hermitian Product; See VSIPL specification for more Info.
+    Not in-place
+    Usage:
+        prodh(a,b,c)
+    Where:
+        a View of input M by P matrix.
+        b View of input M by P matrix.
+        c View of output M by N matrix.
+    Matrices are complex float.
+    """
     assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
        and 'pyJvsip.__View' in repr(c),\
        'Arguments must by pyJvsip views for function prodh'
@@ -300,6 +311,17 @@ def prodh(a,b,c):
 
 # vsip_cmprodj_p
 def prodj(a,b,c):
+    """
+    Matrix Conjugate Product; See VSIPL specification for more Information.
+    Not in-place
+    Usage:
+        prodh(a,b,c)
+    Where:
+        a View of input M by P matrix.
+        b View of input P by N matrix.
+        c View of output M by N matrix.
+    Matrices are complex float.
+    """
     assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
        and 'pyJvsip.__View' in repr(c),\
        'Arguments must by pyJvsip views for function prodj'
@@ -314,6 +336,16 @@ def prodj(a,b,c):
 
 # vsip_dmprodt_p
 def prodt(a,b,c):
+    """
+    Matrix Transpose Product; See VSIPL Specification for more Information.
+    Usage:
+        prodh(a,b,c)
+    Where:
+        a View of input M by P matrix.
+        b View of input M by P matrix.
+        c View of output M by N matrix.
+    Matrices are real or complex float.
+    """
     assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
        and 'pyJvsip.__View' in repr(c),\
        'Arguments must by pyJvsip views for function prodt'
