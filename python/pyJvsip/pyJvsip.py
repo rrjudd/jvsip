@@ -236,9 +236,9 @@ class Block (object):
             return self.__clone(self)   
         #data generators
         def ramp(self,start,increment):
-            supported = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
+            supportedViews = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
             extended = ['cvview_f','cvview_d']
-            if self.type in supported:
+            if self.type in supportedViews:
                 vsip.ramp(start,increment,self.view)
                 return self
             elif self.type in extended:
@@ -2131,7 +2131,7 @@ class Block (object):
                   Done in place and the input is used up so use a copy if the input
                   matrix is needed.
             """
-            supported = ['mview_f','mview_d']
+            supportedViews = ['mview_f','mview_d']
             if self.type not in supported:
                 print('Matrix must be of type mview_f or mview_d')
                 return
@@ -2171,7 +2171,7 @@ class Block (object):
             p=Block('block_vi',self.collength).vector.ramp(0,1)
             L=self.empty.identity
             U=self.copy
-            supported = ['mview_f','mview_d']
+            supportedViews = ['mview_f','mview_d']
             if U.type not in supported:
                 print('Matrix must be of type mview_f or mview_d')
                 return
@@ -3301,22 +3301,22 @@ class FFT (object):
                      'ccfftmop_d':'vsip_ccfftmop_create_d(l[0],l[1],l[2],l[3],l[4],l[5],l[6])',
                      'rcfftmop_d':'vsip_rcfftmop_create_d(l[0],l[1],l[2],l[3],l[4],l[5])',
                      'crfftmop_d':'vsip_crfftmop_create_d(l[0],l[1],l[2],l[3],l[4],l[5])'}
-    fftFuncDict={'cvview_d':'vsip_ccfftip_d(self.fft,l[0].view)',
-                 'cvview_f':'vsip_ccfftip_f(self.fft,l[0].view)',
-                 'cvview_dcvview_d':'vsip_ccfftop_d(self.fft,l[0].view,l[1].view)',
-                 'cvview_fcvview_f':'vsip_ccfftop_f(self.fft,l[0].view,l[1].view)',
-                 'vview_dcvview_d':'vsip_rcfftop_d(self.fft,l[0].view,l[1].view)',
-                 'vview_fcvview_f':'vsip_rcfftop_f(self.fft,l[0].view,l[1].view)',
-                 'cvview_dvview_d':'vsip_crfftop_d(self.fft,l[0].view,l[1].view)',
-                 'cvview_fvview_f':'vsip_crfftop_f(self.fft,l[0].view,l[1].view)',
-                 'cmview_d':'vsip_ccfftmip_d(self.fft,l[0].view)',
-                 'cmview_f':'vsip_ccfftmip_f(self.fft,l[0].view)',
-                 'cmview_dcmview_d':'vsip_ccfftmop_d(self.fft,l[0].view,l[1].view)',
-                 'cmview_fcmview_f':'vsip_ccfftmop_f(self.fft,l[0].view,l[1].view)',
-                 'mview_dcmview_d':'vsip_rcfftmop_d(self.fft,l[0].view,l[1].view)',
-                 'mview_fcmview_f':'vsip_rcfftmop_f(self.fft,l[0].view,l[1].view)',
-                 'cmview_dmview_d':'vsip_crfftmop_d(self.fft,l[0].view,l[1].view)',
-                 'cmview_fmview_f':'vsip_crfftmop_f(self.fft,l[0].view,l[1].view)'}             
+    fftFuncDict={'cvview_d':'vsip_ccfftip_d(self.vsip,l[0].view)',
+                 'cvview_f':'vsip_ccfftip_f(self.vsip,l[0].view)',
+                 'cvview_dcvview_d':'vsip_ccfftop_d(self.vsip,l[0].view,l[1].view)',
+                 'cvview_fcvview_f':'vsip_ccfftop_f(self.vsip,l[0].view,l[1].view)',
+                 'vview_dcvview_d':'vsip_rcfftop_d(self.vsip,l[0].view,l[1].view)',
+                 'vview_fcvview_f':'vsip_rcfftop_f(self.vsip,l[0].view,l[1].view)',
+                 'cvview_dvview_d':'vsip_crfftop_d(self.vsip,l[0].view,l[1].view)',
+                 'cvview_fvview_f':'vsip_crfftop_f(self.vsip,l[0].view,l[1].view)',
+                 'cmview_d':'vsip_ccfftmip_d(self.vsip,l[0].view)',
+                 'cmview_f':'vsip_ccfftmip_f(self.vsip,l[0].view)',
+                 'cmview_dcmview_d':'vsip_ccfftmop_d(self.vsip,l[0].view,l[1].view)',
+                 'cmview_fcmview_f':'vsip_ccfftmop_f(self.vsip,l[0].view,l[1].view)',
+                 'mview_dcmview_d':'vsip_rcfftmop_d(self.vsip,l[0].view,l[1].view)',
+                 'mview_fcmview_f':'vsip_rcfftmop_f(self.vsip,l[0].view,l[1].view)',
+                 'cmview_dmview_d':'vsip_crfftmop_d(self.vsip,l[0].view,l[1].view)',
+                 'cmview_fmview_f':'vsip_crfftmop_f(self.vsip,l[0].view,l[1].view)'}             
     def __init__(self,t,arg):
         if FFT.fftCreateDict.has_key(t):
             self.__jvsip = JVSIP()
@@ -3385,8 +3385,8 @@ class CONV(object):
     """
     tConv=['conv1d_f','conv1d_d']
     convSel={'vview_f':'conv1d_f','vview_d':'conv1d_d'}
-    supported=['vview_f','vview_d']
-    support = {0:VSIP_SUPPORT_FULL,1:VSIP_SUPPORT_SAME,2:VSIP_SUPPORT_MIN,
+    supportedViews=['vview_f','vview_d']
+    supportRegion = {0:VSIP_SUPPORT_FULL,1:VSIP_SUPPORT_SAME,2:VSIP_SUPPORT_MIN,
               'FULL':VSIP_SUPPORT_FULL,'SAME':VSIP_SUPPORT_SAME,'MIN':VSIP_SUPPORT_MIN}
     symmetry = {0:VSIP_NONSYM,1:VSIP_SYM_EVEN_LEN_ODD, 2:VSIP_SYM_EVEN_LEN_EVEN,
         'NON':VSIP_NONSYM,'0DD':VSIP_SYM_EVEN_LEN_ODD,'EVEN':VSIP_SYM_EVEN_LEN_EVEN}
@@ -3400,7 +3400,7 @@ class CONV(object):
         assert isinstance(t,str),'Type argument must be a string for function conv'
         assert f.has_key(t), 'Type <:'+t+':> not recognized by function conv'
         assert CONV.algHint.has_key(hint), 'Argument hint not recognized by function conv'
-        assert CONV.support.has_key(sup), 'Argument for support region not recognized by function conv'
+        assert CONV.supportRegion.has_key(sup), 'Argument for support region not recognized by function conv'
         assert isinstance(dec,int) and isinstance(dtaLength,int) and isinstance(ntimes,int),\
                'Arguments decimation and data size must be integers, and ntimes is an integer'
         assert dec > 0, 'Decimation must be an integer greater than zero '
@@ -3419,18 +3419,18 @@ class CONV(object):
         assert M <= dtaLength, 'The kernel length is to long for the data length'
         self.__jvsip = JVSIP()
         self.__type = t
-        self.__conv = f[t](t,h,CONV.symmetry[symm],dtaLength,dec,CONV.support[sup],ntimes,CONV.algHit[hint])
+        self.__conv = f[t](h.view,CONV.symmetry[symm],dtaLength,dec,CONV.supportRegion[sup],ntimes,CONV.algHint[hint])
         self.__kernel_len = int(M)
         self.__dtaLength = int(dtaLength)
         self.__decimation = int(dec)
-        if CONV.support[sup]==VSIP_SUPPORT_FULL:
+        if CONV.supportRegion[sup]==VSIP_SUPPORT_FULL:
             self.__outLen = (self.__dtaLength + self.__kernel_len - 2) // self.__decimation + 1
-        elif CONV.support[sup]==VSIP_SUPPORT_MIN:
+        elif CONV.supportRegion[sup]==VSIP_SUPPORT_MIN:
             self.__outLen = (self.__dtaLength -1 ) // self.__decimation + 1
         else:
             self.__outLen = (self.__dtaLength - 1) // self.__decimation - (self.__kernel_len - 1) // self.__decimation + 1
         self.__symm = CONV.symmetry[symm]
-        self.__support = CORR.supportStrings[CORR.support[sup]]
+        self.__support = CONV.supportStrings[CONV.supportRegion[sup]]
     def __del__(self):
         f={'conv1d_d':vsip_conv1d_destroy_d,'conv1d_f':vsip_conv1d_destroy_f}
         f[self.type](self.vsip)
@@ -3450,6 +3450,9 @@ class CONV(object):
     @property
     def support(self):
         return self.__support
+    @property
+    def data_len(self):
+        return self.__dtaLength
     @property
     def out_len(self):
         return self.__outLen
@@ -3627,14 +3630,14 @@ class FIR(object):
                   'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d} 
         assert x.type == y.type
         assert filtSptd[self.type] == x.type
-        firflt[self.type](self.fir,x.view,y.view)
+        firflt[self.type](self.vsip,x.view,y.view)
         return y
     def reset(self):
         fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
                   'cfir_f':vsip_cfir_reset_f,'cfir_d':vsip_cfir_reset_d,
                   'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d} 
         if self.state:
-            fir_reset[self.type](self.fir)
+            fir_reset[self.type](self.vsip)
         return self
     @property
     def state(self):
@@ -3710,7 +3713,7 @@ class LU(object):
             chk = (m.rowlength == m.collength) and (self.size == m.rowlength) \
                    and self.type == tMatrix[m.type]
         if chk:
-            luDecompose[self.type](self.lud,m.view)
+            luDecompose[self.type](self.vsip,m.view)
             self.__m['matrix'] = m
             return self
         else:
@@ -3757,7 +3760,7 @@ class LU(object):
                 print('LU object has no matrix associated with it')
                 return
             else:
-                luSol[self.type](self.lud,opM,XB.view)
+                luSol[self.type](self.vsip,opM,XB.view)
                 return inOut
         else:
             print('Input matrix must be conformant with lu')
@@ -3835,7 +3838,7 @@ class CHOL(object):
         assert tMatrix[m.type] == self.type, 'Type <:'+m.type+':> not supported by CHOL object'
         assert m.rowlength == m.collength and m.rowlength == self.size,\
             'For chold object (decomposition) matrix must be square and of size '+repr(self.size)
-        cholDecompose[self.type](self.chold,m.view)
+        cholDecompose[self.type](self.vsip,m.view)
         self.__m['matrix'] = m
         return self
     def solve(self,inOut):
@@ -3930,7 +3933,7 @@ class QR(object):
                 'cqr_f':vsip_cqrd_f,
                 'cqr_d':vsip_cqrd_d}
         if tMatrix[m.type] in self.type :
-            qrDecompose[self.type](self.qrd,m.view)
+            qrDecompose[self.type](self.vsip,m.view)
             self.__m['matrix'] = m
             return self
         else:
@@ -3941,7 +3944,7 @@ class QR(object):
         qrProd={'qr_d':vsip_qrdprodq_d,'qr_f':vsip_qrdprodq_f, \
                'cqr_d':vsip_cqrdprodq_d,'cqr_f':vsip_cqrdprodq_f}
         if QR.qrSel[X.type] in self.type:
-            qrProd[self.type](self.qrd,opQ,opSide,X.view)
+            qrProd[self.type](self.vsip,opQ,opSide,X.view)
             return X
         else:
             print('QR Type not compatible with input')
@@ -3955,7 +3958,7 @@ class QR(object):
                 print('QR object has no matrix associated with it')
                 return
             else:
-                qrSol[self.type](self.qrd,opR,alpha,XB.view)
+                qrSol[self.type](self.vsip,opR,alpha,XB.view)
                 return XB
         else:
             print('Input arguments must be conformant with qrsolr')
@@ -3969,7 +3972,7 @@ class QR(object):
                 print('QR object has no matrix associated with it')
                 return
             else:
-                qrSol[self.type](self.qrd,qrProf,XB.view)
+                qrSol[self.type](self.vsip,qrProf,XB.view)
                 return XB
         else:
             print('Input arguments must be conformant with qrsol')
