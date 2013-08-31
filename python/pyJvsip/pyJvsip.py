@@ -3480,9 +3480,9 @@ class CONV(object):
         self.__decimation = int(dec)
         if CONV.supportRegion[sup]==VSIP_SUPPORT_FULL:
             self.__outLen = (self.__dtaLength + self.__kernel_len - 2) // self.__decimation + 1
-        elif CONV.supportRegion[sup]==VSIP_SUPPORT_MIN:
+        elif CONV.supportRegion[sup]==VSIP_SUPPORT_SAME:
             self.__outLen = (self.__dtaLength -1 ) // self.__decimation + 1
-        else:
+        else: # must be MIN
             self.__outLen = (self.__dtaLength - 1) // self.__decimation - (self.__kernel_len - 1) // self.__decimation + 1
         self.__symm = CONV.symmetry[symm]
         self.__support = CONV.supportStrings[CONV.supportRegion[sup]]
