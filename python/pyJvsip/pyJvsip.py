@@ -2784,12 +2784,12 @@ class Block (object):
                 retval = self.empty
                 if self.type in ['cvview_d','cvview_f']:
                     arg = (self.length,1.0,-1,0,0)
-                elif self.type in ['cmview_d','cmview_f']:
+                else:
                     if 'COL' in self.major:
                         major = 1
                     else:
                         major = 0
-                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                    arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
                 obj=FFT(f[self.type],arg)
                 obj.dft(self,retval)
                 return retval
@@ -2823,12 +2823,12 @@ class Block (object):
                 retval = self.empty
                 if self.type in ['cvview_d','cvview_f']:
                     arg = (self.length,1.0,1,0,0)
-                elif self.type in ['cmview_d','cmview_f']:
+                else:
                     if 'COL' in self.major:
                         major = 1
                     else:
                         major = 0
-                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                    arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
                 obj=FFT(f[self.type],arg)
                 obj.dft(self,retval)
                 return retval
