@@ -13,7 +13,7 @@ from vsipLinearAlgebra import *
 
 import vsiputils as vsip
 
-__version__='0.2.9'
+__version__='0.2.10'
 
 def getType(v):
     """
@@ -86,7 +86,85 @@ class Block (object):
             'vview_bl':'block_bl','mview_f':'block_f','mview_d':'block_d',\
             'cmview_f':'cblock_f','cmview_d':'cblock_d','mview_si':'block_si',\
             'mview_i':'block_i','mview_uc':'block_uc','mview_bl':'block_bl'}
+    #Block specific class below
+    def __init__(self,block_type,length):
+        other = ['real_f','imag_f','real_d','imag_d']
+        self.__jvsip = JVSIP()
+        if block_type in Block.blockTypes:
+            self.__vsipBlock = vsip.create(block_type,(length,VSIP_MEM_NONE))
+            self.__length = length
+            self.__type = block_type
+        elif block_type in other:
+            self.__vsipBlock = length[0]
+            self.__length = length[1]
+            self.__type = block_type
+        else:
+            print('block type <:'+block_type+':> not support by Block class')
+    def __del__(self):
+        if self.__type in Block.blockTypes:
+            vsip.destroy(self.__vsipBlock)
+        del(self.__jvsip)
+    @property
+    def vsip(self):
+        return self.__vsipBlock
+    # major for bind of matrix in attr is 'ROW', or 'COL'
+    def bind(self,*args):
+        if isinstance(args[0],tuple):
+            attr=args[0]
+        elif len(args) is 3:
+            attr=(args[0],args[1],args[2])
+        elif len(args) is 5:
+            attr=(args[0],args[1],args[2],args[3],args[4])
+        else:
+            print('Argument list <:'+repr(args)+':>to bind must be either 3 or 5 integers')
+            print('For vector arguments are offset, stride, length')
+            print('For matrix arguments are offset, col_stride, col_length, row_stride, row_length')
+            return
+        view = vsip.bind(self.__vsipBlock,attr)
+        retval = self.__View(view,self)
+        retval.EW
+        return retval
+    @property
+    def vector(self):
+        """
+            Since data in blocks is only accessible through a view the vector method
+            is a convenience method to return the simplest view wich indexes all data.
+            Usage: 
+               b = Block(aBlockType,length)
+               v = b.vector
+            v is a unit stride compact one dimensional view reflecting all the data 
+            in the block. 
+        """
+        return self.bind(0,1,self.length)
+    @classmethod
+    def supported(cls):
+        return {'blockTypes':Block.blockTypes,'viewTypes':Block.__View.supported()} 
+    @property
+    def copy(self):
+        """ This makes a new block object identical to the calling block object.
+            Data in the old block object is NOT copied to the  new block object.
+        """
+        return self.otherBlock(self.type,self.length)
+    @classmethod
+    def otherBlock(cls,blk,length):
+        """
+        This method is used internal to the pyJvsip module.
+        It is not intended to be used in user code.
+        """
+        return cls(blk,length)           
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def length(self):
+        return self.__length
+    def __len__(self):
+        return self.length
     #View Class defined here
+    # views are required by the specification to be associated with a block.
+    # To enforce that in pyJvsip only block objects know how to create views;
+    # or at least that is the goal by placing views here. As far as python is
+    # concerned I still have much to learn.
     class __View(object):
         viewTypes=['mview_f','mview_d','cmview_f','cmview_d',
                  'mview_si','mview_i','mview_uc','mview_bl',
@@ -104,6 +182,245 @@ class Block (object):
             del(self.__pyBlock)
             del(self.__jvsip)
             vsip.destroy(self.__vsipView)
+        @classmethod
+        def supported(cls):
+            return cls.viewTypes
+        @classmethod
+        def __newView(cls,v,b):
+            """
+            Given a C VSIP view v which is associated with block b.block
+            where b is a pyJvsip block create a new pyJvsip view encapsulating v.
+            This method is used internally to create pyJvsip equivalents for 
+            subviews like rowview, colview, diagview, etc.
+            """
+            return cls(v,b)
+        @classmethod
+        def __realview(cls,V):
+            views={'vview_f':'real_f', 'vview_d':'real_d',
+                   'mview_f':'real_f','mview_d':'real_d'}
+            v=vsip.realview(V.view)
+            t=views[vsip.getType(v)[1]]
+            B=V.block
+            l=B.length
+            b=vsip.getblock(v)
+            newB = B.otherBlock(t,(b,l))
+            return cls(v,newB)
+        @classmethod
+        def __imagview(cls,V):
+            views={'vview_f':'real_f', 'vview_d':'real_d',
+                   'mview_f':'real_f','mview_d':'real_d'}
+            v=vsip.imagview(V.view)
+            t=views[vsip.getType(v)[1]]
+            B=V.block
+            l=B.length
+            b=vsip.getblock(v)
+            newB = B.otherBlock(t,(b,l))
+            return cls(v,newB)
+        # Elementwise add, sub, mul, div
+        def __iadd__(self,other):
+            if 'scalar' in vsip.getType(other)[1] :
+                vsip.add(other,self.view,self.view)
+                return self
+            elif 'pyJvsip.__View' in repr(other):
+                vsip.add(self.view,other.view,self.view)
+                return self
+            else:
+                print('Object <:' + repr(other) +  ':> not supported for add')
+                return False
+        def __add__(self,other):
+            retval = self.copy
+            retval += other
+            return retval
+        def __radd__(self,other):
+            retval = self.copy
+            retval += other
+            return retval
+        def __isub__(self,other): # -=other
+            if 'scalar' in vsip.getType(other)[1] : # v-a
+                vsip.add(-other,self.view,self.view)
+                return self
+            elif 'pyJvsip.__View' in repr(other):
+                vsip.sub(self.view,other.view,self.view)
+                return self
+            else:
+                print('Object <:' + repr(other) +  ':> not supported for sub')
+                return False
+        def __sub__(self,other):#self - other
+            retval=self.copy
+            retval -= other
+            return retval
+        def __rsub__(self,other): #other - self
+            if 'scalar' in vsip.getType(other)[1]:
+                retval = self.copy.neg
+                vsip.add(other,retval.view,retval.view)
+                return retval
+            elif 'pyJvsip.__View' in repr(other):
+                retval = other.copy
+                vsip.sub(retval.view,self.view,retval.view)
+                return retval
+            else:
+                print('Object <:' + repr(other) +  ':> not supported for sub')
+                return False
+        def __imul__(self,other):# *=other
+            if isinstance(other,int):
+                x = float(other)
+            elif isinstance(other,complex):
+                if '_d' in self.type:
+                    x = vsip_cmplx_d(other.real,other.imag)
+                elif '_f' in self.type:
+                    x = vsip_cmplx_f(other.real,other.imag)
+            else:
+                 x = other
+            if 'scalar' in getType(other)[1] :
+                vsip.mul(x,self.view,self.view)
+                return self
+            elif 'pyJvsip.__View' in repr(other):
+                vsip.mul(other.view,self.view,self.view)
+                return self
+            else:
+                print('Object <:' + repr(other) +  ':> not supported for mul')
+                return False
+        def __mul__(self,other):
+            retval = self.copy
+            retval *= other
+            return retval
+        def __rmul__(self,other): # other * self
+            retval = self.copy
+            retval *= other
+            return retval
+        def __idiv__(self,other):
+            if isinstance(other,int):
+                x = float(other)
+            elif isinstance(other,complex):
+                if '_d' in self.type:
+                    x = vsip_cmplx_d(other.real,other.imag)
+                elif '_f' in self.type:
+                    x = vsip_cmplx_f(other.real,other.imag)
+            else:
+                 x = other
+            if 'scalar' in getType(other)[1]:
+                vsip.div(self.view,x,self.view)
+                return self
+            elif 'View' in getType(other)[1]:
+                vsip.div(self.view,other.view,self.view)
+                return self
+            else:
+                print('Object <:' + repr(other) +  ':> not supported for div')
+                return False                 
+        def __div__(self,other):
+            retval=self.copy
+            retval /= other
+            return retval
+        def __rdiv__(self,other): # other / self
+            if 'scalar' in vsip.getType(other):
+                print('Divide scalar by view not supported')
+                return False
+            else:
+                retval=other.copy
+                vsip.div(retval.view,self.view,retval.view)
+                return retval
+        @property
+        def list(self):
+            f = {'cvview_f':'cvcopyToList_f(self.view)',
+                 'cvview_d':'cvcopyToList_d(self.view)',
+                 'vview_f':'vcopyToList_f(self.view)',
+                 'vview_d':'vcopyToList_d(self.view)',
+                 'vview_i':'vcopyToList_i(self.view)',
+                 'vview_si':'vcopyToList_si(self.view)',
+                 'vview_uc':'vcopyTolist_uc(self.view)',
+                 'vview_vi':'vcopyToList_vi(self.view)',
+                 'vview_mi':'vcopyToList_mi(self.view)'}
+            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view)',
+                      'mview_f':'mcopyToListByRow_f(self.view)',
+                      'cmview_d':'cmcopyToListByRow_d(self.view)',
+                      'mview_d':'mcopyToListByRow_d(self.view)',
+                      'mview_i':'mcopyToListByRow_i(self.view)',
+                      'mview_si':'mcopyToListByRow_si(self.view)',
+                      'mview_uc':'mcopyToListByRow_uc(self.view)'}
+            fByCol = {'cmview_f':'cmcopyToListByCol_f(self.view)',
+                      'mview_f':'mcopyToListByCol_f(self.view)',
+                      'cmview_d':'cmcopyToListByCol_d(self.view)',
+                      'mview_d':'mcopyToListByCol_d(self.view)',
+                      'mview_i':'mcopyToListByCol_i(self.view)',
+                      'mview_si':'mcopyToListByCol_si(self.view)',
+                      'mview_uc':'mcopyToListByCol_uc(self.view)'}
+            if f.has_key(self.type):
+                return eval(f[self.type])
+            elif 'ROW' in self.major and fByRow.has_key(self.type):
+                return eval(fByRow[self.type])
+            elif 'COL' in self.major and fByCol.has_key(self.type):
+                return eval(fByCol[self.type])
+            elif self.type in Block.vectorTypes:
+                return vsip.vList(self.view)
+            elif self.type in Block.matrixTypes:
+                return vsip.mList(self.view)
+            else:
+                print('Type not a matrix or vector')
+                return False
+        def __getitem__(self,index):          
+            def scalarVal(val):
+                if 'cscalar' in vsip.getType(val)[1]:
+                    c=complex(val.r,val.i)
+                    return c
+                elif isinstance(val,int) or isinstance(val,long):
+                    return int(val)
+                elif isinstance(val,float) or isinstance(val,complex):
+                    return val
+                elif 'scalar_mi' in vsip.getType(val)[1]:
+                    return {'row_index':val.r,'col_index':val.i}
+                else:
+                    print('__getitem__ does not recognize<:' +type(val)+ ':>')
+                    return False
+            if 'vview' in self.type and isinstance(index,int) and index >= 0:
+                val=vsip.get(self.view,index)
+                return scalarVal(val)
+            elif 'vview' in self.type and isinstance(index,slice):
+                return self.subview(index)
+            elif 'mview' in self.type and (len(index) is 2) and \
+                        isinstance(index[0],int) and isinstance(index[1],int) \
+                        and (index[0] >=0) and (index[1] >= 0):
+                i = (index[0],index[1])
+                val=vsip.get(self.view,i)
+                return(scalarVal(val))
+            elif 'mview' in self.type and (len(index) is 2) and \
+                        isinstance(index[0],slice) and isinstance(index[1],slice):
+                return self.subview(index[0],index[1])
+            elif 'mview' in self.type and (len(index) is 2) and \
+                        isinstance(index[0],slice) and isinstance(index[1],int):
+                return self.subview(index[0],slice(index[1],index[1]+1,1))
+            elif 'mview' in self.type and (len(index) is 2) and \
+                        isinstance(index[0],int) and isinstance(index[1],slice):
+                return self.subview(slice(index[0],index[0]+1,1),index[1])
+            else: 
+                print('Failed to parse index arguments')
+                return
+        def __setitem__(self,i,value):
+            if 'vview' in self.type:
+                if isinstance(i,int):
+                    vsip.put(self.view,i,value)
+                elif 'vview' in self.type and isinstance(i,slice):
+                    copy(value,self.subview(i))
+                else:
+                    print('Failed to recognize index for vector view')
+            elif 'mview' in self.type and isinstance(i,tuple) and len(i) == 2:
+                if isinstance(i[0],slice) and isinstance(i[1],slice):
+                    copy(value,self.subview(i[0],i[1]))
+                elif isinstance(i[0],slice) and isinstance(i[1],int):
+                    copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
+                elif (isinstance(i[0],int) and isinstance(i[1],slice)):
+                    copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
+                elif (isinstance(i[0],int) and isinstance(i[1],int)):
+                    vsip.put(self.view,i,value)
+                else:
+                    print('Failed to recognize index for matrix view')
+            else:
+                print('Failed to parse argument list for __setitem__') 
+        def __len__(self):
+            attr=vsip.size(self.__vsipView)
+            n = attr[2]
+            if len(attr) > 3:
+                n *= attr[4]
+            return int(n)
         # Support functions
         @property  #scalar is a place to store a value which can be recovered from the view
         def scalar(self):
@@ -136,9 +453,6 @@ class Block (object):
         def MAT(self):
             self.__major = 'MAT'
             return self
-        @classmethod
-        def supported(cls):
-            return cls.viewTypes
         def compactAttrib(self,b):
             """Function used for introspection of view objects. Output useful for creating
                attributes needed for creation of new views based on existing views.
@@ -231,9 +545,11 @@ class Block (object):
                 return newView
             else:
                 return self.copy
-        @property # A way to ge a new in-place view of the object
+        @property # A way to get a new in-place view of the object
         def clone(self):
-            return self.__clone(self)   
+            v=vsip.cloneview(self.view)
+            b=self.block
+            return __newView(v,b)
         #data generators
         def ramp(self,start,increment):
             supportedViews = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
@@ -538,9 +854,15 @@ class Block (object):
             return self.__major
         @property
         def real(self):
+            """
+            A method to get a deep copy of the real part of a complex view.
+            """
             return self.realview.copy
         @property
         def imag(self):
+            """
+            A method to get a deep copy of the imaginary part of a complex view.
+            """
             return self.imagview.copy
         def colview(self,j):
             if self.type in Block.matrixTypes:
@@ -566,40 +888,20 @@ class Block (object):
                 return self.__newView(vsip.transview(self.view),self.block)
             else:
                 print('Method transview only works on matrix views')
-                return False
-        @classmethod
-        def __newView(cls,v,b):
-            return cls(v,b)         
+                return False   
         @property
         def realview(self):
             return self.__realview(self)
         @property
         def imagview(self):
             return self.__imagview(self)
-        @classmethod
-        def __realview(cls,V):
-            views={'vview_f':'real_f', 'vview_d':'real_d',
-                   'mview_f':'real_f','mview_d':'real_d'}
-            v=vsip.realview(V.view)
-            t=views[vsip.getType(v)[1]]
-            B=V.block
-            l=B.length
-            b=vsip.getblock(v)
-            newB = B.otherBlock(t,(b,l))
-            return cls(v,newB)
-        @classmethod
-        def __imagview(cls,V):
-            views={'vview_f':'real_f', 'vview_d':'real_d',
-                   'mview_f':'real_f','mview_d':'real_d'}
-            v=vsip.imagview(V.view)
-            t=views[vsip.getType(v)[1]]
-            B=V.block
-            l=B.length
-            b=vsip.getblock(v)
-            newB = B.otherBlock(t,(b,l))
-            return cls(v,newB)
         @property
         def mrowview(self):
+            """
+            The method mrowview is used to convert a vector into a matrix with row length equal self.length
+            and column length equal one.
+            No (direct) C VSIPL equivalent
+            """
             if 'vview' in self.type:
                 return self.block.bind(self.offset,1,1,self.stride,self.length)
             else:
@@ -607,6 +909,11 @@ class Block (object):
                 return
         @property
         def mcolview(self):
+            """
+            The method mcolview is used to convert a vector into a matrix with column length equal self.length
+            and row length equal one.
+            No (direct) C VSIPL equivalent
+            """
             if 'vview' in self.type:
                 return self.block.bind(self.offset,self.stride,self.length,1,1)
             else:
@@ -745,113 +1052,6 @@ class Block (object):
         @property
         def type(self):
             return self.__type
-        @classmethod
-        def __clone(cls,V):
-            v=vsip.cloneview(V.view)
-            b=V.block
-            return cls(v,b)
-        @property
-        def list(self):
-            f = {'cvview_f':'cvcopyToList_f(self.view)',
-                 'cvview_d':'cvcopyToList_d(self.view)',
-                 'vview_f':'vcopyToList_f(self.view)',
-                 'vview_d':'vcopyToList_d(self.view)',
-                 'vview_i':'vcopyToList_i(self.view)',
-                 'vview_si':'vcopyToList_si(self.view)',
-                 'vview_uc':'vcopyTolist_uc(self.view)',
-                 'vview_vi':'vcopyToList_vi(self.view)',
-                 'vview_mi':'vcopyToList_mi(self.view)'}
-            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view)',
-                      'mview_f':'mcopyToListByRow_f(self.view)',
-                      'cmview_d':'cmcopyToListByRow_d(self.view)',
-                      'mview_d':'mcopyToListByRow_d(self.view)',
-                      'mview_i':'mcopyToListByRow_i(self.view)',
-                      'mview_si':'mcopyToListByRow_si(self.view)',
-                      'mview_uc':'mcopyToListByRow_uc(self.view)'}
-            fByCol = {'cmview_f':'cmcopyToListByCol_f(self.view)',
-                      'mview_f':'mcopyToListByCol_f(self.view)',
-                      'cmview_d':'cmcopyToListByCol_d(self.view)',
-                      'mview_d':'mcopyToListByCol_d(self.view)',
-                      'mview_i':'mcopyToListByCol_i(self.view)',
-                      'mview_si':'mcopyToListByCol_si(self.view)',
-                      'mview_uc':'mcopyToListByCol_uc(self.view)'}
-            if f.has_key(self.type):
-                return eval(f[self.type])
-            elif 'ROW' in self.major and fByRow.has_key(self.type):
-                return eval(fByRow[self.type])
-            elif 'COL' in self.major and fByCol.has_key(self.type):
-                return eval(fByCol[self.type])
-            elif self.type in Block.vectorTypes:
-                return vsip.vList(self.view)
-            elif self.type in Block.matrixTypes:
-                return vsip.mList(self.view)
-            else:
-                print('Type not a matrix or vector')
-                return False
-        def __getitem__(self,index):          
-            def scalarVal(val):
-                if 'cscalar' in vsip.getType(val)[1]:
-                    c=complex(val.r,val.i)
-                    return c
-                elif isinstance(val,int) or isinstance(val,long):
-                    return int(val)
-                elif isinstance(val,float) or isinstance(val,complex):
-                    return val
-                elif 'scalar_mi' in vsip.getType(val)[1]:
-                    return {'row_index':val.r,'col_index':val.i}
-                else:
-                    print('__getitem__ does not recognize<:' +type(val)+ ':>')
-                    return False
-            if 'vview' in self.type and isinstance(index,int) and index >= 0:
-                val=vsip.get(self.view,index)
-                return scalarVal(val)
-            elif 'vview' in self.type and isinstance(index,slice):
-                return self.subview(index)
-            elif 'mview' in self.type and (len(index) is 2) and \
-                        isinstance(index[0],int) and isinstance(index[1],int) \
-                        and (index[0] >=0) and (index[1] >= 0):
-                i = (index[0],index[1])
-                val=vsip.get(self.view,i)
-                return(scalarVal(val))
-            elif 'mview' in self.type and (len(index) is 2) and \
-                        isinstance(index[0],slice) and isinstance(index[1],slice):
-                return self.subview(index[0],index[1])
-            elif 'mview' in self.type and (len(index) is 2) and \
-                        isinstance(index[0],slice) and isinstance(index[1],int):
-                return self.subview(index[0],slice(index[1],index[1]+1,1))
-            elif 'mview' in self.type and (len(index) is 2) and \
-                        isinstance(index[0],int) and isinstance(index[1],slice):
-                return self.subview(slice(index[0],index[0]+1,1),index[1])
-            else: 
-                print('Failed to parse index arguments')
-                return
-        def __setitem__(self,i,value):
-            if 'vview' in self.type:
-                if isinstance(i,int):
-                    vsip.put(self.view,i,value)
-                elif 'vview' in self.type and isinstance(i,slice):
-                    copy(value,self.subview(i))
-                else:
-                    print('Failed to recognize index for vector view')
-            elif 'mview' in self.type and isinstance(i,tuple) and len(i) == 2:
-                if isinstance(i[0],slice) and isinstance(i[1],slice):
-                    copy(value,self.subview(i[0],i[1]))
-                elif isinstance(i[0],slice) and isinstance(i[1],int):
-                    copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
-                elif (isinstance(i[0],int) and isinstance(i[1],slice)):
-                    copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
-                elif (isinstance(i[0],int) and isinstance(i[1],int)):
-                    vsip.put(self.view,i,value)
-                else:
-                    print('Failed to recognize index for matrix view')
-            else:
-                print('Failed to parse argument list for __setitem__') 
-        def __len__(self):
-            attr=vsip.size(self.__vsipView)
-            n = attr[2]
-            if len(attr) > 3:
-                n *= attr[4]
-            return int(n)
         # window (data taper) functions
         def cheby(self,ripple):
             t=vsip.getType(self.view)[1]
@@ -899,109 +1099,6 @@ class Block (object):
                 return self
             else:
                 print('View type <:' + t +':> does not support property blackman')
-        # Elementwise add, sub, mul, div
-        def __iadd__(self,other):
-            if 'scalar' in vsip.getType(other)[1] :
-                vsip.add(other,self.view,self.view)
-                return self
-            elif 'pyJvsip.__View' in repr(other):
-                vsip.add(self.view,other.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for add')
-                return False
-        def __add__(self,other):
-            retval = self.copy
-            retval += other
-            return retval
-        def __radd__(self,other):
-            retval = self.copy
-            retval += other
-            return retval
-        def __isub__(self,other): # -=other
-            if 'scalar' in vsip.getType(other)[1] : # v-a
-                vsip.add(-other,self.view,self.view)
-                return self
-            elif 'pyJvsip.__View' in repr(other):
-                vsip.sub(self.view,other.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for sub')
-                return False
-        def __sub__(self,other):#self - other
-            retval=self.copy
-            retval -= other
-            return retval
-        def __rsub__(self,other): #other - self
-            if 'scalar' in vsip.getType(other)[1]:
-                retval = self.copy.neg
-                vsip.add(other,retval.view,retval.view)
-                return retval
-            elif 'pyJvsip.__View' in repr(other):
-                retval = other.copy
-                vsip.sub(retval.view,self.view,retval.view)
-                return retval
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for sub')
-                return False
-        def __imul__(self,other):# *=other
-            if isinstance(other,int):
-                x = float(other)
-            elif isinstance(other,complex):
-                if '_d' in self.type:
-                    x = vsip_cmplx_d(other.real,other.imag)
-                elif '_f' in self.type:
-                    x = vsip_cmplx_f(other.real,other.imag)
-            else:
-                 x = other
-            if 'scalar' in getType(other)[1] :
-                vsip.mul(x,self.view,self.view)
-                return self
-            elif 'pyJvsip.__View' in repr(other):
-                vsip.mul(other.view,self.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for mul')
-                return False
-        def __mul__(self,other):
-            retval = self.copy
-            retval *= other
-            return retval
-        def __rmul__(self,other): # other * self
-            retval = self.copy
-            retval *= other
-            return retval
-        def __idiv__(self,other):
-            if isinstance(other,int):
-                x = float(other)
-            elif isinstance(other,complex):
-                if '_d' in self.type:
-                    x = vsip_cmplx_d(other.real,other.imag)
-                elif '_f' in self.type:
-                    x = vsip_cmplx_f(other.real,other.imag)
-            else:
-                 x = other
-            if 'scalar' in getType(other)[1]:
-                vsip.div(self.view,x,self.view)
-                return self
-            elif 'View' in getType(other)[1]:
-                vsip.div(self.view,other.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for div')
-                return False                 
-        def __div__(self,other):
-            retval=self.copy
-            retval /= other
-            return retval
-        def __rdiv__(self,other): # other / self
-            if 'scalar' in vsip.getType(other):
-                print('Divide scalar by view not supported')
-                return False
-            else:
-                retval=other.copy
-                vsip.div(retval.view,self.view,retval.view)
-                return retval
         #vector-matrix elementwise multiply by row or col
         def mmul(self,other):
             """
@@ -2659,46 +2756,82 @@ class Block (object):
             return self
         @property
         def fftop(self):
-            retval = self.empty
-            f = {'cvview_d':'ccfftop_d',
-                 'cvview_f':'ccfftop_f',
-                 'cmview_d':'ccfftmop_d',
-                 'cmview_f':'ccfftmop_f'}
-            if self.type in ['cvview_d','cvview_f']:
-                arg = (self.length,1.0,-1,0,0)
-            elif self.type in ['cmview_d','cmview_f']:
+            """
+            The method fftop (FFT Out Of Place) is a property on real and float vectors and matrices. 
+            For matrices use the major attribute of the view to set the direction of the FFT.
+            fftop will create and return view of the proper type for the output.
+            If the input is real then fftop assumes the complex portion is zero.
+            """
+            selV={'vview_f':'cvview_f','vview_d':'cvview_d'}
+            selM={'mview_f':'cmview_f','mview_d':'cmview_d'}
+            if selV.has_key(self.type):
+                y=create(selV[self.type],self.length).fill(0.0)
+                copy(self,y.realview)
+                return y.fftip
+            elif selM.has_key(self.type):
+                y=create(selM[self.type],self.collength,self.rowlength).fill(0.0)
+                copy(self,y.realview)
                 if 'COL' in self.major:
-                    major = 1
+                    return y.COL.fftip
                 else:
-                    major = 0
-                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                    return y.ROW.fftip
             else:
-                print('Type <:' +self.type+':> not supported for method fftip')
-                return
-            obj=FFT(f[self.type],arg)
-            obj.dft(self,retval)
-            return retval
+                f = {'cvview_d':'ccfftop_d',
+                     'cvview_f':'ccfftop_f',
+                     'cmview_d':'ccfftmop_d',
+                     'cmview_f':'ccfftmop_f'}
+                assert f.has_key(self.type), 'Type <:'+self.type+':> not supported by method fftop'
+                retval = self.empty
+                if self.type in ['cvview_d','cvview_f']:
+                    arg = (self.length,1.0,-1,0,0)
+                elif self.type in ['cmview_d','cmview_f']:
+                    if 'COL' in self.major:
+                        major = 1
+                    else:
+                        major = 0
+                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                obj=FFT(f[self.type],arg)
+                obj.dft(self,retval)
+                return retval
         @property
         def ifftop(self):
-            retval = self.empty
-            f = {'cvview_d':'ccfftop_d',
-                 'cvview_f':'ccfftop_f',
-                 'cmview_d':'ccfftmop_d',
-                 'cmview_f':'ccfftmop_f'}
-            if self.type in ['cvview_d','cvview_f']:
-                arg = (self.length,1.0,1,0,0)
-            elif self.type in ['cmview_d','cmview_f']:
+            """
+            The method ifftop (Inverse FFT Out Of Place) is a property on real and float vectors and matrices. 
+            For matrices use the major attribute of the view to set the direction of the FFT.
+            fftop will create and return view of the proper type for the output.
+            If the input is real then ifftop assumes the complex portion is zero.
+            """
+            selV={'vview_f':'cvview_f','vview_d':'cvview_d'}
+            selM={'mview_f':'cmview_f','mview_d':'cmview_d'}
+            if selV.has_key(self.type):
+                y=create(selV[self.type],self.length).fill(0.0)
+                copy(self,y.realview)
+                return y.ifftip
+            elif selM.has_key(self.type):
+                y=create(selM[self.type],self.collength,self.rowlength).fill(0.0)
+                copy(self,y.realview)
                 if 'COL' in self.major:
-                    major = 1
+                    return y.COL.ifftip
                 else:
-                    major = 0
-                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                    return y.ROW.ifftip
             else:
-                print('Type <:' +self.type+':> not supported for method fftip')
-                return
-            obj=FFT(f[self.type],arg)
-            obj.dft(self,retval)
-            return retval
+                f = {'cvview_d':'ccfftop_d',
+                     'cvview_f':'ccfftop_f',
+                     'cmview_d':'ccfftmop_d',
+                     'cmview_f':'ccfftmop_f'}
+                assert f.has_key(self.type), 'Type <:'+self.type+':> not supported by method ifftop'
+                retval = self.empty
+                if self.type in ['cvview_d','cvview_f']:
+                    arg = (self.length,1.0,1,0,0)
+                elif self.type in ['cmview_d','cmview_f']:
+                    if 'COL' in self.major:
+                        major = 1
+                    else:
+                        major = 0
+                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                obj=FFT(f[self.type],arg)
+                obj.dft(self,retval)
+                return retval
         @property
         def rcfft(self):
             fCreate = {'vview_d':'rcfftop_d', 'vview_f':'rcfftop_f',
@@ -2785,48 +2918,46 @@ class Block (object):
                Calling view must be square and float
                return lu object
             """
-            assert self.type in ['mview_f','mview_d','cmview_f','cmview_d'], "LU for %s not supported"%self.type
+            assert LU.luSel.has_key(self.type), "LU for %s not supported"%self.type
             assert self.rowlength == self.collength,"LU only supports square matrices"
-            if LU.luSel.has_key(self.type) and (self.rowlength == self.collength):
-                return LU(LU.luSel[self.type],self.rowlength).decompose(self)
+            return LU(LU.luSel[self.type],self.rowlength).decompose(self)
         @property
         def luInv(self):
-            if self.type in Block.matrixTypes:
-                if LU.luSel.has_key(self.type) and (self.rowlength == self.collength):
-                    retval=self.empty.identity
-                    LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,retval)
-                    return retval
-                else:
-                    print('Type <:'+self.type+':> not supported for lu or not square matrix')
-                    return
-            else:
-                print('Property luInv only works on matrices of type float')
-                return
+            """
+            The method luInv creates a new matrix and uses the LU decomposition place the inverse of the
+            calling matrix into it. Note that LU decomposition overwrites the input matrix so if "A" is the input matrix
+            then 
+            Y=A.luInv
+            will overwrite A. To keep A use copy as in 
+            Y=A.copy.luInv.
+            """
+            assert LU.luSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luInv'
+            assert self.rowlength == self.collength, 'Method luInv only works for square matrices'
+            retval=self.empty.identity
+            LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,retval)
+            return retval
         def luSolve(self,XB):
             """
             Usage:
                 X = A.luSolve(X)
                 A is a matrix of type float or double; real or complex.
                 On input X is a vector or matrix of the same precision as A
-            luSolve solve overwrites input data with output data
+            luSolve solve overwrites input data with output data.
+            To keep the input use
+                Y = A.luSolve(X.copy)
+            LU will overwrite the Calling matrix. To keep everything use
+                Y = A.copy.luSolve(X.copy)
             """
-            sptd=['mview_f','cmview_f','mview_d','cmview_d']
-            assert self.type in sptd, "Solve method only works with matrices"
+            assert LU.luSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luSolve'
+            assert self.rowlength == self.collength, 'Method luSolve only works for square matrices'
             if 'vview' in XB.type:
                 X=XB.block.bind(XB.offset,XB.stride,XB.length,1,1)
             else:
                 X = XB
-            if self.type in Block.matrixTypes and X.type == self.type:
-                if LU.luSel.has_key(self.type) and \
-                (self.rowlength == self.collength) and (self.collength == X.collength):
-                    LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,X)
-                    return XB
-                else:
-                    print('Non-conformant views for luSolve')
-                    return
-            else:
-                print('Non-conformant views for luSolve')
-                return
+            assert X.type == self.type, 'Calling view and input/output view must be the same type and precision'
+            assert self.collength == X.collength, 'Input/Output view not sized properly for calling view'
+            LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,X)
+            return XB
         #
         #QR Decomposition; Over-Determined Linear System Solver
         @property
@@ -3083,80 +3214,7 @@ class Block (object):
         def mprint(self,fmt):
             assert isinstance(fmt,str), 'Format for mprint is a string'
             print(self.mstring(fmt))
-    #Block specific class below
-    def __init__(self,block_type,length):
-        other = ['real_f','imag_f','real_d','imag_d']
-        self.__jvsip = JVSIP()
-        if block_type in Block.blockTypes:
-            self.__vsipBlock = vsip.create(block_type,(length,VSIP_MEM_NONE))
-            self.__length = length
-            self.__type = block_type
-        elif block_type in other:
-            self.__vsipBlock = length[0]
-            self.__length = length[1]
-            self.__type = block_type
-        else:
-            print('block type <:'+block_type+':> not support by Block class')
-    def __del__(self):
-        if self.__type in Block.blockTypes:
-            vsip.destroy(self.__vsipBlock)
-        del(self.__jvsip)
-    @property
-    def vsip(self):
-        return self.__vsipBlock
-    # major for bind of matrix in attr is 'ROW', or 'COL'
-    def bind(self,*args):
-        if isinstance(args[0],tuple):
-            attr=args[0]
-        elif len(args) is 3:
-            attr=(args[0],args[1],args[2])
-        elif len(args) is 5:
-            attr=(args[0],args[1],args[2],args[3],args[4])
-        else:
-            print('Argument list <:'+repr(args)+':>to bind must be either 3 or 5 integers')
-            print('For vector arguments are offset, stride, length')
-            print('For matrix arguments are offset, col_stride, col_length, row_stride, row_length')
-            return
-        view = vsip.bind(self.__vsipBlock,attr)
-        retval = self.__View(view,self)
-        retval.EW
-        return retval
-    @property
-    def vector(self):
-        """
-            Since data in blocks is only accessible through a view the vector method
-            is a convenience method to return the simplest view wich indexes all data.
-            Usage: 
-               b = Block(aBlockType,length)
-               v = b.vector
-            v is a unit stride compact one dimensional view reflecting all the data 
-            in the block. 
-        """
-        return self.bind(0,1,self.length)
-    @classmethod
-    def supported(cls):
-        return {'blockTypes':Block.blockTypes,'viewTypes':Block.__View.supported()} 
-    @property
-    def copy(self):
-        """ This makes a new block object identical to the calling block object.
-            Data in the old block object is NOT copied to the  new block object.
-        """
-        return self.otherBlock(self.type,self.length)
-    @classmethod
-    def otherBlock(cls,blk,length):
-        """
-        This method is used internal to the pyJvsip module.
-        It is not intended to be used in user code.
-        """
-        return cls(blk,length)           
-    @property
-    def type(self):
-        return self.__type
-    @property
-    def length(self):
-        return self.__length
-    def __len__(self):
-        return self.length
+    
 
 class Rand(object):
     """ 
@@ -3223,15 +3281,12 @@ class Rand(object):
             print('Not a supported type for rand')
 
 # Signal Processing Classes
-
-
 # Not Implemented
 # vsip_fft_setwindow_f 
 # vsip_dfft2dx_create_f
 # vsip_ccfft2dx_f
 # vsip_crfft2dop_f
 # vsip_rcfft2dop_f 
-
 # vsip_conv2d_create_f
 # vsip_conv2d_destroy_f
 # vsip_conv2d_getattr_f
@@ -4087,7 +4142,6 @@ class SV(object):
         return
     def produ(self):
         return
-    
 
 # pyJvsip Functions
 # copy is kind of brain dead. Need more functionality and performance
