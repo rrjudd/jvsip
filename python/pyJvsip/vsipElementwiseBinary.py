@@ -9,6 +9,8 @@ def __isSizeCompatible(a,b):
             return True
     else:
         return False
+def __isView(a):
+    return 'pyJvsip.__View' in repr(a)
 def add(a,b,c):
     """
     The add function includes view+view adds and scalar+view adds.
@@ -30,15 +32,15 @@ def add(a,b,c):
        'scalarcvview_ucvview_uc':vsip_svadd_uc, 'scalarvview_vivview_vi':vsip_svadd_vi,
        'cscalarcmview_dcmview_d':vsip_csmadd_d, 'cscalarcmview_fcmview_f':vsip_csmadd_f,
        'cscalarcvview_dcvview_d':vsip_csvadd_d, 'cscalarcvview_fcvview_f':vsip_csvadd_f}
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in add'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in add'
+    assert __isView(b),'Argument two must be a pyJvsip view object in add'
+    assert __isView(c),'Argument three must be a pyJvsip view object in add'
     assert __isSizeCompatible(b,c),'Size error in add function'
     if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
         t='scalar'+b.type+c.type
     elif isinstance(a,complex):
         t='cscalar'+b.type+c.type
     else:
-        assert 'pyJvsip.__View' in repr(a),'Argument one must be a scalar or a pyJvsip view object in add'
+        assert __isView(a),'Argument one must be a scalar or a pyJvsip view object in add'
         t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:'+t+':> not recognized for add'
     if 'cscalar' in t:
@@ -148,35 +150,35 @@ def mul(a,b,c):
 def jmul(a,b,c):
     f={'cmview_dcmview_dcmview_d':vsip_cmjmul_d,'cmview_fcmview_fcmview_f':vsip_cmjmul_f,
        'cvview_dcvview_dcvview_d':vsip_cvjmul_d,'cvview_fcvview_fcvview_f':vsip_cvjmul_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument two must be a pyJvsip view object in jmul'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in jmul'
-    assert 'pyJvsip.__View' in repr(c),'Argument two must be a pyJvsip view object in jmul'
+    assert __isView(a),'Argument two must be a pyJvsip view object in jmul'
+    assert __isView(b),'Argument two must be a pyJvsip view object in jmul'
+    assert __isView(c),'Argument two must be a pyJvsip view object in jmul'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:'+t+':> not recognized for jmul'
     assert __isSizeCompatible(a,c), 'Argument one and argument three must be the same size in jmul'
     assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in jmul'
     f[t](a.view,b.view,c.view)
     return c    
-def vmmul(a,b,c):
+def mmul(a,b,c):
     """
     For Vector Matrix multiply along Rows or Along columns in C VSIPL uses a vsip_major argument.
     For pyJvsip if the first arguments major attribute is 'COL' then this is done element-wise along the columns; 
     otherwise it is done element-wise along the rows. It is easier to set the major attribute than to check it.
     Usage
-        vmmul(a.COL,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_COL,c)
-        vmmul(a,ROW,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_ROW,c)
+        mmul(a.COL,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_COL,c)
+        mmul(a,ROW,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_ROW,c)
     """
     err1='The vector length of argument 1 for by column must equal the column length of argument 2'
     err2='The vector length of argument 1 for by row must equal the row length of argument 2'
     f={'cvview_dcmview_dcmview_d':vsip_cvmmul_d,'cvview_fcmview_fcmview_f':vsip_cvmmul_f,
        'vview_dmview_dmview_d':vsip_vmmul_d,'vview_fmview_fmview_f':vsip_vmmul_f,
        'vview_dcmview_dcmview_d':vsip_rvcmmul_d,'vview_fcmview_fcmview_f':vsip_rvcmmul_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument two must be a pyJvsip view object in vmmul'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in vmmul'
-    assert 'pyJvsip.__View' in repr(c),'Argument two must be a pyJvsip view object in vmmul'
+    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in mmul'
+    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in mmul'
+    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in mmul'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for jmul'
-    assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in vmmul'
+    assert f.has_key(t), 'Type <:'+t+':> not recognized for mmul'
+    assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in mmul'
     if 'COL' in a.major:
         assert a.length == b.collength, err1
         f[t](a.view,b.view,VSIP_COL,c.view)

@@ -1,23 +1,5 @@
 # Elementary Math functions
 from vsip import *
-def __isCompatible(a,b):
-    chk = True
-    msg='None'
-    if ('pyJvsip.__View' not in repr(a)) or ('pyJvsip.__View' not in repr(b)):
-        chk = False
-        msg='Input must be a pyJvsip View'
-    elif a.type != b.type:
-        chk = False
-        msg = 'Inputs must be the same type'
-    elif 'mview' in a.type:
-        if (a.rowlength != b.rowlength) or (a.collength != b.collength):
-            chk = False
-            msg = 'Inputs must be the same size'
-    else:
-        if a.length != b.length:
-            chk = False
-            msg = 'Inputs must be the same size'         
-    return (chk,msg)
 def __isSizeCompatible(a,b):
     if 'mview' in a.type and  'mview' in b.type:
         if (a.rowlength == b.rowlength) and (a.collength == b.collength):
@@ -27,40 +9,30 @@ def __isSizeCompatible(a,b):
             return True
     else:
         return False
-
+def __isView(a):
+    return 'pyJvsip.__View' in repr(a)
 def arg(a,b):
     f={'cvview_fvview_f':vsip_varg_f,
        'cvview_dvview_d':vsip_varg_d,
        'cmview_fmview_f':vsip_marg_f,
        'cmview_dmview_d':vsip_marg_d}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views'
     t=a.type+b.type
-    if f.has_key(t):
-        if __isSizeCompatible(a,b): 
-            f[t](a.view,b.view)
-            return b
-        else:
-            print('Arguments must be the same size for arg')
-            return
-    else:
-        print('Argument Types not recognized for arg')
-        return        
-def cconj(a,b):
+    assert f.has_key(t), 'Type <:%s:> not recognized for function arg'%t
+    assert __isSizeCompatible(a,b), 'Input views must be the same size' 
+    f[t](a.view,b.view)
+    return b
+def conj(a,b):
     f={'cvview_fcvview_f':vsip_cvconj_f,
        'cvview_dcvview_d':vsip_cvconj_d,
        'cmview_fcmview_f':vsip_cmconj_f,
        'cmview_dcmview_d':vsip_cmconj_d}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views'
     t=a.type+b.type
-    if f.has_key(t):
-        chk,msg=__isCompatible(a,b)
-        if chk: 
-            f[t](a.view,b.view)
-            return b
-        else:
-            print(msg+'for cconj')
-            return
-    else:
-        print('Argument Types not recognized for cconj')
-        return
+    assert f.has_key(t), 'Type <:%s:> not recognized for function cconj'%t
+    assert __isSizeCompatible(a,b), 'Input views must be the same size' 
+    f[t](a.view,b.view)
+    return b
 def cumsum(a,b):
     """
     Cumulative sum function (see vsip_dscumsum_f).
@@ -73,11 +45,12 @@ def cumsum(a,b):
     and it is easier to set it than to check it.
     The function cumsum(a,b) may be done in place.
     """
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function cumsum'
     t=a.type+b.type
-    f={mview_dmview_d:vsip_mcumsum_d, mview_fmview_f:vsip_mcumsum_f,
-       mview_imview_i:vsip_mcumsum_i, mview_simview_si:vsip_mcumsum_si,
-       vview_dvview_d:vsip_vcumsum_d, vview_fvview_f:vsip_vcumsum_f,
-       vview_ivview_i:vsip_vcumsum_i, vview_sivview_si:vsip_vcumsum_si}
+    f={'mview_dmview_d':vsip_mcumsum_d, 'mview_fmview_f':vsip_mcumsum_f,
+       'mview_imview_i':vsip_mcumsum_i, 'mview_simview_si':vsip_mcumsum_si,
+       'vview_dvview_d':vsip_vcumsum_d, 'vview_fvview_f':vsip_vcumsum_f,
+       'vview_ivview_i':vsip_vcumsum_i, 'vview_sivview_si':vsip_vcumsum_si}
     assert __isSizeCompatible(a,b), 'Arguments must be the same size for cumsum'
     assert f.has_key(t),'Type <:'+t+':> not supported by cumsum'
     if 'mview' in t:
@@ -89,6 +62,7 @@ def cumsum(a,b):
         f[t](a.view,b.view)
         return b
 def euler(a,b):
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function cumsum'
     f={'mview_dcmview_d':vsip_meuler_d,'mview_fcmview_f':vsip_meuler_f,
        'vview_dcvview_d':vsip_veuler_d,'vview_fcvview_f':vsip_veuler_f}
     t=a.type+b.type
@@ -102,6 +76,7 @@ def mag(a,b):
        'vview_dmview_d':vsip_mmag_d,'vview_fmview_f':vsip_mmag_f,
         'vview_dvview_d':vsip_vmag_d,'vview_fvview_f':vsip_vmag_f,
         'vview_ivview_i':vsip_vmag_i,'vview_sivview_si':vsip_vmag_si}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function mag'
     t=a.type+b.type
     assert __isSizeCompatible(a,b), 'Arguments must be the same size for mag'
     assert f.has_key(t),'Type <:'+t+':> not supported by mag'
@@ -115,6 +90,7 @@ def modulate(a,nu,phi,b):
     For pyJvsip modulate returns a tuple of the phase and the output vector.
     phiNew,b=modulate(a,nu,phiOld,b)
     """
+    assert __isView(a) and __isView(b), 'First and last arguments must be pyJvsip views in function modulate'
     f={'cvview_dcvview_d':vsip_cvmodulate_d, 'vview_dcvview_d':vsip_vmodulate_d,
        'cvview_fcvview_f':vsip_cvmodulate_f, 'vview_fcvview_f':vsip_vmodulate_f}
     t=a.type+b.type
@@ -128,6 +104,7 @@ def neg(a,b):
        'mview_dmview_d':vsip_mneg_d, 'mview_fmview_f':vsip_mneg_f,
        'vview_dvview_d':vsip_vneg_d, 'vview_fvview_f':vsip_vneg_f,
        'vview_ivview_i':vsip_vneg_i, 'vview_sivview_si':vsip_vneg_si}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function neg'
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for neg'
     assert f.has_key(t),'Type <:'+t+':> not supported for neg'
@@ -138,6 +115,7 @@ def recip(a,b):
        'cvview_dcvview_d':vsip_cvrecip_d, 'cvview_fcvview_f':vsip_cvrecip_f,
        'mview_dmview_d':vsip_mrecip_d, 'mview_fmview_f':vsip_mrecip_f,
        'vview_dvview_d':vsip_vrecip_d, 'vview_fvview_f':vsip_vrecip_f}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function recip'
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for recip'
     assert f.has_key(t),'Type <:'+t+':> not supported for recip'
@@ -146,6 +124,7 @@ def recip(a,b):
 def rsqrt(a,b):
     f={'mview_dmview_d':vsip_mrsqrt_d, 'mview_fmview_f':vsip_mrsqrt_f,
        'vview_dvview_d':vsip_vrsqrt_d, 'vview_fvview_f':vsip_vrsqrt_f} 
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function rsqrt'
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for rsqrt'
     assert f.has_key(t),'Type <:'+t+':> not supported for rsqrt'
@@ -154,6 +133,7 @@ def rsqrt(a,b):
 def sq(a,b):
     f={'mview_dmview_d':vsip_msq_d, 'mview_fmview_f':vsip_msq_f,
        'vview_dvview_d':vsip_vsq_d, 'vview_fvview_f':vsip_vsq_f}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function sq'
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for sq'
     assert f.has_key(t),'Type <:'+t+':> not supported for sq'

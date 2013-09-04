@@ -733,7 +733,7 @@ static void phaseCheck0_d(svdObj_d *svd)
     vsip_scalar_d eps0 = svd->eps0;
     vsip_length nd=d->length;
     vsip_length nf=f->length;
-    vsip_index i,j;
+    vsip_index i;
     vsip_scalar_d ps;
     vsip_scalar_d m;
     vsip_stride fstrd=f->stride * d->block->rstride;
@@ -756,7 +756,6 @@ static void phaseCheck0_d(svdObj_d *svd)
     svdZeroCheckAndSet_d(eps0,d,f);
     fptr=f->block->array + f->offset * f->block->rstride;
     for (i=0; i<nf-1; i++){
-        j=i+1;
         ps = *fptr;
         m = (ps<0) ? -ps:ps;
         ps=sign_d(ps);
@@ -764,7 +763,6 @@ static void phaseCheck0_d(svdObj_d *svd)
         fptr+=fstrd;
         *fptr *= ps;
     }
-    j=nf;
     ps=*fptr;
     m=(ps<0) ? -ps:ps;
     ps=sign_d(ps);
@@ -1307,7 +1305,7 @@ static void zeroCol0_d(svdObj_d *svd)
     vsip_length n = f->length;
     givensObj_d g;
     vsip_scalar_d xd,xf,t;
-    vsip_index i,j,k;
+    vsip_index i,j;
     if (n == 1){
         xd=*(d->block->array + d->offset * d->block->rstride);
         xf=*(f->block->array + f->offset * f->block->rstride);
@@ -1327,7 +1325,7 @@ static void zeroCol0_d(svdObj_d *svd)
         g=givensCoef_d(xd,t);
         *(d->block->array + d->offset * d->block->rstride)=g.r;
     }else{
-        i=n-1; j=i-1; k=i;
+        i=n-1; j=i-1;
         xd=*(d->block->array + (d->offset+i) * d->block->rstride);
         xf=*(f->block->array + (f->offset+i) * f->block->rstride);
         g=givensCoef_d(xd,xf);
@@ -2807,7 +2805,7 @@ static void czeroCol2_d(csvdObj_d *svd) /* save U */
     vsip_length n = f->length;
     givensObj_d g;
     vsip_scalar_d xd,xf,t;
-    vsip_index i,j,k;
+    vsip_index i,j;
     vsip_scalar_d *dptr=d->block->array + d->offset*d->block->rstride;
     vsip_scalar_d *fptr=f->block->array + f->offset*f->block->rstride;
     vsip_stride dstd=d->stride*d->block->rstride,fstd=f->stride*f->block->rstride;
@@ -2830,7 +2828,7 @@ static void czeroCol2_d(csvdObj_d *svd) /* save U */
         g=givensCoef_d(xd,t);
         *dptr=g.r;
     }else{
-        i=n-1; j=i-1; k=i;
+        i=n-1; j=i-1;
         xd=*(dptr+i*dstd);
         xf=*(fptr+i*fstd);
         g=givensCoef_d(xd,xf);

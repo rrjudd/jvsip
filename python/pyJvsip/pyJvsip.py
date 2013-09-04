@@ -14,6 +14,14 @@ from vsipLinearAlgebra import *
 import vsiputils as vsip
 
 __version__='0.2.10'
+def __isView(a):
+    return 'pyJvsip.__View' in repr(a)
+def __isComplex(a):
+    t=getType(a)
+    if 'scalar' in t[1]:
+        return t[2] is complex
+    else:
+        return t[2] in Block.complexTypes
 
 def getType(v):
     """
@@ -185,6 +193,9 @@ class Block (object):
         @classmethod
         def supported(cls):
             return cls.viewTypes
+        @property
+        def supported(self):
+            self.supported()
         @classmethod
         def __newView(cls,v,b):
             """
@@ -217,108 +228,50 @@ class Block (object):
             newB = B.otherBlock(t,(b,l))
             return cls(v,newB)
         # Elementwise add, sub, mul, div
-        def __iadd__(self,other):
-            if 'scalar' in vsip.getType(other)[1] :
-                vsip.add(other,self.view,self.view)
-                return self
-            elif 'pyJvsip.__View' in repr(other):
-                vsip.add(self.view,other.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for add')
-                return False
-        def __add__(self,other):
-            retval = self.copy
-            retval += other
-            return retval
-        def __radd__(self,other):
-            retval = self.copy
-            retval += other
-            return retval
+        def __iadd__(self,other): # self += other
+            return add(other,self,self)
+        def __add__(self,other): # new = self + other
+            return add(other,self,self.empty)           
+        def __radd__(self,other): # new = other + self
+            return add(other,self,self.empty) 
         def __isub__(self,other): # -=other
-            if 'scalar' in vsip.getType(other)[1] : # v-a
-                vsip.add(-other,self.view,self.view)
-                return self
-            elif 'pyJvsip.__View' in repr(other):
-                vsip.sub(self.view,other.view,self.view)
-                return self
+            if __isView(other):
+                return sub(self,other,self)
             else:
-                print('Object <:' + repr(other) +  ':> not supported for sub')
-                return False
+                return add(-other,self,self)
         def __sub__(self,other):#self - other
-            retval=self.copy
-            retval -= other
-            return retval
+            retval=self.empty
+            if __isView(other):
+                return sub(self,other,retval)
+            else:
+                return add(-other,self,retval)        
         def __rsub__(self,other): #other - self
-            if 'scalar' in vsip.getType(other)[1]:
-                retval = self.copy.neg
-                vsip.add(other,retval.view,retval.view)
-                return retval
-            elif 'pyJvsip.__View' in repr(other):
-                retval = other.copy
-                vsip.sub(retval.view,self.view,retval.view)
-                return retval
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for sub')
-                return False
+            retval=self.empty
+            return sub(other,self,retval)
         def __imul__(self,other):# *=other
-            if isinstance(other,int):
-                x = float(other)
-            elif isinstance(other,complex):
-                if '_d' in self.type:
-                    x = vsip_cmplx_d(other.real,other.imag)
-                elif '_f' in self.type:
-                    x = vsip_cmplx_f(other.real,other.imag)
-            else:
-                 x = other
-            if 'scalar' in getType(other)[1] :
-                vsip.mul(x,self.view,self.view)
-                return self
-            elif 'pyJvsip.__View' in repr(other):
-                vsip.mul(other.view,self.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for mul')
-                return False
+            return mul(other,self,self)
         def __mul__(self,other):
-            retval = self.copy
-            retval *= other
-            return retval
+            return mul(other,self,self.empty)
         def __rmul__(self,other): # other * self
-            retval = self.copy
-            retval *= other
-            return retval
+            return mul(other,self,self.empty)
         def __idiv__(self,other):
-            if isinstance(other,int):
-                x = float(other)
+            if __isView(other):
+                div(self,other,self)
+            elif isinstance(other,int) or isinstance(other,float) or isinstance(other,long):
+                div(self,1.0/float(other),self)
             elif isinstance(other,complex):
-                if '_d' in self.type:
-                    x = vsip_cmplx_d(other.real,other.imag)
-                elif '_f' in self.type:
-                    x = vsip_cmplx_f(other.real,other.imag)
+                mul(1.0/other,self,self)
             else:
-                 x = other
-            if 'scalar' in getType(other)[1]:
-                vsip.div(self.view,x,self.view)
-                return self
-            elif 'View' in getType(other)[1]:
-                vsip.div(self.view,other.view,self.view)
-                return self
-            else:
-                print('Object <:' + repr(other) +  ':> not supported for div')
-                return False                 
+                print('idiv divisor not recognized')       
         def __div__(self,other):
-            retval=self.copy
-            retval /= other
-            return retval
-        def __rdiv__(self,other): # other / self
-            if 'scalar' in vsip.getType(other):
-                print('Divide scalar by view not supported')
-                return False
+            if isinstance(other,complex):
+                return mul(1.0/other,self,self.empty)
             else:
-                retval=other.copy
-                vsip.div(retval.view,self.view,retval.view)
-                return retval
+                return div(self,other,self.empty)
+        def __rdiv__(self,other): # other / self
+            return div(other,self,self.empty)
+        def __neg__(self):
+            return neg(self,self)
         @property
         def list(self):
             f = {'cvview_f':'cvcopyToList_f(self.view)',
@@ -422,7 +375,9 @@ class Block (object):
                 n *= attr[4]
             return int(n)
         # Support functions
-        @property  #scalar is a place to store a value which can be recovered from the view
+        # scalar is a place for the implementation to store a value which can be recovered from the view
+        # not sure we need this. Currently not used.
+        @property
         def scalar(self):
             val=self.__scalar
             if 'cscalar' in repr(val):
@@ -437,15 +392,15 @@ class Block (object):
             else:
                 return self.__scalar
         # EW, COL, ROW, MAT are indicators of how the view is to be used
-        @property 
+        @property
         def EW(self):
             self.__major = 'EW'
             return self
-        @property 
+        @property
         def COL(self):
             self.__major = 'COL'
             return self
-        @property 
+        @property
         def ROW(self):
             self.__major = 'ROW'
             return self
@@ -490,17 +445,28 @@ class Block (object):
                 print('Type <:' + self.type + ':> not supported for compactAttrib')
                 return False
             return (t,length,attr)
-        @property # A way to get a new view and data space of the same size.
+        @property
         def empty(self):
             """
-               creates a new view, on a new block, of the same type and shape as 
-               the calling view. No copy or initialization takes place, so new view
-               is empty, so-to-speak.
+            A way to get a new view and data space of the same size.
+            creates a new view, on a new block, of the same type and shape as 
+            the calling view. No copy or initialization takes place, so new view
+            is empty, so-to-speak.
             """
             attr=self.compactAttrib(0)
             b = self.block.otherBlock(attr[0],attr[1])
             return b.bind(attr[2])
-        @property # returns deep (view and block) copy of object
+        def otherEmpty(self):
+            """
+            A way to get a new complex view and data space of the same size and precision as a real view.
+            creates a new complex view on a new block with the same shape and precision as 
+            the calling view. No copy or initialization takes place, so new view
+            is empty, so-to-speak.
+            """
+            attr=self.compactAttrib(1)
+            b = self.block.otherBlock(attr[0],attr[1])
+            return b.bind(attr[2])
+        @property # returns deep (new view and new block) copy of object including data
         def copy(self):
             """For vector or matrix A then
                B = A.copy will create a compact view B which is a copy
@@ -520,7 +486,7 @@ class Block (object):
             """ Same as copy method except if the view is a matrix it is created with
                 unit stride along the rows.
             """
-            if 'mview' in self.type:     
+            if 'mview' in self.type:
                 attr=self.compactAttrib(0)
                 b = self.block.otherBlock(attr[0],attr[1])
                 cl=self.collength; rl=self.rowlength
@@ -1100,152 +1066,100 @@ class Block (object):
             else:
                 print('View type <:' + t +':> does not support property blackman')
         #vector-matrix elementwise multiply by row or col
-        def mmul(self,other):
-            """
-            mmul(A) expects the calling view to be of type float vector and A to be of 
-            the same precision and type float matrix. Matrix A is returned as a convenience.
-            Note that view A has an a major attribute. If it is set to COL then the calling vector
-            is multiplied elementwise by COL, otherwise it is multiplied by ROW
-            Note lengths must be conformant.
-            If one is unsure of the state of the major attribute it should be set
-            For instance
-            v.mmul(A.ROW)
-            or
-            v.mmul(A.COL)
-            Done in place. v.mmul(A) returns the result in A.
-            """
-            f={'cvview_dcmview_d':vsip_cvmmul_d,
-               'cvview_fcmview_f':vsip_cvmmul_f,
-               'vview_dcmview_d':vsip_rvcmmul_d,
-               'vview_fcmview_f':vsip_rvcmmul_f,
-               'vview_dmview_d':vsip_vmmul_d,
-               'vview_fmview_f':vsip_vmmul_f}
-            t=self.type+other.type
-            if f.has_key(t):
-                if other.__major is 'COL':
-                    f[t](self.view,other.view,VSIP_COL,other.view)
-                else:
-                    f[t](self.view,other.view,VSIP_ROW,other.view)
-                return other
-            else:
-                print('Type <:' + t + ':> not recognized for method mmul')
-        def Mmul(self,other):
-            """
-            Mmul(A) expects the calling view to be of type float vector and A to be of 
-            the same precision and type float matrix. Matrix A is returned as a convenience.
-            Note that view A has an a major attribute. If it is set to COL then the calling vector
-            is multiplied elementwise by COL, otherwise it is multiplied by ROW
-            Note lengths must be conformant.
-            If one is unsure of the state of the major attribute it should be set
-            For instance
-            v.Mmul(A.ROW)
-            or
-            v.Mmul(A.COL)
-            Done out of place. B=v.Mmul(A) returns a new matrix with the result.
-            """
-            f={'cvview_dcmview_d':vsip_cvmmul_d,
-               'cvview_fcmview_f':vsip_cvmmul_f,
-               'vview_dcmview_d':vsip_rvcmmul_d,
-               'vview_fcmview_f':vsip_rvcmmul_f,
-               'vview_dmview_d':vsip_vmmul_d,
-               'vview_fmview_f':vsip_vmmul_f}
-            t=self.type+other.type
-            if f.has_key(t):
-                retval=other.empty.fill(0.0)
-                if other.__major is 'COL':
-                    f[t](self.view,other.view,VSIP_COL,retval.view)
-                else:
-                    f[t](self.view,other.view,VSIP_ROW,retval.view)
-                return retval
-            else:
-                print('Type <:' + t + ':> not recognized for method Mmul')
+        # ### ### ### Element-wise methods
         # Elementary math functions
         @property
         def acos(self):
-            vsip.acos(self.view,self.view)
+            acos(self,self)
             return self
         @property
         def asin(self):
-            vsip.asin(self.view,self.view)
+            asin(self,self)
             return self
+        def atan(self):
+            return atan(self,self)
+        # atan2 only supported by function call
         @property
         def cos(self):
-            vsip.cos(self.view,self.view)
+            cos(self,self)
             return self
         @property
         def cosh(self):
-            vsip.cosh(self.view,self.view)
+            cosh(self,self)
             return self
         @property
         def exp(self):
-            vsip.exp(self.view,self.view)
+            exp(self,self)
             return self
         @property
         def exp10(self):
-            vsip.exp10(self.view,self.view)
+            exp10(self,self)
             return self
         @property
         def log(self):
-            vsip.log(self.view,self.view)
+            log(self,self)
             return self
         @property
         def log10(self):
-            vsip.log10(self.view,self.view)
+            log10(self,self)
             return self
         @property
         def sin(self):
-            vsip.sin(self.view,self.view)
+            sin(self,self)
             return self
         @property
         def sinh(self):
-            vsip.sinh(self.view,self.view)
+            sinh(self,self)
             return self
         @property
         def sqrt(self):
-            vsip.sqrt(self.view,self.view)
+            sqrt(self,self)
             return self
         @property
         def tan(self):
-            vsip.tan(self.view,self.view)
+            tan(self,self)
             return self
         @property
         def tanh(self):
-            vsip.tanh(self.view,self.view)
+            tanh(self,self)
             return self
-        # Unary Operations
+        # ### Unary Operations
         @property
         def arg(self):
-            """ Cone out of place
-                Input vector of type complex
-                arg creates and returns a new vector of type real 
+            """ Done out-of-place
+                Input vector is of type complex
+                Output vector of type real created by arg method and returned. 
             """
             attrs=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
-            vsip.arg(self.view,out.view)
-            return out      
+            return arg(self,out)
         @property
         def conj(self):
             """
             Done In Place. For out of place use self.copy.conj.
             """
-            vsip.conj(self.view,self.view)
-            return self
-        @property   
+            return conj(self,self)
+        @property
         def cumsum(self):
             """
-            Done In Place
+            Done In-Place
+            If Matrix major flag should be set for direction of cumulative sum.
+            If a copy is done to preserve calling view place major after copy
+            Ex
+               a.COL.cumsum
+               b = a.copy.COL.cumsum
             """
-            vsip.cumsum(self.view,self.view)
-            return self
+            return cumsum(self,self)
         @property
         def euler(self):
-            """ Input vector of type real
-                arg creates and returns a new vector of type complex 
+            """ 
+            Not done In-Place
+            Input vector of type real
+            Method euler creates and returns a new output vector of type complex 
             """
             attrs=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
-            vsip.euler(self.view,out.view)
-            return out 
+            return euler(self,out)
         @property
         def mag(self):
             """
@@ -1259,27 +1173,15 @@ class Block (object):
                  y is created internal to the property. If x is real then y.type 
                  is the same as x.type. If x is complex then y is real.
             """
-            f = {'cmview_d':'vsip_cmmag_d(self.view,out.view)',
-                 'cmview_f':'vsip_cmmag_f(self.view,out.view)',
-                 'cvview_d':'vsip_cvmag_d(self.view,out.view)',
-                 'cvview_f':'vsip_cvmag_f(self.view,out.view)',
-                 'mview_d': 'vsip_mmag_d(self.view,out.view)',
-                 'mview_f': 'vsip_mmag_f(self.view,out.view)',
-                 'vview_d': 'vsip_vmag_d(self.view,out.view)',
-                 'vview_f': 'vsip_vmag_f(self.view,out.view)',
-                 'vview_i': 'vsip_vmag_i(self.view,out.view)',
-                 'vview_si':'vsip_vmag_si(self.view,out.view)'}
-            if f.has_key(self.type):
-                if 'cmview' in self.type or 'cvview' in self.type:
-                    attr=self.compactAttrib(1)
-                else:
-                    attr=self.compactAttrib(0)
-                out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
-                eval(f[self.type])
-                return out
+            f = ['cmview_d', 'cmview_f', 'cvview_d', 'cvview_f', 'mview_d', 
+                 'mview_f', 'vview_d', 'vview_f', 'vview_i', 'vview_si']
+            assert self.type in f, 'Type <:%s:> not recognized for magsq'%self.type
+            if 'cmview' in self.type or 'cvview' in self.type:
+                attr=self.compactAttrib(1)
             else:
-                print('Type <:'+self.type+':> not recognized for mag')
-                return
+                attr=self.compactAttrib(0)
+            out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
+            return mag(self,out)
         @property
         def magsq(self):
             """
@@ -1292,20 +1194,12 @@ class Block (object):
               Note:
                  y is created internal to the property.
             """
-            f={'cvview_f':'vsip_vcmagsq_f(self.view,out.view)',
-               'cvview_d':'vsip_vcmagsq_d(self.view,out.view)',
-               'cmview_f':'vsip_mcmagsq_f(self.view,out.view)',
-               'cmview_d':'vsip_mcmagsq_d(self.view,out.view)'}
-            if f.has_key(self.type):
-                attr=self.compactAttrib(1)
-                out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
-                eval(f[self.type])
-                return out
-            else:
-                print('Type <:'+self.type+':> not recognized for magsq')
-                return
-        def __neg__(self):
-            vsip.neg(self.view,self.view)
+            f=['cvview_f','cvview_d','cmview_f','cmview_d']
+            assert self.type in f, 'Type <:%s:> not recognized for magsq'%self.type
+            attr=self.compactAttrib(1)
+            out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
+            return magsq(self,out)
+        # modulate
         @property
         def neg(self):
             """
@@ -1313,45 +1207,76 @@ class Block (object):
             Returns a convenience copy.
             For out of place, for view x, do y = x.copy.neg
             """
-            f= {'cmview_f':vsip_cmneg_d,'cmview_f':vsip_cmneg_f,'cvview_d':vsip_cvneg_d,
-                'cvview_f':vsip_cvneg_f,'mview_d':vsip_mneg_d,'mview_f':vsip_mneg_f,
-                'vview_d':vsip_vneg_d,'vview_f':vsip_vneg_f,'vview_i':vsip_vneg_i,'vview_si':vsip_vneg_si}
-            assert f.has_key(self.type),'Method neg does not support <:'+self.type +':>.'
-            f[self.type](self.view,self.view)
-            return self
-        @property
-        def meansqval(self):
-            """ returns scalar value
-            """
-            return vsip.meansqval(self)
-            return self
-        @property
-        def meanval(self):
-            """ returns scalar value
-            """
-            return vsip.meanval(self.view)
+            return neg(self,self)
         @property
         def recip(self):
-            vsip.recip(self.view,self.view)
-            return self
+            return recip(self,self)
         @property
         def rsqrt(self):
-            vsip.rsqrt(self.view,self.view)
-            return self
-        @property 
+            return rsqrt(self,self)
+        @property
         def sq(self):
-            vsip.sq(self.view,self.view)
-            return self
+            return sq(self,self)
         @property
         def sumval(self):
             """returns a scalar
             """
-            return vsip.sumval(self.view)
+            f={'cmview_d':vsip_cmsumval_d,'cvview_d':vsip_cvsumval_d,'cmview_f':vsip_cmsumval_f,
+               'cvview_f':vsip_cvsumval_f,'mview_d':vsip_msumval_d,'vview_d':vsip_vsumval_d,
+               'mview_f':vsip_msumval_f,'vview_f':vsip_vsumval_f,'vview_i':vsip_vsumval_i,
+               'vview_si':vsip_vsumval_si,'vview_uc':vsip_vsumval_uc,'mview_bl':vsip_msumval_bl,
+               'vview_bl':vsip_vsumval_bl}
+            assert f.has_key(self.type), 'Type <:%s:> not recognized for sumval'%self.type
+            if 'cmview' in self.type or 'cvview' in self.type:
+                x=f[self.type](self.view)
+                return complex(x.r,x.i)
+            else:
+                return f[self.type](self.view)
         @property
         def sumsqval(self):
             """ returns a scalar
             """
-            return vsip.sumsqval(self.view)   
+            f={'mview_d':vsip_msumsqval_d, 'vview_d':vsip_vsumsqval_d,
+                'mview_f':vsip_msumsqval_f, 'vview_f':vsip_vsumsqval_f}
+            assert f.has_key(self.type),'Type <:%s:> not recognized for sumsqval'%self.type
+            return f[self.type](self.view) 
+        # ### Binary
+        # add, mull, div, sub incorporated into python built in __add__, __div__, __sub__, etc.
+        def mmul(self,other):
+            """
+            Input matrix is overwritten by the operation.
+            mmul(A) expects the calling view to be of type float vector and A to be of 
+            the same precision and type float matrix. Matrix A is returned as a convenience.
+            Note that view A has an a major attribute. If it is set to COL then the calling vector
+            is multiplied elementwise by COL, otherwise it is multiplied by ROW
+            Note lengths must be conformant.
+            If one is unsure of the state of the major attribute it should be set
+            For instance
+            v.mmul(A.ROW)
+            or
+            v.mmul(A.COL)
+            Done in place. v.mmul(A) returns the result in A.
+            B = v.mmul(A.copy.COL) returns the result in a new matrix. 
+            """
+            return mmul(self,other,other)
+        @property
+        def meansqval(self):
+            """ returns scalar value
+            """
+            f={'cmview_d':vsip_cmmeansqval_d,'cvview_d':vsip_cvmeansqval_d,'cmview_f':vsip_cmmeansqval_f,
+               'cvview_f':vsip_cvmeansqval_f,'mview_d':vsip_mmeansqval_d,'vview_d':vsip_vmeansqval_d,
+               'mview_f':vsip_mmeansqval_f,'vview_f':vsip_vmeansqval_f}
+            assert f.has_key(self.type), 'Type <:%s:> not recognized for meansqval'%self.type
+            return f[self.type](self.view)
+        @property
+        def meanval(self):
+            """ returns scalar value
+            """
+            f={'cmview_d':vsip_cmmeanval_d,'cvview_d':vsip_cvmeanval_d,'cmview_f':vsip_cmmeanval_f,
+               'cvview_f':vsip_cvmeanval_f,'mview_d':vsip_mmeanval_d,'vview_d':vsip_vmeanval_d,
+               'mview_f':vsip_mmeanval_f,'vview_f':vsip_vmeanval_f}
+            assert f.has_key(self.type), 'Type <:%s:> not recognized for meanval'%self.type
+            return f[self.type](self.view)
         #logical operations
         @property
         def alltrue(self):
@@ -1809,7 +1734,7 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported by maxmgval')
                 return
-        @property 
+        @property
         def maxmgsqvalindx(self):
             """
             This method returns the index of the first maximum complex magnitude squared 
@@ -1833,7 +1758,7 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported by maxmgsqvalindx')
                 return
-        @property 
+        @property
         def maxmgsqval(self):
             """
             This method returns the  maximum complex magnitude squared 
@@ -1932,7 +1857,7 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported by minmgval')
                 return
-        @property 
+        @property
         def minmgsqvalindx(self):
             """
             This method returns the index of the first minimum complex magnitude squared 
@@ -1956,7 +1881,7 @@ class Block (object):
             else:
                 print('Type <:'+self.type+':> not supported by minmgsqvalindx')
                 return
-        @property 
+        @property
         def minmgsqval(self):
             """
             This method returns the  minimum complex magnitude squared 
@@ -3459,7 +3384,7 @@ class CONV(object):
         assert isinstance(dec,int) and isinstance(dtaLength,int) and isinstance(ntimes,int),\
                'Arguments decimation and data size must be integers, and ntimes is an integer'
         assert dec > 0, 'Decimation must be an integer greater than zero '
-        assert 'pyJvsip.__View' in repr(h), 'The kernel must be a pyJvsip view'
+        assert __isView(h), 'The kernel must be a pyJvsip view'
         assert CONV.convSel.has_key(h.type) and t == CONV.convSel[h.type],\
               'Kernel type <:' + h.type + ':> not recognized for convolution.'
         assert CONV.symmetry.has_key(symm), 'Symmetry flag not recognized'       
@@ -3516,7 +3441,7 @@ class CONV(object):
         return self.__decimation
     def convolve(self,x,y):
         f={'conv1d_dvview_dvview_d':vsip_convolve1d_d, 'conv1d_fvview_fvview_f':vsip_convolve1d_f}
-        assert 'pyJvsip.__View' in repr(x) and 'pyJvsip.__View' in repr(y),'Arguments to convolve must be pyJvsip views'
+        assert __isView(x) and __isView(y),'Arguments to convolve must be pyJvsip views'
         t=self.type+x.type+y.type
         assert f.has_key(t),'Type <:' + t + ':> not recognized by convolve method'
         assert y.length == self.out_len, 'Output vector length not equal to calculated output length'
@@ -3608,8 +3533,8 @@ class CORR(object):
            'ccorr1d_fcvview_fcvview_fcvview_f':vsip_ccorrelate1d_f,                                                
            'corr1d_dvview_dvview_dvview_d':vsip_correlate1d_d,                                                     
            'corr1d_fvview_fvview_fvview_f':vsip_correlate1d_f} 
-        assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-           and 'pyJvsip.__View' in repr(c),\
+        assert __isView(a) and __isView(b)\
+           and __isView(c),\
            'The last three arguments of method correlate must be pyJvsip views'
         t = self.type+ref.type+x.type+y.type
         assert f.has_key(t),'Type<:'+t+' not recognized for correlate object'
@@ -3888,7 +3813,7 @@ class CHOL(object):
                 'chol_d':vsip_chold_d,
                 'cchol_f':vsip_cchold_f,
                 'cchol_d':vsip_cchold_d}
-        assert 'pyJvsip.__View' in repr(m), \
+        assert __isView(m), \
               'Input for CHOL decompose method must be a pyJvsip view'
         assert tMatrix[m.type] == self.type, 'Type <:'+m.type+':> not supported by CHOL object'
         assert m.rowlength == m.collength and m.rowlength == self.size,\
@@ -3910,7 +3835,7 @@ class CHOL(object):
                'cchol_d':vsip_ccholsol_d,'cchol_f':vsip_ccholsol_f}
         tMatrix={'cmview_d':'cchol_d','cmview_f':'cchol_f',
                  'mview_d':'chol_d','mview_f':'chol_f'}
-        assert 'pyJvsip.__View' in repr(inOut), \
+        assert __isView(inOut), \
               'Input for CHOL decompose method must be a pyJvsip view'
         if 'vview' in inOut.type:
             a=inOut.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
@@ -4144,7 +4069,6 @@ class SV(object):
         return
 
 # pyJvsip Functions
-# copy is kind of brain dead. Need more functionality and performance
 def create(atype,*vals):
     """
        usage:
