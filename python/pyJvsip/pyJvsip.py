@@ -14,15 +14,6 @@ from vsipLinearAlgebra import *
 import vsiputils as vsip
 
 __version__='0.2.10'
-def __isView(a):
-    return 'pyJvsip.__View' in repr(a)
-def __isComplex(a):
-    t=getType(a)
-    if 'scalar' in t[1]:
-        return t[2] is complex
-    else:
-        return t[2] in Block.complexTypes
-
 def getType(v):
     """
         Returns a tuple with type information.
@@ -229,19 +220,21 @@ class Block (object):
             return cls(v,newB)
         # Elementwise add, sub, mul, div
         def __iadd__(self,other): # self += other
-            return add(other,self,self)
+            add(other,self,self)
+            return self
         def __add__(self,other): # new = self + other
             return add(other,self,self.empty)           
         def __radd__(self,other): # new = other + self
             return add(other,self,self.empty) 
         def __isub__(self,other): # -=other
-            if __isView(other):
-                return sub(self,other,self)
+            if 'pyJvsip.__View' in repr(other):
+                sub(self,other,self)
             else:
-                return add(-other,self,self)
+                add(-other,self,self)
+            return self
         def __sub__(self,other):#self - other
             retval=self.empty
-            if __isView(other):
+            if 'pyJvsip.__View' in repr(other):
                 return sub(self,other,retval)
             else:
                 return add(-other,self,retval)        
@@ -249,20 +242,22 @@ class Block (object):
             retval=self.empty
             return sub(other,self,retval)
         def __imul__(self,other):# *=other
-            return mul(other,self,self)
+            mul(other,self,self)
+            return self
         def __mul__(self,other):
             return mul(other,self,self.empty)
         def __rmul__(self,other): # other * self
             return mul(other,self,self.empty)
         def __idiv__(self,other):
-            if __isView(other):
+            if 'pyJvsip.__View' in repr(other):
                 div(self,other,self)
             elif isinstance(other,int) or isinstance(other,float) or isinstance(other,long):
-                div(self,1.0/float(other),self)
+                div(self,other,self)
             elif isinstance(other,complex):
                 mul(1.0/other,self,self)
             else:
-                print('idiv divisor not recognized')       
+                print('idiv divisor not recognized')
+            return self       
         def __div__(self,other):
             if isinstance(other,complex):
                 return mul(1.0/other,self,self.empty)
@@ -3384,7 +3379,7 @@ class CONV(object):
         assert isinstance(dec,int) and isinstance(dtaLength,int) and isinstance(ntimes,int),\
                'Arguments decimation and data size must be integers, and ntimes is an integer'
         assert dec > 0, 'Decimation must be an integer greater than zero '
-        assert __isView(h), 'The kernel must be a pyJvsip view'
+        assert 'pyJvsip.__View' in repr(h), 'The kernel must be a pyJvsip view'
         assert CONV.convSel.has_key(h.type) and t == CONV.convSel[h.type],\
               'Kernel type <:' + h.type + ':> not recognized for convolution.'
         assert CONV.symmetry.has_key(symm), 'Symmetry flag not recognized'       
@@ -3441,7 +3436,7 @@ class CONV(object):
         return self.__decimation
     def convolve(self,x,y):
         f={'conv1d_dvview_dvview_d':vsip_convolve1d_d, 'conv1d_fvview_fvview_f':vsip_convolve1d_f}
-        assert __isView(x) and __isView(y),'Arguments to convolve must be pyJvsip views'
+        assert 'pyJvsip.__View' in repr(x) and 'pyJvsip.__View' in repr(y),'Arguments to convolve must be pyJvsip views'
         t=self.type+x.type+y.type
         assert f.has_key(t),'Type <:' + t + ':> not recognized by convolve method'
         assert y.length == self.out_len, 'Output vector length not equal to calculated output length'
@@ -3533,8 +3528,8 @@ class CORR(object):
            'ccorr1d_fcvview_fcvview_fcvview_f':vsip_ccorrelate1d_f,                                                
            'corr1d_dvview_dvview_dvview_d':vsip_correlate1d_d,                                                     
            'corr1d_fvview_fvview_fvview_f':vsip_correlate1d_f} 
-        assert __isView(a) and __isView(b)\
-           and __isView(c),\
+        assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
+           and 'pyJvsip.__View' in repr(c),\
            'The last three arguments of method correlate must be pyJvsip views'
         t = self.type+ref.type+x.type+y.type
         assert f.has_key(t),'Type<:'+t+' not recognized for correlate object'
@@ -3813,7 +3808,7 @@ class CHOL(object):
                 'chol_d':vsip_chold_d,
                 'cchol_f':vsip_cchold_f,
                 'cchol_d':vsip_cchold_d}
-        assert __isView(m), \
+        assert 'pyJvsip.__View' in repr(m), \
               'Input for CHOL decompose method must be a pyJvsip view'
         assert tMatrix[m.type] == self.type, 'Type <:'+m.type+':> not supported by CHOL object'
         assert m.rowlength == m.collength and m.rowlength == self.size,\
@@ -3835,7 +3830,7 @@ class CHOL(object):
                'cchol_d':vsip_ccholsol_d,'cchol_f':vsip_ccholsol_f}
         tMatrix={'cmview_d':'cchol_d','cmview_f':'cchol_f',
                  'mview_d':'chol_d','mview_f':'chol_f'}
-        assert __isView(inOut), \
+        assert 'pyJvsip.__View' in repr(inOut), \
               'Input for CHOL decompose method must be a pyJvsip view'
         if 'vview' in inOut.type:
             a=inOut.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
