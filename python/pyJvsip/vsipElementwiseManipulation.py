@@ -27,7 +27,6 @@ def __isSizeCompatible(a,b):
             return True
     else:
         return False
-
 # vsip_dsswap_p
 def swap(a,b):
     """
@@ -60,10 +59,9 @@ def gather(a,b,c):
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function gather'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for gather'
-    assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in gather'
+    assert __isSizeCompatible(b,c),'Index vector must be the same length as output vector'
     f[t](a.view,b.view,c.view)
     return c
-
 
 # vsip_dsscatter_p
 def scatter(a,b,c):
@@ -81,12 +79,12 @@ def scatter(a,b,c):
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function scatter'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for scatter'
-    assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in scatter'
+    assert __isSizeCompatible(a,c),'Index vector must be the same length as input vector'
     f[t](a.view,b.view,c.view)
     return c
 
 # vsip_srect_p 
-def rect(a,b,c):
+def rect(a,b,*vars):
     """
     See VSIP specification for Information
     """
@@ -94,6 +92,11 @@ def rect(a,b,c):
        'mview_dmview_dcmview_d':vsip_mrect_d, 'mview_fmview_fcmview_f':vsip_mrect_f}
     assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function rect'
     assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function rect'
+    assert len(vars) < 2, 'To many arguments to rect function'
+    if len(vars) == 1:
+        c = vars[0]
+    else:
+        c = a.otherEmpty
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function rect'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for rect'
@@ -132,7 +135,7 @@ def imag(a,b):
     return b
 
 # vsip_scmplx_p 
-def cmplx(a,b,c):
+def cmplx(a,b,*vars):
     """
     See VSIP specification for Information
     """
@@ -142,6 +145,11 @@ def cmplx(a,b,c):
        'mview_fmview_fcmview_f':vsip_mcmplx_f}
     assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function cmplx'
     assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function cmplx'
+    assert len(vars) < 2, 'To many arguments to rect function'
+    if len(vars) == 1:
+        c = vars[0]
+    else:
+        c = a.otherEmpty
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function cmplx'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for cmplx'

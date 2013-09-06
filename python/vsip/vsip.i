@@ -1072,6 +1072,8 @@ void vsip_vcminmgsq_d ( const vsip_cvview_d* , const vsip_cvview_d* , const vsip
 void vsip_vcminmgsq_f ( const vsip_cvview_f* , const vsip_cvview_f* , const vsip_vview_f* ) ;
 void vsip_vcmplx_d ( const vsip_vview_d* , const vsip_vview_d* , const vsip_cvview_d* ) ;
 void vsip_vcmplx_f ( const vsip_vview_f* , const vsip_vview_f* , const vsip_cvview_f* ) ;
+void vsip_mcmplx_d ( const vsip_mview_d* , const vsip_mview_d* , const vsip_cmview_d* ) ;
+void vsip_mcmplx_f ( const vsip_mview_f* , const vsip_mview_f* , const vsip_cmview_f* ) ;
 void vsip_vcopy_bl_bl ( const vsip_vview_bl* , const vsip_vview_bl* ) ;
 void vsip_vcopy_bl_d ( const vsip_vview_bl* , const vsip_vview_d* ) ;
 void vsip_vcopy_bl_f ( const vsip_vview_bl* , const vsip_vview_f* ) ;

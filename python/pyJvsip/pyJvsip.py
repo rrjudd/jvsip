@@ -451,6 +451,7 @@ class Block (object):
             attr=self.compactAttrib(0)
             b = self.block.otherBlock(attr[0],attr[1])
             return b.bind(attr[2])
+        @property
         def otherEmpty(self):
             """
             A way to get a new complex view and data space of the same size and precision as a real view.
@@ -560,30 +561,7 @@ class Block (object):
                 return self
             else:
                 print('View of type <:'+self.type+':> not supported by identity')
-                return False
-        #support functions
-        def gather(self,v,indx):
-            if 'vview' not in self.type:
-                print('Gather only works with a vector calling view')
-                return
-            f = {'cmview_d':vsip_cmgather_d, 'cmview_f':vsip_cmgather_f, 
-                 'cvview_d':vsip_cvgather_d, 'cvview_f':vsip_cvgather_f,
-                 'mview_d':vsip_mgather_d, 'mview_f':vsip_mgather_f,
-                 'vview_d':vsip_vgather_d, 'vview_f':vsip_vgather_f,
-                 'vview_i':vsip_vgather_i, 'vview_si':vsip_vgather_si,
-                 'vview_uc':vsip_vgather_uc,
-                 'vview_mi':vsip_vgather_mi, 'vview_vi':vsip_vgather_vi}
-            if 'vview_vi' == indx.type and 'vview' in v.type:
-                f[v.type](v.view,indx.view,self.view)
-                return self
-            elif 'vview_mi' == indx.type and 'mview' in v.type:
-                f[v.type](v.view,indx.view,self.view)
-                return self
-            else:
-                print('Argument list of types<:'+
-                self.type+':>,<:'+v.type+':>,<:'+indx.type+\
-                ':> not supported for gather')
-                return          
+                return False             
         def subview(self,*vals):
             """usage:
                Using Slice (pyJvsip slice does not support negatives at this time):
@@ -745,7 +723,7 @@ class Block (object):
             
             else:
                 print('Submatrix uses vector views of type vector index')
-                return
+                return             
         @property
         def attrib(self):
             attr=vsip.getattrib(self.view)
@@ -813,18 +791,6 @@ class Block (object):
                 The major attribue does NOT necessarily agree with the smallest stride direction.
             """
             return self.__major
-        @property
-        def real(self):
-            """
-            A method to get a deep copy of the real part of a complex view.
-            """
-            return self.realview.copy
-        @property
-        def imag(self):
-            """
-            A method to get a deep copy of the imaginary part of a complex view.
-            """
-            return self.imagview.copy
         def colview(self,j):
             if self.type in Block.matrixTypes:
                 v = vsip.colview(self.view,j)
@@ -1565,71 +1531,6 @@ class Block (object):
             else:
                 print('Method indexbool should only be called if there is at least one true entry')
                 return
-        def scatter(self,other,indx):
-            """
-              Usage:
-                  self.scatter(other,indx)
-              This function scatters self into other governed by indx
-              View other is returned as a convienience
-            """
-            t=self.type+other.type+indx.type
-            f={'cvview_dcmview_dvview_mi': vsip_cmscatter_d, 
-               'cvview_fcmview_fvview_mi': vsip_cmscatter_f, 
-               'cvview_dcvview_dvview_vi': vsip_cvscatter_d, 
-               'cvview_fcvview_fvview_vi': vsip_cvscatter_f, 
-               'vview_dmview_dvview_mi':   vsip_mscatter_d, 
-               'vview_fmview_fvview_mi':   vsip_mscatter_f, 
-               'vview_dvview_dvview_vi':   vsip_vscatter_d, 
-               'vview_fvview_fvview_vi':   vsip_vscatter_f, 
-               'vview_ivview_ivview_vi':   vsip_vscatter_i, 
-               'vview_sivview_sivview_vi': vsip_vscatter_si, 
-               'vview_ucvview_ucvview_vi': vsip_vscatter_uc}
-            if f.has_key(t):
-                f[t](self.view,other.view,indx.view)
-                return other
-            else:
-                print('Input types <:'+t+':> not recognized for scatter')
-                return;
-        def gather(self,indx,*vars):
-            """
-              Usage:
-                  self.gather(indx,other)
-              or
-                  self.gather(indx)
-              This function gathers self into other governed by indx.
-              If other is not provided the function creates one.
-              View other is returned as a convienience
-            """
-            ot={'cmview_f':'cvview_f','cmview_d':'cvview_d','mview_f':'vview_f',
-               'mview_d':'vview_d','cvview_f':'cvview_f','cvview_d':'cvview_d',
-               'vview_f':'vview_f','vview_d':'vview_d','vview_i':'vview_i',
-               'vview_si':'vview_si','vview_uc':'vview_uc','vview_mi':'vview_mi',
-               'vview_vi':'vview_vi'}
-            assert len(vars) < 2, 'Gather only supports two arguments'
-            if len(vars) is 1:
-                other = vars[0]
-            else:
-                other = create(ot[self.type],indx.length)
-            t=self.type+indx.type+other.type
-            f={'cmview_dvview_micvview_d': vsip_cmgather_d,
-               'cmview_fvview_micvview_f': vsip_cmgather_f,
-               'cvview_dvview_vicvview_d': vsip_cvgather_d,
-               'cvview_fvview_vicvview_f': vsip_cvgather_f,
-               'mview_dvview_mivview_d':   vsip_mgather_d,
-               'mview_fvview_mivview_f':   vsip_mgather_f,
-               'vview_dvview_vivview_d':   vsip_vgather_d,
-               'vview_fvview_vivview_f':   vsip_vgather_f,
-               'vview_ivview_vivview_i':   vsip_vgather_i,
-               'vview_sivview_vivview_si': vsip_vgather_si,
-               'vview_ucvview_vivview_uc': vsip_vgather_uc,
-               'vview_mivview_vivview_mi': vsip_vgather_mi,
-               'vview_vivview_vivview_vi': vsip_vgather_vi}
-            if f.has_key(t):
-                f[t](self.view,indx.view,other.view)
-                return other
-            else:
-                print('Input types <:'+t+':> not recognized for other')
-                return;
         def indxFill(self,indx,alpha):
             if 'mview' in self.type:
                 lnth = self.rowlength * self.collength
@@ -1944,7 +1845,63 @@ class Block (object):
             assert self.type in sptd
             out=self.empty
             f[self.type](self.view,other.view,out.view)
-            return out       
+            return out 
+        # Manipulation
+        # Not supported by view method
+        # vsip_scmplx_p
+        # vsip_srect_p
+        # vsip_spolar_p
+        # vsip_dswap_p
+        # ### ###
+        # supported by view method
+        # vsip_dsgather_p
+        def gather(self,indx,*vars):
+            """
+              Usage:
+                  self.gather(indx,other)
+              or
+                  self.gather(indx)
+              This function gathers self into other governed by indx.
+              If other is not provided the function creates one.
+              View other is returned as a convienience
+            """
+            ot={'cmview_f':'cvview_f','cmview_d':'cvview_d','mview_f':'vview_f',
+               'mview_d':'vview_d','cvview_f':'cvview_f','cvview_d':'cvview_d',
+               'vview_f':'vview_f','vview_d':'vview_d','vview_i':'vview_i',
+               'vview_si':'vview_si','vview_uc':'vview_uc','vview_mi':'vview_mi',
+               'vview_vi':'vview_vi'}
+            assert len(vars) < 2, 'Gather only supports an index view, or an index view and an output view'
+            if len(vars) is 1:
+                other = vars[0]
+            else:
+                other = create(ot[self.type],indx.length)
+            gather(self,indx,other)
+            return other
+        # vsip_simag_p
+        @property
+        def imag(self):
+            """
+            A method to get a deep copy of the imaginary part of a complex view.
+            """
+            return imag(self,self.otherEmpty)
+        # vsip_sreal_p
+        @property
+        def real(self):
+            """
+            A method to get a deep copy of the real part of a complex view.
+            """
+            return real(self,self.otherEmpty)            
+        # vsip_dsscatter_p
+        def scatter(self,other,indx):
+            """
+              Usage:
+                  self.scatter(other,indx)
+              This function scatters self into other governed by indx
+              View other is returned as a convienience
+            """
+            scatter(self,other,indx)
+            return other       
+
         #Basic Algorithms
         def axpy(self,a,x):
             """
