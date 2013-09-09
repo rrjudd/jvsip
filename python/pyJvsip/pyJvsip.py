@@ -2205,6 +2205,8 @@ class Block (object):
         def norm2(self):
             """This method is a property which returns the two norm
             """
+            vSup=['vview_f','cvview_f','vview_d','cvview_d']
+            mSup=['mview_f','cmview_f','mview_d','cmview_d']
             def eigB(A): #find Biggest eigenvalue
                 small=A.normFro/1e16 
                 vk=0;   
@@ -2224,8 +2226,6 @@ class Block (object):
                     xk=axk / n
                 return vkn
             assert self.type in vSup or self.type in mSup, 'Type <:'+self.type+':> not supported by norm2'
-            vSup=['vview_f','cvview_f','vview_d','cvview_d']
-            mSup=['mview_f','cmview_f','mview_d','cmview_d']
             if self.type in vSup:
                 return vsip_sqrt_d(self.jdot(self).real)
             else:
