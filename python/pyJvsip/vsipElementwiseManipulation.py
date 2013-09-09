@@ -87,6 +87,15 @@ def scatter(a,b,c):
 def rect(a,b,*vars):
     """
     See VSIP specification for Information
+    Convert polar to rectangular represenation
+    Usage:
+       rect(a,b,c)
+    where
+        a and b are views of type ?view_f or ?view_d
+        c is a compliant view of type c?view_f or c?view_d
+    OR:
+        c = rect(a,b)
+        compliant output c is created by function call.
     """
     f={'vview_dvview_dcvview_d':vsip_vrect_d, 'vview_fvview_fcvview_f':vsip_vrect_f,
        'mview_dmview_dcmview_d':vsip_mrect_d, 'mview_fmview_fcmview_f':vsip_mrect_f}
@@ -108,6 +117,8 @@ def rect(a,b,*vars):
 def real(a,b):
     """
     See VSIP specification for Information
+    real part
+    a is of type complex; b is of corresponding type real
     """
     f={'cvview_dvview_d':vsip_vreal_d, 'cvview_fvview_f':vsip_vreal_f,
        'cmview_dmview_d':vsip_mreal_d, 'cmview_fmview_f':vsip_mreal_f}
@@ -123,6 +134,8 @@ def real(a,b):
 def imag(a,b):
     """
     See VSIP specification for Information
+    Imaginary part
+    a is of type complex; b is of corresponding type imaginary.
     """
     f={'cvview_dvview_d':vsip_vimag_d, 'cvview_fvview_f':vsip_vimag_f,
        'cmview_dmview_d':vsip_mimag_d, 'cmview_fmview_f':vsip_mimag_f}
@@ -138,7 +151,17 @@ def imag(a,b):
 def cmplx(a,b,*vars):
     """
     See VSIP specification for Information
+    Convert Convert real, imaginary (a,b) into complex
+    Usage:
+       rect(a,b,c)
+    where
+        a and b are views of type vview_f or vview_d
+        c is a compliant view of type cvview_f or cvview_d
+    OR:
+        c = rect(a,b)
+        compliant output c is created by function call.
     """
+
     f={'vview_dvview_dcvview_d':vsip_vcmplx_d,
        'vview_fvview_fcvview_f':vsip_vcmplx_f,
        'mview_dmview_dcmview_d':vsip_mcmplx_d,
@@ -158,17 +181,35 @@ def cmplx(a,b,*vars):
     return c
 
 # vsip_spolar_p
-def polar(a,b,c):
+def polar(a,*vars):
     """
     See VSIP specification for Information
+    Convert polar (complex vector) to rectangular (real vectors of radius and angle)
+    Usage:
+        polar(a,r,phi)
+    or:
+        (r,phi) = polar(a)
+    where:
+         a is a complex vector/matrix pyJvsip view
+         r is a radius of type real (vector/matrix pyJvsip view)
+         phi is an angle (vector/matrix pyJvsip view)
     """
     f={'cvview_dvview_dvview_d':vsip_vpolar_d,
        'cvview_fvview_fvview_f':vsip_vpolar_f,
        'cmview_dmview_dmview_d':vsip_mpolar_d,
        'cmview_fmview_fmview_f':vsip_mpolar_f}
     assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function polar'
+    assert len(vars) < 3, 'To many arguments to function polar'
+    assert len(vars) == 2 or len(vars) == 0, 'In Polar argument two and three must both be present or both be absent'
+    if len(vars) == 0:
+        b = a.otherEmpty
+        c = b.empty
+    else:
+        b=vars[0]
+        c=vars[1]
     assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function polar'
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function polar'
+    
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for polar'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in polar'

@@ -218,6 +218,7 @@ class Block (object):
             b=vsip.getblock(v)
             newB = B.otherBlock(t,(b,l))
             return cls(v,newB)
+
         # Elementwise add, sub, mul, div
         def __iadd__(self,other): # self += other
             add(other,self,self)
@@ -369,6 +370,7 @@ class Block (object):
             if len(attr) > 3:
                 n *= attr[4]
             return int(n)
+            
         # Support functions
         # scalar is a place for the implementation to store a value which can be recovered from the view
         # not sure we need this. Currently not used.
@@ -512,56 +514,7 @@ class Block (object):
             v=vsip.cloneview(self.view)
             b=self.block
             return __newView(v,b)
-        #data generators
-        def ramp(self,start,increment):
-            supportedViews = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
-            extended = ['cvview_f','cvview_d']
-            if self.type in supportedViews:
-                vsip.ramp(start,increment,self.view)
-                return self
-            elif self.type in extended:
-                self.fill(0)
-                tmp=self.realview
-                tmp.ramp(start,increment)
-                return self
-            else:
-                print('Type <:'+self.type+':> not supported for ramp')
-                return False
-        def fill(self,aScalar):
-            if self.type in Block.complexTypes:
-                if '_d' in self.type:
-                    if type(aScalar) is complex:
-                        vsip.fill(vsip_cmplx_d(aScalar.real,aScalar.imag),self.view)
-                    else:
-                        vsip.fill(vsip_cmplx_d(aScalar,0.0),self.view)
-                else:
-                    if type(aScalar) is complex:
-                        vsip.fill(vsip_cmplx_f(aScalar.real,aScalar.imag),self.view)
-                    else:
-                        vsip.fill(vsip_cmplx_f(aScalar,0.0),self.view)
-            elif type(aScalar) != complex:
-                vsip.fill(aScalar,self.view)
-            else:
-                print('aScalar must be a type which agrees with vector view')
-            return self
-        def randn(self,seed):
-            gen=Rand('PRNG',seed)
-            gen.randn(self)
-            return self   
-        def randu(self,seed):
-            gen=Rand('PRNG',seed)
-            gen.randu(self)
-            return self   
-        @property
-        def identity(self):
-            f=['cmview_d','cmview_f','mview_d','mview_f','mview_i','mview_si']
-            if self.type in f:
-                self.fill(0)
-                self.diagview(0).fill(1)
-                return self
-            else:
-                print('View of type <:'+self.type+':> not supported by identity')
-                return False             
+
         def subview(self,*vals):
             """usage:
                Using Slice (pyJvsip slice does not support negatives at this time):
@@ -1026,7 +979,7 @@ class Block (object):
                 return self
             else:
                 print('View type <:' + t +':> does not support property blackman')
-        #vector-matrix elementwise multiply by row or col
+        
         # ### ### ### Element-wise methods
         # Elementary math functions
         @property
@@ -1201,9 +1154,11 @@ class Block (object):
                 'mview_f':vsip_msumsqval_f, 'vview_f':vsip_vsumsqval_f}
             assert f.has_key(self.type),'Type <:%s:> not recognized for sumsqval'%self.type
             return f[self.type](self.view) 
+
         # ### Binary
         # add, mull, div, sub incorporated into python built in __add__, __div__, __sub__, etc.
         def mmul(self,other):
+         #vector-matrix elementwise multiply by row or col
             """
             Input matrix is overwritten by the operation.
             mmul(A) expects the calling view to be of type float vector and A to be of 
@@ -1238,6 +1193,7 @@ class Block (object):
                'mview_f':vsip_mmeanval_f,'vview_f':vsip_vmeanval_f}
             assert f.has_key(self.type), 'Type <:%s:> not recognized for meanval'%self.type
             return f[self.type](self.view)
+
         #logical operations
         @property
         def alltrue(self):
@@ -1514,6 +1470,7 @@ class Block (object):
             else:
                 print('Argument type <:'+t+':> not recognized for lne')
             return
+
         # Selection Operations
         @property
         def indexbool(self):
@@ -1845,7 +1802,59 @@ class Block (object):
             assert self.type in sptd
             out=self.empty
             f[self.type](self.view,other.view,out.view)
-            return out 
+            return out         
+        
+        # data generators
+        def ramp(self,start,increment):
+            supportedViews = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
+            extended = ['cvview_f','cvview_d']
+            if self.type in supportedViews:
+                vsip.ramp(start,increment,self.view)
+                return self
+            elif self.type in extended:
+                self.fill(0)
+                tmp=self.realview
+                tmp.ramp(start,increment)
+                return self
+            else:
+                print('Type <:'+self.type+':> not supported for ramp')
+                return False
+        def fill(self,aScalar):
+            if self.type in Block.complexTypes:
+                if '_d' in self.type:
+                    if type(aScalar) is complex:
+                        vsip.fill(vsip_cmplx_d(aScalar.real,aScalar.imag),self.view)
+                    else:
+                        vsip.fill(vsip_cmplx_d(aScalar,0.0),self.view)
+                else:
+                    if type(aScalar) is complex:
+                        vsip.fill(vsip_cmplx_f(aScalar.real,aScalar.imag),self.view)
+                    else:
+                        vsip.fill(vsip_cmplx_f(aScalar,0.0),self.view)
+            elif type(aScalar) != complex:
+                vsip.fill(aScalar,self.view)
+            else:
+                print('aScalar must be a type which agrees with vector view')
+            return self
+        def randn(self,seed):
+            gen=Rand('PRNG',seed)
+            gen.randn(self)
+            return self   
+        def randu(self,seed):
+            gen=Rand('PRNG',seed)
+            gen.randu(self)
+            return self   
+        @property
+        def identity(self):
+            f=['cmview_d','cmview_f','mview_d','mview_f','mview_i','mview_si']
+            if self.type in f:
+                self.fill(0)
+                self.diagview(0).fill(1)
+                return self
+            else:
+                print('View of type <:'+self.type+':> not supported by identity')
+                return False             
+
         # Manipulation
         # Not supported by view method
         # vsip_scmplx_p
@@ -1902,7 +1911,8 @@ class Block (object):
             scatter(self,other,indx)
             return other       
 
-        #Basic Algorithms
+        # Basic Algorithms
+        # These algorithms are specific to pyJvsip for convenience. No C VSIPL functions are in the C Library.
         def axpy(self,a,x):
             """
                This is commonly called a saxpy (daxpy) for single (double) precision
@@ -2073,7 +2083,7 @@ class Block (object):
         def ecos(self,r0,r1):
             """Elementary Column Operations Switch (columns)
                For Matrix A
-                   A.eros(i,j)
+                   A.ecos(i,j)
                    will switch column 'i' and column 'j' in-place
             """
             if 'mview' not in self.type:
@@ -2102,18 +2112,14 @@ class Block (object):
                 matrix. Done in place.
                 The determinant is the product of the diagonal entries.
                 Note:
-                  Done in place and the input is used up so use a copy if the input
+                  Done in place and the input is used up so use a copy method if the input
                   matrix is needed.
             """
             supportedViews = ['mview_f','mview_d']
-            if self.type not in supported:
-                print('Matrix must be of type mview_f or mview_d')
-                return
+            assert self.type in supportedViews, 'Determinant only calculated for real matrices of type float or double'
             n=self.rowlength
             m=self.collength
-            if m != n:
-                print('Matrix must be square')
-                return
+            assert m==n,'For determinant input matrix must be square'
             retval=1.0
             for i in range(n):
                 T=self[i:n,i:n]
@@ -2131,11 +2137,13 @@ class Block (object):
                     scl=-T[j,0]/pvt
                     T.rowview(j).axpy(scl,vp)
             return retval
+        
+        ### plu operations are a demonstration. Should use LU class; or lu, luInv, luSolve.
         @property
         def plu(self):
             """ Calculate an LU decomposition with a row permutation vector
                for square Matrix A of size 'n' and type real, float.
-               This operation is done out of place
+               This operation is done out-of-place
                 A.plu will return (a tuple)
                   an permutation (index) vector of length n (call it p)
                   a lower triangular matrix of size n (call it L)
@@ -2146,14 +2154,10 @@ class Block (object):
             L=self.empty.identity
             U=self.copy
             supportedViews = ['mview_f','mview_d']
-            if U.type not in supported:
-                print('Matrix must be of type mview_f or mview_d')
-                return
+            assert U.type in supportedViews,'Matrix must be of type mview_f or mview_d'
             n=U.rowlength
             m=U.collength
-            if m != n:
-                print('Matrix must be square')
-                return
+            assert m == n, 'Matrix must be square'
             for k in range(n-1):
                 pk=U.colview(k)[k:n].maxmgvalindx
                 if pk != 0:
@@ -2162,8 +2166,7 @@ class Block (object):
                     p[k]=p[k+pk]
                     p[k+pk]=t
                 pvt=U[k,k]
-                if pvt == 0.0:
-                    return 0.0 
+                assert pvt != 0.0, 'Matrix is singular'
                 U[k+1:n,k] /= pvt
                 uc=U.colview(k)[k+1:n];ur=U.rowview(k)[k+1:n]
                 # to do in place use nopu else use product.
@@ -2175,15 +2178,10 @@ class Block (object):
                     U[i,j]=0
             return (p,L,U)
         def lsolve(self,xy):
-            if 'mview' in xy.type:
-                print('Method lsolve only works with vector argument')
-                return
-            if 'vview' in self.type:
-                print('Calling view must be a (upper diagonal) matrix')
-                return
-            if self.rowlength != self.collength or self.rowlength != xy.length:
-                print('Calling view must be square with size equal to argument length')
-                return
+            assert 'vview' in xy.type, 'Method lsolve only works with vector argument'
+            assert 'mview' in self.type, 'Method lsolve only defined for (upper diagonal) matrices'
+            assert self.rowlength == self.collength and self.rowlength == xy.length,\
+                          'Calling view must be square with size equal to argument length'
             n=self.rowlength
             xy[0] /= self[0,0]
             for i in range(1,n):
@@ -2191,21 +2189,18 @@ class Block (object):
                 xy[i] = (y0 - self.rowview(i)[0:i].dot(xy[0:i]))/self[i,i]
             return xy             
         def usolve(self,xy):
-            if 'mview' in xy.type:
-                print('Method usolve only works with vector argument')
-                return
-            if 'vview' in self.type:
-                print('Calling view must be a (upper diagonal) matrix')
-                return
-            if self.rowlength != self.collength or self.rowlength != xy.length:
-                print('Calling view must be square with size equal to argument length')
-                return
+            assert 'vview' in xy.type, 'Method usolve only works with vector argument'
+            assert 'mview' in self.type, 'Method usolve only defined for (upper diagonal) matrices'
+            assert self.rowlength == self.collength and self.rowlength == xy.length,\
+                          'Calling view must be square with size equal to argument length'
             n=self.rowlength-1
             xy[n] /= self[n,n]
             for i in range(n-1,-1,-1):
                 y0=xy[i]
                 xy[i] = (y0 - self.rowview(i)[i+1:n+1].dot(xy[i+1:n+1]))/self[i,i]
             return xy 
+        ### end plu operations
+        
         @property
         def norm2(self):
             """This method is a property which returns the two norm
@@ -2228,20 +2223,18 @@ class Block (object):
                         vk = vkn
                     xk=axk / n
                 return vkn
+            assert self.type in vSup or self.type in mSup, 'Type <:'+self.type+':> not supported by norm2'
             vSup=['vview_f','cvview_f','vview_d','cvview_d']
             mSup=['mview_f','cmview_f','mview_d','cmview_d']
             if self.type in vSup:
                 return vsip_sqrt_d(self.jdot(self).real)
-            if self.type in mSup:
+            else:
                 if self.collength >= self.rowlength:
                     t=self.transview
                     M=t.prodh(t)
                 else:
                     M=self.prodh(self)
                 return vsip_sqrt_d(eigB(M))
-            else:
-                print('Type <:'+self.type+':> not supported by norm2');
-                return
         @property
         def normFro(self):
             """This method is a property which returns the Frobenius norm
@@ -3159,11 +3152,11 @@ class Rand(object):
 
 # Signal Processing Classes
 # Not Implemented
-# vsip_fft_setwindow_f 
+# vsip_fft_setwindow_f
 # vsip_dfft2dx_create_f
 # vsip_ccfft2dx_f
 # vsip_crfft2dop_f
-# vsip_rcfft2dop_f 
+# vsip_rcfft2dop_f
 # vsip_conv2d_create_f
 # vsip_conv2d_destroy_f
 # vsip_conv2d_getattr_f
@@ -3195,7 +3188,7 @@ class FFT (object):
                 'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
                  'crfftmop_d']
             arg is a tuple corresponding to one of the VSIPL arguments list for the associated t value.
-       If VSIPL enumerated types are used one must first import the type from the VSIPL library.
+       If VSIPL enumerated types are available as part of the pyJvsip import.
     """
     fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
                 'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
@@ -3263,8 +3256,9 @@ class FFT (object):
         vsip.destroy(self.__fft)
 
     def dft(self,*vars):
-        """This method requires a single view or two views enclosed in a tuple.
-           Input success depends upon How the FFT object was created.
+        """This method requires one view for in-place dft calculation or two views for out-of-place.
+           The dft type may be retrieved using the type property of the FFT object.
+           See the VSIPL specification for various view requirements which depend on the FFT method being used.
            Some error checking is done but it is not all inclusive.
         """
         if isinstance(vars[0],tuple):
