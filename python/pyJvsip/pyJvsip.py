@@ -513,7 +513,7 @@ class Block (object):
         def clone(self):
             v=vsip.cloneview(self.view)
             b=self.block
-            return __newView(v,b)
+            return self.__newView(v,b)
 
         def subview(self,*vals):
             """usage:
@@ -1052,7 +1052,10 @@ class Block (object):
             """
             Done In Place. For out of place use self.copy.conj.
             """
-            return conj(self,self)
+            if self.type in ['vview_d','vview_f','mview_d','mview_f']:
+                return self
+            else:
+                return conj(self,self)
         @property
         def cumsum(self):
             """
