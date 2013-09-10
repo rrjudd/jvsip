@@ -70,7 +70,7 @@ class JVSIP (object):
             vsip.finalize()
 
 class Block (object):
-    blockTypes = ['block_f','block_d','cblock_f','cblock_d',
+    tBlock = ['block_f','block_d','cblock_f','cblock_d',
               'block_vi','block_mi','block_bl',
               'block_si','block_i','block_uc']
     derivedTypes = ['real_f','real_d']
@@ -89,7 +89,7 @@ class Block (object):
     def __init__(self,block_type,length):
         other = ['real_f','imag_f','real_d','imag_d']
         self.__jvsip = JVSIP()
-        if block_type in Block.blockTypes:
+        if block_type in Block.tBlock:
             self.__vsipBlock = vsip.create(block_type,(length,VSIP_MEM_NONE))
             self.__length = length
             self.__type = block_type
@@ -100,7 +100,7 @@ class Block (object):
         else:
             print('block type <:'+block_type+':> not support by Block class')
     def __del__(self):
-        if self.__type in Block.blockTypes:
+        if self.__type in Block.tBlock:
             vsip.destroy(self.__vsipBlock)
         del(self.__jvsip)
     @property
@@ -137,7 +137,7 @@ class Block (object):
         return self.bind(0,1,self.length)
     @classmethod
     def supported(cls):
-        return {'blockTypes':Block.blockTypes,'viewTypes':Block.__View.supported()} 
+        return {'tBlock':Block.tBlock,'viewTypes':Block.__View.supported()} 
     @property
     def copy(self):
         """ This makes a new block object identical to the calling block object.
@@ -165,7 +165,7 @@ class Block (object):
     # or at least that is the goal by placing views here. As far as python is
     # concerned I still have much to learn.
     class __View(object):
-        viewTypes=['mview_f','mview_d','cmview_f','cmview_d',
+        tView=['mview_f','mview_d','cmview_f','cmview_d',
                  'mview_si','mview_i','mview_uc','mview_bl',
                  'vview_f','vview_d','cvview_f','cvview_d',
                  'vview_si','vview_i','vview_uc',
@@ -183,7 +183,7 @@ class Block (object):
             vsip.destroy(self.__vsipView)
         @classmethod
         def supported(cls):
-            return cls.viewTypes
+            return cls.tView
         @property
         def supported(self):
             self.supported()
@@ -425,7 +425,7 @@ class Block (object):
             cdict={'real_d':'block_d','real_f':'block_f',\
                    'imag_d':'block_d','imag_f':'block_f'}
             t = self.block.type
-            if t in Block.blockTypes and b != 0:
+            if t in Block.tBlock and b != 0:
                 t=tdict[t]
             elif cdict.has_key(t):
                 t=cdict[t]
@@ -3098,6 +3098,8 @@ class Rand(object):
             randObj.randu(a)
        fills view object a with the VSIPL normal or uniform (respectivly) random data.       
     """
+    tRand = ['PRNG','NPRNG']
+    supported = ['vview_f','vview_d','cvview_f','cvview_d']
     def __init__(self,t,seed):
         self.__jvsip = JVSIP()
         self.__type = t
@@ -3190,10 +3192,9 @@ class FFT (object):
             arg is a tuple corresponding to one of the VSIPL arguments list for the associated t value.
        If VSIPL enumerated types are available as part of the pyJvsip import.
     """
-    fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
-                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
-                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
-                 'crfftmop_d']
+    tFft = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', \
+            'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', \
+            'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 'crfftmop_d']
     fftViewDict = {'ccfftip_d':'cvview_d', 
                    'ccfftip_f':'cvview_f', 
                    'ccfftop_d':'cvview_dcvview_d', 
@@ -3209,7 +3210,7 @@ class FFT (object):
                    'crfftmop_d':'cmview_dmview_d', 
                    'crfftmop_f':'cmview_fmview_f', 
                    'rcfftmop_d':'mview_dcmview_d', 
-                   'rcfftmop_f':'mview_fcmview_f'}
+                   'rcfftmop_f':'mview_fcmview_f'} #given fft type what type of views works
     fftCreateDict={'ccfftip_f':'vsip_ccfftip_create_f(l[0],l[1],l[2],l[3],l[4])',
                      'ccfftop_f':'vsip_ccfftop_create_f(l[0],l[1],l[2],l[3],l[4])',
                      'rcfftop_f':'vsip_rcfftop_create_f(l[0],l[1],l[2],l[3])',
@@ -3311,7 +3312,7 @@ class CONV(object):
     """
     tConv=['conv1d_f','conv1d_d']
     convSel={'vview_f':'conv1d_f','vview_d':'conv1d_d'}
-    supportedViews=['vview_f','vview_d']
+    supported=['vview_f','vview_d']
     supportRegion = {0:VSIP_SUPPORT_FULL,1:VSIP_SUPPORT_SAME,2:VSIP_SUPPORT_MIN,
               'FULL':VSIP_SUPPORT_FULL,'SAME':VSIP_SUPPORT_SAME,'MIN':VSIP_SUPPORT_MIN}
     symmetry = {0:VSIP_NONSYM,1:VSIP_SYM_EVEN_LEN_ODD, 2:VSIP_SYM_EVEN_LEN_EVEN,
@@ -3495,6 +3496,7 @@ class CORR(object):
        
 # filter Class
 class FIR(object):
+    tFir=['fir_f','fir_d','cfir_f','cfir_d','rcfir_f','rcfir_d']
     def __init__(self,t,filt,sym,N,D,state):
         """
         Usage:
@@ -3727,8 +3729,8 @@ class CHOL(object):
         self.__m = {'matrix':0}
         assert cholCreate.has_key(t) and cholSize > 0 and isinstance(cholSize,int), \
                'CHOL create error. Check type, and size. Size must be an int greater than 0.'
-        assert uplowSel.has_key(uplow),'Flag for upper or lower matrix not recognized'
-        self.__chol = cholCreate[t](uplowSel[uplow],cholSize)
+        assert CHOL.uplowSel.has_key(uplow),'Flag for upper or lower matrix not recognized'
+        self.__chol = cholCreate[t](CHOL.uplowSel[uplow],cholSize)
     def __del__(self):
         cholDestroy={'cchol_f':vsip_cchold_destroy_f,
                     'cchol_d':vsip_cchold_destroy_d,
@@ -3812,31 +3814,28 @@ class QR(object):
     tQr=['qr_f','qr_d','cqr_f','cqr_d']
     qrSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
+    qOpt=['NOSAVEQ','SAVEQ','SAVEQ1', VSIP_QRD_NOSAVEQ, VSIP_QRD_SAVEQ, VSIP_QRD_SAVEQ1]
+    selQopt = {'NOSAVEQ':0,'SAVEQ':1,'SAVEQ1':2, 0:VSIP_QRD_NOSAVEQ, 1:VSIP_QRD_SAVEQ, 2:VSIP_QRD_SAVEQ1}
     def __init__(self,t,m,n,qOpt):
         qrCreate={'cqr_f':vsip_cqrd_create_f,
               'cqr_d':vsip_cqrd_create_d,
               'qr_f':vsip_qrd_create_f,
               'qr_d':vsip_qrd_create_d}
+        assert qrCreate.has_key(t), 'Type <:%s:> not recognized for QR'%repr(t)
         assert type(m) is int and type(n) is int,"Row and column sizes must be integers"
-        assert m >= n, "For QR column length is >= row length"
+        assert m >= n and n > 0, "For QR lengths are greater than zero and column length is >= row length"
+        assert QR.selQopt.has_key(qOpt), 'Flag for save Q is %s. Flag not recognized for QR'%repr(qOpt)
         self.__jvsip = JVSIP()
         if t in QR.tQr:
             self.__type = t
         else:
             print('Type qr not found')
             return
-        self.__qOpt = qOpt
+        self.__qOpt = QR.selQopt[qOpt]
         self.__collength = m
         self.__rowlength = n
         self.__m = {'matrix':0}
-        if qrCreate.has_key(t) and (m > 0 and isinstance(m,int)) \
-                               and (n > 0 and isinstance(n,int)) \
-                               and (qOpt >= 0) and (qOpt <= 2) and isinstance(qOpt,int):
-            self.__qr = qrCreate[t](m,n,qOpt)
-        else:
-            print('Type must be one of '+repr(tQr)+' and m,n must be integers greater than 0.')
-            print('qOpt must be a valid member of vsip_qrd_qopt.')
-            return
+        self.__qr = qrCreate[t](m,n,QR.selQopt[qOpt])
     def __del__(self):
         del(self.__jvsip)
         vsip.destroy(self.__qr)
@@ -3918,28 +3917,29 @@ class SV(object):
     For instance if only singular values of matrix A are required then you could do
     sv=SV(A.type,A.collength,A.rowlength,'NOS','NOS')
     """
-    tSv=['sv_f','sv_d','csv_f','csv_d','mview_d','cmview_d','mview_f','cmview_f']
+    tSv=['sv_f','sv_d','csv_f','csv_d']
+    supported=['mview_d','cmview_d','mview_f','cmview_f']
     svSel={'sv_f':'mview_f','sv_d':'mview_d','csv_f':'cmview_f','csv_d':'cmview_d'}
     svvSel={'sv_f':'vview_f','sv_d':'vview_d','csv_f':'vview_f','csv_d':'vview_d'}
     tSel={'sv_f':'sv_f','mview_f':'sv_f','sv_d':'sv_d','mview_d':'sv_d',
           'csv_f':'csv_f','cmview_f':'csv_f','csv_d':'csv_d','cmview_d':'csv_d'}
+    opSel={'NOS':VSIP_SVD_UVNOS,'FULL':VSIP_SVD_UVFULL,\
+            'PART':VSIP_SVD_UVPART,0:VSIP_SVD_UVNOS,1:VSIP_SVD_UVFULL,2:VSIP_SVD_UVPART}
     def __init__(self,t,m,n,opU,opV):
         svCreate={'sv_f':vsip_svd_create_f,
               'sv_d':vsip_svd_create_d,
               'csv_f':vsip_csvd_create_f,
               'csv_d':vsip_csvd_create_d}
-        op={'NOS':VSIP_SVD_UVNOS,'FULL':VSIP_SVD_UVFULL,'PART':VSIP_SVD_UVPART}
+        assert SV.tSel.has_key(t),'Type <:%s:> not recognized for SV'%repr(t)
+        assert isinstance(m,int) and isinstance(n,int),'Length arguments must be integers for SV'
+        assert SV.opSel.has_key(opU) and SV.opSel.has_key(opV), 'Singular Value flags not recognized'
         self.__jvsip = JVSIP()
-        if t in SV.tSv:
-            self.__type = SV.tSel[t]
-        else:
-            printf('type <:' + t + ':>not found for SVD')
-            return
-        self.opU=opU
-        self.opV=opV
+        self.__type = SV.tSel[t]
+        self.opU=SV.opSel[opU]
+        self.opV=SV.opSel[opV]
         self.m=m
         self.n=n
-        self.__sv=svCreate[SV.tSel[t]](m,n,op[opU],op[opV])
+        self.__sv=svCreate[SV.tSel[t]](m,n,SV.opSel[opU],SV.opSel[opV])
         self.View=0.0
     def __del__(self):
         svDestroy={'sv_f':vsip_svd_destroy_f,
@@ -4023,8 +4023,7 @@ def create(atype,*vals):
           aType corresponds to a valid type for the object being created and
           ... are a variable argument list associated with each supported create type
     """
-    blockTypes = ['cblock_f','cblock_d','block_f','block_d','block_i','block_si','block_uc', \
-                  'block_vi','block_mi','block_bl']
+    blockTypes = Block.tBlock
     vectorTypes=['cvview_f','cvview_d','vview_f','vview_d','vview_i','vview_si','vview_uc',\
                  'vview_vi','vview_mi','vview_bl']
     fVector = {'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f', \
@@ -4036,87 +4035,77 @@ def create(atype,*vals):
     fMatrix = {'mview_f':'block_f','mview_d':'block_d','cmview_f':'cblock_f',\
                'cmview_d':'cblock_d','mview_i':'block_i','mview_si':'block_si',\
                'mview_uc':'block_uc','mview_bl':'block_bl'}
-    fftTypes = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', \
-                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', \
-                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', \
-                'crfftmop_d']
+    fftTypes = FFT.tFft
     mfftTypes = ['ccfftmip_f', 'ccfftmop_f', 'rcfftmop_f', 'crfftmop_f', \
                  'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 'crfftmop_d']
     vfftTypes=['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', \
                'ccfftip_d', 'ccfftop_d', 'rcfftop_d', 'crfftop_d']
+    luTypes = LU.tLu
+    svTypes = SV.tSv
+    qrTypes = QR.tQr
+    cholTypes=CHOL.tChol
+    convTypes=CONV.tConv
+    corrTypes=CORR.tCorr
+    randType = Rand.tRand
+    majorType=['ROW','COL',VSIP_ROW,VSIP_COL]
+    assert isinstance(atype,str),'Types used in the create function must be a string'
     if atype in blockTypes:
-        if isinstance(vals[0],int) and len(vals) == 1:
-            return Block(atype,vals[0])
-        else:
-            print('Input length for <:' + atype + 'must be a single integer value')
-            return
+        assert len(vals) == 1, 'Create for %s has a single length argument'%atype
+        assert isinstance(vals[0],int), 'Length for %s must be an integer'%atype
+        return Block(atype,vals[0])
     elif atype in vectorTypes:
-        if isinstance(vals[0],int) and len(vals) == 1:
-            return create(fVector[atype],vals[0]).bind(0,1,vals[0])
-        else:
-            print('Input length for <:' + atype + ':> must be a single integer value')
-            return
+        assert len(vals) == 1, 'Create for %s has a single length argument'%atype
+        assert isinstance(vals[0],int), 'Length for %s must be an integer'%atype
+        return create(fVector[atype],vals[0]).bind(0,1,vals[0])
     elif atype in matrixTypes:
-        if len(vals) >1 and isinstance(vals[0],int) and isinstance(vals[1],int):
-            cl=vals[0]
-            rl= vals[1]
-            l=rl * cl;
-            offset=0;
-            if (len(vals) == 3 and 'ROW' in vals[2]) or len(vals) == 2:
-                row_stride=1
-                col_stride=rl
-            elif len(vals) == 3 and 'COL' in vals[2]:
-                row_stride=cl
-                col_stride=1
-            else:
-                print('Input arguments for <:'+atype+':> must be (integers):')
-                print('\tcolumn length, row length,\n and optional major:')
-                print("\t'ROW' (default) or 'COL'")
-                return
-            return create(fMatrix[atype],l).bind(offset,col_stride,cl,row_stride,rl)
-        else:
-            print('Input arguments for <:'+atype+':> must be 2 (integers) and an optional major:')
-            print('\tcolumn length, row length,\n and optional major:')
-            print("\t'ROW' (default) or 'COL'")
-            return
+        assert len(vals) > 1 and len(vals) < 4, \
+                'Create for %s has at least two length arguments and an optional major argument'%atype
+        assert isinstance(vals[0],int) and isinstance(vals[1],int), 'Lengths for %s must be integers'%atype
+        cl=vals[0]
+        rl= vals[1]
+        l=rl * cl
+        offset=0
+        row_stride=1
+        col_stride=rl
+        if len(vals) == 3:
+            assert vals[2] in majorType, 'Flag %s not recognized as a vsip_major type'%repr(vals[2])
+            if vals[2] == VSIP_COL or vals[2] == 'COL':
+                row_stride=c1
+                col_stride=l
+        return create(fMatrix[atype],l).bind(offset,col_stride,cl,row_stride,rl)
     elif atype in fftTypes:
         nVals = len(vals)
         hint = 0 # set to VSIP_ALG_TIME
         ntimes = 0 # set to use a lot
-        if (atype in vfftTypes and nVals < 1) or (atype in mfftTypes and nVals < 2):
-            print('Usage requires a single length for vectors or the column and row length for matrices')
-            print('For vectors (matrices) the second (third) argument is a scalar indicating')
-            print('a scale. This value defaults to 1.0')
-            print('The argument list is searched for the string "INV" and if found the')
-            print('object is built for an inverse FFT. The default is a Forward FFT')
-            print('If a multiple FFT is specified the argument list is searched for a string')
-            print('of "COL". If found the fft is done for each column. The default is by row')
-            return
+        assert (atype in vfftTypes and nVals > 0) or (atype in mfftTypes and nVals > 1), \
+            """
+            Usage requires a single length for vectors or the column and row length for matrices.
+            For vectors (matrices) the second (third) argument is a scalar indicating a scale (defaults to 1.0).
+            The argument list is searched for the string "INV" and if found the object is built for an inverse FFT. 
+            The default is a Forward FFT If a multiple FFT is specified the argument list is searched for a string
+            of "COL". If found the fft is done for each column. The default is by row."""
+        if 'INV' in vals:
+            dir = 1 #VSIP_FFT_INV
         else:
-            if 'INV' in vals:
-                dir = 1 #VSIP_FFT_INV
+            dir = -1 #VSIP_FFT_FWD
+        if atype in mfftTypes:
+            major = 0 # default fft by row
+            assert isinstance(vals[0],int) and isinstance(vals[1],int), \
+                    'Length arguments for %s must be integers'%atype
+            M = vals[0]; N = vals[1]
+            if nVals > 2 and (isinstance(vals[2,int]) or isinstance(vals[2],float)):
+                scaleFactor = float(vals[2]) 
             else:
-                dir = -1 #VSIP_FFT_FWD
-            if atype in mfftTypes and nVals > 1:
-                M = vals[0]
-                N = vals[1]
-                if nVals > 2 and (isinstance(vals[2,int]) or isinstance(vals[2],float)):
-                    scaleFactor = vals[2] 
-                else:
-                    scaleFactor = 1.0   
-                if 'COL' in vals:
-                    major = 1 #'VSIP_COL'
-                else:
-                    major = 0 #'VSIP_ROW'
-            elif atype in vfftTypes and nVals > 0:
-                N = vals[0]
-                if nVals > 1 and (isinstance(vals[1],int) or isinstance(vals[1],float)):
-                    scaleFactor = vals[1]
-                else:
-                    scaleFactor = 1.0
+                scaleFactor = 1.0
+            if 'COL' in vals:
+                major = 1 # 'VSIP_COL'
+        else:
+            assert isinstance(vals[0],int),'Length argument for %s must be an integer'%atype
+            N = vals[0]
+            if nVals > 1 and (isinstance(vals[1],int) or isinstance(vals[1],float)):
+                scaleFactor = float(vals[1])
             else:
-                print('<:' + atype + ':> not recognized') #should not be able to get here
-                return
+                scaleFactor = 1.0
         if ('ccfftip' in atype) or ('ccfftop' in atype):
             arg = (N,scaleFactor,dir,ntimes,hint)
         elif ('crfftop' in atype) or ('rcfftop' in atype):
@@ -4129,8 +4118,47 @@ def create(atype,*vals):
             print('<:' + atype + ':> not recognized') #should not be able to get here
             return
         return FFT(atype,arg)
+    elif atype in randType:
+        assert len(vals) == 2, 'Type <:%s:> takes a type argument and an intger seed'%atype
+        assert isinstance(vals[1],int), 'Argument two for random number generator is an integer'
+        return Rand(atype,vals[1])
+    elif atype in luTypes:
+        assert len(vals) == 1, 'Type <:%s:> takes a type argument and an intger length'%atype
+        assert isinstance(vals[0],int), 'Argument two for LU is an integer'
+        return LU(atype,vals[0])
+    elif atype in qrTypes:
+        assert len(vals) > 1, \
+            'Too few arguments.  Type <::%s:> takes a type, two length arguments, and an optional Q save argument'%atype
+        assert len(vals) < 4, \
+            'Too many arguments.  Type <::%s:> takes a type, two length arguments, and an optional Q save argument'%atype
+        op='SAVEQ' #default
+        if len(vals) == 3:
+            assert QR.selQopt.has_key(vals[2]), 'Flag %s not recognized for QR create'%repr(vals[2])
+            op=vals[2]
+        return QR(atype,vals[0],vals[1],op)    
+    elif atype in svTypes:
+        assert len(vals) > 1,\
+        'Too few arguments.  Type <::%s:> takes a type, two length arguments, and two optional vsip_svd_uv save argumenta'%atype
+        assert len(vals) < 5, \
+            'Too many arguments.  Type <::%s:> takes a type, two length arguments, and an optional Q save argument'%atype
+        opVsave='FULL';opUsave='FULL'
+        if len(vals) == 3:
+            assert SV.opSel.has_key(vals[2]),'Save argument not recognized for singular value'
+            opVsave=SV.opSel[vals[2]]
+            opUsave=opVsave
+        if len(vals) == 4:
+            assert SV.opSel.has_key(vals[2]) and SV.opSel.has_key(vals[3]),'Save Arguments not recognized for singular value'
+            opVsave=SV.opSel[vals[3]]
+            opUsave=SV.opSel[vals[2]]
+        return SV(atype,vals[0],vals[1],opUsave,opVsave)
+    elif atype in cholTypes:
+        return
+    elif atype in convTypes:
+        return
+    elif atype in corrTypes:
+        return
     else:
-        print('Input argument <:'+atype+':> not recognzied for create')
+        print('Input argument <:%s:> not recognzied for create'%atype)
 def svdCompose(d,indx):
     """
     Usage:
