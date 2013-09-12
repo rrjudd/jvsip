@@ -13,7 +13,7 @@ from vsipLinearAlgebra import *
 
 import vsiputils as vsip
 
-__version__='0.2.10'
+__version__='0.3.0'
 def getType(v):
     """
         Returns a tuple with type information.
@@ -1850,13 +1850,10 @@ class Block (object):
         @property
         def identity(self):
             f=['cmview_d','cmview_f','mview_d','mview_f','mview_i','mview_si']
-            if self.type in f:
-                self.fill(0)
-                self.diagview(0).fill(1)
-                return self
-            else:
-                print('View of type <:'+self.type+':> not supported by identity')
-                return False             
+            assert self.type in f,'View of type <:'+self.type+':> not supported by identity'
+            self.fill(0)
+            self.diagview(0).fill(1)
+            return self 
 
         # Manipulation
         # Not supported by view method
@@ -3994,7 +3991,7 @@ class SV(object):
               'sv_d':vsip_svdmatv_d,
               'csv_f':vsip_csvdmatv_f,
               'csv_d':vsip_csvdmatv_d}
-        if 'NOS' in self.opV:
+        if SV.opSel['NOS'] == self.opV:
             return
         else:
             svMatV[self.type](self.vsip,low,high,other.view)
@@ -4007,7 +4004,7 @@ class SV(object):
               'sv_d':vsip_svdmatu_d,
               'csv_f':vsip_csvdmatu_f,
               'csv_d':vsip_csvdmatu_d}
-        if 'NOS' in self.opU:
+        if SV.opSel['NOS'] == self.opU:
             return     
         else:
             svMatU[self.type](self.vsip,low,high,other.view)
@@ -4025,6 +4022,10 @@ def create(atype,*vals):
        where:
           aType corresponds to a valid type for the object being created and
           ... are a variable argument list associated with each supported create type
+        The create function has default values for most creates. For instance the matrix create will be row major 
+        by default, and no memory hints are used since the jvsip distribution does not support 
+        (underneath the covers) the vsip_memory_hint. 
+        QR creates are by default for the full Q, SV creates are by default for the full matrix.
     """
     blockTypes = Block.tBlock
     vectorTypes=['cvview_f','cvview_d','vview_f','vview_d','vview_i','vview_si','vview_uc',\
@@ -4051,6 +4052,7 @@ def create(atype,*vals):
     corrTypes=CORR.tCorr
     randType = Rand.tRand
     majorType=['ROW','COL',VSIP_ROW,VSIP_COL]
+    mat_uploFlag=['UPP','LOW',VSIP_TR_LOW,VSIP_TR_UPP]
     assert isinstance(atype,str),'Types used in the create function must be a string'
     if atype in blockTypes:
         assert len(vals) == 1, 'Create for %s has a single length argument'%atype
@@ -4155,13 +4157,77 @@ def create(atype,*vals):
             opUsave=SV.opSel[vals[2]]
         return SV(atype,vals[0],vals[1],opUsave,opVsave)
     elif atype in cholTypes:
-        return
+        assert len(vals) < 3, 'Cholesky create takes either a vsip_mat_uplo flag and a length, or just a length'
+        assert len(vals) > 0, 'Cholesky must have at least one integer size value'
+        if len(vals) == 2:
+            assert vals[0] in mat_uploFlag, "Second argument to create for type %s is 'UPP' or 'LOW' "%atype
+            assert isinstance[vals[1],int], 'Third argument to create for type %s is an integer size'%atype
+            matFlag=vals[0]
+            sz=vals[1]
+        else:
+            matFlag='UPP'
+            assert isinstance[vals[0],int], \
+                    'Argument to create for type %s is an integer size. If not included default vsip_mat_uplo is "UPP" '%atype
+            sz=vals[0]                    
+        return CHOL(atype,matFlag,sz)
     elif atype in convTypes:
-        return
+        """
+        Usage Cases Convolution:
+         create(atype,h,dtaLength) => symm = 'NON', dec=1, support='FULL',ntimes=0,hint='TIME'
+         create(atype,h,dtaLength, dec) => symm = 'NON', support='FULL',ntimes=0,hint='TIME'
+         create(atype,h,symm, dtaLength, dec) => support='FULL',ntimes=0,hint='TIME'
+         create(atype,h,symm, dtaLength, dec, support) => ntimes=0,hint='TIME'
+        """
+        ntimes=0; hint='TIME'; symm='NON'; dec=1; support='FULL'
+        nvals=len(vals)
+        msg = 'For create convolution the number of arguments after type is five or less.'
+        msg += '\nNote ntimes hint is always 0 and the alg hint is always "TIME" for this function.'
+        msg += 'These are default values and not part of the argument list'
+        msg1 = 'The first argument after the type must be a vector view conformant with the convolution type\n'
+        msg1+= 'The second argument after the data type must be an integer length.'
+        assert nvals > 1, 'As a minimum convolution create requires a filter view and a data length'
+        h=vals[0]
+        if nvals < 4:
+            dtaSize = vals[1]
+        else:
+            dtaSize = vals[2]
+            symm = vals[1]
+            assert symmetry.has_key(symm),'Symmetry flag not recognized for create of %s'%atype
+        assert nvals < 6, msg
+        assert 'pyJvsip.__View' in repr(h) and isinstance(dtaSize,int) and CONV.convSel.has_key(h.type), msg1
+        assert atype == CONV.convSel[h.type],'Type %s not conformant with %s.'%(h.type,atype)
+        if nvals > 3:
+            dec = vals[3]
+            assert isinstance(dec,int),'Decimation value for create of %s must be an integer'%atype
+        if nvals > 4:
+            sup = vals[4]
+            assert supportRegion.has_key(sup), 'Support region flag not recognized for create of %s'%atype
+        return CONV(atype,h,symm,dtaLength,dec,sup,ntimes,hint)
     elif atype in corrTypes:
-        return
+        """
+        Usage:
+           If region is 'FULL' use
+           corr=create(atype,repSize,dtaSize)
+        or:
+           corr=create(atype,repSize,dtaSize,region)
+           where region is one of 'FULL', 'SAVE', or 'MIN'
+        ntimes and hint always default to 0 and 'TIME' respectively.
+        """
+        ntimes=0; hint='TIME'; region='FULL' 
+        region = 'FULL'
+        nvals = len(vals)
+        assert nvals > 1, 'As a minimum create of %s requires a reference vector length and a data vector length'%atype
+        assert nvals < 4, \
+           'Too many argumentsfor create of %s; has at most a type, two lengths, and a support region flag'%atype
+        repSize = vals[0];dtaSize=vals[1]
+        if nvals > 2:
+           region = vals[2]
+        assert supportRegion.has_key(region), 'Support region flag not recognized for create of %s'%atype
+        assert isinstance(repSize,int), 'Reference vector length must be an for create of %s'%atype
+        assert isinstance(dtaSize,int), 'Data vector length must be an integer for create of %s'%atype
+        return CORR(atype,repSize,dtaSize,region,ntimes,hint)
     else:
-        print('Input argument <:%s:> not recognzied for create'%atype)
+        print('Input type <:%s:> not recognzied for create'%atype)
 def svdCompose(d,indx):
     """
     Usage:
