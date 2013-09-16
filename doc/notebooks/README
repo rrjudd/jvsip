@@ -2,3 +2,9 @@ This directory uses notebooks to document some of the pyJvsip module by
 example. A similar named pdf file for each notebook file should allow 
 one to browse the notebook even if you don't have ipython and notebooks 
 working on your platform.
+
+I have run into a portability problem between my ubuntu (linux) platform
+and my OS X Apple platforms. The notebook (.ipynb) was non-readable by the
+ubuntu platforms default ipython distribution. Exporting the .ipynb to a 
+.py file and then importing that into a new notebook seems to be more portable.
+So I plan to include both the notebook and the export python file formats here.
