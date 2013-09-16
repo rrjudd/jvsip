@@ -4064,7 +4064,7 @@ def create(atype,*vals):
         return create(fVector[atype],vals[0]).bind(0,1,vals[0])
     elif atype in matrixTypes:
         assert len(vals) > 1 and len(vals) < 4, \
-                'Create for %s has at least two length arguments and an optional major argument'%atype
+                'Create for %s has two length arguments and an optional major argument'%atype
         assert isinstance(vals[0],int) and isinstance(vals[1],int), 'Lengths for %s must be integers'%atype
         cl=vals[0]
         rl= vals[1]
@@ -4075,8 +4075,8 @@ def create(atype,*vals):
         if len(vals) == 3:
             assert vals[2] in majorType, 'Flag %s not recognized as a vsip_major type'%repr(vals[2])
             if vals[2] == VSIP_COL or vals[2] == 'COL':
-                row_stride=c1
-                col_stride=l
+                row_stride=cl
+                col_stride=1
         return create(fMatrix[atype],l).bind(offset,col_stride,cl,row_stride,rl)
     elif atype in fftTypes:
         nVals = len(vals)
