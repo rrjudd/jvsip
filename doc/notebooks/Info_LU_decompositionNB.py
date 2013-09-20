@@ -17,7 +17,7 @@ f='%.5f'
 # <markdowncell>
 
 # Create some data A x = b   
-# Note we create an x and calculate a b directly
+# Note we create an x and calculate a b directly. To demonstrate we use A and b to estimate x.
 
 # <codecell>
 
@@ -32,7 +32,7 @@ print('Calculated b=Ax vector');b.mprint(f)
 
 # <markdowncell>
 
-# Note LU overwrites the input matrix; so to preserve our original matrix we use a copy. The LU object will keep a reference to the copy (which means python wont garbage collect it).
+# Both LU and SV overwrite the input matrix; so to preserve our original matrix we use a copy. The LU (and SV) object will keep a reference to the copy (which means python will not garbage collect it). We solve this first using SVD. We don't overwrite our original vector so we can compare the estimated solution to the actual solution. SVD does not have a solver so we do it long hand.
 
 # <codecell>
 
@@ -41,15 +41,15 @@ s.mprint(f)
 xe=v.prod(u.transview.prod(b)/s)
 x.mprint(f)
 xe.mprint(f)
-print('%.5e'%(xe-x).normFro)
+print('Forbenius norm of x estimate - x is %.5e'%(xe-x).normFro)
 
 # <markdowncell>
 
-# First we solve using the LU class directly.
+# Now we solve using LU. We start with the LU class directly.
 
 # <markdowncell>
 
-# Note LU.luSel is a dictionary which lets you select the LU decomposition type using the matrix type
+# Note that the class instance varialbe LU.luSel is a dictionary which lets you select the LU decomposition type using the matrix type.
 
 # <codecell>
 
@@ -57,9 +57,9 @@ print('Example of LU.luSel: %s'%pv.LU.luSel[A.type])
 luObj = pv.LU(pv.LU.luSel[A.type],n)
 _=luObj.decompose(A.copy)
 print('Solve for x using b. Done in place. Here we make a copy of b first. ')
-xb = b.copy
-luObj.solve(pv.VSIP_MAT_NTRANS,xb).mprint(f)
-print('Calculate an error using (x-xb).normFro %.5e:'%(x-xb).normFro)
+xe = b.copy
+luObj.solve(pv.VSIP_MAT_NTRANS,xe).mprint(f)
+print('Forbenius norm of x estimate - x is %.5e'%(xe-x).normFro)
 
 # <markdowncell>
 
@@ -67,10 +67,10 @@ print('Calculate an error using (x-xb).normFro %.5e:'%(x-xb).normFro)
 
 # <codecell>
 
-xb=b.copy
+xe=b.copy
 luObj=A.copy.lu
-luObj.solve(pv.VSIP_MAT_NTRANS,xb).mprint(f)
-print('Calculate an error using (x-xb).normFro %.5e:'%(x-xb).normFro)
+luObj.solve(pv.VSIP_MAT_NTRANS,xe).mprint(f)
+print('Forbenius norm of x estimate - x is %.5e'%(xe-x).normFro)
 
 # <markdowncell>
 
@@ -78,9 +78,9 @@ print('Calculate an error using (x-xb).normFro %.5e:'%(x-xb).normFro)
 
 # <codecell>
 
-xb=b.copy
-A.copy.luSolve(xb).mprint(f)
-print('Calculate an error using (x-xb).normFro %.5e:'%(x-xb).normFro)
+xe=b.copy
+A.copy.luSolve(xe).mprint(f)
+print('Forbenius norm of x estimate - x is %.5e'%(xe-x).normFro)
 
 # <markdowncell>
 
@@ -89,8 +89,11 @@ print('Calculate an error using (x-xb).normFro %.5e:'%(x-xb).normFro)
 # <codecell>
 
 Ainv=A.copy.luInv
+print('A inverse')
 Ainv.mprint(f)
+print('Origional A')
 A.mprint(f)
+print('check to see if we have an inverse by doing a matrix product')
 A.prod(Ainv).mprint(f)
 
 # <codecell>
