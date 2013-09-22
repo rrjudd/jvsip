@@ -3099,7 +3099,7 @@ class Rand(object):
        fills view object a with the VSIPL normal or uniform (respectivly) random data.       
     """
     tRand = ['PRNG','NPRNG']
-    supported = ['vview_f','vview_d','cvview_f','cvview_d']
+    supported = ['vview_f','vview_d','cvview_f','cvview_d','mview_f','mview_d','cmview_f','cmview_d']
     def __init__(self,t,seed):
         self.__jvsip = JVSIP()
         self.__type = t
@@ -3134,7 +3134,11 @@ class Rand(object):
         f = {'cvview_d':vsip_cvrandn_d,
              'cvview_f':vsip_cvrandn_f,
              'vview_d':vsip_vrandn_d,
-             'vview_f':vsip_vrandn_f}
+             'vview_f':vsip_vrandn_f,
+             'cmview_d':vsip_cmrandn_d,
+             'cmview_f':vsip_cmrandn_f,
+             'mview_d':vsip_mrandn_d,
+             'mview_f':vsip_mrandn_f}
         if f.has_key(t):
             f[t](self.rng,a.view)
             return a
@@ -3145,7 +3149,11 @@ class Rand(object):
         f = {'cvview_d':vsip_cvrandu_d,
              'cvview_f':vsip_cvrandu_f,
              'vview_d':vsip_vrandu_d,
-             'vview_f':vsip_vrandu_f}
+             'vview_f':vsip_vrandu_f,
+             'cmview_d':vsip_cmrandu_d,
+             'cmview_f':vsip_cmrandu_f,
+             'mview_d':vsip_mrandu_d,
+             'mview_f':vsip_mrandu_f}
         if f.has_key(t):
             f[t](self.rng,a.view)
             return a
