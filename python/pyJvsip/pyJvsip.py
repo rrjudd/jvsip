@@ -3811,14 +3811,14 @@ class QR(object):
     """ qSave is VSIP_QRD_NOSAVEQ => 0 (No Q)
                 VSIP_QRD_SAVEQ => 1  (Full Q)
                 VSIP_QRD_SAQVEQ1 =>2 (skinny Q)
-        opR, opQ
+        qOp
                 VSIP_MAT_NTRANS => 0,
                 VSIP_MAT_TRANS => 1,
                 VSIP_MAT_HERM => 2,
-        opSide
+        qSide
                 VSIP_MAT_LSIDE => 0, 
                 VSIP_MAT_RSIDE => 1
-        qrProb
+        qProb
                 VSIP_COV => 0,
                 VSIP_LLS => 1
    """
@@ -3831,7 +3831,7 @@ class QR(object):
     qOp = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM,
             0:VSIP_MAT_NTRANS,1:VSIP_MAT_TRANS,2:VSIP_MAT_HERM}
     qProb={'COV':VSIP_COV,'LLS':VSIP_LLS,0:VSIP_COV,1:VSIP_LLS}
-    probSel={f0:'COV',1:'LLS'}
+    probSel={0:'COV',1:'LLS'}
     def __init__(self,t,m,n,qSave):
         qrCreate={'cqr_f':vsip_cqrd_create_f,
               'cqr_d':vsip_cqrd_create_d,
@@ -3882,11 +3882,11 @@ class QR(object):
                 'qr_d':vsip_qrd_d,
                 'cqr_f':vsip_cqrd_f,
                 'cqr_d':vsip_cqrd_d}
-        assert __isView(m),'Input to decompose must be a pyJvsip view'
+        assert 'pyJvsip.__View' in repr(m),'Input to decompose must be a pyJvsip view'
         assert tMatrix.has_key(m.type),'Type <:%s:> not supported for QR'%m.type
         assert self.type == tMatrix[m.type],\
                  'View of type <:%s:> not compliant with QR object of type <:%s:>'%(m.type,self.type)
-        assert self.__collength==m.collength and self.rowlength==m.rowlength, \
+        assert self.__collength==m.collength and self.__rowlength==m.rowlength, \
                  'Matrix to decompose and QR object are not the same size.'
         qrDecompose[self.type](self.vsip,m.view)
         self.__m['matrix'] = m
@@ -3894,13 +3894,13 @@ class QR(object):
     def prodQ(self,op,side,X):
         qrProd={'qr_d':vsip_qrdprodq_d,'qr_f':vsip_qrdprodq_f, \
                'cqr_d':vsip_cqrdprodq_d,'cqr_f':vsip_cqrdprodq_f}
-        assert __isView(self.__m['matrix']), 'No matrix associated with QR object.'
+        assert 'pyJvsip.__View' in repr(self.__m['matrix']), 'No matrix associated with QR object.'
         assert QR.qSide.has_key(side),\
          "Flag for Q side not recognized; should be 'LSIDE' or 'RSIDE'"
         assert QR.qOp.has_key(op),\
          "Flag for Q option not recognized; should be 'NTRANS', 'TRANS' or 'HERM' "
         assert self.args[2] != 0,'QR object told not to save Q. No matrix product available'
-        assert __isView(X),'The last argument to prodQ must be a pyJvsip view.'
+        assert 'pyJvsip.__View' in repr(X),'The last argument to prodQ must be a pyJvsip view.'
         assert QR.qrSel.has_key(X.type),'The input view to prodQ is not supported by QR object'
         assert QR.qrSel[X.type] == self.type,\
                  'The input view to prodQ not the type the QR object was created for'
@@ -3921,11 +3921,11 @@ class QR(object):
     def solveR(self,op,alpha,XB):
         qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
                'cqr_d':vsip_cqrsolr_d,'cqr_f':vsip_cqrsolr_f}
-        assert __isView(self.__m['matrix']), 'No matrix associated with QR object.'
+        assert 'pyJvsip.__View' in repr(self.__m['matrix']), 'No matrix associated with QR object.'
         assert isinstance(alpha,int) or isinstance(alpha,float) or isinstance(alpha,complex),\
             'Second argument must be a number compatible with input/output view'
         assert QR.qOp.has_key(op),'Flag for matrix operation not found.'
-        assert __isView(XB),'Last argument must be a pyJvsip View'
+        assert 'pyJvsip.__View' in repr(XB),'Last argument must be a pyJvsip View'
         assert QR.qrSel.has_key(XB.type)
         if 'cmview_d' in XB.type:
             sclr=vsip_cmplx_d(alpha.real,alpha,imag)
@@ -3940,9 +3940,9 @@ class QR(object):
     def solve(self,prob,XB):
         qrSol={'qr_d':vsip_qrsol_d,'qr_f':vsip_qrsol_f,\
                'cqr_d':vsip_cqrsol_d,'cqr_f':vsip_cqrsol_f}
-        assert __isView(self.__m['matrix']),'No matrix associated with QR object'
-        assert QR.qrProb.has_key(prob),"QR problem type should be 'COV' or 'LLS'. "
-        assert __isView(XB),'The second argument to solve must be a pyJvsip view'
+        assert 'pyJvsip.__View' in repr(self.__m['matrix']),'No matrix associated with QR object'
+        assert QR.qProb.has_key(prob),"QR problem type should be 'COV' or 'LLS'. "
+        assert 'pyJvsip.__View' in repr(XB),'The second argument to solve must be a pyJvsip view'
         assert QR.qrSel.has_key(XB.type),'The second argument is not supported by QR'
         assert QR.qrSel[XB.type] == self.type,\
         'The QR object of type <:%s:> was not defined for an input/output view of type <:%s:>'%(self.type,XB.type)
