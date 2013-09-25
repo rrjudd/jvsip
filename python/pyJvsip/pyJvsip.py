@@ -14,6 +14,10 @@ from vsipLinearAlgebra import *
 import vsiputils as vsip
 
 __version__='0.3.0'
+
+def __isView(a):
+    return 'pyJvsip.__View' in repr(a)
+
 def getType(v):
     """
         Returns a tuple with type information.
@@ -2838,7 +2842,7 @@ class Block (object):
                where view is of type float; real or complex
                Return QR object and decomposition for calling view.
                Input view is used by QR object is so use a copy if original is needed.
-               This returns a QR object for a Full Q. (qOpt => VSIP_QRD_SAVEQ)
+               This returns a QR object for a Full Q. (qSave => VSIP_QRD_SAVEQ)
                NOTE for vector views:
                If the input view is a vector then the vector is converted to a matrix matrix.
                Vectors are treated as a column here.
@@ -3085,7 +3089,6 @@ class Block (object):
             assert isinstance(fmt,str), 'Format for mprint is a string'
             print(self.mstring(fmt))
     
-
 class Rand(object):
     """ 
        Usage
@@ -3805,7 +3808,7 @@ class CHOL(object):
         return inOut
 
 class QR(object):
-    """ qOpt is VSIP_QRD_NOSAVEQ => 0 (No Q)
+    """ qSave is VSIP_QRD_NOSAVEQ => 0 (No Q)
                 VSIP_QRD_SAVEQ => 1  (Full Q)
                 VSIP_QRD_SAQVEQ1 =>2 (skinny Q)
         opR, opQ
@@ -3822,9 +3825,14 @@ class QR(object):
     tQr=['qr_f','qr_d','cqr_f','cqr_d']
     qrSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
-    qOpt=['NOSAVEQ','SAVEQ','SAVEQ1', VSIP_QRD_NOSAVEQ, VSIP_QRD_SAVEQ, VSIP_QRD_SAVEQ1]
-    selQopt = {'NOSAVEQ':0,'SAVEQ':1,'SAVEQ1':2, 0:VSIP_QRD_NOSAVEQ, 1:VSIP_QRD_SAVEQ, 2:VSIP_QRD_SAVEQ1}
-    def __init__(self,t,m,n,qOpt):
+    qSave=['NOSAVEQ','SAVEQ','SAVEQ1', VSIP_QRD_NOSAVEQ, VSIP_QRD_SAVEQ, VSIP_QRD_SAVEQ1]
+    selQsave = {'NOSAVEQ':0,'SAVEQ':1,'SAVEQ1':2, 0:VSIP_QRD_NOSAVEQ, 1:VSIP_QRD_SAVEQ, 2:VSIP_QRD_SAVEQ1}
+    qSide = {'LSIDE':VSIP_MAT_LSIDE,'RSIDE':VSIP_MAT_RSIDE,0:VSIP_MAT_LSIDE,1:VSIP_MAT_RSIDE}
+    qOp = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM,
+            0:VSIP_MAT_NTRANS,1:VSIP_MAT_TRANS,2:VSIP_MAT_HERM}
+    qProb={'COV':VSIP_COV,'LLS':VSIP_LLS,0:VSIP_COV,1:VSIP_LLS}
+    probSel={f0:'COV',1:'LLS'}
+    def __init__(self,t,m,n,qSave):
         qrCreate={'cqr_f':vsip_cqrd_create_f,
               'cqr_d':vsip_cqrd_create_d,
               'qr_f':vsip_qrd_create_f,
@@ -3832,18 +3840,18 @@ class QR(object):
         assert qrCreate.has_key(t), 'Type <:%s:> not recognized for QR'%repr(t)
         assert type(m) is int and type(n) is int,"Row and column sizes must be integers"
         assert m >= n and n > 0, "For QR lengths are greater than zero and column length is >= row length"
-        assert QR.selQopt.has_key(qOpt), 'Flag for save Q is %s. Flag not recognized for QR'%repr(qOpt)
+        assert QR.selQsave.has_key(qSave), 'Flag for save Q is %s. Flag not recognized for QR'%repr(qSave)
         self.__jvsip = JVSIP()
         if t in QR.tQr:
             self.__type = t
         else:
             print('Type qr not found')
             return
-        self.__qOpt = QR.selQopt[qOpt]
+        self.__qSave = QR.selQsave[qSave]
         self.__collength = m
         self.__rowlength = n
         self.__m = {'matrix':0}
-        self.__qr = qrCreate[t](m,n,QR.selQopt[qOpt])
+        self.__qr = qrCreate[t](m,n,QR.selQsave[qSave])
     def __del__(self):
         del(self.__jvsip)
         vsip.destroy(self.__qr)
@@ -3855,7 +3863,16 @@ class QR(object):
         return {'ColumnLength':self.__collength,'RowLength':self.__rowlength}
     @property
     def args(self):
-        return (self.__collength,self.__rowlength,self.__qOpt)
+        return (self.__collength,self.__rowlength,self.__qSave)
+    def qSize(self):
+        attr=self.args
+        m=attr[0];n=attr[1];op=attr[2]
+        if op == 0:
+            return (0,0)
+        elif op == 1:
+            return(m,n)
+        else:
+            return(m,m)
     @property
     def vsip(self):
         return self.__qr
@@ -3865,51 +3882,76 @@ class QR(object):
                 'qr_d':vsip_qrd_d,
                 'cqr_f':vsip_cqrd_f,
                 'cqr_d':vsip_cqrd_d}
-        if tMatrix[m.type] in self.type :
-            qrDecompose[self.type](self.vsip,m.view)
-            self.__m['matrix'] = m
-            return self
-        else:
-            print('View type <:' +m.type+':> not supported by qr object of type <:' \
-                   + self.type +':>')
-            return
-    def prodQ(self,opQ,opSide,X):
+        assert __isView(m),'Input to decompose must be a pyJvsip view'
+        assert tMatrix.has_key(m.type),'Type <:%s:> not supported for QR'%m.type
+        assert self.type == tMatrix[m.type],\
+                 'View of type <:%s:> not compliant with QR object of type <:%s:>'%(m.type,self.type)
+        assert self.__collength==m.collength and self.rowlength==m.rowlength, \
+                 'Matrix to decompose and QR object are not the same size.'
+        qrDecompose[self.type](self.vsip,m.view)
+        self.__m['matrix'] = m
+        return self
+    def prodQ(self,op,side,X):
         qrProd={'qr_d':vsip_qrdprodq_d,'qr_f':vsip_qrdprodq_f, \
                'cqr_d':vsip_cqrdprodq_d,'cqr_f':vsip_cqrdprodq_f}
-        if QR.qrSel[X.type] in self.type:
-            qrProd[self.type](self.vsip,opQ,opSide,X.view)
-            return X
-        else:
-            print('QR Type not compatible with input')
-            return
-    def solveR(self,opR,alpha,XB):
+        assert __isView(self.__m['matrix']), 'No matrix associated with QR object.'
+        assert QR.qSide.has_key(side),\
+         "Flag for Q side not recognized; should be 'LSIDE' or 'RSIDE'"
+        assert QR.qOp.has_key(op),\
+         "Flag for Q option not recognized; should be 'NTRANS', 'TRANS' or 'HERM' "
+        assert self.args[2] != 0,'QR object told not to save Q. No matrix product available'
+        assert __isView(X),'The last argument to prodQ must be a pyJvsip view.'
+        assert QR.qrSel.has_key(X.type),'The input view to prodQ is not supported by QR object'
+        assert QR.qrSel[X.type] == self.type,\
+                 'The input view to prodQ not the type the QR object was created for'
+        m,n=self.qSize
+        XM=X.collength
+        if QR.qSide[side] == VSIP_MAT_LSIDE:
+            if QR.qOp[op] == VSIP_MAT_TRANS or QR.qOp[op] == VSIP_MAT_HERM:
+                assert m == XM, 'Matrix product size error  in prodQ'
+            else: #must be NTRANS
+                assert n == XM,'Matrix product Size Error in prodQ'
+        else: #must be RSIDE
+            if QR.qOp[op] == VSIP_MAT_TRANS or QR.qOp[op] == VSIP_MAT_HERM:
+                assert n == XM,'Matrix product Size Error in prodQ'
+            else: #must be NTRANS
+                assert m == XM, 'Matrix product Size Error in prodQ'
+        qrProd[self.type](self.vsip,QR.qOp[op],QR.qSide[side],X.view)
+        return X        
+    def solveR(self,op,alpha,XB):
         qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
                'cqr_d':vsip_cqrsolr_d,'cqr_f':vsip_cqrsolr_f}
-        if (QR.qrSel[XB.type] in self.type) and qrSol.has_key(self.type) and \
-           (opR >= 0 and opR <= 2) and isinstance(opR,int):
-            if self.__m['matrix'] == 0:
-                print('QR object has no matrix associated with it')
-                return
-            else:
-                qrSol[self.type](self.vsip,opR,alpha,XB.view)
-                return XB
+        assert __isView(self.__m['matrix']), 'No matrix associated with QR object.'
+        assert isinstance(alpha,int) or isinstance(alpha,float) or isinstance(alpha,complex),\
+            'Second argument must be a number compatible with input/output view'
+        assert QR.qOp.has_key(op),'Flag for matrix operation not found.'
+        assert __isView(XB),'Last argument must be a pyJvsip View'
+        assert QR.qrSel.has_key(XB.type)
+        if 'cmview_d' in XB.type:
+            sclr=vsip_cmplx_d(alpha.real,alpha,imag)
+        elif 'cmview_f' in XB.type:
+            sclr= vsip_cmplx_f(alpha.real,alpha.imag)
         else:
-            print('Input arguments must be conformant with qrsolr')
-            return
-    def solve(self,qrProb,XB):
+            sclr=alpha
+        assert self.__rowlength == XB.rowlength,'Size error for solveR.'
+        assert self.type == qrSel[XB.type], 'The input view does not comply with QR object type'
+        qrSol[self.type](self.vsip,QR.qOp[op],sclr,XB.view)
+        return XB
+    def solve(self,prob,XB):
         qrSol={'qr_d':vsip_qrsol_d,'qr_f':vsip_qrsol_f,\
                'cqr_d':vsip_cqrsol_d,'cqr_f':vsip_cqrsol_f}
-        if (QR.qrSel[XB.type] in self.type) and qrSol.has_key(self.type) and \
-           (opR >= 0 and opR <= 2) and isinstance(opR,int):
-            if self.__m['matrix'] == 0:
-                print('QR object has no matrix associated with it')
-                return
-            else:
-                qrSol[self.type](self.vsip,qrProf,XB.view)
-                return XB
-        else:
-            print('Input arguments must be conformant with qrsol')
-            return
+        assert __isView(self.__m['matrix']),'No matrix associated with QR object'
+        assert QR.qrProb.has_key(prob),"QR problem type should be 'COV' or 'LLS'. "
+        assert __isView(XB),'The second argument to solve must be a pyJvsip view'
+        assert QR.qrSel.has_key(XB.type),'The second argument is not supported by QR'
+        assert QR.qrSel[XB.type] == self.type,\
+        'The QR object of type <:%s:> was not defined for an input/output view of type <:%s:>'%(self.type,XB.type)
+        if 'COV' == QR.probSel[QR.qProb[prob]]:
+            assert XB.collength == self.__rowlength, 'Size error for solve covariance problem'
+        else: # must be LLS
+            assert XB.collength == self.__collength, 'Size error for solve least square problem'
+        qrSol[self.type](self.vsip,QR.qProb[prob],XB.view)
+        return XB
 
 # To Do; make vsip enums work as well as strings
 class SV(object):
@@ -4146,7 +4188,7 @@ def create(atype,*vals):
             'Too many arguments.  Type <::%s:> takes a type, two length arguments, and an optional Q save argument'%atype
         op='SAVEQ' #default
         if len(vals) == 3:
-            assert QR.selQopt.has_key(vals[2]), 'Flag %s not recognized for QR create'%repr(vals[2])
+            assert QR.selQsave.has_key(vals[2]), 'Flag %s not recognized for QR create'%repr(vals[2])
             op=vals[2]
         return QR(atype,vals[0],vals[1],op)    
     elif atype in svTypes:
