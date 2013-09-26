@@ -37,7 +37,8 @@ def copy(a,b):
        'vview_ivview_uc':vsip_vcopy_i_uc, 'vview_ivview_vi':vsip_vcopy_i_vi,
        'vview_mivview_mi':vsip_vcopy_mi_mi, 'vview_sivview_d':vsip_vcopy_si_d,
        'vview_sivview_f':vsip_vcopy_si_f, 'vview_sivview_si':vsip_vcopy_si_si,
-       'vview_vivview_i':vsip_vcopy_vi_i, 'vview_vivview_vi':vsip_vcopy_vi_vi}
+       'vview_vivview_i':vsip_vcopy_vi_i, 'vview_vivview_vi':vsip_vcopy_vi_vi,
+       'vview_vivview_f':vsip_vcopy_vi_f, 'vview_vivview_d':vsip_vcopy_vi_d}
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in cminmgsq'
     assert 'pyJvsip.__View' in repr(b),\

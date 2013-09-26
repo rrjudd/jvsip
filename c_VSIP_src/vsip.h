@@ -1272,6 +1272,8 @@ void vsip_vcopy_si_f ( const vsip_vview_si*, const vsip_vview_f* ) ;
 void vsip_vcopy_si_si ( const vsip_vview_si*, const vsip_vview_si* ) ;
 void vsip_vcopy_vi_i ( const vsip_vview_vi*, const vsip_vview_i* ) ;
 void vsip_vcopy_vi_vi ( const vsip_vview_vi*, const vsip_vview_vi* ) ;
+void vsip_vcopy_vi_d ( const vsip_vview_vi*, const vsip_vview_d* ) ;
+void vsip_vcopy_vi_f ( const vsip_vview_vi*, const vsip_vview_f* ) ;
 void vsip_vcopyfrom_user_d ( vsip_scalar_d* const, const vsip_vview_d* ) ;
 void vsip_vcopyfrom_user_f ( vsip_scalar_f* const, const vsip_vview_f* ) ;
 void vsip_vcopyfrom_user_i ( vsip_scalar_i* const, const vsip_vview_i* ) ;
