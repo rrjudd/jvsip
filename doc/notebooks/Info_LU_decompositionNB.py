@@ -23,7 +23,7 @@ f='%.5f'
 
 n=5
 A=pv.create('mview_d',n,n).fill(0.0)
-A.block.vector.randn(5)
+A.randn(5)
 x=pv.create('vview_d',n).randn(9)
 print('Matrix A');A.mprint(f)
 print('Known x vector');x.mprint(f)
