@@ -2867,29 +2867,22 @@ class Block (object):
                For this function self is not overwritten
                Q.prod(R) should return (a matrix) equivalent to the input
             """
-            if self.type not in ['vview_d','vview_f','mview_d','mview_f', \
-                                 'cvview_d','cvview_f','cmview_d','cmview_f']:
-                print('Type <:'+self.type+':> not supported by view qrd method')
-                return
+            assert self.type in ['vview_d','vview_f','mview_d','mview_f', \
+                                 'cvview_d','cvview_f','cmview_d','cmview_f'],\
+                   'Type <:'+self.type+':> not supported by view qrd method'
             if self.type in ['vview_f','vview_d','cvview_f','cvview_d']:
                 A=self.block.bind(self.offset,self.stride,self.length,0,1).copy
-            elif self.type in ['mview_f','mview_d','cmview_f','cmview_d']:
+            else:
                 A = self.copy
+            m = A.collength;n=A.rowlength;
+            Q = Block(Block.blkSel[self.type],m*m).bind(0,1,m,m,m).identity
+            qr = A.copy.qr
+            qr.prodQ('NTRANS','RSIDE',Q)
+            if 'cmview' in A.type:
+                qr.prodQ('HERM','LSIDE',A)
             else:
-                print('Type <:' +self.type+ '<: not supported for qrd')
-                return
-            if 'vview' in self.type:
-                n = self.length
-            else:
-                n = self.collength
-            Q = Block(Block.blkSel[self.type],n*n).bind(0,1,n,n,n).identity
-            qr = A.qr
-            qr.prodQ(0,0,Q)
-            if 'mview' in self.type:
-                R = Q.transview.prod(self)
-            else:
-                R = Q.transview.prod(self.block.bind(self.offset,self.stride,self.length,0,1))
-            return(Q,R)
+                qr.prodQ('TRANS','LSIDE',A)
+            return(Q,A)
         #SVD Decomposition
         @property
         def sv(self):
@@ -3864,15 +3857,16 @@ class QR(object):
     @property
     def args(self):
         return (self.__collength,self.__rowlength,self.__qSave)
+    @property
     def qSize(self):
         attr=self.args
         m=attr[0];n=attr[1];op=attr[2]
         if op == 0:
             return (0,0)
         elif op == 1:
-            return(m,n)
-        else:
             return(m,m)
+        else:
+            return(m,n)
     @property
     def vsip(self):
         return self.__qr
