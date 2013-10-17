@@ -59,7 +59,7 @@ def am(a,b,c,d):
             f[t](a.view,vsip_cmplx_f(b.real,b.imag),c.view,d.view)
     elif 'scalar' in t:
         f[t](a.view,b,c.view.d.view)
-    else:            
+    else:
         f[t](a.view,b.view,c.view,d.view)
     return d
 
@@ -199,3 +199,4 @@ def sbm(a,b,c,d):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for msb'
     f[t](a.view,b.view,c.view,d.view)
     return d
+

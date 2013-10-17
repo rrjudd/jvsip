@@ -30,18 +30,19 @@ def jvCopyToNp(v):
             ary=empty(v.length,p)
         return (ary,mjr)
     assert 'pyJvsip' in getType(v)[0], "Input does not appear to be a pyJvsip type."
-    assert ('view_d' in v.type) or ('view_f' in v.type), v.type + " not supported by jvCopyToNp"
+    assert ('view_d' in v.type) or ('view_f' in v.type), \
+                "Type %s not supported by jvCopyToNp"%v.type
     f= {'vview_f':vcopyToNParray_f,'vview_d':vcopyToNParray_d,
-    'cvview_f':cvcopyToNParray_f,'cvview_d':cvcopyToNParray_d,
-    'mview_f':mcopyToNParray_f,'mview_d':mcopyToNParray_d,
-    'cmview_f':cmcopyToNParray_f,'cmview_d':cmcopyToNParray_d}
+        'cvview_f':cvcopyToNParray_f,'cvview_d':cvcopyToNParray_d,
+        'mview_f':mcopyToNParray_f,'mview_d':mcopyToNParray_d,
+        'cmview_f':cmcopyToNParray_f,'cmview_d':cmcopyToNParray_d}
     ary,mjr = myarray(v)
     if 'vview' in v.type:
         f[v.type](v.view,ary)
     else:
         f[v.type](v.view,mjr,ary)
     return ary
-    
+
 def npCopyToJv(a):
     """
     Usage:
@@ -66,7 +67,8 @@ def npCopyToJv(a):
     sptd=['float32','float64','complex64','complex128']
     assert a.dtype.name in sptd, a.dtype.name + ' not supported by npCopyToJv.'
     assert 0 < len(a.shape) < 3, 'Only arrays of dimension 1 or 2 supported.'
-    assert (a.flags.c_contiguous or a.flags.f_contiguous) and a.flags.aligned, 'Only contiguous aligned arrays supported'
+    assert (a.flags.c_contiguous or a.flags.f_contiguous) and a.flags.aligned, \
+                'Only contiguous aligned arrays supported'
     v=myView(a)
     f= {'vview_f':vcopyFromNParray_f,'vview_d':vcopyFromNParray_d,
         'cvview_f':cvcopyFromNParray_f,'cvview_d':cvcopyFromNParray_d,

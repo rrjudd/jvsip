@@ -67,7 +67,7 @@ class JVSIP (object):
                 printf('VSIP failed to initialize')
             else:
                 JVSIP.init = 1;
- 
+
     def __del__(self):
         JVSIP.init -= 1
         if JVSIP.init == 0:
@@ -132,16 +132,16 @@ class Block (object):
         """
             Since data in blocks is only accessible through a view the vector method
             is a convenience method to return the simplest view wich indexes all data.
-            Usage: 
+            Usage:
                b = Block(aBlockType,length)
                v = b.vector
-            v is a unit stride compact one dimensional view reflecting all the data 
-            in the block. 
+            v is a unit stride compact one dimensional view reflecting all the data
+            in the block.
         """
         return self.bind(0,1,self.length)
     @classmethod
     def supported(cls):
-        return {'tBlock':Block.tBlock,'viewTypes':Block.__View.supported()} 
+        return {'tBlock':Block.tBlock,'viewTypes':Block.__View.supported()}
     @property
     def copy(self):
         """ This makes a new block object identical to the calling block object.
@@ -154,7 +154,7 @@ class Block (object):
         This method is used internal to the pyJvsip module.
         It is not intended to be used in user code.
         """
-        return cls(blk,length)           
+        return cls(blk,length)
     @property
     def type(self):
         return self.__type
@@ -181,6 +181,7 @@ class Block (object):
             self.__type      =vsip.getType(view)[1]
             self.__major     ='EW'
             self.__scalar = 0
+            self.__parent = 0
         def __del__(self):
             del(self.__pyBlock)
             del(self.__jvsip)
@@ -196,7 +197,7 @@ class Block (object):
             """
             Given a C VSIP view v which is associated with block b.block
             where b is a pyJvsip block create a new pyJvsip view encapsulating v.
-            This method is used internally to create pyJvsip equivalents for 
+            This method is used internally to create pyJvsip equivalents for
             subviews like rowview, colview, diagview, etc.
             """
             return cls(v,b)
@@ -228,9 +229,9 @@ class Block (object):
             add(other,self,self)
             return self
         def __add__(self,other): # new = self + other
-            return add(other,self,self.empty)           
+            return add(other,self,self.empty)
         def __radd__(self,other): # new = other + self
-            return add(other,self,self.empty) 
+            return add(other,self,self.empty)
         def __isub__(self,other): # -=other
             if 'pyJvsip.__View' in repr(other):
                 sub(self,other,self)
@@ -242,7 +243,7 @@ class Block (object):
             if 'pyJvsip.__View' in repr(other):
                 return sub(self,other,retval)
             else:
-                return add(-other,self,retval)        
+                return add(-other,self,retval)
         def __rsub__(self,other): #other - self
             retval=self.empty
             return sub(other,self,retval)
@@ -262,7 +263,7 @@ class Block (object):
                 mul(1.0/other,self,self)
             else:
                 print('idiv divisor not recognized')
-            return self       
+            return self
         def __div__(self,other):
             if isinstance(other,complex):
                 return mul(1.0/other,self,self.empty)
@@ -310,7 +311,7 @@ class Block (object):
             else:
                 print('Type not a matrix or vector')
                 return False
-        def __getitem__(self,index):          
+        def __getitem__(self,index):
             def scalarVal(val):
                 if 'cscalar' in vsip.getType(val)[1]:
                     c=complex(val.r,val.i)
@@ -344,7 +345,7 @@ class Block (object):
             elif 'mview' in self.type and (len(index) is 2) and \
                         isinstance(index[0],int) and isinstance(index[1],slice):
                 return self.subview(slice(index[0],index[0]+1,1),index[1])
-            else: 
+            else:
                 print('Failed to parse index arguments')
                 return
         def __setitem__(self,i,value):
@@ -367,14 +368,14 @@ class Block (object):
                 else:
                     print('Failed to recognize index for matrix view')
             else:
-                print('Failed to parse argument list for __setitem__') 
+                print('Failed to parse argument list for __setitem__')
         def __len__(self):
             attr=vsip.size(self.__vsipView)
             n = attr[2]
             if len(attr) > 3:
                 n *= attr[4]
             return int(n)
-            
+
         # Support functions
         # scalar is a place for the implementation to store a value which can be recovered from the view
         # not sure we need this. Currently not used.
@@ -450,7 +451,7 @@ class Block (object):
         def empty(self):
             """
             A way to get a new view and data space of the same size.
-            creates a new view, on a new block, of the same type and shape as 
+            creates a new view, on a new block, of the same type and shape as
             the calling view. No copy or initialization takes place, so new view
             is empty, so-to-speak.
             """
@@ -461,7 +462,7 @@ class Block (object):
         def otherEmpty(self):
             """
             A way to get a new complex view and data space of the same size and precision as a real view.
-            creates a new complex view on a new block with the same shape and precision as 
+            creates a new complex view on a new block with the same shape and precision as
             the calling view. No copy or initialization takes place, so new view
             is empty, so-to-speak.
             """
@@ -478,8 +479,8 @@ class Block (object):
                This is an easy way to create a new data space for out of place
                operations.
                For instance:
-                   B = A.copy.sin 
-               will leave A alone, copy its elements to new view (and block) B 
+                   B = A.copy.sin
+               will leave A alone, copy its elements to new view (and block) B
                and then do an in-place sine operation on B.
             """
             return copy(self,self.empty)
@@ -503,7 +504,7 @@ class Block (object):
             """ Same as copy method except if the view is a matrix it is created with
                 unit stride along the Columns.
             """
-            if 'mview' in self.type:     
+            if 'mview' in self.type:
                 attr=self.compactAttrib(0)
                 b = self.block.otherBlock(attr[0],attr[1])
                 cl=self.collength; rl=self.rowlength
@@ -532,7 +533,7 @@ class Block (object):
                    vs=v.subview(slice(2,len(v),1)) is the same as
                    vs=v.subview(2) or vs=v.subview(2,len(v)-1) or vs=v.subview(2,len(v),1)
                    and
-                   vs=v.subview(slice(2,8,2) is the same ags 
+                   vs=v.subview(slice(2,8,2) is the same ags
                    vs=v.subview(2,7,2)
                For matrix first pair is top left corner (row,col)
                For matrix second pair is bottom right corner (row,col) inclusive
@@ -542,13 +543,13 @@ class Block (object):
                where:
                   vals is index or
                           index, end_index or
-                          index, end_index, stride 
+                          index, end_index, stride
                        for a vector
-                  vals is row_index,col_index or 
+                  vals is row_index,col_index or
                           row_index,col_index, end_row_index, end_col_index or
                           row_index,col_index, end_row_index, end_col_index, colstride, rowstride
                        for a matrix
-               anotherView is a view on the same block and data as aView. 
+               anotherView is a view on the same block and data as aView.
                Offset, strides and lengths are defined on aView, not the block.
                Note that strides are along a dimension not through the block so that
                to select every other element of the parent view one would use a stride
@@ -630,7 +631,7 @@ class Block (object):
                     return mAttr(attr,(slice(vals[0],vals[2]+1,vals[4]),slice(vals[1],vals[3]+1,vals[5])))
                 else:
                     return False
-                return (no,ncs,ncl,nrs,nrl)  
+                return (no,ncs,ncl,nrs,nrl)
             attr = vsip.getattrib(self.view)
             if self.type in Block.vectorTypes:
                 return self.block.bind(vAttr(attr,vals))
@@ -641,13 +642,13 @@ class Block (object):
                 return False
         def submatrix(self,rows,cols,*vals):
             """ Ussage for matrix m:
-                   s = m.submatrix(rows, cols) 
-                or 
+                   s = m.submatrix(rows, cols)
+                or
                    s=m.submatrix(rows,cols,'COL')
                 The method submatrix will create a new data space and copy the indicated
                 submatrix values into the new matrix.
                 The default submatrix is row major. If the last argument is a string
-                which contains 'COL' then the submatrix will be column major. 
+                which contains 'COL' then the submatrix will be column major.
                 If the index entries (rows,cols) are an integer then the submatrix will
                 be the input matrix values minus the row and column crossing at (rows,cols).
                 If rows and cols are vectors of type vector index then the submatrix will
@@ -677,10 +678,10 @@ class Block (object):
                     v=retval.colview(i)
                     v.gather(self.colview(i),rows)
                 return retval
-            
+
             else:
                 print('Submatrix uses vector views of type vector index')
-                return             
+                return
         @property
         def attrib(self):
             attr=vsip.getattrib(self.view)
@@ -772,13 +773,17 @@ class Block (object):
                 return self.__newView(vsip.transview(self.view),self.block)
             else:
                 print('Method transview only works on matrix views')
-                return False   
+                return False
         @property
         def realview(self):
-            return self.__realview(self)
+            v=self.__realview(self)
+            v.__parent=self
+            return v
         @property
         def imagview(self):
-            return self.__imagview(self)
+            v = self.__imagview(self)
+            v.__parent=self
+            return v
         @property
         def mrowview(self):
             """
@@ -983,7 +988,7 @@ class Block (object):
                 return self
             else:
                 print('View type <:' + t +':> does not support property blackman')
-        
+
         # ### ### ### Element-wise methods
         # Elementary math functions
         @property
@@ -1046,7 +1051,7 @@ class Block (object):
         def arg(self):
             """ Done out-of-place
                 Input vector is of type complex
-                Output vector of type real created by arg method and returned. 
+                Output vector of type real created by arg method and returned.
             """
             attrs=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
@@ -1073,10 +1078,10 @@ class Block (object):
             return cumsum(self,self)
         @property
         def euler(self):
-            """ 
+            """
             Not done In-Place
             Input vector of type real
-            Method euler creates and returns a new output vector of type complex 
+            Method euler creates and returns a new output vector of type complex
             """
             attrs=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
@@ -1091,10 +1096,10 @@ class Block (object):
                  x is a view object
                  y is a view object of type real and precision and size the same as x
               Note:
-                 y is created internal to the property. If x is real then y.type 
+                 y is created internal to the property. If x is real then y.type
                  is the same as x.type. If x is complex then y is real.
             """
-            f = ['cmview_d', 'cmview_f', 'cvview_d', 'cvview_f', 'mview_d', 
+            f = ['cmview_d', 'cmview_f', 'cvview_d', 'cvview_f', 'mview_d',
                  'mview_f', 'vview_d', 'vview_f', 'vview_i', 'vview_si']
             assert self.type in f, 'Type <:%s:> not recognized for magsq'%self.type
             if 'cmview' in self.type or 'cvview' in self.type:
@@ -1151,8 +1156,10 @@ class Block (object):
             if 'cmview' in self.type or 'cvview' in self.type:
                 x=f[self.type](self.view)
                 return complex(x.r,x.i)
-            else:
+            elif '_f' in self.type or '_d' in self.type:
                 return f[self.type](self.view)
+            else:
+                return int(f[self.type](self.view))
         @property
         def sumsqval(self):
             """ returns a scalar
@@ -1160,7 +1167,7 @@ class Block (object):
             f={'mview_d':vsip_msumsqval_d, 'vview_d':vsip_vsumsqval_d,
                 'mview_f':vsip_msumsqval_f, 'vview_f':vsip_vsumsqval_f}
             assert f.has_key(self.type),'Type <:%s:> not recognized for sumsqval'%self.type
-            return f[self.type](self.view) 
+            return f[self.type](self.view)
 
         # ### Binary
         # add, mull, div, sub incorporated into python built in __add__, __div__, __sub__, etc.
@@ -1168,7 +1175,7 @@ class Block (object):
          #vector-matrix elementwise multiply by row or col
             """
             Input matrix is overwritten by the operation.
-            mmul(A) expects the calling view to be of type float vector and A to be of 
+            mmul(A) expects the calling view to be of type float vector and A to be of
             the same precision and type float matrix. Matrix A is returned as a convenience.
             Note that view A has an a major attribute. If it is set to COL then the calling vector
             is multiplied elementwise by COL, otherwise it is multiplied by ROW
@@ -1179,7 +1186,7 @@ class Block (object):
             or
             v.mmul(A.COL)
             Done in place. v.mmul(A) returns the result in A.
-            B = v.mmul(A.copy.COL) returns the result in a new matrix. 
+            B = v.mmul(A.copy.COL) returns the result in a new matrix.
             """
             return mmul(self,other,other)
         @property
@@ -1447,7 +1454,7 @@ class Block (object):
             else:
                 print('Argument type <:'+t+':> not recognized for llt')
                 return
-        def lne(self,other): 
+        def lne(self,other):
             """
             Logical Not Equal
             Usage:
@@ -1456,7 +1463,7 @@ class Block (object):
                b is a boolean. if x[i] != y[i] the b[i]=1 (true) else 0 (false)
                if y is a scalar if x[i] != y then b[i] = 1
             Note this works for a matrix also. The index changes to (i,j)
-            """  
+            """
             if 'mview' in self.type:
                 m=self.collength
                 n=self.rowlength
@@ -1597,7 +1604,7 @@ class Block (object):
         @property
         def maxmgsqvalindx(self):
             """
-            This method returns the index of the first maximum complex magnitude squared 
+            This method returns the index of the first maximum complex magnitude squared
             value found.
             """
             f={'cmview_d':'vsip_mcmaxmgsqval_d(self.view,idx)',
@@ -1621,7 +1628,7 @@ class Block (object):
         @property
         def maxmgsqval(self):
             """
-            This method returns the  maximum complex magnitude squared 
+            This method returns the  maximum complex magnitude squared
             value found..
             """
             f={'cmview_d':'vsip_mcmaxmgsqval_d(self.view,None)',
@@ -1720,7 +1727,7 @@ class Block (object):
         @property
         def minmgsqvalindx(self):
             """
-            This method returns the index of the first minimum complex magnitude squared 
+            This method returns the index of the first minimum complex magnitude squared
             value found.
             """
             f={'cmview_d':'vsip_mcminmgsqval_d(self.view,idx)',
@@ -1744,7 +1751,7 @@ class Block (object):
         @property
         def minmgsqval(self):
             """
-            This method returns the  minimum complex magnitude squared 
+            This method returns the  minimum complex magnitude squared
             value found..
             """
             f={'cmview_d':'vsip_mcminmgsqval_d(self.view,None)',
@@ -1783,7 +1790,7 @@ class Block (object):
             assert self.type in sptd
             out=self.empty
             f[self.type](self.view,other.view,out.view)
-            return out 
+            return out
         def bbor(self,other):
             """
             bitwise/boolean and
@@ -1809,8 +1816,8 @@ class Block (object):
             assert self.type in sptd
             out=self.empty
             f[self.type](self.view,other.view,out.view)
-            return out         
-        
+            return out
+
         # data generators
         def ramp(self,start,increment):
             supportedViews = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
@@ -1846,18 +1853,18 @@ class Block (object):
         def randn(self,seed):
             gen=Rand('PRNG',seed)
             gen.randn(self)
-            return self   
+            return self
         def randu(self,seed):
             gen=Rand('PRNG',seed)
             gen.randu(self)
-            return self   
+            return self
         @property
         def identity(self):
             f=['cmview_d','cmview_f','mview_d','mview_f','mview_i','mview_si']
             assert self.type in f,'View of type <:'+self.type+':> not supported by identity'
             self.fill(0)
             self.diagview(0).fill(1)
-            return self 
+            return self
 
         # Manipulation
         # Not supported by view method
@@ -1903,7 +1910,7 @@ class Block (object):
             """
             A method to get a deep copy of the real part of a complex view.
             """
-            return real(self,self.otherEmpty)            
+            return real(self,self.otherEmpty)
         # vsip_dsscatter_p
         def scatter(self,other,indx):
             """
@@ -1913,7 +1920,7 @@ class Block (object):
               View other is returned as a convienience
             """
             scatter(self,other,indx)
-            return other       
+            return other
 
         # Basic Algorithms
         # These algorithms are specific to pyJvsip for convenience. No C VSIPL functions are in the C Library.
@@ -1926,7 +1933,7 @@ class Block (object):
                where self and x are vectors of the same type and a is a scalar.
                This is an in-place operation
                For C VSIPL this is implemented using functionality vsip_vsma_p
-                  vector-scalar-multiply-(vector)-add 
+                  vector-scalar-multiply-(vector)-add
             """
             if 'cvview_d' in self.type:
                 t = self.type + 'cscalar_d' + x.type
@@ -1946,7 +1953,7 @@ class Block (object):
             else:
                 print('Type combination for axpy not recognized.')
                 print('Should be (scalar,vector view)')
-                return False              
+                return False
             f = {'cvview_dcscalar_dcvview_d':vsip_cvsma_d,
                  'cvview_fcscalar_fcvview_f':vsip_cvsma_f,
                  'vview_dscalarvview_d':vsip_vsma_d,
@@ -1960,12 +1967,12 @@ class Block (object):
         def gaxpy(self,A,x):
             """
             Generalized axpy:
-                y += Ax 
-                        where y is vector in R(n), x is vector in R(m), 
+                y += Ax
+                        where y is vector in R(n), x is vector in R(m),
                         A is matrix R(m,n); Views are float of same precision
             For more general case use gemp
             Note:
-              Regular matrix multiply may be faster but gaxpy is an in-place operation. 
+              Regular matrix multiply may be faster but gaxpy is an in-place operation.
               If instead you use y=Ax+y then Ax will create a new vector; add it to y into
               another new vector; and then replace the y reference with the new reference.
             """
@@ -2001,7 +2008,7 @@ class Block (object):
                  Doing a regular outer product such as
                  A = A + x.outer(y)
                  will create a new matrix for the outer product; create a new matrix
-                 for the addition results and then return this matrix into the reference 
+                 for the addition results and then return this matrix into the reference
                  for A. Using A.opu(x,y) will do an in-place operation in A.
             """
             if 'mview' not in self.type:
@@ -2015,7 +2022,7 @@ class Block (object):
                 s=self.colstride
                 o=t.offset
                 for i in range(self.collength):
-                    t.putoffset(i*s+o) 
+                    t.putoffset(i*s+o)
                     t.axpy(x[i],y)
             else: #do by COL
                 t=self.colview(0)
@@ -2035,7 +2042,7 @@ class Block (object):
                  Doing a regular outer product such as
                  A = A - x.outer(y)
                  will create a new matrix for the outer product; create a new matrix
-                 for the addition results and then return this matrix into the reference 
+                 for the addition results and then return this matrix into the reference
                  for A. Using A.opu(x,y) will do an in-place operation in A.
             """
             if 'mview' not in self.type:
@@ -2049,7 +2056,7 @@ class Block (object):
                 s=self.colstride
                 o=t.offset
                 for i in range(self.collength):
-                    t.putoffset(i*s+o) 
+                    t.putoffset(i*s+o)
                     t.axpy(-x[i],y)
             else: #do by COL
                 t=self.colview(0)
@@ -2112,7 +2119,7 @@ class Block (object):
         @property
         def det(self):
             """ Calculate the determinant of a real matrix.
-                Uses elementary row operations and axpy to produce an upper diagonal 
+                Uses elementary row operations and axpy to produce an upper diagonal
                 matrix. Done in place.
                 The determinant is the product of the diagonal entries.
                 Note:
@@ -2135,13 +2142,13 @@ class Block (object):
                 if pvt == 0.0:
                     return 0.0
                 else:
-                    retval *= pvt 
+                    retval *= pvt
                 vp=T.rowview(0)
                 for j in range(1,T.rowlength):
                     scl=-T[j,0]/pvt
                     T.rowview(j).axpy(scl,vp)
             return retval
-        
+
         ### plu operations are a demonstration. Should use LU class; or lu, luInv, luSolve.
         @property
         def plu(self):
@@ -2191,7 +2198,7 @@ class Block (object):
             for i in range(1,n):
                 y0=xy[i]
                 xy[i] = (y0 - self.rowview(i)[0:i].dot(xy[0:i]))/self[i,i]
-            return xy             
+            return xy
         def usolve(self,xy):
             assert 'vview' in xy.type, 'Method usolve only works with vector argument'
             assert 'mview' in self.type, 'Method usolve only defined for (upper diagonal) matrices'
@@ -2202,9 +2209,9 @@ class Block (object):
             for i in range(n-1,-1,-1):
                 y0=xy[i]
                 xy[i] = (y0 - self.rowview(i)[i+1:n+1].dot(xy[i+1:n+1]))/self[i,i]
-            return xy 
+            return xy
         ### end plu operations
-        
+
         @property
         def norm2(self):
             """This method is a property which returns the two norm
@@ -2212,10 +2219,10 @@ class Block (object):
             vSup=['vview_f','cvview_f','vview_d','cvview_d']
             mSup=['mview_f','cmview_f','mview_d','cmview_d']
             def eigB(A): #find Biggest eigenvalue
-                small=A.normFro/1e16 
-                vk=0;   
+                small=A.normFro/1e16
+                vk=0;
                 xk=A.colview(0).empty.fill(0.0)
-                xk[0]=1 
+                xk[0]=1
                 for i in range(1000):
                     axk=A.prod(xk)
                     n=axk.norm2
@@ -2291,7 +2298,7 @@ class Block (object):
                 return mx
             else:
                 print('Type <:'+self.type+':> not supported by norm1')
-                return                          
+                return
         #linear algebra
         def gemp(self,alpha,A,opA,B,opB,beta):
             """
@@ -2376,7 +2383,7 @@ class Block (object):
                     vsip.prod(self.view,other.view,retval.view)
                 return retval
             else:
-                print('Input views <:' + self.type + ':> and <:' + other.type + 
+                print('Input views <:' + self.type + ':> and <:' + other.type +
                       ':> do not appear to be supported by function prod')
                 return False
         def prodh(self,other):
@@ -2412,13 +2419,13 @@ class Block (object):
                 return retval
             else:
                 print('Views must be matrices')
-                return False 
+                return False
         @property
         def trans(self):
             """
-            Done out of place. 
-            A new block and view and view are created and the transpose 
-            of the calling view is copied into it. See transview for a transpose view on 
+            Done out of place.
+            A new block and view and view are created and the transpose
+            of the calling view is copied into it. See transview for a transpose view on
             the same block.
             Usage:
                 B=A.trans
@@ -2510,7 +2517,7 @@ class Block (object):
         @property
         def permuteTranspose(self):
             """Return a permutation vector which is the equivalent of a transpose
-               of the permutation matrix represented by the calling view. 
+               of the permutation matrix represented by the calling view.
                Done out-of-place. Input vector not modified.
                Input and output vectors both of type vview_vi
             """
@@ -2534,14 +2541,14 @@ class Block (object):
                 dir is a string 'ASCENDING' or 'DESCENDING'
                 fill is a bool True or False
                 indx is an index vector the same length as self
-              All arguments are optional but must be entered in order; for instance if 
-              dir is included then mode must be included. 
-              The bool fill indicates whether the indx vector is initialized or not. 
-              If no indx vector is included and fill is False then no indx vector is returned. 
-              If no indx vector is included and fill is True (or not included) then an indx vector 
+              All arguments are optional but must be entered in order; for instance if
+              dir is included then mode must be included.
+              The bool fill indicates whether the indx vector is initialized or not.
+              If no indx vector is included and fill is False then no indx vector is returned.
+              If no indx vector is included and fill is True (or not included) then an indx vector
               is created and initialized and returned (with the sorted indices).
               If an indx vector is included then it is initialized (or not depending on fill), and the
-              indices are sorted. If an index is included, indx is returned as a convenience.   
+              indices are sorted. If an index is included, indx is returned as a convenience.
             """
             sptd=['vview_f','vview_d','vview_i','vview_vi']
             t=self.type
@@ -2586,7 +2593,7 @@ class Block (object):
                 return idx
             else:
                 print('Type <:' + t + ':> not supported by sort')
-                return        
+                return
         # Signal Processing
         @property
         def fftip(self):
@@ -2631,7 +2638,7 @@ class Block (object):
         @property
         def fftop(self):
             """
-            The method fftop (FFT Out Of Place) is a property on real and float vectors and matrices. 
+            The method fftop (FFT Out Of Place) is a property on real and float vectors and matrices.
             For matrices use the major attribute of the view to set the direction of the FFT.
             fftop will create and return view of the proper type for the output.
             If the input is real then fftop assumes the complex portion is zero.
@@ -2670,7 +2677,7 @@ class Block (object):
         @property
         def ifftop(self):
             """
-            The method ifftop (Inverse FFT Out Of Place) is a property on real and float vectors and matrices. 
+            The method ifftop (Inverse FFT Out Of Place) is a property on real and float vectors and matrices.
             For matrices use the major attribute of the view to set the direction of the FFT.
             fftop will create and return view of the proper type for the output.
             If the input is real then ifftop assumes the complex portion is zero.
@@ -2800,9 +2807,9 @@ class Block (object):
             """
             The method luInv creates a new matrix and uses the LU decomposition place the inverse of the
             calling matrix into it. Note that LU decomposition overwrites the input matrix so if "A" is the input matrix
-            then 
+            then
             Y=A.luInv
-            will overwrite A. To keep A use copy as in 
+            will overwrite A. To keep A use copy as in
             Y=A.copy.luInv.
             """
             assert LU.luSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luInv'
@@ -2830,7 +2837,9 @@ class Block (object):
                 X = XB
             assert X.type == self.type, 'Calling view and input/output view must be the same type and precision'
             assert self.collength == X.collength, 'Input/Output view not sized properly for calling view'
-            LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,X)
+            obj=LU(LU.luSel[self.type],self.rowlength).decompose(self)
+            assert obj.singular,'The calling matrix is singular'
+            obj.solve('NTRANS',X)
             return XB
         #
         #QR Decomposition; Over-Determined Linear System Solver
@@ -2909,7 +2918,7 @@ class Block (object):
             For SVD decomposition where
                 A = U s V^H
             For matrix A:
-                D=A.svd 
+                D=A.svd
             Matrix A is overwritten by the SVD. To retain A use
                 D = A.copy.svd
             returns a tuple into D.
@@ -2939,7 +2948,7 @@ class Block (object):
             For SVD decomposition where
                 A = U s V^H
             For matrix A:
-                D=A.svd 
+                D=A.svd
             Matrix A is overwritten by the SVD. To retain A use
                 D = A.copy.svd
             returns a tuple into D.
@@ -2970,7 +2979,7 @@ class Block (object):
             For SVD decomposition where
                 A = U s V^H
             For matrix A:
-                D=A.svd 
+                D=A.svd
             Matrix A is overwritten by the SVD. To retain A use
                 D = A.copy.svd
             returns a tuple into D.
@@ -2996,7 +3005,7 @@ class Block (object):
             For SVD decomposition where
                 A = U s V^H
             For matrix A:
-                D=A.svd 
+                D=A.svd
             Matrix A is overwritten by the SVD. To retain A use
                 D = A.copy.svd
             returns a tuple into D.
@@ -3018,11 +3027,11 @@ class Block (object):
             return (s,V)
         #utility functions
         def mstring(self,fmt):
-            """ 
+            """
             This method returns a string suitable for printing the values as a vector or matrix.
             usage:
               mstring(<vsip matrix/vector>, fmt)
-            fmt is a string corresponding to a simple fmt statement. 
+            fmt is a string corresponding to a simple fmt statement.
             For instance '%6.5f' prints as 6 characters wide with 5 decimal digits.
             Note format converts this statement to '% 6.5f' or '%+6.5f' so keep
             the input simple.
@@ -3081,9 +3090,9 @@ class Block (object):
         def mprint(self,fmt):
             assert isinstance(fmt,str), 'Format for mprint is a string'
             print(self.mstring(fmt))
-    
+
 class Rand(object):
-    """ 
+    """
        Usage
             randObj=Rand(aType,aSeed)
             where aType is one of 'PRNG' or 'NPRNG'
@@ -3092,7 +3101,7 @@ class Rand(object):
        version.
             randObj.randn(a)
             randObj.randu(a)
-       fills view object a with the VSIPL normal or uniform (respectivly) random data.       
+       fills view object a with the VSIPL normal or uniform (respectivly) random data.
     """
     tRand = ['PRNG','NPRNG']
     supported = ['vview_f','vview_d','cvview_f','cvview_d','mview_f','mview_d','cmview_f','cmview_d']
@@ -3188,10 +3197,10 @@ class FFT (object):
     """
        Usage:
             fftObj=FFT(t,arg) where
-            t is one of 
-                ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', 
-                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', 
-                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 
+            t is one of
+                ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d',
+                'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f',
+                'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d',
                  'crfftmop_d']
             arg is a tuple corresponding to one of the VSIPL arguments list for the associated t value.
        If VSIPL enumerated types are available as part of the pyJvsip import.
@@ -3199,21 +3208,21 @@ class FFT (object):
     tFft = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', \
             'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f', \
             'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d', 'crfftmop_d']
-    fftViewDict = {'ccfftip_d':'cvview_d', 
-                   'ccfftip_f':'cvview_f', 
-                   'ccfftop_d':'cvview_dcvview_d', 
-                   'ccfftop_f':'cvview_fcvview_f', 
-                   'rcfftop_d':'vview_dcvview_d', 
-                   'rcfftop_f':'vview_fcvview_f', 
-                   'crfftop_d':'cvview_dvview_d', 
-                   'crfftop_f':'cvview_dvview_f', 
-                   'ccfftmip_d':'cmview_d', 
-                   'ccfftmip_f':'cmview_f', 
-                   'ccfftmop_d':'cmview_dcmview_d', 
-                   'ccfftmop_f':'cmview_fcmview_f', 
-                   'crfftmop_d':'cmview_dmview_d', 
-                   'crfftmop_f':'cmview_fmview_f', 
-                   'rcfftmop_d':'mview_dcmview_d', 
+    fftViewDict = {'ccfftip_d':'cvview_d',
+                   'ccfftip_f':'cvview_f',
+                   'ccfftop_d':'cvview_dcvview_d',
+                   'ccfftop_f':'cvview_fcvview_f',
+                   'rcfftop_d':'vview_dcvview_d',
+                   'rcfftop_f':'vview_fcvview_f',
+                   'crfftop_d':'cvview_dvview_d',
+                   'crfftop_f':'cvview_dvview_f',
+                   'ccfftmip_d':'cmview_d',
+                   'ccfftmip_f':'cmview_f',
+                   'ccfftmop_d':'cmview_dcmview_d',
+                   'ccfftmop_f':'cmview_fcmview_f',
+                   'crfftmop_d':'cmview_dmview_d',
+                   'crfftmop_f':'cmview_fmview_f',
+                   'rcfftmop_d':'mview_dcmview_d',
                    'rcfftmop_f':'mview_fcmview_f'} #given fft type what type of views works
     fftCreateDict={'ccfftip_f':'vsip_ccfftip_create_f(l[0],l[1],l[2],l[3],l[4])',
                      'ccfftop_f':'vsip_ccfftop_create_f(l[0],l[1],l[2],l[3],l[4])',
@@ -3246,7 +3255,7 @@ class FFT (object):
                  'mview_dcmview_d':'vsip_rcfftmop_d(self.vsip,l[0].view,l[1].view)',
                  'mview_fcmview_f':'vsip_rcfftmop_f(self.vsip,l[0].view,l[1].view)',
                  'cmview_dmview_d':'vsip_crfftmop_d(self.vsip,l[0].view,l[1].view)',
-                 'cmview_fmview_f':'vsip_crfftmop_f(self.vsip,l[0].view,l[1].view)'}             
+                 'cmview_fmview_f':'vsip_crfftmop_f(self.vsip,l[0].view,l[1].view)'}
     def __init__(self,t,arg):
         if FFT.fftCreateDict.has_key(t):
             self.__jvsip = JVSIP()
@@ -3293,7 +3302,7 @@ class FFT (object):
                 return l[0]
         else:
             print('Type <:' + t + ':> not a supported type for FFT')
-            return False     
+            return False
     @property
     def vsip(self):
         return self.__fft
@@ -3338,7 +3347,7 @@ class CONV(object):
         assert 'pyJvsip.__View' in repr(h), 'The kernel must be a pyJvsip view'
         assert CONV.convSel.has_key(h.type) and t == CONV.convSel[h.type],\
               'Kernel type <:' + h.type + ':> not recognized for convolution.'
-        assert CONV.symmetry.has_key(symm), 'Symmetry flag not recognized'       
+        assert CONV.symmetry.has_key(symm), 'Symmetry flag not recognized'
         mySym=CONV.symmStrings[CONV.symmetry[symm]]
         # calculate kernel length
         if mySym == 'NON':
@@ -3448,7 +3457,7 @@ class CORR(object):
         return self.__type
     @property
     def vsip(self):
-        return self.__corr 
+        return self.__corr
     @property
     def support(self):
         """ Support attribute
@@ -3480,10 +3489,10 @@ class CORR(object):
         """
         biasSelect={0:VSIP_BIASED,1:VSIP_UNBIASED, 'BIASED':VSIP_BIASED,
               'UNBIASED':VSIP_UNBIASED}
-        f={'ccorr1d_dcvview_dcvview_dcvview_d':vsip_ccorrelate1d_d,                                                     
-           'ccorr1d_fcvview_fcvview_fcvview_f':vsip_ccorrelate1d_f,                                                
-           'corr1d_dvview_dvview_dvview_d':vsip_correlate1d_d,                                                     
-           'corr1d_fvview_fvview_fvview_f':vsip_correlate1d_f} 
+        f={'ccorr1d_dcvview_dcvview_dcvview_d':vsip_ccorrelate1d_d,
+           'ccorr1d_fcvview_fcvview_fcvview_f':vsip_ccorrelate1d_f,
+           'corr1d_dvview_dvview_dvview_d':vsip_correlate1d_d,
+           'corr1d_fvview_fvview_fvview_f':vsip_correlate1d_f}
         assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
            and 'pyJvsip.__View' in repr(c),\
            'The last three arguments of method correlate must be pyJvsip views'
@@ -3497,7 +3506,7 @@ class CORR(object):
             'data vector length not in correlate object'
         f[t](self.vsip,biasSelect[bias],ref.view,x.view,y.view)
         return y
-       
+
 # filter Class
 class FIR(object):
     tFir=['fir_f','fir_d','cfir_f','cfir_d','rcfir_f','rcfir_d']
@@ -3505,7 +3514,7 @@ class FIR(object):
         """
         Usage:
            firObj = FIR(t,filt,sym,N,D,state,ntimes,hint)
-        t is a type string; one of: 
+        t is a type string; one of:
               'rcfir_f','cfir_f','fir_f','rcfir_d','cfir_d','fir_d'
         filt is a vector view of filter coefficients
         sym is a string; one of 'NONE','ODD','EVEN'
@@ -3536,7 +3545,7 @@ class FIR(object):
         self.__length = N
         self.__decimation=D
         self.__state = state
-        
+
     def __del__(self):
         firDestroy = {'fir_f':vsip_fir_destroy_f,
                      'fir_d':vsip_fir_destroy_d,
@@ -3559,7 +3568,7 @@ class FIR(object):
                      'rcfir_f':'cvview_f','rcfir_d':'cvview_d'}
         firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,\
                   'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,\
-                  'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d} 
+                  'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d}
         assert x.type == y.type
         assert filtSptd[self.type] == x.type
         firflt[self.type](self.vsip,x.view,y.view)
@@ -3567,7 +3576,7 @@ class FIR(object):
     def reset(self):
         fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
                   'cfir_f':vsip_cfir_reset_f,'cfir_d':vsip_cfir_reset_d,
-                  'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d} 
+                  'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d}
         if self.state:
             fir_reset[self.type](self.vsip)
         return self
@@ -3609,6 +3618,7 @@ class LU(object):
         self.__type = t
         self.__size = luSize
         self.__m = {'matrix':0}
+        self.__singular=1
         if luCreate.has_key(t) and luSize > 0 and isinstance(luSize,int):
             self.__lu = luCreate[t](luSize)
         else:
@@ -3625,6 +3635,12 @@ class LU(object):
     def size(self):
         return self.__size
     @property
+    def singular(self):
+        if self.__singular == 0:
+            return True
+        else:
+            return False
+    @property
     def vsip(self):
         return self.__lu
     def decompose(self,m):
@@ -3639,18 +3655,14 @@ class LU(object):
                 'lu_d':vsip_lud_d,
                 'clu_f':vsip_clud_f,
                 'clu_d':vsip_clud_d}
-        assert m.rowlength == m.collength
-        chk = (m.type in LU.supported) 
-        if chk:
-            chk = (m.rowlength == m.collength) and (self.size == m.rowlength) \
-                   and self.type == tMatrix[m.type]
-        if chk:
-            luDecompose[self.type](self.vsip,m.view)
-            self.__m['matrix'] = m
-            return self
-        else:
-            print('Matrix must be square and compliant with calling object')
-            return
+        assert 'pyJvsip.__View' in repr(m),'Input must be a pyJvsip view in LU Decompose'
+        assert m.rowlength == m.collength,'Matrix must be square for LU'
+        assert m.type in LU.supported, 'Matrix not supported by LU'
+        assert self.size == m.rowlength,\
+                     'LU object of size %d but matrix of size %d'%(self.size,m.rowlength)
+        self.__singular=luDecompose[self.type](self.vsip,m.view)
+        self.__m['matrix'] = m
+        return self
     def solve(self,opIn,inOut):
         """
            sv.solve(opA,XB)
@@ -3662,8 +3674,8 @@ class LU(object):
            single column.
         I have tried to make this generic but it is probably possible to pass in arguments
         which will cause a failure when calling the underlying VSIPL functions.
-        """ 
-        op = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM}  
+        """
+        op = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM}
         if 'vview' in inOut.type:
             XB=inOut.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
         else:
@@ -3680,7 +3692,7 @@ class LU(object):
                     opM=opn['HERM']
                 else:
                     opM=np['TRANS']
-            else: 
+            else:
                 opM=op['TRANS']
         else:
             assert (opIn >= 0) and (opIn < 3), "LU solve: Flag %d not recognized"%opIn
@@ -3698,10 +3710,10 @@ class LU(object):
             print('Input matrix must be conformant with lu')
             return
 
-# vsip_dchold_p 
-# vsip_dchold_create_p 
-# vsip_dchold_destroy_p 
-# vsip_dchold_getattr_p 
+# vsip_dchold_p
+# vsip_dchold_create_p
+# vsip_dchold_destroy_p
+# vsip_dchold_getattr_p
 # vsip_dcholsol_p
 class CHOL(object):
     """
@@ -3740,7 +3752,7 @@ class CHOL(object):
                     'cchol_d':vsip_cchold_destroy_d,
                     'chol_f':vsip_chold_destroy_f,
                     'chol_d':vsip_chold_destroy_d}
-        del(self.__jvsip)  
+        del(self.__jvsip)
         cholDestroy[self.__type](self.__chol)
     @property
     def type(self):
@@ -3775,14 +3787,14 @@ class CHOL(object):
         return self
     def solve(self,inOut):
         """
-        Usage for cholesky object chold:       
+        Usage for cholesky object chold:
            chold.solve(XB)
            XB is a matrix. Solve is done in place.
            For pyJvsip if a vector is passed in for XB it will work as a matrix with a
            single column.
         I have tried to make this generic but it is probably possible to pass in arguments
         which will cause a failure when calling the underlying VSIPL functions.
-        """ 
+        """
         cholSol={'chol_d':vsip_cholsol_d,'chol_f':vsip_cholsol_f,\
                'cchol_d':vsip_ccholsol_d,'cchol_f':vsip_ccholsol_f}
         tMatrix={'cmview_d':'cchol_d','cmview_f':'cchol_f',
@@ -3809,7 +3821,7 @@ class QR(object):
                 VSIP_MAT_TRANS => 1,
                 VSIP_MAT_HERM => 2,
         qSide
-                VSIP_MAT_LSIDE => 0, 
+                VSIP_MAT_LSIDE => 0,
                 VSIP_MAT_RSIDE => 1
         qProb
                 VSIP_COV => 0,
@@ -3911,7 +3923,7 @@ class QR(object):
             else: #must be NTRANS
                 assert m == XM, 'Matrix product Size Error in prodQ'
         qrProd[self.type](self.vsip,QR.qOp[op],QR.qSide[side],X.view)
-        return X        
+        return X
     def solveR(self,op,alpha,XB):
         qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
                'cqr_d':vsip_cqrsolr_d,'cqr_f':vsip_cqrsolr_f}
@@ -3947,7 +3959,6 @@ class QR(object):
         qrSol[self.type](self.vsip,QR.qProb[prob],XB.view)
         return XB
 
-# To Do; make vsip enums work as well as strings
 class SV(object):
     """
     Usage:
@@ -4001,7 +4012,7 @@ class SV(object):
     @property
     def vsip(self):
         """
-        SV property returning VSIPL svd object. 
+        SV property returning VSIPL svd object.
         Must retain reference to containing SV object to use.
         """
         return self.__sv
@@ -4049,7 +4060,7 @@ class SV(object):
               'csv_f':vsip_csvdmatu_f,
               'csv_d':vsip_csvdmatu_d}
         if SV.opSel['NOS'] == self.opU:
-            return     
+            return
         else:
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
@@ -4066,9 +4077,9 @@ def create(atype,*vals):
        where:
           aType corresponds to a valid type for the object being created and
           ... are a variable argument list associated with each supported create type
-        The create function has default values for most creates. For instance the matrix create will be row major 
-        by default, and no memory hints are used since the jvsip distribution does not support 
-        (underneath the covers) the vsip_memory_hint. 
+        The create function has default values for most creates. For instance the matrix create will be row major
+        by default, and no memory hints are used since the jvsip distribution does not support
+        (underneath the covers) the vsip_memory_hint.
         QR creates are by default for the full Q, SV creates are by default for the full matrix.
     """
     blockTypes = Block.tBlock
@@ -4100,16 +4111,17 @@ def create(atype,*vals):
     assert isinstance(atype,str),'Types used in the create function must be a string'
     if atype in blockTypes:
         assert len(vals) == 1, 'Create for %s has a single length argument'%atype
-        assert isinstance(vals[0],int), 'Length for %s must be an integer'%atype
+        assert isinstance(vals[0],int) or isinstance(vals[0],long), 'Length for %s must be an integer'%atype
         return Block(atype,vals[0])
     elif atype in vectorTypes:
         assert len(vals) == 1, 'Create for %s has a single length argument'%atype
-        assert isinstance(vals[0],int), 'Length for %s must be an integer'%atype
+        assert isinstance(vals[0],int) or isinstance(vals[0],long), 'Length for %s must be an integer'%atype
         return create(fVector[atype],vals[0]).bind(0,1,vals[0])
     elif atype in matrixTypes:
         assert len(vals) > 1 and len(vals) < 4, \
                 'Create for %s has two length arguments and an optional major argument'%atype
-        assert isinstance(vals[0],int) and isinstance(vals[1],int), 'Lengths for %s must be integers'%atype
+        assert (isinstance(vals[0],int) and isinstance(vals[1],int)) or \
+               (isinstance(vals[0],long) and isinstance(vals[1],long)), 'Lengths for %s must be integers'%atype
         cl=vals[0]
         rl= vals[1]
         l=rl * cl
@@ -4130,7 +4142,7 @@ def create(atype,*vals):
             """
             Usage requires a single length for vectors or the column and row length for matrices.
             For vectors (matrices) the second (third) argument is a scalar indicating a scale (defaults to 1.0).
-            The argument list is searched for the string "INV" and if found the object is built for an inverse FFT. 
+            The argument list is searched for the string "INV" and if found the object is built for an inverse FFT.
             The default is a Forward FFT If a multiple FFT is specified the argument list is searched for a string
             of "COL". If found the fft is done for each column. The default is by row."""
         if 'INV' in vals:
@@ -4139,17 +4151,18 @@ def create(atype,*vals):
             dir = -1 #VSIP_FFT_FWD
         if atype in mfftTypes:
             major = 0 # default fft by row
-            assert isinstance(vals[0],int) and isinstance(vals[1],int), \
+            assert (isinstance(vals[0],int) and isinstance(vals[1],int)) or \
+                   (isinstance(vals[0],long) and isinstance(vals[1],long)), \
                     'Length arguments for %s must be integers'%atype
             M = vals[0]; N = vals[1]
             if nVals > 2 and (isinstance(vals[2,int]) or isinstance(vals[2],float)):
-                scaleFactor = float(vals[2]) 
+                scaleFactor = float(vals[2])
             else:
                 scaleFactor = 1.0
             if 'COL' in vals:
                 major = 1 # 'VSIP_COL'
         else:
-            assert isinstance(vals[0],int),'Length argument for %s must be an integer'%atype
+            assert isinstance(vals[0],int) or isinstance(vals[0],long),'Length argument for %s must be an integer'%atype
             N = vals[0]
             if nVals > 1 and (isinstance(vals[1],int) or isinstance(vals[1],float)):
                 scaleFactor = float(vals[1])
@@ -4184,7 +4197,7 @@ def create(atype,*vals):
         if len(vals) == 3:
             assert QR.selQsave.has_key(vals[2]), 'Flag %s not recognized for QR create'%repr(vals[2])
             op=vals[2]
-        return QR(atype,vals[0],vals[1],op)    
+        return QR(atype,vals[0],vals[1],op)
     elif atype in svTypes:
         assert len(vals) > 1,\
         'Too few arguments.  Type <::%s:> takes a type, two length arguments, and two optional vsip_svd_uv save argumenta'%atype
@@ -4212,7 +4225,7 @@ def create(atype,*vals):
             matFlag='UPP'
             assert isinstance[vals[0],int], \
                     'Argument to create for type %s is an integer size. If not included default vsip_mat_uplo is "UPP" '%atype
-            sz=vals[0]                    
+            sz=vals[0]
         return CHOL(atype,matFlag,sz)
     elif atype in convTypes:
         """
@@ -4257,7 +4270,7 @@ def create(atype,*vals):
            where region is one of 'FULL', 'SAVE', or 'MIN'
         ntimes and hint always default to 0 and 'TIME' respectively.
         """
-        ntimes=0; hint='TIME'; region='FULL' 
+        ntimes=0; hint='TIME'; region='FULL'
         region = 'FULL'
         nvals = len(vals)
         assert nvals > 1, 'As a minimum create of %s requires a reference vector length and a data vector length'%atype
@@ -4302,3 +4315,26 @@ def svdCompose(d,indx):
         j=indx[i]
         r += d[0].colview(j).outer(d[1][j],d[2].colview(j))
     return r
+def listToJv(t,a):
+    """
+       listToJv will attempt to create a pyJvsip view of type t and copy the list a
+       into it. Lists are very general. It is easy to create a list that listToJv can not
+       handle. Lists must agree with the data type t. Currently only vectors of type
+       float and double are supported.
+    """
+    assert t in ['vview_d','vview_f','cvview_d','cvview_d'], 'Requested type not supported'
+    assert isinstance(a,list),'Input must be a list'
+    n=len(a)
+    v=create(t,n)
+    if 'cvview_d' in t:
+        for i in range(n):
+            s=a[i]
+            v[i]=vsip_cmplx_d(s.real,s.imag)
+    elif 'cvview_f' in t:
+        for i in range(n):
+            s=a[i]
+            v[i]=vsip_cmplx_f(s.real,s.imag)
+    else:
+        for i in range(n):
+            v[i] = a[i]
+    return v
