@@ -350,9 +350,12 @@ class Block (object):
                 return
         def __setitem__(self,i,value):
             if 'vview' in self.type:
-                if isinstance(i,int):
+                if isinstance(i,int) or isinstance(i,long):
                     vsip.put(self.view,i,value)
-                elif 'vview' in self.type and isinstance(i,slice):
+                elif isinstance(i,slice) and (isinstance(value,int)\
+                        or isinstance(value,long) or isinstance(value,float)):
+                    self.subview(i).fill(value)
+                elif isinstance(i,slice):
                     copy(value,self.subview(i))
                 else:
                     print('Failed to recognize index for vector view')
@@ -363,12 +366,19 @@ class Block (object):
                     copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
                 elif (isinstance(i[0],int) and isinstance(i[1],slice)):
                     copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
-                elif (isinstance(i[0],int) and isinstance(i[1],int)):
+                elif (isinstance(i[0],int) or isinstance(i[0],long)) \
+                     and (isinstance(i[1],int) or isinstance(i[1],long)):
                     vsip.put(self.view,i,value)
                 else:
                     print('Failed to recognize index for matrix view')
             else:
                 print('Failed to parse argument list for __setitem__')
+        def __delitem__(self,i): #drop index i
+             assert 'vview' in self.type, 'delete item only works with vector views'
+             n=self.length
+             self[i:self.length-1] = self[i+1:self.length].copy # need new copy since overlap exists
+             self.putlength(self.length-1)
+             return self
         def __len__(self):
             attr=vsip.size(self.__vsipView)
             n = attr[2]
