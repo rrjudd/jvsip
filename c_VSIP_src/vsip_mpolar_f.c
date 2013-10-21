@@ -58,3 +58,4 @@ void vsip_mpolar_f(const vsip_cmview_f* a, const vsip_mview_f* r, const vsip_mvi
       }
    }
 }
+

@@ -4352,3 +4352,4 @@ vsip_csvdprodv_f(const vsip_csv_f *svd, vsip_mat_op OpV, vsip_mat_side ApV,const
     }
     return 0;
 }
+

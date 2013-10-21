@@ -46,3 +46,4 @@ void vsip_vpolar_d(
       rp += rst; tp += tst;
    }
 }
+
