@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from distutils.core import setup
 setup(name='pyJvsip',
-      version='0.3.0',
+      version='0.3.1',
       description='pyJvsip is a vector/matrix signal processing module bassed on the VSIPL C Library',
       author='Randall Judd',
       author_email='rrjudd@me.com',

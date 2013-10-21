@@ -13,7 +13,7 @@ from vsipLinearAlgebra import *
 
 import vsiputils as vsip
 
-__version__='0.3.0'
+__version__='0.3.1'
 
 def __isView(a):
     return 'pyJvsip.__View' in repr(a)
@@ -373,12 +373,31 @@ class Block (object):
                     print('Failed to recognize index for matrix view')
             else:
                 print('Failed to parse argument list for __setitem__')
-        def __delitem__(self,i): #drop index i
-             assert 'vview' in self.type, 'delete item only works with vector views'
-             n=self.length
-             self[i:self.length-1] = self[i+1:self.length].copy # need new copy since overlap exists
-             self.putlength(self.length-1)
-             return self
+        def __delitem__(self,key): #drop index key
+            assert isinstance(key,int) or isinstance(key,long) or isinstance(key,tuple),\
+                 'Key must be an integer index or a tuple pair of index integers'
+            if isinstance(key,int) or isinstance(key,long):
+                i = key
+                if 'vview' in self.type:
+                    self[i:self.length-1] = self[i+1:self.length].copy # need new copy since overlap exists
+                    self.putlength(self.length-1)
+                else:
+                    if 'COL' in self.major:
+                        self[:,i:self.rowlength-1]=self[:,i+1:self.rowlength].copy
+                        self.putrowlength(self.rowlength-1)
+                    else:
+                        self[i:self.collength-1,:]=self[i+1:self.collength,:].copy
+                        self.putcollength(self.collength-1)
+            else:
+                assert 'mview' in self.type,'A tuple key does not work for a vector view'
+                assert len(key) == 2, 'Matrix view delete i,j has exactly two integer arguments'
+                i=key[0]
+                j=key[1]
+                assert isinstance(i,int) or isinstance(i,long) and \
+                       isinstance(j,int) or isinstance(j,long), 'Integer indices required'
+                del self.ROW[i]
+                del self.COL[j]
+            return self
         def __len__(self):
             attr=vsip.size(self.__vsipView)
             n = attr[2]
