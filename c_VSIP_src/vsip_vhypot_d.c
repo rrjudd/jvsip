@@ -37,3 +37,4 @@ void vsip_vhypot_d(
       ap += ast; bp += bst; rp += rst; 
    }
 }
+

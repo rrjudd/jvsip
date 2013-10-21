@@ -48,3 +48,4 @@ void vsip_mrect_d( const vsip_mview_d* r, const vsip_mview_d *t, const vsip_cmvi
       }
    }
 }
+

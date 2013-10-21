@@ -54,3 +54,4 @@ void vsip_mcmplx_d(const vsip_mview_d* a, const vsip_mview_d* b, const vsip_cmvi
     }
     
 }
+
