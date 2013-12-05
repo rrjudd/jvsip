@@ -351,7 +351,10 @@ class Block (object):
         def __setitem__(self,i,value):
             if 'vview' in self.type:
                 if isinstance(i,int) or isinstance(i,long):
-                    vsip.put(self.view,i,value)
+                    if('cvview' in self.type):
+                        vsip.put(self.view,i,complex(value.real,value.imag))
+                    else:
+                        vsip.put(self.view,i,value)
                 elif isinstance(i,slice) and (isinstance(value,int)\
                         or isinstance(value,long) or isinstance(value,float)):
                     self.subview(i).fill(value)
@@ -368,7 +371,10 @@ class Block (object):
                     copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
                 elif (isinstance(i[0],int) or isinstance(i[0],long)) \
                      and (isinstance(i[1],int) or isinstance(i[1],long)):
-                    vsip.put(self.view,i,value)
+                    if 'cmview' in self.type:
+                        vsip.put(self.view,i,complex(value.real,value.imag))
+                    else:
+                        vsip.put(self.view,i,value)
                 else:
                     print('Failed to recognize index for matrix view')
             else:
