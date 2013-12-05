@@ -474,7 +474,7 @@ static void svdZeroCheckAndSet_d(vsip_scalar_d e, vsip_vview_d *d, vsip_vview_d 
     vsip_scalar_d *fptr=f->block->array+f->offset*f->block->rstride;
     vsip_scalar_d *dptr=d->block->array+d->offset*d->block->rstride;
     for(i=0; i<n; i++){
-        vsip_scalar_d *fi=fptr+i*fstd,*di=dptr+i*fstd;
+        vsip_scalar_d *fi=fptr+i*fstd,*di=dptr+i*dstd;
         if((*fi<0 ? -*fi:*fi) < (e*(*di<0 ? -*di:*di + *(di+dstd)<0 ? -*(di+dstd):*(di+dstd)))) *fi=0.0;
     }
 }
