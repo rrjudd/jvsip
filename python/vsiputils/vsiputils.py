@@ -10,7 +10,7 @@ def getType(v):
         Returns a tuple with True if a vsip type is found, plus a string indicating the type.
         For instance for
         a = vsip_vcreate_f(10,VSIP_MEM_NONE)
-        will return for the call getType(a) (True,'vview_f')     
+        will return for the call getType(a) (True,'vview_f')
         also returns types of scalars derived from structure. for instance
         c = vsip_cscalar_d() will return for getType(c) the tuple (True, 'cscalar_d').
         attr = vsip_mattr_d() will return for getType(attr) the tuple (True, 'mattr_d')
@@ -81,13 +81,13 @@ def pyIndex(a):
         return False
 def create(atype,atuple):
     """
-    Create a vsipl object associated with a type. 
+    Create a vsipl object associated with a type.
 
-    Note that scalar types and attribute types are not created here. The argument 'atuple' 
-    is a tuple containing necessary data to create the object defined by atype. The contents 
-    of the tuple are the same as the arguments described in the prototypes of the C VSIPL document. 
+    Note that scalar types and attribute types are not created here. The argument 'atuple'
+    is a tuple containing necessary data to create the object defined by atype. The contents
+    of the tuple are the same as the arguments described in the prototypes of the C VSIPL document.
     For instance
-        create('block_f',(10000,VSIP_MEM_NONE)) 
+        create('block_f',(10000,VSIP_MEM_NONE))
     is the same as
         vsip_blockcreate_f(10000,VSIP_MEM_NONE);
     """
@@ -243,7 +243,7 @@ def destroy(obj):
     else:
         print('Type ' + t + ' not supported by destroy')
         return False
-     
+
 # VSIPL scalar functions
 # s on front denotes scalar and prevents conflict with overloaded view functions
 def sconj(a):
@@ -350,7 +350,7 @@ def _vget_mi(a,b): # used internal to this module
    return [miToTuple(vsip_vget_mi(a,i)) for i in range(getlength(a))]
 
 def vList(v):
-   """ 
+   """
       This function copies the data from a VSIPL view into a flat list. If
       the view is a matrix view it copies the data by row (flattens it). VSIP complex
       is copied into python complex. Type _bl (bool) is copied into True, False
@@ -407,12 +407,12 @@ def mList(m):
 def listV(t,v):
     """
        This function is not very 'smart'
-       This function creates a vsipl double or integer vector and copies a list into VSIPL. 
+       This function creates a vsipl double or integer vector and copies a list into VSIPL.
        It will only copy into vectors of type double (real or complex) or of type int.
        That is to say vectors of type vsip_vview_d, vsip_cvview_d, and vsip_vview_i.
        The list is expected to be of a float, integer, or Python complex type.
-       It is expected to be flat. List of lists is not allowed here. No error 
-       checking is done. 
+       It is expected to be flat. List of lists is not allowed here. No error
+       checking is done.
        The input list must be of a single type (integer, complex, float). The first element
        of the list is checked and depending on the result a vsipl vector is created and list
        comprehension is used to copy it into VSIPL.
@@ -477,7 +477,7 @@ def _blocktype(vt): # used internal to this module
             'cmattr_f':'cblock_f',
             'cmattr_d':'cblock_d',
             'vattr_vi':'block_vi',
-            'vattr_mi':'block_mi', 
+            'vattr_mi':'block_mi',
             'vattr_bl':'block_bl',
             'vattr_i':'block_i',
             'vattr_si':'block_si',
@@ -548,7 +548,7 @@ def dataGen(a):
         return a
     else:
         print('Not a supported type. Should be a vsip complex float vector vector')
-        return False  
+        return False
 def randCreate(t,seed,length):
     """
        Create a VSIPL vector view and populate it with random numbers.
@@ -595,13 +595,13 @@ def randCreate(t,seed,length):
 # functions not closely related to VSIPL defined functionality
 def viewCreate(a):
     """
-        Create a vsip view object. The argument "a" is a view attribute. Use the attribute type 
+        Create a vsip view object. The argument "a" is a view attribute. Use the attribute type
         and attribute state to create a view object. Return object on success, and False on failure
         NOTE: The size of the underlying block is the magnitutde of the maximum stride times the length
-        of dimension associated with the stride plus the offset. This produces a block at least big 
-        enough to accomodate the view associated with the attribute. If a particular block size is 
-        required first create the block using the standard vsipl block create, and then create the 
-        view using vbind or mbind and then (if vbind or mbind are not sufficient) put the attribute 
+        of dimension associated with the stride plus the offset. This produces a block at least big
+        enough to accomodate the view associated with the attribute. If a particular block size is
+        required first create the block using the standard vsipl block create, and then create the
+        view using vbind or mbind and then (if vbind or mbind are not sufficient) put the attribute
         using putattrib.
         """
     t=getType(a)
@@ -664,7 +664,7 @@ def attr(t,l):
        Note the block attribute is not filled out.
        The Argument "l" is a list or tuple of (offset, stride, length) for a vector
        or (offset, col_stride, col_length, row_stride, row_length) for a matrix
-       
+
        """
     f={'vview_f':'vsip_vattr_f()',
        'vview_vi':'vsip_vattr_vi()',
@@ -703,7 +703,7 @@ def attr(t,l):
             _mattr(a,l)
             return a
         else:
-            print('Incorrect list argument') 
+            print('Incorrect list argument')
             return False
     else:
        print('not a supported type')
@@ -810,18 +810,18 @@ def bind(blk,l_in):
 def view(t,l_in):
     """
        This function creates a vector or matrix view including vector views associated
-       with a window function (hanning,blackman,kaiser, cheby). 
+       with a window function (hanning,blackman,kaiser, cheby).
        Note: To make this as a single call for all view creates the first parameter
        is the type and the second parameter is a tuple with three entries as
        indicated. The value of the entries are the same as for the vsip function call.
        the second and/or third entries may be ignored if the type does not need them.
-       See the VSIPL specification for additional clues. 
+       See the VSIPL specification for additional clues.
        The calling convention
-       for a float vector is: 
+       for a float vector is:
        view('vview_f',(length))
-       Note the first argument is a view type with associated precision 
+       Note the first argument is a view type with associated precision
        (_f, _d, _vi, _si, _i, _uc, _mi)
-       for a float matrix the call is: 
+       for a float matrix the call is:
        view('mview_f',(col_length, row_length,VSIP_ROW))
        for row major. Use VSIP_COL for column major.
        for a window function use: (note _d is also supported):
@@ -829,7 +829,7 @@ def view(t,l_in):
        view('hanning_f',(length))
        view('kaiser_f',(length,float parameter))
        view('cheby_f',(length,float parameter))
-      
+
        """
     f={'blackman_d':'vsip_vcreate_blackman_d(l[0], VSIP_MEM_NONE)',
        'hanning_d':'vsip_vcreate_hanning_d(l[0], VSIP_MEM_NONE)',
@@ -868,7 +868,7 @@ def view(t,l_in):
         l=l_in
     else:
         print('Attribute input argument is not list, tuple, or int length')
-        return False   
+        return False
     if f.has_key(t):
         return eval(f[t])
     else:
@@ -1173,7 +1173,7 @@ def getrowlength(a):
         'mview_si':vsip_mgetrowlength_si,
         'mview_uc':vsip_mgetrowlength_uc,
         'cmview_f':vsip_cmgetrowlength_f,
-        'cmview_d':vsip_cmgetrowlength_d, 
+        'cmview_d':vsip_cmgetrowlength_d,
         'mview_bl':vsip_mgetcollength_bl}
     if t[0]  and f.has_key(t[1]):
         return f[t[1]](a)
@@ -1363,7 +1363,7 @@ def colview(A,i):
         print('Type ' + t + ' not supported by rowview')
         return False
 def subview(v,i):
-    """ 
+    """
         Usage
             a = subview(A,i)
         where
@@ -1425,8 +1425,8 @@ def transview(A):
 def get(a,i):
     """
        get(aView,aIndex) will return a value from a vsip view. Argument aIndex
-       corresponds to a tuple, a single integer, or a vsip_scalar_mi. The argument 
-       must make sense for the input view. 
+       corresponds to a tuple, a single integer, or a vsip_scalar_mi. The argument
+       must make sense for the input view.
     """
     f={'cvview_dscalar':'vsip_cvget_d(a,int(i))',
        'cvview_fscalar':'vsip_cvget_f(a,int(i))',
@@ -1482,8 +1482,8 @@ def get(a,i):
 def put(a,i,scl):
     """
        put(aView,aIndex,aScalar) will put aScalar in aView at position aIndex.
-       Argument aIndex corresponds to a tuple or a single integer, or a vsip_scalar_mi. 
-       aIndex must make sense for the input view. 
+       Argument aIndex corresponds to a tuple or a single integer, or a vsip_scalar_mi.
+       aIndex must make sense for the input view.
     """
     f={'cvview_dscalar':'vsip_cvput_d(a,i,x)',
        'cvview_fscalar':'vsip_cvput_f(a,i,x)',
@@ -1519,7 +1519,7 @@ def put(a,i,scl):
         elif 'cscalar' in getType(scl)[1]:
             x = scl
         else:
-            print('Input scalar type is not recognized for complex view')
+            print('In vsiutils put; Input scalar type is not recognized for complex view')
             return
     elif '_mi' in t:
         if 'scalar_mi' in getType(scl)[1]:
@@ -1666,11 +1666,11 @@ def allDestroy(a):
 # Random Number Generation
 class randcreate(object):
     """
-       randcreate defaults to 
+       randcreate defaults to
            vsip_randcreate(s, 1,1,VSIP_PRNG)
        if an integer is passed in as the argument.
        If the argument type is 'randstate' then this
-       object is used to initialize the randcreate object. 
+       object is used to initialize the randcreate object.
        """
     def __init__(self,s):
         t = getType(s)
@@ -1951,7 +1951,7 @@ def cumsum(input,output):
     """
         cumsum(input,output)
         input is a vector or matrix.
-        output is either a vector for vector inpute 
+        output is either a vector for vector inpute
         or output is a tuple consiting of a vsip_major flag plus a corresponding  matrix;
         For instance
         cumsum(vector_input, vector_output)
@@ -1975,7 +1975,7 @@ def cumsum(input,output):
     if f.has_key(t):
         eval(f[t])
     else:
-        print('Not a supported type')        
+        print('Not a supported type')
 def euler(input,output):
     f={'mview_dcmview_d':vsip_meuler_d,
        'mview_fcmview_f':vsip_meuler_f,
@@ -1998,7 +1998,7 @@ def mag(input,output):
        'vview_d':vsip_vmag_d,
        'vview_f':vsip_vmag_f,
        'vview_i':vsip_vmag_i,
-       'vview_si':vsip_vmag_si} 
+       'vview_si':vsip_vmag_si}
     t = getType(input)[1]
     if f.has_key(t):
         f[t](input,output)
@@ -2100,7 +2100,7 @@ def rsqrt(a,b):
     f={'mview_d':vsip_mrsqrt_d,
        'mview_f':vsip_mrsqrt_f,
        'vview_d':vsip_vrsqrt_d,
-       'vview_f':vsip_vrsqrt_f} 
+       'vview_f':vsip_vrsqrt_f}
     t = getType(a)[1]
     if f.has_key(t):
         f[t](a,b)
@@ -2159,7 +2159,7 @@ def add(a,b,c):
         add(a,b,c) adds a to b elementwise returning the answer in c.
         Unlike VSIPL this add will return c as a convenience.
         note not every combination is supported. Currently supported are
-        vsip_vadd_f, vsip_vadd_d, vsip_madd_f, vsip_madd_d, vsip_cvadd_f, 
+        vsip_vadd_f, vsip_vadd_d, vsip_madd_f, vsip_madd_d, vsip_cvadd_f,
         vsip_cvadd_d, vsip_cmadd_f, vsip_cmadd_d, vsip_vadd_i, vsip_madd_i,
         vsip_vadd_si, vsip_madd_si, vsip_vadd_vi, vsip_vadd_uc, vsip_rcvadd_f,
         vsip_rcvadd_d, vsip_rcmadd_f, vsip_rcmadd_d, vsip_csmadd_d, vsip_csmadd_f,
@@ -2245,12 +2245,12 @@ def sub(a,b,c):
         sub(a,b,c) does a-b returning the result in c. View c is returned as a convenience.
         The first argument, a may be a scalar, Otherwise a and b must be of the same size.
         VSIPL functions supported are
-        vsip_cmsub_d, vsip_cmsub_f, vsip_crmsub_d, vsip_crmsub_f, vsip_crvsub_d, vsip_crvsub_f, 
-        vsip_csmsub_d, vsip_csmsub_f, vsip_csvsub_d, vsip_csvsub_f, vsip_cvsub_d, vsip_cvsub_f, 
-        vsip_msub_d, vsip_msub_f, vsip_msub_i, vsip_msub_si, vsip_rcmsub_d, vsip_rcmsub_f, 
+        vsip_cmsub_d, vsip_cmsub_f, vsip_crmsub_d, vsip_crmsub_f, vsip_crvsub_d, vsip_crvsub_f,
+        vsip_csmsub_d, vsip_csmsub_f, vsip_csvsub_d, vsip_csvsub_f, vsip_cvsub_d, vsip_cvsub_f,
+        vsip_msub_d, vsip_msub_f, vsip_msub_i, vsip_msub_si, vsip_rcmsub_d, vsip_rcmsub_f,
         vsip_rcvsub_d, vsip_rcvsub_f,vsip_rscmsub_d, vsip_rscmsub_f, vsip_rscvsub_d, vsip_rscvsub_f,
-        vsip_smsub_d, vsip_smsub_f, vsip_smsub_i, vsip_smsub_si, vsip_svsub_d, vsip_svsub_f, 
-        vsip_svsub_i, vsip_svsub_si, vsip_svsub_uc, vsip_svsub_vi, vsip_vsub_d, vsip_vsub_f, 
+        vsip_smsub_d, vsip_smsub_f, vsip_smsub_i, vsip_smsub_si, vsip_svsub_d, vsip_svsub_f,
+        vsip_svsub_i, vsip_svsub_si, vsip_svsub_uc, vsip_svsub_vi, vsip_vsub_d, vsip_vsub_f,
         vsip_vsub_i, vsip_vsub_si, vsip_vsub_uc
         """
     t0=getType(a)
@@ -2309,15 +2309,15 @@ def mul(a,b,c):
         Unlike VSIPL this mul returns the answer as a convenience. May be done
         in-place if a or b is the same type as c.
         VSIPL functions supported are
-        vsip_vmul_d, vsip_vmul_f, vsip_vmul_i, vsip_vmul_si, vsip_vmul_uc, vsip_cmmul_d, 
-        vsip_cmmul_f, vsip_cvmul_d, vsip_cvmul_f, vsip_mmul_d, vsip_mmul_f, vsip_rcmmul_d, 
-        vsip_rcmmul_f, vsip_rcvmul_d, vsip_rcvmul_f, vsip_rscmmul_d, vsip_rscmmul_f, 
-        vsip_rscvmul_d, vsip_rscvmul_f, vsip_smmul_d, vsip_smmul_f, vsip_svmul_d, vsip_svmul_f, 
-        vsip_svmul_i, vsip_svmul_si, vsip_svmul_uc, vsip_csmmul_d, vsip_csmmul_f, vsip_csvmul_d, 
+        vsip_vmul_d, vsip_vmul_f, vsip_vmul_i, vsip_vmul_si, vsip_vmul_uc, vsip_cmmul_d,
+        vsip_cmmul_f, vsip_cvmul_d, vsip_cvmul_f, vsip_mmul_d, vsip_mmul_f, vsip_rcmmul_d,
+        vsip_rcmmul_f, vsip_rcvmul_d, vsip_rcvmul_f, vsip_rscmmul_d, vsip_rscmmul_f,
+        vsip_rscvmul_d, vsip_rscvmul_f, vsip_smmul_d, vsip_smmul_f, vsip_svmul_d, vsip_svmul_f,
+        vsip_svmul_i, vsip_svmul_si, vsip_svmul_uc, vsip_csmmul_d, vsip_csmmul_f, vsip_csvmul_d,
         vsip_csvmul_f
         To decode read about vsipl naming conventions in VSIPL specification.
         Note there are other muls which could not be included because the API was not the same,
-        or conflicted. For instance vsip_cjmul_d has the same type inputs as vsip_cmul_d. 
+        or conflicted. For instance vsip_cjmul_d has the same type inputs as vsip_cmul_d.
         """
     t0=getType(a)
     t1=getType(b)
@@ -2405,7 +2405,7 @@ def div(a,b,c):
         mul(s,v,r)
     t0=getType(a)[1]
     t1=getType(b)[1]
-    t=t0+t1 
+    t=t0+t1
     f = {'cmview_dcmview_d':vsip_cmdiv_d,
          'cmview_fcmview_f':vsip_cmdiv_f,
          'cmview_dscalar':vsip_cmrsdiv_d,
@@ -2459,7 +2459,7 @@ def div(a,b,c):
 # Ternary Operations
 # Logical Operations
 # Selection Operations
-# Bitwise and Boolean 
+# Bitwise and Boolean
 def am(a,b,c,d):
     """
        add and multiply
@@ -2657,7 +2657,7 @@ def fill(a_scalar,a_view):
         Fill view object b with scalar object a
         VSIPL functions supported are
         vsip_cmfill_d, vsip_cmfill_f, vsip_cvfill_d, vsip_cvfill_f, vsip_mfill_d, vsip_mfill_f,
-        vsip_mfill_i, vsip_mfill_si, vsip_vfill_d, vsip_vfill_f, vsip_vfill_i, vsip_vfill_si, 
+        vsip_mfill_i, vsip_mfill_si, vsip_vfill_d, vsip_vfill_f, vsip_vfill_i, vsip_vfill_si,
         vsip_vfill_uc
         """
     t1=getType(a_scalar)
@@ -2691,7 +2691,7 @@ def fill(a_scalar,a_view):
         f[t](x,a_view)
         return a_view
     else:
-        print('Type ' + t + ' not supported by fill') 
+        print('Type ' + t + ' not supported by fill')
 
 def ramp(a,b,c):
     """
@@ -2765,10 +2765,10 @@ def copy(a,b):
     'vview_sivview_si':vsip_vcopy_si_si,
     'vview_vivview_i':vsip_vcopy_vi_i,
     'vview_vivview_vi':vsip_vcopy_vi_vi}
-    f1v={'cvview_d':get, 'cvview_f':get, 'vview_d':get, 
-         'vview_f':get, 'vview_i':get, 'vview_si':get, 
+    f1v={'cvview_d':get, 'cvview_f':get, 'vview_d':get,
+         'vview_f':get, 'vview_i':get, 'vview_si':get,
          'vview_uc':get, 'vview_vi':get, 'vview_bl':get, 'vview_mi':get}
-    f1m={'cmview_d':get, 'cmview_f':get, 'mview_d':get, 'mview_f':get, 
+    f1m={'cmview_d':get, 'cmview_f':get, 'mview_d':get, 'mview_f':get,
          'mview_i':get, 'mview_si':get, 'mview_uc':get, 'mview_bl':get}
     t1=getType(a)[1]
     t2=getType(b)[1]
@@ -2782,23 +2782,23 @@ def copy(a,b):
         return b
     elif f1m.has_key(t1) and f1m.has_key(t2):
         for i in range(getcollength(a)):
-            for j in range(getrowlength(a)): 
+            for j in range(getrowlength(a)):
                 put(b,(i,j),get(a,(i,j)))
         return b
     else:
         print('Type <:' + t1 + t2 + ':> not supported by copy')
-        return False    
+        return False
 
 # Selection Operations
 def clip(a,t1,t2,c1,c2,r):
-    f = {'mview_d':vsip_mclip_d, 
-         'mview_f':vsip_mclip_f, 
-         'mview_i':vsip_mclip_i, 
-         'mview_si':vsip_mclip_si, 
-         'vview_d':vsip_vclip_d, 
-         'vview_f':vsip_vclip_f, 
-         'vview_i':vsip_vclip_i, 
-         'vview_si':vsip_vclip_si, 
+    f = {'mview_d':vsip_mclip_d,
+         'mview_f':vsip_mclip_f,
+         'mview_i':vsip_mclip_i,
+         'mview_si':vsip_mclip_si,
+         'vview_d':vsip_vclip_d,
+         'vview_f':vsip_vclip_f,
+         'vview_i':vsip_vclip_i,
+         'vview_si':vsip_vclip_si,
          'vview_uc':vsip_vclip_uc}
     t=getType(a)[1]
     if f.has_key(t):
@@ -2887,7 +2887,7 @@ def maxmgval(a,idx):
     if f.has_key(t):
         return eval(f[t])
     else:
-        print('Type ' + t + ' not supported for maxmgval')  
+        print('Type ' + t + ' not supported for maxmgval')
 def maxval(a,idx):
     f={'mview_d':'vsip_mmaxval_d(a,idx)',
        'vview_d':'vsip_vmaxval_d(a,idx)',
@@ -3140,8 +3140,8 @@ def fftCreate(t,arg):
        and a tuple argument that corresponds to the VSIPL function call argument list.
        The first argument for fftCreate corresponds to the supported types for fft call
        input and output views. For out-of-place this would be (for instance)
-       'cvview_dcvview_d' for ccfftop with double precision and 
-       'vview_fcvview_f for 'rcfftop' for float precision. 
+       'cvview_dcvview_d' for ccfftop with double precision and
+       'vview_fcvview_f for 'rcfftop' for float precision.
        For in-place calls only the type of the input/output view is called for.
        'if the views are matrix views then the multiple fft object is created.
         If the type FFT requested is not supported then a message is printed and False
@@ -3153,17 +3153,17 @@ def fftCreate(t,arg):
         'cvview_f':'vsip_ccfftip_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4])',
         'cvview_dcvview_d':'vsip_ccfftop_create_d(arg[0] , arg[1] , arg[2] , arg[3] , arg[4])',
         'cvview_fcvview_f':'vsip_ccfftop_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4])',
-        'vview_dcvview_d':'vsip_rcfftop_create_d(arg[0] , arg[1] , arg[2] , arg[3])', 
+        'vview_dcvview_d':'vsip_rcfftop_create_d(arg[0] , arg[1] , arg[2] , arg[3])',
         'vview_fcvview_f':'vsip_rcfftop_create_f(arg[0] , arg[1] , arg[2] , arg[3])',
-        'cvview_dvview_d':'vsip_crfftop_create_d(arg[0] , arg[1] , arg[2] , arg[3])', 
+        'cvview_dvview_d':'vsip_crfftop_create_d(arg[0] , arg[1] , arg[2] , arg[3])',
         'cvview_dvview_f':'vsip_crfftop_create_f(arg[0] , arg[1] , arg[2] , arg[3])',
         'cmview_d':'vsip_ccfftmip_create_d(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5] , arg[6])',
         'cmview_f':'vsip_ccfftmip_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5] , arg[6])' ,
         'cmview_dcmview_d':'vsip_ccfftmop_create_d(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5] , arg[6])' ,
         'cmview_fcmview_f':'vsip_ccfftmop_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5] , arg[6])' ,
-        'cmview_dmview_d':'vsip_crfftmop_create_d(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5]) ', 
+        'cmview_dmview_d':'vsip_crfftmop_create_d(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5]) ',
         'cmview_fmview_f':'vsip_crfftmop_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5]) ',
-        'mview_dcmview_d':'vsip_rcfftmop_create_d,(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5])',  
+        'mview_dcmview_d':'vsip_rcfftmop_create_d,(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5])',
         'mview_fcmview_f':'vsip_rcfftmop_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5])' }
     if f.has_key(t):
         return eval(f[t])
@@ -3213,7 +3213,7 @@ def fftDestroy(fftobj):
         return False
 
 #Fir Functions
-#TVCPP does not seem to handle the rcfir case. may need to fix that. 
+#TVCPP does not seem to handle the rcfir case. may need to fix that.
 #rcfir case breaks my key-value coding below.
 def firCreate(kernel,sym,length,decimation,state,ntimes,alghint):
     """
@@ -3231,7 +3231,7 @@ def firCreate(kernel,sym,length,decimation,state,ntimes,alghint):
         return False
 def firDestroy(fir):
     f={ 'cfir_d':vsip_cfir_destroy_d,
-        'cfir_f':vsip_cfir_destroy_f, 
+        'cfir_f':vsip_cfir_destroy_f,
         'fir_d': vsip_fir_destroy_d,
         'fir_f': vsip_fir_destroy_f}
     t=getType(fir)[1]
@@ -3241,8 +3241,8 @@ def firDestroy(fir):
         print('not a fir object')
 def firfilt(fir,input,output):
     f={ 'cfir_d': vsip_cfirflt_d,
-        'cfir_f': vsip_cfirflt_f, 
-        'fir_d': vsip_firflt_d, 
+        'cfir_f': vsip_cfirflt_f,
+        'fir_d': vsip_firflt_d,
         'fir_f': vsip_firflt_f}
     t=getType(fir)[1]
     if f.has_key(t):
@@ -3253,7 +3253,7 @@ def firfilt(fir,input,output):
 def firReset(fir):
     f={ 'cfir_d': vsip_cfir_reset_d,
         'cfir_f': vsip_cfir_reset_f,
-        'fir_d': vsip_fir_reset_d, 
+        'fir_d': vsip_fir_reset_d,
         'fir_f': vsip_fir_reset_f}
     t=getType(fir)[1]
     if f.has_key(t):
@@ -3281,7 +3281,7 @@ def histo(src,min_bin,max_bin,opt,hist):
         print('Type ' + t + ' not supported by histogram')
         return False
 def freqswap(x):
-    """Swaps halves of a vector, or quadrants of a matrix, to remap zero 
+    """Swaps halves of a vector, or quadrants of a matrix, to remap zero
        frequencies from the origin to the middle.
     """
     f = { 'cvview_d':vsip_cvfreqswap_d,
@@ -3502,7 +3502,7 @@ def lud_create(t,N):
     """
        lu = lud_create(t,N)
        where
-            t is a type 
+            t is a type
             N is the size
        types supported are 'lu_f', 'clu_f', 'lu_d', 'clu_d'
     """
