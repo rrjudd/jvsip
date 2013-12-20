@@ -326,6 +326,7 @@ class Block (object):
                     print('__getitem__ does not recognize<:' +type(val)+ ':>')
                     return False
             if 'vview' in self.type and isinstance(index,int) and index >= 0:
+                assert index < self.length,'Index out of bounds'
                 val=vsip.get(self.view,index)
                 return scalarVal(val)
             elif 'vview' in self.type and isinstance(index,slice):
@@ -333,6 +334,8 @@ class Block (object):
             elif 'mview' in self.type and (len(index) is 2) and \
                         isinstance(index[0],int) and isinstance(index[1],int) \
                         and (index[0] >=0) and (index[1] >= 0):
+                assert index[0] < self.collength and index[1] < self.rowlength,\
+                        'Index out of bound'
                 i = (index[0],index[1])
                 val=vsip.get(self.view,i)
                 return(scalarVal(val))
@@ -351,6 +354,7 @@ class Block (object):
         def __setitem__(self,i,value):
             if 'vview' in self.type:
                 if isinstance(i,int) or isinstance(i,long):
+                    assert i >= 0 and i < self.type,'Index out of bound'
                     if('cvview' in self.type):
                         vsip.put(self.view,i,complex(value.real,value.imag))
                     else:
@@ -366,11 +370,14 @@ class Block (object):
                 if isinstance(i[0],slice) and isinstance(i[1],slice):
                     copy(value,self.subview(i[0],i[1]))
                 elif isinstance(i[0],slice) and isinstance(i[1],int):
+                    assert i[1] >= 0 and i[1] < self.collength,'Row index out of bound'
                     copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
                 elif (isinstance(i[0],int) and isinstance(i[1],slice)):
                     copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
                 elif (isinstance(i[0],int) or isinstance(i[0],long)) \
                      and (isinstance(i[1],int) or isinstance(i[1],long)):
+                    assert i[0] >= 0 and i[0] < self.collength and i[1] >=0 and i[1] < self.collength,\
+                           'Index out of bound'
                     if 'cmview' in self.type:
                         vsip.put(self.view,i,complex(value.real,value.imag))
                     else:
@@ -2527,26 +2534,21 @@ class Block (object):
                 print('Input views must be float vectors of the same precision')
                 return False
         def permute(self,p,*major):
-            f={'mview_f':vsip_mpermute_once_f,'mview_d':vsip_mpermute_once_d}
-            if p.type != 'vview_vi':
-                print('First input argument must be of type vview_vi')
-                return
+            """
+            The permute method will permute a matrix by row or by column given an index vector.
+            """
+            f={'cmview_f':vsip_cmpermute_once_f,'cmview_d':vsip_cmpermute_once_d,'mview_f':vsip_mpermute_once_f,'mview_d':vsip_mpermute_once_d}
+            assert p.type in 'vview_vi','The index vector for method permute must be of type "vview_vi".'
             pc=p.copy
-            if self.type not in ['vview_f','vview_d','mview_d','mview_f']:
-                print('permute currently only supported for real, float, views')
-                return
+            assert self.type in ['cmview_f','cmview_d','mview_f','mview_d','vview_f','vview_d'],\
+                              'For method permute type <:%s:> not supported'%self.type
             if 'vview' in self.type:
                 self.mcolview.permute(p,'ROW')
-                return self
             elif len(major) == 1 and major[0] == 'COL':
-                if p.length != self.rowlength:
-                    print('Length of permutation vector must be equal to row length')
-                    return
+                assert p.length == self.rowlength,'In permute method index vector is not sized properly'
                 f[self.type](self.view,VSIP_COL,pc.view,self.view)
             else: #do by ROW
-                if p.length != self.collength:
-                    print('Length of permutation vector must be equal to column length')
-                    return
+                assert p.length == self.collength,'In permute method index vector is not sized properly'
                 f[self.type](self.view,VSIP_ROW,pc.view,self.view)
             return self
         @property

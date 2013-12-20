@@ -124,7 +124,7 @@ def bidiag(B):
         houseProd(v,B[i:,i:]);
         pv.copy(v[1:],x[1:])
     return B
-def biDiagPhaseToZero(B,L, d, f, R, eps0): 
+def biDiagPhaseToZero(B,L, d, f, R, eps0): # here d and f may be complex
     nd=d.length
     nf=f.length
     assert nd == nf+1, 'For biDiagPhaseToZero the length of d should be nf+1'
@@ -132,19 +132,28 @@ def biDiagPhaseToZero(B,L, d, f, R, eps0):
     rr=R.rowview
     for i in range(nd):
         ps = d[i]
-        m=abs(ps) 
-        ps /= m
+        if ps == 0.0:
+            ps = 1.0
+            m = 0.0
+        else:
+            m=abs(ps) # hypot(ps.real,ps.imag) might have better numerical properties than abs
+            ps /= m
         if(m < eps0):
             d[i]=0.0
         else:
             d[i]=m
-            f[i] *= ps.conjugate()
+            if i < f.length:
+                f[i] *= ps.conjugate()
             lc(i)[:] *= ps
     for i in range(nf-1):
         j=i+1
         ps=f[i]
-        m=abs(ps)
-        ps /= m
+        if ps == 0.0:
+            ps = 1.0
+            m=0.0
+        else:
+            m=abs(ps) # hypot(ps.real,ps.imag) might have better numerical properties than abs
+            ps /= m
         lc(j)[:] *= ps.conjugate()
         rr(j)[:] *= ps
         f[i] = m
@@ -152,12 +161,16 @@ def biDiagPhaseToZero(B,L, d, f, R, eps0):
     j=nf
     i=j-1
     ps=f[i]
-    m=abs(ps)
-    ps /= m
+    if ps == 0.0:
+        ps = 1.0
+        m = 0.0
+    else:
+        m=abs(ps)
+        ps /= m
     f[i]=m
     lc(j)[:] *= ps.conjugate()
     rr(j)[:] *= ps
-    if 'cvview' in d.type: 
+    if 'cvview' in d.type: #From here d and f are real since imaginary is all zero
         return (d.realview.copy,f.realview.copy)
     else:
         return (d.copy,f.copy)
@@ -169,4 +182,4 @@ def svdBidiag(A,eps):
     R=VHmatExtract(B)
     b=B.diagview
     d,f=biDiagPhaseToZero(B,L, b(0), b(1), R, eps0)
-    return(L,d,f,R,eps0)
+    return (L,d,f,R,eps0)
