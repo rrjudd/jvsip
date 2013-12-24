@@ -33,6 +33,10 @@ VI_cblockcreate_f(
       b->size     = N;   /* size in complex elements            */
       b->bindings = 0;
       b->hint     = h;
+      b->a_scalar.r = 0.0; b->a_scalar.i = 0.0;
+      b->a_zero.r = 0.0; b->a_zero.i = 0.0;
+      b->a_one.r = 1.0; b->a_one.i = 0.0;
+      b->a_imag_one.r = 0.0; b->a_imag_one.i = 1.0;
       #if defined(VSIP_DEFAULT_SPLIT) || defined(VSIP_ALWAYS_SPLIT)
          b->cstride  = 1;   /* native block are split           */
          b->R = VI_blockcreate_f(N,h);
@@ -70,6 +74,7 @@ VI_cblockcreate_f(
             b->I->array++;
          }
       #endif
+      if(b){
       #if defined(VSIP_ALWAYS_INTERLEAVED)
          b->data = ((void*)0);
          b->Rp = (vsip_scalar_f*)NULL;
@@ -80,11 +85,8 @@ VI_cblockcreate_f(
          b->Rp = (vsip_scalar_f*)NULL;
          b->Ip = (vsip_scalar_f*)NULL;
       #endif
-      b->a_scalar.r = 0.0; b->a_scalar.i = 0.0;
-      b->a_zero.r = 0.0; b->a_zero.i = 0.0;
-      b->a_one.r = 1.0; b->a_one.i = 0.0;
-      b->a_imag_one.r = 0.0; b->a_imag_one.i = 1.0;
-  }    
+      }
+  }
   return b;
 }
 #endif
