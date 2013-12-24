@@ -2079,8 +2079,8 @@ static void cphaseCheck_f(csvdObj_f *svd)
    vsip_scalar_f ps;
    vsip_scalar_f m;
    vsip_cvview_f *l = &svd->ls_one;
-   vsip_scalar_f*fptr=f->block->array;
-   vsip_scalar_f*dptr=d->block->array;
+   vsip_scalar_f *fptr=f->block->array + f->offset * f->block->rstride;
+   vsip_scalar_f *dptr=d->block->array + d->offset * d->block->rstride;
    vsip_scalar_f *re,*im;
    vsip_stride strd;
    for(i=0; i<d->length; i++){
@@ -2121,8 +2121,8 @@ static void cphaseCheck2_f(csvdObj_f *svd) /* save U */
    vsip_scalar_f ps;
    vsip_scalar_f m;
    vsip_cvview_f *l = &svd->ls_one;
-   vsip_scalar_f*fptr=f->block->array;
-   vsip_scalar_f*dptr=d->block->array;
+   vsip_scalar_f *fptr=f->block->array + f->offset * f->block->rstride;
+   vsip_scalar_f *dptr=d->block->array + d->offset * d->block->rstride;
    vsip_scalar_f *re,*im;
    vsip_stride strd;
    for(i=0; i<d->length; i++){
@@ -2161,8 +2161,8 @@ static void cphaseCheck1_f(csvdObj_f *svd) /* save V */
    vsip_index i;
    vsip_scalar_f ps;
    vsip_scalar_f m;
-   vsip_scalar_f*fptr=f->block->array;
-   vsip_scalar_f*dptr=d->block->array;
+   vsip_scalar_f *fptr=f->block->array + f->offset * f->block->rstride;
+   vsip_scalar_f *dptr=d->block->array + d->offset * d->block->rstride;
    for(i=0; i<d->length; i++){
       ps=dptr[i];
       m = (ps<0) ? -ps:ps;
