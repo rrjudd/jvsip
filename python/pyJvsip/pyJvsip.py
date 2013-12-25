@@ -354,7 +354,7 @@ class Block (object):
         def __setitem__(self,i,value):
             if 'vview' in self.type:
                 if isinstance(i,int) or isinstance(i,long):
-                    assert i >= 0 and i < self.type,'Index out of bound'
+                    assert i >= 0 and i < self.length,'Index out of bound'
                     if('cvview' in self.type):
                         vsip.put(self.view,i,complex(value.real,value.imag))
                     else:
