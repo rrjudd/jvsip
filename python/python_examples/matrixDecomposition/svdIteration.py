@@ -275,7 +275,7 @@ def svdIteration(L0,d0,f0,R0,eps0):
                 zeroCol(d,f,R);
             else:
                 L=L[:,k:]
-                d.putlength(d.length-k+1)
+                d.putlength(d.length-(k+1))
                 d.putoffset(d.offset+k+1)
                 f.putlength(f.length - k)
                 f.putoffset(f.offset + k)
