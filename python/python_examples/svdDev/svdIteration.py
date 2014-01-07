@@ -258,6 +258,25 @@ def phaseCheck(L,d,f,R,eps0):
 
 
 def svdIteration(L0,d0,f0,R0,eps0):
+    """
+    Iterate so that d0 will contain singular values of a
+    matrix A and f0 will be all zeroes.
+    Usage:
+        L,d,R = svdIteration(L0,d0,f0,R0,eps0)
+    Where:
+        Assuming a decompostion of matrix A
+        A = L0.prod(D0).prod(R0)
+       and
+        D0.diagview(0).realview[:]=d0
+        D0.diagview(1).realview[:]=f0
+        other entries of D0 are zero.
+        eps0 is a small number representing zero for the iteration process.
+    Returns L,d,R such that
+        A = L.prod(D).prod(R)
+        D compliant with L and R for matrix product
+        D.diagview(0).realview[:]=d
+        other entries of D are zero.
+    """
     cntr=0.0
     maxcntr = 5 * d0.length
     while (cntr < maxcntr):

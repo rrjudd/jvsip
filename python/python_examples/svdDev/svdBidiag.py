@@ -58,7 +58,7 @@ def sign(a):
         if re < im:
             t=re/im; t*=t; t +=1; t = im*sqrt(t)
         else:
-            t=im/re; t*=t; t +=1; t = re*sqrt(t) 
+            t=im/re; t*=t; t +=1; t = re*sqrt(t)
         return a/t
 def houseVector(x):
     nrm=x.norm2
@@ -175,6 +175,24 @@ def biDiagPhaseToZero(B,L, d, f, R, eps0): # here d and f may be complex
     else:
         return (d.copy,f.copy)
 def svdBidiag(A,eps):
+    """
+    Usage:
+        L,d,f,R,eps0= svdBidiag(A,eps)
+    Where:
+        A is a matrix
+           supported types => mview_f, cmview_f, mview_d, cmview_d
+        eps is a small number
+        L is the left decomposition matrix
+        d is a real vector representing the zero diagonal
+        f is a real vector representing the first diagonal
+        eps0 is a small number bassed upon eps and the frobenius norm of A
+    Note:
+        If B is A.empty.fill(0)
+        and B.diagview(0).realview[:]=d; B.diagview(1).realview[:]=f
+    then
+        A=L.prod(B).prod(R)
+    This aglorithm is done out-of-place so A is preserved.
+    """
     eps0 = A.normFro/float(A.rowlength) * eps
     B=A.copy
     bidiag(B)

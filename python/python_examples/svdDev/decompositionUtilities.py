@@ -1,3 +1,8 @@
+# Notes
+# This module not really designed for general purpose use. I wrote this as a study mechanism for
+# decomposition algorithms. The codes are not well tested and may be naive.
+#
+# lapack working notes at http://www.netlib.org/lapack/lawns/
 import pyJvsip as pv
 def eye(t,n): # create and return an identity matrix of size n and type t
     return pv.create(t,n,n).identity
@@ -23,9 +28,11 @@ def sign(a_in): # see  LAPACK Working Notes 148 for definition of sign
     else:
         print('sign function only works on scalars')
         return
-def houseVector(x): 
+# householder routines
+def houseVector(x):
     """
-     This algorithm returns a normalized householder vector 'v' such that
+     v = houseVector(x)
+     returns a normalized householder vector 'v' such that
      the householder projection matrix 'H' is:
      H = I - 2 v v*
     """
@@ -123,9 +130,9 @@ def givens(t,i,j,c,s,size):
        Usage:
          G=givens(t,i,j,c,s,size)
        Where:
-         t = type 
-         i,j are index values for placement of 
-         c,s which are obtained (probably) from function givensCoef. 
+         t = type
+         i,j are index values for placement of
+         c,s which are obtained (probably) from function givensCoef.
          size is an integer
     """
     G=eye(t,size)
@@ -146,7 +153,7 @@ def gProd(i,j,c,s,A):
     """
     a1=A.rowview(i).copy
     a2=A.rowview(j).copy
-    A.rowview(i)[:]= c * a1 + s * a2 
+    A.rowview(i)[:]= c * a1 + s * a2
     A.rowview(j)[:]= c * a2 - s.conjugate() * a1
     return A
 def prodG(A,i,j,c,s):
@@ -164,7 +171,7 @@ def prodG(A,i,j,c,s):
     """
     a_i=A.colview(i).copy
     a_j=A.colview(j).copy
-    A.colview(i)[:]= c * a_i + s.conjugate() * a_j 
+    A.colview(i)[:]= c * a_i + s.conjugate() * a_j
     A.colview(j)[:]= c * a_j - s * a_i
     return A
 def gtProd(i,j,c,s,A):
@@ -182,7 +189,7 @@ def gtProd(i,j,c,s,A):
     """
     a_i=A.rowview(i).copy
     a_j=A.rowview(j).copy
-    A.rowview(i)[:]= c * a_i + s.conjugate() * a_j 
+    A.rowview(i)[:]= c * a_i + s.conjugate() * a_j
     A.rowview(j)[:]= c * a_j - s * a_i
     return A
 def prodGT(A,i,j,c,s):
@@ -204,7 +211,7 @@ def prodGT(A,i,j,c,s):
     A.colview(i)[:] = c * a1 + s * a2
     A.colview(j)[:] = c * a2 -s.conjugate() * a1
     return A
-# householder routines
+# QR decomposition
 def QRD_inPlace(A):
     """
     The function QRD_inPlace(A) is done in-place on matrix A. If you want to retain A make a copy first.
@@ -255,7 +262,7 @@ def fullQProd(Q,B):
         houseProd(v,U[i:,i:])
     return U
 def QmatExtract(B):
-    """ 
+    """
     If B is a matrix which has been operated on by QRD_inPlace then
     QmatExtract(B) will return the full Q matrix of the QR decomposition.
     """
@@ -288,7 +295,7 @@ def houseQR(A):
        Usage:
           Q,R=houseQR(A)
        where:
-          A is of size M, N; M >= N; A = Q R 
+          A is of size M, N; M >= N; A = Q R
           Q is unitary
           R is upper triangular
     """
@@ -338,8 +345,8 @@ def bidiag(A): # m >= n
         if i < n-2:
             j=i+1
             x = B[i:,j:].rowview(0)
-            #v=houseVector(x.conj);x.conj 
-            v=houseVector(x).conj 
+            #v=houseVector(x.conj);x.conj
+            v=houseVector(x).conj
             v /= v[0]
             prodHouse(B[i:,j:],v)#=B[i:,j:].prod(house(v))
             x[1:]=v[1:]
@@ -354,7 +361,7 @@ def bidiag(A): # m >= n
 def bidiagExtract(B):
     """
       B=bidiagExtract(B0)
-        Returns, out of place, a matrix with the bidiagonal entries. 
+        Returns, out of place, a matrix with the bidiagonal entries.
         Input matrix is one produced by B0=bidiag(A)
     """
     B0=B.empty.fill(0.0)
@@ -364,8 +371,8 @@ def bidiagExtract(B):
 def UmatExtract(B):
     """
       U=UmatExtract(B0)
-        returns, out of place, the U matrix of the bidiagonal 
-        decomposition A=UBV^H given the result of bidiag routine 
+        returns, out of place, the U matrix of the bidiagonal
+        decomposition A=UBV^H given the result of bidiag routine
         B0=bidiag(A)
     """
     m=B.collength
@@ -384,8 +391,8 @@ def UmatExtract(B):
 def VHmatExtract(B):
     """
       VH=UmatExtract(B0)
-        returns, out of place, the hermtian V matrix of the bidiagonal 
-        decomposition A=UBV^H given the result of bidiag routine 
+        returns, out of place, the hermtian V matrix of the bidiagonal
+        decomposition A=UBV^H given the result of bidiag routine
         B0=bidiag(A)
     """
     m=B.collength
@@ -439,9 +446,9 @@ def givensExtract(t,i,j,c,s,size):
     """
        Usage:
          G=givensExtract(t,i,j,c,s,size)
-         t = type 
-         i,j are index values for placement of 
-         c,s which are obtained (probably) from function givensCoef. 
+         t = type
+         i,j are index values for placement of
+         c,s which are obtained (probably) from function givensCoef.
          size is an integer
     """
     G=eye(t,size)
@@ -450,19 +457,19 @@ def givensExtract(t,i,j,c,s,size):
 def gProd(i,j,c,s,A):
     a1=A.rowview(i).copy
     a2=A.rowview(j).copy
-    A.rowview(i)[:]= c * a1 + s * a2 
+    A.rowview(i)[:]= c * a1 + s * a2
     A.rowview(j)[:]= c * a2 - s.conjugate() * a1
     return A
 def prodG(A,i,j,c,s):
     a_i=A.colview(i).copy
     a_j=A.colview(j).copy
-    A.colview(i)[:]= c * a_i + s.conjugate() * a_j 
+    A.colview(i)[:]= c * a_i + s.conjugate() * a_j
     A.colview(j)[:]= c * a_j - s * a_i
     return A
 def gtProd(i,j,c,s,A):
     a_i=A.rowview(i).copy
     a_j=A.rowview(j).copy
-    A.rowview(i)[:]= c * a_i + s.conjugate() * a_j 
+    A.rowview(i)[:]= c * a_i + s.conjugate() * a_j
     A.rowview(j)[:]= c * a_j - s * a_i
     return A
 def prodGT(A,i,j,c,s):
@@ -516,14 +523,14 @@ def givensBidiag(A):
             gProd(0,j,c,s,TC)
     return (U,B,VH)
 def svdZeroCheckAndSet(e,b0,b1):
-    """ 
+    """
      Usage:
         svdZeroCheckAndSet(eps,d,f)
      Where:
         eps0 is a small number we consider to be (close to) zero
         d is a vector view representing the main diagonal of an upper bidiagonal matrix
         f is a vector view representing the superdiagonal in an upper bidiagonal matrix.
-      In the svd algorithm this checks the superdiagonal for small numbers which 
+      In the svd algorithm this checks the superdiagonal for small numbers which
       may be set to zero. If found, set to zero.
     """
     s=e * (b0[0:b1.length].mag + b0[1:].mag)
@@ -534,10 +541,10 @@ def svdCorners(b1):
     """
        Functionality
            i,j = svdCorners(v)
-       where 
+       where
            v is a real vector of type float or double
-           i,j are indices. 
-       i,j; as returned 
+           i,j are indices.
+       i,j; as returned
            v[i:j-1] will be vector with no zero elements
            v[j-1:] will be a vector with all zero elements
        Note v is the first super-diagonal of a bidiagonal matrix.
@@ -555,8 +562,8 @@ def svdCorners(b1):
         i -= 1
     return(i+1,j+1)
 def diagPhaseToZero(L,B):
-    """ 
-       To phase shift the main diagonal entries of a matrix B so entries 
+    """
+       To phase shift the main diagonal entries of a matrix B so entries
        are real (imaginary zero) use this routine.
     """
     d = B.diagview(0)
@@ -567,12 +574,12 @@ def diagPhaseToZero(L,B):
             ps /= m
             L.colview(i)[:] *= ps
             B.rowview(i)[:] *= ps # if B is strictly diagonal don't need this step
-            d[i] = m 
+            d[i] = m
 def biDiagPhaseToZero(L,d,f,R,eps0):
-    """ 
+    """
     For a Bidiagonal matrix B This routine uses subview vectors
       `d=B.diagview(0)`
-    and 
+    and
       `f=B.diagview(1)`
     and phase shifts vectors d and f so that B has zero complex part.
     Matrices L and R are update matrices.
@@ -587,7 +594,7 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
                 ps=-1.0
             else:
                 ps= 1.0
-            m = abs(m) 
+            m = abs(m)
         else:
             m=pv.vsip_hypot_d(ps.real,ps.imag)
             ps /= m
@@ -598,7 +605,7 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
                 f[i] *= ps.conjugate()
         else:
             d[i] = 0.0
-    svdZeroCheckAndSet(eps0,d,f)          
+    svdZeroCheckAndSet(eps0,d,f)
     for i in range(f.length-1):
         j=i+1
         ps = f[i]
@@ -608,7 +615,7 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
                 ps=-1.0
             else:
                 ps= 1.0
-            m = abs(m) 
+            m = abs(m)
         else:
             m=pv.vsip_hypot_d(ps.real,ps.imag)
             ps /= m
@@ -625,7 +632,7 @@ def biDiagPhaseToZero(L,d,f,R,eps0):
             ps=-1.0
         else:
             ps= 1.0
-        m = abs(m) 
+        m = abs(m)
     else:
         m=pv.vsip_hypot_d(ps.real,ps.imag)
         ps /= m
@@ -645,12 +652,12 @@ def zeroRow(L,d,f):
     L is a subview of the left update matrix we call L0 here.
     for the indices shown above
     L = L0[:,i:n+1]
-    
+
     If d contains a zero entry, and the zero entry is not at the end of d,
     then zeroRow is used to zero out the corresponding superdiagonal entry
-    in the row. Vector d may contain more than one zero. We zero out the zero 
-    with the largest index (we designate k). So d[k] = d0[i+k] is the zero 
-    of interest. 
+    in the row. Vector d may contain more than one zero. We zero out the zero
+    with the largest index (we designate k). So d[k] = d0[i+k] is the zero
+    of interest.
         Note if d[k] is the last entry then the corresponding superdiagonal entry
         in the row is already zero. Use zeroCol to zero out the column.
 
@@ -744,18 +751,18 @@ def svdMu(d2,f1,d3,f2):
     D = (cu * cl - cd * cd)/(T*T)
     if 4.*D > 1.0:
         root = 0.0
-    else: 
+    else:
         root = T * pv.vsip_sqrt_d(1.0 - 4. * D)
     lambda1 = (T + root)/(2.); lambda2 = (T - root)/(2.)
     if abs(lambda1 - cl) < abs(lambda2 - cl):
         mu = lambda1
     else:
         mu = lambda2
-    return mu 
+    return mu
 def svdStep(L,d,f,R):
     if 'cvview' in d.type or 'cvview' in f.type:
         print('Input vector views must be of type real; Fail for svdStep')
-        return     
+        return
     n=d.length
     #initial step
     if n >= 3:
@@ -787,9 +794,9 @@ def svdStep(L,d,f,R):
     #final step
     i=n-2; j=n-1
     c,s,r = givensCoef(d[i],t)
-    d[i]=r; 
+    d[i]=r;
     t= c * d[j] - s * f[i];
-    f[i] *= c; f[i] += s * d[j]; 
+    f[i] *= c; f[i] += s * d[j];
     d[j]=t
     prodG(L,i,j,c,s)
 def zeroFind(d,eps0):
@@ -806,18 +813,18 @@ def zeroFind(d,eps0):
 
 def svd(A):
     """
-       The bidiag routine is used in the svd and bidiag is defined out of place, 
+       The bidiag routine is used in the svd and bidiag is defined out of place,
        so svd is also out of place. The bidiag routine can be done in-place with
        a simple change, so the svd can also be done in-place.
        Usage:
            U,S,VH = svd(A)
            A is a matrix with column length >= row length
            where U is a unitary matrix of size A.columnlength
-           S is a real vector of size A.rowlength containing the singular values of A 
+           S is a real vector of size A.rowlength containing the singular values of A
               Note: S is considered here to be a diagonal matrix
            VH is a unitary matrix of size A.rowlength
        Note:
-           A = U S VH = U.prod(S.mmul(VH.ROW)) 
+           A = U S VH = U.prod(S.mmul(VH.ROW))
     """
     def svdBidiagonal(A):
         if 'mview_f' not in A.type and 'mview_d' not in A.type:
