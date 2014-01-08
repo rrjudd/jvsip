@@ -11735,7 +11735,7 @@
 				061C2938172845EC00773972 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		06307E3D150BB71E00EF9D00 /* Build configuration list for PBXProject "jvsipF" */ = {
 			isa = XCConfigurationList;
@@ -11744,7 +11744,7 @@
 				06307E58150BB71E00EF9D00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		06307E59150BB71E00EF9D00 /* Build configuration list for PBXNativeTarget "jvsipF" */ = {
 			isa = XCConfigurationList;
@@ -11753,7 +11753,7 @@
 				06307E5B150BB71E00EF9D00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
