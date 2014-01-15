@@ -128,13 +128,13 @@ def mul(a,b,c):
        'vview_sivview_sivview_si':vsip_vmul_si, 'vview_ucvview_ucvview_uc':vsip_vmul_uc}
     assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in mul'
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in mul'
-    assert __isSizeCompatible(b,c),'Size error in add function'
+    assert __isSizeCompatible(b,c),'Size error in mul function'
     if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
         t='scalar'+b.type+c.type
     elif isinstance(a,complex):
         t='cscalar'+b.type+c.type
     else:
-        assert 'pyJvsip.__View' in repr(a),'Argument one must be a scalar or a pyJvsip view object in add'
+        assert 'pyJvsip.__View' in repr(a),'Argument one must be a scalar or a pyJvsip view object in mul'
         t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:'+t+':> not recognized for mul'
     if 'cscalar' in t:
@@ -279,3 +279,4 @@ def hypot(a,b,c):
     assert f.has_key(t),'Type <:'+t+':> not recognized for hypot'
     f[t](a.view,b.view,c.view)
     return c
+
