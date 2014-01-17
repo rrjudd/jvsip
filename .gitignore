@@ -6,9 +6,13 @@ c_VSIP_testing/atest.c
 include/
 lib/
 build/
-vsip_wrap.c
 vsip.py
+.ipynb_checkpoints
+ToDo
+Untitled*
+*wrap.c
 *.pyc
 *.[oa]
+*.so
 *~
 .DS_Store
