@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AF4AB254-60A2-47A6-A4D3-1F2ABBC78FA0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>jvsipF</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>98CE807A-110B-468E-95D2-38734B471B19</key>
+		<string>https://github.com/rrjudd/jvsip</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>AppleXcode/jvsipF/jvsipF.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>98CE807A-110B-468E-95D2-38734B471B19</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rrjudd/jvsip</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>98CE807A-110B-468E-95D2-38734B471B19</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>98CE807A-110B-468E-95D2-38734B471B19</string>
+			<key>IDESourceControlWCCName</key>
+			<string>jvsip</string>
+		</dict>
+	</array>
+</dict>
+</plist>
