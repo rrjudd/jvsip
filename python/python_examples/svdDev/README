@@ -53,3 +53,10 @@ I keep this info incase I need to backup.
 for complex use testVsipCsvd.c instead of testVsipSvd.c
 
 Modify testVsip*.c for various test cases.
+
+NOTE:
+The C VSIP svd is done, at least version one and is also supported in pyJvsip
+although work remains. I will use this directory for documentation and will try to
+cleanup the code so it is consistent and works. I am having a little trouble doing this
+so it can be built and used by somebody other than myself. It's main value is documentation
+and support of the C VSIPL code to improve it's maintainablity.
