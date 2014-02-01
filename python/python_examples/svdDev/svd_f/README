@@ -1,0 +1,14 @@
+In this directory is a file svd_f.c which defines an svd for vsip float using C VSIPL code.
+
+The file test_svd_f.c runs a simple example using routines defined in svd_f
+
+The file svd_f.py mirrors the code in svd_f.c except using the vsip module and python. The goal 
+is to demonstrate how to develop C code using python and vice versa for testing and development
+purposes.
+
+Note this code is not as well tested as I would like and is probably buggy.  It is more important to
+test and debug the actual pyJvsip and C VSIPL svd code and my time is a bit limited. This code was
+origionaly developed when writing the C VSIPL routines and so I include it here.
+
+To make the C code just do
+gcc -o test_svd_f test_svd_f.c svd_f.c  -I<vsip.h directory> -L<vsip.h library directory> -lvsip
