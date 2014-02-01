@@ -67,7 +67,6 @@ def diag_sv_f(Am,a, i):
     v = vsip_vattr_f()
     vsip_mgetattrib_f(Am,A)
     vsip_vgetattrib_f(a,v)
-    print("in diag_sv_f")
     v.stride=A.row_stride + A.col_stride
     if(i==0):
        v.length = A.row_length

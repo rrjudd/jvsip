@@ -4,7 +4,9 @@ The file test_svd_f.c runs a simple example using routines defined in svd_f
 
 The file svd_f.py mirrors the code in svd_f.c except using the vsip module and python. The goal 
 is to demonstrate how to develop C code using python and vice versa for testing and development
-purposes.
+purposes.  The notebook module test_svd_f.ipynb is the counterpoint to test_svd_f.  Comparison of
+the python codes with there coresponding C codes is instructive and the main reason for includeing
+this example.
 
 Note this code is not as well tested as I would like and is probably buggy.  It is more important to
 test and debug the actual pyJvsip and C VSIPL svd code and my time is a bit limited. This code was
