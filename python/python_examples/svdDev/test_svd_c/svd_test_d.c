@@ -1,4 +1,5 @@
-#include"svd_d.h"
+#include<vsip.h>
+#include"svd.h"
 
 static void mprint_d(vsip_mview_d *A){
     vsip_length n=vsip_mgetrowlength_d(A);
@@ -38,30 +39,27 @@ static vsip_scalar_d checkBack_d(vsip_mview_d* A,vsip_mview_d* L, vsip_vview_d* 
 }
 
 int main(int argc, char* argv[]){
-    vsip_length m=6,n=6;
-    svdObj_d *s;
-    int init=vsip_init((void*)0);
-    vsip_mview_d *A = vsip_mcreate_d(m,n,VSIP_ROW,VSIP_MEM_NONE);
-    vsip_vview_d *a = vsip_vbind_d(vsip_mgetblock_d(A),0,1,m*n);
-    vsip_randstate *rnd=vsip_randcreate(5,1,1,VSIP_PRNG);
-    if(init) exit(0);
-    vsip_vrandn_d(rnd,a);
-    mprint_d(A); printf("\n");
-    s = svd_d(A);
-    if(!s){
-        printf("svd failed\n");
-        exit(0);
-    }
-    mprint_d(s->L);
-    printf("\n");
-    vprint_d(s->d);
-    printf("\n");
-    mprint_d(s->R);
-    printf("Check value %f\n",checkBack_d(A,s->L,s->d,s->R));
-    vsip_vdestroy_d(a);
-    vsip_malldestroy_d(A);
-    vsip_randdestroy(rnd);
-    svdFinalize_d(s);
-    vsip_finalize((void*)0);
-    return 1;
+   int init=vsip_init((void*)0);
+   if(init) exit(0);
+   svdObj_d s;
+   vsip_mview_d *A = vsip_mcreate_d(8,6,VSIP_ROW,VSIP_MEM_NONE);
+   vsip_vview_d *a = vsip_vbind_d(vsip_mgetblock_d(A),0,1,48);
+   vsip_randstate *rnd=vsip_randcreate(5,1,1,VSIP_PRNG);
+   vsip_vrandn_d(rnd,a);
+   mprint_d(A); printf("\n");
+   s=svd_d(A);
+   mprint_d(s.L);
+   printf("\n");
+   vprint_d(s.d);
+   printf("\n");
+   mprint_d(s.R);
+   printf("Check value %f\n",checkBack_d(A,s.L,s.d,s.R));
+   vsip_malldestroy_d(s.L);
+   vsip_malldestroy_d(s.R);
+   vsip_valldestroy_d(s.d);
+   vsip_vdestroy_d(a);
+   vsip_malldestroy_d(A);
+   vsip_randdestroy(rnd);
+   vsip_finalize((void*)0);
+   return 1;
 }

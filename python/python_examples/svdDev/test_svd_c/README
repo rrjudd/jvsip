@@ -1,0 +1,4 @@
+The file svd.c and svd.h contain C VSIPL code implementing the basic SVD calculation.
+The files *_test contains some example code testing svd.c
+The file make_test_f.sh is a shell script to compile the code. (sh make_test.sh)
+The file make_clean.sh is a shell script to remove stuff compiled by make_test.sh
