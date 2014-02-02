@@ -975,7 +975,6 @@ static void zeroRow_f(svdObj_f *svd)
    givensObj_f g;
    vsip_scalar_f xd,xf,t;
    vsip_index i;
-   printf(" d, f length %ld, %ld\n",d->length,f->length);
    xd=*dptr;
    xf=*fptr;
    g=givensCoef_f(xd,xf);
@@ -3075,7 +3074,6 @@ static void svdBidiag0_f(svdObj_f *svd)
    bidiag_f(svd);
    biDiagPhaseToZero0_f(svd);
 }
-#define VPRINT(d) {int i;printf("[");for(i=0; i<d->length; i++) printf("%.6f ",VI_VGET_F(d,i));printf("]\n");}
 
 static void svdIteration_f(svdObj_f* svd)
 {
@@ -3100,12 +3098,10 @@ static void svdIteration_f(svdObj_f* svd)
       imsv_f(R0,R,cnr.i,cnr.j,0,0);
       n=f->length;
       k=zeroFind_f(d,eps0);
-      printf("in");VPRINT(d0)
       if (k > 0 ){
          k=k-1;
          if(VI_VGET_F(d,n) == 0.0){
             zeroCol_f(svd);
-            printf("zero col");VPRINT(d0)
          }else{
             imsv_f(L,L,0,0,k,0);
             d->length-=k+1;
@@ -3113,11 +3109,9 @@ static void svdIteration_f(svdObj_f* svd)
             f->length -= k;
             f->offset += k;
             zeroRow_f(svd);
-            printf("zero row");VPRINT(d0)
          }
       }else{
          svdStep_f(svd);
-         printf("svd step");VPRINT(d0)
       }
       phaseCheck_f(svd);
    }

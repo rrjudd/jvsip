@@ -1,5 +1,15 @@
+# Notes
+# This module not really designed for general purpose use. I wrote this as a study mechanism for
+# decomposition algorithms. The codes are not well tested and may be naive.
+#
+# lapack working notes at http://www.netlib.org/lapack/lawns/
 import pyJvsip as pv
-def eye(t,n): # create and return an identity matrix of size n and type t
+def eye(t,n):
+    """
+    Usage: I=eye(t,n)
+       create and return an identity matrix of size n and type t
+       t must be a matrix
+    """
     return pv.create(t,n,n).identity
 def sign(a_in): # see  LAPACK Working Notes 148 for definition of sign
     """
@@ -23,9 +33,11 @@ def sign(a_in): # see  LAPACK Working Notes 148 for definition of sign
     else:
         print('sign function only works on scalars')
         return
+# householder routines
 def houseVector(x): 
     """
-     This algorithm returns a normalized householder vector 'v' such that
+     v = houseVector(x) 
+     returns a normalized householder vector 'v' such that
      the householder projection matrix 'H' is:
      H = I - 2 v v*
     """
@@ -204,7 +216,7 @@ def prodGT(A,i,j,c,s):
     A.colview(i)[:] = c * a1 + s * a2
     A.colview(j)[:] = c * a2 -s.conjugate() * a1
     return A
-# householder routines
+# QR decomposition
 def QRD_inPlace(A):
     """
     The function QRD_inPlace(A) is done in-place on matrix A. If you want to retain A make a copy first.
@@ -850,6 +862,7 @@ def svd(A):
         cntr=0
         maxcntr=5*d0.length
         while cntr < maxcntr:
+            print('%d %d\n'%(d0.length,f0.length))
             biDiagPhaseToZero(L0,d0,f0,R0,eps0)
             cntr += 1
             i,j=svdCorners(f0)

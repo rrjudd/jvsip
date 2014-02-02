@@ -3,6 +3,7 @@ c_VSIP_testing/test_all
 c_VSIP_testing/test_all.c
 c_VSIP_testing/atest
 c_VSIP_testing/atest.c
+python/python_examples/svdDev/svd_f/test_svd_f
 include/
 lib/
 build/
