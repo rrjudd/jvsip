@@ -2836,9 +2836,9 @@ class Block (object):
                Calling view must be square and float
                return lu object
             """
-            assert LU.luSel.has_key(self.type), "LU for %s not supported"%self.type
+            assert LU.tSel.has_key(self.type), "LU for %s not supported"%self.type
             assert self.rowlength == self.collength,"LU only supports square matrices"
-            return LU(LU.luSel[self.type],self.rowlength).decompose(self)
+            return LU(LU.tSel[self.type],self.rowlength).decompose(self)
         @property
         def luInv(self):
             """
@@ -2849,10 +2849,10 @@ class Block (object):
             will overwrite A. To keep A use copy as in
             Y=A.copy.luInv.
             """
-            assert LU.luSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luInv'
+            assert LU.tSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luInv'
             assert self.rowlength == self.collength, 'Method luInv only works for square matrices'
             retval=self.empty.identity
-            LU(LU.luSel[self.type],self.rowlength).decompose(self).solve(0,retval)
+            LU(LU.tSel[self.type],self.rowlength).decompose(self).solve(0,retval)
             return retval
         def luSolve(self,XB):
             """
@@ -2866,7 +2866,7 @@ class Block (object):
             LU will overwrite the Calling matrix. To keep everything use
                 Y = A.copy.luSolve(X.copy)
             """
-            assert LU.luSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luSolve'
+            assert LU.tSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luSolve'
             assert self.rowlength == self.collength, 'Method luSolve only works for square matrices'
             if 'vview' in XB.type:
                 X=XB.block.bind(XB.offset,XB.stride,XB.length,1,1)
@@ -2874,7 +2874,7 @@ class Block (object):
                 X = XB
             assert X.type == self.type, 'Calling view and input/output view must be the same type and precision'
             assert self.collength == X.collength, 'Input/Output view not sized properly for calling view'
-            obj=LU(LU.luSel[self.type],self.rowlength).decompose(self)
+            obj=LU(LU.tSel[self.type],self.rowlength).decompose(self)
             assert obj.singular,'The calling matrix is singular'
             obj.solve('NTRANS',X)
             return XB
@@ -2901,7 +2901,7 @@ class Block (object):
                 print('Type <:' +self.type+ '<: not supported for QR')
                 return
             assert A.collength >= A.rowlength,"QR requires column length less than row length"
-            retval=QR(QR.qrSel[self.type],A.collength,A.rowlength,VSIP_QRD_SAVEQ)
+            retval=QR(QR.tSel[self.type],A.collength,A.rowlength,VSIP_QRD_SAVEQ)
             retval.decompose(A)
             return retval
         @property
@@ -3361,7 +3361,7 @@ class CONV(object):
     See VSIPL specification for more information on convolution.
     """
     tConv=['conv1d_f','conv1d_d']
-    convSel={'vview_f':'conv1d_f','vview_d':'conv1d_d'}
+    tSel={'vview_f':'conv1d_f','vview_d':'conv1d_d'}
     supported=['vview_f','vview_d']
     supportRegion = {0:VSIP_SUPPORT_FULL,1:VSIP_SUPPORT_SAME,2:VSIP_SUPPORT_MIN,
               'FULL':VSIP_SUPPORT_FULL,'SAME':VSIP_SUPPORT_SAME,'MIN':VSIP_SUPPORT_MIN}
@@ -3382,7 +3382,7 @@ class CONV(object):
                'Arguments decimation and data size must be integers, and ntimes is an integer'
         assert dec > 0, 'Decimation must be an integer greater than zero '
         assert 'pyJvsip.__View' in repr(h), 'The kernel must be a pyJvsip view'
-        assert CONV.convSel.has_key(h.type) and t == CONV.convSel[h.type],\
+        assert CONV.tSel.has_key(h.type) and t == CONV.tSel[h.type],\
               'Kernel type <:' + h.type + ':> not recognized for convolution.'
         assert CONV.symmetry.has_key(symm), 'Symmetry flag not recognized'
         mySym=CONV.symmStrings[CONV.symmetry[symm]]
@@ -3644,7 +3644,7 @@ class FIR(object):
 # vsip_dlusol_p
 class LU(object):
     tLu=['lu_f','lu_d','clu_f','clu_d']
-    luSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
+    tSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
     def __init__(self,t,luSize):
         luCreate={'clu_f':vsip_clud_create_f,
@@ -3757,7 +3757,7 @@ class CHOL(object):
     Cholesky Decompossition
     """
     tChol=['chol_f','chol_d','cchol_f','cchol_d']
-    cholSel={'mview_f':'chol_f','mview_d':'chol_d','cmview_f':'cchol_f','cmview_d':'cchol_d'}
+    tSel={'mview_f':'chol_f','mview_d':'chol_d','cmview_f':'cchol_f','cmview_d':'cchol_d'}
     uplowSel={0:VSIP_TR_LOW,1:VSIP_TR_UPP,'UPP':VSIP_TR_UPP,'LOW':VSIP_TR_LOW}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
     def __init__(self,t,uplow,cholSize):
@@ -3865,7 +3865,7 @@ class QR(object):
                 VSIP_LLS => 1
    """
     tQr=['qr_f','qr_d','cqr_f','cqr_d']
-    qrSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
+    tSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
     qSave=['NOSAVEQ','SAVEQ','SAVEQ1', VSIP_QRD_NOSAVEQ, VSIP_QRD_SAVEQ, VSIP_QRD_SAVEQ1]
     selQsave = {'NOSAVEQ':0,'SAVEQ':1,'SAVEQ1':2, 0:VSIP_QRD_NOSAVEQ, 1:VSIP_QRD_SAVEQ, 2:VSIP_QRD_SAVEQ1}
@@ -3944,8 +3944,8 @@ class QR(object):
          "Flag for Q option not recognized; should be 'NTRANS', 'TRANS' or 'HERM' "
         assert self.args[2] != 0,'QR object told not to save Q. No matrix product available'
         assert 'pyJvsip.__View' in repr(X),'The last argument to prodQ must be a pyJvsip view.'
-        assert QR.qrSel.has_key(X.type),'The input view to prodQ is not supported by QR object'
-        assert QR.qrSel[X.type] == self.type,\
+        assert QR.tSel.has_key(X.type),'The input view to prodQ is not supported by QR object'
+        assert QR.tSel[X.type] == self.type,\
                  'The input view to prodQ not the type the QR object was created for'
         m,n=self.qSize
         XM=X.collength
@@ -3969,7 +3969,7 @@ class QR(object):
             'Second argument must be a number compatible with input/output view'
         assert QR.qOp.has_key(op),'Flag for matrix operation not found.'
         assert 'pyJvsip.__View' in repr(XB),'Last argument must be a pyJvsip View'
-        assert QR.qrSel.has_key(XB.type)
+        assert QR.tSel.has_key(XB.type)
         if 'cmview_d' in XB.type:
             sclr=vsip_cmplx_d(alpha.real,alpha,imag)
         elif 'cmview_f' in XB.type:
@@ -3977,7 +3977,7 @@ class QR(object):
         else:
             sclr=alpha
         assert self.__rowlength == XB.rowlength,'Size error for solveR.'
-        assert self.type == qrSel[XB.type], 'The input view does not comply with QR object type'
+        assert self.type == tSel[XB.type], 'The input view does not comply with QR object type'
         qrSol[self.type](self.vsip,QR.qOp[op],sclr,XB.view)
         return XB
     def solve(self,prob,XB):
@@ -3986,8 +3986,8 @@ class QR(object):
         assert 'pyJvsip.__View' in repr(self.__m['matrix']),'No matrix associated with QR object'
         assert QR.qProb.has_key(prob),"QR problem type should be 'COV' or 'LLS'. "
         assert 'pyJvsip.__View' in repr(XB),'The second argument to solve must be a pyJvsip view'
-        assert QR.qrSel.has_key(XB.type),'The second argument is not supported by QR'
-        assert QR.qrSel[XB.type] == self.type,\
+        assert QR.tSel.has_key(XB.type),'The second argument is not supported by QR'
+        assert QR.tSel[XB.type] == self.type,\
         'The QR object of type <:%s:> was not defined for an input/output view of type <:%s:>'%(self.type,XB.type)
         if 'COV' == QR.probSel[QR.qProb[prob]]:
             assert XB.collength == self.__rowlength, 'Size error for solve covariance problem'
@@ -4288,8 +4288,8 @@ def create(atype,*vals):
             symm = vals[1]
             assert symmetry.has_key(symm),'Symmetry flag not recognized for create of %s'%atype
         assert nvals < 6, msg
-        assert 'pyJvsip.__View' in repr(h) and isinstance(dtaSize,int) and CONV.convSel.has_key(h.type), msg1
-        assert atype == CONV.convSel[h.type],'Type %s not conformant with %s.'%(h.type,atype)
+        assert 'pyJvsip.__View' in repr(h) and isinstance(dtaSize,int) and CONV.tSel.has_key(h.type), msg1
+        assert atype == CONV.tSel[h.type],'Type %s not conformant with %s.'%(h.type,atype)
         if nvals > 3:
             dec = vals[3]
             assert isinstance(dec,int),'Decimation value for create of %s must be an integer'%atype
