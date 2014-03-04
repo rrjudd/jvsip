@@ -77,7 +77,7 @@ def gemp(alpha,a,op_a,b,op_b,beta,c):
              vsip_cmplx_d(beta.real,beta.imag),c.view)
         return c
     elif t == 'cmview_f':
-        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.view,view,opc[op_a],b.view,opc[op_b],\
+        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.view,opc[op_a],b.view,opc[op_b],\
              vsip_cmplx_f(beta.real,beta.imag),c.view)
         return c
     else:
