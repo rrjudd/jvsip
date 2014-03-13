@@ -1,0 +1,3 @@
+The output of example 11 is long and should be output to a file
+example11 >file.m
+file.m may be input into matlab for ploting
