@@ -1,0 +1,11 @@
+The output of example 11 is long and should be output to a file
+For pyJvsip I have assumed matplotlib is installed. Make appropriate
+changes (to example11.py) if that is not the case.
+pythone example11.py should run and plot.
+
+If no matplotlib
+python example11.py >file.m 
+file.m may be input into matlab for ploting
+
+If you are using a notebook start it with
+ipython notebook --pylab inline
