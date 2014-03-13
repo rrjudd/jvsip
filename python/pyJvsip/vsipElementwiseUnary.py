@@ -82,6 +82,15 @@ def mag(a,b):
     assert f.has_key(t),'Type <:'+t+':> not supported by mag'
     f[t](a.view,b.view)
     return b
+def cmagsq(a,b):
+    f={'cmview_dmview_d':vsip_mcmagsq_d, 'cmview_fmview_f':vsip_mcmagsq_f,
+       'cvview_dvview_d':vsip_vcmagsq_d, 'cvview_fvview_f':vsip_vcmagsq_f}
+    assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function cmagsq'
+    t=a.type+b.type
+    assert __isSizeCompatible(a,b), 'Arguments must be the same size for cmagq'
+    assert f.has_key(t),'Type <:'+t+':> not supported by cmagsq'
+    f[t](a.view,b.view)
+    return b
 def modulate(a,nu,phi,b):
     """
     See VSIP document for more information on vsip_vmodulate_f

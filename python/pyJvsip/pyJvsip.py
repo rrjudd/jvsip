@@ -1143,7 +1143,7 @@ class Block (object):
             """
             f = ['cmview_d', 'cmview_f', 'cvview_d', 'cvview_f', 'mview_d',
                  'mview_f', 'vview_d', 'vview_f', 'vview_i', 'vview_si']
-            assert self.type in f, 'Type <:%s:> not recognized for magsq'%self.type
+            assert self.type in f, 'Type <:%s:> not recognized for mag'%self.type
             if 'cmview' in self.type or 'cvview' in self.type:
                 attr=self.compactAttrib(1)
             else:
