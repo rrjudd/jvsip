@@ -41,11 +41,11 @@ def clip(a,t1,t2,c1,c2,r):
     assert a.type == r.type,'Input and output views for clip must be the same type'
     assert __isSizeCompatible(a,r),'Input and output views for clip must be the same size'
     assert f.has_key(a.type),'Type <:'+a.type+':> not supported for clip'
-    assert isinstance(t1,int) or ininstance(t1,float) or isinstance(t1,long)
-    assert isinstance(t2,int) or ininstance(t2,float) or isinstance(t2,long)
-    assert isinstance(c1,int) or ininstance(c1,float) or isinstance(c1,long)
-    assert isinstance(c2,int) or ininstance(c2,float) or isinstance(c2,long)
-    f[t](a.view,t1,t2,c1,c2,r.view)
+    assert isinstance(t1,int) or isinstance(t1,float) or isinstance(t1,long)
+    assert isinstance(t2,int) or isinstance(t2,float) or isinstance(t2,long)
+    assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
+    assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
+    f[a.type](a.view,t1,t2,c1,c2,r.view)
     return r
 # vsip_sinvclip_p
 def invclip(a,t1,t2,t3,c1,c2,r):
@@ -66,11 +66,11 @@ def invclip(a,t1,t2,t3,c1,c2,r):
     assert a.type == r.type,'Input and output views for invclip must be the same type'
     assert __isSizeCompatible(a,r),'Input and output views for invclip must be the same size'    
     assert f.has_key(a.type),'Type <:'+a.type+':> not supported for invclip'
-    assert isinstance(t1,int) or ininstance(t1,float) or isinstance(t1,long)
-    assert isinstance(t2,int) or ininstance(t2,float) or isinstance(t2,long)
-    assert isinstance(t3,int) or ininstance(t3,float) or isinstance(t3,long)
-    assert isinstance(c1,int) or ininstance(c1,float) or isinstance(c1,long)
-    assert isinstance(c2,int) or ininstance(c2,float) or isinstance(c2,long)
+    assert isinstance(t1,int) or isinstance(t1,float) or isinstance(t1,long)
+    assert isinstance(t2,int) or isinstance(t2,float) or isinstance(t2,long)
+    assert isinstance(t3,int) or isinstance(t3,float) or isinstance(t3,long)
+    assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
+    assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
     f[t](a.view,t1,t2,t3,c1,c2,r.view)
     return r
 
