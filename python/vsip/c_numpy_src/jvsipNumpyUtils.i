@@ -1,7 +1,7 @@
  %module jvsipNumpyUtils
  %{
  /* Put header files here or function declarations like below */
-#include "../../../c_vsip_src/vsip.h"
+#include "../../../c_VSIP_src/vsip.h"
 #include "numpyArrayCopies.h"
  %}
 typedef enum { VSIP_ROW = 0, VSIP_COL = 1 } vsip_major;
