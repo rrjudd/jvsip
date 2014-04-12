@@ -11,6 +11,16 @@ vsip.py
 .ipynb_checkpoints
 ToDo
 Untitled*
+*.aux
+*.lot
+*.log
+*.lof
+*.ind
+*.ilg
+*.odt
+*.idx
+*.toc
+*.gz
 *wrap.c
 *.pyc
 *.[oa]

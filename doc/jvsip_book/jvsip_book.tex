@@ -11,6 +11,7 @@
 \usepackage{lmodern}
 \usepackage{listings}             % Include the listings-package
 \usepackage{float}
+\usepackage{makeidx}
 \usepackage{minted}
 \usepackage[hypcap]{caption}
 \newcounter{cexctr} \setcounter{cexctr}{1}
@@ -44,6 +45,7 @@
 \newcommand{\pyjvmethod}{\textbf{method }}
 %*********
 %\includeonly{c2}
+\makeindex
 \begin{document}
 \include{titlePage}
 \frontmatter
@@ -59,4 +61,5 @@
 \include{c5}
 \include{c6}
 \include{c7}
+\printindex
 \end{document}
