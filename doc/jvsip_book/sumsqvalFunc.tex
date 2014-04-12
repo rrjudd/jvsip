@@ -1,0 +1,17 @@
+\afunc{sumsqval}{Returns the sum of the squares of all the elements of a \ttbf{view}. Does not modify input. See table \ref{tab:unaryOperations}}
+\cvsiplh
+\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\newline \hspace*{1.1cm} {
+\ttfamily
+\begin{tabular}[H]{l}
+vsip\_scalar\_d vsip\_msumsqval\_d(const vsip\_mview\_d* );\\
+vsip\_scalar\_d vsip\_vsumsqval\_d(const vsip\_vview\_d* );\\
+vsip\_scalar\_f vsip\_msumsqval\_f(const vsip\_mview\_f* );\\
+vsip\_scalar\_f vsip\_vsumsqval\_f(const vsip\_vview\_f* );\\
+\end{tabular}
+}
+\pyjvsiph
+\viewmthd{yes}{yes}{NA}{aValue=in.sumsqval}
+\apyfunc{No}{}
+\newline \hspace*{.8cm} \textbf{Comment}
+\newline\hspace*{.9cm}\parbox{10.8cm}{\vspace*{.1cm}Since the \ttbf{sumsqval} function returns a scalar without modifying the \ttbf{view} there seemed little point in supporting this as a separate function call for \pyjv.}

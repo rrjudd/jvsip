@@ -1,0 +1,62 @@
+\documentclass[10pt,oneside,a4paper]{book}
+\usepackage{showframe}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{blindtext}
+\usepackage[linktoc=all]{hyperref}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc} 
+\usepackage{lmodern}
+\usepackage{listings}             % Include the listings-package
+\usepackage{float}
+\usepackage{minted}
+\usepackage[hypcap]{caption}
+\newcounter{cexctr} \setcounter{cexctr}{1}
+\newcounter{pyjvexctr} \setcounter{pyjvexctr}{1}
+\newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
+\newcommand{\ilCode}[1]{{\small {\ttfamily \bfseries #1}}}
+% C Example heading
+\newcommand{\cex}{{\begin{center} \bfseries{c VSIPL Example \arabic{cexctr}} \end{center}}}
+%\newcommand{\pyjvex}{{\begin{center} \bfseries{pyJvsip Example \arabic{pyjvexctr}} \end{center}}}
+%\newcommand*{\mhdr}{\fontfamily{pcr}\selectfont}
+%*********JVSIP Function Commands
+\newcommand{\afunc}[2]{\clearpage{\large \textbf{\hypertarget{#1Func}{#1}}} \vspace{.2cm}\\ \hspace*{.3cm} \parbox{11cm}{#2 } \vspace{.2cm}}
+%hlinkFunk used for hyperlink of table name with function page.
+\newcommand{\hlnkFunc}[1]{\hyperlink{#1Func}{\texttt{#1}}}
+%
+\newcommand{\cvsiplh}{ \newline \hspace*{.3cm} {\normalsize \textbf{C VSIPL}}\vspace{.2cm}}
+%
+\newcommand{\pyjvsiph}{\newline \hspace*{.3cm} {\normalsize \textbf{pyJvsip}}\vspace*{.2cm}}
+%
+\newcommand{\viewmthd}[4]{\newline \hspace*{.8cm}{\textbf{View Method}
+\newline\hspace*{1.1cm}{\textbf{Available:}}#1\hspace{.25cm}{\textbf{Property:}} #2\hspace{.25cm}{\textbf{In-Place:}} #3 
+\newline \hspace*{1.1cm}{\bfseries Example:} {\ttfamily #4}}}
+%
+\newcommand{\apyfunc}[2]{\newline \hspace*{.8cm} \textbf{Function} 
+\newline\hspace*{1.1cm} \textbf{Available:} #1 
+\newline \hspace*{1.1cm} \textbf{Example:} {\ttfamily #2}}
+%
+\newcommand{\pyjv}{\ttbf{pyJvsip }}
+\newcommand{\jv}{\ttbf{JVSIP }}
+\newcommand{\pyjvfunc}{\textbf{function }}
+\newcommand{\pyjvmethod}{\textbf{method }}
+%*********
+%\includeonly{c2}
+\begin{document}
+\include{titlePage}
+\frontmatter
+\include{preface}
+\tableofcontents
+\listoffigures
+\listoftables
+\mainmatter
+\include{c1}
+\include{c2}
+\include{c3}
+\include{c4}
+\include{c5}
+\include{c6}
+\include{c7}
+\end{document}

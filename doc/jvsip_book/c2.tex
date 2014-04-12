@@ -1,0 +1,59 @@
+\chapter{Functions}
+\section*{Introduction}
+In this chapter I give basic usage information for the functions included in the JVSIP implementation of the C VSIPL specification and also related information for the \pyjv python module.  There are many functions so I may miss a few.
+
+Usage information may also be found by reading the C VSIPL specification, either the old one included with the JVSIP distribution or the newer one developed by the HPEC working group of the OMG.  I currently recommend sticking with the old one included with the JVSIP distribution.  There is a lot of information about C VSIPL in the specification so C VSIPL information in this document will not be extensive; and since \pyjv has no specification document I will spend more time covering the \pyjv methodology.
+
+I try and include information on the \pyjv methods and functions collocated with the corresponding C VSIPL information.  Reading the pyJvsip.py module file is also encouraged.  \ttbf{PyJvsip} includes some functionality not (directly) part of C VSIPL.  I will try and highlight these special cases.  
+
+For python information the python help mechanism has also been supported somewhat; but keeping that information correct, up-to-date, and available for every function is a work in progress. 
+
+Keep in mind this chapters main purpose is as a go-to reference for proper incantations when writing code. Except for the introductory sections it is probably not something you will want to read.
+
+In order to have some reasonable ordering of the functions the alphabetical listing is based upon a root function name, not the actual vsip function. For instance the second function in the list is the \ilCode{add} function. There are several \ilCode{add} functions in the Core profile. All of them are placed together under \ilCode{add}.
+
+When a C VSIPL function requires a special object it needs support functions to create the object, and destroy it, and perhaps query it for its attributes. For instance to do a discrete Fourier transform one needs a function to create an FFT object, a function to do the actual FFT using the FFT object, and a function to destroy the FFT object when it is no longer needed. The author calls functions which are designed to work together to do a single job function sets. Function sets are placed together under a single heading. For instance all the functions involved with doing an FFT are placed under the FFT heading.
+
+As discussed in chapter one python supports polymorphism, and object oriented programing. A \pyjv object is an instantiation of a python class definition. The python object will contain a C VSIPL object as an instance variable as well as other information needed by \pyjv. For this reason the python garbage collector will destroy C VSIPL objects when no reference to the \pyjv object exists.
+
+Because of the true object oriented nature of \pyjv there are methods defined for every class which accomplish most of the functionality of C VSIPL. \ttbf{PyJvsip} also defines many functions which operate on the \pyjv objects. Frequently you can use either a method or a function. This information is reflected in the JVSIP function list.
+
+No attempt is made to be exhaustive in the function descriptions. Those interested in more detail are directed to the VSIPL specification document included with the JVSIP distribution. In addition various examples included in this document will provide more detail on the use of some of the more complicated functions.
+
+\section*{C VSIPL Specification}
+The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as approved by the VSIPL Forum on January 31, 2008.  That document is included with the \ttbf{JVSIP} distribution.  The purpose of this section is to provide a roadmap for people who are familiar with this C VSIPL specification to get around in this \ttbf{JVSIP} manual.  Here I provide tables in an order matching the \emph{VSIPL 1.3 API} specification with links to the same information as presented  in the \ttbf{JVSIP} manual.
+\subsection*{Summary of VSIPL Types}
+\subsection*{Support Functions}
+\subsection*{Scalar Functions}
+In general I do not define scalar functions in \pyjv.  Ease of use is a major goal of the \pyjv module and to further this goal I decided to scalars used by or returned by \pyjv functions should be normal python scalars. Using scalar functions (such as $\cos$, $\sin$, etc.) imported from the math module or the numpy module should work fine. That said, you can always use the C VSIPL scalar functions directly since they are in the \ttbf{vsip} module which is included in the \pyjv module.
+\subsection*{Random Number Generation}
+\subsection*{Vector \& Elementwise Operations}
+Many of the functions are simple operations which are done on each element in a matrix or vector. The tables referenced here list these with a link to the corresponding function page.
+    \input{ElementaryMath.tex}
+    \input{UnaryOperations.tex}
+\subsection*{Signal Processing Functions}
+\subsection*{Linear Algebra Functions}
+\subsection*{Implementation Dependent Input and Output}
+   \ttbf{JVSIP} does not support implementation dependent IO at this time.
+\subsection*{VSIPL Interpolation}
+
+\subsection*{VSIPL Permute}
+\subsection*{VSIPL Sort}
+
+
+\section*{VSIP Types}
+This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}. 
+\section*{JVSIP Function List}\addcontentsline{roc}{section}{JVSIP Function List} 
+
+
+
+\input{acosFunc}\input{argFunc}\input{asinFunc}\input{atanFunc}\input{atan2Func}
+\input{ceilFunc}
+\input{cosFunc}\input{coshFunc}\input{ceilFunc}\input{conjFunc}\input{cumsumFunc}\input{copyFunc}
+\input{eulerFunc}\input{expFunc}\input{exp10Func}
+\input{floorFunc}
+\input{magFunc}\input{magsqFunc}\input{meanvalFunc}\input{meansqvalFunc}\input{modulateFunc}
+\input{negFunc}
+\input{recipFunc}\input{roundFunc}\input{rsqrtFunc}
+\input{sinFunc}\input{sinhFunc}\input{sqrtFunc}\input{sqFunc}\input{sumvalFunc}\input{sumsqvalFunc}
+\input{tanFunc}\input{tanhFunc}

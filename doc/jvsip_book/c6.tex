@@ -1,0 +1,14 @@
+\chapter{Signal Processing Functionality}
+\section*{Introduction}
+\section*{Window}
+VSIPL provides functions to create Blackman, Chebyshev, Hanning and Kaiser windows. Unlike most functions in C VSIPL the window creation routines do not use an already created vector and fill it. Instead they actually create a block, allocate data for the block, create a unit stride full length vector on the block, fill the vector with the window coefficients, and then return the pointer to the vector view. The return value will be \ilCode{NULL} on an allocation failure.
+
+For pyJvsip the windows are defined as a method on a view so the functionality, from a user perspective, is to create a vector of a certain type and length and then fill the vector with a window.  Size information are taken from the calling view. Under the covers the C VSIPL window functions are used so a copy is actually taking place to meet the requirements of pyJvsip.
+
+\newpage
+\cex
+\inputminted[linenos=true,resetmargins=true]{c}{./c_examples/example18.c}
+\newpage
+\section*{Convolution, Correlation and FIR Filtering}
+\section*{Fourier Transforms}
+

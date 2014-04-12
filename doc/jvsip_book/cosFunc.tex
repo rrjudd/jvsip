@@ -1,0 +1,22 @@
+\afunc{cos}{Cosine; An elementary math function; see table \ref{tab:elementaryMath}}
+\cvsiplh
+\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\newline \hspace*{1.1cm} {
+\ttfamily
+\begin{tabular}[H]{l}
+vsip\_scalar\_f vsip\_cos\_f(vsip\_scalar\_f a);\\
+vsip\_scalar\_d vsip\_cos\_d(vsip\_scalar\_d a);\\
+void vsip\_mcos\_d(\\*
+\hspace{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*);\\
+void vsip\_mcos\_f(\\*
+\hspace{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*);\\
+void vsip\_vcos\_d(\\*
+\hspace{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*);\\
+void vsip\_vcos\_f(\\*
+\hspace{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*);\\
+\end{tabular}
+}
+\pyjvsiph
+\viewmthd{yes}{yes}{yes}{inOut.cos}
+\apyfunc{yes}{out = cos(in,out)}
+\newline\hspace*{1.2cm}\parbox{10.8cm}{\vspace*{.1cm}The \ttbf{cos} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}
