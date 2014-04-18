@@ -1,0 +1,21 @@
+\clearpage
+\section*{Depth, Shape, Precision; VSIPL Naming}
+In order to understand VSIPL one needs to understand something about the convention used when naming functions, types, structures, scalars, etc. in C VSIPL. This also will help one understand some of the reasons behind the \ttbf{block} and \ttbf{view} structures in VSIPL. I try to maintain the same conventions in this document and extend them to cover \pyjv type strings.
+
+\subsection*{Depth}
+A scalar element has a \ttbf{depth}.  For VSIPL this is pretty simple.  It is either complex or real. I suppose in the future it is possible other scalar depths could be defined. For instance a scalar defining a pixel in an image might have red, green, blue components. 
+
+Note that \ttbf{depth} is an attribute of a \ttbf{block}. 
+
+\subsection*{Precision}
+Precision indicates how accurate the numbers are. In C this would be indicated by \ilCode{float}, \ilCode{double}, \ilCode{int}, etc. \jv only supports C precisions but the naming conventions for the VSIP specification allow for just about any precision to be be declared if an implementation wants to support it.
+
+Note that \ttbf{precision} is an attribute of a \ttbf{block}
+
+\subsection*{Shape}
+A \ttbf{view} defines the \ttbf{shape} of a VSIPL object. A \ttbf{block} is basically an abstract notion of memory storage. It has a \ttbf{depth} and a \ttbf{precision} and provides to a view a linear array of scalar elements.  How the elements are defined on the underlying memory of the compute device is implementation dependent. The \ttbf{view} then places a shape on the block allowing one to access the data as a vector, matrix, or tensor. 
+
+So the \ttbf{shape} is an attribute of the \ttbf{view}. Views are basically index sets.
+
+\subsection*{Naming}
+Generally the letter \ttbf{c} is used to indicate complex. For real the precision is generally understood except in some cases where both real and complex are needed. 

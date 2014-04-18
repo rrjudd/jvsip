@@ -1,3 +1,16 @@
-\afunc{modulate}{Arctangent of Two Arguments; An elementwise function}
+\afunc{modulate}{Computes the modulation of a real vector by a specified complex frequency. See unary operations table \ref{tab:unaryOperations}}
 \cvsiplh
+\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\newline \hspace*{1.1cm} {
+\ttfamily
+\begin{tabular}[H]{l}
+vsip\_scalar\_d vsip\_cvmodulate\_d(\\*\hspace{.6cm}const vsip\_cvview\_d*, vsip\_scalar\_d, \\*\hspace{.6cm}vsip\_scalar\_d, const vsip\_cvview\_d*);\\
+vsip\_scalar\_d vsip\_vmodulate\_d(\\*\hspace{.6cm}const vsip\_vview\_d*, vsip\_scalar\_d, \\*\hspace{.6cm}vsip\_scalar\_d, const vsip\_cvview\_d*);\\
+vsip\_scalar\_f vsip\_cvmodulate\_f(\\*\hspace{.6cm}const vsip\_cvview\_f*, vsip\_scalar\_f, \\*\hspace{.6cm}vsip\_scalar\_f, const vsip\_cvview\_f*);\\
+vsip\_scalar\_f vsip\_vmodulate\_f(\\*\hspace{.6cm}const vsip\_vview\_f*, vsip\_scalar\_f, \\*\hspace{.6cm}vsip\_scalar\_f, const vsip\_cvview\_f*);\\
+\end{tabular}
+}
 \pyjvsiph
+\viewmthd{No}{NA}{NA}{NA}
+\apyfunc{Yes}{phiNew,out=modulate(in,nu,phi,out)}
+\pyComment{{\item{Note \ttbf{phi} is the initial phase and the final phase is returned as \ttbf{phiNew}. For \pyjv we also return a convenience copy of the output vector}}}
