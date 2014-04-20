@@ -22,31 +22,33 @@ No attempt is made to be exhaustive in the function descriptions. Those interest
 
 \section*{C VSIPL Specification}
 The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as approved by the VSIPL Forum on January 31, 2008.  That document is included with the \ttbf{JVSIP} distribution.  The purpose of this section is to provide a roadmap for people who are familiar with this C VSIPL specification to get around in this \ttbf{JVSIP} manual.  Here I provide tables in an order matching the \emph{VSIPL 1.3 API} specification with links to the same information as presented  in the \ttbf{JVSIP} manual.
+    \input{VSIP1p3Chapters}
 \subsection*{Summary of VSIPL Types}
 \subsection*{Support Functions}
+    \input{VSIP1p3SupportFunctions}
 \subsection*{Scalar Functions}
-In general I do not define scalar functions in \pyjv.  Ease of use is a major goal of the \pyjv module and to further this goal I decided to scalars used by or returned by \pyjv functions should be normal python scalars. Using scalar functions (such as $\cos$, $\sin$, etc.) imported from the math module or the numpy module should work fine. That said, you can always use the C VSIPL scalar functions directly since they are in the \ttbf{vsip} module which is included in the \pyjv module.
+In general I do not define scalar functions in \pyjv.  Ease of use is a major goal of the \pyjv module and to further this goal I decided scalars used by or returned by \pyjv functions should be normal python scalars. Using scalar functions (such as $\cos$, $\sin$, etc.) imported from the math module or the numpy module should work fine. That said, you can always use the C VSIPL scalar functions directly since they are in the \ttbf{vsip} module which is included in the \pyjv module.
 \subsection*{Random Number Generation}
 \subsection*{Vector \& Elementwise Operations}
 Many of the functions are simple operations which are done on each element in a matrix or vector. The tables referenced here list these with a link to the corresponding function page.
+    \input{VSIP1p3ElementwiseFunctions}
     \input{ElementaryMath.tex}
     \input{UnaryOperations.tex}
+    \input{BinaryOperations.tex}
 \subsection*{Signal Processing Functions}
+    \input{VSIP1p3SignalProcessingFunctions}
 \subsection*{Linear Algebra Functions}
+    \input{VSIP1p3LinearAlgebraFunctions}
 \subsection*{Implementation Dependent Input and Output}
    \ttbf{JVSIP} does not support implementation dependent IO at this time.
-\subsection*{VSIPL Interpolation}
-
-\subsection*{VSIPL Permute}
-\subsection*{VSIPL Sort}
-
-
+\subsection*{VSIPL Addendum}
+Editing the VSIPL specification was becoming difficult because of it's length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in a addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.
+\subsubsection*{VSIPL Interpolation}
+\subsubsection*{VSIPL Permute}
+\subsubsection*{VSIPL Sort}
 \section*{VSIP Types}
 This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}. 
 \section*{JVSIP Function List}\addcontentsline{roc}{section}{JVSIP Function List} 
-
-
-
 \input{acosFunc}\input{argFunc}\input{asinFunc}\input{atanFunc}\input{atan2Func}
 \input{ceilFunc}
 \input{cosFunc}\input{coshFunc}\input{ceilFunc}\input{conjFunc}\input{cumsumFunc}\input{copyFunc}
