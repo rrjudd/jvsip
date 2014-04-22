@@ -376,7 +376,7 @@ class Block (object):
                     copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
                 elif (isinstance(i[0],int) or isinstance(i[0],long)) \
                      and (isinstance(i[1],int) or isinstance(i[1],long)):
-                    assert i[0] >= 0 and i[0] < self.collength and i[1] >=0 and i[1] < self.collength,\
+                    assert i[0] >= 0 and i[0] < self.collength and i[1] >=0 and i[1] < self.rowlength,\
                            'Index out of bound'
                     if 'cmview' in self.type:
                         vsip.put(self.view,i,complex(value.real,value.imag))
