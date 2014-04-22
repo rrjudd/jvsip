@@ -1108,6 +1108,41 @@ class Block (object):
             else:
                 return conj(self,self)
         @property
+        def jmul(self,inpt):
+            """
+            Method jmul creates a complex vector space for output; regardless of input.
+            Works for float precision.
+            Done out-of-place
+            Usage
+               out=self.jmul(inpt)
+            """
+            t=self.type+inpt.type
+            f=['vview_fvview_f','cvview_fcvview_f','cvview_fvview_f','vview_fcvview_f',
+               'vview_dvview_d','cvview_dcvview_d','cvview_dvview_d','vview_dcvview_d',
+               'mview_fmview_f','cmview_fcvview_f','cmview_fmview_f','mview_fcmview_f',
+               'mview_dmview_d','cmview_dcvview_d','cmview_dmview_d','mview_dcmview_d']
+            assert f.has_key(t),'type <:%s:> not supported by jmul'%t
+            if 'vview' in t:
+                assert self.length == inpt.length, 'Vector lengths must be equal in jmul'
+                if '_f' in t:
+                    out = pv.create('cvview_f',self.length).fill(0.0)
+                else:
+                    out = pv.create('cvview_f',self.length).fill(0.0)
+            else:
+                assert self.rowlength == inpt.rowlength and self.collength == inpt.collength,\
+                'Matrix sizes must be the same'
+                if '_f' in t:
+                    out = pv.create('cmview_f',self.collength,self.rowlength).fill(0.0)
+                else:
+                    out = pv.create('cmview_d',self.collength,self.rowlength).fill(0.0)
+            if t in ['cvview_fcvview_f','cvview_dcvview_d','cmview_fcvview_f','cmview_dcvview_d']:
+                return jmul(self,inpt,out)
+            elif 'c' in inpt.type:
+                conj(inpt,out)
+                return mul(self,out,out)
+            else:
+                return mul(inpt,self,out)
+
         def cumsum(self):
             """
             Done In-Place
