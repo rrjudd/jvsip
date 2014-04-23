@@ -1109,7 +1109,7 @@ class Block (object):
                 return conj(self,self)
         def jmul(self,inpt):
             """
-            Method jmul creates a complex vector space for output; regardless of input.
+            Method jmul creates a view for output; regardless of input.
             Works for float precision.
             Done out-of-place
             Usage
