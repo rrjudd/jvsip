@@ -23,10 +23,15 @@ No attempt is made to be exhaustive in the function descriptions. Those interest
 \section*{C VSIPL Specification}
 The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as approved by the VSIPL Forum on January 31, 2008.  That document is included with the \ttbf{JVSIP} distribution.  The purpose of this section is to provide a roadmap for people who are familiar with this C VSIPL specification to get around in this \ttbf{JVSIP} manual.  Here I provide tables in an order matching the \emph{VSIPL 1.3 API} specification with links to the same information as presented  in the \ttbf{JVSIP} manual.
     \input{VSIP1p3Chapters}
-\subsection*{Summary of VSIPL Types}
-\subsection*{Support Functions}
+\subsection*{Summary of VSIPL Types}\addcontentsline{toc}{section}{Summary of VSIPL Types}
+\subsection*{Support Functions}\addcontentsline{toc}{section}{Support Functions}
     \input{VSIP1p3SupportFunctions}
-\subsection*{Scalar Functions}
+\subsubsection*{Initialization and Finalization Operations}
+    \input{InitSupport}
+    \input{BlockSupport}
+    \input{VectorSupport}
+    \input{TensorSupport}
+\subsection*{Scalar Functions}\addcontentsline{toc}{subsection}{Scalar Functions}
 In general I do not define scalar functions in \pyjv.  Ease of use is a major goal of the \pyjv module and to further this goal I decided scalars used by or returned by \pyjv functions should be normal python scalars. Using scalar functions (such as $\cos$, $\sin$, etc.) imported from the math module or the numpy module should work fine. That said, you can always use the C VSIPL scalar functions directly since they are in the \ttbf{vsip} module which is included in the \pyjv module.
 \subsection*{Random Number Generation}
 \subsection*{Vector \& Elementwise Operations}
@@ -35,20 +40,46 @@ Many of the functions are simple operations which are done on each element in a 
     \input{ElementaryMath.tex}
     \input{UnaryOperations.tex}
     \input{BinaryOperations.tex}
-\subsection*{Signal Processing Functions}
+    \input{TernaryOperations.tex}
+    \input{LogicalOperations.tex}
+    \input{SelectionOperations.tex}
+    \input{BitwiseOperators.tex}
+    \input{ElementGenerationOperations.tex}
+    \input{ManipulationOperations.tex}
+\subsection*{Signal Processing Functions}\addcontentsline{toc}{subsection}{Signal Processing Functions}
     \input{VSIP1p3SignalProcessingFunctions}
-\subsection*{Linear Algebra Functions}
+\subsubsection*{Fast Fourier Transforms} \addcontentsline{toc}{subsubsection}{Fast Fourier Transforms}
+\subsubsection*{Convolution and Correlation Functions}\addcontentsline{toc}{subsubsection}{Convolution and Correlation Functions}
+\subsection*{Linear Algebra Functions}\addcontentsline{toc}{subsection}{Linear Algebra Functions}
     \input{VSIP1p3LinearAlgebraFunctions}
-\subsection*{Implementation Dependent Input and Output}
+\subsection*{Implementation Dependent Input and Output}\addcontentsline{toc}{subsection}{Implementation Dependent Input and Output}
    \ttbf{JVSIP} does not support implementation dependent IO at this time.
-\subsection*{VSIPL Addendum}
+\subsection*{VSIPL Addendum}\addcontentsline{toc}{subsection}{VSIPL Addendum}
 Editing the VSIPL specification was becoming difficult because of it's length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in a addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.
-\subsubsection*{VSIPL Interpolation}
-\subsubsection*{VSIPL Permute}
-\subsubsection*{VSIPL Sort}
+\subsubsection*{VSIPL Interpolation}\addcontentsline{toc}{subsubsection}{VSIPL Interpolation}
+\subsubsection*{VSIPL Permute}\addcontentsline{toc}{subsubsection}{VSIPL Permute}
+\subsubsection*{VSIPL Sort}\addcontentsline{toc}{subsubsection}{VSIPL Sort}
 \section*{VSIP Types}
 This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}. 
-\section*{JVSIP Function List}\addcontentsline{roc}{section}{JVSIP Function List} 
+\section*{JVSIP Function List}\addcontentsline{roc}{section}{JVSIP Function List}
+The following pages are a list of available functions in JVSIP. The top part of each page will include a section of available C functions (basically extracted from \ilCode{vsip.h}). Since the VSIPL specification is the primary source of information for C VSIPL not much more is included. 
+
+Following the list of available functions is information on how (and if) the function is supported by \pyjv. The \pyjv section of the function page is more extensive than the C information. Basically there is a line indicating if it is available (as a 	tbf{view} method), if it is a property, and if it is in-place. Then there is a line indicating if it is available as a \pyjv function. Finally there is a comment section with additional information.
+
+Note that comments may follow the C VSIPL and/or pyJvsip section and may also follow both indicating the comments pertain to the entire page and not just C or Python.
+
+\subsection*{PyJvsip Methods}
+We note that saying the method is a property means you call it without even an empty argument list. For instance if \ilCode{a} is a \pyjv \ttbf{view} then \ilCode{a.cos} will replace the values in \ilCode{a} with there cosine. Since it is a property we DON'T say \ilCode{a.cos()}. Frequently, but not always, view methods are done in-place and that is also indicated. If it is not done in-place then the method will construct an appropriate output \ttbf{view} and return it filled out with the appropriate values.
+
+An example of a \ttbf{view} method that is not done in place is \ilCode{copy}. For instance \ilCode{b=a.copy} will produce a copy of \ilCode{a} in an appropriate view. Note the new \ttbf{b view} will be the same precision, shape and depth as the calling \ttbf{view} but the \ttbf block will be of an exact size and the stride information will be the minimum stride required for the \ttbf{view}. Additional information on copy is available on it's function page.
+
+This is the type of information included on the function pages. Since there seem to be many exceptions we won't provide a lot of rules; and instead refer to the function page.
+
+\subsection*{PyJvsip Functions}
+In the \pyjv \ttbf{Function} section we provide information on function calls. For pyJvsip python function calls correspond closely with their C counterpart except that the shape, depth and precision are determined by the argument types used in the call and not by the actual name as is used by C VSIPL.
+
+Not all C functions have a corresponding \pyjv function call. In particular most functions that return a value will be handled using a view method with no need for a function.
+ 
 \input{acosFunc}\input{argFunc}\input{asinFunc}\input{atanFunc}\input{atan2Func}
 \input{ceilFunc}
 \input{cosFunc}\input{coshFunc}\input{ceilFunc}\input{conjFunc}\input{cumsumFunc}\input{copyFunc}

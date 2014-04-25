@@ -1,7 +1,9 @@
 \chapter{Linear Algebra}
 \addcontentsline{toc}{section}{Introduction}
 \section*{Introduction}
-VSIPL specifies support for matrix operations such as matrix products, 
+VSIPL specifies support for standard matrix operations such as matrix products,methods to solve the standard matrix equation $A \vec{x} = \vec{b}$, and methods to solve least squares problems. VSIPL hides the decomposition of matrices in objects. So in addition to standard matrix products, special functions for doing matrix products with decomposition matrices are provided.
+We note that although vectors are treated as column vectors in equations, VSIPL vector views have only one stride and so the action of the vector within the function is defined only by the function definition.
+In general all matrix views passed into a function are defined as type const. This means that the area of the block mapped by the view does not change inside of the function call. For some of the defined in place operations where the input and output are defined by the same view the input matrix size may be different than that required by the output data. For these cases the strides of the input view define where the output data is placed. The first element of the output data replaces the first element of the input data. The author recommends defining a view of the output data space for convenience. For a couple of cases the output data space may be bigger than the input data space. Defining an output data view will ensure that the strides of the input view and the size of the block are sufficient to hold the output data. 
 \addcontentsline{toc}{section}{Simple Matrix-Matrix and Vector-Matrix Operations}
 \section*{Simple Matrix-Matrix and Vector-Matrix Operations}
 \section*{Simple Solvers}\addcontentsline{toc}{section}{Simple Solvers}
