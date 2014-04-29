@@ -1,0 +1,23 @@
+\begin{table}[H]
+\caption{Filter Functions \\* See signal processing table \ref{tab:signalProcessingFunctions}}
+\label{tab:filterFunctions}
+\begin{center}
+\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\rmfamily \bfseries Finite Impulse Response Filter Class}\\
+\multicolumn{2}{c}{See function page \hyperlink{firFunc}{\texttt{FIR}}} \\ \hline
+fir\_create & Create FIR Object\\
+fir\_destroy & Free FIR Object\\
+firflt & Filter Data\\
+fir\_getattr & Get attributes of FIR Object\\
+fir\_reset & Reset FIR Object to just created state\\ \hline
+\multicolumn{2}{c}{\rmfamily \bfseries Infinite Impulse Response Filter Class} \\
+\multicolumn{2}{c}{IIR not supported in \jv} \\ \hline
+iir\_create & Create IIR Object\\
+iir\_destroy & Free IIR Object\\
+iirflt & Filter Data\\
+iir\_getattr & Get attributes of IIR Object\\
+iir\_reset & Reset IIR Object to just created state\\ \hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%

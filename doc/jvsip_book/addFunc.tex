@@ -74,10 +74,10 @@ void vsip\_svadd\_vi(\\*\hspace{1cm}vsip\_scalar\_vi, const vsip\_vview\_vi*,\\*
 \hspace*{1.1cm}Overloaded on plus operator.\\
 \hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\ttbf{a += b; a += 2}\\*
-\hspace*{1.5cm}\ttbf{view a} replaced with result\\
+\hspace*{1.5cm}Elements of \ttbf{view a} replaced with result.\\
 \hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\ttbf{c = a + b; d = 2 + c}\\*
-\hspace*{1.5cm}\ttbf{view c} and \ttbf{view d} created and filled with result off operation.\\
+\hspace*{1.5cm}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.\\
 \apyfunc{yes}{out = add(in1,in2,out)}
 \pyComment{\item{The \ttbf{add} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. }
 \item{This may be done in-place if \ttbf{in1==out} or \ttbf{in2==out}.}

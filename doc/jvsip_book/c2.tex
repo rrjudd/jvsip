@@ -22,15 +22,18 @@ No attempt is made to be exhaustive in the function descriptions. Those interest
 
 \section*{C VSIPL Specification}
 The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as approved by the VSIPL Forum on January 31, 2008.  That document is included with the \ttbf{JVSIP} distribution.  The purpose of this section is to provide a roadmap for people who are familiar with this C VSIPL specification to get around in this \ttbf{JVSIP} manual.  Here I provide tables in an order matching the \emph{VSIPL 1.3 API} specification with links to the same information as presented  in the \ttbf{JVSIP} manual.
-    \input{VSIP1p3Chapters}
+    \input{VSIP1p3Chapters} %table of
 \subsection*{Summary of VSIPL Types}\addcontentsline{toc}{section}{Summary of VSIPL Types}
 \subsection*{Support Functions}\addcontentsline{toc}{section}{Support Functions}
     \input{VSIP1p3SupportFunctions}
-\subsubsection*{Initialization and Finalization Operations}
-    \input{InitSupport}
-    \input{BlockSupport}
-    \input{VectorSupport}
-    \input{TensorSupport}
+\subsubsection*{Initialize and Finalize Operations}\addcontentsline{toc}{subsubsection}{Initialize and Finalize Operations}
+    \input{InitSupport} %table of
+\subsubsection*{Block Objects}\addcontentsline{toc}{subsubsection}{Block Class}
+    \input{BlockSupport} % table of
+\subsubsection*{View Objects}\addcontentsline{toc}{subsubsection}{View Class}
+    \input{VectorSupport}% table of
+    \input{MatrixSupport} % table of
+    \input{TensorSupport}% table of
 \subsection*{Scalar Functions}\addcontentsline{toc}{subsection}{Scalar Functions}
 In general I do not define scalar functions in \pyjv.  Ease of use is a major goal of the \pyjv module and to further this goal I decided scalars used by or returned by \pyjv functions should be normal python scalars. Using scalar functions (such as $\cos$, $\sin$, etc.) imported from the math module or the numpy module should work fine. That said, you can always use the C VSIPL scalar functions directly since they are in the \ttbf{vsip} module which is included in the \pyjv module.
 \subsection*{Random Number Generation}
@@ -49,7 +52,21 @@ Many of the functions are simple operations which are done on each element in a 
 \subsection*{Signal Processing Functions}\addcontentsline{toc}{subsection}{Signal Processing Functions}
     \input{VSIP1p3SignalProcessingFunctions}
 \subsubsection*{Fast Fourier Transforms} \addcontentsline{toc}{subsubsection}{Fast Fourier Transforms}
-\subsubsection*{Convolution and Correlation Functions}\addcontentsline{toc}{subsubsection}{Convolution and Correlation Functions}
+\input{FftFunctions}
+%
+\subsubsection*{Convolution and Correlation Functions} 
+\addcontentsline{toc}{subsubsection}{Convolution and Correlation Functions}
+\input{ConvCorrFunctions}
+%
+\subsubsection*{Window Functions} \addcontentsline{toc}{subsubsection}{Window Functions}
+\input{WindowFunctions}
+%
+\subsubsection*{Filter Functions} \addcontentsline{toc}{subsubsection}{Filter Functions}
+\input{FilterFunctions}
+%
+\subsubsection*{Miscellaneous Signal Processing Functions} \addcontentsline{toc}{subsubsection}{Miscellaneous Signal Processing Functions}
+\input{miscSigProcFunctions}
+%
 \subsection*{Linear Algebra Functions}\addcontentsline{toc}{subsection}{Linear Algebra Functions}
     \input{VSIP1p3LinearAlgebraFunctions}
 \subsection*{Implementation Dependent Input and Output}\addcontentsline{toc}{subsection}{Implementation Dependent Input and Output}
@@ -82,10 +99,13 @@ Not all C functions have a corresponding \pyjv function call. In particular most
  
 \input{addFunc}
 \input{acosFunc}\input{argFunc}\input{asinFunc}\input{atanFunc}\input{atan2Func}
+\input{blockadmitFunc}
 \input{ceilFunc}
 \input{cosFunc}\input{coshFunc}\input{ceilFunc}\input{conjFunc}\input{cumsumFunc}\input{copyFunc}
+\input{divFunc}
 \input{eulerFunc}\input{expFunc}\input{exp10Func}
 \input{logFunc}\input{log10Func}
+\input{firFunc}
 \input{floorFunc}
 \input{magFunc}\input{magsqFunc}\input{meanvalFunc}\input{meansqvalFunc}\input{modulateFunc}
 \input{negFunc}

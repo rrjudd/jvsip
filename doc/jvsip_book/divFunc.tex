@@ -73,3 +73,11 @@ void vsip\_csmdiv\_f(\\*\hspace{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*,\\*
 \end{tabular}
 }
 \pyjvsiph
+\newline\hspace*{.8cm}{\textbf{View Method}\\
+\hspace*{1.1cm}Overloaded on divide operator.\\
+\hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
+\hspace*{1.1cm}\textbf{Example: }\ttbf{a /= b; a /= 2}\\*
+\hspace*{1.5cm}Elements of \ttbf{view a} replaced with result.\\
+\hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
+\hspace*{1.1cm}\textbf{Example: }\ttbf{c = a / b; d = 2 / c; e = c / 2}\\*
+\hspace*{1.5cm}\parbox{.85\textwidth}{\ttbf{view c}, \ttbf{view d}, and \ttbf{view e}  created and filled with result of operation.}\\
