@@ -178,7 +178,7 @@ def msb(a,b,c,d):
 def sbm(a,b,c,d):
     """
     vector subtract - vector multiply
-    msb(a,b,c,d) d == (a - b) * c (elementwise)
+    sbm(a,b,c,d) d == (a - b) * c (elementwise)
     a=>vector view
     b=>vector view
     c=>vector view
