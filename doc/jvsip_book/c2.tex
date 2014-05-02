@@ -19,12 +19,12 @@ As discussed in chapter one python supports polymorphism, and object oriented pr
 Because of the true object oriented nature of \pyjv there are methods defined for every class which accomplish most of the functionality of C VSIPL. \ttbf{PyJvsip} also defines many functions which operate on the \pyjv objects. Frequently you can use either a method or a function. This information is reflected in the JVSIP function list.
 
 No attempt is made to be exhaustive in the function descriptions. Those interested in more detail are directed to the VSIPL specification document included with the JVSIP distribution. In addition various examples included in this document will provide more detail on the use of some of the more complicated functions.
-
-\section*{C VSIPL Specification}
-The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as approved by the VSIPL Forum on January 31, 2008.  That document is included with the \ttbf{JVSIP} distribution.  The purpose of this section is to provide a roadmap for people who are familiar with this C VSIPL specification to get around in this \ttbf{JVSIP} manual.  Here I provide tables in an order matching the \emph{VSIPL 1.3 API} specification with links to the same information as presented  in the \ttbf{JVSIP} manual.
+%
+\section*{C VSIPL Specification}\addcontentsline{toc}{section}{C VSIPL Specification}
+The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as approved by the VSIPL Forum on January 31, 2008.  That document is included with the \ttbf{JVSIP} distribution.  The main purpose of this section is to provide a roadmap for people who are familiar with the C VSIPL specification to get around in this \ttbf{JVSIP} manual.  Here I provide tables in an order matching the \emph{VSIPL 1.3 API} specification with links to the same information as presented  in the \ttbf{JVSIP} manual.
     \input{VSIP1p3Chapters} %table of
-\subsection*{Summary of VSIPL Types}\addcontentsline{toc}{section}{Summary of VSIPL Types}
-\subsection*{Support Functions}\addcontentsline{toc}{section}{Support Functions}
+\subsection*{Summary of VSIPL Types}\addcontentsline{toc}{subsection}{Summary of VSIPL Types}
+\subsection*{Support Functions}\addcontentsline{toc}{subsection}{Support Functions}
     \input{VSIP1p3SupportFunctions}
 \subsubsection*{Initialize and Finalize Operations}\addcontentsline{toc}{subsubsection}{Initialize and Finalize Operations}
     \input{InitSupport} %table of
@@ -77,38 +77,43 @@ Editing the VSIPL specification was becoming difficult because of it's length an
 \subsubsection*{VSIPL Permute}\addcontentsline{toc}{subsubsection}{VSIPL Permute}
 \subsubsection*{VSIPL Sort}\addcontentsline{toc}{subsubsection}{VSIPL Sort}
 \section*{VSIP Types}
-This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}. 
-\section*{JVSIP Function List}\addcontentsline{roc}{section}{JVSIP Function List}
+This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}.
+ 
+\section*{JVSIP Function List}\addcontentsline{toc}{section}{JVSIP Function List}
 The following pages are a list of available functions in JVSIP. The top part of each page will include a section of available C functions (basically extracted from \ilCode{vsip.h}). Since the VSIPL specification is the primary source of information for C VSIPL not much more is included. 
 
 Following the list of available functions is information on how (and if) the function is supported by \pyjv. The \pyjv section of the function page is more extensive than the C information. Basically there is a line indicating if it is available (as a 	tbf{view} method), if it is a property, and if it is in-place. Then there is a line indicating if it is available as a \pyjv function. Finally there is a comment section with additional information.
 
 Note that comments may follow the C VSIPL and/or pyJvsip section and may also follow both indicating the comments pertain to the entire page and not just C or Python.
 
-\subsection*{PyJvsip Methods}
+\subsection*{PyJvsip Methods}\addcontentsline{toc}{subsection}{PyJvsip Methods}
 We note that saying the method is a property means you call it without even an empty argument list. For instance if \ilCode{a} is a \pyjv \ttbf{view} then \ilCode{a.cos} will replace the values in \ilCode{a} with there cosine. Since it is a property we DON'T say \ilCode{a.cos()}. Frequently, but not always, view methods are done in-place and that is also indicated. If it is not done in-place then the method will construct an appropriate output \ttbf{view} and return it filled out with the appropriate values.
 
 An example of a \ttbf{view} method that is not done in place is \ilCode{copy}. For instance \ilCode{b=a.copy} will produce a copy of \ilCode{a} in an appropriate view. Note the new \ttbf{b view} will be the same precision, shape and depth as the calling \ttbf{view} but the \ttbf block will be of an exact size and the stride information will be the minimum stride required for the \ttbf{view}. Additional information on copy is available on it's function page.
 
 This is the type of information included on the function pages. Since there seem to be many exceptions we won't provide a lot of rules; and instead refer to the function page.
 
-\subsection*{PyJvsip Functions}
+\subsection*{PyJvsip Functions}\addcontentsline{toc}{subsection}{PyJvsip Functions}
 In the \pyjv \ttbf{Function} section we provide information on function calls. For pyJvsip python function calls correspond closely with their C counterpart except that the shape, depth and precision are determined by the argument types used in the call and not by the actual name as is used by C VSIPL.
 
 Not all C functions have a corresponding \pyjv function call. In particular most functions that return a value will be handled using a view method with no need for a function.
  
-\input{addFunc}
-\input{acosFunc}\input{argFunc}\input{asinFunc}\input{atanFunc}\input{atan2Func}
+\input{addFunc}\input{acosFunc}\input{amFunc}\input{argFunc}\input{asinFunc}
+\input{atanFunc}\input{atan2Func}
 \input{blockadmitFunc}
 \input{ceilFunc}
-\input{cosFunc}\input{coshFunc}\input{ceilFunc}\input{conjFunc}\input{cumsumFunc}\input{copyFunc}
+\input{cosFunc}\input{coshFunc}\input{ceilFunc}\input{conjFunc}
+\input{cumsumFunc}\input{copyFunc}
 \input{divFunc}
 \input{eulerFunc}\input{expFunc}\input{exp10Func}
 \input{logFunc}\input{log10Func}
-\input{firFunc}
+\input{firFunc}\input{fftFunc}
 \input{floorFunc}
-\input{magFunc}\input{magsqFunc}\input{meanvalFunc}\input{meansqvalFunc}\input{modulateFunc}
+\input{maFunc}\input{magFunc}\input{magsqFunc}\input{meanvalFunc}
+\input{meansqvalFunc}\input{modulateFunc}\input{msbFunc}
 \input{negFunc}
 \input{recipFunc}\input{roundFunc}\input{rsqrtFunc}
-\input{sinFunc}\input{sinhFunc}\input{sqrtFunc}\input{sqFunc}\input{sumvalFunc}\input{sumsqvalFunc}
+\input{sbmFunc}\input{sinFunc}\input{sinhFunc}\input{sqrtFunc}
+\input{sqFunc}\input{sumvalFunc}
+\input{sumsqvalFunc}
 \input{tanFunc}\input{tanhFunc}

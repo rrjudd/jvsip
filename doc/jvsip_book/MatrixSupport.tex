@@ -2,10 +2,35 @@
 \caption{Matrix View Object Functions}
 \label{tab:matrixSupport}
 \begin{center}
-\begin{tabular}{|l|l|}
-\hlnkFunc{init} & Initialize the VSIP Library\\
-\hlnkFunc{finalize} & Finalize the VSIP Library\\
-\end{tabular}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}\\
+\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block} \\
+\hlnkFunc{cloneview} & Clone a \ttbf{view} \\
+\hlnkFunc{colview} & Return a column \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\hlnkFunc{create} & Create a \ttbf{view} \\
+\hlnkFunc{destroy} & Free a \ttbf{view} \\
+\hlnkFunc{diagview} & Return a diagonal \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\hlnkFunc{get} & Get a value from a \ttbf{view}\\
+\hlnkFunc{getblock} & Return \ttbf{block} associated with \ttbf{view}\\
+\hlnkFunc{getattrib} & Get attribute structure associated with \ttbf{view}\\
+\hlnkFunc{getcollength} & Get get length of vector \ttbf{view}\\
+\hlnkFunc{getrowlength} & Get get length of vector \ttbf{view}\\
+\hlnkFunc{getoffset} & Get get offset into block of vector \ttbf{view}\\
+\hlnkFunc{getcolstride} & Get stride through block of vector\ttbf{view}\\
+\hlnkFunc{getrowstride} & Get stride through block of vector\ttbf{view}\\
+\hlnkFunc{imagview} & Return \ttbf{view} of imaginary part of complex \ttbf{view}\\
+\hlnkFunc{put} & Get a value from a \ttbf{view}\\
+\hlnkFunc{putattrib} & Set attribute structure associated with \ttbf{view}\\
+\hlnkFunc{putcollength} & Set length of vector \ttbf{view}\\
+\hlnkFunc{putrowlength} & Set length of vector \ttbf{view}\\
+\hlnkFunc{putoffset} & Set offset into block of vector \ttbf{view}\\
+\hlnkFunc{putcolstride} & Set stride through block of vector\ttbf{view}\\
+\hlnkFunc{putrowstride} & Set stride through block of vector\ttbf{view}\\
+\hlnkFunc{realview} & Return \ttbf{view} of real part of complex \ttbf{view}\\
+\hlnkFunc{rowview} & Return a row \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\hlnkFunc{subview} & Create a sub-\ttbf{view} of a \ttbf{view}\\
+\hlnkFunc{transview} & Create a matrix \ttbf{view} as a transpose of a matrix\ttbf{view}\\
+\hline\end{tabular}
 \end{center}
 \label{default}
 \end{table}%

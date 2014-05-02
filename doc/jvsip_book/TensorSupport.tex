@@ -2,10 +2,38 @@
 \caption{Tensor Views}
 \label{tab:tensorSupport}
 \begin{center}
-\begin{tabular}{|l|l|}
-\hlnkFunc{init} & Initialize the VSIP Library\\
-\hlnkFunc{finalize} & Finalize the VSIP Library\\
-\end{tabular}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}\\
+\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block} \\
+\hlnkFunc{cloneview} & Clone a \ttbf{view} \\
+\hlnkFunc{create} & Create a \ttbf{view} \\
+\hlnkFunc{destroy} & Free a \ttbf{view} \\
+\hlnkFunc{get} & Get a value from a \ttbf{view}\\
+\hlnkFunc{getattrib} & Get attribute structure associated with \ttbf{view}\\
+\hlnkFunc{getblock} & Return \ttbf{block} associated with \ttbf{view}\\
+\hlnkFunc{getoffset} & Get get offset into block of vector \ttbf{view}\\
+\hlnkFunc{getxlength} & Get get X length of tensor \ttbf{view}\\
+\hlnkFunc{getxstride} & Get the X stride attribute of a tensor \ttbf{view}\\
+\hlnkFunc{getylength} & Get get Y length of tensor \ttbf{view}\\
+\hlnkFunc{getystride} & Get the Y stride attribute of a tensor \ttbf{view}\\
+\hlnkFunc{getzlength} & Get get Z length of tensor \ttbf{view}\\
+\hlnkFunc{getzstride} & Get the Z stride attribute of a tensor \ttbf{view}\\
+\hlnkFunc{imagview} & Return \ttbf{view} of imaginary part of complex \ttbf{view}\\
+\hlnkFunc{matrixview} & Create a matrix view of a 2-D slice of the tensor \ttbf{view}\\
+\hlnkFunc{put} & Get a value from a \ttbf{view}\\
+\hlnkFunc{putattrib} & Set attribute structure associated with \ttbf{view}\\
+\hlnkFunc{putoffset} & Set offset into block of vector \ttbf{view}\\
+\hlnkFunc{putxlength} & Set X length of tensor \ttbf{view}\\
+\hlnkFunc{putxstride} & Set X stride through block of tensor\ttbf{view}\\
+\hlnkFunc{putylength} & Set Y length of tensor \ttbf{view}\\
+\hlnkFunc{putystride} & Set Y stride through block of tensor\ttbf{view}\\
+\hlnkFunc{putzlength} & Set Z length of tensor \ttbf{view}\\
+\hlnkFunc{putzstride} & Set Z stride through block of tensor\ttbf{view}\\
+\hlnkFunc{realview} & Return \ttbf{view} of real part of complex \ttbf{view}\\
+\hlnkFunc{subview} & Create a sub-\ttbf{view} of a \ttbf{view}\\
+\hlnkFunc{transview} & Create a transposed of a tensor \ttbf{view}\\
+\hlnkFunc{vectview} & Create a vector view of a 1-D slice of the tensor \ttbf{view}\\
+\hline\end{tabular}
 \end{center}
 \label{default}
 \end{table}%
