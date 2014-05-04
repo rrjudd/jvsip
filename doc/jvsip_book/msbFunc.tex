@@ -4,13 +4,15 @@
 \newline \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
-void vsip\_cvmsb\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*);
-void vsip\_cvmsb\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*,\\*\hspace{.7cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*); 
-void vsip\_vmsb\_d(const vsip\_vview\_d*, const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_vview\_d*, const vsip\_vview\_d*); 
-void vsip\_vmsb\_f(const vsip\_vview\_f*, const vsip\_vview\_f*,\\*\hspace{.7cm}const vsip\_vview\_f*, const vsip\_vview\_f*); 
+void vsip\_cvmsb\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
+void vsip\_cvmsb\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*,\\*\hspace{.7cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*); \\
+void vsip\_vmsb\_d(const vsip\_vview\_d*, const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_vview\_d*, const vsip\_vview\_d*); \\
+void vsip\_vmsb\_f(const vsip\_vview\_f*, const vsip\_vview\_f*,\\*\hspace{.7cm}const vsip\_vview\_f*, const vsip\_vview\_f*); \\
 \end{tabular}
 }
 \pyjvsiph
 \viewmthd{No}{NA}{NA}{NA}
-\apyfunc{yes}{out = msb(in1,in2,in3,out)}
-\newline\hspace*{1.2cm}\parbox{10.8cm}{\vspace*{.1cm}The \ttbf{log} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if one of the input views is the same as the output view.}
+\apyfunc{Yes}{\ttbf{out = msb(in1,in2,in3,out)}}
+\pyComment{\item{Arguments \ttbf{in1}, \ttbf{in2} and \ttbf{in3} are always \ttbf{view}s. }
+\item{The \ttbf{msb} function works much the same as the C VSIPL version except that a convenience pointer to the output \ttbf{view} is returned.}
+\item{This may be done in-place if an input \ttbf{view} is the same as the output \ttbf{view}.}}

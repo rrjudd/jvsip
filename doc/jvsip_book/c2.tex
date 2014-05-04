@@ -36,9 +36,11 @@ The main document on which \ttbf{JVSIP} is based is the \emph{VSIPL 1.3 API} as 
     \input{TensorSupport}% table of
 \subsection*{Scalar Functions}\addcontentsline{toc}{subsection}{Scalar Functions}
 In general I do not define scalar functions in \pyjv.  Ease of use is a major goal of the \pyjv module and to further this goal I decided scalars used by or returned by \pyjv functions should be normal python scalars. Using scalar functions (such as $\cos$, $\sin$, etc.) imported from the math module or the numpy module should work fine. That said, you can always use the C VSIPL scalar functions directly since they are in the \ttbf{vsip} module which is included in the \pyjv module.
-\subsection*{Random Number Generation}
-\subsection*{Vector \& Elementwise Operations}
-Many of the functions are simple operations which are done on each element in a matrix or vector. The tables referenced here list these with a link to the corresponding function page.
+\subsection*{Random Number Generation}\addcontentsline{toc}{subsection}{Random Number Generation}
+\subsection*{Elementwise Operations}\addcontentsline{toc}{subsection}{Elementwise Operations}
+Elementwise operatons are simple operations which are done on each element in a matrix or vector. Most of the time, when more than one \ttbf{view} is input, the \ttbf{view} shapes will need to be the same since the operation is done to identically indexed elements for each input \ttbf{view} and the operation result is placed in an identically indexed element of the output \ttbf{view}. 
+
+The tables referenced in this section list elementwise operations with a link to the corresponding function page. Although the function pages are alphabetical, the lists here are in the same order (although not necessarily identical) to the order they appear in the C VSIPL specification.
     \input{VSIP1p3ElementwiseFunctions}
     \input{ElementaryMath.tex}
     \input{UnaryOperations.tex}
