@@ -1,17 +1,16 @@
+\subsubsection*{Element Generation and Copy} \addcontentsline{toc}{subsubsection}{Element Generation and Copy}
+This section has functions to copy data from one place to another. 
 \begin{table}[H]
 \caption{Element Generation and Copy}
 \label{tab:elementGenerationOperations}
 \begin{center}
-\begin{tabular}{|l|l|}
-\hlnkFunc{add} & Add\\
-\hlnkFunc{div} & Divide\\
-\hlnkFunc{expoavg} & Exponential Average\\
-\hlnkFunc{hypot} & Hypotenuse\\
-\hlnkFunc{jmul} & Conjugate Multiply\\
-\hlnkFunc{mul} & Multiply\\
-\hlnkFunc{vmmul} & Vector Matrix Multiply\\
-\hlnkFunc{sub} & Subtract\\
-\end{tabular}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{copy} & Copy \ttbf{view} to \ttbf{view}\\
+\hlnkFunc{copyto\_user} & Copy data in a \ttbf{view} to user specified memory\\
+\hlnkFunc{copyfrom\_user} & Copy data from user specified memory to a \ttbf{view}\\
+\hlnkFunc{fill} & Fill a \ttbf{view} with a constant value\\
+\hlnkFunc{ramp} & In a vector \ttbf{view} create equally space \emph{ramp} data\\
+\hline\end{tabular}
 \end{center}
 \label{default}
 \end{table}%
