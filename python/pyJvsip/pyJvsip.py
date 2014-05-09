@@ -1186,7 +1186,7 @@ class Block (object):
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
             return mag(self,out)
         @property
-        def magsq(self):
+        def cmagsq(self):
             """
               View property magsq is an out-of-place operation
               Usage:
@@ -1201,7 +1201,7 @@ class Block (object):
             assert self.type in f, 'Type <:%s:> not recognized for magsq'%self.type
             attr=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
-            return magsq(self,out)
+            return cmagsq(self,out)
         # modulate
         @property
         def neg(self):
@@ -3338,8 +3338,8 @@ class FFT (object):
         else:
             print("Type <:" + t + ":> not a recognized type for FFT")
     def __del__(self):
-        del (self.__jvsip)
         vsip.destroy(self.__fft)
+        del (self.__jvsip)
 
     def dft(self,*vars):
         """This method requires one view for in-place dft calculation or two views for out-of-place.
@@ -3585,11 +3585,13 @@ class FIR(object):
     def __init__(self,t,filt,sym,N,D,state):
         """
         Usage:
-           firObj = FIR(t,filt,sym,N,D,state,ntimes,hint)
+           firObj = FIR(t,filt,sym,N,D,state)
         t is a type string; one of:
               'rcfir_f','cfir_f','fir_f','rcfir_d','cfir_d','fir_d'
         filt is a vector view of filter coefficients
         sym is a string; one of 'NONE','ODD','EVEN'
+        N is the length of the input data expected
+        D is the decimation
         state (save state) is 'NO' or 'YES'
         """
         filtSptd = {'fir_f':'vview_f',
@@ -3607,7 +3609,7 @@ class FIR(object):
         symType={'NONE':0,'ODD':1,'EVEN':2}
         stateType={'NO':1,'YES':2}
         assert filt.type == filtSptd[t],\
-                  'Filter Coefficients in wrong view type for filter of type ' + t
+                  'Filter Coefficients of type <:%s:> in wrong for filter of type <:%s:>'%(filt.type,t)
         assert firCreate.has_key(t), 'Filter type not recognized'
         assert sym in ['NONE','ODD','EVEN'],'Sym flag not recognized'
         assert state in ['NO','YES'],'State flag not recognized'
