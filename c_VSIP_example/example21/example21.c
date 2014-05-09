@@ -31,6 +31,41 @@ void VU_mprintgram_d(vsip_mview_d* M,char* fname)
    return;
 }
 
+vsip_mview_d *noiseGen(){
+    vsip_index i,j;
+    for(j=0; j<Nnoise; j++){
+        noise[j] = vsip_vcreate_d(Nn,0);
+      vsip_vrandn_d(state,nv);
+      vsip_firflt_d(fir,nv,noise[j]);
+      vsip_svmul_d(12.0/(Nnoise),noise[j],noise[j]);
+      vsip_vputlength_d(noise[j],Ns);
+   }
+   for(i=0; i<Mp; i++){
+      vsip_scalar_d Xim_val = vsip_mget_d(Xim,i,Theta_o);
+      data_v = vsip_mrowview_d(data,i);
+      vsip_vsmsa_d(t,w0,-w0 * Xim_val,tt);
+      vsip_vcos_d(tt,data_v); /*F0 time series */
+      vsip_vsmsa_d(t,w1,-w1 * Xim_val,tt);
+      vsip_vcos_d(tt,tt); /*F1 time series */
+      vsip_vadd_d(tt,data_v,data_v);
+      vsip_vsmsa_d(t,w2,-w2 * Xim_val,tt);
+      vsip_vcos_d(tt,tt); /*F2 time series */
+      vsip_vadd_d(tt,data_v,data_v);
+      vsip_vsmsa_d(t,w3,-w3 * Xim_val,tt);
+      vsip_vcos_d(tt,tt); /*F3 time series */
+      vsip_svmul_d(3.0,tt,tt); /* scale by 3.0 */
+      vsip_vadd_d(tt,data_v,data_v);
+      vsip_svmul_d(3,data_v,data_v);
+      for(j=0; j<Nnoise; j++){
+         /* simple time delay beam forming for noise */
+         vsip_vputoffset_d(noise[j],offset0 +
+                           (int)( i * alpha * cos(j * cnst1)));
+         vsip_vadd_d(noise[j],data_v,data_v);
+      }
+      /* need to destroy before going on to next phone */
+      vsip_vdestroy_d(data_v);
+   }
+
 int main(){
    int init = vsip_init((void*)0);
    int i,j; /* counters */
@@ -72,11 +107,9 @@ int main(){
    for(j=0; j<Nnoise; j++){
       noise[j] = vsip_vcreate_d(Nn,0);
       vsip_vrandn_d(state,nv);
-      printf("%e %e %e \n",vsip_vget_d(nv,0),vsip_vget_d(nv,1),vsip_vget_d(nv,2));
       vsip_firflt_d(fir,nv,noise[j]);
       vsip_svmul_d(12.0/(Nnoise),noise[j],noise[j]);
       vsip_vputlength_d(noise[j],Ns);
-      /*printf("%e \n",vsip_vget_d(noise[j],0));*/
    }
    for(i=0; i<Mp; i++){
       vsip_scalar_d Xim_val = vsip_mget_d(Xim,i,Theta_o);
