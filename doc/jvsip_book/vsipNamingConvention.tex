@@ -5,7 +5,7 @@ In order to understand \cvl one needs to understand something about the conventi
 \subsection*{Depth}\addcontentsline{toc}{subsection}{Depth}
 A scalar element has a \ttbf{depth}.  For VSIPL this is pretty simple.  It is either complex or real. I suppose in the future it is possible other scalar depths could be defined. For instance a scalar defining a pixel in an image might have red, green, blue components. 
 
-Note that \ttbf{depth} is an attribute of a \ttbf{block}. 
+Note that \ttbf{depth} is an attribute of a \ttbf{block}, and that \ttbf{block}s only store elements of a single type; so a \ttbf{block} will only have one depth associated with it. 
 %
 \subsection*{Precision}\addcontentsline{toc}{subsection}{Precision}
 Precision indicates how accurate the numbers are. In C this would be indicated by \ilCode{float}, \ilCode{double}, \ilCode{int}, etc. \jv only supports standard ANSI C89 precisions but the naming conventions for the VSIP specification allow for just about any precision to be be declared if an implementation wants to support it.
@@ -35,6 +35,6 @@ The type \ttbf{ue32} is used in the definition of \ttbf{VSIPL} random numbers. T
 Shapes in \cv library are basically indicated by an \ttbf{s} for a scalar, a \ttbf{v} for a vector, a \ttbf{m} for a matrix and a \ttbf{t} for a tensor.
 
 \subsubsection*{Comments on Naming in C VSIPL specification}\addcontentsline{toc}{subsubsection}{Comments on Naming in C VSIPL specification}
-In the \cvl specification we have characters in italic font for d (depth), \\*s (shape), p (any precision), f (any float), i (any integer), etc. 
+In the \cvl specification we have characters in italic font for \ttbf{\emph{d}} (depth), \\* \ttbf{\emph{s}} (shape), \ttbf{\emph{p}} (any precision), \ttbf{\emph{f}} (any float), \ttbf{\emph{i}} (any integer), etc. 
 
 These special characters indicate an overloaded specification telling the implementor what general types may be defined for a function in an implementation.   I don't use these character types in this document because I am talking about an actual implementation; not a specification.  The characters I use indicate what is actually implemented.
