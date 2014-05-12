@@ -26,7 +26,7 @@ vsip_mview_d *mcenter_d(vsip_mview_d *gram)
     vsip_offset o = vsip_mgetoffset_d(gram);
     assert(rs == 1);
     assert(cs == (vsip_stride)rl);
-    if (rs & 1){ // odd use freqswap for each column
+    if (cl & 1){ // odd use freqswap for each column
         vsip_vview_d *v=vsip_mcolview_d(gram,0);
         for(i=0; i<rl; i++){
             vsip_vfreqswap_d(v);
@@ -46,7 +46,7 @@ vsip_mview_d *mcenter_d(vsip_mview_d *gram)
     }
     return gram;
 }
-vsip_mview_d *scale(vsip_cmview_d *gram_data)
+vsip_mview_d *cmscale_d(vsip_cmview_d *gram_data)
 {
     vsip_scalar_mi indx;
     vsip_length M = vsip_cmgetcollength_d(gram_data);
@@ -70,12 +70,21 @@ vsip_mview_d *noiseGen(
                 Nnoise=64;
     vsip_scalar_d cnst1=M_PI/(vsip_scalar_d)Nnoise;
     vsip_offset offset0 = (vsip_offset)(alpha * Mp + 1);
-    vsip_vview_d *kernel=vsip_vcreate_d(Nfilter,VSIP_MEM_NONE);
+    vsip_vview_d *kernel=vsip_vcreate_kaiser_d(Nfilter,kaiser,VSIP_MEM_NONE);
     vsip_mview_d *data=vsip_mcreate_d(Mp,Ns,VSIP_ROW,VSIP_MEM_NONE);
     vsip_mview_d *noise=vsip_mcreate_d(Mp,Nn,VSIP_ROW,VSIP_MEM_NONE);
     vsip_vview_d *nv = vsip_vcreate_d(2 * Nn,VSIP_MEM_NONE);
-    vsip_fir_d *fir = vsip_fir_create_d(kernel,VSIP_NONSYM,2*Nn,2,VSIP_STATE_NO_SAVE,0,0);
+    vsip_fir_d *fir =  \
+            vsip_fir_create_d(kernel,VSIP_NONSYM,2*Nn,2,VSIP_STATE_SAVE,0,0);
     vsip_randstate *state = vsip_randcreate(15,1,1,VSIP_PRNG);
+    vsip_mfill_d(0.0,data);
+    for(j=0; j<Nnoise; j++){
+        vsip_vview_d *noise_j=vsip_mrowview_d(noise,j);
+        vsip_vrandn_d(state,nv);
+        vsip_firflt_d(fir,nv,noise_j);
+        vsip_svmul_d(12.0/(float)Nnoise,noise_j,noise_j);
+        vsip_vdestroy_d(noise_j);
+    }
     vsip_mputrowlength_d(noise,Ns);
     for(i=0; i<Mp; i++){//for each sensor
         vsip_vview_d *data_v = vsip_mrowview_d(data,i);
@@ -95,8 +104,7 @@ vsip_mview_d *noiseGen(
 vsip_mview_d *narrowBandGen(
        vsip_mview_d *data,
        vsip_scalar_d alpha,
-       vsip_scalar_d **targets,
-       vsip_length Ntargets,
+       void **targets,
        vsip_scalar_d Fs)
 {
     vsip_index i,j;
@@ -107,6 +115,9 @@ vsip_mview_d *narrowBandGen(
     vsip_mview_d *Xim = vsip_mcreate_d(M,M+1,VSIP_ROW,VSIP_MEM_NONE);
     vsip_vview_d *m = vsip_vcreate_d(M,VSIP_MEM_NONE);
     vsip_vview_d *Xi = vsip_vcreate_d(M + 1,VSIP_MEM_NONE);
+    vsip_vview_d *freq=(vsip_vview_d*)targets[0];
+    vsip_vview_vi *bearing=(vsip_vview_vi*)targets[1];
+    vsip_vview_d *scale=(vsip_vview_d*)targets[2];
     vsip_vramp_d(0.0,1.0,t);
     vsip_vramp_d(0.0,M_PI/(vsip_scalar_d)M,Xi);
     vsip_vcos_d(Xi,Xi);
@@ -114,11 +125,11 @@ vsip_mview_d *narrowBandGen(
     vsip_vouter_d(alpha,m,Xi,Xim);
     for(i=0; i<M; i++){//for each sensor
         vsip_vview_d *data_v = vsip_mrowview_d(data,i);
-        for(j=0; j<Ntargets; j++){//for each noise direction
-            vsip_scalar_d *tgt=targets[j];
-            vsip_scalar_d w0=tgt[0] * 20. * M_PI/(vsip_scalar_d)Fs;
-            vsip_index Theta=(vsip_index)tgt[1];
-            vsip_scalar_d sc = tgt[2];
+        for(j=0; j<vsip_vgetlength_d(freq); j++){//for each noise direction
+            vsip_scalar_d f=vsip_vget_d(freq,j);
+            vsip_scalar_d w0=vsip_vget_d(freq,j) * 2.0 * M_PI/(vsip_scalar_d)Fs;
+            vsip_index Theta=vsip_vget_vi(bearing,j);
+            vsip_scalar_d sc = vsip_vget_d(scale,j);
             vsip_scalar_d Xim_val = vsip_mget_d(Xim,i,Theta);
             vsip_vsmsa_d(t,w0,-w0*Xim_val,tt);
             vsip_vcos_d(tt,tt);
