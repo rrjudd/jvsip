@@ -82,6 +82,8 @@ class Block (object):
                  'mview_si','mview_i','mview_uc','mview_bl']
     vectorTypes=['vview_f','vview_d','cvview_f','cvview_d', 'vview_si','vview_i',\
                  'vview_uc','vview_mi', 'vview_vi','vview_bl']
+    windowTypes=['blackman_d','blackman_f','cheby_d','cheby_f',\
+                 'kaiser_d','kaiser_f','hanning_d','hanning_f']
     complexTypes=['cvview_f','cmview_f','cvview_d','cmview_d','cblock_f','cblock_d']
     blkSel={'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f',\
             'cvview_d':'cblock_d', 'vview_si':'block_si','vview_i':'block_i',\
@@ -101,6 +103,24 @@ class Block (object):
             self.__vsipBlock = length[0]
             self.__length = length[1]
             self.__type = block_type
+        elif block_type in Block.windowTypes:
+            f={'blackman_d':'vsip_vcreate_blackman_d(length,0)',\
+               'blackman_f':'vsip_vcreate_blackman_f(length,0)',\
+               'cheby_d':'vsip_vcreate_cheby_d(length[0],length[1],0)',\
+               'cheby_f':'vsip_vcreate_cheby_f(length[0],length[1],0)',\
+                'kaiser_d':'vsip_vcreate_kaiser_d(length[0],length[1],0)',\
+                'kaiser_f':'vsip_vcreate_kaiser_f(length[0],length[1],0)',\
+                'hanning_d':'vsip_vcreate_hanning_d(length,0)',\
+                'hanning_f':'vsip_vcreate_hanning_f(length,0)'}
+            bt={'blackman_d':'block_d','blackman_f':'block_f','cheby_d':'block_d',\
+               'cheby_f':'block_f','kaiser_d':'block_d','kaiser_f':'block_f',\
+                'hanning_d':'block_d','hanning_f':'block_f'}
+            v=eval(f[block_type])
+            b = vsip.getblock(v)
+            self.__vsipBlock=b;
+            self.__type=bt[block_type]
+            self.__length=length
+            self.w = self.__View(v,self)
         else:
             print('block type <:'+block_type+':> not support by Block class')
     def __del__(self):
