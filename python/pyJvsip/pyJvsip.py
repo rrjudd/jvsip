@@ -2795,7 +2795,7 @@ class Block (object):
                      'cvview_f':'ccfftop_f',
                      'cmview_d':'ccfftmop_d',
                      'cmview_f':'ccfftmop_f'}
-                assert f.has_key(self.type), 'Type <:'+self.type+':> not supported by method ifftop'
+                assert f.has_key(self.type), 'Type <:%s:> not supported by method ifftop'%self.type
                 retval = self.empty
                 if self.type in ['cvview_d','cvview_f']:
                     FFT(f[self.type],self.length,1.0,1,0,0).dft(self,retval)
@@ -3288,13 +3288,14 @@ class Rand(object):
 class FFT (object):
     """
        Usage:
-            fftObj=FFT(t,arg) where
+            fftObj=FFT(t,*arg) where
             t is one of
                 ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d',
                 'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f',
                 'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d',
                  'crfftmop_d']
-            arg is a tuple corresponding to one of the VSIPL arguments list for the associated t value.
+            arg is a tuple corresponding to one of the VSIPL arguments list for the associated type value.
+        Example:
        If VSIPL enumerated types are available as part of the pyJvsip import.
     """
     tFft = ['ccfftip_f', 'ccfftop_f', 'rcfftop_f', 'crfftop_f', 'ccfftip_d', \
@@ -3354,9 +3355,10 @@ class FFT (object):
             self.__arg = args
             self.__type = t
             l = args
+            
             self.__fft = eval(FFT.fftCreateDict[t])
         else:
-            print("Type <:" + t + ":> not a recognized type for FFT")
+            print("Type <:%s:> not a recognized type for FFT",t)
     def __del__(self):
         vsip.destroy(self.__fft)
         del (self.__jvsip)
