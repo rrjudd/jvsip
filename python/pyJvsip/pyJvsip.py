@@ -92,26 +92,26 @@ class Block (object):
             'cmview_f':'cblock_f','cmview_d':'cblock_d','mview_si':'block_si',\
             'mview_i':'block_i','mview_uc':'block_uc','mview_bl':'block_bl'}
     #Block specific class below
-    def __init__(self,block_type,length):
+    def __init__(self,block_type,*args):
         other = ['real_f','imag_f','real_d','imag_d']
         self.__jvsip = JVSIP()
         if block_type in Block.tBlock:
-            self.__vsipBlock = vsip.create(block_type,(length,VSIP_MEM_NONE))
-            self.__length = length
+            self.__vsipBlock = vsip.create(block_type,(args[0],VSIP_MEM_NONE))
+            self.__length = args[0]
             self.__type = block_type
         elif block_type in other:
-            self.__vsipBlock = length[0]
-            self.__length = length[1]
+            self.__vsipBlock = args[0]
+            self.__length = args[1]
             self.__type = block_type
         elif block_type in Block.windowTypes:
-            f={'blackman_d':'vsip_vcreate_blackman_d(length,0)',\
-               'blackman_f':'vsip_vcreate_blackman_f(length,0)',\
-               'cheby_d':'vsip_vcreate_cheby_d(length[0],length[1],0)',\
-               'cheby_f':'vsip_vcreate_cheby_f(length[0],length[1],0)',\
-                'kaiser_d':'vsip_vcreate_kaiser_d(length[0],length[1],0)',\
-                'kaiser_f':'vsip_vcreate_kaiser_f(length[0],length[1],0)',\
-                'hanning_d':'vsip_vcreate_hanning_d(length,0)',\
-                'hanning_f':'vsip_vcreate_hanning_f(length,0)'}
+            f={'blackman_d':'vsip_vcreate_blackman_d(args[0],0)',\
+               'blackman_f':'vsip_vcreate_blackman_f(args[0],0)',\
+               'cheby_d':'vsip_vcreate_cheby_d(args[0],args[1],0)',\
+               'cheby_f':'vsip_vcreate_cheby_f(args[0],args[1],0)',\
+                'kaiser_d':'vsip_vcreate_kaiser_d(args[0],args[1],0)',\
+                'kaiser_f':'vsip_vcreate_kaiser_f(args[0],args[1],0)',\
+                'hanning_d':'vsip_vcreate_hanning_d(args[0],0)',\
+                'hanning_f':'vsip_vcreate_hanning_f(args[0],0)'}
             bt={'blackman_d':'block_d','blackman_f':'block_f','cheby_d':'block_d',\
                'cheby_f':'block_f','kaiser_d':'block_d','kaiser_f':'block_f',\
                 'hanning_d':'block_d','hanning_f':'block_f'}
@@ -119,7 +119,7 @@ class Block (object):
             b = vsip.getblock(v)
             self.__vsipBlock=b;
             self.__type=bt[block_type]
-            self.__length=length
+            self.__length=args[0]
             self.w = self.__View(v,self)
         else:
             print('block type <:'+block_type+':> not support by Block class')
@@ -169,12 +169,15 @@ class Block (object):
         """
         return self.otherBlock(self.type,self.length)
     @classmethod
-    def otherBlock(cls,blk,length):
+    def otherBlock(cls,blk,arg):
         """
         This method is used internal to the pyJvsip module.
         It is not intended to be used in user code.
         """
-        return cls(blk,length)
+        if isinstance(arg,tuple):
+            return cls(blk,arg[0],arg[1])
+        else:
+            return cls(blk,arg)
     @property
     def type(self):
         return self.__type
@@ -2694,18 +2697,16 @@ class Block (object):
                        'cmview_d':'ccfftmip_d',
                        'cmview_f':'ccfftmip_f'}
             if self.type in ['cvview_d','cvview_f']:
-                arg = (self.length,1.0,-1,0,0)
+                FFT(fCreate[self.type],self.length,1.0,-1,0,0).dft(self)
             elif self.type in ['cmview_d','cmview_f']:
                 if 'COL' in self.major:
                     major = 1
                 else:
                     major = 0
-                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
+                  dft(self)
             else:
                 print('Type <:' +self.type+':> not supported for method fftip')
-                return
-            obj=FFT(fCreate[self.type],arg)
-            obj.dft(self)
             return self
         @property
         def ifftip(self):
@@ -2714,24 +2715,24 @@ class Block (object):
                        'cmview_d':'ccfftmip_d',
                        'cmview_f':'ccfftmip_f'}
             if self.type in ['cvview_d','cvview_f']:
-                arg = (self.length,1.0,1,0,0)
+                FFT(fCreate[self.type],self.length,1.0,1,0,0).dft(self)
             elif self.type in ['cmview_d','cmview_f']:
                 if 'COL' in self.major:
                     major = 1
                 else:
                     major = 0
-                arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
+                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
+                    dft(self)
             else:
                 print('Type <:' +self.type+':> not supported for method fftip')
-                return
-            obj=FFT(fCreate[self.type],arg)
-            obj.dft(self)
             return self
         @property
         def fftop(self):
             """
-            The method fftop (FFT Out Of Place) is a property on real and float vectors and matrices.
-            For matrices use the major attribute of the view to set the direction of the FFT.
+            The method fftop (FFT Out Of Place) is a property on real and float vectors
+            and matrices.
+            For matrices use the major attribute of the view to set the direction of the
+            FFT.
             fftop will create and return view of the proper type for the output.
             If the input is real then fftop assumes the complex portion is zero.
             """
@@ -2753,24 +2754,26 @@ class Block (object):
                      'cvview_f':'ccfftop_f',
                      'cmview_d':'ccfftmop_d',
                      'cmview_f':'ccfftmop_f'}
-                assert f.has_key(self.type), 'Type <:'+self.type+':> not supported by method fftop'
+                assert f.has_key(self.type), \
+                      'Type <:'+self.type+':> not supported by method fftop'
                 retval = self.empty
                 if self.type in ['cvview_d','cvview_f']:
-                    arg = (self.length,1.0,-1,0,0)
+                    FFT(f[self.type],self.length,1.0,-1,0,0).dft(self,retval)
                 else:
                     if 'COL' in self.major:
                         major = 1
                     else:
                         major = 0
-                    arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
-                obj=FFT(f[self.type],arg)
-                obj.dft(self,retval)
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
+                       dft(self,retval)
                 return retval
         @property
         def ifftop(self):
             """
-            The method ifftop (Inverse FFT Out Of Place) is a property on real and float vectors and matrices.
-            For matrices use the major attribute of the view to set the direction of the FFT.
+            The method ifftop (Inverse FFT Out Of Place) is a property on real and float
+            vectors and matrices.
+            For matrices use the major attribute of the view to set the direction of the
+            FFT.
             fftop will create and return view of the proper type for the output.
             If the input is real then ifftop assumes the complex portion is zero.
             """
@@ -2795,15 +2798,14 @@ class Block (object):
                 assert f.has_key(self.type), 'Type <:'+self.type+':> not supported by method ifftop'
                 retval = self.empty
                 if self.type in ['cvview_d','cvview_f']:
-                    arg = (self.length,1.0,1,0,0)
+                    FFT(f[self.type],self.length,1.0,1,0,0).dft(self,retval)
                 else:
                     if 'COL' in self.major:
                         major = 1
                     else:
                         major = 0
-                    arg = (self.collength,self.rowlength,1.0,-1,major,0,0)
-                obj=FFT(f[self.type],arg)
-                obj.dft(self,retval)
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
+                        dft(self,retval)
                 return retval
         @property
         def rcfft(self):
@@ -2828,19 +2830,18 @@ class Block (object):
                 if self.type in ['vview_f','vview_d']:
                     n=int(length/2)+1
                     retval=Block(t[self.type],n).bind(0,1,n)
-                    arg = (length,1.0,1,0)
+                    FFT(fCreate[self.type],length,1.0,1,0).dft(self,retval)
                 else:
                     if 'COL' in self.major:
                         m = int(length/2) + 1
                         n = self.rowlength
                         retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
-                        arg=(length,n,1.0,1,1,0)
+                        FFT(fCreate[self.type],n,1.0,1,1,0).dft(self,retval)
                     else:
                         m=self.collength
                         n=int(length/2) + 1
                         retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
-                        arg=(m,length,1.0,0,1,0)
-                FFT(fCreate[self.type],arg).dft(self,retval)
+                        FFT(fCreate[self.type],m,length,1.0,0,1,0).dft(self,retval)
                 return retval
             else:
                 print('Type <:'+self.type+':> not supported for rcfft')
@@ -2865,19 +2866,18 @@ class Block (object):
                 if self.type in ['cvview_f','cvview_d']:
                     n=2 * (length -1)
                     retval=Block(t[self.type],n).bind(0,1,n)
-                    arg = (n,1.0,1,0)
+                    FFT(fCreate[self.type],n,1.0,1,0).dft(self,retval)
                 else:
                     if 'COL' in self.major:
                         m = 2 * (length -1)
                         n = self.rowlength
                         retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
-                        arg=(m,n,1.0,1,1,0)
+                        FFT(fCreate[self.type],m,n,1.0,1,1,0).dft(self,retval)
                     else:
                         m=self.collength
                         n==2 * (length -1)
                         retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
-                        arg=(m,n,1.0,0,1,0)
-                FFT(fCreate[self.type],arg).dft(self,retval)
+                        FFT(fCreate[self.type],m,n,1.0,0,1,0).dft(self,retval)
                 return retval
             else:
                 print('Type <:'+self.type+':> not supported for crfft')
@@ -3348,12 +3348,12 @@ class FFT (object):
                  'mview_fcmview_f':'vsip_rcfftmop_f(self.vsip,l[0].view,l[1].view)',
                  'cmview_dmview_d':'vsip_crfftmop_d(self.vsip,l[0].view,l[1].view)',
                  'cmview_fmview_f':'vsip_crfftmop_f(self.vsip,l[0].view,l[1].view)'}
-    def __init__(self,t,arg):
+    def __init__(self,t,*args):
         if FFT.fftCreateDict.has_key(t):
             self.__jvsip = JVSIP()
-            self.__arg = arg
+            self.__arg = args
             self.__type = t
-            l = arg
+            l = args
             self.__fft = eval(FFT.fftCreateDict[t])
         else:
             print("Type <:" + t + ":> not a recognized type for FFT")
@@ -4177,6 +4177,7 @@ def create(atype,*vals):
         QR creates are by default for the full Q, SV creates are by default for the full matrix.
     """
     blockTypes = Block.tBlock
+    windowTypes=Block.windowTypes
     vectorTypes=['cvview_f','cvview_d','vview_f','vview_d','vview_i','vview_si','vview_uc',\
                  'vview_vi','vview_mi','vview_bl']
     fVector = {'vview_f':'block_f','vview_d':'block_d','cvview_f':'cblock_f', \
@@ -4207,6 +4208,13 @@ def create(atype,*vals):
         assert len(vals) == 1, 'Create for %s has a single length argument'%atype
         assert isinstance(vals[0],int) or isinstance(vals[0],long), 'Length for %s must be an integer'%atype
         return Block(atype,vals[0])
+    elif atype in windowTypes:
+        if 'hanning' in atype or 'blackman' in atype:
+            assert len(vals) == 1, 'Create for %s has a single length argument'%atype
+            return Block(atype,vals[0]).w
+        else:
+            assert len(vals) == 2, 'Create for %s has a single length argument and one parameter'%atype
+            return Block(atype,vals[0],vals[1]).w
     elif atype in vectorTypes:
         assert len(vals) == 1, 'Create for %s has a single length argument'%atype
         assert isinstance(vals[0],int) or isinstance(vals[0],long), 'Length for %s must be an integer'%atype
@@ -4234,11 +4242,16 @@ def create(atype,*vals):
         ntimes = 0 # set to use a lot
         assert (atype in vfftTypes and nVals > 0) or (atype in mfftTypes and nVals > 1), \
             """
-            Usage requires a single length for vectors or the column and row length for matrices.
-            For vectors (matrices) the second (third) argument is a scalar indicating a scale (defaults to 1.0).
-            The argument list is searched for the string "INV" and if found the object is built for an inverse FFT.
-            The default is a Forward FFT If a multiple FFT is specified the argument list is searched for a string
-            of "COL". If found the fft is done for each column. The default is by row."""
+            Usage requires a single length for vectors or the column and row length for
+            matrices.
+            For vectors (matrices) the second (third) argument is a scalar indicating a
+            scale (defaults to 1.0).
+            The argument list is searched for the string "INV" and if found the object is
+            built for an inverse FFT.
+            The default is a Forward FFT If a multiple FFT is specified the argument list
+            is searched for a string of "COL". If found the fft is done for each column.
+            The default is by row.
+            """
         if 'INV' in vals:
             dir = 1 #VSIP_FFT_INV
         else:
@@ -4256,24 +4269,32 @@ def create(atype,*vals):
             if 'COL' in vals:
                 major = 1 # 'VSIP_COL'
         else:
-            assert isinstance(vals[0],int) or isinstance(vals[0],long),'Length argument for %s must be an integer'%atype
+            assert isinstance(vals[0],int) or isinstance(vals[0],long),\
+                'Length argument for %s must be an integer'%atype
             N = vals[0]
             if nVals > 1 and (isinstance(vals[1],int) or isinstance(vals[1],float)):
                 scaleFactor = float(vals[1])
             else:
                 scaleFactor = 1.0
         if ('ccfftip' in atype) or ('ccfftop' in atype):
-            arg = (N,scaleFactor,dir,ntimes,hint)
+            arg = (N,scaleFactor,dir,ntimes,hint)#5
         elif ('crfftop' in atype) or ('rcfftop' in atype):
-            arg = (N,scaleFactor,ntimes,hint)
+            arg = (N,scaleFactor,ntimes,hint)#4
         elif ('ccfftmip' in atype) or ('ccfftmop' in atype):
-            arg = (M,N,scaleFactor,dir,major,ntimes,hint)
+            arg = (M,N,scaleFactor,dir,major,ntimes,hint)#7
         elif ('crfftmop' in atype) or ('rcfftmop' in atype):
-            arg = (M,N,scaleFactor,major,ntimes,hint)
+            arg = (M,N,scaleFactor,major,ntimes,hint)#6
         else:
-            print('<:' + atype + ':> not recognized') #should not be able to get here
+            print('<:%s:> not recognized'%atype) #should not be able to get here
             return
-        return FFT(atype,arg)
+        if len(arg) == 7:
+            return FFT(atype,arg[0],arg[1],arg[2],arg[3],arg[4],arg[5],arg[6])
+        elif len(arg) == 6:
+            return FFT(atype,arg[0],arg[1],arg[2],arg[3],arg[4],arg[5])
+        elif len(arg) == 5:
+            return FFT(atype,arg[0],arg[1],arg[2],arg[3],arg[4])
+        elif len(arg) == 4:
+            return FFT(atype,arg[0],arg[1],arg[2],arg[3])
     elif atype in randType:
         assert len(vals) == 2, 'Type <:%s:> takes a type argument and an intger seed'%atype
         assert isinstance(vals[1],int), 'Argument two for random number generator is an integer'
