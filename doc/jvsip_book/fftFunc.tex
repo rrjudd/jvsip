@@ -7,37 +7,86 @@
 \newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_create}
 \newline \hspace*{1.1cm} {
 \ttfamily
-\begin{tabular}[H]{l}
-vsip\_rcfir\_d* vsip\_rcfir\_create\_d(\\*\hspace{.7cm}const vsip\_vview\_d*, vsip\_symmetry, vsip\_length,\\*\hspace{.7cm}vsip\_length, vsip\_obj\_state, unsigned, vsip\_alg\_hint);\\
+\begin{tabular}[H]{l}\hline
+\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Create Functions}\\ \hline
+vsip\_fft\_d* vsip\_ccfftip\_create\_d(vsip\_length, vsip\_scalar\_d,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_d* vsip\_ccfftop\_create\_d(vsip\_length, vsip\_scalar\_d,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_d* vsip\_crfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_d* vsip\_rcfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_ccfftip\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_ccfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_crfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_rcfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+\hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Create Functions}\\ \hline
+vsip\_fftm\_d* vsip\_ccfftmip\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_ccfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_crfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major, unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_rcfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major, unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_ccfftmip\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_ccfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_crfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major, unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_rcfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major, unsigned int, vsip\_alg\_hint);\\ \hline
 \end{tabular}
 }
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_destroy}
+\clearpage
+\hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_destroy}
 \newline \hspace*{1.1cm} {
 \ttfamily
-\begin{tabular}[H]{l}
+\begin{tabular}[H]{l}\hline
+\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Destroy Functions}\\ \hline
 int vsip\_fft\_destroy\_d(vsip\_fft\_d*);\\
+int vsip\_fft\_destroy\_f(vsip\_fft\_f*);\\
+\hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Destroy Functions}\\ \hline
+int vsip\_fftm\_destroy\_d(vsip\_fftm\_d*);\\
+int vsip\_fftm\_destroy\_f(vsip\_fftm\_f*);\\ \hline
 \end{tabular}
 }\vspace{.1cm}
 \newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft}
 \newline \hspace*{1.1cm} {
 \ttfamily
-\begin{tabular}[H]{l}
-int vsip\_rcfirflt\_d(vsip\_rcfir\_d*, const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*);\\
-\end{tabular}
+\begin{tabular}[H]{l} \hline
+\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Functions}\\ \hline
+void vsip\_ccfftip\_d(const vsip\_fft\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*);\\
+void vsip\_ccfftip\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_cvview\_f*);\\
+void vsip\_ccfftop\_d(const vsip\_fft\_d*,\\*\hspace{.7cm} const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
+void vsip\_ccfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
+void vsip\_crfftop\_d(const vsip\_fft\_d*,\\*\hspace{.7cm} const vsip\_cvview\_d*, const vsip\_vview\_d*);\\
+void vsip\_crfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_cvview\_f*, const vsip\_vview\_f*);\\
+void vsip\_rcfftop\_d(const vsip\_fft\_d*,\\*\hspace{.7cm} const vsip\_vview\_d*, const vsip\_cvview\_d*);\\
+void vsip\_rcfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_vview\_f*, const vsip\_cvview\_f*);\\ \hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Functions}\\ \hline
+void vsip\_ccfftmip\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_cmview\_d*);\\
+void vsip\_ccfftmip\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_cmview\_f*);\\
+void vsip\_ccfftmop\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
+void vsip\_ccfftmop\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
+void vsip\_crfftmop\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_cmview\_d*, const vsip\_mview\_d*);\\
+void vsip\_crfftmop\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_cmview\_f*, const vsip\_mview\_f*);\\
+void vsip\_rcfftmop\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_mview\_d*, const vsip\_cmview\_d*);\\
+void vsip\_rcfftmop\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_mview\_f*, const vsip\_cmview\_f*);\\ \hline \end{tabular}
 }
 \clearpage
 \hspace*{.8cm} \texttt{fft\_getattr}
 \newline \hspace*{1.1cm} {
 \ttfamily
-\begin{tabular}[H]{l}
-void vsip\_rcfir\_getattr\_d(const vsip\_rcfir\_d*,\\*\hspace{.7cm}vsip\_rcfir\_attr*);\\
+\begin{tabular}[H]{l}\hline
+\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Get Attributes Functions}\\ \hline
+void vsip\_fft\_getattr\_d(const vsip\_fft\_d*, vsip\_fft\_attr\_d*);\\
+void vsip\_fft\_getattr\_f(const vsip\_fft\_f*, vsip\_fft\_attr\_f*);\\
+\hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Get Attributes Functions}\\ \hline
+void vsip\_fftm\_getattr\_d(const vsip\_fftm\_d*, vsip\_fftm\_attr\_d*);\\
+void vsip\_fftm\_getattr\_f(const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
 \end{tabular}
-}\vspace{.1cm}
-\newline\hspace*{.8cm} \texttt{fir\_reset}
-\newline \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-void vsip\_rcfir\_reset\_d(vsip\_rcfir\_d*)\\
-\end{tabular}\
 }
 \pyjvsiph
+\newline\hspace*{.8cm}{\textbf{View Method}\\
+\hspace*{1cm}\parbox{10.5cm}{
+\begin{itemize}
+\item {Special \ttbf{view} methods exist.} 
+\item {The scale factor is always one for \ttbf{view} methods.}
+\item {For out of place the method will create and return the output \ttbf{view}.}
+\end{itemize}}\\
+\hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
+\hspace*{1.1cm}\textbf{Example: }\ttbf{a /= b; a /= 2}\\*
+\hspace*{1.5cm}Elements of \ttbf{view a} replaced with result.\\
+\hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
+\hspace*{1.1cm}\textbf{Example: }\ttbf{c = a / b; d = 2 / c; e = c / 2}\\*
+\hspace*{1.5cm}\parbox{.85\textwidth}{\ttbf{view c}, \ttbf{view d}, and \ttbf{view e}  created and filled with result of operation.}\\
