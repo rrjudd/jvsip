@@ -77,16 +77,27 @@ void vsip\_fftm\_getattr\_f(const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
 \end{tabular}
 }
 \pyjvsiph
-\newline\hspace*{.8cm}{\textbf{View Method}\\
+\newline\hspace*{.8cm}{\textbf{View Methods}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
 \item {Special \ttbf{view} methods exist.} 
 \item {The scale factor is always one for \ttbf{view} methods.}
-\item {For out of place the method will create and return the output \ttbf{view}.}
+\item {For out of place the method will create and return the output \ttbf{view}.
+\item {\ttbf{View} methods determine if the FFT is a multiple FFT or a vector FFT by the \ttbf{view} type}
+}
 \end{itemize}}\\
 \hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
-\hspace*{1.1cm}\textbf{Example: }\ttbf{a /= b; a /= 2}\\*
-\hspace*{1.5cm}Elements of \ttbf{view a} replaced with result.\\
+\hspace*{1.1cm}\textbf{Example: }Forward transform of vector \ttbf{x} in-place\\*
+\hspace*{3.5cm}\ttbf{x.fftip}\\*
+\hspace*{2.9cm}Inverse transform of vector \ttbf{x} in-place\\
+\hspace*{3.5cm}\ttbf{x.ifftip}\\*
 \hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
-\hspace*{1.1cm}\textbf{Example: }\ttbf{c = a / b; d = 2 / c; e = c / 2}\\*
-\hspace*{1.5cm}\parbox{.85\textwidth}{\ttbf{view c}, \ttbf{view d}, and \ttbf{view e}  created and filled with result of operation.}\\
+\hspace*{1.1cm}\textbf{Example: }\ttbf{y=x.rcfft}\\*
+\hspace*{1.5cm}\ttbf{z=y.crfft}\\*
+\hspace*{1.5cm}real to complex and complex to real FFT\\
+\hspace*{1.5cm} \ttbf{y=x.ccfft}
+\hspace*{1.5cm}\parbox{.85\textwidth}{}\\
+\newline\hspace*{.8cm}{\textbf{FFT Methods}\\
+To create an FFT object  
+fftObj=FFT('type',*args)
+Where \ttbf{args} is a tuple containing the create parameters for the FFT type selected.
