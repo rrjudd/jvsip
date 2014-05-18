@@ -2813,75 +2813,50 @@ class Block (object):
                        'mview_d':'rcfftmop_d', 'mview_f':'rcfftmop_f'}
             t={'vview_f':'cblock_f','vview_d':'cblock_d',
                    'mview_f':'cblock_f','mview_d':'cblock_d'}
-            if self.type in ['vview_d','vview_f']:
+            assert fCreate.has_key(self.type),'Type <:%s:> is not supported for rcfft'%self.type
+            if 'vview' in self.type:
                 length = self.length
-            elif self.type in ['mview_d','mview_f']:
-                if 'COL' in self.major:
-                    length = self.collength
-                else:
-                    length = self.rowlength
+                assert not length & 1,'rcfft only supported for even length along fft direction '
+                n=int(length/2)+1
+                retval=Block(t[self.type],n).bind(0,1,n)
+                FFT(fCreate[self.type],length,1.0,1,0).dft(self,retval)
+            elif 'COL' in self.major:
+                length = self.collength
+                assert not length & 1,'rcfft only supported for even length along fft direction '
+                m = int(length/2 + 1)
+                n = self.rowlength
+                retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
+                FFT(fCreate[self.type],n,1.0,1,1,0).dft(self,retval)
             else:
-                print('Type <:' + self.type + ':> is not supported for rcfft')
-                return
-            if (length % 2):
-                print('rcfft only supported for even length along fft direction ')
-                return
-            if t.has_key(self.type):
-                if self.type in ['vview_f','vview_d']:
-                    n=int(length/2)+1
-                    retval=Block(t[self.type],n).bind(0,1,n)
-                    FFT(fCreate[self.type],length,1.0,1,0).dft(self,retval)
-                else:
-                    if 'COL' in self.major:
-                        m = int(length/2) + 1
-                        n = self.rowlength
-                        retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
-                        FFT(fCreate[self.type],n,1.0,1,1,0).dft(self,retval)
-                    else:
-                        m=self.collength
-                        n=int(length/2) + 1
-                        retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
-                        FFT(fCreate[self.type],m,length,1.0,0,1,0).dft(self,retval)
-                return retval
-            else:
-                print('Type <:'+self.type+':> not supported for rcfft')
-                return
+                length = self.rowlength
+                assert not length & 1,'rcfft only supported for even length along fft direction '
+                m=int(self.collength)
+                n=int(length/2 + 1)
+                retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
+                FFT(fCreate[self.type],m,length,1.0,0,1,0).dft(self,retval)
+            return retval
         @property
-        def crfft(self):
+        def crfft(self):           
             fCreate = {'cvview_d':'crfftop_d', 'cvview_f':'crfftop_f',
                        'cmview_d':'crfftmop_d', 'cmview_f':'crfftmop_f'}
             t={'cvview_f':'block_f','cvview_d':'block_d',
                'cmview_f':'block_f','cmview_d':'block_d'}
-            if self.type in ['cvview_d','cvview_f']:
-                length = self.length
-            elif self.type in ['cmview_d','cmview_f']:
-                if 'COL' in self.major:
-                    length = self.collength
-                else:
-                    length = self.rowlength
+            assert fCreate.has_key(self.type),'Type <:%s:> is not supported for rcfft'%self.type
+            if 'vview' in self.type:
+                n = int( 2 * (self.length-1))
+                retval=Block(t[self.type],n).bind(0,1,n)
+                FFT(fCreate[self.type],n,1.0,1,0).dft(self,retval)
+            elif 'COL' in self.major:
+                m = int( 2 * (self.collength-1))
+                n = self.rowlength
+                retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
+                FFT(fCreate[self.type],m,n,1.0,1,1,0).dft(self,retval)
             else:
-                print('Type <:' + self.type + ':> is not supported for rcfft')
-                return
-            if t.has_key(self.type):
-                if self.type in ['cvview_f','cvview_d']:
-                    n=2 * (length -1)
-                    retval=Block(t[self.type],n).bind(0,1,n)
-                    FFT(fCreate[self.type],n,1.0,1,0).dft(self,retval)
-                else:
-                    if 'COL' in self.major:
-                        m = 2 * (length -1)
-                        n = self.rowlength
-                        retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
-                        FFT(fCreate[self.type],m,n,1.0,1,1,0).dft(self,retval)
-                    else:
-                        m=self.collength
-                        n==2 * (length -1)
-                        retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
-                        FFT(fCreate[self.type],m,n,1.0,0,1,0).dft(self,retval)
-                return retval
-            else:
-                print('Type <:'+self.type+':> not supported for crfft')
-                return
+                m=self.collength
+                n= int(2 * (self.rowlength -1))
+                retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
+                FFT(fCreate[self.type],m,n,1.0,0,1,0).dft(self,retval)
+            return retval
         #
         # General Square Solver
         @property
