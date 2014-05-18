@@ -2746,19 +2746,15 @@ class Block (object):
                      'cvview_f':'ccfftop_f',
                      'cmview_d':'ccfftmop_d',
                      'cmview_f':'ccfftmop_f'}
-                assert f.has_key(self.type), \
-                      'Type <:'+self.type+':> not supported by method fftop'
+                assert f.has_key(self.type), 'Type <:%s:> not supported by method fftop'%self.type
                 retval = self.empty
-                if self.type in ['cvview_d','cvview_f']:
+                if 'vview'	 in self.type:
                     FFT(f[self.type],self.length,1.0,-1,0,0).dft(self,retval)
+                elif 'COL' in self.major:
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,-1,VSIP_COL,0,0).dft(self,retval)
                 else:
-                    if 'COL' in self.major:
-                        major = 1
-                    else:
-                        major = 0
-                    FFT(f[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
-                       dft(self,retval)
-                return retval
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,-1,VSIP_ROW,0,0).dft(self,retval)
+            return retval
         @property
         def ifftop(self):
             """
@@ -2789,16 +2785,13 @@ class Block (object):
                      'cmview_f':'ccfftmop_f'}
                 assert f.has_key(self.type), 'Type <:%s:> not supported by method ifftop'%self.type
                 retval = self.empty
-                if self.type in ['cvview_d','cvview_f']:
+                if 'vview' self.type:
                     FFT(f[self.type],self.length,1.0,1,0,0).dft(self,retval)
+                elif 'COL' in self.major:
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,1,VSIP_COL,0,0).dft(self,retval)
                 else:
-                    if 'COL' in self.major:
-                        major = 1
-                    else:
-                        major = 0
-                    FFT(f[self.type],self.collength,self.rowlength,1.0,1,major,0,0).\
-                        dft(self,retval)
-                return retval
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,1,VSIP_ROW,0,0).dft(self,retval)
+            return retval
         @property
         def rcfft(self):
             fCreate = {'vview_d':'rcfftop_d', 'vview_f':'rcfftop_f',
