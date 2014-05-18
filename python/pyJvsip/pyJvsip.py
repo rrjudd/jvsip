@@ -2696,17 +2696,13 @@ class Block (object):
                        'cvview_f':'ccfftip_f',
                        'cmview_d':'ccfftmip_d',
                        'cmview_f':'ccfftmip_f'}
-            if self.type in ['cvview_d','cvview_f']:
+            assert fCreate.has_key(self.type),'View of type <:%s"> not supported by fftip.'%self.type
+            if 'vview' in self.type:
                 FFT(fCreate[self.type],self.length,1.0,-1,0,0).dft(self)
-            elif self.type in ['cmview_d','cmview_f']:
-                if 'COL' in self.major:
-                    major = 1
-                else:
-                    major = 0
-                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
-                  dft(self)
+            elif 'COL' in self.major:
+                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,-1,VSIP_COL,0,0).dft(self)
             else:
-                print('Type <:' +self.type+':> not supported for method fftip')
+                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,-1,VSIP_ROW,0,0).dft(self)
             return self
         @property
         def ifftip(self):
@@ -2714,17 +2710,13 @@ class Block (object):
                        'cvview_f':'ccfftip_f',
                        'cmview_d':'ccfftmip_d',
                        'cmview_f':'ccfftmip_f'}
-            if self.type in ['cvview_d','cvview_f']:
+            assert fCreate.has_key(self.type),'View of type <:%s"> not supported by ifftip.'%self.type
+            if 'vview' in self.type:
                 FFT(fCreate[self.type],self.length,1.0,1,0,0).dft(self)
-            elif self.type in ['cmview_d','cmview_f']:
-                if 'COL' in self.major:
-                    major = 1
-                else:
-                    major = 0
-                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
-                    dft(self)
+            elif 'COL' in self.major:
+                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,1,VSIP_COL,0,0).dft(self)
             else:
-                print('Type <:' +self.type+':> not supported for method fftip')
+                FFT(fCreate[self.type],self.collength,self.rowlength,1.0,1,VSIP_ROW,0,0).dft(self)
             return self
         @property
         def fftop(self):
@@ -2804,7 +2796,7 @@ class Block (object):
                         major = 1
                     else:
                         major = 0
-                    FFT(f[self.type],self.collength,self.rowlength,1.0,-1,major,0,0).\
+                    FFT(f[self.type],self.collength,self.rowlength,1.0,1,major,0,0).\
                         dft(self,retval)
                 return retval
         @property
