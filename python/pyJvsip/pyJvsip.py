@@ -2785,7 +2785,7 @@ class Block (object):
                      'cmview_f':'ccfftmop_f'}
                 assert f.has_key(self.type), 'Type <:%s:> not supported by method ifftop'%self.type
                 retval = self.empty
-                if 'vview' self.type:
+                if 'vview' in self.type:
                     FFT(f[self.type],self.length,1.0,1,0,0).dft(self,retval)
                 elif 'COL' in self.major:
                     FFT(f[self.type],self.collength,self.rowlength,1.0,1,VSIP_COL,0,0).dft(self,retval)
@@ -2811,14 +2811,14 @@ class Block (object):
                 m = int(length/2 + 1)
                 n = self.rowlength
                 retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
-                FFT(fCreate[self.type],n,1.0,1,1,0).dft(self,retval)
+                FFT(fCreate[self.type],length,n,1.0,VSIP_COL,1,0).dft(self,retval)
             else:
                 length = self.rowlength
                 assert not length & 1,'rcfft only supported for even length along fft direction '
                 m=int(self.collength)
                 n=int(length/2 + 1)
                 retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
-                FFT(fCreate[self.type],m,length,1.0,0,1,0).dft(self,retval)
+                FFT(fCreate[self.type],m,length,1.0,VSIP_ROW,1,0).dft(self,retval)
             return retval
         @property
         def crfft(self):           
@@ -2835,12 +2835,12 @@ class Block (object):
                 m = int( 2 * (self.collength-1))
                 n = self.rowlength
                 retval = Block(t[self.type],n * m).bind(0,1,m,m,n)
-                FFT(fCreate[self.type],m,n,1.0,1,1,0).dft(self,retval)
+                FFT(fCreate[self.type],m,n,1.0,VSIP_COL,1,0).dft(self,retval)
             else:
                 m=self.collength
                 n= int(2 * (self.rowlength -1))
                 retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
-                FFT(fCreate[self.type],m,n,1.0,0,1,0).dft(self,retval)
+                FFT(fCreate[self.type],m,n,1.0,VSIP_ROW,1,0).dft(self,retval)
             return retval
         #
         # General Square Solver
