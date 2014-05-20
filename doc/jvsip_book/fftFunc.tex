@@ -89,13 +89,15 @@ void vsip\_fftm\_getattr\_f(const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
 \hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }Forward transform of vector \ttbf{x} in-place\\*
 \hspace*{3.5cm}\ttbf{x.fftip}\\*
+\hspace*{2.9cm}For matrix FFT multiple use major attribute.\\*
+\hspace*{3.5cm}\ttbf{x.ROW.fftip} \& \ttbf{x.COL.fftip}\\*
 \hspace*{2.9cm}Inverse transform of vector \ttbf{x} in-place\\
 \hspace*{3.5cm}\ttbf{x.ifftip}\\*
 \hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
-\hspace*{1.1cm}\textbf{Example: }\ttbf{y=x.rcfft}\\*
-\hspace*{1.5cm}\ttbf{z=y.crfft}\\*
-\hspace*{1.5cm}real to complex and complex to real FFT\\
-\hspace*{1.5cm} \ttbf{y=x.ccfft}
+\hspace*{1.1cm}\textbf{Example: }real to complex and complex to real FFT\\*
+\hspace*{1.5cm}\ttbf{ y=x.rcfft}\\*
+\hspace*{1.5cm}\ttbf{ z=y.crfft}\\*
+\hspace*{1.5cm}\ttbf{ y=x.ccfft}
 \hspace*{1.5cm}\parbox{.85\textwidth}{}\\
 \newline\hspace*{.8cm}{\textbf{FFT Methods}\\
 To create an FFT object  
