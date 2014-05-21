@@ -111,16 +111,20 @@ void vsip\_fftm\_getattr\_f(const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
 \hspace*{3.5cm}\ttbf{ y=x.COL.ifftop}\\
  \hspace*{2.9cm}Complex to complex multiple inverse transform of matrix \ttbf{x}\\*\hspace*{2.9cm}out-of-place by row\\
 \hspace*{3.5cm}\ttbf{ y=x.ROW.ifftop}\\
-\newline\hspace*{.8cm}{\textbf{FFT Methods}\\
+\clearpage
+\hspace*{.8cm}{\textbf{FFT Methods}\\
 \hspace*{1.cm}\parbox{.85\textwidth}{To create an FFT object use \\*
 \hspace*{1.cm} \ttbf{fftObj=FFT(t,*args)}\\*
 Where \ttbf{args} is a tuple containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.}\\
-Note \ttbf{arg} will contain some or all of the following in the order listed
+Note \ttbf{arg} will contain some or all of the following in the order listed}
 \begin{itemize}
-\item{\ttbf{M} =>Column Length}
-\item{\ttbf{N} =>Row Length for \ttbf{matrix} or Vector length for \ttbf{vector}}
-\item{\ttbf{scl}}
-\item{\ttbf{dir}}
+\item{\ttbf{M}\hspace*{.85cm} \parbox[t]{.8\textwidth}{Column Length}}
+\item{\ttbf{N} \hspace*{.8cm} \parbox[t]{.8\textwidth}{Row Length for \ttbf{matrix} or Vector length for \ttbf{vector}}}
+\item{\ttbf{scl} \hspace*{.5cm} \parbox[t]{.8\textwidth}{Scale Factor}}
+\item{\ttbf{dir} \hspace*{.5cm} \parbox[t]{.8\textwidth}{Direction flag for FFT either VSIP\_FFT\_FWD or VSIP\_FFT\_INV}}
+\item{\ttbf{major} \hspace*{.2cm} \parbox[t]{.8\textwidth}{For multiple FFT by row (VSIP\_ROW) or by column (VSIP\_COL)}}
+\item{\ttbf{ntimes} \hspace*{.1cm} \parbox[t]{.8\textwidth}{Hint for how much the FFT object will be used. Zero indicates many times.}}
+\item{\ttbf{hint} \hspace*{.45cm}\parbox[t]{.8\textwidth}{Algorithm hint to optimize for speed (VSIP\_ALG\_TIME), size (VSIP\_ALG\_SPACE), or accuracy (VSIP\_ALG\_NOISE)}}
 \end{itemize}
 \begin{table}[H]
 \caption{FFT Types and Argument Strings}
