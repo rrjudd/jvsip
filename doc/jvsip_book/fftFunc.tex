@@ -1,5 +1,5 @@
 \clearpage
-{\large \textbf{\hypertarget{fftFunc}{FFT Class}}}\vspace{.2cm}\\
+{\large \textbf{\hypertarget{fftFunc}{FFT Function Set}}}\vspace{.2cm}\\
 \hspace*{.3cm}
 \parbox{0.85\textwidth}{Discrete Fourier Transforms. See FFT Functions table \ref{tab:fftFunctions}}
 \cvsiplh 
@@ -8,24 +8,28 @@
 \newline \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}\hline
-\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Create Functions}\\ \hline
-vsip\_fft\_d* vsip\_ccfftip\_create\_d(vsip\_length, vsip\_scalar\_d,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_d* vsip\_ccfftop\_create\_d(vsip\_length, vsip\_scalar\_d,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_d* vsip\_crfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_d* vsip\_rcfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_ccfftip\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_ccfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_crfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_rcfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-\hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Create Functions}\\ \hline
-vsip\_fftm\_d* vsip\_ccfftmip\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
-vsip\_fftm\_d* vsip\_ccfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
-vsip\_fftm\_d* vsip\_crfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major, unsigned int, vsip\_alg\_hint);\\
-vsip\_fftm\_d* vsip\_rcfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major, unsigned int, vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_ccfftmip\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_ccfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major, unsigned int,\\*\hspace{.7cm}vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_crfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major, unsigned int, vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_rcfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major, unsigned int, vsip\_alg\_hint);\\ \hline
+\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Create Functions\vspace{.1cm}}\\ \hline
+vsip\_fft\_d* vsip\_ccfftip\_create\_d(vsip\_length, \\*\hspace{.7cm}vsip\_scalar\_d,vsip\_fft\_dir,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_d* vsip\_ccfftop\_create\_d(vsip\_length, \\*\hspace{.7cm}vsip\_scalar\_d,vsip\_fft\_dir,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_d* vsip\_crfftop\_create\_d(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_d* vsip\_rcfftop\_create\_d(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_f* vsip\_ccfftip\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,vsip\_fft\_dir,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_f* vsip\_ccfftop\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,vsip\_fft\_dir,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_f* vsip\_crfftop\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+vsip\_fft\_f* vsip\_rcfftop\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\vspace{.1cm}\\
+\end{tabular}
+}
+\newline\hspace*{1.1cm} {
+\begin{tabular}[H]{l}\hline
+\multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Create Functions}\\ \hline
+vsip\_fftm\_d* vsip\_ccfftmip\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_ccfftmop\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_crfftmop\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_rcfftmop\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_ccfftmip\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_ccfftmop\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_crfftmop\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_rcfftmop\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\ \hline
 \end{tabular}
 }
 \clearpage
@@ -69,15 +73,15 @@ void vsip\_rcfftmop\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_mview\_
 \ttfamily
 \begin{tabular}[H]{l}\hline
 \hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Get Attributes Functions}\\ \hline
-void vsip\_fft\_getattr\_d(const vsip\_fft\_d*, vsip\_fft\_attr\_d*);\\
-void vsip\_fft\_getattr\_f(const vsip\_fft\_f*, vsip\_fft\_attr\_f*);\\
+void vsip\_fft\_getattr\_d(\\*\hspace{.7cm}const vsip\_fft\_d*, vsip\_fft\_attr\_d*);\\
+void vsip\_fft\_getattr\_f(\\*\hspace{.7cm}const vsip\_fft\_f*, vsip\_fft\_attr\_f*);\\
 \hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Get Attributes Functions}\\ \hline
-void vsip\_fftm\_getattr\_d(const vsip\_fftm\_d*, vsip\_fftm\_attr\_d*);\\
-void vsip\_fftm\_getattr\_f(const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
+void vsip\_fftm\_getattr\_d(\\*\hspace{.7cm}const vsip\_fftm\_d*, vsip\_fftm\_attr\_d*);\\
+void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
 \end{tabular}
 }
 \pyjvsiph
-\newline\hspace*{.8cm}{\textbf{View Methods}\\
+\newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
 \item {Special \ttbf{view} methods exist.} 
@@ -111,12 +115,11 @@ void vsip\_fftm\_getattr\_f(const vsip\_fftm\_f*, vsip\_fftm\_attr\_f*);\\
 \hspace*{3.5cm}\ttbf{ y=x.COL.ifftop}\\
  \hspace*{2.9cm}Complex to complex multiple inverse transform of matrix \ttbf{x}\\*\hspace*{2.9cm}out-of-place by row\\
 \hspace*{3.5cm}\ttbf{ y=x.ROW.ifftop}\\
-\clearpage
-\hspace*{.8cm}{\textbf{FFT Methods}\\
-\hspace*{1.cm}\parbox{.85\textwidth}{To create an FFT object use \\*
+\hspace*{.8cm}{\textbf{FFT Class\vspace{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{To create an FFT object use \\*
 \hspace*{1.cm} \ttbf{fftObj=FFT(t,*args)}\\*
-Where \ttbf{args} is a tuple containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.}\\
-\hspace*{1.cm}\parbox{.75\textwidth}{Note \ttbf{arg} will contain some or all of the following in the order listed\\
+where \ttbf{args} is a tuple containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.\vspace{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{arg} will contain some or all of the following in the order listed. The exact argument list, and each type string, is shown in the Discrete Fourier Transform Class table below.\\
 \begin{tabular}[t]{|l l|}\hline
 \ttbf{M} & \parbox[t]{.75\textwidth}{Column Length \vspace*{.1cm}}\\ \hline
 \ttbf{N} & \parbox[t]{.75\textwidth}{Row Length for \ttbf{matrix} or Vector length for \ttbf{vector}\vspace*{.1cm}} \\\hline
@@ -127,22 +130,26 @@ Where \ttbf{args} is a tuple containing the create parameters for the FFT type s
 \ttbf{alghint} & \parbox[t]{.75\textwidth}{Algorithm hint to optimize for speed (VSIP\_ALG\_TIME), size (VSIP\_ALG\_SPACE), or accuracy (VSIP\_ALG\_NOISE)\vspace*{.1cm}}\\
 \hline \end{tabular}}
 \newline
-\begin{tabular}{|l l|}\hline
-\multicolumn{2}{|l|}{\parbox[t]{.9\textwidth}{\center{\rmfamily \bfseries Discrete Fourier Transform Class}\vspace{.2cm}}}\\ \hline \hline
-'ccfftip\_f' & \parbox[t]{.75\textwidth}{Complex-to-complex FFT single precision float in-place \\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftop\_f' & \parbox[t]{.75\textwidth}{Complex-to-complex FFT single precision float out-of-place \\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftop\_f' & \parbox[t]{.75\textwidth}{Real-to-complex FFT single precision float out-of-place \\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftop\_f'& \parbox[t]{.75\textwidth}{Complex-to-real FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftip\_d' & \parbox[t]{.75\textwidth}{Complex-to-complex FFT double precision in-place\\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftop\_d'& \parbox[t]{.75\textwidth}{Complex-to-complex FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftop\_d'& \parbox[t]{.75\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftop\_d'& \parbox[t]{.75\textwidth}{Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmip\_f' & \parbox[t]{.75\textwidth}{Complex-to-complex multiple FFT single precision in-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmop\_f' & \parbox[t]{.75\textwidth}{Complex-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftmop\_f' & \parbox[t]{.75\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftmop\_f' &\parbox[t]{.75\textwidth}{ Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmip\_d' & \parbox[t]{.75\textwidth}{Complex-to-complex multiple FFT double precision in-place\\*\ttbf{arg =(M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmop\_d' & \parbox[t]{.75\textwidth}{Complex-to-complex multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftmop\_d' & \parbox[t]{.75\textwidth}{Real-to-complex multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftmop\_d' & \parbox[t]{.75\textwidth}{Complex-to-real multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\
-\hline\end{tabular}
+\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}\hline
+\multicolumn{2}{|c|}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Discrete Fourier Transform Class}\vspace{.2cm}}}\\ \hline \hline
+'ccfftip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision in-place \\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision out-of-place \\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex FFT float precision out-of-place \\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftop\_f'& \parbox[t]{.68\textwidth}{Complex-to-real FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftip\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT double precision in-place\\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftop\_d'& \parbox[t]{.68\textwidth}{Complex-to-complex FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftop\_d'& \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftop\_d'& \parbox[t]{.68\textwidth}{Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT single precision in-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftmop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftmop\_f' &\parbox[t]{.68\textwidth}{ Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmip\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT double precision in-place\\*\ttbf{arg =(M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmop\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftmop\_d' & \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftmop\_d' & \parbox[t]{.68\textwidth}{Complex-to-real multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\
+\hline\end{tabular}}
+\clearpage\hspace*{.8cm}{\textbf{FFT Class Methods}\\
+\hspace*{1.1cm} \parbox[t]{.88\textwidth}{Below we assume we have created an FFT object we call \ttbf{fftObj} and we have an input \ttbf{view x} compliant with \ttbf{fftObj} and if necessary a compliant output \ttbf{view y}.\vspace{.2cm}}
+\newline\hspace*{1.2cm}\parbox[t]{.85\textwidth}{To calculate an in-place DFT we do\\*\hspace*{.5cm}\ttbf{fftObj.dft(x)}\\ To calculate an out-of-place DFT we do\\*\hspace*{.5cm} \ttbf{fftObj.dft(x,y)\vspace{.1cm}}\\
+To get the FFT type (a string) we do\\*\hspace*{.5cm}\ttbf{t=fftObj.type}\vspace{.1cm}\\To get the argument list (a tuple) the FFT was created with we do\\*\hspace*{.5cm}\ttbf{arg=fftObj.arg}\vspace{.1cm}\\If we want to examine or use the C VSIPL FFT Object encapsulated inside the pyJvsip FFT object we do\\*\hspace*{.5cm}\ttbf{vsipObj=fftObj.vsip\\}}
