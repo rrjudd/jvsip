@@ -84,20 +84,22 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
-\item {Special \ttbf{view} methods exist.} 
-\item {The scale factor is always one for \ttbf{view} methods.}
+\item {Special \ttbf{view} methods exist for \ttbf{view}s of type float and double.} 
+\item {\ttbf{View} methods are defined as properties (@property) so the scale factor is always one for \ttbf{view} methods.}
 \item {For out of place the method will create and return the output \ttbf{view}.
-\item {\ttbf{View} methods determine if the FFT is a multiple FFT or a vector FFT by the \ttbf{view} type}
+\item {\ttbf{View} methods determine if the FFT is a multiple FFT or a vector FFT by the \ttbf{view} type. The \pyjv \ttbf{view} \ttbf{major} attribute is used to determine if the multiple FFT is by row or by column.}
+\item {Out-of-place \ttbf{view} methods \ttbf{fftop} and \ttbf{ifftop} treat real vectors as if they were complex with a zero imaginary part}
 }
 \end{itemize}}\\
 \hspace*{1.1cm}\textbf{In-Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\\
 \hspace*{2.9cm}Forward transform of vector \ttbf{x} in-place\\*
-\hspace*{3.5cm}\ttbf{x.fftip}\\*
+\hspace*{3.5cm}\ttbf{x.fftip}\\
 \hspace*{2.9cm}For matrix FFT multiple use major attribute.\\*
-\hspace*{3.5cm}\ttbf{x.ROW.fftip} \& \ttbf{x.COL.fftip}\\*
-\hspace*{2.9cm}Inverse transform of vector \ttbf{x} in-place\\
-\hspace*{3.5cm}\ttbf{x.ifftip}\\*
+\hspace*{3.5cm}\ttbf{x.ROW.fftip} \\*
+\hspace*{3.5cm}\ttbf{x.COL.fftip}\\
+\hspace*{2.9cm}Inverse transform of vector \ttbf{x} in-place\\*
+\hspace*{3.5cm}\ttbf{x.ifftip}\\
 \hspace*{1.1cm}\textbf{Out-of-Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\\
 \hspace*{2.9cm}Real to complex and complex to real FFT\\*
@@ -119,7 +121,7 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an FFT object use \\*
 \hspace*{1.cm} \ttbf{fftObj=FFT(t,*args)}\\*
 where \ttbf{args} is a tuple containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.\vspace{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{arg} will contain some or all of the following in the order listed. The exact argument list, and each type string, is shown in the Discrete Fourier Transform Class table below.\\
+\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. The exact argument list, and each type string, is shown in the Discrete Fourier Transform Class table below.\\
 \begin{tabular}[t]{|l l|}\hline
 \ttbf{M} & \parbox[t]{.75\textwidth}{Column Length \vspace*{.1cm}}\\ \hline
 \ttbf{N} & \parbox[t]{.75\textwidth}{Row Length for \ttbf{matrix} or Vector length for \ttbf{vector}\vspace*{.1cm}} \\\hline
@@ -132,22 +134,22 @@ where \ttbf{args} is a tuple containing the create parameters for the FFT type s
 \newline
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}\hline
 \multicolumn{2}{|c|}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Discrete Fourier Transform Class}\vspace{.2cm}}}\\ \hline \hline
-'ccfftip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision in-place \\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision out-of-place \\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex FFT float precision out-of-place \\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftop\_f'& \parbox[t]{.68\textwidth}{Complex-to-real FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftip\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT double precision in-place\\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftop\_d'& \parbox[t]{.68\textwidth}{Complex-to-complex FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftop\_d'& \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftop\_d'& \parbox[t]{.68\textwidth}{Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT single precision in-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftmop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftmop\_f' &\parbox[t]{.68\textwidth}{ Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{arg = (M,N,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmip\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT double precision in-place\\*\ttbf{arg =(M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'ccfftmop\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'rcfftmop\_d' & \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
-'crfftmop\_d' & \parbox[t]{.68\textwidth}{Complex-to-real multiple FFT double precision out-of-place\\*\ttbf{arg = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\
+'ccfftip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision in-place \\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision out-of-place \\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex FFT float precision out-of-place \\*\ttbf{args = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftop\_f'& \parbox[t]{.68\textwidth}{Complex-to-real FFT single precision out-of-place\\*\ttbf{args = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftip\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT double precision in-place\\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftop\_d'& \parbox[t]{.68\textwidth}{Complex-to-complex FFT double precision out-of-place\\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftop\_d'& \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{args = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftop\_d'& \parbox[t]{.68\textwidth}{Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{args = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT single precision in-place\\*\ttbf{args = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT single precision out-of-place\\*\ttbf{args = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftmop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT single precision out-of-place\\*\ttbf{args = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftmop\_f' &\parbox[t]{.68\textwidth}{ Complex-to-real multiple FFT single precision out-of-place\\*\ttbf{args = (M,N,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmip\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT double precision in-place\\*\ttbf{args =(M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'ccfftmop\_d' & \parbox[t]{.68\textwidth}{Complex-to-complex multiple FFT double precision out-of-place\\*\ttbf{args = (M,N,scl,dir,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'rcfftmop\_d' & \parbox[t]{.68\textwidth}{Real-to-complex multiple FFT double precision out-of-place\\*\ttbf{args = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\\hline
+'crfftmop\_d' & \parbox[t]{.68\textwidth}{Complex-to-real multiple FFT double precision out-of-place\\*\ttbf{args = (M,N,scl,major,ntimes,alghint)}\vspace*{.1cm}}\\
 \hline\end{tabular}}
 \clearpage\hspace*{.8cm}{\textbf{FFT Class Methods}\\
 \hspace*{1.1cm} \parbox[t]{.88\textwidth}{Below we assume we have created an FFT object we call \ttbf{fftObj} and we have an input \ttbf{view x} compliant with \ttbf{fftObj} and if necessary a compliant output \ttbf{view y}.\vspace{.2cm}}
