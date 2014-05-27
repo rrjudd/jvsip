@@ -2821,7 +2821,7 @@ class Block (object):
                 FFT(fCreate[self.type],m,length,1.0,VSIP_ROW,1,0).dft(self,retval)
             return retval
         @property
-        def crfft(self):           
+        def crfft(self):
             fCreate = {'cvview_d':'crfftop_d', 'cvview_f':'crfftop_f',
                        'cmview_d':'crfftmop_d', 'cmview_f':'crfftmop_f'}
             t={'cvview_f':'block_f','cvview_d':'block_d',
@@ -2842,6 +2842,28 @@ class Block (object):
                 retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
                 FFT(fCreate[self.type],m,n,1.0,VSIP_ROW,1,0).dft(self,retval)
             return retval
+        def firflt(x,*args):
+            assert 'pyJvsip.__View' in repr(x), 'The kernel must be a pyJvsip view'
+            fSel={'vview_fvview_f':'fir_f','vview_fcvview_f':'rcfir_f','cvview_fcvview_f':'cfir_f',
+                   'vview_dvview_d':'fir_d','vview_dcvview_d':'rcfir_d','cvview_dcvview_d':'cfir_d'}
+            sel=self.type+x.type
+            assert fSel.has_key(sel),'type <:%s:> not supported for fir method'%sel
+            t=fSel[sel]
+            saveState='NO'
+            sym='NONE'
+            N=x.length
+            if len(args) > 0:
+                assert isinstance(args[0],int),'Decimation argument must be an integer'
+                D=int(args[0])
+                assert D <= self.length,'Decimation argument must be <= the length of the kernel'
+            else:
+                D=1
+            args = (self,sym,N,D,saveState)
+            firObj = FIR(t,*args)
+            y=create(x.type,int(N/D)+1)
+            firObj(x,y)
+            y.putlength(firObj.lengthOut)
+            return y
         #
         # General Square Solver
         @property
@@ -3315,7 +3337,6 @@ class FFT (object):
             self.__arg = args
             self.__type = t
             l = args
-            
             self.__fft = eval(FFT.fftCreateDict[t])
         else:
             print("Type <:%s:> not a recognized type for FFT",t)
@@ -3564,17 +3585,35 @@ class CORR(object):
 # filter Class
 class FIR(object):
     tFir=['fir_f','fir_d','cfir_f','cfir_d','rcfir_f','rcfir_d']
-    def __init__(self,t,filt,sym,N,D,state):
+    def __init__(self,t,*args):
         """
         Usage:
-           firObj = FIR(t,filt,sym,N,D,state)
+           firObj = FIR(t,*args)
+        args is a tuple containing the argument list for the C VSIPL create call
+        args = (filt, symm, N, D, state, ntimes, algHint)
         t is a type string; one of:
               'rcfir_f','cfir_f','fir_f','rcfir_d','cfir_d','fir_d'
         filt is a vector view of filter coefficients
-        sym is a string; one of 'NONE','ODD','EVEN'
+        sym may ba a string or VSIP flag
+            'NONE' or VSIP_NONSYM
+            'ODD' or VSIP_SYM_EVEN_LEN_ODD
+            'EVEN' or VSIP_SYM_EVEN_LEN_EVEN
         N is the length of the input data expected
         D is the decimation
-        state (save state) is 'NO' or 'YES'
+        state (save state) may be a string or VSIP flag
+            'NO' or VSIP_STATE_NO_SAVE or
+            'YES' or VSIP_STATE_SAVE
+        ntimes is a hint indicating how often the fir will be used.
+            0 indicates a lot of times
+            ntimes may be left off and defaults to zero.
+            JVSIP only supports only supports the interface. Internaly ntimes
+            is not supported.
+        algHint defaults to 0
+            VSIP_ALG_TIME
+            VSIP_ALG_SPACE
+            VSIP_ALG_NOISE
+            JVSIP only supports the interface for algHint. Internally algHint is
+            not supported.
         """
         filtSptd = {'fir_f':'vview_f',
                      'fir_d':'vview_d',
@@ -3588,20 +3627,35 @@ class FIR(object):
                      'cfir_d':vsip_cfir_create_d,
                      'rcfir_f':vsip_rcfir_create_f,
                      'rcfir_d':vsip_rcfir_create_d}
-        symType={'NONE':0,'ODD':1,'EVEN':2}
-        stateType={'NO':1,'YES':2}
-        assert filt.type == filtSptd[t],\
+        symType={VSIP_NONSYM:VSIP_NONSYM,
+                 VSIP_SYM_EVEN_LEN_ODD:VSIP_SYM_EVEN_LEN_ODD,
+                 VSIP_SYM_EVEN_LEN_EVEN:VSIP_SYM_EVEN_LEN_EVEN,
+                 'NONE':0,'ODD':1,'EVEN':2}
+        stateType={VSIP_STATE_NO_SAVE:VSIP_STATE_NO_SAVE, VSIP_STATE_SAVE: VSIP_STATE_SAVE,'NO':1,'YES':2}
+        assert len(args) > 4, 'args must include (filt, symm, N, D, state).'
+        assert len(args) < 8, 'Argument list has too many elemnets'
+        assert args[0].type == filtSptd[t],\
                   'Filter Coefficients of type <:%s:> in wrong for filter of type <:%s:>'%(filt.type,t)
         assert firCreate.has_key(t), 'Filter type not recognized'
-        assert sym in ['NONE','ODD','EVEN'],'Sym flag not recognized'
-        assert state in ['NO','YES'],'State flag not recognized'
+        algHint=VSIP_ALG_TIME
+        ntimes=0
+        filt=args[0].view
+        sym=symType[args[1]]
+        N=args[2]
+        D=args[3]
+        assert stateType.has_key(args[4]),'State flag not recognized'
+        state=stateType[args[4]]
+        assert args[0].length <= N,'Data length must be >= kernel length'
+        assert D <= args[0].length,'Decimation must be <= kernel length'
+        assert sym in [VSIP_NONSYM,VSIP_SYM_EVEN_LEN_ODD,VSIP_SYM_EVEN_LEN_EVEN,
+                       'NONE','ODD','EVEN'],'Sym flag not recognized'
         self.__jvsip = JVSIP()
         self.__type = t
-        self.__fir = firCreate[t](filt.view,symType[sym],N,D,stateType[state],0,0)
+        self.__fir = firCreate[t](filt,sym,N,D,state,ntimes,algHint)
         self.__length = N
         self.__decimation=D
         self.__state = state
-
+        self.__outLength=0
     def __del__(self):
         firDestroy = {'fir_f':vsip_fir_destroy_f,
                      'fir_d':vsip_fir_destroy_d,
@@ -3627,7 +3681,7 @@ class FIR(object):
                   'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d}
         assert x.type == y.type
         assert filtSptd[self.type] == x.type
-        firflt[self.type](self.vsip,x.view,y.view)
+        self.__outLength = firflt[self.type](self.vsip,x.view,y.view)
         return y
     def reset(self):
         fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
@@ -3654,6 +3708,9 @@ class FIR(object):
     @property
     def decimation(self):
         return self.__decimation
+    @property
+    def lengthOut(self):
+        return self.__outLength
 
 # Linear Algebra Classes
 # vsip_dlud_p
