@@ -69,11 +69,16 @@ void vsip\_fir\_reset\_f(vsip\_fir\_f*)\\
 \newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
-\item {No \ttbf{view} methods have been defined.} 
+\item {A \ttbf{view} method has been defined.} 
+\item {The kernel \ttbf{view} is used as the calling view. The kernel is treated as non-symetric so the entire kernel must be used.}
+\item {A variable argument list is supported. The first argument is the input data \ttbf{view} which is required}
+\item {The second argument is an integer >= 1 indicating the decimation factor. If the decimation is one then the argument may be left off}
+\item{Save state is 'NO' and hints are set to there default values.\vspace{.2cm}}
 \end{itemize}}\\
+
 \hspace*{.8cm}{\textbf{FIR Class\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an FIR object use \\*
-\hspace*{1.cm} \ttbf{firObj=FIR(t,*args)}}\\
+\hspace*{1.cm} \ttbf{firObj=FIR(t,*args)}\\*
 where \ttbf{args} is a tuple containing the create parameters for the FIR type selected, and \ttbf{t} is a string indicating the type of FIR to create.\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. Each type string, is shown in the Finite Impulse Response Filter Types table below.\\
 \begin{tabular}[t]{|l l|}\hline
