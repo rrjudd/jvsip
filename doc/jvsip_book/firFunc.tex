@@ -75,20 +75,21 @@ void vsip\_fir\_reset\_f(vsip\_fir\_f*)\\
 \item {The second argument is an integer >= 1 indicating the decimation factor. If the decimation is one then the argument may be left off}
 \item{Save state is 'NO' and hints are set to there default values.\vspace{.2cm}}
 \end{itemize}}\\
-
+\clearpage
 \hspace*{.8cm}{\textbf{FIR Class\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an FIR object use \\*
 \hspace*{1.cm} \ttbf{firObj=FIR(t,*args)}\\*
 where \ttbf{args} is a tuple containing the create parameters for the FIR type selected, and \ttbf{t} is a string indicating the type of FIR to create.\vspace{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. Each type string, is shown in the Finite Impulse Response Filter Types table below.\\
+\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. Each type string is shown in the Finite Impulse Response Filter Types table below.\\
 \begin{tabular}[t]{|l l|}\hline
-\ttbf{filt} & \parbox[t]{.75\textwidth}{A vector \ttbf{view} of filter coefficients \vspace*{.1cm}}\\ \hline
-\ttbf{sym} & \parbox[t]{.75\textwidth}{Symmetry of \ttbf{filt} kernel\vspace*{.1cm}} \\\hline
-\ttbf{N} & \parbox[t]{.75\textwidth}{Length of input data vector \vspace*{.1cm}}\\\hline
-\ttbf{D} & \parbox[t]{.75\textwidth}{Decimation factor\vspace*{.1cm}}\\\hline
-\ttbf{state} & \parbox[t]{.75\textwidth}{ \vspace*{.1cm}}\\\hline
-\ttbf{ntimes} & \parbox[t]{.75\textwidth}{Hint for how much the FIR object will be used. Zero indicates many times\vspace*{.1cm}} \\\hline
-\ttbf{algHint} & \parbox[t]{.75\textwidth}{Algorithm hint to optimize for\\*speed (VSIP\_ALG\_TIME),\\*size (VSIP\_ALG\_SPACE),\\* or accuracy (VSIP\_ALG\_NOISE)\vspace*{.1cm}}\\
+\ttbf{filt} & \parbox[t]{.75\textwidth}{A vector \ttbf{view} of filter coefficients.\\*Required argument \vspace*{.1cm}}\\ \hline
+\ttbf{sym} & \parbox[t]{.75\textwidth}{Symmetry of \ttbf{filt} kernel. \\* Required argument\vspace*{.1cm}} \\\hline
+\ttbf{N} & \parbox[t]{.75\textwidth}{Length of input data vector. \\* Required argument\vspace*{.1cm}}\\\hline
+\ttbf{D} & \parbox[t]{.75\textwidth}{Decimation factor.\\* Required argument\vspace*{.1cm}}\\\hline
+\ttbf{state} & \parbox[t]{.75\textwidth}{Flag to indicate if the filter state is to be saved.\\*
+VSIP\_STATE\_SAVE or VSIP\_STATE\_NO\_SAVE\\* Argument is supported but defaults to not saving. \\* Instead of \ttbf{VSIP} flags you may use the strings \ttbf{'YES'} or \ttbf{'NO'}.\vspace*{.1cm}}\\ \hline
+\ttbf{ntimes} & \parbox[t]{.75\textwidth}{Hint for how much the FIR object will be used. Zero indicates many times.\\*For \jv this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
+\ttbf{algHint} & \parbox[t]{.75\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE})\\*For \jv this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
 \hline \end{tabular}}
 \newline
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}\hline

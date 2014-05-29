@@ -3603,6 +3603,7 @@ class FIR(object):
         state (save state) may be a string or VSIP flag
             'NO' or VSIP_STATE_NO_SAVE or
             'YES' or VSIP_STATE_SAVE
+            Default to 'NO' if argument left off.
         ntimes is a hint indicating how often the fir will be used.
             0 indicates a lot of times
             ntimes may be left off and defaults to zero.
@@ -3632,23 +3633,24 @@ class FIR(object):
                  VSIP_SYM_EVEN_LEN_EVEN:VSIP_SYM_EVEN_LEN_EVEN,
                  'NONE':0,'ODD':1,'EVEN':2}
         stateType={VSIP_STATE_NO_SAVE:VSIP_STATE_NO_SAVE, VSIP_STATE_SAVE: VSIP_STATE_SAVE,'NO':1,'YES':2}
-        assert len(args) > 4, 'args must include (filt, symm, N, D, state).'
+        assert len(args) > 3, 'args must include (filt, symm, N, D).'
         assert len(args) < 8, 'Argument list has too many elemnets'
         assert args[0].type == filtSptd[t],\
                   'Filter Coefficients of type <:%s:> in wrong for filter of type <:%s:>'%(filt.type,t)
         assert firCreate.has_key(t), 'Filter type not recognized'
+        state= VSIP_STATE_NO_SAVE
+        if len(args) > 4:
+            assert stateType.has_key(args[4]),'State flag not recognized'
+            state = stateType[args[4]]
         algHint=VSIP_ALG_TIME
         ntimes=0
         filt=args[0].view
         sym=symType[args[1]]
         N=args[2]
         D=args[3]
-        assert stateType.has_key(args[4]),'State flag not recognized'
-        state=stateType[args[4]]
         assert args[0].length <= N,'Data length must be >= kernel length'
         assert D <= args[0].length,'Decimation must be <= kernel length'
-        assert sym in [VSIP_NONSYM,VSIP_SYM_EVEN_LEN_ODD,VSIP_SYM_EVEN_LEN_EVEN,
-                       'NONE','ODD','EVEN'],'Sym flag not recognized'
+        assert symType.has_key(sym),'Sym flag not recognized'
         self.__jvsip = JVSIP()
         self.__type = t
         self.__fir = firCreate[t](filt,sym,N,D,state,ntimes,algHint)
