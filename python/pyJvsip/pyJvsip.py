@@ -2842,7 +2842,7 @@ class Block (object):
                 retval = Block(t[self.type],m*n).bind(0,n,m,1,n)
                 FFT(fCreate[self.type],m,n,1.0,VSIP_ROW,1,0).dft(self,retval)
             return retval
-        def firflt(x,*args):
+        def firflt(self,x,*args):
             assert 'pyJvsip.__View' in repr(x), 'The kernel must be a pyJvsip view'
             fSel={'vview_fvview_f':'fir_f','vview_fcvview_f':'rcfir_f','cvview_fcvview_f':'cfir_f',
                    'vview_dvview_d':'fir_d','vview_dcvview_d':'rcfir_d','cvview_dcvview_d':'cfir_d'}
@@ -2861,7 +2861,7 @@ class Block (object):
             args = (self,sym,N,D,saveState)
             firObj = FIR(t,*args)
             y=create(x.type,int(N/D)+1)
-            firObj(x,y)
+            firObj.flt(x,y)
             y.putlength(firObj.lengthOut)
             return y
         #
