@@ -3685,7 +3685,11 @@ class FIR(object):
         assert filtSptd[self.type] == x.type
         self.__outLength = firflt[self.type](self.vsip,x.view,y.view)
         return y
+    @property
     def reset(self):
+        """
+        Property. Resets the state of the FIR object. (as it had not been called yet).
+        """
         fir_reset = {'fir_f':vsip_fir_reset_f,'fir_d':vsip_fir_reset_d,
                   'cfir_f':vsip_cfir_reset_f,'cfir_d':vsip_cfir_reset_d,
                   'rcfir_f':vsip_rcfir_reset_f,'rcfir_d':vsip_rcfir_reset_d}
@@ -3694,24 +3698,43 @@ class FIR(object):
         return self
     @property
     def state(self):
+        """
+        Property. Returns a bool True if the FIR object saves state and False if it does not save state.
+        """
         if self.__state == 'YES':
             return True
         else:
             return False
     @property
     def type(self):
+        """
+        Property. Returns a string reflecting the type of FIR object.
+        """
         return self.__type
     @property
     def vsip(self):
+        """
+        Property. Returns the C VSIPL FIR instance.
+        """
         return self.__fir
     @property
     def length(self):
+        """
+        Property. Returns the length of the expected input data view.
+        """
         return self.__length
+
     @property
     def decimation(self):
+        """
+        Property. Returns the decimation factor for the filter.
+        """
         return self.__decimation
     @property
     def lengthOut(self):
+        """
+        Property. Returns number of data values in output view from last filter operation.
+        """
         return self.__outLength
 
 # Linear Algebra Classes
