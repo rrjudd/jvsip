@@ -1,8 +1,8 @@
 \clearpage
-{\large \textbf{\hypertarget{firFunc}{FIR Class}}}\vspace{.2cm}\\
+{\large \textbf{\hypertarget{firFunc}{FIR Function Set}}}\vspace{.2cm}\\
 \hspace*{.3cm}
 \parbox{0.85\textwidth}{Finite Impulse Response Class. See filter functions table \ref{tab:filterFunctions}}
-\cvsiplh 
+\\\cvsiplh 
 \newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 \newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fir\_create}
 \newline \hspace*{1.1cm} {
@@ -65,15 +65,15 @@ void vsip\_fir\_reset\_d(vsip\_fir\_d*)\\
 void vsip\_fir\_reset\_f(vsip\_fir\_f*)\\
 \end{tabular}\
 }
-\pyjvsiph
+\\\pyjvsiph
 \newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
-\item {A \ttbf{view} method has been defined.} 
-\item {The kernel \ttbf{view} is used as the calling view. The kernel is treated as non-symetric so the entire kernel must be used.}
-\item {A variable argument list is supported. The first argument is the input data \ttbf{view} which is required}
-\item {The second argument is an integer >= 1 indicating the decimation factor. If the decimation is one then the argument may be left off}
-\item{Save state is 'NO' and hints are set to there default values.\vspace{.2cm}}
+\item {A \ttbf{view} method has been defined for the kernel \ttbf{view}. The kernel is treated as non-symetric so the entire kernel is assumed.}
+\item {A variable argument list is supported.} 
+\subitem{The first required argument is the input data \ttbf{view}.}
+\subitem {\parbox[t]{.74\textwidth}{The second optional argument is the decimation factor. It defaults to one}\vspace*{.1cm}}
+\item{Other parameters are set to there default value or calculated.\vspace{.2cm}}
 \end{itemize}}\\
 \clearpage
 \hspace*{.8cm}{\textbf{FIR Class\vspace{.2cm}}\\
@@ -82,14 +82,14 @@ void vsip\_fir\_reset\_f(vsip\_fir\_f*)\\
 where \ttbf{args} is a tuple containing the create parameters for the FIR type selected, and \ttbf{t} is a string indicating the type of FIR to create.\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. Each type string is shown in the Finite Impulse Response Filter Types table below.\\
 \begin{tabular}[t]{|l l|}\hline
-\ttbf{filt} & \parbox[t]{.75\textwidth}{A vector \ttbf{view} of filter coefficients.\\*Required argument \vspace*{.1cm}}\\ \hline
-\ttbf{sym} & \parbox[t]{.75\textwidth}{Symmetry of \ttbf{filt} kernel. \\* Required argument\vspace*{.1cm}} \\\hline
-\ttbf{N} & \parbox[t]{.75\textwidth}{Length of input data vector. \\* Required argument\vspace*{.1cm}}\\\hline
-\ttbf{D} & \parbox[t]{.75\textwidth}{Decimation factor.\\* Required argument\vspace*{.1cm}}\\\hline
-\ttbf{state} & \parbox[t]{.75\textwidth}{Flag to indicate if the filter state is to be saved.\\*
+\ttbf{filt} & \parbox[t]{.74\textwidth}{A vector \ttbf{view} of filter coefficients.\\*Required argument \vspace*{.1cm}}\\ \hline
+\ttbf{sym} & \parbox[t]{.74\textwidth}{Symmetry of \ttbf{filt} kernel. \\* Required argument\vspace*{.1cm}} \\\hline
+\ttbf{N} & \parbox[t]{.74\textwidth}{Length of input data vector. \\* Required argument\vspace*{.1cm}}\\\hline
+\ttbf{D} & \parbox[t]{.74\textwidth}{Decimation factor.\\* Required argument\vspace*{.1cm}}\\\hline
+\ttbf{state} & \parbox[t]{.74\textwidth}{Flag to indicate if the filter state is to be saved.\\*
 VSIP\_STATE\_SAVE or VSIP\_STATE\_NO\_SAVE\\* Argument is supported but defaults to not saving. \\* Instead of \ttbf{VSIP} flags you may use the strings \ttbf{'YES'} or \ttbf{'NO'}.\vspace*{.1cm}}\\ \hline
-\ttbf{ntimes} & \parbox[t]{.75\textwidth}{Hint for how much the FIR object will be used. Zero indicates many times.\\*For \jv this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
-\ttbf{algHint} & \parbox[t]{.75\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE})\\*For \jv this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
+\ttbf{ntimes} & \parbox[t]{.74\textwidth}{Hint for how much the FIR object will be used. Zero indicates many times.\\*For \jv this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
+\ttbf{algHint} & \parbox[t]{.74\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE})\\*For \jv this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
 \hline \end{tabular}}
 \newline
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}\hline
@@ -101,7 +101,13 @@ VSIP\_STATE\_SAVE or VSIP\_STATE\_NO\_SAVE\\* Argument is supported but defaults
 'cfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{FIR}; double precision \vspace*{.1cm}}\\\hline
 'rcfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{FIR} with real \ttbf{kernel}; double precision \vspace*{.1cm}}\\\hline
 \hline\end{tabular}}
-\clearpage\hspace*{.8cm}{\textbf{FFT Class Methods}\\
-\hspace*{1.1cm} \parbox[t]{.88\textwidth}{Below we assume we have created an FFT object we call \ttbf{fftObj} and we have an input \ttbf{view x} compliant with \ttbf{fftObj} and if necessary a compliant output \ttbf{view y}.\vspace{.2cm}}
-\newline\hspace*{1.2cm}\parbox[t]{.85\textwidth}{To calculate an in-place DFT we do\\*\hspace*{.5cm}\ttbf{fftObj.dft(x)}\\ To calculate an out-of-place DFT we do\\*\hspace*{.5cm} \ttbf{fftObj.dft(x,y)\vspace{.1cm}}\\
-To get the FFT type (a string) we do\\*\hspace*{.5cm}\ttbf{t=fftObj.type}\vspace{.1cm}\\To get the argument list (a tuple) the FFT was created with we do\\*\hspace*{.5cm}\ttbf{arg=fftObj.arg}\vspace{.1cm}\\If we want to examine or use the C VSIPL FFT Object encapsulated inside the pyJvsip FFT object we do\\*\hspace*{.5cm}\ttbf{vsipObj=fftObj.vsip\\}}
+\clearpage\hspace*{.8cm}{\textbf{FIR Class Methods}\\
+\hspace*{1.1cm} \parbox[t]{.88\textwidth}{Below we assume we have created an FIR object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
+\newline\hspace*{1.2cm}
+\parbox[t]{.85\textwidth}{To filter the data \ttbf{x} and place the results in \ttbf{y} we do \\*\hspace*{.5cm}\ttbf{fftObj.flt(x,y)}\\
+To retrieve the length of input vector \ttbf{view} the filter expects in \ttbf{x} we do\vspace{.1cm}\\*\hspace*{.5cm} \ttbf{n=firObj.length}\\
+To retrieve the decimation factor the filter was created with we do\\*\hspace*{.5cm} \ttbf{n=firObj.decimation}\\
+It is possible if we are saving state and using the filter on consecutive input \ttbf{view}s to filter data consecutively that the length of the output will vary. To retrieve the number of output values placed in \ttbf{y} we do\vspace{.1cm}\\*\hspace*{.5cm} \ttbf{n=firObj.lengthOut}\\
+To recover the filter type (a string) we do \\*\hspace*{.5cm} \ttbf{t=firObj.type}\\
+To recover the C VSIP filter object associated with the pyJvsip filter we do\\*\hspace*{.5cm}\ttbf{vsipObj=firObj.vsip}\\
+}
