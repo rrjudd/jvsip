@@ -105,11 +105,21 @@ where \ttbf{args} is a tuple containing the create parameters for the FIR type s
 \hspace*{1.1cm} \parbox[t]{.88\textwidth}{For class methods table we assume we have created an FIR object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
 \newline
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
-\ttbf{fftObj.flt(x,y)} & \parbox[t]{.68\textwidth}{Filter the data \ttbf{x} and place the results in \ttbf{y}}\\\hline
-\ttbf{firObj.length} & \parbox[t]{.68\textwidth}{ Returns integer length for expected input data \ttbf{x}. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.decimation} & \parbox[t]{.68\textwidth}{ Returns integer decimation factor. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.lengthOut} & \parbox[t]{.68\textwidth}{ Returns integer of valid data points in \ttbf{y} \vspace*{.1cm}}\\\hline
-\ttbf{firObj.type} & \parbox[t]{.68\textwidth}{Returns string indicating filter type.\vspace*{.1cm}}\\\hline
-\ttbf{firObj.vsip} & \parbox[t]{.68\textwidth}{Returns C VSIPL filter instance.\vspace*{.1cm}}\\\hline
+\multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
+\ttbf{fftObj.flt(x,y)} & \parbox[t]{.58\textwidth}{Filter the data \ttbf{x} and place the results in \ttbf{y}}\\\hline
+\ttbf{firObj.decimation} & \parbox[t]{.58\textwidth}{ Returns integer decimation factor. \vspace*{.1cm}}\\\hline
+\ttbf{firObj.length} & \parbox[t]{.58\textwidth}{ Returns integer length for \ttbf{x}. \vspace*{.1cm}}\\\hline
+\ttbf{firObj.lengthOut} & \parbox[t]{.58\textwidth}{ Returns integer of valid data points in \ttbf{y} \vspace*{.1cm}}\\\hline
+\ttbf{firObj.reset} & \parbox[t]{.58\textwidth}{Resets FIR filter to it's initial state. \vspace*{.1cm}}\\\hline
+\ttbf{firObj.state} & \parbox[t]{.58\textwidth}{Returns \ttbf{True} if filter state is saved, otherwise returns \ttbf{False}.\vspace*{.1cm}}\\\hline
+\ttbf{firObj.type} & \parbox[t]{.58\textwidth}{Returns string indicating filter type.\vspace*{.1cm}}\\\hline
+\ttbf{firObj.vsip} & \parbox[t]{.58\textwidth}{Returns C VSIPL filter instance.\vspace*{.1cm}}\\\hline
 \end{tabular}\vspace*{.4cm}}\\
+\hspace*{.7cm} \parbox[t]{.91\textwidth}{
+\begin{itemize}
+\item{Methods \ttbf{decimation}, \ttbf{length}, \ttbf{state}, \ttbf{type} and \ttbf{vsip} are set when the FIR instance is created and do not change after create}
+\item{Method \ttbf{lengthOut}\footnotemark[1] is calculated during the execution of method \ttbf{flt(x,y)} and is useful if state is saved and the filter object is used multiple times on a long piece of data.}
+\item{Method \ttbf{reset} is used if state is saved and the filter is used multiple times on a long data set and then \emph{reset}\footnotemark[2] to it's initial state for use on multiple long data sets.}
+\end{itemize}}
+\footnotetext[1]{See C VSIPL specification for more information on length of output data.}
+\footnotetext[2]{See signal processing text on overlap-add and overlap-save filtering.}
