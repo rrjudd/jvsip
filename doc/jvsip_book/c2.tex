@@ -72,7 +72,7 @@ The tables referenced in this section list elementwise operations with a link to
 \subsection*{Implementation Dependent Input and Output}\addcontentsline{toc}{subsection}{Implementation Dependent Input and Output}
    \ttbf{JVSIP} does not support implementation dependent IO at this time.
 \subsection*{VSIPL Addendum}\addcontentsline{toc}{subsection}{VSIPL Addendum}
-Editing the VSIPL specification was becoming difficult because of it's length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in a addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.
+Editing the VSIPL specification was becoming difficult because of its length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in a addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.
 \subsubsection*{VSIPL Interpolation}\addcontentsline{toc}{subsubsection}{VSIPL Interpolation}
 \subsubsection*{VSIPL Permute}\addcontentsline{toc}{subsubsection}{VSIPL Permute}
 \subsubsection*{VSIPL Sort}\addcontentsline{toc}{subsubsection}{VSIPL Sort}
@@ -89,7 +89,7 @@ Note that comments may follow the C VSIPL and/or pyJvsip section and may also fo
 \subsection*{PyJvsip Methods}\addcontentsline{toc}{subsection}{PyJvsip Methods}
 We note that saying the method is a property means you call it without even an empty argument list. For instance if \ilCode{a} is a \pyjv \ttbf{view} then \ilCode{a.cos} will replace the values in \ilCode{a} with there cosine. Since it is a property we DON'T say \ilCode{a.cos()}. Frequently, but not always, view methods are done in-place and that is also indicated. If it is not done in-place then the method will construct an appropriate output \ttbf{view} and return it filled out with the appropriate values.
 
-An example of a \ttbf{view} method that is not done in place is \ilCode{copy}. For instance \ilCode{b=a.copy} will produce a copy of \ilCode{a} in an appropriate view. Note the new \ttbf{b view} will be the same precision, shape and depth as the calling \ttbf{view} but the \ttbf block will be of an exact size and the stride information will be the minimum stride required for the \ttbf{view}. Additional information on copy is available on it's function page.
+An example of a \ttbf{view} method that is not done in place is \ilCode{copy}. For instance \ilCode{b=a.copy} will produce a copy of \ilCode{a} in an appropriate view. Note the new \ttbf{b view} will be the same precision, shape and depth as the calling \ttbf{view} but the \ttbf block will be of an exact size and the stride information will be the minimum stride required for the \ttbf{view}. Additional information on copy is available on its function page.
 
 This is the type of information included on the function pages. Since there seem to be many exceptions we won't provide a lot of rules; and instead refer to the function page.
 
@@ -107,8 +107,9 @@ Not all C functions have a corresponding \pyjv function call. In particular most
 \input{divFunc}
 \input{eulerFunc}\input{expFunc}\input{exp10Func}
 \input{logFunc}\input{log10Func}
-\input{firFunc}\input{fftFunc}
+\input{fftFunc}\input{firFunc}
 \input{floorFunc}
+\input{ludFunc}
 \input{maFunc}\input{magFunc}\input{magsqFunc}\input{meanvalFunc}
 \input{meansqvalFunc}\input{modulateFunc}\input{msbFunc}
 \input{negFunc}

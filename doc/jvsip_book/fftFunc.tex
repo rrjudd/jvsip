@@ -4,51 +4,50 @@
 \parbox{0.85\textwidth}{Discrete Fourier Transforms. See FFT Functions table \ref{tab:fftFunctions}}
 \\\cvsiplh 
 \newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_create}
-\newline \hspace*{1.cm} {
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_create}
+\newline \hspace*{0.5cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
-\hline \multicolumn{1}{c}{\rmfamily \bfseries FFT Create Functions\vspace{.1cm}}\\ \hline
-vsip\_fft\_d* vsip\_ccfftip\_create\_d(vsip\_length, \\*\hspace{.7cm}vsip\_scalar\_d,vsip\_fft\_dir,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_d* vsip\_ccfftop\_create\_d(vsip\_length, \\*\hspace{.7cm}vsip\_scalar\_d,vsip\_fft\_dir,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_d* vsip\_crfftop\_create\_d(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_d* vsip\_rcfftop\_create\_d(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_ccfftip\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,vsip\_fft\_dir,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_ccfftop\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,vsip\_fft\_dir,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_crfftop\_create\_f(vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
-vsip\_fft\_f* vsip\_rcfftop\_create\_f(vsip\_length, \\*\hspace{.7cm}vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\\hline
+\multicolumn{1}{c}{\rmfamily \bfseries FFT Create Functions\vspace{.1cm}}\\ \hline
+vsip\_fft\_d* vsip\_ccfftip\_create\_d(vsip\_length, vsip\_scalar\_d,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_d* vsip\_ccfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}vsip\_fft\_dir, unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_d* vsip\_crfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_d* vsip\_rcfftop\_create\_d(vsip\_length,vsip\_scalar\_d,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_ccfftip\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}vsip\_fft\_dir,unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_ccfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}vsip\_fft\_dir,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_crfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
+vsip\_fft\_f* vsip\_rcfftop\_create\_f(vsip\_length, vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\\hline
 \end{tabular}
-}
-\newline\hspace*{1.cm} {
-\begin{tabular}[H]{|l|}\hline
+\newline\hspace*{0.5cm} 
+\begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Create Functions}\\ \hline
-vsip\_fftm\_d* vsip\_ccfftmip\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
-vsip\_fftm\_d* vsip\_ccfftmop\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
-vsip\_fftm\_d* vsip\_crfftmop\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
-vsip\_fftm\_d* vsip\_rcfftmop\_create\_d(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_ccfftmip\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_ccfftmop\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_crfftmop\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
-vsip\_fftm\_f* vsip\_rcfftmop\_create\_f(\\*\hspace{.7cm}vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\ \hline
+vsip\_fftm\_d* vsip\_ccfftmip\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_ccfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_crfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_d* vsip\_rcfftmop\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_ccfftmip\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_ccfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_crfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\
+vsip\_fftm\_f* vsip\_rcfftmop\_create\_f(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_f, vsip\_major,\\*\hspace{.7cm} unsigned int, vsip\_alg\_hint);\\ \hline
 \end{tabular}
 }
 \clearpage
-\hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_destroy}
-\newline \hspace*{1.cm} {
+%\hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_destroy}
+\hspace*{1.cm} {
 \ttfamily
-\begin{tabular}[H]{|l|}\hline
+\begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries FFT Destroy Functions}\\ \hline
 int vsip\_fft\_destroy\_d(vsip\_fft\_d*);\\
 int vsip\_fft\_destroy\_f(vsip\_fft\_f*);\\
-\hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Destroy Functions}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Destroy Functions}\\ \hline
 int vsip\_fftm\_destroy\_d(vsip\_fftm\_d*);\\
 int vsip\_fftm\_destroy\_f(vsip\_fftm\_f*);\\ \hline
 \end{tabular}
 }\vspace{.1cm}
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft}
 \newline \hspace*{1.cm} {
 \ttfamily
-\begin{tabular}[H]{|l|} \hline
+\begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries FFT Functions}\\ \hline
 void vsip\_ccfftip\_d(const vsip\_fft\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*);\\
 void vsip\_ccfftip\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_cvview\_f*);\\
@@ -57,7 +56,7 @@ void vsip\_ccfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_cvview\_f
 void vsip\_crfftop\_d(const vsip\_fft\_d*,\\*\hspace{.7cm} const vsip\_cvview\_d*, const vsip\_vview\_d*);\\
 void vsip\_crfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_cvview\_f*, const vsip\_vview\_f*);\\
 void vsip\_rcfftop\_d(const vsip\_fft\_d*,\\*\hspace{.7cm} const vsip\_vview\_d*, const vsip\_cvview\_d*);\\
-void vsip\_rcfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_vview\_f*, const vsip\_cvview\_f*);\\ \hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Functions}\\ \hline
+void vsip\_rcfftop\_f(const vsip\_fft\_f*,\\*\hspace{.7cm} const vsip\_vview\_f*, const vsip\_cvview\_f*);\\ \hline \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Functions}\\\hline
 void vsip\_ccfftmip\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_cmview\_d*);\\
 void vsip\_ccfftmip\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_cmview\_f*);\\
 void vsip\_ccfftmop\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
@@ -68,10 +67,10 @@ void vsip\_rcfftmop\_d(const vsip\_fftm\_d*,\\*\hspace{.7cm} const vsip\_mview\_
 void vsip\_rcfftmop\_f(const vsip\_fftm\_f*,\\*\hspace{.7cm} const vsip\_mview\_f*, const vsip\_cmview\_f*);\\ \hline \end{tabular}
 }
 \clearpage
-\hspace*{.8cm} \texttt{fft\_getattr}
-\newline \hspace*{1.cm} {
+%\hspace*{.8cm} \texttt{fft\_getattr}
+\hspace*{1.cm} {
 \ttfamily
-\begin{tabular}[H]{|l|}\hline
+\begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries FFT Get Attributes Functions}\\ \hline
 void vsip\_fft\_getattr\_d(\\*\hspace{.7cm}const vsip\_fft\_d*, vsip\_fft\_attr\_d*);\\
 void vsip\_fft\_getattr\_f(\\*\hspace{.7cm}const vsip\_fft\_f*, vsip\_fft\_attr\_f*);\\
@@ -125,7 +124,8 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \hspace*{1.cm} \ttbf{fftObj=FFT(t,*args)}\\*
 where \ttbf{args} is a tuple containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. The exact argument list, and each type string, is shown in the Discrete Fourier Transform Class table below.\\
-\begin{tabular}[t]{|l l|}\hline
+\begin{tabular}[t]{|l l|}
+\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Fast Fourier Transform Argument List\vspace{.2cm}}}}\\ \hline
 \ttbf{M} & \parbox[t]{.75\textwidth}{Column Length \vspace*{.1cm}}\\ \hline
 \ttbf{N} & \parbox[t]{.75\textwidth}{Row Length for \ttbf{matrix} or Vector length for \ttbf{vector}\vspace*{.1cm}} \\\hline
 \ttbf{scl} & \parbox[t]{.75\textwidth}{Scale Factor \vspace*{.1cm}}\\\hline
@@ -135,8 +135,8 @@ where \ttbf{args} is a tuple containing the create parameters for the FFT type s
 \ttbf{alghint} & \parbox[t]{.75\textwidth}{Algorithm hint to optimize for speed (VSIP\_ALG\_TIME), size (VSIP\_ALG\_SPACE), or accuracy (VSIP\_ALG\_NOISE)\vspace*{.1cm}}\\
 \hline \end{tabular}}
 \newline
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}\hline
-\multicolumn{2}{|c|}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Discrete Fourier Transform Class}\vspace{.2cm}}}\\ \hline \hline
+\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
+\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Fast Fourier Transform Class Types}\vspace{.2cm}}}\\ \hline 
 'ccfftip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision in-place \\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
 'ccfftop\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision out-of-place \\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline
 'rcfftop\_f' & \parbox[t]{.68\textwidth}{Real-to-complex FFT float precision out-of-place \\*\ttbf{args = (M,N,scl,ntimes,alghint)}\vspace*{.1cm}}\\\hline
