@@ -4,11 +4,11 @@
 \parbox{0.85\textwidth}{Finite Impulse Response Class. See filter functions table \ref{tab:filterFunctions}}
 \\\cvsiplh 
 \newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fir\_create}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fir\_create}
 \newline \hspace*{1.cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
-\hline \multicolumn{1}{c}{\rmfamily \bfseries FIR Create Functions\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries FIR Create Functions\vspace{.1cm}}\\ \hline
 vsip\_rcfir\_d* vsip\_rcfir\_create\_d(\\*\hspace{.6cm}const vsip\_vview\_d*, vsip\_symmetry, vsip\_length,\\*\hspace{.6cm}vsip\_length, vsip\_obj\_state, unsigned, vsip\_alg\_hint);\\
 vsip\_rcfir\_f* vsip\_rcfir\_create\_f(\\*\hspace{.6cm}const vsip\_vview\_f*, vsip\_symmetry, vsip\_length,\\*\hspace{.6cm}vsip\_length, vsip\_obj\_state, unsigned, vsip\_alg\_hint);\\
 vsip\_cfir\_d* vsip\_cfir\_create\_d(\\*\hspace{.6cm}const vsip\_cvview\_d*, vsip\_symmetry, vsip\_length,\\*\hspace{.6cm}vsip\_length, vsip\_obj\_state, unsigned, vsip\_alg\_hint);\\
@@ -17,11 +17,11 @@ vsip\_fir\_d* vsip\_fir\_create\_d(\\*\hspace{.6cm}const vsip\_vview\_d*, vsip\_
 vsip\_fir\_f* vsip\_fir\_create\_f(\\*\hspace{.6cm}const vsip\_vview\_f*, vsip\_symmetry, vsip\_length,\\*\hspace{.6cm}vsip\_length, vsip\_obj\_state, unsigned, vsip\_alg\_hint);\\\hline
 \end{tabular}\vspace{.1cm}
 }
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fir\_destroy}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fir\_destroy}
 \newline \hspace*{1.cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
-\hline \multicolumn{1}{c}{\rmfamily \bfseries FIR Destroy Functions\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries FIR Destroy Functions\vspace{.1cm}}\\ \hline
 int vsip\_rcfir\_destroy\_d(vsip\_rcfir\_d*);\\
 int vsip\_rcfir\_destroy\_f(vsip\_rcfir\_f*);\\
 int vsip\_cfir\_destroy\_d(vsip\_cfir\_d*);\\
@@ -30,11 +30,11 @@ int vsip\_fir\_destroy\_d(vsip\_fir\_d*);\\
 int vsip\_fir\_destroy\_f(vsip\_fir\_f*);\\\hline
 \end{tabular}\vspace{.1cm}
 }\vspace{.1cm}
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{firflt}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{firflt}
 \newline \hspace*{1.cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
-\hline \multicolumn{1}{c}{\rmfamily \bfseries FIR Filter Functions\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries FIR Filter Functions\vspace{.1cm}}\\ \hline
 int vsip\_rcfirflt\_d(vsip\_rcfir\_d*, const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*);\\
 int vsip\_rcfirflt\_f(vsip\_rcfir\_f*, const vsip\_cvview\_f*,\\*\hspace{.7cm}const vsip\_cvview\_f*);\\
 int vsip\_cfirflt\_d(vsip\_cfir\_d*, const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*);\\
@@ -44,11 +44,11 @@ int vsip\_firflt\_f(vsip\_fir\_f*, const vsip\_vview\_f*,\\*\hspace{.7cm}const v
 \end{tabular}\vspace{.1cm}
 }
 \clearpage
-\hspace*{.8cm} \texttt{fir\_getattr}
-\newline \hspace*{1.cm} {
+%\hspace*{.8cm} \texttt{fir\_getattr}
+\hspace*{1.cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
-\hline \multicolumn{1}{c}{\rmfamily \bfseries Get FIR Attribute Functions\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Get FIR Attribute Functions\vspace{.1cm}}\\ \hline
 void vsip\_rcfir\_getattr\_d(const vsip\_rcfir\_d*,\\*\hspace{.7cm}vsip\_rcfir\_attr*);\\
 void vsip\_rcfir\_getattr\_f(const vsip\_rcfir\_f*,\\*\hspace{.7cm}vsip\_rcfir\_attr*);\\
 void vsip\_cfir\_getattr\_d(const vsip\_cfir\_d*,\\*\hspace{.7cm}vsip\_cfir\_attr*);\\
@@ -57,11 +57,11 @@ void vsip\_fir\_getattr\_d(const vsip\_fir\_d*,\\*\hspace{.7cm}vsip\_fir\_attr*)
 void vsip\_fir\_getattr\_f(const vsip\_fir\_f*,\\*\hspace{.7cm}vsip\_fir\_attr*);\\\hline
 \end{tabular}\vspace{.1cm}
 }\vspace{.1cm}
-\newline\hspace*{.8cm} \texttt{fir\_reset}
+%\newline\hspace*{.8cm} \texttt{fir\_reset}
 \newline \hspace*{1.cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
-\hline \multicolumn{1}{c}{\rmfamily \bfseries Reset FIR Functions\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Reset FIR Functions\vspace{.1cm}}\\ \hline
 void vsip\_rcfir\_reset\_d(vsip\_rcfir\_d*)\\
 void vsip\_rcfir\_reset\_f(vsip\_rcfir\_f*)\\
 void vsip\_cfir\_reset\_d(vsip\_cfir\_d*)\\
