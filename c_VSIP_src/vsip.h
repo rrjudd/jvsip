@@ -260,10 +260,10 @@ typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_qr_att
 typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_qr_attr_d;
 typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_cqr_attr_f;
 typedef struct { vsip_length m; vsip_length n; vsip_qrd_qopt Qopt; } vsip_cqr_attr_d;
-typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_sv_attr_f;
-typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_csv_attr_f;
-typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_sv_attr_d;
-typedef struct { vsip_length m; vsip_length n; vsip_svd_uv Usave; vsip_svd_uv Vsave; } vsip_csv_attr_d;
+typedef struct { vsip_length m; vsip_length n; vsip_svd_uv; vsip_svd_uv; } vsip_sv_attr_f;
+typedef struct { vsip_length m; vsip_length n; vsip_svd_uv; vsip_svd_uv; } vsip_csv_attr_f;
+typedef struct { vsip_length m; vsip_length n; vsip_svd_uv; vsip_svd_uv; } vsip_sv_attr_d;
+typedef struct { vsip_length m; vsip_length n; vsip_svd_uv; vsip_svd_uv; } vsip_csv_attr_d;
 typedef struct { vsip_scalar_vi input; vsip_scalar_vi output; vsip_fft_place place; vsip_scalar_d scale; vsip_fft_dir dir; } vsip_fft_attr_d;
 typedef struct { vsip_scalar_vi input; vsip_scalar_vi output; vsip_fft_place place; vsip_scalar_f scale; vsip_fft_dir dir; } vsip_fft_attr_f;
 typedef struct { vsip_scalar_mi input; vsip_scalar_mi output; vsip_fft_place place; vsip_scalar_d scale; vsip_fft_dir dir; vsip_major major; } vsip_fftm_attr_d;
@@ -1991,7 +1991,7 @@ int vsip_svdprodv_f(const vsip_sv_f*, vsip_mat_op, vsip_mat_side, const vsip_mvi
 int vsip_svdmatu_f(const vsip_sv_f*, vsip_scalar_vi, vsip_scalar_vi, const vsip_mview_f*);
 int vsip_svdmatv_f(const vsip_sv_f*, vsip_scalar_vi, vsip_scalar_vi, const vsip_mview_f*);
 /* Complex */
-vsip_csv_f * vsip_csvd_create_f(vsip_length, vsip_length, vsip_svd_uv Usave, vsip_svd_uv Vsave);
+vsip_csv_f * vsip_csvd_create_f(vsip_length, vsip_length, vsip_svd_uv, vsip_svd_uv);
 int vsip_csvd_destroy_f(vsip_csv_f* svd);
 int vsip_csvd_f(vsip_csv_f*, const vsip_cmview_f*, vsip_vview_f *s);
 void vsip_csvd_getattr_f(const vsip_csv_f*, vsip_csv_attr_f*);
@@ -2013,7 +2013,7 @@ int vsip_svdprodv_f(const vsip_sv_f*, vsip_mat_op, vsip_mat_side, const vsip_mvi
 int vsip_svdmatu_d(const vsip_sv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_mview_d*);
 int vsip_svdmatv_d(const vsip_sv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_mview_d*);
 /* Complex */
-vsip_csv_d * vsip_csvd_create_d(vsip_length, vsip_length, vsip_svd_uv Usave, vsip_svd_uv Vsave);
+vsip_csv_d * vsip_csvd_create_d(vsip_length, vsip_length, vsip_svd_uv, vsip_svd_uv);
 int vsip_csvd_destroy_d(vsip_csv_d* svd);
 int vsip_csvd_d(vsip_csv_d*, const vsip_cmview_d*, vsip_vview_d *s);
 void vsip_csvd_getattr_d(const vsip_csv_d*, vsip_csv_attr_d*);
