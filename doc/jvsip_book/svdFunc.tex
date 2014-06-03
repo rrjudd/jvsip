@@ -9,18 +9,18 @@
 \newline \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Create LU Object\vspace{.1cm}}\\ \hline
-vsip\_sv\_d* vsip\_svd\_create\_d(vsip\_length);\\
-vsip\_sv\_f* vsip\_svd\_create\_f(vsip\_length);\\
-vsip\_csv\_d* vsip\_csvd\_create\_d(vsip\_length);\\
-vsip\_csv\_f* vsip\_csvd\_create\_f(vsip\_length);\\
+\multicolumn{1}{c}{\rmfamily \bfseries Create SVD Object\vspace{.1cm}}\\ \hline
+vsip\_sv\_d* vsip\_svd\_create\_d(vsip\_length,\\*\hspace*{.8cm}vsip\_length, vsip\_svd\_uv , vsip\_svd\_uv);\\
+vsip\_sv\_f* vsip\_svd\_create\_f(vsip\_length,\\*\hspace*{.8cm}vsip\_length, vsip\_svd\_uv , vsip\_svd\_uv);\\
+vsip\_csv\_d* vsip\_csvd\_create\_d(vsip\_length,\\*\hspace*{.8cm}vsip\_length, vsip\_svd\_uv , vsip\_svd\_uv);\\
+vsip\_csv\_f* vsip\_csvd\_create\_f(vsip\_length,\\*\hspace*{.8cm}vsip\_length, vsip\_svd\_uv , vsip\_svd\_uv);\\
 \hline\end{tabular}\\}
 %
 %\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_destroy}
 \newline \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Destroy LU Object\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Destroy SVD Object\vspace{.1cm}}\\ \hline
 int vsip\_svd\_destroy\_d(vsip\_sv\_d*);\\
 int vsip\_svd\_destroy\_f(vsip\_sv\_f*);\\
 int vsip\_csvd\_destroy\_d(vsip\_csv\_d*);\\
@@ -31,91 +31,59 @@ int vsip\_csvd\_destroy\_f(vsip\_csv\_f*);\\
 \newline \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Calculate LU Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_svd\_d(vsip\_sv\_d*, const vsip\_mview\_d*);\\
-int vsip\_svd\_f(vsip\_sv\_f*, const vsip\_mview\_f*);\\
-int vsip\_csvd\_d(vsip\_csv\_d*, const vsip\_cmview\_d*);\\
-int vsip\_csvd\_f(vsip\_csv\_f*, const vsip\_cmview\_f*);\\
-\hline\end{tabular}\\}
-%
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{sv}\\
-\newline \hspace*{1.cm}{
-\ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated LU Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_sv\_d(const vsip\_sv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_d*);\\
-int vsip\_sv\_f(const vsip\_sv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_f*);\\
-int vsip\_csv\_d(const vsip\_csv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_d*);\\
-int vsip\_csv\_f(const vsip\_csv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_f*);\\
+\multicolumn{1}{c}{\rmfamily \bfseries Compute SVD\vspace{.1cm}}\\ \hline
+int vsip\_svd\_d(vsip\_sv\_d*, const vsip\_mview\_d*,\\*\hspace*{.8cm}vsip\_vview\_d*);\\
+int vsip\_svd\_f(vsip\_sv\_f*, const vsip\_mview\_f*,\\*\hspace*{.8cm}vsip\_vview\_f*);\\
+int vsip\_csvd\_d(vsip\_csv\_d*, const vsip\_cmview\_d*,\\*\hspace*{.8cm}vsip\_vview\_d*);\\
+int vsip\_csvd\_f(vsip\_csv\_f*, const vsip\_cmview\_f*,\\*\hspace*{.8cm}vsip\_vview\_f*);\\
 \hline\end{tabular}\\}
 %
 %\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_getattr}
 \newline \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Fill LU Attribute Structure\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Fill SVD Attribute Structure\vspace{.1cm}}\\ \hline
 void vsip\_svd\_getattr\_d(const vsip\_sv\_d*,\\*\hspace*{.8cm} vsip\_sv\_attr\_d*);\\
 void vsip\_svd\_getattr\_f(const vsip\_sv\_f*,\\*\hspace*{.8cm} vsip\_sv\_attr\_f*);\\
 void vsip\_csvd\_getattr\_d(const vsip\_csv\_d*,\\*\hspace*{.8cm} vsip\_csv\_attr\_d*);\\
 void vsip\_csvd\_getattr\_f(const vsip\_csv\_f*,\\*\hspace*{.8cm} vsip\_csv\_attr\_f*);\\
 \hline\end{tabular}\\}
 %
+\newline \hspace*{0.4cm} {
+\ttfamily\vspace{.3cm}
+\begin{tabular}[H]{|l|}
+\multicolumn{1}{c}{\rmfamily \bfseries Product with U from SV Decomposition\vspace{.1cm}}\\ \hline
+int vsip\_svdprodu\_f(const vsip\_sv\_f*,vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_mview\_f*);\\
+int vsip\_csvdprodu\_f(const vsip\_csv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_cmview\_f*);\\
+int vsip\_svdprodu\_d(const vsip\_sv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_mview\_d*);\\
+int vsip\_svdprodu\_f(const vsip\_sv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_mview\_f*);\\
+int vsip\_csvdprodu\_d(const vsip\_csv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_cmview\_d*);\\
+int vsip\_csvdprodu\_f(const vsip\_csv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_cmview\_f*);\\
+\hline\end{tabular}\\}
+%
+\newline \hspace*{0.4cm} {
+\ttfamily\vspace{.3cm}
+\begin{tabular}[H]{|l|}
+\multicolumn{1}{c}{\rmfamily \bfseries Product with U from SV Decomposition\vspace{.1cm}}\\ \hline
+int vsip\_svdprodv\_f(const vsip\_sv\_f*,vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_mview\_f*);\\
+int vsip\_csvdprodv\_f(const vsip\_csv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_cmview\_f*);\\
+int vsip\_svdprodv\_d(const vsip\_sv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_mview\_d*);\\
+int vsip\_svdprodv\_f(const vsip\_sv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_mview\_f*);\\
+int vsip\_csvdprodv\_d(const vsip\_csv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_cmview\_d*);\\
+int vsip\_csvdprodv\_f(const vsip\_csv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm}vsip\_mat\_side, const vsip\_cmview\_f*);\\
+\hline\end{tabular}\\}
+%
+\newline \hspace*{1.cm} {
+\ttfamily\vspace{.3cm}
+\begin{tabular}[H]{|l|}
+\multicolumn{1}{c}{\rmfamily \bfseries Product with V from SV Decomposition\vspace{.1cm}}\\ \hline
+\hline\end{tabular}\\}
+%
+\newline \hspace*{1.cm} {
+\ttfamily\vspace{.3cm}
+\begin{tabular}[H]{|l|}
+\multicolumn{1}{c}{\rmfamily \bfseries Return with V from SV Decomposition\vspace{.1cm}}\\ \hline
+\hline\end{tabular}\\}
+%
 \clearpage\pyjvsiph
 \newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
-\hspace*{1cm}\parbox{10.5cm}{
-\begin{itemize}
-\item {A \ttbf{view} method has been defined for the kernel \ttbf{view}. The kernel is treated as non-symmetric so the entire kernel is assumed.\footnotemark[1]}
-\item {A variable argument list is supported.} 
-\subitem{The first required argument is the input data \ttbf{view}.}
-\subitem {\parbox[t]{.74\textwidth}{The second optional argument is the decimation factor. It defaults to one.}\vspace*{.1cm}}
-\item{Other parameters are either set to there default value, or are calculated from included parameters.\vspace{.2cm}}
-\end{itemize}}\\
-\hspace*{1.cm}\textbf{In-Place: }\hspace{.2cm} no\\
-\hspace*{1.1cm}\textbf{Out-Of-Place: }\hspace{.2cm} yes\\
-\hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{
-\begin{tabular}[t]{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Argument List\vspace{.2cm}}}}\\ \hline
-\ttbf{filt} & \parbox[t]{.74\textwidth}{A vector \ttbf{view} of filter coefficients.\\*Required argument \vspace*{.1cm}}\\ \hline
-\ttbf{sym} & \parbox[t]{.74\textwidth}{Symmetry of \ttbf{filt} kernel. \\* Required argument\vspace*{.1cm}} \\\hline
-\ttbf{N} & \parbox[t]{.74\textwidth}{Length of input data vector. \\* Required argument\vspace*{.1cm}}\\\hline
-\ttbf{D} & \parbox[t]{.74\textwidth}{Decimation factor.\\* Required argument\vspace*{.1cm}}\\\hline
-\ttbf{state} & \parbox[t]{.74\textwidth}{Flag to indicate if the filter state is to be saved.\\*
-\ttbf{VSIP\_STATE\_SAVE} or \ttbf{VSIP\_STATE\_NO\_SAVE}\\* Argument is supported but defaults to not saving. \\* Instead of \ttbf{VSIP} flags you may use the strings \ttbf{'YES'} or \ttbf{'NO'}.\vspace*{.1cm}}\\ \hline
-\ttbf{ntimes} & \parbox[t]{.74\textwidth}{Hint for how much the LUD object will be used. Zero indicates many times.\\*For \jv this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
-\ttbf{algHint} & \parbox[t]{.74\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE}).\\*For \jv this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
-\hline \end{tabular}\\
-\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Types\vspace{.2cm}}}}\\ \hline
-'fir\_f' & \parbox[t]{.68\textwidth}{Real \ttbf{LUD}; float precision \vspace*{.1cm}}\\\hline
-'cfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{LUD}; float precision \vspace*{.1cm}}\\\hline
-'rcfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{LUD} with real \ttbf{kernel}; float precision \vspace*{.1cm}}\\\hline
-'fir\_d' & \parbox[t]{.68\textwidth}{ Real \ttbf{LUD}; double precision \vspace*{.1cm}}\\\hline
-'cfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{LUD}; double precision \vspace*{.1cm}}\\\hline
-'rcfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{LUD} with real \ttbf{kernel}; double precision \vspace*{.1cm}}\\\hline
-\end{tabular}\vspace*{.4cm}}\\
-\clearpage
-%
-\hspace*{.8cm}{\textbf{LUD Class Methods}\\
-\hspace*{1.1cm} \parbox[t]{.88\textwidth}{For class methods table we assume we have created an LUD object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
-\newline
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
-\ttbf{firObj.flt(x,y)} & \parbox[t]{.58\textwidth}{Filter the data \ttbf{x} and place the results in \ttbf{y}}\\\hline
-\ttbf{firObj.decimation} & \parbox[t]{.58\textwidth}{ Returns integer decimation factor. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.length} & \parbox[t]{.58\textwidth}{ Returns integer length for \ttbf{x}. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.lengthOut} & \parbox[t]{.58\textwidth}{ Returns integer of valid data points in \ttbf{y} \vspace*{.1cm}}\\\hline
-\ttbf{firObj.reset} & \parbox[t]{.58\textwidth}{Resets LUD filter to it's initial state. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.state} & \parbox[t]{.58\textwidth}{Returns \ttbf{True} if filter state is saved, otherwise returns \ttbf{False}.\vspace*{.1cm}}\\\hline
-\ttbf{firObj.type} & \parbox[t]{.58\textwidth}{Returns string indicating filter type.\vspace*{.1cm}}\\\hline
-\ttbf{firObj.vsip} & \parbox[t]{.58\textwidth}{Returns C VSIPL filter instance.\vspace*{.1cm}}\\\hline
-\end{tabular}\vspace*{.4cm}}\\
-\hspace*{.7cm} \parbox[t]{.91\textwidth}{
-\begin{itemize}
-\item{Methods \ttbf{decimation}, \ttbf{length}, \ttbf{state}, \ttbf{type} and \ttbf{vsip} are set when the LUD instance is created and do not change after create}
-\item{Method \ttbf{lengthOut}\footnotemark[2] is calculated during the execution of method \ttbf{flt(x,y)} and is useful if state is saved and the filter object is used multiple times on a long piece of data.}
-\item{Method \ttbf{reset} is used if state is saved and the filter is used multiple times on a long data set and then \emph{reset}\footnotemark[3] to it's initial state for use on multiple long data sets.}
-\end{itemize}}
-\footnotetext[1]{This does not preclude symmetric kernels. You just need the entire kernel.}
-\footnotetext[2]{See C VSIPL specification for more information on length of output data.}
-\footnotetext[3]{See signal processing text on overlap-add and overlap-save filtering.}
