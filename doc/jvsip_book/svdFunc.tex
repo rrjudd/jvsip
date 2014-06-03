@@ -1,63 +1,63 @@
 \clearpage
-\hypertarget{choldFunc}{\large \textbf{Cholesky Decompostion Function Set}}\vspace{.2cm}\\
+\hypertarget{svdFunc}{\large \textbf{SVD Function Set}}\vspace{.2cm}\\
 \hspace*{.3cm}
-\parbox{0.85\textwidth}{Cholesky Decomposition Class. \ref{tab:symmetricPositiveDefiniteSolvers}}
+\parbox{0.85\textwidth}{SVD Class. \ref{tab:singularValueDecompostion}}
 \\\cvsiplh 
 \newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{chold\_create}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_create}
 \newline \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create LU Object\vspace{.1cm}}\\ \hline
-vsip\_chol\_d* vsip\_chold\_create\_d(vsip\_length);\\
-vsip\_chol\_f* vsip\_chold\_create\_f(vsip\_length);\\
-vsip\_cchol\_d* vsip\_cchold\_create\_d(vsip\_length);\\
-vsip\_cchol\_f* vsip\_cchold\_create\_f(vsip\_length);\\
+vsip\_sv\_d* vsip\_svd\_create\_d(vsip\_length);\\
+vsip\_sv\_f* vsip\_svd\_create\_f(vsip\_length);\\
+vsip\_csv\_d* vsip\_csvd\_create\_d(vsip\_length);\\
+vsip\_csv\_f* vsip\_csvd\_create\_f(vsip\_length);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{chold\_destroy}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_destroy}
 \newline \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy LU Object\vspace{.1cm}}\\ \hline
-int vsip\_chold\_destroy\_d(vsip\_chol\_d*);\\
-int vsip\_chold\_destroy\_f(vsip\_chol\_f*);\\
-int vsip\_cchold\_destroy\_d(vsip\_cchol\_d*);\\
-int vsip\_cchold\_destroy\_f(vsip\_cchol\_f*);\\
+int vsip\_svd\_destroy\_d(vsip\_sv\_d*);\\
+int vsip\_svd\_destroy\_f(vsip\_sv\_f*);\\
+int vsip\_csvd\_destroy\_d(vsip\_csv\_d*);\\
+int vsip\_csvd\_destroy\_f(vsip\_csv\_f*);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{chold}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{svd}
 \newline \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Calculate LU Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_chold\_d(vsip\_chol\_d*, const vsip\_mview\_d*);\\
-int vsip\_chold\_f(vsip\_chol\_f*, const vsip\_mview\_f*);\\
-int vsip\_cchold\_d(vsip\_cchol\_d*, const vsip\_cmview\_d*);\\
-int vsip\_cchold\_f(vsip\_cchol\_f*, const vsip\_cmview\_f*);\\
+int vsip\_svd\_d(vsip\_sv\_d*, const vsip\_mview\_d*);\\
+int vsip\_svd\_f(vsip\_sv\_f*, const vsip\_mview\_f*);\\
+int vsip\_csvd\_d(vsip\_csv\_d*, const vsip\_cmview\_d*);\\
+int vsip\_csvd\_f(vsip\_csv\_f*, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{cholsol}\\
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{sv}\\
 \newline \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated LU Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_cholsol\_d(const vsip\_chol\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_d*);\\
-int vsip\_cholsol\_f(const vsip\_chol\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_f*);\\
-int vsip\_ccholsol\_d(const vsip\_cchol\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_d*);\\
-int vsip\_ccholsol\_f(const vsip\_cchol\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_f*);\\
+int vsip\_sv\_d(const vsip\_sv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_d*);\\
+int vsip\_sv\_f(const vsip\_sv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_f*);\\
+int vsip\_csv\_d(const vsip\_csv\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_d*);\\
+int vsip\_csv\_f(const vsip\_csv\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{chold\_getattr}
+%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_getattr}
 \newline \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill LU Attribute Structure\vspace{.1cm}}\\ \hline
-void vsip\_chold\_getattr\_d(const vsip\_chol\_d*,\\*\hspace*{.8cm} vsip\_chol\_attr\_d*);\\
-void vsip\_chold\_getattr\_f(const vsip\_chol\_f*,\\*\hspace*{.8cm} vsip\_chol\_attr\_f*);\\
-void vsip\_cchold\_getattr\_d(const vsip\_cchol\_d*,\\*\hspace*{.8cm} vsip\_cchol\_attr\_d*);\\
-void vsip\_cchold\_getattr\_f(const vsip\_cchol\_f*,\\*\hspace*{.8cm} vsip\_cchol\_attr\_f*);\\
+void vsip\_svd\_getattr\_d(const vsip\_sv\_d*,\\*\hspace*{.8cm} vsip\_sv\_attr\_d*);\\
+void vsip\_svd\_getattr\_f(const vsip\_sv\_f*,\\*\hspace*{.8cm} vsip\_sv\_attr\_f*);\\
+void vsip\_csvd\_getattr\_d(const vsip\_csv\_d*,\\*\hspace*{.8cm} vsip\_csv\_attr\_d*);\\
+void vsip\_csvd\_getattr\_f(const vsip\_csv\_f*,\\*\hspace*{.8cm} vsip\_csv\_attr\_f*);\\
 \hline\end{tabular}\\}
 %
 \clearpage\pyjvsiph

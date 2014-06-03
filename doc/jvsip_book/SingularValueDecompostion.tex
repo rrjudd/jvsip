@@ -1,15 +1,19 @@
+\subsubsection*{Singular Value Decomposition} \addcontentsline{toc}{subsubsection}{Singular Value Decomposition}
 \begin{table}[H]
-\caption{Singular Value Decomposition}
+\caption{Singular Value Decomposition \ref{tab:linearAlgebraFunctions}}
 \label{tab:singularValueDecompostion}
 \begin{center}
-\begin{tabular}{|l|l|}\hline
-\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}\\
-\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block} \\
-\hlnkFunc{cloneview} & Clone a \ttbf{view} \\
-\hlnkFunc{colview} & Return a column \ttbf{view} (vector) of a matrix \ttbf{view}\\
-\hlnkFunc{create} & Create a \ttbf{view} \\
-\hlnkFunc{destroy} & Free a \ttbf{view} \\
-\hlnkFunc{diagview} & Return a diagonal \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\hyperlink{svdFunc}{\rmfamily \bfseries SVD Function Set}}\\
+\hline
+svd & Matrix Singular Value Decomposition\\
+svd\_create & Create Singular Value Decomposition Object \\
+svd\_destroy & Destroy SVD Object \\
+svd\_getattr & SVD Get Attributes\\
+svd\_produ & Product with U from SV Decomposition \\
+svdprodv & Product with V from SV Decomposition \\
+svdmatu & Return with U from SV Decomposition\\
+svdmatv & Return with V from SV Decomposition\\
 \hline\end{tabular}
 \end{center}
 \label{default}

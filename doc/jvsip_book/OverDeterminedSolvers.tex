@@ -1,16 +1,18 @@
+\subsubsection*{Over-determined Linear System Solver} \addcontentsline{toc}{subsubsection}{Over-determined Linear System Solver}
 \begin{table}[H]
-\caption{Over-determined Linear System Solver}
+\caption{Over-determined Linear System Solver \ref{tab:linearAlgebraFunctions}}
 \label{tab:overDeterminedSolver}
 \begin{center}
-\begin{tabular}{|l|l|}\hline
-\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}\\
-\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block} \\
-\hlnkFunc{cloneview} & Clone a \ttbf{view} \\
-\hlnkFunc{colview} & Return a column \ttbf{view} (vector) of a matrix \ttbf{view}\\
-\hlnkFunc{create} & Create a \ttbf{view} \\
-\hlnkFunc{destroy} & Free a \ttbf{view} \\
-\hlnkFunc{diagview} & Return a diagonal \ttbf{view} (vector) of a matrix \ttbf{view}\\
-\hlnkFunc{get} & Get a value from a \ttbf{view}\\
+\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\hyperlink{qrdFunc}{\rmfamily \bfseries QRD Function Set}}\\
+\hline
+qrd & Cholesky Decomposition\\
+qrd\_create & Create QR Decomposition Object\\
+qrd\_destroy & Destroy QRD Object\\
+qrd\_getattr & QRD Get Attributes\\
+qrdprodq & Product with Q from QR Decomposition\\
+qrdsolr &Solve Linear System Based on R from QRD\\
+qrdsol & Solve Covariance or LLSQ System\\
 \hline\end{tabular}
 \end{center}
 \label{default}
