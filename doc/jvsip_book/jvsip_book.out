@@ -1,0 +1,76 @@
+\BOOKMARK [0][-]{chapter*.1}{Preface}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Introduction To JVSIP}{}% 2
+\BOOKMARK [1][-]{section*.8}{Introduction}{chapter.1}% 3
+\BOOKMARK [1][-]{section*.10}{C VSIP versus pyJvsip }{chapter.1}% 4
+\BOOKMARK [2][-]{section*.11}{Polymorphism}{section*.10}% 5
+\BOOKMARK [3][-]{section*.12}{Example}{section*.11}% 6
+\BOOKMARK [1][-]{section*.13}{Depth, Shape, Precision; VSIPL Naming}{chapter.1}% 7
+\BOOKMARK [2][-]{section*.14}{Depth}{section*.13}% 8
+\BOOKMARK [2][-]{section*.15}{Precision}{section*.13}% 9
+\BOOKMARK [2][-]{section*.16}{Shape}{section*.13}% 10
+\BOOKMARK [2][-]{section*.17}{Function Naming for C VSIPL }{section*.13}% 11
+\BOOKMARK [3][-]{section*.18}{Depth Affix}{section*.17}% 12
+\BOOKMARK [3][-]{section*.19}{Precision Affix}{section*.17}% 13
+\BOOKMARK [3][-]{section*.21}{Shape Affix}{section*.17}% 14
+\BOOKMARK [3][-]{section*.22}{Comments on Naming in C VSIPL specification}{section*.17}% 15
+\BOOKMARK [0][-]{chapter.2}{Functions}{}% 16
+\BOOKMARK [1][-]{section*.24}{C VSIPL Specification}{chapter.2}% 17
+\BOOKMARK [2][-]{section*.26}{Summary of VSIPL Types}{section*.24}% 18
+\BOOKMARK [2][-]{section*.27}{Support Functions}{section*.24}% 19
+\BOOKMARK [3][-]{section*.29}{Initialize and Finalize Operations}{section*.27}% 20
+\BOOKMARK [3][-]{section*.31}{Block Class}{section*.27}% 21
+\BOOKMARK [3][-]{section*.33}{View Class}{section*.27}% 22
+\BOOKMARK [2][-]{section*.37}{Scalar Functions}{section*.24}% 23
+\BOOKMARK [2][-]{section*.38}{Random Number Generation}{section*.24}% 24
+\BOOKMARK [2][-]{section*.39}{Elementwise Operations}{section*.24}% 25
+\BOOKMARK [3][-]{section*.41}{Elementary Math}{section*.39}% 26
+\BOOKMARK [3][-]{section*.43}{Unary Operations}{section*.39}% 27
+\BOOKMARK [3][-]{section*.45}{Binary Operations}{section*.39}% 28
+\BOOKMARK [3][-]{section*.47}{Ternary Operations}{section*.39}% 29
+\BOOKMARK [3][-]{section*.49}{Logical Operations}{section*.39}% 30
+\BOOKMARK [3][-]{section*.51}{Selection Operations}{section*.39}% 31
+\BOOKMARK [3][-]{section*.53}{Bitwise and Boolean Logical Operators}{section*.39}% 32
+\BOOKMARK [3][-]{section*.55}{Element Generation and Copy}{section*.39}% 33
+\BOOKMARK [3][-]{section*.57}{Manipulation Operations}{section*.39}% 34
+\BOOKMARK [2][-]{section*.59}{Signal Processing Functions}{section*.24}% 35
+\BOOKMARK [3][-]{section*.61}{Fast Fourier Transforms}{section*.59}% 36
+\BOOKMARK [3][-]{section*.63}{Convolution and Correlation Functions}{section*.59}% 37
+\BOOKMARK [3][-]{section*.65}{Window Functions}{section*.59}% 38
+\BOOKMARK [3][-]{section*.67}{Filter Functions}{section*.59}% 39
+\BOOKMARK [3][-]{section*.69}{Miscellaneous Signal Processing Functions}{section*.59}% 40
+\BOOKMARK [2][-]{section*.71}{Linear Algebra Functions}{section*.24}% 41
+\BOOKMARK [2][-]{section*.79}{Implementation Dependent Input and Output}{section*.24}% 42
+\BOOKMARK [2][-]{section*.80}{VSIPL Addendum}{section*.24}% 43
+\BOOKMARK [3][-]{section*.81}{VSIPL Interpolation}{section*.80}% 44
+\BOOKMARK [3][-]{section*.82}{VSIPL Permute}{section*.80}% 45
+\BOOKMARK [3][-]{section*.83}{VSIPL Sort}{section*.80}% 46
+\BOOKMARK [1][-]{section*.85}{JVSIP Function List}{chapter.2}% 47
+\BOOKMARK [2][-]{section*.86}{PyJvsip Methods}{section*.85}% 48
+\BOOKMARK [2][-]{section*.87}{PyJvsip Functions}{section*.85}% 49
+\BOOKMARK [0][-]{chapter.3}{Introduction to JVSIP Programming}{}% 50
+\BOOKMARK [0][-]{chapter.4}{Blocks and Views}{}% 51
+\BOOKMARK [1][-]{section*.95}{Introduction}{chapter.4}% 52
+\BOOKMARK [1][-]{section*.96}{Block Fundamentals}{chapter.4}% 53
+\BOOKMARK [1][-]{section*.97}{View Fundamentals}{chapter.4}% 54
+\BOOKMARK [2][-]{section*.98}{Vectors and vector manipulation}{section*.97}% 55
+\BOOKMARK [2][-]{section*.99}{Matrices and matrix manipulation}{section*.97}% 56
+\BOOKMARK [0][-]{chapter.5}{Introduction Boolean, Gather, Scatter and Indexbool}{}% 57
+\BOOKMARK [1][-]{section*.100}{Introduction}{chapter.5}% 58
+\BOOKMARK [0][-]{chapter.6}{Signal Processing}{}% 59
+\BOOKMARK [1][-]{section*.102}{Fourier Transforms}{chapter.6}% 60
+\BOOKMARK [2][-]{section*.103}{Vector FFT}{section*.102}% 61
+\BOOKMARK [2][-]{section*.104}{Vector FFT by Row or Column}{section*.102}% 62
+\BOOKMARK [1][-]{section*.105}{Convolution, Correlation and FIR Filtering}{chapter.6}% 63
+\BOOKMARK [1][-]{section*.106}{Window Creation}{chapter.6}% 64
+\BOOKMARK [1][-]{section*.107}{Miscellaneous}{chapter.6}% 65
+\BOOKMARK [2][-]{section*.108}{Histogram}{section*.107}% 66
+\BOOKMARK [2][-]{section*.109}{Data Reorganization}{section*.107}% 67
+\BOOKMARK [3][-]{section*.110}{Frequency Swapping}{section*.109}% 68
+\BOOKMARK [0][-]{chapter.7}{Linear Algebra}{}% 69
+\BOOKMARK [1][-]{section*.111}{Introduction}{chapter.7}% 70
+\BOOKMARK [1][-]{section*.112}{Simple Matrix-Matrix and Vector-Matrix Operations}{chapter.7}% 71
+\BOOKMARK [1][-]{section*.114}{Simple Solvers}{chapter.7}% 72
+\BOOKMARK [1][-]{section*.115}{LU Decomposition}{chapter.7}% 73
+\BOOKMARK [1][-]{section*.116}{Cholesky Decompostion}{chapter.7}% 74
+\BOOKMARK [1][-]{section*.117}{QR Decompostion}{chapter.7}% 75
+\BOOKMARK [1][-]{section*.118}{Singular Value Decomposition}{chapter.7}% 76
