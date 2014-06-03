@@ -1,12 +1,15 @@
 \begin{table}[H]
-\caption{Symmetric Positive Definite Linear System Solver}
+\caption{Symmetric Positive Definite (SPD) Linear System Solver  \ref{tab:linearAlgebraFunctions}}
 \label{tab:symmetricPositiveDefiniteSolvers}
 \begin{center}
-\begin{tabular}{|l|l|}\hline
-\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}\\
-\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block} \\
-\hlnkFunc{cloneview} & Clone a \ttbf{view} \\
-\hlnkFunc{colview} & Return a column \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\hyperlink{cholFunc}{\rmfamily \bfseries Cholesky Decomposition Function set}}\\
+\hline
+chold & Cholesky Decomposition\\
+chold\_create & Create Cholesky Decomposition Object\\
+chold\_destroy & Destroy CHOLD Object\\
+chold\_getattr & CHOLD Get Attributes\\
+cholsol & Solve SPD Linear System\\
 \hline\end{tabular}
 \end{center}
 \label{default}

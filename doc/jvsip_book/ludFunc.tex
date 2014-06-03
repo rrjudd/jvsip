@@ -1,7 +1,7 @@
 \clearpage
-{\large \textbf{\hypertarget{ludFunc}{LUD Function Set}}}\vspace{.2cm}\\
+\hypertarget{ludFunc}{\large \textbf{LUD Function Set}}\vspace{.2cm}\\
 \hspace*{.3cm}
-\parbox{0.85\textwidth}{Lower-Upper Decomposition Class. \ref{tab:linearAlgebraFunctions}}
+\parbox{0.85\textwidth}{Lower-Upper Decomposition Class. \ref{tab:generalSquareSolver}}
 \\\cvsiplh 
 \newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
@@ -73,18 +73,6 @@ void vsip\_clud\_getattr\_f(const vsip\_clu\_f*,\\*\hspace*{.8cm} vsip\_clu\_att
 \hspace*{1.cm}\textbf{In-Place: }\hspace{.2cm} no\\
 \hspace*{1.1cm}\textbf{Out-Of-Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
-\hspace*{1.9cm}\parbox{.82\textwidth}{Real FIR of real \ttbf{view x} given kernel \ttbf{view k} with default decimation 1.}\vspace*{.1cm}\\
-\hspace*{2.5cm}\ttbf{y=k.firflt(x)}\vspace*{.1cm}\\
-\hspace*{1.9cm}\parbox{.82\textwidth}{Complex FIR of complex \ttbf{view x} given real kernel \ttbf{view k} with user chosen decimation 3.}\vspace*{.1cm}\\
-\hspace*{2.5cm}\ttbf{y=k.firflt(x,3)}\vspace*{.1cm}\\
-\hspace*{1.9cm}\parbox{.82\textwidth}{Complex FIR of complex \ttbf{view x} given complex kernel \ttbf{view k} with default decimation 1.}\vspace*{.1cm}\\
-\hspace*{2.5cm}\ttbf{y=k.firflt(x)}\vspace*{.1cm}\\
-\hspace*{1.9cm}\parbox{.82\textwidth}{Note output \ttbf{view y} is created and returned by the method.}\\
-\hspace*{.8cm}\textbf{FIR Class\vspace{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{To create an FIR object use \\*
-\hspace*{1.cm} \ttbf{firObj=FIR(t,*args)}\\*
-where \ttbf{args} is a tuple containing the create parameters for the FIR type selected, and \ttbf{t} is a string indicating the type of FIR to create.\vspace{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of items listed in the FIR argument list in the order listed. The type string \ttbf{t} is shown in the FIR Types table below the argument list.}\\
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{
 \begin{tabular}[t]{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Argument List\vspace{.2cm}}}}\\ \hline
@@ -94,22 +82,22 @@ where \ttbf{args} is a tuple containing the create parameters for the FIR type s
 \ttbf{D} & \parbox[t]{.74\textwidth}{Decimation factor.\\* Required argument\vspace*{.1cm}}\\\hline
 \ttbf{state} & \parbox[t]{.74\textwidth}{Flag to indicate if the filter state is to be saved.\\*
 \ttbf{VSIP\_STATE\_SAVE} or \ttbf{VSIP\_STATE\_NO\_SAVE}\\* Argument is supported but defaults to not saving. \\* Instead of \ttbf{VSIP} flags you may use the strings \ttbf{'YES'} or \ttbf{'NO'}.\vspace*{.1cm}}\\ \hline
-\ttbf{ntimes} & \parbox[t]{.74\textwidth}{Hint for how much the FIR object will be used. Zero indicates many times.\\*For \jv this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
+\ttbf{ntimes} & \parbox[t]{.74\textwidth}{Hint for how much the LUD object will be used. Zero indicates many times.\\*For \jv this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
 \ttbf{algHint} & \parbox[t]{.74\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE}).\\*For \jv this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
 \hline \end{tabular}\\
 \begin{tabular}{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Types\vspace{.2cm}}}}\\ \hline
-'fir\_f' & \parbox[t]{.68\textwidth}{Real \ttbf{FIR}; float precision \vspace*{.1cm}}\\\hline
-'cfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{FIR}; float precision \vspace*{.1cm}}\\\hline
-'rcfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{FIR} with real \ttbf{kernel}; float precision \vspace*{.1cm}}\\\hline
-'fir\_d' & \parbox[t]{.68\textwidth}{ Real \ttbf{FIR}; double precision \vspace*{.1cm}}\\\hline
-'cfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{FIR}; double precision \vspace*{.1cm}}\\\hline
-'rcfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{FIR} with real \ttbf{kernel}; double precision \vspace*{.1cm}}\\\hline
+'fir\_f' & \parbox[t]{.68\textwidth}{Real \ttbf{LUD}; float precision \vspace*{.1cm}}\\\hline
+'cfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{LUD}; float precision \vspace*{.1cm}}\\\hline
+'rcfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{LUD} with real \ttbf{kernel}; float precision \vspace*{.1cm}}\\\hline
+'fir\_d' & \parbox[t]{.68\textwidth}{ Real \ttbf{LUD}; double precision \vspace*{.1cm}}\\\hline
+'cfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{LUD}; double precision \vspace*{.1cm}}\\\hline
+'rcfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{LUD} with real \ttbf{kernel}; double precision \vspace*{.1cm}}\\\hline
 \end{tabular}\vspace*{.4cm}}\\
 \clearpage
 %
-\hspace*{.8cm}{\textbf{FIR Class Methods}\\
-\hspace*{1.1cm} \parbox[t]{.88\textwidth}{For class methods table we assume we have created an FIR object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
+\hspace*{.8cm}{\textbf{LUD Class Methods}\\
+\hspace*{1.1cm} \parbox[t]{.88\textwidth}{For class methods table we assume we have created an LUD object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
 \newline
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
@@ -117,14 +105,14 @@ where \ttbf{args} is a tuple containing the create parameters for the FIR type s
 \ttbf{firObj.decimation} & \parbox[t]{.58\textwidth}{ Returns integer decimation factor. \vspace*{.1cm}}\\\hline
 \ttbf{firObj.length} & \parbox[t]{.58\textwidth}{ Returns integer length for \ttbf{x}. \vspace*{.1cm}}\\\hline
 \ttbf{firObj.lengthOut} & \parbox[t]{.58\textwidth}{ Returns integer of valid data points in \ttbf{y} \vspace*{.1cm}}\\\hline
-\ttbf{firObj.reset} & \parbox[t]{.58\textwidth}{Resets FIR filter to it's initial state. \vspace*{.1cm}}\\\hline
+\ttbf{firObj.reset} & \parbox[t]{.58\textwidth}{Resets LUD filter to it's initial state. \vspace*{.1cm}}\\\hline
 \ttbf{firObj.state} & \parbox[t]{.58\textwidth}{Returns \ttbf{True} if filter state is saved, otherwise returns \ttbf{False}.\vspace*{.1cm}}\\\hline
 \ttbf{firObj.type} & \parbox[t]{.58\textwidth}{Returns string indicating filter type.\vspace*{.1cm}}\\\hline
 \ttbf{firObj.vsip} & \parbox[t]{.58\textwidth}{Returns C VSIPL filter instance.\vspace*{.1cm}}\\\hline
 \end{tabular}\vspace*{.4cm}}\\
 \hspace*{.7cm} \parbox[t]{.91\textwidth}{
 \begin{itemize}
-\item{Methods \ttbf{decimation}, \ttbf{length}, \ttbf{state}, \ttbf{type} and \ttbf{vsip} are set when the FIR instance is created and do not change after create}
+\item{Methods \ttbf{decimation}, \ttbf{length}, \ttbf{state}, \ttbf{type} and \ttbf{vsip} are set when the LUD instance is created and do not change after create}
 \item{Method \ttbf{lengthOut}\footnotemark[2] is calculated during the execution of method \ttbf{flt(x,y)} and is useful if state is saved and the filter object is used multiple times on a long piece of data.}
 \item{Method \ttbf{reset} is used if state is saved and the filter is used multiple times on a long data set and then \emph{reset}\footnotemark[3] to it's initial state for use on multiple long data sets.}
 \end{itemize}}

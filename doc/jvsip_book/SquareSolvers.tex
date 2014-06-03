@@ -1,14 +1,15 @@
 \begin{table}[H]
-\caption{General Square Linear System Solver}
+\caption{General Square Linear System Solver \ref{tab:linearAlgebraFunctions}}
 \label{tab:generalSquareSolver}
 \begin{center}
-\begin{tabular}{|l|l|}\hline
-\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}\\
-\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block} \\
-\hlnkFunc{cloneview} & Clone a \ttbf{view} \\
-\hlnkFunc{colview} & Return a column \ttbf{view} (vector) of a matrix \ttbf{view}\\
-\hlnkFunc{create} & Create a \ttbf{view} \\
-\hlnkFunc{destroy} & Free a \ttbf{view} \\
+\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\hyperlink{ludFunc}{\rmfamily \bfseries LUD Function set}}\\
+\hline
+lud & LU Decomposition\\
+lud\_create & Create LU Decomposition Object \\
+lud\_destroy & Destroy LUD Object \\
+lud\_getattr & LUD Get Attributes\\
+lusol & Solve General Linear System \\
 \hline\end{tabular}
 \end{center}
 \label{default}
