@@ -43,10 +43,7 @@ In general I do not define scalar functions in \pyjv.  Ease of use is a major go
 %%
 \subsection*{Random Number Generation}\addcontentsline{toc}{subsection}{Random Number Generation}
 %%
-\subsection*{Elementwise Operations}\addcontentsline{toc}{subsection}{Elementwise Operations}
-Elementwise operatons are simple operations which are done on each element in a matrix or vector. Most of the time, when more than one \ttbf{view} is input, the \ttbf{view} shapes will need to be the same since the operation is done to identically indexed elements for each input \ttbf{view} and the operation result is placed in an identically indexed element of the output \ttbf{view}. \\
-The tables referenced in this section list elementwise operations with a link to the corresponding function page. Although the function pages are alphabetical, the lists here are in the same order (although not necessarily identical) to the order they appear in the C VSIPL specification.\\
-    \input{VSIP1p3ElementwiseFunctions}
+\input{VSIP1p3ElementwiseFunctions}
     \input{ElementaryMath.tex}
     \input{UnaryOperations.tex}
     \input{BinaryOperations.tex}
@@ -57,16 +54,14 @@ The tables referenced in this section list elementwise operations with a link to
     \input{ElementGenerationOperations.tex}
     \input{ManipulationOperations.tex}
 %%
-\subsection*{Signal Processing Functions}\addcontentsline{toc}{subsection}{Signal Processing Functions}
-    \input{VSIP1p3SignalProcessingFunctions}
+\input{VSIP1p3SignalProcessingFunctions}
     \input{FftFunctions}
     \input{ConvCorrFunctions}
     \input{WindowFunctions}
     \input{FilterFunctions}
     \input{MiscSigProcFunctions}
 %%
-\subsection*{Linear Algebra Functions}\addcontentsline{toc}{subsection}{Linear Algebra Functions}
-    \input{VSIP1p3LinearAlgebraFunctions}
+\input{VSIP1p3LinearAlgebraFunctions}
     \input{MatrixOperations}
     \input{SpecialSolvers}
     \input{SquareSolvers}%lud
@@ -127,7 +122,8 @@ input{ceilFunc}
 \input{divFunc}
 \input{dotFunc}
 \input{eulerFunc}
-\input{expFunc}\input{exp10Func}
+\input{expFunc}
+\input{exp10Func}
 \input{fftFunc}
 \input{fillFunc}
 \input{finalizeFunc}
