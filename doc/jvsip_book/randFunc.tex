@@ -1,0 +1,51 @@
+\afuncT{rand}{Random Number Function Set.}{Random}
+\\\cvsiplh
+\begin{table}[h]
+\centering
+\begin{tabular}[H]{|l|}
+\multicolumn{1}{c}{\hypertarget{randomNumbers}{Random Number Function Set}}\\
+\hline
+\multicolumn{1}{|c|}{Create and Destroy}\\
+\hline
+vsip\_randstate *vsip\_randcreate(\\*\hspace*{.8cm}vsip\_index, vsip\_index, vsip\_index, vsip\_rng);\\
+int vsip\_randdestroy(vsip\_randstate *);\\
+\hline
+\hline
+\multicolumn{1}{|c|}{Scalar Random Numbers}\\
+\hline
+vsip\_scalar\_d vsip\_randn\_d(vsip\_randstate*);\\
+vsip\_scalar\_d vsip\_randu\_d(vsip\_randstate*);\\
+vsip\_scalar\_f vsip\_randn\_f(vsip\_randstate*);\\
+vsip\_scalar\_f vsip\_randu\_f(vsip\_randstate*);\\
+vsip\_cscalar\_d vsip\_crandn\_d(vsip\_randstate*);\\
+vsip\_cscalar\_d vsip\_crandu\_d(vsip\_randstate*);\\
+vsip\_cscalar\_f vsip\_crandn\_f(vsip\_randstate*);\\
+vsip\_cscalar\_f vsip\_crandu\_f(vsip\_randstate*);\\
+\hline
+\hline
+\multicolumn{1}{|c|}{Normal Random Numbers On \ttbf{view}s}\\
+\hline
+void vsip\_vrandn\_d(vsip\_randstate*, const vsip\_vview\_d*);\\
+void vsip\_vrandn\_f(vsip\_randstate*, const vsip\_vview\_f*);\\
+void vsip\_mrandn\_d(vsip\_randstate*, const vsip\_mview\_d*);\\
+void vsip\_mrandn\_f(vsip\_randstate*, const vsip\_mview\_f*);\\
+void vsip\_cvrandn\_d(vsip\_randstate *, const vsip\_cvview\_d*);\\
+void vsip\_cvrandn\_f(vsip\_randstate *, const vsip\_cvview\_f*);\\
+void vsip\_cmrandn\_d(vsip\_randstate*, const vsip\_cmview\_d*);\\
+void vsip\_cmrandn\_f(vsip\_randstate*, const vsip\_cmview\_f*);\\
+\hline
+\hline
+\multicolumn{1}{|c|}{Uniform Random Numbers On \ttbf{view}s}\\
+\hline
+void vsip\_vrandu\_d(vsip\_randstate*, const vsip\_vview\_d*);\\
+void vsip\_vrandu\_f(vsip\_randstate*, const vsip\_vview\_f*);\\
+void vsip\_mrandu\_d(vsip\_randstate*, const vsip\_mview\_d*);\\
+void vsip\_mrandu\_f(vsip\_randstate*, const vsip\_mview\_f*);\\
+void vsip\_cvrandu\_d(vsip\_randstate *, const vsip\_cvview\_d*);\\
+void vsip\_cvrandu\_f(vsip\_randstate *, const vsip\_cvview\_f*);\\
+void vsip\_cmrandu\_d(vsip\_randstate*, const vsip\_cmview\_d*);\\
+void vsip\_cmrandu\_f(vsip\_randstate*, const vsip\_cmview\_f*);\\
+\hline
+\end{tabular}
+\end{table}
+\\\pyjvsiph
