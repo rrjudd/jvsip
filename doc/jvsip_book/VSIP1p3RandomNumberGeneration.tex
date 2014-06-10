@@ -1,1 +1,14 @@
-\subsection*{Random Number Generation}\addcontentsline{toc}{subsection}{Random Number Generation}
+\subsection*{Random Number Generation \hyperlink{VSIPspecHead}{(up)}\hypertarget{Random}{}}\addcontentsline{toc}{subsection}{Random Number Generation}
+VSIPL supports a pseudo random number generator which may be used to produce either a normal random number or a uniform random number. The C VSIPL specification has a particular random number generator defined so that it will produce the same numbers independent of the implementation. This is called a portable random number generator and is indicated during the creation of the random number state object with a flag \ttbf{VSIP\_PRNG}. The specification also supports an implementation dependent randomnumber generator using the flag \ttbf{VSIP\_NPRNG}.\\
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\hyperlink{randomNumbers}{Random Numbers Function Set}}\\
+\hline
+randcreate & Create a random number object with initial state\\
+randdestroy & Destroy a random number object\\
+randu & Fill a \ttbf{view} with uniform random numbers\\
+randn & Fill a \ttbf{view} with normal random numbers\\
+\hline
+\end{tabular}
+\end{table}

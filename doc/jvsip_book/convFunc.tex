@@ -1,43 +1,4 @@
 \clearpage
-{\large \textbf{\hypertarget{convFunc}{CONV Class}}}\vspace{.2cm}\\
-\hspace*{.3cm}
-\parbox{0.85\textwidth}{Discrete Fourier Transforms. See FFT Functions table \ref{tab:fftFunctions}}
+{\large \textbf{\hypertarget{convFunc}{CONV Class}}\hspace*{\fill}\hyperlink{ConvCorrFunctions}{up}\vspace{.2cm}\\
 \\\cvsiplh 
-\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_create}
-\newline \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-vsip\_rcfir\_d* vsip\_rcfir\_create\_d(\\*\hspace{.7cm}const vsip\_vview\_d*, vsip\_symmetry, vsip\_length,\\*\hspace{.7cm}vsip\_length, vsip\_obj\_state, unsigned, vsip\_alg\_hint);\\
-\end{tabular}
-}
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_destroy}
-\newline \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-int vsip\_fft\_destroy\_d(vsip\_fft\_d*);\\
-\end{tabular}
-}\vspace{.1cm}
-\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft}
-\newline \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-int vsip\_rcfirflt\_d(vsip\_rcfir\_d*, const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*);\\
-\end{tabular}
-}
-\clearpage
-\hspace*{.8cm} \texttt{fft\_getattr}
-\newline \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-void vsip\_rcfir\_getattr\_d(const vsip\_rcfir\_d*,\\*\hspace{.7cm}vsip\_rcfir\_attr*);\\
-\end{tabular}
-}\vspace{.1cm}
-\newline\hspace*{.8cm} \texttt{fir\_reset}
-\newline \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-void vsip\_rcfir\_reset\_d(vsip\_rcfir\_d*)\\
-\end{tabular}\
-}
 \\\pyjvsiph
