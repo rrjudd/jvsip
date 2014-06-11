@@ -1118,7 +1118,7 @@ class Block (object):
                 Input vector is of type complex
                 Output vector of type real created by arg method and returned.
             """
-            attrs=self.compactAttrib(1)
+            attr=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
             return arg(self,out)
         @property
@@ -1183,7 +1183,7 @@ class Block (object):
             Input vector of type real
             Method euler creates and returns a new output vector of type complex
             """
-            attrs=self.compactAttrib(1)
+            attr=self.compactAttrib(1)
             out=self.block.otherBlock(attr[0],attr[1]).bind(attr[2])
             return euler(self,out)
         @property
