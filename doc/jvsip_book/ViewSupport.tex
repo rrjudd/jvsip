@@ -1,4 +1,54 @@
 \subsubsection*{View Objects}\addcontentsline{toc}{subsubsection}{View Class}
-       \input{VectorSupport}% table of
-       \input{MatrixSupport} % table of
-       \input{TensorSupport}% table of
+\begin{table}[H]
+\caption{View Support}
+\label{tab:viewSupport}
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{alldestroy} & Free both \ttbf{block} and \ttbf{view}.\\
+\hlnkFunc{bind} & Bind a \ttbf{view} to a \ttbf{block}.\\
+\hlnkFunc{cloneview} & Clone a \ttbf{view}.\\
+\hlnkFunc{colview} & Return a column \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\hlnkFunc{create} & Create a \ttbf{view}.\\
+\hlnkFunc{destroy} & Free a \ttbf{view}.\\
+\hlnkFunc{get} & Get a value from a \ttbf{view}\\
+\hlnkFunc{getblock} & Return \ttbf{block} associated with \ttbf{view}\\
+\hlnkFunc{getattrib} & Get attribute structure associated with \ttbf{view}\\
+\hlnkFunc{getlength} & Get get length of vector \ttbf{view}\\
+\hlnkFunc{getcollength} & Get length of matrix \ttbf{view} column\\
+\hlnkFunc{getrowlength} & Get length of matrix \ttbf{view} row\\
+\hlnkFunc{getoffset} & Get get offset into block of vector \ttbf{view}\\
+\hlnkFunc{getstride} & Get stride through block of vector \ttbf{view}\\
+\hlnkFunc{getcolstride} & Get stride through block of matrix \ttbf{view} for columns.\\
+\hlnkFunc{getrowstride} & Get stride through block of matrix \ttbf{view} for rows.\\
+\hlnkFunc{getxlength} & Get get X length of tensor \ttbf{view}\\
+\hlnkFunc{getxstride} & Get the X stride attribute of a tensor \ttbf{view}\\
+\hlnkFunc{getylength} & Get get Y length of tensor \ttbf{view}\\
+\hlnkFunc{getystride} & Get the Y stride attribute of a tensor \ttbf{view}\\
+\hlnkFunc{getzlength} & Get get Z length of tensor \ttbf{view}\\
+\hlnkFunc{getzstride} & Get the Z stride attribute of a tensor \ttbf{view}\\
+\hlnkFunc{imagview} & Return \ttbf{view} of imaginary part of complex \ttbf{view}\\
+\hlnkFunc{matrixview} & Create a matrix view of a 2-D slice of the tensor \ttbf{view}\\
+\hlnkFunc{put} & Get a value from a \ttbf{view}\\
+\hlnkFunc{putattrib} & Set attribute structure associated with \ttbf{view}.\\
+\hlnkFunc{putlength} & Set length of vector \ttbf{view}.\\
+\hlnkFunc{putcollength} & Set length of matrix \ttbf{view} column.\\
+\hlnkFunc{putrowlength} & Set length of matrix \ttbf{view} row.\\
+\hlnkFunc{putoffset} & Set offset into block of vector \ttbf{view}.\\
+\hlnkFunc{putstride} & Set stride through block of vector\ttbf{view}.\\
+\hlnkFunc{putcolstride} & Set stride through block of matrix \ttbf{view} column.\\
+\hlnkFunc{putrowstride} & Set stride through block of matrix \ttbf{view} row.\\
+\hlnkFunc{putxlength} & Set X length of tensor \ttbf{view}\\
+\hlnkFunc{putxstride} & Set X stride through block of tensor\ttbf{view}\\
+\hlnkFunc{putylength} & Set Y length of tensor \ttbf{view}\\
+\hlnkFunc{putystride} & Set Y stride through block of tensor\ttbf{view}\\
+\hlnkFunc{putzlength} & Set Z length of tensor \ttbf{view}\\
+\hlnkFunc{putzstride} & Set Z stride through block of tensor\ttbf{view}\\
+\hlnkFunc{realview} & Return \ttbf{view} of real part of complex \ttbf{view}.\\
+\hlnkFunc{rowview} & Return a row \ttbf{view} (vector) of a matrix \ttbf{view}\\
+\hlnkFunc{subview} & Create a sub-\ttbf{view} of a \ttbf{view}.\\
+\hlnkFunc{transview} & Create a matrix \ttbf{view} as a transpose of a matrix\ttbf{view}\\
+\hlnkFunc{vectview} & Create a vector \ttbf{view} of a 1-D slice of a tensor \ttbf{view}\\
+\hline\end{tabular}
+\end{center}
+\label{default}
+\end{table}%

@@ -1,10 +1,10 @@
 \chapter{Functions}
 \section*{Introduction}
-In this chapter I give basic usage information for the functions included in the JVSIP implementation of the C VSIPL specification and also related information for the \pyjv python module.  I only include functions implemented in \jv; either in the C VSIPL library or the \pyjv module. Functions covered in the C specification not (currently) supported in \jv are not covered in this manual.
+In this chapter I give basic usage information for the functions included in the JVSIP implementation of the C VSIPL specification and also related information for the \pyjv{} python module.  I only include functions implemented in \jv{}; either in the C VSIPL library or the \pyjv{} module. Functions covered in the C specification not (currently) supported in \ttbf{JVSIP} are not covered in this manual.
 
-Usage information may also be found by reading the C VSIPL specification, either the old one included with the JVSIP distribution or the newer one developed by the HPEC working group of the OMG.  I currently recommend sticking with the old one included with the JVSIP distribution.  There is a lot of information about C VSIPL in the specification so C VSIPL information in this document will not be extensive; and since \pyjv has no specification document I will spend more time covering the \pyjv methodology.
+Usage information may also be found by reading the C VSIPL specification, either the old one included with the JVSIP distribution or the newer one developed by the HPEC working group of the OMG.  I currently recommend sticking with the old one included with the JVSIP distribution.  There is a lot of information about C VSIPL in the specification so C VSIPL information in this document will not be extensive; and since \pyjv{} has no specification document I will spend more time covering the \pyjv{} methodology.
 
-I try and include information on the \pyjv methods and functions collocated with the corresponding C VSIPL information.  Reading the pyJvsip.py module file is also encouraged.  \ttbf{PyJvsip} includes some functionality not (directly) part of C VSIPL.  I will try and highlight these special cases.  
+I try and include information on the \pyjv{} methods and functions collocated with the corresponding C VSIPL information.  Reading the pyJvsip.py module file is also encouraged.  \ttbf{PyJvsip} includes some functionality not (directly) part of C VSIPL.  I will try and highlight these special cases.  
 
 For python information the python help mechanism has also been supported somewhat; but keeping that information correct, up-to-date, and available for every function is a work in progress. 
 
@@ -14,11 +14,11 @@ In order to have some reasonable ordering of the functions the alphabetical list
 
 When a C VSIPL function requires a special object it needs support functions to create the object, and destroy it, and perhaps query it for its attributes. For instance to do a discrete Fourier transform one needs a function to create an FFT object, a function to do the actual FFT using the FFT object, and a function to destroy the FFT object when it is no longer needed. The author calls functions which are designed to work together to do a single job function sets. Function sets are placed together under a single heading. For instance all the functions involved with doing an FFT are placed under the FFT heading.
 
-As discussed in chapter one python supports polymorphism, and object oriented programing. A \pyjv object is an instantiation of a python class definition. The python object will contain a C VSIPL object as an instance variable as well as other information needed by \pyjv. For this reason the python garbage collector will destroy C VSIPL objects when no reference to the \pyjv object exists.
+As discussed in chapter one python supports polymorphism, and object oriented programing. A \pyjv{} object is an instantiation of a python class definition. The python object will contain a C VSIPL object as an instance variable as well as other information needed by \pyjv. For this reason the python garbage collector will destroy C VSIPL objects when no reference to the \pyjv{} object exists.
 
-Because of the true object oriented nature of \pyjv there are methods defined for every class which accomplish most of the functionality of C VSIPL. \ttbf{PyJvsip} also defines many functions which operate on the \pyjv objects. Frequently you can use either a method or a function. This information is reflected in the JVSIP function list.
+Because of the true object oriented nature of \pyjv{} there are methods defined for every class which accomplish most of the functionality of C VSIPL. \ttbf{PyJvsip} also defines many functions which operate on the \pyjv{} objects. Frequently you can use either a method or a function. This information is reflected in the JVSIP function list.
 
-No attempt is made to be exhaustive in the function descriptions. Those interested in more detail are directed to the VSIPL specification document included with the \jv distribution. In addition various examples included in this document will provide more detail on the use of some of the more complicated functions.
+No attempt is made to be exhaustive in the function descriptions. Those interested in more detail are directed to the VSIPL specification document included with the \jv{} distribution. In addition various examples included in this document will provide more detail on the use of some of the more complicated functions.
 %
 \input{VSIP1p3Chapters} %table of
 %%
@@ -68,21 +68,21 @@ This section covers the enumerated types and special structures. These are decla
 \section*{JVSIP Function List}\addcontentsline{toc}{section}{JVSIP Function List}
 The following pages are a list of available functions in JVSIP. The top part of each page will include a section of available C functions (basically extracted from \ilCode{vsip.h}). Since the VSIPL specification is the primary source of information for C VSIPL not much more is included.\\
 %
-Following the list of available functions is information on how (and if) the function is supported by \pyjv. The \pyjv section of the function page is more extensive than the C information. Basically there is a line indicating if it is available (as a 	tbf{view} method), if it is a property, and if it is in-place. Then there is a line indicating if it is available as a \pyjv function. Finally there is a comment section with additional information.\\
+Following the list of available functions is information on how (and if) the function is supported by \pyjv. The \pyjv{} section of the function page is more extensive than the C information. Basically there is a line indicating if it is available (as a 	tbf{view} method), if it is a property, and if it is in-place. Then there is a line indicating if it is available as a \pyjv{} function. Finally there is a comment section with additional information.\\
 %
 Note that comments may follow the C VSIPL and/or pyJvsip section and may also follow both indicating the comments pertain to the entire page and not just C or Python.\\
 %
 \subsection*{PyJvsip Methods}\addcontentsline{toc}{subsection}{PyJvsip Methods}
-We note that saying the method is a property means you call it without even an empty argument list. For instance if \ilCode{a} is a \pyjv \ttbf{view} then \ilCode{a.cos} will replace the values in \ilCode{a} with there cosine. Since it is a property we DON'T say \ilCode{a.cos()}. Frequently, but not always, view methods are done in-place and that is also indicated. If it is not done in-place then the method will construct an appropriate output \ttbf{view} and return it filled out with the appropriate values.\\
+We note that saying the method is a property means you call it without even an empty argument list. For instance if \ilCode{a} is a \pyjv{} \ttbf{view} then \ilCode{a.cos} will replace the values in \ilCode{a} with there cosine. Since it is a property we DON'T say \ilCode{a.cos()}. Frequently, but not always, view methods are done in-place and that is also indicated. If it is not done in-place then the method will construct an appropriate output \ttbf{view} and return it filled out with the appropriate values.\\
 %
 An example of a \ttbf{view} method that is not done in place is \ilCode{copy}. For instance \ilCode{b=a.copy} will produce a copy of \ilCode{a} in an appropriate view. Note the new \ttbf{b view} will be the same precision, shape and depth as the calling \ttbf{view} but the \ttbf block will be of an exact size and the stride information will be the minimum stride required for the \ttbf{view}. Additional information on copy is available on its function page.\\
 %
 This is the type of information included on the function pages. Since there seem to be many exceptions we won't provide a lot of rules; and instead refer to the function page.\\
 %
 \subsection*{PyJvsip Functions}\addcontentsline{toc}{subsection}{PyJvsip Functions}
-In the \pyjv \ttbf{Function} section we provide information on function calls. For pyJvsip python function calls correspond closely with their C counterpart except that the shape, depth and precision are determined by the argument types used in the call and not by the actual name as is used by C VSIPL.
+In the \pyjv{} \ttbf{Function} section we provide information on function calls. For pyJvsip python function calls correspond closely with their C counterpart except that the shape, depth and precision are determined by the argument types used in the call and not by the actual name as is used by C VSIPL.
 
-Not all C functions have a corresponding \pyjv function call. In particular most functions that return a value will be handled using a view method with no need for a function.
+Not all C functions have a corresponding \pyjv{} function call. In particular most functions that return a value will be handled using a view method with no need for a function.
  
 \input{addFunc}
 \input{acosFunc}

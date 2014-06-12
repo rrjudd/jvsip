@@ -6,10 +6,10 @@
 \begin{tabular}[H]{l}
 vsip\_scalar\_d vsip\_arg\_d(vsip\_cscalar\_d);\\
 vsip\_scalar\_f vsip\_arg\_f(vsip\_cscalar\_f);\\
-void vsip\_marg\_d(const vsip\_cmview\_d*, const vsip\_mview\_d* );\\
-void vsip\_marg\_f(const vsip\_cmview\_f*, const vsip\_mview\_f* );\\
-void vsip\_varg\_d(const vsip\_cvview\_d*,const vsip\_vview\_d*);\\
-void vsip\_varg\_f(const vsip\_cvview\_f*, const vsip\_vview\_f* );\\
+void vsip\_marg\_d(\\*\hspace{.5cm}const vsip\_cmview\_d*, const vsip\_mview\_d*);\\
+void vsip\_marg\_f(\\*\hspace{.5cm}const vsip\_cmview\_f*, const vsip\_mview\_f*);\\
+void vsip\_varg\_d(\\*\hspace{.5cm}const vsip\_cvview\_d*, const vsip\_vview\_d*);\\
+void vsip\_varg\_f(\\*\hspace{.5cm}const vsip\_cvview\_f*, const vsip\_vview\_f*);\\
 \end{tabular}
 }
 \\\pyjvsiph
@@ -18,7 +18,7 @@ void vsip\_varg\_f(const vsip\_cvview\_f*, const vsip\_vview\_f* );\\
 \newline \hspace*{.8cm}\textbf{Comment}\\
 \hspace*{.8cm}\parbox{11cm}{\vspace*{.2cm}
 \begin{itemize}
-\item{Since \ttbf{arg} takes a view of \emph{depth} complex and outputs to a view of \emph{depth} real of the same \emph{shape} and \emph{precision} as the input view the \ttbf{arg} \pyjvmethod will create a view of the proper type and size and return it.}
-\item{The \ttbf{arg} \pyjvfunc works the same as the C VSIPL function except a convenience pointer is returned to the output view}
-\item{For the \pyjvfunc limited in-place functionality exists with replacement of the real or imaginary view of the input with the output. For instance \ilCode{out=arg(in,in.realview)} works fine.}
+\item{Since \ttbf{arg} takes a view of \emph{depth} complex and outputs to a view of \emph{depth} real of the same \emph{shape} and \emph{precision} as the input view the \ttbf{arg} method will create a view of the proper type and size and return it.}
+\item{The \ttbf{arg} function works the same as the C VSIPL function except a convenience pointer is returned to the output view}
+\item{For the function limited in-place functionality exists with replacement of the real or imaginary view of the input with the output. For instance \ilCode{out=arg(in,in.realview)} works fine.}
 \end{itemize}}
