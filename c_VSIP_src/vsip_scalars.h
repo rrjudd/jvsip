@@ -43,5 +43,7 @@
 #define VSIP_EXP_D(x)  ((vsip_scalar_d) exp(x))
 #define VSIP_FLOOR_F(x) ((vsip_scalar_f) floor(x))
 #define VSIP_FLOOR_D(x) ((vsip_scalar_d) floor(x))
+#define VSIP_CEIL_F(x) ((vsip_scalar_f) ceil(x))
+#define VSIP_CEIL_D(x) ((vsip_scalar_d) ceil(x))
 
 #endif
