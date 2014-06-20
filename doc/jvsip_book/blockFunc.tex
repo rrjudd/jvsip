@@ -1,0 +1,34 @@
+\clearpage
+\hypertarget{blockFunc}{\large \textbf{Block Function Set}}\vspace{.2cm}\\
+\\\cvsiplh 
+\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+%
+\newline \hspace*{0.5cm} {
+\texttt{
+\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\rmfamily \bfseries Create Block Object\vspace{.1cm}}\\\hline
+vsip\_block\_bl* vsip\_blockcreate\_bl(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_d* vsip\_blockcreate\_d(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_f* vsip\_blockcreate\_f(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_i* vsip\_blockcreate\_i(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_mi* vsip\_blockcreate\_mi(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_si* vsip\_blockcreate\_si(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_uc* vsip\_blockcreate\_uc(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_block\_vi* vsip\_blockcreate\_vi(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_cblock\_d* vsip\_cblockcreate\_d(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
+vsip\_cblock\_f* vsip\_cblockcreate\_f(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\vspace{.2cm}\\ 
+\hline\hline\\
+\multicolumn{1}{c}{\rmfamily \bfseries Free Block Object\vspace{.1cm}}\\\hline
+void vsip\_blockdestroy\_bl(vsip\_block\_bl*);\\
+void vsip\_blockdestroy\_d(vsip\_block\_d*);\\
+void vsip\_blockdestroy\_f(vsip\_block\_f*);\\
+void vsip\_blockdestroy\_i(vsip\_block\_i*);\\
+void vsip\_blockdestroy\_mi(vsip\_block\_mi*);\\
+void vsip\_blockdestroy\_si(vsip\_block\_si*);\\
+void vsip\_blockdestroy\_uc(vsip\_block\_uc*);\\
+void vsip\_blockdestroy\_vi(vsip\_block\_vi *);\\
+void vsip\_cblockdestroy\_d(vsip\_cblock\_d*);\\
+void vsip\_cblockdestroy\_f(vsip\_cblock\_f*);\\
+\end{tabular}
+}}
+\\\pyjvsiph

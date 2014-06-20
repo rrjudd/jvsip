@@ -2,7 +2,7 @@
 \section*{Introduction}
 In this chapter I give basic usage information for the functions included in the JVSIP implementation of the C VSIPL specification and also related information for the \pyjv{} python module.  I only include functions implemented in \jv{}; either in the C VSIPL library or the \pyjv{} module. Functions covered in the C specification not (currently) supported in \ttbf{JVSIP} are not covered in this manual.
 
-Usage information may also be found by reading the C VSIPL specification, either the old one included with the JVSIP distribution or the newer one developed by the HPEC working group of the OMG.  I currently recommend sticking with the old one included with the JVSIP distribution.  There is a lot of information about C VSIPL in the specification so C VSIPL information in this document will not be extensive; and since \pyjv{} has no specification document I will spend more time covering the \pyjv{} methodology.
+Usage information may also be found by reading the C VSIPL specification, either the old one included with the JVSIP distribution or the newer one developed by the HPEC working group of the OMG.  I currently recommend sticking with the old one included with the JVSIP distribution.  There is a lot of information about C VSIPL in the specification so C VSIPL information in this document will not be extensive; and since \pyjv{}	 has no specification document I will spend more time covering the \pyjv{} methodology.
 
 I try and include information on the \pyjv{} methods and functions collocated with the corresponding C VSIPL information.  Reading the pyJvsip.py module file is also encouraged.  \ttbf{PyJvsip} includes some functionality not (directly) part of C VSIPL.  I will try and highlight these special cases.  
 
@@ -21,46 +21,6 @@ Because of the true object oriented nature of \pyjv{} there are methods defined 
 No attempt is made to be exhaustive in the function descriptions. Those interested in more detail are directed to the VSIPL specification document included with the \jv{} distribution. In addition various examples included in this document will provide more detail on the use of some of the more complicated functions.
 %
 \input{VSIP1p3Chapters} %table of
-%%
-   \input{VSIP1p3SummaryOfTypes}
-%%
-   \input{VSIP1p3SupportFunctions}
-%%%
-     \input{InitSupport} %table of
-     \input{BlockSupport} % table of
-     \input{ViewSupport}
-%%
-   \input{VSIP1p3ScalarFunctions}
-%%
-   \input{VSIP1p3RandomNumberGeneration}
-%%
-   \input{VSIP1p3ElementwiseFunctions}
-      \input{ElementaryMath.tex}
-      \input{UnaryOperations.tex}
-      \input{BinaryOperations.tex}
-      \input{TernaryOperations.tex}
-      \input{LogicalOperations.tex}
-      \input{SelectionOperations.tex}
-      \input{BitwiseOperators.tex}
-      \input{ElementGenerationOperations.tex}
-      \input{ManipulationOperations.tex}
-%%
-   \input{VSIP1p3SignalProcessingFunctions}
-      \input{FftFunctions}
-      \input{ConvCorrFunctions}
-      \input{WindowFunctions}
-      \input{FilterFunctions}
-      \input{MiscSigProcFunctions}
-%%
-   \input{VSIP1p3LinearAlgebraFunctions}
-      \input{MatrixOperations}
-      \input{SpecialSolvers}
-      \input{SquareSolvers}%lud
-      \input{SymmetricPositiveDefinitSolvers}%chold
-      \input{OverDeterminedSolvers}%qrd
-      \input{SingularValueDecompostion}%svd
-%%
-    \input{VSIP1p3Addendum}
 %
 \section*{VSIP Types}
 This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}.
@@ -86,20 +46,22 @@ Not all C functions have a corresponding \pyjv{} function call. In particular mo
  
 \input{addFunc}
 \input{acosFunc}
+\input{alldestroyFunc}
 \input{amFunc}
 \input{argFunc}
 \input{asinFunc}
 \input{atanFunc}
 \input{atan2Func}
-\input{blockadmitFunc}
+\input{blockFunc}
+\input{userblockFunc}
 \input{ceilFunc}
 \input{choldFunc}
 \input{cmplxFunc}
 \input{convFunc}
 \input{corrFunc}
-\input{cosFunc}\
-input{coshFunc}
-input{ceilFunc}
+\input{cosFunc}
+\input{coshFunc}
+\input{ceilFunc}
 \input{conjFunc}
 \input{covsolFunc}
 \input{cumsumFunc}
