@@ -1,5 +1,5 @@
 /*
- //  jvsip_floor.c
+ //  jvsip_round.c
  //  jvsip
  //
  //  Created by RANDALL JUDD on 6/20/14.
@@ -26,7 +26,7 @@
 #include<vsip_vviewattributes_i.h>
 #include<math.h>
 #include"vsip_scalars.h"
-void vsip_mfloor_d_d(const vsip_mview_d* a, const vsip_mview_d* r)
+void vsip_mround_d_d(const vsip_mview_d* a, const vsip_mview_d* r)
 {
     vsip_length n_mj, /* major length */
                 n_mn; /* minor length */
@@ -50,7 +50,14 @@ void vsip_mfloor_d_d(const vsip_mview_d* a, const vsip_mview_d* r)
     while(n_mn-- > 0){
        vsip_length n = n_mj;
        while(n-- >0){
-         *rp = VSIP_FLOOR_D(*ap);
+         vsip_scalar_d tf=VSIP_FLOOR_D(*ap);
+         vsip_scalar_d tc=VSIP_CEIL_D(*ap);
+         if(tf == tc) *rp = tf;
+         else{
+             if(  .5 < *ap - tf) *rp = tc;
+             else if( .5 > *ap - tf) *rp = tf;
+             else *rp = (int)tf & 1 ? tc:tf;
+         }
          ap += ast_mj;  rp += rst_mj;
        }
        ap0 += ast_mn; rp0 += rst_mn;
@@ -58,7 +65,7 @@ void vsip_mfloor_d_d(const vsip_mview_d* a, const vsip_mview_d* r)
     }
     return;
 }
-void vsip_mfloor_d_i(const vsip_mview_d* a, const vsip_mview_i* r)
+void vsip_mround_d_i(const vsip_mview_d* a, const vsip_mview_i* r)
 {
     vsip_length n_mj, /* major length */
                 n_mn; /* minor length */
@@ -68,6 +75,7 @@ void vsip_mfloor_d_i(const vsip_mview_d* a, const vsip_mview_i* r)
     vsip_scalar_d *ap = (a->block->array) + a->offset * a->block->rstride;
     vsip_scalar_i *rp0 = rp;
     vsip_scalar_d  *ap0 = ap;
+    vsip_scalar_d t;
     if(r->row_stride < r->col_stride){
            n_mj   = r->row_length; n_mn = r->col_length;
            rst_mj = r->row_stride; rst_mn = r->col_stride;
@@ -82,11 +90,18 @@ void vsip_mfloor_d_i(const vsip_mview_d* a, const vsip_mview_i* r)
     while(n_mn-- > 0){
        vsip_length n = n_mj;
        while(n-- >0){
-         vsip_scalar_d t = VSIP_FLOOR_D(*ap);
+         vsip_scalar_f tf=VSIP_FLOOR_D(*ap);
+         vsip_scalar_f tc=VSIP_CEIL_D(*ap);
+         if(tf == tc) t = tf;
+         else{
+             if(  .5 < *ap - tf) t = tc;
+             else if( .5 > *ap - tf) t = tf;
+             else t = (int)tf & 1 ? tc:tf;
+         }
          if(t == 0.0) 
              *rp = 0;
          else 
-             *rp = t > 0 ? (vsip_scalar_i)(t+DBL_EPSILON):(vsip_scalar_i)(t-DBL_EPSILON);
+             *rp = t > 0 ? (vsip_scalar_i)(t+FLT_EPSILON):(vsip_scalar_i)(t-FLT_EPSILON);
          ap += ast_mj;  rp += rst_mj;
        }
        ap0 += ast_mn; rp0 += rst_mn;
@@ -94,7 +109,7 @@ void vsip_mfloor_d_i(const vsip_mview_d* a, const vsip_mview_i* r)
     }
     return;
 }
-void vsip_mfloor_f_f(const vsip_mview_f* a, const vsip_mview_f* r)
+void vsip_mround_f_f(const vsip_mview_f* a, const vsip_mview_f* r)
 {
     vsip_length n_mj, /* major length */
                 n_mn; /* minor length */
@@ -120,7 +135,14 @@ void vsip_mfloor_f_f(const vsip_mview_f* a, const vsip_mview_f* r)
     while(n_mn-- > 0){
        vsip_length n = n_mj;
        while(n-- >0){
-         *rp = VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tf=VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tc=VSIP_CEIL_F(*ap);
+         if(tf == tc) *rp = tf;
+         else{
+             if(  .5 < *ap - tf) *rp = tc;
+             else if( .5 > *ap - tf) *rp = tf;
+             else *rp = (int)tf & 1 ? tc:tf;
+         }
          ap += ast_mj;  rp += rst_mj;
        }
        ap0 += ast_mn; rp0 += rst_mn;
@@ -128,7 +150,7 @@ void vsip_mfloor_f_f(const vsip_mview_f* a, const vsip_mview_f* r)
     }
     return;
 }
-void vsip_mfloor_f_i(const vsip_mview_f* a, const vsip_mview_i* r)
+void vsip_mround_f_i(const vsip_mview_f* a, const vsip_mview_i* r)
 {
 
     vsip_length n_mj, /* major length */
@@ -139,6 +161,7 @@ void vsip_mfloor_f_i(const vsip_mview_f* a, const vsip_mview_i* r)
     vsip_scalar_f *ap = (a->block->array) + a->offset * a->block->rstride;
     vsip_scalar_i *rp0 = rp;
     vsip_scalar_f  *ap0 = ap;
+    vsip_scalar_f t;
     if(r->row_stride < r->col_stride){
            n_mj   = r->row_length; n_mn = r->col_length;
            rst_mj = r->row_stride; rst_mn = r->col_stride;
@@ -153,7 +176,14 @@ void vsip_mfloor_f_i(const vsip_mview_f* a, const vsip_mview_i* r)
     while(n_mn-- > 0){
        vsip_length n = n_mj;
        while(n-- >0){
-         vsip_scalar_f t = VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tf=VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tc=VSIP_CEIL_F(*ap);
+         if(tf == tc) t = tf;
+         else{
+             if(  .5 < *ap - tf) t = tc;
+             else if( .5 > *ap - tf) t = tf;
+             else t = (int)tf & 1 ? tc:tf;
+         }
          if(t == 0.0) 
              *rp = 0;
          else 
@@ -165,7 +195,7 @@ void vsip_mfloor_f_i(const vsip_mview_f* a, const vsip_mview_i* r)
     }
     return;
 }
-void vsip_vfloor_d_d(const vsip_vview_d* a, const vsip_vview_d* r)
+void vsip_vround_d_d(const vsip_vview_d* a, const vsip_vview_d* r)
 {
       vsip_length n   = r->length;
       vsip_stride ast = a->stride * a->block->rstride,
@@ -173,19 +203,34 @@ void vsip_vfloor_d_d(const vsip_vview_d* a, const vsip_vview_d* r)
       vsip_scalar_d *ap = (a->block->array) + a->offset * a->block->rstride;
       vsip_scalar_d *rp = (r->block->array) + r->offset * r->block->rstride;
       while(n-- > 0){
-         *rp = VSIP_FLOOR_D(*ap);
+         vsip_scalar_d tf=VSIP_FLOOR_D(*ap);
+         vsip_scalar_d tc=VSIP_CEIL_D(*ap);
+         if(tf == tc) *rp = tf;
+         else{
+             if(  .5 < *ap - tf) *rp = tc;
+             else if( .5 > *ap - tf) *rp = tf;
+             else *rp = (int)tf & 1 ? tc:tf;
+         }
          ap += ast; rp += rst;
       }
 }
-void vsip_vfloor_d_i(const vsip_vview_d* a, const vsip_vview_i* r)
+void vsip_vround_d_i(const vsip_vview_d* a, const vsip_vview_i* r)
 {
       vsip_length n   = r->length; 
       vsip_stride ast = a->stride * a->block->rstride, 
                   rst = r->stride;
       vsip_scalar_d *ap = (a->block->array) + a->offset * a->block->rstride;
       vsip_scalar_i *rp = (r->block->array) + r->offset;
+      vsip_scalar_d t;
       while(n-- > 0){
-         vsip_scalar_d t = VSIP_FLOOR_D(*ap);
+         vsip_scalar_d tf=VSIP_FLOOR_D(*ap);
+         vsip_scalar_d tc=VSIP_CEIL_D(*ap);
+         if(tf == tc) t = tf;
+         else{
+             if(  .5 < *ap - tf) t = tc;
+             else if( .5 > *ap - tf) t = tf;
+             else t = (int)tf & 1 ? tc:tf;
+         }
          if(t == 0.0) 
              *rp = 0;
          else 
@@ -193,7 +238,7 @@ void vsip_vfloor_d_i(const vsip_vview_d* a, const vsip_vview_i* r)
          ap += ast; rp += rst;
       }
 }
-void vsip_vfloor_f_f(const vsip_vview_f* a, const vsip_vview_f* r)
+void vsip_vround_f_f(const vsip_vview_f* a, const vsip_vview_f* r)
 {
       vsip_length n   = r->length; 
       vsip_stride ast = a->stride * a->block->rstride, 
@@ -201,23 +246,38 @@ void vsip_vfloor_f_f(const vsip_vview_f* a, const vsip_vview_f* r)
       vsip_scalar_f *ap = (a->block->array) + a->offset * a->block->rstride;
       vsip_scalar_f *rp = (r->block->array) + r->offset * r->block->rstride;
       while(n-- > 0){
-         *rp = VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tf=VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tc=VSIP_CEIL_F(*ap);
+         if(tf == tc) *rp = tf;
+         else{
+             if(  .5 < *ap - tf) *rp = tc;
+             else if( .5 > *ap - tf) *rp = tf;
+             else *rp = (int)tf & 1 ? tc:tf;
+         }
          ap += ast; rp += rst;
       }
 }
-void vsip_vfloor_f_i(const vsip_vview_f* a, const vsip_vview_i* r)
+void vsip_vround_f_i(const vsip_vview_f* a, const vsip_vview_i* r)
 {
       vsip_length n   = r->length; 
       vsip_stride ast = a->stride * a->block->rstride, 
                   rst = r->stride;
       vsip_scalar_f *ap = (a->block->array) + a->offset * a->block->rstride;
       vsip_scalar_i *rp = (r->block->array) + r->offset;
+      vsip_scalar_f t;
       while(n-- > 0){
-         vsip_scalar_f t = VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tf=VSIP_FLOOR_F(*ap);
+         vsip_scalar_f tc=VSIP_CEIL_F(*ap);
+         if(tf == tc) t = tf;
+         else{
+             if(  .5 < *ap - tf) t = tc;
+             else if( .5 > *ap - tf) t = tf;
+             else t = (int)tf & 1 ? tc:tf;
+         }
          if(t == 0.0) 
              *rp = 0;
          else 
-             *rp = t > 0 ? (vsip_scalar_i)(t+DBL_EPSILON):(vsip_scalar_i)(t-DBL_EPSILON);
+             *rp = t > 0 ? (vsip_scalar_i)(t+FLT_EPSILON):(vsip_scalar_i)(t-FLT_EPSILON);
          ap += ast; rp += rst;
       }
 }

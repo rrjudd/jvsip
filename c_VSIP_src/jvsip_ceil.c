@@ -1,3 +1,23 @@
+ /*
+ //  jvsip_ceil.c
+ //  jvsip
+ //
+ //  Created by RANDALL JUDD on 6/20/14.
+ //  Copyright (c) 2014 Independent Consultant. All rights reserved.
+ */
+/*********************************************************************
+ // This code includes no warranty, express or implied, including     /
+ // the warranties of merchantability and fitness for a particular    /
+ // purpose.                                                          /
+ // No person or entity assumes any legal liability or responsibility /
+ // for the accuracy, completeness, or usefulness of any information, /
+ // apparatus, product, or process disclosed, or represents that      /
+ // its use would not infringe privately owned rights.                /
+ *********************************************************************/
+/*********************************************************************
+ // The MIT License (see copyright for jvsip in top level directory)
+ // http://opensource.org/licenses/MIT
+ **********************************************************************/
 #include<vsip.h>
 #include<vsip_mviewattributes_d.h>
 #include<vsip_vviewattributes_d.h>
@@ -64,7 +84,10 @@ void vsip_mceil_d_i(const vsip_mview_d* a, const vsip_mview_i* r)
        vsip_length n = n_mj;
        while(n-- >0){
          vsip_scalar_d t = VSIP_CEIL_D(*ap);
-         *rp = (vsip_scalar_i)(t+DBL_EPSILON);
+         if(t == 0.0) 
+             *rp = 0;
+         else 
+             *rp = t > 0 ? (vsip_scalar_i)(t+DBL_EPSILON):(vsip_scalar_i)(t-DBL_EPSILON);
          ap += ast_mj;  rp += rst_mj;
        }
        ap0 += ast_mn; rp0 += rst_mn;
@@ -132,7 +155,10 @@ void vsip_mceil_f_i(const vsip_mview_f* a, const vsip_mview_i* r)
        vsip_length n = n_mj;
        while(n-- >0){
          vsip_scalar_f t = VSIP_CEIL_F(*ap);
-         *rp = (vsip_scalar_i)(t+FLT_EPSILON);
+         if(t == 0.0) 
+             *rp = 0;
+         else 
+             *rp = t > 0 ? (vsip_scalar_i)(t+DBL_EPSILON):(vsip_scalar_i)(t-DBL_EPSILON);
          ap += ast_mj;  rp += rst_mj;
        }
        ap0 += ast_mn; rp0 += rst_mn;
@@ -161,7 +187,10 @@ void vsip_vceil_d_i(const vsip_vview_d* a, const vsip_vview_i* r)
       vsip_scalar_i *rp = (r->block->array) + r->offset;
       while(n-- > 0){
          vsip_scalar_d t = VSIP_CEIL_D(*ap);
-         *rp = (vsip_scalar_i)(t+DBL_EPSILON);
+         if(t == 0.0) 
+             *rp = 0;
+         else 
+             *rp = t > 0 ? (vsip_scalar_i)(t+DBL_EPSILON):(vsip_scalar_i)(t-DBL_EPSILON);
          ap += ast; rp += rst;
       }
 }
@@ -186,7 +215,10 @@ void vsip_vceil_f_i(const vsip_vview_f* a, const vsip_vview_i* r)
       vsip_scalar_i *rp = (r->block->array) + r->offset;
       while(n-- > 0){
          vsip_scalar_f t = VSIP_CEIL_F(*ap);
-         *rp = (vsip_scalar_i)(t+FLT_EPSILON);
+         if(t == 0.0) 
+             *rp = 0;
+         else 
+             *rp = t > 0 ? (vsip_scalar_i)(t+DBL_EPSILON):(vsip_scalar_i)(t-DBL_EPSILON);
          ap += ast; rp += rst;
       }
 }

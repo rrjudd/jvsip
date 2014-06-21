@@ -19,7 +19,7 @@ def arg(a,b):
     assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views'
     t=a.type+b.type
     assert f.has_key(t), 'Type <:%s:> not recognized for function arg'%t
-    assert __isSizeCompatible(a,b), 'Input views must be the same size' 
+    assert __isSizeCompatible(a,b), 'Input views must be the same size'
     f[t](a.view,b.view)
     return b
 def conj(a,b):
@@ -30,7 +30,7 @@ def conj(a,b):
     assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views'
     t=a.type+b.type
     assert f.has_key(t), 'Type <:%s:> not recognized for function cconj'%t
-    assert __isSizeCompatible(a,b), 'Input views must be the same size' 
+    assert __isSizeCompatible(a,b), 'Input views must be the same size'
     f[t](a.view,b.view)
     return b
 def cumsum(a,b):
@@ -38,7 +38,7 @@ def cumsum(a,b):
     Cumulative sum function (see vsip_dscumsum_f).
     Works for matrix and vectors.
     For matrix does cumulative sum along rows or columns defined by the major
-    attribute of the first argument. 
+    attribute of the first argument.
     If the major attribute is COL then it is done by column;
     otherwise it is done by row. It is recommended to set the major attribute
     when calling the function since you don't know what it is unless you check it,
@@ -132,7 +132,7 @@ def recip(a,b):
     return b
 def rsqrt(a,b):
     f={'mview_dmview_d':vsip_mrsqrt_d, 'mview_fmview_f':vsip_mrsqrt_f,
-       'vview_dvview_d':vsip_vrsqrt_d, 'vview_fvview_f':vsip_vrsqrt_f} 
+       'vview_dvview_d':vsip_vrsqrt_d, 'vview_fvview_f':vsip_vrsqrt_f}
     assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function rsqrt'
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for rsqrt'
@@ -148,6 +148,39 @@ def sq(a,b):
     assert f.has_key(t),'Type <:'+t+':> not supported for sq'
     f[t](a.view,b.view)
     return b
-# vsip_sfloor_p_p Not implemented
-# vsip_sceil_p_p Not implemented
-# vsip_sround_p_p Not implemented
+#vsip_sfloor_p_p
+def floor(a,r):
+    f={'mview_dmview_d':vsip_mfloor_d_d, 'mview_fmview_f':vsip_mfloor_d_d,
+        'vview_dvview_d':vsip_vfloor_d_d, 'vview_fvview_f':vsip_vfloor_f_f,
+        'mview_dmview_i':vsip_mfloor_d_i, 'mview_fmview_i':vsip_mfloor_d_i,
+        'vview_dvview_i':vsip_vfloor_d_i, 'vview_fvview_i':vsip_vfloor_f_i}
+    assert __isView(a) and __isView(r), 'Arguments must be pyJvsip views in function floor'
+    t=a.type+r.type
+    assert __isSizeCompatible(a,r),'Input/Output views must be the same size for floor'
+    assert f.has_key(t),'Type <:%s:> not supported for floor'%t
+    f[t](a.view,r.view)
+    return r
+# vsip_sceil_p_p
+def ceil(a,r):
+    f={'mview_dmview_d':vsip_mceil_d_d, 'mview_fmview_f':vsip_mceil_d_d,
+        'vview_dvview_d':vsip_vceil_d_d, 'vview_fvview_f':vsip_vceil_f_f,
+        'mview_dmview_i':vsip_mceil_d_i, 'mview_fmview_i':vsip_mceil_d_i,
+        'vview_dvview_i':vsip_vceil_d_i, 'vview_fvview_i':vsip_vceil_f_i}
+    assert __isView(a) and __isView(r), 'Arguments must be pyJvsip views in function ceil'
+    t=a.type+r.type
+    assert __isSizeCompatible(a,r),'Input/Output views must be the same size for ceil'
+    assert f.has_key(t),'Type <:%s:> not supported for ceil'%t
+    f[t](a.view,r.view)
+    return r
+# vsip_sround_p_p
+def round(a,r):
+    f={'mview_dmview_d':vsip_mround_d_d, 'mview_fmview_f':vsip_mround_d_d,
+        'vview_dvview_d':vsip_vround_d_d, 'vview_fvview_f':vsip_vround_f_f,
+        'mview_dmview_i':vsip_mround_d_i, 'mview_fmview_i':vsip_mround_d_i,
+        'vview_dvview_i':vsip_vround_d_i, 'vview_fvview_i':vsip_vround_f_i}
+    assert __isView(a) and __isView(r), 'Arguments must be pyJvsip views in function round'
+    t=a.type+r.type
+    assert __isSizeCompatible(a,r),'Input/Output views must be the same size for round'
+    assert f.has_key(t),'Type <:%s:> not supported for round'%t
+    f[t](a.view,r.view)
+    return r

@@ -1907,3 +1907,12 @@ void vsip_rcfir_reset_d ( vsip_rcfir_d* ) ;
 void vsip_rcfir_reset_f ( vsip_rcfir_f* ) ;
 vsip_rcfir_d* vsip_rcfir_create_d ( const vsip_vview_d*, vsip_symmetry, vsip_length, vsip_length, vsip_obj_state, unsigned int, vsip_alg_hint ) ;
 vsip_rcfir_f* vsip_rcfir_create_f ( const vsip_vview_f*, vsip_symmetry, vsip_length, vsip_length, vsip_obj_state, unsigned int, vsip_alg_hint ) ;
+void vsip_mround_d_d(const vsip_mview_d*, const vsip_mview_d* ) ;
+void vsip_mround_d_i(const vsip_mview_d*, const vsip_mview_i* ) ;
+void vsip_mround_f_f(const vsip_mview_f*, const vsip_mview_f* ) ;
+void vsip_mround_f_i(const vsip_mview_f*, const vsip_mview_i* ) ;
+void vsip_vround_d_d(const vsip_vview_d*, const vsip_vview_d* ) ;
+void vsip_vround_d_i(const vsip_vview_d*, const vsip_vview_i* ) ;
+void vsip_vround_f_f(const vsip_vview_f*, const vsip_vview_f* ) ;
+void vsip_vround_f_i(const vsip_vview_f*, const vsip_vview_i* ) ;
+
