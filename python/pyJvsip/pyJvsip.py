@@ -352,6 +352,9 @@ class Block (object):
                 assert index < self.length,'Index out of bounds'
                 val=vsip.get(self.view,index)
                 return scalarVal(val)
+            elif 'mview' in self.type and isinstance(index,int) and index >=0:
+                assert index < self.collength,'Index out of bounds'
+                return self.rowview(index)
             elif 'vview' in self.type and isinstance(index,slice):
                 return self.subview(index)
             elif 'mview' in self.type and (len(index) is 2) and \
@@ -435,12 +438,11 @@ class Block (object):
                 del self.COL[j]
             return self
         def __len__(self):
-            attr=vsip.size(self.__vsipView)
-            n = attr[2]
-            if len(attr) > 3:
-                n *= attr[4]
-            return int(n)
-
+            t=self.type
+            if 'mview' in self.type:
+                return int(self.collength)
+            else:
+                return int(self.length)
         # Support functions
         # scalar is a place for the implementation to store a value which can be recovered from the view
         # not sure we need this. Currently not used.
@@ -482,7 +484,7 @@ class Block (object):
                  attr=compactAttrib(b)
                  attr is a tuple with three entries.
                  attr[0] is the block type of self if b is 0 (see below for b is 1).
-                 attr[1] is len(self)
+                 attr[1] is number of elements in view
                  attr[2] is an attribute (tuple) suitable for entry into bind.
                NOTE:
                if b is 1 (not 0) and self.block.type is real then attr[0] will be complex
@@ -499,10 +501,11 @@ class Block (object):
                 t=tdict[t]
             elif cdict.has_key(t):
                 t=cdict[t]
-            length = len(self)
             if self.type in Block.vectorTypes:
-                attr=(0,1,length)
+                length=self.length
+                attr=(0,1,self.length)
             elif self.type in Block.matrixTypes:
+                length=self.rowlength * self.collength
                 size=vsip.size(self.view)
                 if size[1] < size[3]:
                     attr=(0,      1,size[2],size[2],size[4])
