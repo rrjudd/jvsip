@@ -24,6 +24,7 @@ def copy(a,b):
        'mview_fmview_d':vsip_mcopy_f_d, 'mview_fmview_f':vsip_mcopy_f_f,
        'mview_fmview_i':vsip_mcopy_f_i, 'mview_fmview_uc':vsip_mcopy_f_uc,
        'mview_imview_f':vsip_mcopy_i_f, 'mview_simview_f':vsip_mcopy_si_f,
+       'mview_imview_i':vsip_mcopy_i_i,
        'vview_blvview_bl':vsip_vcopy_bl_bl, 'vview_blvview_d':vsip_vcopy_bl_d,
        'vview_blvview_f':vsip_vcopy_bl_f, 'vview_dvview_bl':vsip_vcopy_d_bl,
        'vview_dvview_d':vsip_vcopy_d_d, 'vview_dvview_f':vsip_vcopy_d_f,

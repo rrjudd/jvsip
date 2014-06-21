@@ -150,9 +150,9 @@ def sq(a,b):
     return b
 #vsip_sfloor_p_p
 def floor(a,r):
-    f={'mview_dmview_d':vsip_mfloor_d_d, 'mview_fmview_f':vsip_mfloor_d_d,
+    f={'mview_dmview_d':vsip_mfloor_d_d, 'mview_fmview_f':vsip_mfloor_f_f,
         'vview_dvview_d':vsip_vfloor_d_d, 'vview_fvview_f':vsip_vfloor_f_f,
-        'mview_dmview_i':vsip_mfloor_d_i, 'mview_fmview_i':vsip_mfloor_d_i,
+        'mview_dmview_i':vsip_mfloor_d_i, 'mview_fmview_i':vsip_mfloor_f_i,
         'vview_dvview_i':vsip_vfloor_d_i, 'vview_fvview_i':vsip_vfloor_f_i}
     assert __isView(a) and __isView(r), 'Arguments must be pyJvsip views in function floor'
     t=a.type+r.type
@@ -162,9 +162,9 @@ def floor(a,r):
     return r
 # vsip_sceil_p_p
 def ceil(a,r):
-    f={'mview_dmview_d':vsip_mceil_d_d, 'mview_fmview_f':vsip_mceil_d_d,
+    f={'mview_dmview_d':vsip_mceil_d_d, 'mview_fmview_f':vsip_mceil_f_f,
         'vview_dvview_d':vsip_vceil_d_d, 'vview_fvview_f':vsip_vceil_f_f,
-        'mview_dmview_i':vsip_mceil_d_i, 'mview_fmview_i':vsip_mceil_d_i,
+        'mview_dmview_i':vsip_mceil_d_i, 'mview_fmview_i':vsip_mceil_f_i,
         'vview_dvview_i':vsip_vceil_d_i, 'vview_fvview_i':vsip_vceil_f_i}
     assert __isView(a) and __isView(r), 'Arguments must be pyJvsip views in function ceil'
     t=a.type+r.type
@@ -174,9 +174,9 @@ def ceil(a,r):
     return r
 # vsip_sround_p_p
 def round(a,r):
-    f={'mview_dmview_d':vsip_mround_d_d, 'mview_fmview_f':vsip_mround_d_d,
+    f={'mview_dmview_d':vsip_mround_d_d, 'mview_fmview_f':vsip_mround_f_f,
         'vview_dvview_d':vsip_vround_d_d, 'vview_fvview_f':vsip_vround_f_f,
-        'mview_dmview_i':vsip_mround_d_i, 'mview_fmview_i':vsip_mround_d_i,
+        'mview_dmview_i':vsip_mround_d_i, 'mview_fmview_i':vsip_mround_f_i,
         'vview_dvview_i':vsip_vround_d_i, 'vview_fvview_i':vsip_vround_f_i}
     assert __isView(a) and __isView(r), 'Arguments must be pyJvsip views in function round'
     t=a.type+r.type
