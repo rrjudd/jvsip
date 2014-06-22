@@ -5,6 +5,9 @@ c_VSIP_testing/atest
 c_VSIP_testing/atest.c
 python/python_examples/svdDev/svd_f/test_svd_f
 python/vsip/c_numpy_src/jvsipNumpyUtils.py
+doc/jvsip_book/jvsip_book.out
+doc/jvsip_book/jvsip_book.pdf
+doc/jvsip_book/jvsip_book.pyg
 include/
 lib/
 build/
