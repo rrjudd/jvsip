@@ -1,0 +1,74 @@
+\clearpage
+User Block Function Set\hspace*{\fill}\hyperlink{userBlockFunctionSet}{(up)}\\
+There are a group of functions to create user blocks. User blocks are block objects associated with user memory. User memory is any memory allocated by methods not associated with VSIPL. These blocks have functions associated with them to allow input and output of data from VSIPL without exposing the VSIPL implementations architecture to the user.\\
+User blocks have no counterpart in \pyjv.
+\\\cvsiplh\\
+\texttt{
+\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\rmfamily \bfseries  Admit Block Object\vspace{.1cm}}\\ \hline
+int vsip\_blockadmit\_bl(vsip\_block\_bl*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_d(vsip\_block\_d*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_f(vsip\_block\_f*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_i(vsip\_block\_i*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_mi(vsip\_block\_mi*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_si(vsip\_block\_si*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_uc(vsip\_block\_uc*, vsip\_scalar\_bl);\\
+int vsip\_blockadmit\_vi(vsip\_block\_vi*, vsip\_scalar\_bl);\\
+int vsip\_cblockadmit\_d(vsip\_cblock\_d*, vsip\_scalar\_bl);\\
+int vsip\_cblockadmit\_f(vsip\_cblock\_f*, vsip\_scalar\_bl);\\
+\end{tabular}\\
+\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\rmfamily \bfseries Bind User Memory To Block Object\vspace{.1cm}}\\ \hline
+vsip\_block\_bl* vsip\_blockbind\_bl(\\*\hspace{.7cm}
+vsip\_scalar\_bl * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_d* vsip\_blockbind\_d(\\*\hspace{.7cm}
+vsip\_scalar\_d * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_f* vsip\_blockbind\_f(\\*\hspace{.7cm}vsip\_scalar\_f * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_i* vsip\_blockbind\_i(\\*\hspace{.7cm}vsip\_scalar\_i * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_mi* vsip\_blockbind\_mi(\\*\hspace{.7cm}vsip\_scalar\_vi * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_si* vsip\_blockbind\_si(\\*\hspace{.7cm}vsip\_scalar\_si * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_uc* vsip\_blockbind\_uc(\\*\hspace{.7cm}vsip\_scalar\_uc * const, size\_t, vsip\_memory\_hint);\\
+vsip\_block\_vi* vsip\_blockbind\_vi(\\*\hspace{.7cm}vsip\_scalar\_vi * const, size\_t, vsip\_memory\_hint);\\
+vsip\_cblock\_d* vsip\_cblockbind\_d(\\*\hspace{.7cm}vsip\_scalar\_d* const, vsip\_scalar\_d* const,\\*\hspace{.7cm}size\_t, vsip\_memory\_hint);\\
+vsip\_cblock\_f* vsip\_cblockbind\_f(\\*\hspace{.7cm}vsip\_scalar\_f* const, vsip\_scalar\_f* const,\\*\hspace{.7cm}size\_t, vsip\_memory\_hint);\\
+\end{tabular}\\
+\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\rmfamily \bfseries Release Block Object\vspace{.1cm}}\\ \hline
+void vsip\_cblockrelease\_d(vsip\_cblock\_d*,\\*\hspace{.7cm}vsip\_scalar\_bl, vsip\_scalar\_d**, vsip\_scalar\_d**);\\
+void vsip\_cblockrelease\_f(vsip\_cblock\_f*,\\*\hspace{.7cm}vsip\_scalar\_bl,vsip\_scalar\_f**, vsip\_scalar\_f**);\\
+vsip\_scalar\_bl* vsip\_blockrelease\_bl(\\*\hspace{.7cm}vsip\_block\_bl*, vsip\_scalar\_bl);\\
+vsip\_scalar\_d* vsip\_blockrelease\_d(\\*\hspace{.7cm}vsip\_block\_d*, vsip\_scalar\_bl);\\
+vsip\_scalar\_f* vsip\_blockrelease\_f(\\*\hspace{.7cm}vsip\_block\_f*, vsip\_scalar\_bl);\\
+vsip\_scalar\_i* vsip\_blockrelease\_i(\\*\hspace{.7cm}vsip\_block\_i*, vsip\_scalar\_bl);\\
+vsip\_scalar\_si* vsip\_blockrelease\_si(\\*\hspace{.7cm}vsip\_block\_si*, vsip\_scalar\_bl);\\
+vsip\_scalar\_uc* vsip\_blockrelease\_uc(\\*\hspace{.7cm}vsip\_block\_uc*, vsip\_scalar\_bl);\\
+vsip\_scalar\_vi* vsip\_blockrelease\_mi(\\*\hspace{.7cm}vsip\_block\_mi*, vsip\_scalar\_bl);\\
+vsip\_scalar\_vi* vsip\_blockrelease\_vi(\\*\hspace{.7cm}vsip\_block\_vi*, vsip\_scalar\_bl);\\
+\end{tabular}\\
+\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\rmfamily \bfseries Rebind New User Memory To Block Object\vspace{.1cm}}\\ \hline
+void vsip\_cblockrebind\_d(vsip\_cblock\_d*,\\*\hspace{.7cm}vsip\_scalar\_d* const, vsip\_scalar\_d* const,\\*\hspace{.7cm}vsip\_scalar\_d**, vsip\_scalar\_d**);\\
+void vsip\_cblockrebind\_f(\\*\hspace{.7cm}vsip\_cblock\_f*, vsip\_scalar\_f* const,\\*\hspace{.7cm}vsip\_scalar\_f* const, vsip\_scalar\_f**, vsip\_scalar\_f**);\\
+vsip\_scalar\_bl* vsip\_blockrebind\_bl(\\*\hspace{.7cm}vsip\_block\_bl*, vsip\_scalar\_bl* const);\\
+vsip\_scalar\_d* vsip\_blockrebind\_d(\\*\hspace{.7cm}vsip\_block\_d*, vsip\_scalar\_d* const);\\
+vsip\_scalar\_f* vsip\_blockrebind\_f(\\*\hspace{.7cm}vsip\_block\_f*, vsip\_scalar\_f* const);\\
+vsip\_scalar\_i* vsip\_blockrebind\_i(\\*\hspace{.7cm}vsip\_block\_i*, vsip\_scalar\_i* const);\\
+vsip\_scalar\_si* vsip\_blockrebind\_si(\\*\hspace{.7cm}vsip\_block\_si*, vsip\_scalar\_si* const);\\
+vsip\_scalar\_uc* vsip\_blockrebind\_uc(\\*\hspace{.7cm}vsip\_block\_uc*, vsip\_scalar\_uc* const);\\
+vsip\_scalar\_vi* vsip\_blockrebind\_mi(\\*\hspace{.7cm}vsip\_block\_mi*, vsip\_scalar\_vi* const);\\
+vsip\_scalar\_vi* vsip\_blockrebind\_vi(\\*\hspace{.7cm}vsip\_block\_vi*, vsip\_scalar\_vi* const);\\\\
+\end{tabular}\\
+\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\rmfamily \bfseries Return Pointer To User Memory.\vspace{.1cm}}\\ \hline
+void vsip\_cblockfind\_d(const vsip\_cblock\_d*,\\*\hspace{.7cm}vsip\_scalar\_d**, vsip\_scalar\_d**);\\
+void vsip\_cblockfind\_f(const vsip\_cblock\_f*,\\*\hspace{.7cm}vsip\_scalar\_f**, vsip\_scalar\_f**);\\
+vsip\_scalar\_bl* vsip\_blockfind\_bl(const vsip\_block\_bl*);\\
+vsip\_scalar\_d* vsip\_blockfind\_d(const vsip\_block\_d*);\\
+vsip\_scalar\_f* vsip\_blockfind\_f(const vsip\_block\_f*);\\
+vsip\_scalar\_i* vsip\_blockfind\_i(const vsip\_block\_i*);\\
+vsip\_scalar\_si* vsip\_blockfind\_si(const vsip\_block\_si*);\\
+vsip\_scalar\_uc* vsip\_blockfind\_uc(const vsip\_block\_uc*);\\
+vsip\_scalar\_vi* vsip\_blockfind\_mi(const vsip\_block\_mi*);\\
+vsip\_scalar\_vi* vsip\_blockfind\_vi(const vsip\_block\_vi*);\\
+\end{tabular}
+}
