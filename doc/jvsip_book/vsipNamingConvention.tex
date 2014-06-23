@@ -1,21 +1,21 @@
 \clearpage
 \section*{Depth, Shape, Precision; VSIPL Naming}\addcontentsline{toc}{section}{Depth, Shape, Precision; VSIPL Naming}
-In order to understand \cvl{} one needs to understand something about the convention used when naming functions, types, structures, scalars, etc. in \cvl. This also will help one understand some of the reasons behind the \ttbf{block} and \ttbf{view} structures in \cvl. I try to maintain the same conventions in this document and extend them to cover \pyjv type strings.
+In order to understand \cvl{} one needs to understand something about the convention used when naming functions, types, structures, scalars, etc. in \cvl. This also will help one understand some of the reasons behind the \ttbf{block} and \ttbf{view} structures in \cvl. I try to maintain the same conventions in this document and extend them to cover \pyjv{} type strings.
 %
 \subsection*{Depth}\addcontentsline{toc}{subsection}{Depth}
-A scalar element has a \ttbf{depth}.  For VSIPL this is pretty simple.  It is either complex or real. I suppose in the future it is possible other scalar depths could be defined. For instance a scalar defining a pixel in an image might have red, green, blue components. 
+A scalar element has a \ttbf{depth}.  For \ttbf{VSIPL} this is pretty simple.  It is either complex or real. I suppose in the future it is possible other scalar depths could be defined. For instance a scalar defining a pixel in an image might have red, green, blue components. 
 
 Note that \ttbf{depth} is an attribute of a \ttbf{block}, and that \ttbf{block}s only store elements of a single type; so a \ttbf{block} will only have one depth associated with it. 
 %
 \subsection*{Precision}\addcontentsline{toc}{subsection}{Precision}
-Precision indicates how accurate the numbers are. In C this would be indicated by \ilCode{float}, \ilCode{double}, \ilCode{int}, etc. \jv only supports standard ANSI C89 precisions but the naming conventions for the VSIP specification allow for just about any precision to be be declared if an implementation wants to support it.
+Precision indicates how accurate the numbers are. In C this would be indicated by \ilCode{float}, \ilCode{double}, \ilCode{int}, etc. \jv{} only supports standard ANSI C89 precisions but the naming conventions for the \ttbf{VSIP} specification allow for just about any precision to be be declared if an implementation wants to support it.
 
 Note that \ttbf{precision} is an attribute of a \ttbf{block}
 %
 \subsection*{Shape}\addcontentsline{toc}{subsection}{Shape}
-A \ttbf{view} defines the \ttbf{shape} of a VSIPL object. A \ttbf{block} is basically an abstract notion of memory storage. It has a \ttbf{depth} and a \ttbf{precision} and provides to a view a linear array of scalar elements.  How the elements are defined on the underlying memory of the compute device is implementation dependent. The \ttbf{view} then places a shape on the block allowing one to access the data as a vector, matrix, or tensor. 
+A \ttbf{view} defines the \ttbf{shape} of a \ttbf{VSIPL} object. A \ttbf{block} is basically an abstract notion of memory storage. It has a \ttbf{depth} and a \ttbf{precision} and provides to a view a linear array of scalar elements.  How the elements are defined on the underlying memory of the compute device is implementation dependent. The \ttbf{view} then places a shape on the block allowing one to access the data as a vector, matrix, or tensor. 
 
-So the \ttbf{shape} is an attribute of the \ttbf{view}. Views are basically index sets.
+So the \ttbf{shape} is an attribute of the \ttbf{view}. A \ttbf{view} is basically an index set on a \ttbf{block}.
 %
 \subsection*{Function Naming for \cvl}\addcontentsline{toc}{subsection}{Function Naming for \cvl}
 \subsubsection*{Depth Affix}\addcontentsline{toc}{subsubsection}{Depth Affix}
@@ -24,11 +24,11 @@ Generally the prefix \ttbf{c} is used to indicate complex and the prefix \ttbf{r
 We also have an \ttbf{mi} depth type which goes in the precision place-holder. This is a matrix index type the scalar of which is defined as a structure in the \cvl{} specification (similar to the way complex is defined).
 %
 \subsubsection*{Precision Affix}\addcontentsline{toc}{subsubsection}{Precision Affix}
-There are many precisions available for use in VSIPL. The ones used in \jv are contained in table \ref{tab:jvsipPrecisions}.  
+There are many precisions available for use in \ttbf{VSIPL}. The ones used in \jv{} are contained in table \ref{tab:jvsipPrecisions}.  
 
 We note that the matrix index has elements that are the same precision as the vector index. The matrix index comes in the precision place when naming but it is much like the complex type and actually indicates a \ttbf{depth}.
 
-The type \ttbf{ue32} is used in the definition of \ttbf{VSIPL} random numbers. There are no blocks defined for it, only a scalar.  For JVSIP this is defined to be an \ilCode{unsigned int} which normally is 32 bits long; but I don't think this is required by the C89 specification. So in general the declaration of this type (in \ttbf{vsip.h}) will be implementation dependent.
+The type \ttbf{ue32} is used in the definition of \ttbf{VSIPL} random numbers. There are no blocks defined for it, only a scalar.  For \jv{} this is defined to be an \ilCode{unsigned int} which normally is 32 bits long; but I don't think this is required by the C89 specification. So in general the declaration of this type (in \ttbf{vsip.h}) will be implementation dependent.
 \input{JvsipPrecisions}
 %
 \subsubsection*{Shape Affix}\addcontentsline{toc}{subsubsection}{Shape Affix}

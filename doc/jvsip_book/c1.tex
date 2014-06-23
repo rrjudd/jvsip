@@ -1,14 +1,14 @@
 \chapter{Introduction To JVSIP}
 \section*{Introduction}\addcontentsline{toc}{section}{Introduction}
-If you are new to VSIPL and find you are confused by the various acronyms, or you find some of the terms here are unfamiliar, try reading the Preface chapter above. It contains information about the origins and meaning of JVSIP and VSIPL and may reduce the confusion factor for the person new to VSIPL.
+If you are new to \ttbf{VSIPL} and find you are confused by the various acronyms, or you find some of the terms here are unfamiliar, try reading the Preface chapter above. It contains information about the origins and meaning of \jv{} and \ttbf{VSIPL} and may reduce the confusion factor for the person new to \ttbf{VSIPL}.
 
 First the big picture.
 
-The \jv distribution contains a C signal processing library implementing (most of) the \ttbf{C VSIPL} specification. \jv also contains a python vsip module encapsulating the C library.  Once the {\ttbf{vsip}} module was done a new module called {\ttbf{vsiputils}} was done to provide function overloading and to reduce the name space.  One of the main purposes of the {\ttbf{vsiputils}} module was to help me to learn python programing; but a lot of work was done there and the module still survives although it may go away in the future.  Eventually I got around to defining python classes and created the \pyjv module.  In this document we mainly treat the python interface defined in the \pyjv module but you should be aware other modules exist.
+The \jv{} distribution contains a C signal processing library implementing (most of) the \ttbf{C VSIPL} specification. \jv{} also contains a python vsip module encapsulating the \ttbf{C VSIP} library.  Once the {\ttbf{vsip}} module was done a new module called {\ttbf{vsiputils}} was done to provide function overloading and to reduce the name space.  One of the main purposes of the {\ttbf{vsiputils}} module was to help me to learn python programing; but a lot of work was done there and the module still survives although it may go away in the future.  Eventually I got around to defining python classes and created the \pyjv{} module.  In this document we mainly treat the python interface defined in the \pyjv{} module but you should be aware other modules exist.
 
 The distribution is available on \href{https://github.com/rrjudd/jvsip?}{{github}}. The distribution only contains source code. You will need a C compiler (supporting C89) to make the C Library. You will need the same C compiler, a python distribution (2.7), and a free open source package called \href{http://www.swig.org}{SWIG} to help encapsulate C code into python modules. The C library and the Python modules are independent except the same C source code is used for both.
 
-Chapter one of this book will contain some basic information and an example in figure \ref{fig:addTwoVectors}. This chapter and chapter three are for a quick start for readers who want to get started programing. Chapter two is mostly a reference chapter containing C and \pyjv functions and usage information.  Chapter four will delve more deeply into the \ttbf{block} and \ttbf{view} structures.  Following chapters cover more complicated functions for signal processing and linear algebra.
+Chapter one of this book will contain some basic information and an example in figure \ref{fig:addTwoVectors}. This chapter and chapter three are for a quick start for readers who want to get started programing. Chapter two is mostly a reference chapter containing C and \pyjv{} functions and usage information.  Chapter four will delve more deeply into the \ttbf{block} and \ttbf{view} structures.  Following chapters cover more complicated functions for signal processing and linear algebra.
 
 %\subsection*{Example {\arabic{cexctr}}:  Add two vectors}
 \clearpage
@@ -16,29 +16,29 @@ Chapter one of this book will contain some basic information and an example in f
 \caption{Add Two Vectors}
 \label{fig:addTwoVectors}
 \setlength{\parskip}{.25cm}
-\begin{minipage}[t][10cm][t]{.45\textwidth}
+\begin{minipage}[t][20cm][t]{.5\textwidth}
 {\begin{center} \bfseries{c VSIPL} \end{center}}\setlength{\parskip}{.25cm}
-\inputminted[linenos=true,resetmargins=true,xleftmargin=.75cm,fontfamily=tt, fontsize= \tiny]{c}{./c_examples/example1.c}
+\inputminted[linenos=true,resetmargins=true,xleftmargin=.75cm,fontfamily=tt, fontsize= \small]{c}{./c_examples/example1.c}
 \end{minipage}
-\begin{minipage}[t][5cm][t]{.45\textwidth}
+\begin{minipage}[t][10cm][t]{.5\textwidth}
 {\begin{center} \bfseries{\pyjv} \end{center}}\setlength{\parskip}{.25cm}
-\inputminted[linenos=true,resetmargins=true,xleftmargin=.75cm,fontfamily=tt,fontsize=\tiny]{python}{./pyJvsip_examples/example1a.py}\setlength{\parskip}{.25cm}
+\inputminted[linenos=true,resetmargins=true,xleftmargin=.75cm,fontfamily=tt,fontsize=\small]{python}{./pyJvsip_examples/example1a.py}\setlength{\parskip}{.25cm}
 {\begin{center} \bfseries{Polymorphism with \pyjv} \end{center}}\setlength{\parskip}{.25cm}
-\inputminted[linenos=true,resetmargins=true,xleftmargin=.75cm,fontfamily=tt,fontsize=\tiny]{python}{./pyJvsip_examples/example1b.py}
+\inputminted[linenos=true,resetmargins=true,xleftmargin=.75cm,fontfamily=tt,fontsize=\small]{python}{./pyJvsip_examples/example1b.py}
 \end{minipage}
 \end{figure}
 
 \section*{\ttbf{C VSIP} versus \pyjv}\addcontentsline{toc}{section}{C VSIP versus \pyjv}
-In this section I will make some comments about the difference between programing with c and the \ttbf{C VSIP} library and programing with \pyjv in the python environment. 
+In this section I will make some comments about the difference between programing with c and the \ttbf{C VSIP} library and programing with \pyjv{} in the python environment. 
 
-The VSIPL library has support mechanisms for blocks and views. The \pyjv module has support for blocks and views. The block and view in \pyjv are instantiations of class definitions. The block and view in c VSIPL are opaque structures created with c VSIPL support functions defined for that purpose. This means a \pyjv view is not the same as a VSIPL view even though I may write about them as if they are the same object. In general VSIPL objects (LUD, FFT, matrix view, etc.) created with create functions are contained inside a \pyjv object as an instance variable.
+The VSIPL library has support mechanisms for blocks and views. The \pyjv{} module has support for blocks and views. The block and view in \pyjv{} are instantiations of class definitions. The block and view in c VSIPL are opaque structures created with c VSIPL support functions defined for that purpose. This means a \pyjv{} view is not the same as a VSIPL view even though I may write about them as if they are the same object. In general VSIPL objects (LUD, FFT, matrix view, etc.) created with create functions are contained inside a \pyjv{} object as an instance variable.
 
-The VSIPL library has a requirement for initialization and finalization.  PyJvsip is written on top of the c VSIPL implementation so we still need to initialize it and finalize it. However for \pyjv I have abstracted that away so that when a \pyjv object is created the initialization of the object checks to see if C VSIPL has been initialized and will call \ilCode{vsip\_init} if it needs to. There is a special class object which keeps track of \pyjv objects and when no \pyjv objects are left then it calls \ilCode{vsip\_finalize}. So \pyjv has no explicit initialization/finalization other than the required python import statement.  
+The VSIPL library has a requirement for initialization and finalization.  PyJvsip is written on top of the c VSIPL implementation so we still need to initialize it and finalize it. However for \pyjv{} I have abstracted that away so that when a \pyjv{} object is created the initialization of the object checks to see if C VSIPL has been initialized and will call \ilCode{vsip\_init} if it needs to. There is a special class object which keeps track of \pyjv{} objects and when no \pyjv{} objects are left then it calls \ilCode{vsip\_finalize}. So \pyjv{} has no explicit initialization/finalization other than the required python import statement.  
 
-To avoid memory leaks there is a requirement for destruction of allocated objects after they are no longer needed in C VSIPL. For deallocation of VSIPL objects contained within a \pyjv object; when a \pyjv object has no reference left the python garbage collector will call the delete method.  This will destroy any c VSIPL objects that have been allocated for use with the \pyjv object. So \pyjv has no explicit destroy functions.
+To avoid memory leaks there is a requirement for destruction of allocated objects after they are no longer needed in C VSIPL. For deallocation of VSIPL objects contained within a \pyjv{} object; when a \pyjv{} object has no reference left the python garbage collector will call the delete method.  This will destroy any c VSIPL objects that have been allocated for use with the \pyjv{} object. So \pyjv{} has no explicit destroy functions.
 
 \subsection*{Polymorphism}\addcontentsline{toc}{subsection}{Polymorphism}
-The encapsulation of c VSIPL using SWIG adds type information to the VSIPL python objects. Using this information, and information added to \pyjv objects, as keys for python dictionaries allows VSIPL to become polymorphic. Most functions and methods in \pyjv determine the underlying functionality using type information extracted from the calling object. Not every combination will necessarily work.  Someplace under the covers everything must be covered.  However it is generally possible to program in \pyjv in a manner so that once the initial type has been chosen the rest of the code is generic even to the point of covering both real and complex. 
+The encapsulation of c VSIPL using SWIG adds type information to the VSIPL python objects. Using this information, and information added to \pyjv{} objects, as keys for python dictionaries allows VSIPL to become polymorphic. Most functions and methods in \pyjv{} determine the underlying functionality using type information extracted from the calling object. Not every combination will necessarily work.  Someplace under the covers everything must be covered.  However it is generally possible to program in \pyjv{} in a manner so that once the initial type has been chosen the rest of the code is generic even to the point of covering both real and complex. 
 \subsubsection*{Example}\addcontentsline{toc}{subsubsection}{Example}
 We show a simple example in figure \ref{fig:addTwoVectors} where we add two vectors both in C VSIPL on the left and in python on the right using \pyjv. 
 
