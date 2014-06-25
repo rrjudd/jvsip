@@ -1,0 +1,22 @@
+\afuncT{permute}{Permute a view}{permute}
+\\\cvsiplh
+\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\newline \hspace*{1.1cm} {
+\ttfamily
+\begin{tabular}[H]{l}
+void vsip\_mpermute\_d ( const vsip\_mview\_d*, const vsip\_permute*, const vsip\_mview\_d* ) ;\\
+void vsip\_mpermute\_f ( const vsip\_mview\_f*, const vsip\_permute*, const vsip\_mview\_f* ) ;\\
+void vsip\_mpermute\_once\_d ( const vsip\_mview\_d*, vsip\_major, const vsip\_vview\_vi*, const vsip\_mview\_d* ) ;\\
+void vsip\_mpermute\_once\_f ( const vsip\_mview\_f*, vsip\_major, const vsip\_vview\_vi*, const vsip\_mview\_f* ) ;\\
+void vsip\_cmpermute\_once\_d ( const vsip\_cmview\_d*, vsip\_major, const vsip\_vview\_vi*, const vsip\_cmview\_d* ) ;\\
+void vsip\_cmpermute\_once\_f ( const vsip\_cmview\_f*, vsip\_major, const vsip\_vview\_vi*, const vsip\_cmview\_f* ) ;\\
+void vsip\_permute\_destroy ( vsip\_permute* ) ;\\
+vsip\_permute* vsip\_mpermute\_create\_d ( vsip\_length, vsip\_length, vsip\_major ) ;\\
+vsip\_permute* vsip\_mpermute\_create\_f ( vsip\_length, vsip\_length, vsip\_major ) ;\\
+vsip\_permute* vsip\_permute\_init ( vsip\_permute*, const vsip\_vview\_vi* ) ;\\
+\end{tabular}
+}\\
+\\\pyjvsiph
+\viewmthd{Yes}{Yes}{NA}{msq=in.meansqval}
+\apyfunc{No}{NA}
+\pyComment{\item{There seemed to be no reason to include this as a separate function for \pyjv}}
