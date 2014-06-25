@@ -1,9 +1,9 @@
-\subsubsection*{Window Functions} \addcontentsline{toc}{subsubsection}{Window Functions}
+\subsubsection*{Window Functions\hspace*{\fill}\hyperlink{SignalProcessing}{(up)}\hypertarget{windowFunctions}{}} \addcontentsline{toc}{subsubsection}{Window Functions}
 When windows were defined in the VSIPL specification they were defined as standalone functions to create a compact block with a vector \ttbf{view} and fill the view with the window coefficients. I think this was an unfortunate way to do it; we would have been better off to first create the \ttbf{view} and then call a function to fill the view with the coefficients.
 
 The method of window creation in C VSIPL makes it difficult to encapsulate windows into the \pyjv methods and functions; and I don't want to create a special class just for windows. Consequently window creation has become part of the class for \pyjv.
 \begin{table}[H]
-\caption{Window Functions\ref{tab:signalProcessingFunctions}}
+\caption{Window Functions}
 \label{tab:windowFunctions}
 \begin{center}
 \begin{tabular}{|l|l|} \hline

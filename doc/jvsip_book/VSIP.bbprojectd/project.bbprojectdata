@@ -4,6 +4,7 @@
 <dict>
 	<key>HierarchyData</key>
 	<array>
+		<string>56DB8E9D-5515-4114-8299-DD1CFFA236FF</string>
 		<string>AA41E9D7-C00C-4BC9-A6AC-6240B1ABAC1A</string>
 		<dict>
 			<key>CollectionID</key>
@@ -13,7 +14,6 @@
 				<string>2739C4D8-A88C-49B2-AB75-5EE5B1357376</string>
 				<string>C21B2294-AFFC-4D31-B08A-3121ACAA1B4B</string>
 				<string>53F6B5EB-FEFE-4BA5-862F-38EF1367BCDD</string>
-				<string>67F2E01D-FF8F-4F09-81EE-DB058B270686</string>
 				<dict>
 					<key>CollectionID</key>
 					<string>6B0DC483-EB3C-43FF-8547-F77C2DCC34A0</string>
@@ -23,6 +23,14 @@
 						<string>D4F0A22C-A8CE-4938-ACBE-5F68DA16BCF4</string>
 						<string>B98568AD-5EBF-4A36-AE82-111445CC93BC</string>
 						<string>23B946AF-31DB-4487-AEA2-5677982D55FC</string>
+					</array>
+				</dict>
+				<dict>
+					<key>CollectionID</key>
+					<string>1D338967-061D-454D-814F-6536A1A07414</string>
+					<key>CollectionItems</key>
+					<array>
+						<string>4294258E-83F4-4004-A753-0674D7A33EA6</string>
 					</array>
 				</dict>
 				<dict>
@@ -67,14 +75,6 @@
 						<string>3C11BA41-C9F3-4423-86B7-37655BFF4120</string>
 						<string>56F6D24A-B8B1-4581-BF9B-B6D3C09AA5A0</string>
 						<string>E9443547-6A2F-495C-9206-C0709CA17BD9</string>
-					</array>
-				</dict>
-				<dict>
-					<key>CollectionID</key>
-					<string>24FE8E4F-B8AB-4EC1-A27E-D5618424F69B</string>
-					<key>CollectionItems</key>
-					<array>
-						<string>3B2642F1-465E-48D7-AF34-CE26803DD96B</string>
 					</array>
 				</dict>
 			</array>
@@ -371,6 +371,15 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>1D338967-061D-454D-814F-6536A1A07414</key>
+		<dict>
+			<key>ItemData</key>
+			<array/>
+			<key>ItemName</key>
+			<string>VSIPRandom</string>
+			<key>ItemType</key>
+			<string>StaticCollection</string>
+		</dict>
 		<key>23B946AF-31DB-4487-AEA2-5677982D55FC</key>
 		<dict>
 			<key>ItemData</key>
@@ -425,15 +434,6 @@
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
 			<true/>
-		</dict>
-		<key>24FE8E4F-B8AB-4EC1-A27E-D5618424F69B</key>
-		<dict>
-			<key>ItemData</key>
-			<array/>
-			<key>ItemName</key>
-			<string>VSIPRandom</string>
-			<key>ItemType</key>
-			<string>StaticCollection</string>
 		</dict>
 		<key>2739C4D8-A88C-49B2-AB75-5EE5B1357376</key>
 		<dict>
@@ -612,63 +612,6 @@
 			<key>ItemType</key>
 			<string>StaticCollection</string>
 		</dict>
-		<key>3B2642F1-465E-48D7-AF34-CE26803DD96B</key>
-		<dict>
-			<key>ItemData</key>
-			<dict>
-				<key>BookmarkData</key>
-				<data>
-				Ym9va0gEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
-				AAAAAAAAAAAAAAAAAAAAOAMAAAUAAAABAQAAVXNlcnMA
-				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
-				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
-				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAAIQAAAAEBAABW
-				U0lQMXAzUmFuZG9tTnVtYmVyR2VuZXJhdGlvbi50ZXgA
-				AAAgAAAAAQYAAAQAAAAUAAAAIAAAADAAAAA8AAAATAAA
-				AFgAAABsAAAACAAAAAQDAAApEgIAAAAAAAgAAAAEAwAA
-				scAFAAAAAAAIAAAABAMAAFRCBgAAAAAACAAAAAQDAABW
-				QgYAAAAAAAgAAAAEAwAAcUIGAAAAAAAIAAAABAMAAO5N
-				BgAAAAAACAAAAAQDAADMbU8AAAAAAAgAAAAEAwAAx85V
-				AAAAAAAgAAAAAQYAAMAAAADQAAAA4AAAAPAAAAAAAQAA
-				EAEAACABAAAwAQAACAAAAAAEAABBuUHz9gAAABgAAAAB
-				AgAAAQAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAEF
-				AAAEAAAAAwMAAAEAAAAEAAAAAwMAAAYAAAAEAAAAAwMA
-				APUBAAAMAAAAAQEAAE1hY2ludG9zaCBIRAgAAAAEAwAA
-				ACCIPToAAAAIAAAAAAQAAEG3nrgSAAAAJAAAAAEBAAAw
-				MzMxNDQxRS1EMzNGLTM3RjItQTU1RS03MTcyRENEOTlB
-				MEMYAAAAAQIAAIEAAAABAAgA7xcAAAEACAAAAAAAAAAA
-				AAEAAAABAQAALwAAAN0AAAABAgAAOWU4YTg0NWFiMWJk
-				ZTQ5ZDczYmRlNGRkYTgyNzNmMTMzMTIzM2I5NjswMDAw
-				MDAwMDswMDAwMDAwMDswMDAwMDAwMDAwMDAwMDIwO2Nv
-				bS5hcHBsZS5hcHAtc2FuZGJveC5yZWFkLXdyaXRlOzAw
-				MDAwMDAxOzAxMDAwMDAyOzAwMDAwMDAwMDA1NWNlYzc7
-				L3VzZXJzL2p1ZGQvbG9jYWwvc3JjL2p2c2lwL2RvYy9q
-				dnNpcF9ib29rL3ZzaXAxcDNyYW5kb21udW1iZXJnZW5l
-				cmF0aW9uLnRleAAAAADYAAAA/v///wEAAAAAAAAAEQAA
-				AAQQAACYAAAAAAAAAAUQAABAAQAAAAAAABAQAAB4AQAA
-				AAAAAEAQAABoAQAAAAAAAFUQAACgAQAAAAAAAFYQAACY
-				AQAAAAAAAAIgAABEAgAAAAAAABAgAADEAQAAAAAAABEg
-				AAD4AQAAAAAAABIgAADYAQAAAAAAABMgAADoAQAAAAAA
-				ACAgAAAkAgAAAAAAADAgAACYAQAAAAAAAAHAAACsAQAA
-				AAAAABHAAAAUAAAAAAAAABLAAAC4AQAAAAAAAIDwAABQ
-				AgAAAAAAAA==
-				</data>
-				<key>FileURL</key>
-				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/VSIP1p3RandomNumberGeneration.tex</string>
-				<key>RelativePath</key>
-				<string>./VSIP1p3RandomNumberGeneration.tex</string>
-				<key>TypeID</key>
-				<string>_CFileLocator</string>
-				<key>Version</key>
-				<integer>1</integer>
-			</dict>
-			<key>ItemName</key>
-			<string>VSIP1p3RandomNumberGeneration.tex</string>
-			<key>ItemType</key>
-			<string>FileReference</string>
-			<key>UserOverrideItemName</key>
-			<true/>
-		</dict>
 		<key>3C11BA41-C9F3-4423-86B7-37655BFF4120</key>
 		<dict>
 			<key>ItemData</key>
@@ -721,6 +664,63 @@
 			</dict>
 			<key>ItemName</key>
 			<string>SymmetricPositiveDefinitSolvers.tex</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>4294258E-83F4-4004-A753-0674D7A33EA6</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va0gEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAOAMAAAUAAAABAQAAVXNlcnMA
+				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
+				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
+				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAAIQAAAAEBAABW
+				U0lQMXAzUmFuZG9tTnVtYmVyR2VuZXJhdGlvbi50ZXgA
+				AAAgAAAAAQYAAAQAAAAUAAAAIAAAADAAAAA8AAAATAAA
+				AFgAAABsAAAACAAAAAQDAAApEgIAAAAAAAgAAAAEAwAA
+				scAFAAAAAAAIAAAABAMAAFRCBgAAAAAACAAAAAQDAABW
+				QgYAAAAAAAgAAAAEAwAAcUIGAAAAAAAIAAAABAMAAO5N
+				BgAAAAAACAAAAAQDAADMbU8AAAAAAAgAAAAEAwAAx85V
+				AAAAAAAgAAAAAQYAAMAAAADQAAAA4AAAAPAAAAAAAQAA
+				EAEAACABAAAwAQAACAAAAAAEAABBuUHz9gAAABgAAAAB
+				AgAAAQAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAEF
+				AAAEAAAAAwMAAAEAAAAEAAAAAwMAAAYAAAAEAAAAAwMA
+				APUBAAAMAAAAAQEAAE1hY2ludG9zaCBIRAgAAAAEAwAA
+				ACCIPToAAAAIAAAAAAQAAEG3nrgSAAAAJAAAAAEBAAAw
+				MzMxNDQxRS1EMzNGLTM3RjItQTU1RS03MTcyRENEOTlB
+				MEMYAAAAAQIAAIEAAAABAAgA7xcAAAEACAAAAAAAAAAA
+				AAEAAAABAQAALwAAAN0AAAABAgAAOWU4YTg0NWFiMWJk
+				ZTQ5ZDczYmRlNGRkYTgyNzNmMTMzMTIzM2I5NjswMDAw
+				MDAwMDswMDAwMDAwMDswMDAwMDAwMDAwMDAwMDIwO2Nv
+				bS5hcHBsZS5hcHAtc2FuZGJveC5yZWFkLXdyaXRlOzAw
+				MDAwMDAxOzAxMDAwMDAyOzAwMDAwMDAwMDA1NWNlYzc7
+				L3VzZXJzL2p1ZGQvbG9jYWwvc3JjL2p2c2lwL2RvYy9q
+				dnNpcF9ib29rL3ZzaXAxcDNyYW5kb21udW1iZXJnZW5l
+				cmF0aW9uLnRleAAAAADYAAAA/v///wEAAAAAAAAAEQAA
+				AAQQAACYAAAAAAAAAAUQAABAAQAAAAAAABAQAAB4AQAA
+				AAAAAEAQAABoAQAAAAAAAFUQAACgAQAAAAAAAFYQAACY
+				AQAAAAAAAAIgAABEAgAAAAAAABAgAADEAQAAAAAAABEg
+				AAD4AQAAAAAAABIgAADYAQAAAAAAABMgAADoAQAAAAAA
+				ACAgAAAkAgAAAAAAADAgAACYAQAAAAAAAAHAAACsAQAA
+				AAAAABHAAAAUAAAAAAAAABLAAAC4AQAAAAAAAIDwAABQ
+				AgAAAAAAAA==
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/VSIP1p3RandomNumberGeneration.tex</string>
+				<key>RelativePath</key>
+				<string>./VSIP1p3RandomNumberGeneration.tex</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>VSIP1p3RandomNumberGeneration.tex</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -894,6 +894,62 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>56DB8E9D-5515-4114-8299-DD1CFFA236FF</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vaygEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAGAMAAAUAAAABAQAAVXNlcnMA
+				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
+				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
+				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAAEwAAAAEBAABW
+				U0lQMXAzQWRkZW5kdW0udGV4ACAAAAABBgAABAAAABQA
+				AAAgAAAAMAAAADwAAABMAAAAWAAAAGwAAAAIAAAABAMA
+				ACkSAgAAAAAACAAAAAQDAACxwAUAAAAAAAgAAAAEAwAA
+				VEIGAAAAAAAIAAAABAMAAFZCBgAAAAAACAAAAAQDAABx
+				QgYAAAAAAAgAAAAEAwAA7k0GAAAAAAAIAAAABAMAAMxt
+				TwAAAAAACAAAAAQDAAD64FUAAAAAACAAAAABBgAAsAAA
+				AMAAAADQAAAA4AAAAPAAAAAAAQAAEAEAACABAAAIAAAA
+				AAQAAEG5Q1TeAAAAGAAAAAECAAABAAAAAAAAAA8AAAAA
+				AAAAAAAAAAAAAAAAAAAAAQUAAAQAAAADAwAAAQAAAAQA
+				AAADAwAABgAAAAQAAAADAwAA9QEAAAwAAAABAQAATWFj
+				aW50b3NoIEhECAAAAAQDAAAAIIg9OgAAAAgAAAAABAAA
+				QbeeuBIAAAAkAAAAAQEAADAzMzE0NDFFLUQzM0YtMzdG
+				Mi1BNTVFLTcxNzJEQ0Q5OUEwQxgAAAABAgAAgQAAAAEA
+				CADvFwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAAzwAA
+				AAECAABlNGQyMzY2OTc0OWEyMjFhMjdiMzM0MDZmMjFh
+				YjA4ZDAwNjE2YzRhOzAwMDAwMDAwOzAwMDAwMDAwOzAw
+				MDAwMDAwMDAwMDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5k
+				Ym94LnJlYWQtd3JpdGU7MDAwMDAwMDE7MDEwMDAwMDI7
+				MDAwMDAwMDAwMDU1ZTBmYTsvdXNlcnMvanVkZC9sb2Nh
+				bC9zcmMvanZzaXAvZG9jL2p2c2lwX2Jvb2svdnNpcDFw
+				M2FkZGVuZHVtLnRleAAA2AAAAP7///8BAAAAAAAAABEA
+				AAAEEAAAiAAAAAAAAAAFEAAAMAEAAAAAAAAQEAAAaAEA
+				AAAAAABAEAAAWAEAAAAAAABVEAAAkAEAAAAAAABWEAAA
+				iAEAAAAAAAACIAAANAIAAAAAAAAQIAAAtAEAAAAAAAAR
+				IAAA6AEAAAAAAAASIAAAyAEAAAAAAAATIAAA2AEAAAAA
+				AAAgIAAAFAIAAAAAAAAwIAAAiAEAAAAAAAABwAAAnAEA
+				AAAAAAARwAAAFAAAAAAAAAASwAAAqAEAAAAAAACA8AAA
+				QAIAAAAAAAA=
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/VSIP1p3Addendum.tex</string>
+				<key>RelativePath</key>
+				<string>./VSIP1p3Addendum.tex</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>VSIP1p3Addendum.tex</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>56F6D24A-B8B1-4581-BF9B-B6D3C09AA5A0</key>
 		<dict>
 			<key>ItemData</key>
@@ -1057,62 +1113,6 @@
 			</dict>
 			<key>ItemName</key>
 			<string>TernaryOperations.tex</string>
-			<key>ItemType</key>
-			<string>FileReference</string>
-			<key>UserOverrideItemName</key>
-			<true/>
-		</dict>
-		<key>67F2E01D-FF8F-4F09-81EE-DB058B270686</key>
-		<dict>
-			<key>ItemData</key>
-			<dict>
-				<key>BookmarkData</key>
-				<data>
-				Ym9vaygEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
-				AAAAAAAAAAAAAAAAAAAAGAMAAAUAAAABAQAAVXNlcnMA
-				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
-				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
-				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAAEwAAAAEBAABW
-				U0lQMXAzQWRkZW5kdW0udGV4ACAAAAABBgAABAAAABQA
-				AAAgAAAAMAAAADwAAABMAAAAWAAAAGwAAAAIAAAABAMA
-				ACkSAgAAAAAACAAAAAQDAACxwAUAAAAAAAgAAAAEAwAA
-				VEIGAAAAAAAIAAAABAMAAFZCBgAAAAAACAAAAAQDAABx
-				QgYAAAAAAAgAAAAEAwAA7k0GAAAAAAAIAAAABAMAAMxt
-				TwAAAAAACAAAAAQDAAD64FUAAAAAACAAAAABBgAAsAAA
-				AMAAAADQAAAA4AAAAPAAAAAAAQAAEAEAACABAAAIAAAA
-				AAQAAEG5Q1TeAAAAGAAAAAECAAABAAAAAAAAAA8AAAAA
-				AAAAAAAAAAAAAAAAAAAAAQUAAAQAAAADAwAAAQAAAAQA
-				AAADAwAABgAAAAQAAAADAwAA9QEAAAwAAAABAQAATWFj
-				aW50b3NoIEhECAAAAAQDAAAAIIg9OgAAAAgAAAAABAAA
-				QbeeuBIAAAAkAAAAAQEAADAzMzE0NDFFLUQzM0YtMzdG
-				Mi1BNTVFLTcxNzJEQ0Q5OUEwQxgAAAABAgAAgQAAAAEA
-				CADvFwAAAQAIAAAAAAAAAAAAAQAAAAEBAAAvAAAAzwAA
-				AAECAABlNGQyMzY2OTc0OWEyMjFhMjdiMzM0MDZmMjFh
-				YjA4ZDAwNjE2YzRhOzAwMDAwMDAwOzAwMDAwMDAwOzAw
-				MDAwMDAwMDAwMDAwMjA7Y29tLmFwcGxlLmFwcC1zYW5k
-				Ym94LnJlYWQtd3JpdGU7MDAwMDAwMDE7MDEwMDAwMDI7
-				MDAwMDAwMDAwMDU1ZTBmYTsvdXNlcnMvanVkZC9sb2Nh
-				bC9zcmMvanZzaXAvZG9jL2p2c2lwX2Jvb2svdnNpcDFw
-				M2FkZGVuZHVtLnRleAAA2AAAAP7///8BAAAAAAAAABEA
-				AAAEEAAAiAAAAAAAAAAFEAAAMAEAAAAAAAAQEAAAaAEA
-				AAAAAABAEAAAWAEAAAAAAABVEAAAkAEAAAAAAABWEAAA
-				iAEAAAAAAAACIAAANAIAAAAAAAAQIAAAtAEAAAAAAAAR
-				IAAA6AEAAAAAAAASIAAAyAEAAAAAAAATIAAA2AEAAAAA
-				AAAgIAAAFAIAAAAAAAAwIAAAiAEAAAAAAAABwAAAnAEA
-				AAAAAAARwAAAFAAAAAAAAAASwAAAqAEAAAAAAACA8AAA
-				QAIAAAAAAAA=
-				</data>
-				<key>FileURL</key>
-				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/VSIP1p3Addendum.tex</string>
-				<key>RelativePath</key>
-				<string>./VSIP1p3Addendum.tex</string>
-				<key>TypeID</key>
-				<string>_CFileLocator</string>
-				<key>Version</key>
-				<integer>1</integer>
-			</dict>
-			<key>ItemName</key>
-			<string>VSIP1p3Addendum.tex</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
