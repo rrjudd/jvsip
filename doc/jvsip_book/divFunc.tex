@@ -1,79 +1,78 @@
 \afuncT{div}{Divide two \ttbf{view}s, a scalar and a \ttbf{view} or a \ttbf{view} and a scalar. A binary operation.}{binaryOperations}
 \\\cvsiplh
 \newline
-\hspace*{1cm}\parbox{.9\textwidth}{\textrm{There are many combinations of divide available in \jv{}. The specification provides the normal \ttbf{view} divides of complex-complex and real-real types; but also provides real-complex and complex-real divides as well as mixed scalar -\ttbf{view} and \ttbf{view}-scalar devides. Consequently the listed available functions are broken up into several tables below.}}\vspace{.1cm}
+\hspace*{1cm}\parbox{.9\textwidth}{\textrm{There are many combinations of divide available in \jv{}. The specification provides the normal \ttbf{view} divides of complex-complex and real-real types; but also provides real-complex and complex-real divides as well as mixed \ttbf{scalar-view} and \ttbf{view-scalar} divides. Consequently the listed available functions are broken up into several tables below.}
+}\vspace{.1cm}
 \newline
 {\hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions } \newline}
 \hspace*{1cm}
 \texttt{
 \begin{tabular}[H]{l}
 \multicolumn{1}{c}{\rmfamily \bfseries Scalar Functions}\\ \hline
-vsip\_cscalar\_d vsip\_cdiv\_d(\\*\hspace{1cm}vsip\_cscalar\_d, vsip\_cscalar\_d);\\
-vsip\_cscalar\_d vsip\_crdiv\_d(\\*\hspace{1cm}vsip\_cscalar\_d, vsip\_scalar\_d);\\
-vsip\_cscalar\_f vsip\_cdiv\_f(\\*\hspace{1cm}vsip\_cscalar\_f, vsip\_cscalar\_f);\\
-vsip\_cscalar\_f vsip\_crdiv\_f(\\*\hspace{1cm}vsip\_cscalar\_f, vsip\_scalar\_f);\\
-\end{tabular}
+vsip\_cscalar\_d vsip\_cdiv\_d(vsip\_cscalar\_d, vsip\_cscalar\_d);\\
+vsip\_cscalar\_d vsip\_crdiv\_d(vsip\_cscalar\_d, vsip\_scalar\_d);\\
+vsip\_cscalar\_f vsip\_cdiv\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\\
+vsip\_cscalar\_f vsip\_crdiv\_f(vsip\_cscalar\_f, vsip\_scalar\_f);\\
+\end{tabular}\\
 }
-\clearpage
 \hspace*{1cm}\texttt{
 \begin{tabular}[H]{l}
 \multicolumn{1}{c}{\rmfamily \bfseries Normal View Functions}\\ \hline
-void vsip\_vdiv\_d(\\*\hspace{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*,\\*\hspace{1cm}const vsip\_vview\_d*);\\
-void vsip\_vdiv\_f(\\*\hspace{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*,\\*\hspace{1cm}const vsip\_vview\_f*);\\
-void vsip\_mdiv\_d(\\*\hspace{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*,\\*\hspace{1cm}const vsip\_mview\_d*);\\
-void vsip\_mdiv\_f(\\*\hspace{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*,\\*\hspace{1cm}const vsip\_mview\_f*);\\
-void vsip\_cvdiv\_d(\\*\hspace{1cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*,\\*\hspace{1cm}const vsip\_cvview\_d*);\\
-void vsip\_cvdiv\_f(\\*\hspace{1cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*,\\*\hspace{1cm}const vsip\_cvview\_f*);\\
-void vsip\_cmdiv\_d(\\*\hspace{1cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*,\\*\hspace{1cm}const vsip\_cmview\_d*);\\
-void vsip\_cmdiv\_f(\\*\hspace{1cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*,\\*\hspace{1cm}const vsip\_cmview\_f*);\\
-\end{tabular}
+void vsip\_vdiv\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*,const vsip\_vview\_d*);\\
+void vsip\_vdiv\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*,const vsip\_vview\_f*);\\
+void vsip\_mdiv\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*,const vsip\_mview\_d*);\\
+void vsip\_mdiv\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*,const vsip\_mview\_f*);\\
+void vsip\_cvdiv\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*,const vsip\_cvview\_d*);\\
+void vsip\_cvdiv\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*,const vsip\_cvview\_f*);\\
+void vsip\_cmdiv\_d(\\*\hspace*{1cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*,const vsip\_cmview\_d*);\\
+void vsip\_cmdiv\_f(\\*\hspace*{1cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\\
+\end{tabular}\\
 }
-\clearpage
 \hspace*{1cm}\texttt{
 \begin{tabular}[H]{l}
 \multicolumn{1}{c}{\rmfamily \bfseries Mixed Depth View Functions}\\ \hline
-void vsip\_rcvdiv\_d(\\*\hspace{1cm}const vsip\_vview\_d*, const vsip\_cvview\_d*,\\*\hspace{1cm}const vsip\_cvview\_d*);\\
-void vsip\_rcvdiv\_f(\\*\hspace{1cm}const vsip\_vview\_f*, const vsip\_cvview\_f*,\\*\hspace{1cm}const vsip\_cvview\_f*);\\
-void vsip\_crvdiv\_d(\\*\hspace{1cm}const vsip\_cvview\_d*, const vsip\_vview\_d*,\\*\hspace{1cm}const vsip\_cvview\_d*);\\
-void vsip\_crvdiv\_f(\\*\hspace{1cm}const vsip\_cvview\_f*, const vsip\_vview\_f*,\\*\hspace{1cm}const vsip\_cvview\_f*);\\
-void vsip\_rcmdiv\_d(\\*\hspace{1cm}const vsip\_mview\_d*, const vsip\_cmview\_d*,\\*\hspace{1cm}const vsip\_cmview\_d*);\\
-void vsip\_rcmdiv\_f(\\*\hspace{1cm}const vsip\_mview\_f*, const vsip\_cmview\_f*,\\*\hspace{1cm}const vsip\_cmview\_f*);\\
-void vsip\_crmdiv\_d(\\*\hspace{1cm}const vsip\_cmview\_d*, const vsip\_mview\_d*,\\*\hspace{1cm}const vsip\_cmview\_d*);\\
-void vsip\_crmdiv\_f(\\*\hspace{1cm}const vsip\_cmview\_f*, const vsip\_mview\_f*,\\*\hspace{1cm}const vsip\_cmview\_f*);\\
-\end{tabular}
+void vsip\_rcvdiv\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_cvview\_d*,const vsip\_cvview\_d*);\\
+void vsip\_rcvdiv\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_cvview\_f*,const vsip\_cvview\_f*);\\
+void vsip\_crvdiv\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, const vsip\_vview\_d*,const vsip\_cvview\_d*);\\
+void vsip\_crvdiv\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_vview\_f*,const vsip\_cvview\_f*);\\
+void vsip\_rcmdiv\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_cmview\_d*,const vsip\_cmview\_d*);\\
+void vsip\_rcmdiv\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\\
+void vsip\_crmdiv\_d(\\*\hspace*{1cm}const vsip\_cmview\_d*, const vsip\_mview\_d*,const vsip\_cmview\_d*);\\
+void vsip\_crmdiv\_f(\\*\hspace*{1cm}const vsip\_cmview\_f*, const vsip\_mview\_f*,const vsip\_cmview\_f*);\\
+\end{tabular}\\
 }
-\newline\hspace*{1cm}\texttt{
+\\\hspace*{1cm}\texttt{
 \begin{tabular}[H]{l}
 \multicolumn{1}{c}{\rmfamily \bfseries View Divide Scalar Functions}\\ \hline
-void vsip\_vsdiv\_d(\\*\hspace{1cm}const vsip\_vview\_d*, vsip\_scalar\_d,\\*\hspace{1cm}const vsip\_vview\_d*);\\
-void vsip\_vsdiv\_f(\\*\hspace{1cm}const vsip\_vview\_f*, vsip\_scalar\_f,\\*\hspace{1cm}const vsip\_vview\_f*);\\
-void vsip\_cvrsdiv\_d(\\*\hspace{1cm}const vsip\_cvview\_d*, vsip\_scalar\_d,\\*\hspace{1cm}const vsip\_cvview\_d*);\\
-void vsip\_cvrsdiv\_f(\\*\hspace{1cm}const vsip\_cvview\_f*, vsip\_scalar\_f,\\*\hspace{1cm}const vsip\_cvview\_f*);\\
-void vsip\_msdiv\_d(\\*\hspace{1cm}const vsip\_mview\_d*, vsip\_scalar\_d,\\*\hspace{1cm}const vsip\_mview\_d*);\\
-void vsip\_msdiv\_f(\\*\hspace{1cm}const vsip\_mview\_f*, vsip\_scalar\_f,\\*\hspace{1cm}const vsip\_mview\_f*);\\
-void vsip\_cmrsdiv\_d(\\*\hspace{1cm}const vsip\_cmview\_d*, vsip\_scalar\_d,\\*\hspace{1cm}const vsip\_cmview\_d*);\\
-void vsip\_cmrsdiv\_f(\\*\hspace{1cm}const vsip\_cmview\_f*, vsip\_scalar\_f,\\*\hspace{1cm}const vsip\_cmview\_f*);\\
-\end{tabular}
+void vsip\_vsdiv\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, vsip\_scalar\_d,const vsip\_vview\_d*);\\
+void vsip\_vsdiv\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, vsip\_scalar\_f,const vsip\_vview\_f*);\\
+void vsip\_cvrsdiv\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, vsip\_scalar\_d,const vsip\_cvview\_d*);\\
+void vsip\_cvrsdiv\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, vsip\_scalar\_f,const vsip\_cvview\_f*);\\
+void vsip\_msdiv\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, vsip\_scalar\_d,const vsip\_mview\_d*);\\
+void vsip\_msdiv\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, vsip\_scalar\_f,const vsip\_mview\_f*);\\
+void vsip\_cmrsdiv\_d(\\*\hspace*{1cm}const vsip\_cmview\_d*, vsip\_scalar\_d,const vsip\_cmview\_d*);\\
+void vsip\_cmrsdiv\_f(\\*\hspace*{1cm}const vsip\_cmview\_f*, vsip\_scalar\_f,const vsip\_cmview\_f*);\\
+\end{tabular}\\
 }
-\newline\hspace*{1cm}\texttt{
+\\\hspace*{1cm}\texttt{
 \begin{tabular}[H]{l}
 \multicolumn{1}{c}{\rmfamily \bfseries Scalar Divide View Functions}\\ \hline
-void vsip\_svdiv\_d(\\*\hspace{1cm}vsip\_scalar\_d, const vsip\_vview\_d*,\\*\hspace{1cm}const vsip\_vview\_d*);\\
-void vsip\_svdiv\_f(\\*\hspace{1cm}vsip\_scalar\_f, const vsip\_vview\_f*,\\*\hspace{1cm}const vsip\_vview\_f*);\\
-void vsip\_rscvdiv\_d(\\*\hspace{1cm}vsip\_scalar\_d, const vsip\_cvview\_d*,\\*\hspace{1cm}const vsip\_cvview\_d*);\\
-void vsip\_rscvdiv\_f(\\*\hspace{1cm}vsip\_scalar\_f, const vsip\_cvview\_f*,\\*\hspace{1cm}const vsip\_cvview\_f*);\\
-void vsip\_csvdiv\_d(\\*\hspace{1cm}vsip\_cscalar\_d, const vsip\_cvview\_d*,\\*\hspace{1cm}const vsip\_cvview\_d*);\\
-void vsip\_csvdiv\_f(\\*\hspace{1cm}vsip\_cscalar\_f, const vsip\_cvview\_f*,\\*\hspace{1cm}const vsip\_cvview\_f*);\\
-void vsip\_smdiv\_d(\\*\hspace{1cm}vsip\_scalar\_d, const vsip\_mview\_d*,\\*\hspace{1cm}const vsip\_mview\_d*);\\
-void vsip\_smdiv\_f(\\*\hspace{1cm}vsip\_scalar\_f, const vsip\_mview\_f*,\\*\hspace{1cm}const vsip\_mview\_f*);\\
-void vsip\_rscmdiv\_d(\\*\hspace{1cm}vsip\_scalar\_d, const vsip\_cmview\_d*,\\*\hspace{1cm}const vsip\_cmview\_d*);\\
-void vsip\_rscmdiv\_f(\\*\hspace{1cm}vsip\_scalar\_f, const vsip\_cmview\_f*,\\*\hspace{1cm}const vsip\_cmview\_f*);\\
-void vsip\_csmdiv\_d(\\*\hspace{1cm}vsip\_cscalar\_d, const vsip\_cmview\_d*,\\*\hspace{1cm}const vsip\_cmview\_d*);\\
-void vsip\_csmdiv\_f(\\*\hspace{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*,\\*\hspace{1cm}const vsip\_cmview\_f*);\\
-\end{tabular}
+void vsip\_svdiv\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_vview\_d*,const vsip\_vview\_d*);\\
+void vsip\_svdiv\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_vview\_f*,const vsip\_vview\_f*);\\
+void vsip\_rscvdiv\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cvview\_d*,const vsip\_cvview\_d*);\\
+void vsip\_rscvdiv\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cvview\_f*,const vsip\_cvview\_f*);\\
+void vsip\_csvdiv\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cvview\_d*,const vsip\_cvview\_d*);\\
+void vsip\_csvdiv\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cvview\_f*,const vsip\_cvview\_f*);\\
+void vsip\_smdiv\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_mview\_d*,const vsip\_mview\_d*);\\
+void vsip\_smdiv\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_mview\_f*,const vsip\_mview\_f*);\\
+void vsip\_rscmdiv\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cmview\_d*,const vsip\_cmview\_d*);\\
+void vsip\_rscmdiv\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\\
+void vsip\_csmdiv\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cmview\_d*,const vsip\_cmview\_d*);\\
+void vsip\_csmdiv\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\\
+\end{tabular}\\
 }
 \\\pyjvsiph
-\newline\hspace*{.8cm}{\textbf{View Method}\\
+\\\hspace*{.8cm}{\textbf{View Method}\\
 \hspace*{1.1cm}Overloaded on divide operator.\\
 \hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\ttbf{a /= b; a /= 2}\\*
@@ -81,3 +80,11 @@ void vsip\_csmdiv\_f(\\*\hspace{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*,\\*
 \hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\ttbf{c = a / b; d = 2 / c; e = c / 2}\\*
 \hspace*{1.5cm}\parbox{.85\textwidth}{\ttbf{view c}, \ttbf{view d}, and \ttbf{view e}  created and filled with result of operation.}\\
+\\\hspace*{.8cm}{\textbf{Function}\vspace{.2cm}}\\
+\hspace*{1.1cm}\parbox{.9\textwidth}{The divide function works the same as C VSIPL except a convenience copy of the output view will return.\vspace{.2cm}}\\
+\hspace*{1.1cm}\textbf{Example: }\ttbf{c = div(a,b,c)}\\
+\hspace*{1.5cm}Variables \ttbf{a} and \ttbf{b} are both views or \ttbf{a} OR \ttbf{b} may be a scalar.\\
+\hspace*{1.5cm}Variable \ttbf{c} is a compliant output \ttbf{view}.\\
+\hspace*{1.5cm}In place means \ttbf{c} is the same as \ttbf{a} or \ttbf{b}.\\
+\hspace*{1.5cm}The function will complain if input variable combination is not supported.\\
+

@@ -1,43 +1,57 @@
-\subsection*{VSIPL Addendum\hspace*{\fill}\hyperlink{VSIPspecHead}{(up)}\hypertarget{Addendum}{}}\addcontentsline{toc}{subsection}{VSIPL Addendum}
-Editing the VSIPL specification was becoming difficult because of its length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in a addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.
+\subsection*{Interpolation, Permutation, and Sorting (VSIP Addendum) \hspace*{\fill}\hyperlink{VSIPspecHead}{(up)}\hypertarget{Addendum}{}}\addcontentsline{toc}{subsection}{Interpolation, Permutation, and Sorting}
+Editing the VSIPL specification was becoming difficult because of its length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in an addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.\\
+The new functions in the addendum support interpolation, permutation and data sorting.
 \subsubsection*{VSIPL Interpolation}\addcontentsline{toc}{subsubsection}{VSIPL Interpolation}
-typedef struct vsip_splineattributes_f vsip_spline_f;
-typedef struct vsip_splineattributes_d vsip_spline_d; 
-void vsip_minterp_spline_d ( const vsip_vview_d *, const vsip_mview_d *, vsip_spline_d *, vsip_major, const vsip_vview_d *, const vsip_mview_d * ) ;
-void vsip_minterp_spline_f ( const vsip_vview_f *, const vsip_mview_f *, vsip_spline_f *, vsip_major, const vsip_vview_f *, const vsip_mview_f * ) ;
-void vsip_spline_destroy_d ( vsip_spline_d * ) ;
-void vsip_spline_destroy_f ( vsip_spline_f * ) ;
-void vsip_vinterp_spline_d ( const vsip_vview_d *, const vsip_vview_d *, vsip_spline_d *, const vsip_vview_d *, const vsip_vview_d * ) ;
-void vsip_vinterp_spline_f ( const vsip_vview_f *, const vsip_vview_f *, vsip_spline_f *, const vsip_vview_f *, const vsip_vview_f * ) ;
-vsip_spline_d* vsip_spline_create_d ( vsip_length ) ;
-vsip_spline_f* vsip_spline_create_f ( vsip_length ) ;
-mbProR:jvsip_book judd$ grep nearest ../../include/vsip.h
-void vsip_minterp_nearest_f ( const vsip_vview_f *, const vsip_mview_f *, vsip_major, const vsip_vview_f *, const vsip_mview_f * ) ;
-void vsip_vinterp_nearest_f ( const vsip_vview_f *, const vsip_vview_f *, const vsip_vview_f *, const vsip_vview_f * ) ;
-void vsip_vinterp_nearest_d( const vsip_vview_d *, const vsip_vview_d *, const vsip_vview_d *, const vsip_vview_d *);
-void vsip_minterp_nearest_d ( const vsip_vview_d*, const vsip_mview_d*, vsip_major, const vsip_vview_d*, const vsip_mview_d* ) ;
-mbProR:jvsip_book judd$ grep linear ../../include/vsip.h
-void vsip_minterp_linear_f ( const vsip_vview_f *, const vsip_mview_f *, vsip_major, const vsip_vview_f *, const vsip_mview_f * ) ;
-void vsip_vinterp_linear_f ( const vsip_vview_f *, const vsip_vview_f *, const vsip_vview_f *, const vsip_vview_f * ) ;
-void vsip_minterp_linear_d ( const vsip_vview_d *, const vsip_mview_d *, vsip_major, const vsip_vview_d *, const vsip_mview_d * ) ;
-void vsip_vinterp_linear_d( const vsip_vview_d *, const vsip_vview_d *, const vsip_vview_d *, const vsip_vview_d *);
+\begin{table}[H]
+\caption{Initialization \ref{tab:vsiplAPISupport}}
+\label{tab:initSupport}
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{spline} & Cubic spline interpolation\\
+\hlnkFunc{nearest} & Interpolate to the nearest point\\
+\hlnkFunc{linear} & Linear Interpolation\\
+\hline\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+typedef struct vsip\_splineattributes\_f vsip\_spline\_f;
+typedef struct vsip\_splineattributes\_d vsip\_spline\_d; 
+void vsip\_minterp\_spline\_d ( const vsip\_vview\_d *, const vsip\_mview\_d *, vsip\_spline\_d *, vsip\_major, const vsip\_vview\_d *, const vsip\_mview\_d * ) ;
+void vsip\_minterp\_spline\_f ( const vsip\_vview\_f *, const vsip\_mview\_f *, vsip\_spline\_f *, vsip\_major, const vsip\_vview\_f *, const vsip\_mview\_f * ) ;
+void vsip\_spline\_destroy\_d ( vsip\_spline\_d * ) ;
+void vsip\_spline\_destroy\_f ( vsip\_spline\_f * ) ;
+void vsip\_vinterp\_spline\_d ( const vsip\_vview\_d *, const vsip\_vview\_d *, vsip\_spline\_d *, const vsip\_vview\_d *, const vsip\_vview\_d * ) ;
+void vsip\_vinterp\_spline\_f ( const vsip\_vview\_f *, const vsip\_vview\_f *, vsip\_spline\_f *, const vsip\_vview\_f *, const vsip\_vview\_f * ) ;
+vsip\_spline\_d* vsip\_spline\_create\_d ( vsip\_length ) ;
+vsip\_spline\_f* vsip\_spline\_create\_f ( vsip\_length ) ;
+
+void vsip\_minterp\_nearest\_f ( const vsip\_vview\_f *, const vsip\_mview\_f *, vsip\_major, const vsip\_vview\_f *, const vsip\_mview\_f * ) ;
+void vsip\_vinterp\_nearest\_f ( const vsip\_vview\_f *, const vsip\_vview\_f *, const vsip\_vview\_f *, const vsip\_vview\_f * ) ;
+void vsip\_vinterp\_nearest\_d( const vsip\_vview\_d *, const vsip\_vview\_d *, const vsip\_vview\_d *, const vsip\_vview\_d *);
+void vsip\_minterp\_nearest\_d ( const vsip\_vview\_d*, const vsip\_mview\_d*, vsip\_major, const vsip\_vview\_d*, const vsip\_mview\_d* ) ;
+
+void vsip\_minterp\_linear\_f ( const vsip\_vview\_f *, const vsip\_mview\_f *, vsip\_major, const vsip\_vview\_f *, const vsip\_mview\_f * ) ;
+void vsip\_vinterp\_linear\_f ( const vsip\_vview\_f *, const vsip\_vview\_f *, const vsip\_vview\_f *, const vsip\_vview\_f * ) ;
+void vsip\_minterp\_linear\_d ( const vsip\_vview\_d *, const vsip\_mview\_d *, vsip\_major, const vsip\_vview\_d *, const vsip\_mview\_d * ) ;
+void vsip\_vinterp\_linear\_d( const vsip\_vview\_d *, const vsip\_vview\_d *, const vsip\_vview\_d *, const vsip\_vview\_d *);
 
 \subsubsection*{VSIPL Permute}\addcontentsline{toc}{subsubsection}{VSIPL Permute}
-void vsip_mpermute_d ( const vsip_mview_d*, const vsip_permute*, const vsip_mview_d* ) ;
-void vsip_mpermute_f ( const vsip_mview_f*, const vsip_permute*, const vsip_mview_f* ) ;
-void vsip_mpermute_once_d ( const vsip_mview_d*, vsip_major, const vsip_vview_vi*, const vsip_mview_d* ) ;
-void vsip_mpermute_once_f ( const vsip_mview_f*, vsip_major, const vsip_vview_vi*, const vsip_mview_f* ) ;
-void vsip_cmpermute_once_d ( const vsip_cmview_d*, vsip_major, const vsip_vview_vi*, const vsip_cmview_d* ) ;
-void vsip_cmpermute_once_f ( const vsip_cmview_f*, vsip_major, const vsip_vview_vi*, const vsip_cmview_f* ) ;
-void vsip_permute_destroy ( vsip_permute* ) ;
-vsip_permute* vsip_mpermute_create_d ( vsip_length, vsip_length, vsip_major ) ;
-vsip_permute* vsip_mpermute_create_f ( vsip_length, vsip_length, vsip_major ) ;
-vsip_permute* vsip_permute_init ( vsip_permute*, const vsip_vview_vi* ) ;
+void vsip\_mpermute\_d ( const vsip\_mview\_d*, const vsip\_permute*, const vsip\_mview\_d* ) ;
+void vsip\_mpermute\_f ( const vsip\_mview\_f*, const vsip\_permute*, const vsip\_mview\_f* ) ;
+void vsip\_mpermute\_once\_d ( const vsip\_mview\_d*, vsip\_major, const vsip\_vview\_vi*, const vsip\_mview\_d* ) ;
+void vsip\_mpermute\_once\_f ( const vsip\_mview\_f*, vsip\_major, const vsip\_vview\_vi*, const vsip\_mview\_f* ) ;
+void vsip\_cmpermute\_once\_d ( const vsip\_cmview\_d*, vsip\_major, const vsip\_vview\_vi*, const vsip\_cmview\_d* ) ;
+void vsip\_cmpermute\_once\_f ( const vsip\_cmview\_f*, vsip\_major, const vsip\_vview\_vi*, const vsip\_cmview\_f* ) ;
+void vsip\_permute\_destroy ( vsip\_permute* ) ;
+vsip\_permute* vsip\_mpermute\_create\_d ( vsip\_length, vsip\_length, vsip\_major ) ;
+vsip\_permute* vsip\_mpermute\_create\_f ( vsip\_length, vsip\_length, vsip\_major ) ;
+vsip\_permute* vsip\_permute\_init ( vsip\_permute*, const vsip\_vview\_vi* ) ;
 
 \subsubsection*{VSIPL Sort}\addcontentsline{toc}{subsubsection}{VSIPL Sort}
-typedef enum { VSIP_SORT_ASCENDING = 0, VSIP_SORT_DESCENDING = 1 } vsip_sort_dir;
-typedef enum { VSIP_SORT_BYVALUE = 0, VSIP_SORT_BYMAGNITUDE = 1 } vsip_sort_mode;
-void vsip_vsortip_d ( const vsip_vview_d*, vsip_sort_mode, vsip_sort_dir, vsip_bool, const vsip_vview_vi* ) ;
-void vsip_vsortip_f ( const vsip_vview_f*, vsip_sort_mode, vsip_sort_dir, vsip_bool, const vsip_vview_vi* ) ;
-void vsip_vsortip_vi ( const vsip_vview_vi*, vsip_sort_mode, vsip_sort_dir, vsip_bool, const vsip_vview_vi* ) ;
-void vsip_vsortip_i ( const vsip_vview_i*, vsip_sort_mode, vsip_sort_dir, vsip_bool, const vsip_vview_vi* ) ;
+typedef enum { VSIP\_SORT\_ASCENDING = 0, VSIP\_SORT\_DESCENDING = 1 } vsip\_sort\_dir;
+typedef enum { VSIP\_SORT\_BYVALUE = 0, VSIP\_SORT\_BYMAGNITUDE = 1 } vsip\_sort\_mode;
+void vsip\_vsortip\_d ( const vsip\_vview\_d*, vsip\_sort\_mode, vsip\_sort\_dir, vsip\_bool, const vsip\_vview\_vi* ) ;
+void vsip\_vsortip\_f ( const vsip\_vview\_f*, vsip\_sort\_mode, vsip\_sort\_dir, vsip\_bool, const vsip\_vview\_vi* ) ;
+void vsip\_vsortip\_vi ( const vsip\_vview\_vi*, vsip\_sort\_mode, vsip\_sort\_dir, vsip\_bool, const vsip\_vview\_vi* ) ;
+void vsip\_vsortip\_i ( const vsip\_vview\_i*, vsip\_sort\_mode, vsip\_sort\_dir, vsip\_bool, const vsip\_vview\_vi* ) ;

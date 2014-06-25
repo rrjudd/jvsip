@@ -256,6 +256,35 @@
 				</dict>
 			</array>
 		</dict>
+		<dict>
+			<key>CollectionID</key>
+			<string>690CE4F5-6D68-4DC6-A1E4-3E2AC5AD35CD</string>
+			<key>CollectionItems</key>
+			<array>
+				<dict>
+					<key>CollectionID</key>
+					<string>0B34192A-D08D-4E6C-ACAD-64CCB3651BBD</string>
+					<key>CollectionItems</key>
+					<array>
+						<string>A328AEE3-CFA4-485F-916B-32BD371FEFDC</string>
+						<string>1F2BD47B-DC20-4389-846A-52042E63D2EE</string>
+						<string>C406C475-3223-473D-9403-30348EE7FED9</string>
+					</array>
+				</dict>
+				<dict>
+					<key>CollectionID</key>
+					<string>18FE1BF5-729B-4829-A4AE-E3F8560382E5</string>
+					<key>CollectionItems</key>
+					<array/>
+				</dict>
+				<dict>
+					<key>CollectionID</key>
+					<string>EFF58FA4-ACA2-4FA0-9B3D-8692DBE2003B</string>
+					<key>CollectionItems</key>
+					<array/>
+				</dict>
+			</array>
+		</dict>
 	</array>
 	<key>ProjectItems</key>
 	<dict>
@@ -375,6 +404,15 @@
 			<array/>
 			<key>ItemName</key>
 			<string>LinearAlgebra</string>
+			<key>ItemType</key>
+			<string>StaticCollection</string>
+		</dict>
+		<key>0B34192A-D08D-4E6C-ACAD-64CCB3651BBD</key>
+		<dict>
+			<key>ItemData</key>
+			<array/>
+			<key>ItemName</key>
+			<string>Interpolation</string>
 			<key>ItemType</key>
 			<string>StaticCollection</string>
 		</dict>
@@ -895,6 +933,70 @@
 			</dict>
 			<key>ItemName</key>
 			<string>mulFunc.tex</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
+		<key>18FE1BF5-729B-4829-A4AE-E3F8560382E5</key>
+		<dict>
+			<key>ItemData</key>
+			<array/>
+			<key>ItemName</key>
+			<string>Sort</string>
+			<key>ItemType</key>
+			<string>StaticCollection</string>
+		</dict>
+		<key>1F2BD47B-DC20-4389-846A-52042E63D2EE</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayAEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAEAMAAAUAAAABAQAAVXNlcnMA
+				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
+				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
+				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAADgAAAAEBAABs
+				aW5lYXJGdW5jLnRleAAAIAAAAAEGAAAEAAAAFAAAACAA
+				AAAwAAAAPAAAAEwAAABYAAAAbAAAAAgAAAAEAwAA+Q0C
+				AAAAAAAIAAAABAMAANHDBQAAAAAACAAAAAQDAADwLwsA
+				AAAAAAgAAAAEAwAAVBEMAAAAAAAIAAAABAMAABDFHAAA
+				AAAACAAAAAQDAACH0BwAAAAAAAgAAAAEAwAACYvHAAAA
+				AAAIAAAABAMAACDyzAAAAAAAIAAAAAEGAACsAAAAvAAA
+				AMwAAADcAAAA7AAAAPwAAAAMAQAAHAEAAAgAAAAABAAA
+				QblaGUYAAAAYAAAAAQIAAAEAAAAAAAAADwAAAAAAAAAA
+				AAAAAAAAAAAAAAABBQAABAAAAAMDAAABAAAABAAAAAMD
+				AAAGAAAABAAAAAMDAAD2AQAADAAAAAEBAABNYWNpbnRv
+				c2ggSEQIAAAABAMAAABwabiuAAAACAAAAAAEAABBtbuZ
+				8gAAACQAAAABAQAARkI0OTYwNEUtOEQ5MS0zQzJBLTlE
+				NDItQTE3MTZCNjFEQTU0GAAAAAECAACBAAAAAQAIAO8X
+				AAABAAgAAAAAAAAAAAABAAAAAQEAAC8AAADKAAAAAQIA
+				ADliMDE4OWEwNTllZGEwZTdmYWVmY2QyYTg0MGVkZTVi
+				NjI1N2ViMjg7MDAwMDAwMDA7MDAwMDAwMDA7MDAwMDAw
+				MDAwMDAwMDAyMDtjb20uYXBwbGUuYXBwLXNhbmRib3gu
+				cmVhZC13cml0ZTswMDAwMDAwMTswMTAwMDAwMzswMDAw
+				MDAwMDAwY2NmMjIwOy91c2Vycy9qdWRkL2xvY2FsL3Ny
+				Yy9qdnNpcC9kb2MvanZzaXBfYm9vay9saW5lYXJmdW5j
+				LnRleAAAANgAAAD+////AQAAAAAAAAARAAAABBAAAIQA
+				AAAAAAAABRAAACwBAAAAAAAAEBAAAGQBAAAAAAAAQBAA
+				AFQBAAAAAAAAVRAAAIwBAAAAAAAAVhAAAIQBAAAAAAAA
+				AiAAADACAAAAAAAAECAAALABAAAAAAAAESAAAOQBAAAA
+				AAAAEiAAAMQBAAAAAAAAEyAAANQBAAAAAAAAICAAABAC
+				AAAAAAAAMCAAAIQBAAAAAAAAAcAAAJgBAAAAAAAAEcAA
+				ABQAAAAAAAAAEsAAAKQBAAAAAAAAgPAAADwCAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/linearFunc.tex</string>
+				<key>RelativePath</key>
+				<string>./linearFunc.tex</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>linearFunc.tex</string>
 			<key>ItemType</key>
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
@@ -3497,6 +3599,15 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>690CE4F5-6D68-4DC6-A1E4-3E2AC5AD35CD</key>
+		<dict>
+			<key>ItemData</key>
+			<array/>
+			<key>ItemName</key>
+			<string>Addendum</string>
+			<key>ItemType</key>
+			<string>StaticCollection</string>
+		</dict>
 		<key>6F72C3FA-2810-4821-92A6-383B3B87AF2C</key>
 		<dict>
 			<key>ItemData</key>
@@ -4505,6 +4616,61 @@
 			<key>UserOverrideItemName</key>
 			<true/>
 		</dict>
+		<key>A328AEE3-CFA4-485F-916B-32BD371FEFDC</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayAEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAEAMAAAUAAAABAQAAVXNlcnMA
+				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
+				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
+				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAADgAAAAEBAABz
+				cGxpbmVGdW5jLnRleAAAIAAAAAEGAAAEAAAAFAAAACAA
+				AAAwAAAAPAAAAEwAAABYAAAAbAAAAAgAAAAEAwAA+Q0C
+				AAAAAAAIAAAABAMAANHDBQAAAAAACAAAAAQDAADwLwsA
+				AAAAAAgAAAAEAwAAVBEMAAAAAAAIAAAABAMAABDFHAAA
+				AAAACAAAAAQDAACH0BwAAAAAAAgAAAAEAwAACYvHAAAA
+				AAAIAAAABAMAAADyzAAAAAAAIAAAAAEGAACsAAAAvAAA
+				AMwAAADcAAAA7AAAAPwAAAAMAQAAHAEAAAgAAAAABAAA
+				QblaGPYAAAAYAAAAAQIAAAEAAAAAAAAADwAAAAAAAAAA
+				AAAAAAAAAAAAAAABBQAABAAAAAMDAAABAAAABAAAAAMD
+				AAAGAAAABAAAAAMDAAD2AQAADAAAAAEBAABNYWNpbnRv
+				c2ggSEQIAAAABAMAAABwabiuAAAACAAAAAAEAABBtbuZ
+				8gAAACQAAAABAQAARkI0OTYwNEUtOEQ5MS0zQzJBLTlE
+				NDItQTE3MTZCNjFEQTU0GAAAAAECAACBAAAAAQAIAO8X
+				AAABAAgAAAAAAAAAAAABAAAAAQEAAC8AAADKAAAAAQIA
+				ADg3MjdhNDQwYjA3OTQ0N2ExYTk3MzFjNWZjZDIwZjg5
+				MzhiZDcyMGQ7MDAwMDAwMDA7MDAwMDAwMDA7MDAwMDAw
+				MDAwMDAwMDAyMDtjb20uYXBwbGUuYXBwLXNhbmRib3gu
+				cmVhZC13cml0ZTswMDAwMDAwMTswMTAwMDAwMzswMDAw
+				MDAwMDAwY2NmMjAwOy91c2Vycy9qdWRkL2xvY2FsL3Ny
+				Yy9qdnNpcC9kb2MvanZzaXBfYm9vay9zcGxpbmVmdW5j
+				LnRleAAAANgAAAD+////AQAAAAAAAAARAAAABBAAAIQA
+				AAAAAAAABRAAACwBAAAAAAAAEBAAAGQBAAAAAAAAQBAA
+				AFQBAAAAAAAAVRAAAIwBAAAAAAAAVhAAAIQBAAAAAAAA
+				AiAAADACAAAAAAAAECAAALABAAAAAAAAESAAAOQBAAAA
+				AAAAEiAAAMQBAAAAAAAAEyAAANQBAAAAAAAAICAAABAC
+				AAAAAAAAMCAAAIQBAAAAAAAAAcAAAJgBAAAAAAAAEcAA
+				ABQAAAAAAAAAEsAAAKQBAAAAAAAAgPAAADwCAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/splineFunc.tex</string>
+				<key>RelativePath</key>
+				<string>./splineFunc.tex</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>splineFunc.tex</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
+		</dict>
 		<key>A330F42D-0F3E-4F90-AF2B-8223811EFD72</key>
 		<dict>
 			<key>ItemData</key>
@@ -5413,6 +5579,61 @@
 			<string>Support</string>
 			<key>ItemType</key>
 			<string>StaticCollection</string>
+		</dict>
+		<key>C406C475-3223-473D-9403-30348EE7FED9</key>
+		<dict>
+			<key>ItemData</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9vayAEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAAEAMAAAUAAAABAQAAVXNlcnMA
+				AAAEAAAAAQEAAGp1ZGQFAAAAAQEAAGxvY2FsAAAAAwAA
+				AAEBAABzcmMABQAAAAEBAABqdnNpcAAAAAMAAAABAQAA
+				ZG9jAAoAAAABAQAAanZzaXBfYm9vawAADwAAAAEBAABu
+				ZWFyZXN0RnVuYy50ZXgAIAAAAAEGAAAEAAAAFAAAACAA
+				AAAwAAAAPAAAAEwAAABYAAAAbAAAAAgAAAAEAwAA+Q0C
+				AAAAAAAIAAAABAMAANHDBQAAAAAACAAAAAQDAADwLwsA
+				AAAAAAgAAAAEAwAAVBEMAAAAAAAIAAAABAMAABDFHAAA
+				AAAACAAAAAQDAACH0BwAAAAAAAgAAAAEAwAACYvHAAAA
+				AAAIAAAABAMAABnyzAAAAAAAIAAAAAEGAACsAAAAvAAA
+				AMwAAADcAAAA7AAAAPwAAAAMAQAAHAEAAAgAAAAABAAA
+				QblaGTcAAAAYAAAAAQIAAAEAAAAAAAAADwAAAAAAAAAA
+				AAAAAAAAAAAAAAABBQAABAAAAAMDAAABAAAABAAAAAMD
+				AAAGAAAABAAAAAMDAAD2AQAADAAAAAEBAABNYWNpbnRv
+				c2ggSEQIAAAABAMAAABwabiuAAAACAAAAAAEAABBtbuZ
+				8gAAACQAAAABAQAARkI0OTYwNEUtOEQ5MS0zQzJBLTlE
+				NDItQTE3MTZCNjFEQTU0GAAAAAECAACBAAAAAQAIAO8X
+				AAABAAgAAAAAAAAAAAABAAAAAQEAAC8AAADLAAAAAQIA
+				AGVhYzlmMDZjZjUzNTNiMjMyZjhhMmE4MWJhNWM2ZGEy
+				YTFkNmZiNWE7MDAwMDAwMDA7MDAwMDAwMDA7MDAwMDAw
+				MDAwMDAwMDAyMDtjb20uYXBwbGUuYXBwLXNhbmRib3gu
+				cmVhZC13cml0ZTswMDAwMDAwMTswMTAwMDAwMzswMDAw
+				MDAwMDAwY2NmMjE5Oy91c2Vycy9qdWRkL2xvY2FsL3Ny
+				Yy9qdnNpcC9kb2MvanZzaXBfYm9vay9uZWFyZXN0ZnVu
+				Yy50ZXgAANgAAAD+////AQAAAAAAAAARAAAABBAAAIQA
+				AAAAAAAABRAAACwBAAAAAAAAEBAAAGQBAAAAAAAAQBAA
+				AFQBAAAAAAAAVRAAAIwBAAAAAAAAVhAAAIQBAAAAAAAA
+				AiAAADACAAAAAAAAECAAALABAAAAAAAAESAAAOQBAAAA
+				AAAAEiAAAMQBAAAAAAAAEyAAANQBAAAAAAAAICAAABAC
+				AAAAAAAAMCAAAIQBAAAAAAAAAcAAAJgBAAAAAAAAEcAA
+				ABQAAAAAAAAAEsAAAKQBAAAAAAAAgPAAADwCAAAAAAAA
+				</data>
+				<key>FileURL</key>
+				<string>file://localhost/Users/judd/local/src/jvsip/doc/jvsip_book/nearestFunc.tex</string>
+				<key>RelativePath</key>
+				<string>./nearestFunc.tex</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+			<key>ItemName</key>
+			<string>nearestFunc.tex</string>
+			<key>ItemType</key>
+			<string>FileReference</string>
+			<key>UserOverrideItemName</key>
+			<true/>
 		</dict>
 		<key>C41F20BB-499D-400B-876B-D79F6C97D050</key>
 		<dict>
@@ -6694,6 +6915,15 @@
 			<string>FileReference</string>
 			<key>UserOverrideItemName</key>
 			<true/>
+		</dict>
+		<key>EFF58FA4-ACA2-4FA0-9B3D-8692DBE2003B</key>
+		<dict>
+			<key>ItemData</key>
+			<array/>
+			<key>ItemName</key>
+			<string>Permute</string>
+			<key>ItemType</key>
+			<string>StaticCollection</string>
 		</dict>
 		<key>F55128DA-05DE-4782-B266-ACA11039EB9A</key>
 		<dict>
