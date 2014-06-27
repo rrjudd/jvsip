@@ -29,6 +29,8 @@
 \newcommand{\afuncT}[3]{\clearpage{\Large \textbf{\hypertarget{{\ttfamily \bfseries#1Func}}{#1}}{\hspace*{\fill}\hypertarget{#1Func}{}\hyperlink{#3}{up}}} \vspace{.2cm}\\ \hspace*{.3cm} \parbox{.9\textwidth}{#2 } \vspace{.2cm}}
 %hlinkFunk used for hyperlink of table name with function page.
 \newcommand{\hlnkFunc}[1]{\hyperlink{#1Func}{\texttt{#1}}}
+\newcommand{\hlnkFuncT}[2]{\hyperlink{#1Func}{\texttt{#2}}}
+
 %
 \newcommand{\cvsiplh}{ \hspace*{.3cm} {\large \textbf{C VSIPL}}\vspace{.2cm}}
 %
@@ -62,6 +64,9 @@
 %use as \cvl{}
 \newcommand{\cvl}{\ttbf{C VSIPL}}
 %*********
+% from http://mirrors.rit.edu/CTAN/info/digests/ttn/ttn2n3.pdf
+\newcommand\Ts{\rule{0pt}{2.6ex}}
+\newcommand\Bs{\rule[-1.2ex]{0pt}{0pt}}
 %\includeonly{c2}
 \makeindex
 \begin{document}
