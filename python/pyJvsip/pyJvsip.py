@@ -1923,19 +1923,22 @@ class Block (object):
 
         # data generators
         def ramp(self,start,increment):
-            supportedViews = ['vview_f','vview_d','vview_i','vview_si','vview_uc','vview_vi']
+            f={'vview_f':vsip_vramp_f,
+               'vview_d':vsip_vramp_d,
+               'vview_i':vsip_vramp_i,
+               'vview_si':vsip_vramp_si,
+               'vview_uc':vsip_vramp_uc,
+               'vview_vi':vsip_vramp_vi}
             extended = ['cvview_f','cvview_d']
-            if self.type in supportedViews:
-                vsip.ramp(start,increment,self.view)
-                return self
-            elif self.type in extended:
+            t=self.type
+            assert f.has_key(t) or t in extended,'Type <:%s:> not support for ramp'
+            if f.has_key(t):
+                f[t](start,increment,self.view)
+            else:
                 self.fill(0)
                 tmp=self.realview
                 tmp.ramp(start,increment)
-                return self
-            else:
-                print('Type <:'+self.type+':> not supported for ramp')
-                return False
+            return self
         def fill(self,aScalar):
             if self.type in Block.complexTypes:
                 if '_d' in self.type:
@@ -2314,7 +2317,7 @@ class Block (object):
                 xy[i] = (y0 - self.rowview(i)[i+1:n+1].dot(xy[i+1:n+1]))/self[i,i]
             return xy
         ### end plu operations
-
+        #Matrix and Vector norms
         @property
         def norm2(self):
             """This method is a property which returns the two norm

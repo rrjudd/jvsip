@@ -1,8 +1,8 @@
-\afuncT{fft}{Discrete Fourier Transforms.}{fftFunctions}}
+\afuncT{fft}{Discrete Fourier Transforms.}{fftFunctions}
 \\\cvsiplh 
-\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_create}
-\newline \hspace*{0.5cm} {
+\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{fft\_create}
+\\ \hspace*{0.5cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries FFT Create Functions\vspace{.1cm}}\\ \hline
@@ -15,7 +15,7 @@ vsip\_fft\_f* vsip\_ccfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.
 vsip\_fft\_f* vsip\_crfftop\_create\_f(vsip\_length,vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\
 vsip\_fft\_f* vsip\_rcfftop\_create\_f(vsip\_length, vsip\_scalar\_f,\\*\hspace{.7cm}unsigned int, vsip\_alg\_hint);\\\hline
 \end{tabular}
-\newline\hspace*{0.5cm} 
+\\\hspace*{0.5cm} 
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Multiple FFT Create Functions}\\ \hline
 vsip\_fftm\_d* vsip\_ccfftmip\_create\_d(vsip\_length, vsip\_length,\\*\hspace{.7cm}vsip\_scalar\_d, vsip\_fft\_dir, vsip\_major,\\*\hspace{.7cm} unsigned int,vsip\_alg\_hint);\\
@@ -41,8 +41,8 @@ int vsip\_fftm\_destroy\_d(vsip\_fftm\_d*);\\
 int vsip\_fftm\_destroy\_f(vsip\_fftm\_f*);\\ \hline
 \end{tabular}
 }\vspace{.1cm}
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{fft}
-\newline \hspace*{1.cm} {
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{fft}
+\\ \hspace*{1.cm} {
 \ttfamily
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries FFT Functions}\\ \hline
@@ -77,11 +77,11 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \hline\end{tabular}
 }
 \\\pyjvsiph
-\newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
+\\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
 \item {Special \ttbf{view} methods exist for \ttbf{view}s of type float and double.} 
-\item {\ttbf{View} methods are defined as properties (@property) so the scale factor is always one for \ttbf{view} methods.}
+\item {\ttbf{View} methods are defined as properties (@property). The scale factor is always one for \ttbf{view} methods.}
 \item {For out of place the method will create and return the output \ttbf{view}.
 \item {\ttbf{View} methods determine if the FFT is a multiple FFT or a vector FFT by the \ttbf{view} type. The \pyjv \ttbf{view} \ttbf{major} attribute is used to determine if the multiple FFT is by row or by column.}
 \item {Out-of-place \ttbf{view} methods \ttbf{fftop} and \ttbf{ifftop} treat real vectors as if they were complex with a zero imaginary part}
@@ -131,7 +131,7 @@ where \ttbf{args} is a tuple containing the create parameters for the FFT type s
 \ttbf{ntimes} & \parbox[t]{.75\textwidth}{Hint for how much the FFT object will be used. Zero indicates many times\vspace*{.1cm}} \\\hline
 \ttbf{alghint} & \parbox[t]{.75\textwidth}{Algorithm hint to optimize for speed (VSIP\_ALG\_TIME), size (VSIP\_ALG\_SPACE), or accuracy (VSIP\_ALG\_NOISE)\vspace*{.1cm}}\\
 \hline \end{tabular}}
-\newline
+\\
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Fast Fourier Transform Class Types}\vspace{.2cm}}}\\ \hline 
 'ccfftip\_f' & \parbox[t]{.68\textwidth}{Complex-to-complex FFT float precision in-place \\*\ttbf{args = (M,N,scl,dir,ntimes,alghint)}\vspace*{.1cm}}\\\hline

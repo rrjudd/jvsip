@@ -1,3 +1,24 @@
 \afuncT{sqrt}{Square Root; An elementwise function.}{elementaryMath}
 \\\cvsiplh
+\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\\ \hspace*{1.1cm} {
+\ttfamily
+\begin{tabular}[H]{l}
+vsip\_scalar\_f vsip\_sqrt\_f(vsip\_scalar\_f a);\\
+vsip\_scalar\_d vsip\_sqrt\_d(vsip\_scalar\_d a);\\
+vsip\_cscalar\_d vsip\_csqrt\_d(vsip\_cscalar\_d);\\
+vsip\_cscalar\_f vsip\_csqrt\_f(vsip\_cscalar\_f);\\
+void vsip\_msqrt\_d(const vsip\_mview\_d*, const vsip\_mview\_d*);\\
+void vsip\_msqrt\_f(const vsip\_mview\_f*, const vsip\_mview\_f*);\\
+void vsip\_vsqrt\_d(const vsip\_vview\_d*, const vsip\_vview\_d*);\\
+void vsip\_vsqrt\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\
+void vsip\_cmsqrt\_d(const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
+void vsip\_cmsqrt\_f(const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
+void vsip\_cvsqrt\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
+void vsip\_cvsqrt\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
+\end{tabular}
+}
 \\\pyjvsiph
+\viewmthd{yes}{yes}{yes}{inOut.sqrt}
+\apyfunc{yes}{out = sqrt(in,out)}
+\pyComment{\item{The \ttbf{sqrt} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}}

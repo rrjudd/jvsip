@@ -1,12 +1,9 @@
-\clearpage
-\hypertarget{ludFunc}{\large \textbf{LUD Function Set}}\hspace*{\fill}(up)\vspace{.2cm}\\
-\hspace*{.3cm}
-\parbox{0.85\textwidth}{Lower-Upper Decomposition Class. \ref{tab:generalSquareSolver}}
+\afuncT{lud}{Lower-Upper Decomposition Class.}{generalSquareSolver}
 \\\cvsiplh 
-\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_create}
-\newline \hspace*{1.cm} {
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_create}
+\\ \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create LU Object\vspace{.1cm}}\\ \hline
@@ -16,8 +13,8 @@ vsip\_clu\_d* vsip\_clud\_create\_d(vsip\_length);\\
 vsip\_clu\_f* vsip\_clud\_create\_f(vsip\_length);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_destroy}
-\newline \hspace*{1.cm} {
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_destroy}
+\\ \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy LU Object\vspace{.1cm}}\\ \hline
@@ -27,8 +24,8 @@ int vsip\_clud\_destroy\_d(vsip\_clu\_d*);\\
 int vsip\_clud\_destroy\_f(vsip\_clu\_f*);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{lud}
-\newline \hspace*{1.cm}{
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud}
+\\ \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Calculate LU Decomposition\vspace{.1cm}}\\ \hline
@@ -38,67 +35,51 @@ int vsip\_clud\_d(vsip\_clu\_d*, const vsip\_cmview\_d*);\\
 int vsip\_clud\_f(vsip\_clu\_f*, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{lusol}\\
-\newline \hspace*{1.cm}{
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lusol}\\
+\\ \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated LU Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_lusol\_d(const vsip\_lu\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_d*);\\
-int vsip\_lusol\_f(const vsip\_lu\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_mview\_f*);\\
-int vsip\_clusol\_d(const vsip\_clu\_d*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_d*);\\
-int vsip\_clusol\_f(const vsip\_clu\_f*, vsip\_mat\_op,\\*\hspace*{.8cm} const vsip\_cmview\_f*);\\
+int vsip\_lusol\_d(const vsip\_lu\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
+int vsip\_lusol\_f(const vsip\_lu\_f*, vsip\_mat\_op, const vsip\_mview\_f*);\\
+int vsip\_clusol\_d(const vsip\_clu\_d*, vsip\_mat\_op, const vsip\_cmview\_d*);\\
+int vsip\_clusol\_f(const vsip\_clu\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
-%\newline \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_getattr}
-\newline \hspace*{1.cm}{
+%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_getattr}
+\\ \hspace*{1.cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill LU Attribute Structure\vspace{.1cm}}\\ \hline
-void vsip\_lud\_getattr\_d(const vsip\_lu\_d*,\\*\hspace*{.8cm} vsip\_lu\_attr\_d*);\\
-void vsip\_lud\_getattr\_f(const vsip\_lu\_f*,\\*\hspace*{.8cm} vsip\_lu\_attr\_f*);\\
-void vsip\_clud\_getattr\_d(const vsip\_clu\_d*,\\*\hspace*{.8cm} vsip\_clu\_attr\_d*);\\
-void vsip\_clud\_getattr\_f(const vsip\_clu\_f*,\\*\hspace*{.8cm} vsip\_clu\_attr\_f*);\\
+void vsip\_lud\_getattr\_d(const vsip\_lu\_d*, vsip\_lu\_attr\_d*);\\
+void vsip\_lud\_getattr\_f(const vsip\_lu\_f*, vsip\_lu\_attr\_f*);\\
+void vsip\_clud\_getattr\_d(const vsip\_clu\_d*, vsip\_clu\_attr\_d*);\\
+void vsip\_clud\_getattr\_f(const vsip\_clu\_f*, vsip\_clu\_attr\_f*);\\
 \hline\end{tabular}\\}
 %
-\clearpage\pyjvsiph
-\newline\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
-\hspace*{1cm}\parbox{10.5cm}{
+\\ \pyjvsiph
+\\ \hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
+\hspace*{1.1cm}\parbox{.9\textwidth}{
 \begin{itemize}
-\item {A \ttbf{view} method has been defined for the kernel \ttbf{view}. The kernel is treated as non-symmetric so the entire kernel is assumed.\footnotemark[1]}
-\item {A variable argument list is supported.} 
-\subitem{The first required argument is the input data \ttbf{view}.}
-\subitem {\parbox[t]{.74\textwidth}{The second optional argument is the decimation factor. It defaults to one.}\vspace*{.1cm}}
-\item{Other parameters are either set to there default value, or are calculated from included parameters.\vspace{.2cm}}
-\end{itemize}}\\
-\hspace*{1.cm}\textbf{In-Place: }\hspace{.2cm} no\\
-\hspace*{1.1cm}\textbf{Out-Of-Place: }\hspace{.2cm} yes\\
+\item {three \ttbf{view} methods have been defined for LU Decompostion.}
+\subitem{\ttbf{luSolve{(xb)}} -Calculate an in-place solution to $A\vec{x}=\vec{b}$ or $A X = B$.\Bs}
+\subitem{\ttbf{luInv} - A method to obtain a matrix inverse using LU for computation.}
+\subitem{\ttbf{lu} - A method to obtain a computed LU object from a matrix.\Bs}
+\item{\Ts Methods \ttbf{lu} and \ttbf{luInv} are defined as properties.}
+\item{LU decomposition will overwrite the input matrix so use a copy to preserve the calling view.}
+\end{itemize}\vspace{2mm}}}\\
+%%
 \hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{
-\begin{tabular}[t]{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Argument List\vspace{.2cm}}}}\\ \hline
-\ttbf{filt} & \parbox[t]{.74\textwidth}{A vector \ttbf{view} of filter coefficients.\\*Required argument \vspace*{.1cm}}\\ \hline
-\ttbf{sym} & \parbox[t]{.74\textwidth}{Symmetry of \ttbf{filt} kernel. \\* Required argument\vspace*{.1cm}} \\\hline
-\ttbf{N} & \parbox[t]{.74\textwidth}{Length of input data vector. \\* Required argument\vspace*{.1cm}}\\\hline
-\ttbf{D} & \parbox[t]{.74\textwidth}{Decimation factor.\\* Required argument\vspace*{.1cm}}\\\hline
-\ttbf{state} & \parbox[t]{.74\textwidth}{Flag to indicate if the filter state is to be saved.\\*
-\ttbf{VSIP\_STATE\_SAVE} or \ttbf{VSIP\_STATE\_NO\_SAVE}\\* Argument is supported but defaults to not saving. \\* Instead of \ttbf{VSIP} flags you may use the strings \ttbf{'YES'} or \ttbf{'NO'}.\vspace*{.1cm}}\\ \hline
-\ttbf{ntimes} & \parbox[t]{.74\textwidth}{Hint for how much the LUD object will be used. Zero indicates many times.\\*For \jv{} this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
-\ttbf{algHint} & \parbox[t]{.74\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE}).\\*For \jv{} this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
-\hline \end{tabular}\\
-\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Types\vspace{.2cm}}}}\\ \hline
-'fir\_f' & \parbox[t]{.68\textwidth}{Real \ttbf{LUD}; float precision \vspace*{.1cm}}\\\hline
-'cfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{LUD}; float precision \vspace*{.1cm}}\\\hline
-'rcfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{LUD} with real \ttbf{kernel}; float precision \vspace*{.1cm}}\\\hline
-'fir\_d' & \parbox[t]{.68\textwidth}{ Real \ttbf{LUD}; double precision \vspace*{.1cm}}\\\hline
-'cfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{LUD}; double precision \vspace*{.1cm}}\\\hline
-'rcfir\_d' & \parbox[t]{.68\textwidth}{Complex \ttbf{LUD} with real \ttbf{kernel}; double precision \vspace*{.1cm}}\\\hline
-\end{tabular}\vspace*{.4cm}}\\
-\clearpage
+\hspace*{1.9cm}\parbox{.85\textwidth}{\Ts Assume matrix \ttbf{view} \ttbf{A} has been created and has data in it.}\\
+\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{qrObj=A.qr} \\*
+will create a full \ttbf{QR} using flag \ttbf{VSIP\_QRD\_SAVEQ} and decompose the matrix.}\\
+\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{Q,R=A.qrd} \\*
+will create matrix \ttbf{Q} and matrix \ttbf{R} using \ttbf{QR} and \ttbf{A} such that \ttbf{A = Q.prod(R)}}\\
+%
 %
 \hspace*{.8cm}{\textbf{LUD Class Methods}\\
 \hspace*{1.1cm} \parbox[t]{.88\textwidth}{For class methods table we assume we have created an LUD object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
-\newline
+\\
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
 \ttbf{firObj.flt(x,y)} & \parbox[t]{.58\textwidth}{Filter the data \ttbf{x} and place the results in \ttbf{y}}\\\hline

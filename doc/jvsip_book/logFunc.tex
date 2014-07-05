@@ -1,12 +1,24 @@
 \afuncT{log}{Natural logarithm; An element-wise function.}{elementaryMath}
 \\\cvsiplh
-\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\newline \hspace*{1.1cm} {
+\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\\ \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
+vsip\_scalar\_d vsip\_log\_d(vsip\_scalar\_d);\\
+vsip\_scalar\_f vsip\_log\_f(vsip\_scalar\_f);\\
+vsip\_cscalar\_d vsip\_clog\_d(vsip\_cscalar\_d);\\
+vsip\_cscalar\_f vsip\_clog\_f(vsip\_cscalar\_f);\\
+void vsip\_cmlog\_d(const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
+void vsip\_cmlog\_f(const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
+void vsip\_cvlog\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
+void vsip\_cvlog\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
+void vsip\_mlog\_d(const vsip\_mview\_d*, const vsip\_mview\_d*);\\
+void vsip\_mlog\_f(const vsip\_mview\_f*, const vsip\_mview\_f*);\\
+void vsip\_vlog\_d(const vsip\_vview\_d*, const vsip\_vview\_d*);\\
+void vsip\_vlog\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\
 \end{tabular}
 }
 \\\pyjvsiph
-\viewmthd{yes}{yes}{yes}{inOut.sin}
-\apyfunc{yes}{out = sin(in,out)}
-\newline\hspace*{1.2cm}\parbox{10.8cm}{\vspace*{.1cm}The \ttbf{log} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}
+\viewmthd{yes}{yes}{yes}{inOut.log}
+\apyfunc{yes}{out = log(in,out)}
+\\\hspace*{1.2cm}\parbox{10.8cm}{\vspace*{.1cm}The \ttbf{log} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}

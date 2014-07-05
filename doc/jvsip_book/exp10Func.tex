@@ -1,3 +1,18 @@
-\afuncT{exp10}{Exponential Base 10; An elementwise function}{elementaryMath}
+\afuncT{exp10}{exp10onential Base 10; An elementwise function}{elementaryMath}
 \\\cvsiplh
+\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\\ \hspace*{1.1cm} {
+\ttfamily
+\begin{tabular}[H]{l}
+vsip\_scalar\_d vsip\_exp10\_d(vsip\_scalar\_d);\\
+vsip\_scalar\_f vsip\_exp10\_f(vsip\_scalar\_f);\\
+void vsip\_mexp10\_d(const vsip\_mview\_d*, const vsip\_mview\_d*);\\
+void vsip\_mexp10\_f(const vsip\_mview\_f*, const vsip\_mview\_f*);\\
+void vsip\_vexp10\_d(const vsip\_vview\_d*, const vsip\_vview\_d*);\\
+void vsip\_vexp10\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\
+\end{tabular}
+}
 \\\pyjvsiph
+\viewmthd{yes}{yes}{yes}{inOut.exp10}
+\apyfunc{yes}{out = exp10(in,out)}
+\pyComment{\item{The \ttbf{exp10} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}}

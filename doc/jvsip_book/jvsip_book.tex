@@ -1,6 +1,6 @@
 \documentclass[10pt,oneside,a4paper]{book}
 \usepackage[margin=2cm]{geometry}
-\usepackage{showframe}
+%\usepackage{showframe}
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage{blindtext}
@@ -37,26 +37,26 @@
 \newcommand{\pyjvsiph}{\hspace*{.3cm} {\large \textbf{pyJvsip}}\vspace*{.2cm}}
 %
 \newcommand{\pyjvComment}[1]{\newline \hspace*{.3cm} \textbf{Comments}
-\newline\hspace*{.6cm}\parbox{10.8cm}{
+\\ \hspace*{.6cm}\parbox{10.8cm}{
   \vspace*{.1cm}\begin{itemize}
    { #1}
   \end{itemize}
 }}
 %
 \newcommand{\pyComment}[1]{\newline \hspace*{.8cm} \textbf{Comments}
-\newline\hspace*{.8cm}\parbox{10.8cm}{
+\\ \hspace*{.8cm}\parbox{.9\textwidth}{
   \vspace*{.1cm}\begin{itemize}
    { #1}
   \end{itemize}
 }}
 %
 \newcommand{\viewmthd}[4]{\newline \hspace*{.8cm}{\textbf{View Method}
-\newline\hspace*{1.1cm}{\textbf{Available: }}#1\hspace{.25cm}{\textbf{Property: }} #2\hspace{.25cm}{\textbf{In-Place: }} #3 
-\newline \hspace*{1.1cm}{\bfseries Example:} {\ttfamily #4}}}
+\\ \hspace*{1.1cm}{\textbf{Available: }}#1\hspace{.25cm}{\textbf{Property: }} #2\hspace{.25cm}{\textbf{In-Place: }} #3 
+\\ \hspace*{1.1cm}{\bfseries Example:} {\ttfamily #4}}}
 %
 \newcommand{\apyfunc}[2]{\newline \hspace*{.8cm} \textbf{Function} 
-\newline\hspace*{1.1cm} \textbf{Available:} #1 
-\newline \hspace*{1.1cm} \textbf{Example:} {\ttfamily #2}}
+\\ \hspace*{1.1cm} \textbf{Available:} #1 
+\\ \hspace*{1.1cm} \textbf{Example:} {\ttfamily #2}}
 %use as \pyJvsip{}
 \newcommand{\pyjv}{{\ttbf{pyJvsip}}}
 %use as \jv{}
