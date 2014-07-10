@@ -3781,9 +3781,9 @@ class LU(object):
     @property
     def singular(self):
         if self.__singular == 0:
-            return True
-        else:
             return False
+        else:
+            return True
     @property
     def vsip(self):
         return self.__lu

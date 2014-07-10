@@ -70,33 +70,44 @@ void vsip\_clud\_getattr\_f(const vsip\_clu\_f*, vsip\_clu\_attr\_f*);\\
 \end{itemize}\vspace{2mm}}}\\
 %%
 \hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
-\hspace*{1.9cm}\parbox{.85\textwidth}{\Ts Assume matrix \ttbf{view} \ttbf{A} has been created and has data in it.}\\
-\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{qrObj=A.qr} \\*
-will create a full \ttbf{QR} using flag \ttbf{VSIP\_QRD\_SAVEQ} and decompose the matrix.}\\
-\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{Q,R=A.qrd} \\*
-will create matrix \ttbf{Q} and matrix \ttbf{R} using \ttbf{QR} and \ttbf{A} such that \ttbf{A = Q.prod(R)}}\\
+\hspace*{1.9cm}\parbox{.85\textwidth}{\Ts Assume square matrix \ttbf{view} \ttbf{A} has been created and has data in it. Also assume we have a known matrix or vector (assumed to be a column vector) \ttbf{B} and we need to solve for unknown \ttbf{X} in $A X = B$.}\\
+\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{luObj=A.lu} \\*
+will create an \ttbf{LU} decomposition object and decompose calling view A.}\\
+\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{invA=A.luInv} \\*
+will return an inverse matrix for A.}\\
+\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{A.luSolve(B)} \\*
+will in-place solve \ttbf{B} for \ttbf{X}}.\vspace*{.3cm}\\
 %
 %
-\hspace*{.8cm}{\textbf{LUD Class Methods}\\
-\hspace*{1.1cm} \parbox[t]{.88\textwidth}{For class methods table we assume we have created an LUD object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
+\hspace*{.8cm}{\textbf{LU Class Methods\vspace*{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{LU} object do\\
+\hspace*{1.cm}\ttbf{luObj = LU(t,size)} \\
+Where \ttbf{t} is a string indicating the type of \ttbf{LU} object to create and \ttbf{size} is the size of the square matrix the \ttbf{LU} object will decompose.\\
+For class methods table we assume we have created an LU object we call \ttbf{luObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{luObj} and some compliant \ttbf{view B} where we want to solve for the unknown \ttbf{X} in $A X = B $.\vspace{.2cm}}\\
+\begin{table}
+\caption{Flags and Types for LU Decomposition}
+\begin{center}\begin{tabular}{|l l|}
+%%
+\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries LU Decomposition Types}}}\Bs\\\hline
+'lu\_d' & Real \ttbf{LU}; double precision \Bs\\\hline
+'lu\_f' & Real \ttbf{LU}; float precision\Bs\\\hline
+'clu\_d' & Complex \ttbf{LU}; double precision\Bs\\\hline
+'clu\_f' & Complex \ttbf{LU}; float precision\Bs\\\hline
+%%%
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Matrix Operator Flags (\ttbf{op})}}}\Bs\\\hline
+\Ts'NTRANS' or \ttbf{VSIP\_MAT\_NTRANS} & No Transpose operator\Bs\\\hline
+   'TRANS' or \ttbf{VSIP\_MAT\_TRANS} & Transpose operator\Bs\\\hline
+   'HERM' or \ttbf{VSIP\_MAT\_HERM} & Hermitian operator\Bs\\\hline
+%%%
+ \end{tabular}\end{center}\end{table}
+%%
 \\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
-\ttbf{firObj.flt(x,y)} & \parbox[t]{.58\textwidth}{Filter the data \ttbf{x} and place the results in \ttbf{y}}\\\hline
-\ttbf{firObj.decimation} & \parbox[t]{.58\textwidth}{ Returns integer decimation factor. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.length} & \parbox[t]{.58\textwidth}{ Returns integer length for \ttbf{x}. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.lengthOut} & \parbox[t]{.58\textwidth}{ Returns integer of valid data points in \ttbf{y} \vspace*{.1cm}}\\\hline
-\ttbf{firObj.reset} & \parbox[t]{.58\textwidth}{Resets LUD filter to it's initial state. \vspace*{.1cm}}\\\hline
-\ttbf{firObj.state} & \parbox[t]{.58\textwidth}{Returns \ttbf{True} if filter state is saved, otherwise returns \ttbf{False}.\vspace*{.1cm}}\\\hline
-\ttbf{firObj.type} & \parbox[t]{.58\textwidth}{Returns string indicating filter type.\vspace*{.1cm}}\\\hline
-\ttbf{firObj.vsip} & \parbox[t]{.58\textwidth}{Returns C VSIPL filter instance.\vspace*{.1cm}}\\\hline
+\hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l l|}
+\multicolumn{2}{c}{\parbox[t]{.8\textwidth}{\center{\rmfamily \bfseries LU Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
+\ttbf{luObj.decompose(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{luObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
+\ttbf{luObj.solve(op,XB)} & \parbox[t]{.6\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
+\ttbf{luObj.size} & \parbox[t]{.6\textwidth}{ Property. Returns integer length size of square matrix \ttbf{LU} object will decompose.\Bs}\\\hline
+\ttbf{luObj.singular} & \parbox[t]{.6\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline
+\ttbf{luObj.type} & \parbox[t]{.6\textwidth}{Returns string indicating LU type.\Bs}\\\hline
+\ttbf{luObj.vsip} & \parbox[t]{.6\textwidth}{Returns C VSIPL LU instance.\vspace*{.1cm}\Bs}\\\hline
 \end{tabular}\vspace*{.4cm}}\\
-\hspace*{.7cm} \parbox[t]{.91\textwidth}{
-\begin{itemize}
-\item{Methods \ttbf{decimation}, \ttbf{length}, \ttbf{state}, \ttbf{type} and \ttbf{vsip} are set when the LUD instance is created and do not change after create}
-\item{Method \ttbf{lengthOut}\footnotemark[2] is calculated during the execution of method \ttbf{flt(x,y)} and is useful if state is saved and the filter object is used multiple times on a long piece of data.}
-\item{Method \ttbf{reset} is used if state is saved and the filter is used multiple times on a long data set and then \emph{reset}\footnotemark[3] to it's initial state for use on multiple long data sets.}
-\end{itemize}}
-\footnotetext[1]{This does not preclude symmetric kernels. You just need the entire kernel.}
-\footnotetext[2]{See C VSIPL specification for more information on length of output data.}
-\footnotetext[3]{See signal processing text on overlap-add and overlap-save filtering.}
