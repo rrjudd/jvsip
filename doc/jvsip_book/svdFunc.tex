@@ -17,7 +17,7 @@ vsip\_csv\_f* vsip\_csvd\_create\_f(vsip\_length, vsip\_length,\\*\hspace*{1cm}v
 \\ \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Destroy SVD Object\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Destroy SVD Object\vspace{.1cm}}\\ \hline\Ts
 int vsip\_svd\_destroy\_d(vsip\_sv\_d*);\Bs\\
 int vsip\_svd\_destroy\_f(vsip\_sv\_f*);\Bs\\
 int vsip\_csvd\_destroy\_d(vsip\_csv\_d*);\Bs\\
@@ -49,7 +49,7 @@ void vsip\_csvd\_getattr\_f(const vsip\_csv\_f*,  vsip\_csv\_attr\_f*);\Bs\\
 \\ \hspace*{0.4cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Product with U from SV Decomposition\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Product with U from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
 \Ts int vsip\_svdprodu\_f(const vsip\_sv\_f*,vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_mview\_f*);\Bs\\
 int vsip\_csvdprodu\_f(const vsip\_csv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_f*);\Bs\\
 int vsip\_svdprodu\_d(const vsip\_sv\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_mview\_d*);\Bs\\
@@ -73,15 +73,28 @@ int vsip\_csvdprodv\_f(const vsip\_csv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\h
 \\ \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Return with U from SV Decomposition\vspace{.1cm}}\\ \hline
-
+\multicolumn{1}{c}{\rmfamily \bfseries Return with U from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
+int vsip\_svdmatu\_f(const vsip\_sv\_f*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_mview\_f*);\Bs\\
+int vsip\_csvdmatu\_f(const vsip\_csv\_f*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_f*);\Bs\\
+int vsip\_svdmatu\_d(const vsip\_sv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_mview\_d*);\Bs\\
+int vsip\_csvdmatu\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_d*);\Bs\\
 \hline\end{tabular}\\}
 %
 \\ \hspace*{1.cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Return with V from SV Decomposition\vspace{.1cm}}\\ \hline
+\multicolumn{1}{c}{\rmfamily \bfseries Return with V from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
+int vsip\_svdmatv\_f(const vsip\_sv\_f*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_mview\_f*);\Bs\\
+int vsip\_csvdmatv\_f(const vsip\_csv\_f*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_f*);\Bs\\
+int vsip\_svdmatv\_d(const vsip\_sv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_mview\_d*);\Bs\\
+int vsip\_csvdmatv\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_d*);\Bs\\
 \hline\end{tabular}\\}
 %
 \\\pyjvsiph
 \\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
+%
+\hspace*{.8cm}{\textbf{LU Class Methods\vspace*{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{SV} object do\\
+\hspace*{1.cm}\ttbf{svObj = SV(t,m,n,opU,opV)} \\
+Where \ttbf{t} is a string indicating the type of \ttbf{SV} object to create, \ttbf{m} and \ttbf{n} indicate the size of the input matrix to \ttbf{ (\ttbf{m,n}), and \ttbf{opU} and  \ttbf{opV} are flags specifying computing options for matrices \ttbf{U} and \ttbf{V} respectively.\\
+For the class methods table we assume we have created an SV object we call \ttbf{svObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{svObj}.\vspace{.2cm}}\\

@@ -2881,7 +2881,7 @@ class Block (object):
             """
             assert LU.tSel.has_key(self.type), "LU for %s not supported"%self.type
             assert self.rowlength == self.collength,"LU only supports square matrices"
-            return LU(LU.tSel[self.type],self.rowlength).decompose(self)
+            return LU(LU.tSel[self.type],self.rowlength).lud(self)
         @property
         def luInv(self):
             """
@@ -2895,7 +2895,7 @@ class Block (object):
             assert LU.tSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for luInv'
             assert self.rowlength == self.collength, 'Method luInv only works for square matrices'
             retval=self.empty.identity
-            LU(LU.tSel[self.type],self.rowlength).decompose(self).solve(0,retval)
+            LU(LU.tSel[self.type],self.rowlength).lud(self).solve(0,retval)
             return retval
         def luSolve(self,XB):
             """
@@ -2917,7 +2917,7 @@ class Block (object):
                 X = XB
             assert X.type == self.type, 'Calling view and input/output view must be the same type and precision'
             assert self.collength == X.collength, 'Input/Output view not sized properly for calling view'
-            obj=LU(LU.tSel[self.type],self.rowlength).decompose(self)
+            obj=LU(LU.tSel[self.type],self.rowlength).lud(self)
             assert obj.singular,'The calling matrix is singular'
             obj.solve('NTRANS',X)
             return XB
@@ -2945,7 +2945,7 @@ class Block (object):
                 return
             assert A.collength >= A.rowlength,"QR requires column length less than row length"
             retval=QR(QR.tSel[self.type],A.collength,A.rowlength,VSIP_QRD_SAVEQ)
-            retval.decompose(A)
+            retval.lud(A)
             return retval
         @property
         def qrd(self):
@@ -3787,10 +3787,10 @@ class LU(object):
     @property
     def vsip(self):
         return self.__lu
-    def decompose(self,m):
+    def lud(self,m):
         """
         Usage:
-            luObj.decompose(A)
+            luObj.lud(A)
             A is a square matrix of type real or complex float or double
         decompose method for LU object atta
         """
@@ -3907,11 +3907,11 @@ class CHOL(object):
     @property
     def vsip(self):
         return self.__chol
-    def decompose(self,m):
+    def lud(self,m):
         """
         Decompose method for CHOL object
-        Usage for cholesky object chold:
-            chold.decompose(A)
+        Usage for cholesky object cholObj:
+            cholObj.chold(A)
         Where:
             A is a square matrix of type real or complex float or double
         """
@@ -4026,7 +4026,7 @@ class QR(object):
     @property
     def vsip(self):
         return self.__qr
-    def decompose(self,m):
+    def qrd(self,m):
         tMatrix={'cmview_d':'cqr_d','cmview_f':'cqr_f','mview_d':'qr_d','mview_f':'qr_f'}
         qrDecompose={'qr_f':vsip_qrd_f,
                 'qr_d':vsip_qrd_d,
@@ -4212,7 +4212,6 @@ class SV(object):
         return
     def produ(self):
         return
-
 # pyJvsip Functions
 def create(atype,*vals):
     """
