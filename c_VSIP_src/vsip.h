@@ -2033,8 +2033,6 @@ int vsip_svd_d(vsip_sv_d *, const vsip_mview_d *, vsip_vview_d *);
 void vsip_svd_getattr_d(const vsip_sv_d *, vsip_sv_attr_d *);
 int vsip_svdprodu_d(const vsip_sv_d*, vsip_mat_op, vsip_mat_side, const vsip_mview_d*);
 int vsip_svdprodv_d(const vsip_sv_d*, vsip_mat_op, vsip_mat_side, const vsip_mview_d*);
-int vsip_svdprodu_f(const vsip_sv_f*, vsip_mat_op, vsip_mat_side, const vsip_mview_f*);
-int vsip_svdprodv_f(const vsip_sv_f*, vsip_mat_op, vsip_mat_side, const vsip_mview_f*);
 int vsip_svdmatu_d(const vsip_sv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_mview_d*);
 int vsip_svdmatv_d(const vsip_sv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_mview_d*);
 /* Complex */
@@ -2044,8 +2042,6 @@ int vsip_csvd_d(vsip_csv_d*, const vsip_cmview_d*, vsip_vview_d *s);
 void vsip_csvd_getattr_d(const vsip_csv_d*, vsip_csv_attr_d*);
 int vsip_csvdprodu_d(const vsip_csv_d*, vsip_mat_op, vsip_mat_side, const vsip_cmview_d*);
 int vsip_csvdprodv_d(const vsip_csv_d*, vsip_mat_op, vsip_mat_side,const vsip_cmview_d*);
-int vsip_csvdprodu_f(const vsip_csv_f*, vsip_mat_op, vsip_mat_side, const vsip_cmview_f*);
-int vsip_csvdprodv_f(const vsip_csv_f*, vsip_mat_op, vsip_mat_side,const vsip_cmview_f*);
 int vsip_csvdmatu_d(const vsip_csv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_cmview_d*);
 int vsip_csvdmatv_d(const vsip_csv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_cmview_d*);
 

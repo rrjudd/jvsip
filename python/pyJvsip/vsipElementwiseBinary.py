@@ -159,20 +159,23 @@ def jmul(a,b,c):
     assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in jmul'
     f[t](a.view,b.view,c.view)
     return c    
-def mmul(a,b,c):
+def vmmul(a,b,c):
     """
     For Vector Matrix multiply along Rows or Along columns in C VSIPL uses a vsip_major argument.
     For pyJvsip if the first arguments major attribute is 'COL' then this is done element-wise along the columns; 
     otherwise it is done element-wise along the rows. It is easier to set the major attribute than to check it.
     Usage
         mmul(a.COL,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_COL,c)
-        mmul(a,ROW,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_ROW,c)
+        mmul(a.ROW,b,c) is equivalent to vsip_vmmul_f(a,b,VSIP_ROW,c)
     """
     err1='The vector length of argument 1 for by column must equal the column length of argument 2'
     err2='The vector length of argument 1 for by row must equal the row length of argument 2'
-    f={'cvview_dcmview_dcmview_d':vsip_cvmmul_d,'cvview_fcmview_fcmview_f':vsip_cvmmul_f,
-       'vview_dmview_dmview_d':vsip_vmmul_d,'vview_fmview_fmview_f':vsip_vmmul_f,
-       'vview_dcmview_dcmview_d':vsip_rvcmmul_d,'vview_fcmview_fcmview_f':vsip_rvcmmul_f}
+    f={'cvview_dcmview_dcmview_d':vsip_cvmmul_d,
+       'cvview_fcmview_fcmview_f':vsip_cvmmul_f,
+       'vview_dmview_dmview_d':vsip_vmmul_d,
+       'vview_fmview_fmview_f':vsip_vmmul_f,
+       'vview_dcmview_dcmview_d':vsip_rvcmmul_d,
+       'vview_fcmview_fcmview_f':vsip_rvcmmul_f}
     assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in mmul'
     assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in mmul'
     assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in mmul'

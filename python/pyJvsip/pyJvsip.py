@@ -583,7 +583,7 @@ class Block (object):
             else:
                 return self.copy
         @property # A way to get a new in-place view of the object
-        def clone(self):
+        def cloneview(self):
             v=vsip.cloneview(self.view)
             b=self.block
             return self.__newView(v,b)
@@ -1009,6 +1009,12 @@ class Block (object):
         @property
         def type(self):
             return self.__type
+        @property 
+        def size(self):
+            if 'vview' in self.type:
+                return (self.length,0)
+            else:
+                return (self.collength,self.rowlength)
         # window (data taper) functions
         def cheby(self,ripple):
             t=vsip.getType(self.view)[1]
@@ -1280,18 +1286,18 @@ class Block (object):
             Input matrix is overwritten by the operation.
             mmul(A) expects the calling view to be of type float vector and A to be of
             the same precision and type float matrix. Matrix A is returned as a convenience.
-            Note that view A has an a major attribute. If it is set to COL then the calling vector
-            is multiplied elementwise by COL, otherwise it is multiplied by ROW
+            Note that views have a major attribute. If the calling view is set to COL then the calling vector
+            multiplies A elementwise by COL, otherwise it is multiplied by ROW
             Note lengths must be conformant.
             If one is unsure of the state of the major attribute it should be set
             For instance
-            v.mmul(A.ROW)
+            v.ROW.mmul(A)
             or
-            v.mmul(A.COL)
+            v.COL.mmul(A)
             Done in place. v.mmul(A) returns the result in A.
             B = v.mmul(A.copy.COL) returns the result in a new matrix.
             """
-            return mmul(self,other,other)
+            return vmmul(self,other,other)
         @property
         def meansqval(self):
             """ returns scalar value
@@ -3018,8 +3024,8 @@ class Block (object):
             svObj.svd(self,s)
             U=create(self.type,m,m)
             V=create(self.type,n,n)
-            svObj.matv(0,n,V)
-            svObj.matu(0,m,U)
+            svObj.matV(0,n,V)
+            svObj.matU(0,m,U)
             return (U,s,V)
         @property
         def svdP(self):
@@ -3050,8 +3056,8 @@ class Block (object):
             svObj.svd(self,s)
             U=create(self.type,m,rl)
             V=create(self.type,n,rl)
-            svObj.matv(0,rl,V)
-            svObj.matu(0,rl,U)
+            svObj.matV(0,rl,V)
+            svObj.matU(0,rl,U)
             return (U,s,V)
         @property
         def svdU(self):
@@ -3260,7 +3266,6 @@ class Rand(object):
 # vsip_dcorr2d_destroy_f
 # vsip_dcorr2d_getattr_f
 # vsip_dcorrelate2d_f
-
 # FFT Class for 1 d and FFTM
 # vsip_ccfftx_f
 # vsip_crfftop_f
@@ -3393,7 +3398,6 @@ class FFT (object):
     @property
     def arg(self):
         return self.__arg
-
 # Convolution/Correlation Classes
 # vsip_dconv1d_create_f
 # vsip_dconv1d_destroy_f
@@ -3488,7 +3492,6 @@ class CONV(object):
         assert y.length == self.out_len, 'Output vector length not equal to calculated output length'
         f[t](self.vsip,x.view,y.view)
         return y
-
 # vsip_dcorr1d_create_f
 # vsip_dcorr1d_destroy_f
 # vsip_dcorr1d_getattr_f
@@ -3587,7 +3590,6 @@ class CORR(object):
             'data vector length not in correlate object'
         f[t](self.vsip,biasSelect[bias],ref.view,x.view,y.view)
         return y
-
 # filter Class
 class FIR(object):
     tFir=['fir_f','fir_d','cfir_f','cfir_d','rcfir_f','rcfir_d']
@@ -3742,7 +3744,6 @@ class FIR(object):
         Property. Returns number of data values in output view from last filter operation.
         """
         return self.__outLength
-
 # Linear Algebra Classes
 # vsip_dlud_p
 # vsip_dlud_create_p
@@ -3853,7 +3854,6 @@ class LU(object):
         else:
             print('Input matrix must be conformant with lu')
             return
-
 # vsip_dchold_p
 # vsip_dchold_create_p
 # vsip_dchold_destroy_p
@@ -3955,7 +3955,7 @@ class CHOL(object):
         assert self.__m['matrix'] != 0, 'Cholesky object not associated with a matrix'
         cholSol[self.type](a.view)
         return inOut
-
+#QR
 class QR(object):
     """ qSave is VSIP_QRD_NOSAVEQ => 0 (No Q)
                 VSIP_QRD_SAVEQ => 1  (Full Q)
@@ -4014,7 +4014,7 @@ class QR(object):
     def args(self):
         return (self.__collength,self.__rowlength,self.__qSave)
     @property
-    def qSize(self):
+    def sizeQ(self):
         attr=self.args
         m=attr[0];n=attr[1];op=attr[2]
         if op == 0:
@@ -4102,7 +4102,7 @@ class QR(object):
             assert XB.collength == self.__collength, 'Size error for solve least square problem'
         qrSol[self.type](self.vsip,QR.qProb[prob],XB.view)
         return XB
-
+#Singular Value
 class SV(object):
     """
     Usage:
@@ -4122,8 +4122,12 @@ class SV(object):
     svvSel={'sv_f':'vview_f','sv_d':'vview_d','csv_f':'vview_f','csv_d':'vview_d'}
     tSel={'sv_f':'sv_f','mview_f':'sv_f','sv_d':'sv_d','mview_d':'sv_d',
           'csv_f':'csv_f','cmview_f':'csv_f','csv_d':'csv_d','cmview_d':'csv_d'}
-    opSel={'NOS':VSIP_SVD_UVNOS,'FULL':VSIP_SVD_UVFULL,\
-            'PART':VSIP_SVD_UVPART,0:VSIP_SVD_UVNOS,1:VSIP_SVD_UVFULL,2:VSIP_SVD_UVPART}
+    saveSel={'NOS':VSIP_SVD_UVNOS,'FULL':VSIP_SVD_UVFULL,'PART':VSIP_SVD_UVPART,
+                 0:VSIP_SVD_UVNOS,     1:VSIP_SVD_UVFULL,     2:VSIP_SVD_UVPART}
+    sideSel = {'LSIDE':VSIP_MAT_LSIDE,'RSIDE':VSIP_MAT_RSIDE,
+                     0:VSIP_MAT_LSIDE,      1:VSIP_MAT_RSIDE}
+    matopSel = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM,
+                       0:VSIP_MAT_NTRANS,      1:VSIP_MAT_TRANS,     2:VSIP_MAT_HERM}
     def __init__(self,t,m,n,opU,opV):
         svCreate={'sv_f':vsip_svd_create_f,
               'sv_d':vsip_svd_create_d,
@@ -4131,14 +4135,24 @@ class SV(object):
               'csv_d':vsip_csvd_create_d}
         assert SV.tSel.has_key(t),'Type <:%s:> not recognized for SV'%repr(t)
         assert isinstance(m,int) and isinstance(n,int),'Length arguments must be integers for SV'
-        assert SV.opSel.has_key(opU) and SV.opSel.has_key(opV), 'Singular Value flags not recognized'
+        assert SV.saveSel.has_key(opU) and SV.saveSel.has_key(opV), 'Singular Value flags not recognized'
         self.__jvsip = JVSIP()
         self.__type = SV.tSel[t]
-        self.opU=SV.opSel[opU]
-        self.opV=SV.opSel[opV]
+        self.opU=SV.saveSel[opU]
+        self.opV=SV.saveSel[opV]
         self.m=m
         self.n=n
-        self.__sv=svCreate[SV.tSel[t]](m,n,SV.opSel[opU],SV.opSel[opV])
+        self.__sizeU=(m,m)
+        self.__sizeV=(n,n)
+        if self.opU == VSIP_SVD_UVPART and m > n:
+            self.__sizeU = (m,n)
+        if self.opV == VSIP_SVD_UVPART and n > m:
+            self.__sizeV = (n,m)
+        if self.opU == VSIP_SVD_UVNOS:
+            self.__sizeU = (0,0)
+        if self.opV == VSIP_SVD_UVNOS:
+            self.__sizeV = (0,0)
+        self.__sv=svCreate[SV.tSel[t]](m,n,SV.saveSel[opU],SV.saveSel[opV])
         self.View=0.0
     def __del__(self):
         svDestroy={'sv_f':vsip_svd_destroy_f,
@@ -4147,6 +4161,15 @@ class SV(object):
               'csv_d':vsip_csvd_destroy_d}
         svDestroy[self.type](self.vsip)
         del(self.__jvsip)
+    @property
+    def size(self):
+        return(self.m,self.n)
+    @property
+    def sizeU(self):
+        return self.__sizeU
+    @property
+    def sizeV(self):
+        return self.__sizeV
     @property
     def type(self):
         """
@@ -4182,7 +4205,7 @@ class SV(object):
         else:
             print('svd does not understand argument list\n')
             return
-    def matv(self,low,high,other):
+    def matV(self,low,high,other):
         """
         valid arguments are (low,high,outView)
         """
@@ -4190,12 +4213,12 @@ class SV(object):
               'sv_d':vsip_svdmatv_d,
               'csv_f':vsip_csvdmatv_f,
               'csv_d':vsip_csvdmatv_d}
-        if SV.opSel['NOS'] == self.opV:
+        if SV.saveSel['NOS'] == self.opV:
             return
         else:
             svMatV[self.type](self.vsip,low,high,other.view)
             return other
-    def matu(self,low,high,other):
+    def matU(self,low,high,other):
         """
         valid arguments are (low,high,outView)
         """
@@ -4203,15 +4226,34 @@ class SV(object):
               'sv_d':vsip_svdmatu_d,
               'csv_f':vsip_csvdmatu_f,
               'csv_d':vsip_csvdmatu_d}
-        if SV.opSel['NOS'] == self.opU:
+        if SV.saveSel['NOS'] == self.opU:
             return
         else:
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
-    def prodv(self):
-        return
-    def produ(self):
-        return
+    
+    def prodV(self,opMat,opSide,inout):
+        assert 'pyJvsip.__View' in repr(inout), 'The Input/Output argument must be a pyJvsip view'
+        assert SV.svSel[self.type] == inout.type, 'SV object of type %s not compatible with view of type %s'%(self.type,inout.type)
+        assert SV.matopSel.has_key(opMat),'Matrix operator flag not recognized'
+        assert SV.sideSel.has_key(opSide),'Side operator flag not recognized'
+        assert SV.saveSel['NOS'] != self.opV,'SV object created with no V matrix saved'
+        f={'sv_f':vsip_svdprodv_f,'sv_d':vsip_svdprodv_d,'csv_f':vsip_csvdprodv_f,'csv_d':vsip_csvdprodv_d}
+        m,n=sizeOut(self.sizeV,inout.size,opMat,opSide)
+        out=inout.cloneview; out.putrowlength(n); out.putcollength(m);      
+        f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
+        return out
+    def prodU(self,opMat,opSide,inout):
+        assert 'pyJvsip.__View' in repr(inout), 'The Input/Output argument must be a pyJvsip view'
+        assert SV.svSel[self.type] == inout.type, 'SV object of type %s not compatible with view of type %s'%(self.type,inout.type)
+        assert SV.matopSel.has_key(opMat),'Matrix operator flag not recognized'
+        assert SV.sideSel.has_key(opSide),'Side operator flag not recognized'
+        assert SV.saveSel['NOS'] != self.opU,'SV object created with no U matrix saved'
+        m,n=sizeOut(self.sizeU,inout.size,opMat,opSide)
+        out=inout.cloneview; out.putrowlength(n); out.putcollength(m);    
+        f={'sv_f':vsip_svdprodu_f,'sv_d':vsip_svdprodu_d,'csv_f':vsip_csvdprodu_f,'csv_d':vsip_csvdprodu_d}
+        f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
+        return out
 # pyJvsip Functions
 def create(atype,*vals):
     """
@@ -4369,13 +4411,13 @@ def create(atype,*vals):
             'Too many arguments.  Type <::%s:> takes a type, two length arguments, and an optional Q save argument'%atype
         opVsave='FULL';opUsave='FULL'
         if len(vals) == 3:
-            assert SV.opSel.has_key(vals[2]),'Save argument not recognized for singular value'
-            opVsave=SV.opSel[vals[2]]
+            assert SV.saveSel.has_key(vals[2]),'Save argument not recognized for singular value'
+            opVsave=SV.saveSel[vals[2]]
             opUsave=opVsave
         if len(vals) == 4:
-            assert SV.opSel.has_key(vals[2]) and SV.opSel.has_key(vals[3]),'Save Arguments not recognized for singular value'
-            opVsave=SV.opSel[vals[3]]
-            opUsave=SV.opSel[vals[2]]
+            assert SV.saveSel.has_key(vals[2]) and SV.saveSel.has_key(vals[3]),'Save Arguments not recognized for singular value'
+            opVsave=SV.saveSel[vals[3]]
+            opUsave=SV.saveSel[vals[2]]
         return SV(atype,vals[0],vals[1],opUsave,opVsave)
     elif atype in cholTypes:
         assert len(vals) < 3, 'Cholesky create takes either a vsip_mat_uplo flag and a length, or just a length'
@@ -4481,10 +4523,12 @@ def svdCompose(d,indx):
     return r
 def listToJv(t,a):
     """
-       listToJv will attempt to create a pyJvsip view of type t and copy the list a
-       into it. Lists are very general. It is easy to create a list that listToJv can not
-       handle. Lists must agree with the data type t. Currently only vectors of type
-       float and double are supported.
+    Usage:
+       listToJv(t,a)
+    will attempt to create a pyJvsip view of type t and copy the list <a>
+    into it. Lists are very general. It is easy to create a list that listToJv can not
+    handle. Lists must agree with the data type t. Currently only vectors of type
+    float and double are supported.
     """
     assert t in ['vview_d','vview_f','cvview_d','cvview_d'], 'Requested type not supported'
     assert isinstance(a,list),'Input must be a list'
@@ -4502,3 +4546,53 @@ def listToJv(t,a):
         for i in range(n):
             v[i] = a[i]
     return v
+def sizeOut(s1,s2,opMat,opSide):
+    """
+    Return size of output matrix after matrix product
+    Usage:
+        m,n=sizeOut(s1,s2,opMat,opSide)
+    where:
+       s1 is size of prime matrix.
+       s2 is size of other matrix
+       size of output matrix after matrix product is (m,n)
+       opMat indicates if prime matrix is transposed or not before matrix product.
+       opSide indicates location of prime matrix as Left or Right
+    """
+    if opSide==VSIP_MAT_LSIDE or opSide=='LSIDE':
+        if opMat == VSIP_MAT_NTRANS or opMat == 'NTRANS':
+            assert s1[1] == s2[0],'Matrices are not compliant for matrix product.'
+            m = s1[0];n = s2[1]
+        else: #must be TRANS or HERM
+            assert s1[0] == s2[0],'Matrices are not compliant for matrix product.'
+            m = s1[1];n = s2[1]
+    else: #must be RSIDE
+        if opMat == VSIP_MAT_NTRANS or opMat == 'NTRANS':
+            assert s1[0] == s2[1],'Matrices are not compliant for matrix product.'
+            m = s2[0]; n = s1[1]
+        else: #must be TRANS or HERM
+            assert s1[1] == s2[1],'Matrices are not compliant for matrix product.'
+            m = s2[0]; n = s1[0]
+    return(m,n)
+def sizeIn(s,opMat,opSide):
+    """
+    Return size of input matrix for matrix product
+    Usage:
+        m,n=sizeOut(s,opMat,opSide)
+    where:
+       s is size of prime matrix.
+       size of input matrix is (m,n)
+       opMat indicates if prime matrix is transposed or not before matrix product.
+       opSide indicates location of prime matrix as Left or Right
+    Note m or n will be free. This is indicated be a zero for that entry.
+    """
+    if opSide==VSIP_MAT_LSIDE or opSide=='LSIDE': 
+        if opMat == VSIP_MAT_NTRANS or opMat == 'NTRANS':
+            m = s[1]; n=0;
+        else: #must be TRANS or HERM
+            m = s[0]; n=0;
+    else: #must be RSIDE
+        if opMat == VSIP_MAT_NTRANS or opMat == 'NTRANS':
+            m = 0; n = s[0]
+        else: #must be TRANS or HERM
+            m = 0; n = s[1]
+    return(m,n)
