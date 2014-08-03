@@ -30,25 +30,14 @@
 %hlinkFunk used for hyperlink of table name with function page.
 \newcommand{\hlnkFunc}[1]{\hyperlink{#1Func}{\texttt{#1}}}
 \newcommand{\hlnkFuncT}[2]{\hyperlink{#1Func}{\texttt{#2}}}
-
 %
 \newcommand{\cvsiplh}{ \hspace*{.3cm} {\large \textbf{C VSIPL}}\vspace{.2cm}}
 %
 \newcommand{\pyjvsiph}{\hspace*{.3cm} {\large \textbf{pyJvsip}}\vspace*{.2cm}}
 %
-\newcommand{\pyjvComment}[1]{\newline \hspace*{.3cm} \textbf{Comments}
-\\ \hspace*{.6cm}\parbox{10.8cm}{
-  \vspace*{.1cm}\begin{itemize}
-   { #1}
-  \end{itemize}
-}}
+\newcommand{\pyjvComment}[1]{\newline \hspace*{.3cm} \textbf{Comments}\\ \hspace*{.6cm}\parbox{10.8cm}{ \vspace*{.1cm}\begin{itemize}{ #1}\end{itemize}}}
 %
-\newcommand{\pyComment}[1]{\newline \hspace*{.8cm} \textbf{Comments}
-\\ \hspace*{.8cm}\parbox{.9\textwidth}{
-  \vspace*{.1cm}\begin{itemize}
-   { #1}
-  \end{itemize}
-}}
+\newcommand{\pyComment}[1]{\newline \hspace*{.8cm} \textbf{Comments}\\ \hspace*{.8cm}\parbox{.9\textwidth}{\vspace*{.1cm}\begin{itemize}{ #1} \end{itemize}}}
 %
 \newcommand{\viewmthd}[4]{\newline \hspace*{.8cm}{\textbf{View Method}
 \\ \hspace*{1.1cm}{\textbf{Available: }}#1\hspace{.25cm}{\textbf{Property: }} #2\hspace{.25cm}{\textbf{In-Place: }} #3 
@@ -63,11 +52,9 @@
 \newcommand{\jv}{\ttbf{JVSIP}}
 %use as \cvl{}
 \newcommand{\cvl}{\ttbf{C VSIPL}}
-%*********
 % from http://mirrors.rit.edu/CTAN/info/digests/ttn/ttn2n3.pdf
 \newcommand\Ts{\rule{0pt}{2.6ex}}
 \newcommand\Bs{\rule[-1.2ex]{0pt}{0pt}}
-%\includeonly{c2}
 \makeindex
 \begin{document}
 \include{titlePage}

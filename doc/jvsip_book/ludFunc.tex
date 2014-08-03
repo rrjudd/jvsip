@@ -104,7 +104,7 @@ For class methods table we assume we have created an LU object we call \ttbf{luO
 \\
 \hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.8\textwidth}{\center{\rmfamily \bfseries LU Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
-\ttbf{luObj.decompose(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{luObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
+\ttbf{luObj.lud(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{luObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
 \ttbf{luObj.solve(op,XB)} & \parbox[t]{.6\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
 \ttbf{luObj.size} & \parbox[t]{.6\textwidth}{ Property. Returns integer length size of square matrix \ttbf{LU} object will decompose.\Bs}\\\hline
 \ttbf{luObj.singular} & \parbox[t]{.6\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline

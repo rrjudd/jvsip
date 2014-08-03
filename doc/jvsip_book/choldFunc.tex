@@ -89,7 +89,7 @@ For class methods table we assume we have created an CHOL object we call \ttbf{c
 %%
 \hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.8\textwidth}{\center{\rmfamily \bfseries CHOL Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
-\ttbf{cholObj.decompose(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{cholObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
+\ttbf{cholObj.chold(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{cholObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
 \ttbf{cholObj.solve(op,XB)} & \parbox[t]{.6\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
 \ttbf{cholObj.size} & \parbox[t]{.6\textwidth}{ Property. Returns integer length size of square matrix \ttbf{CHOL} object will decompose.\Bs}\\\hline
 \ttbf{cholObj.singular} & \parbox[t]{.6\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline

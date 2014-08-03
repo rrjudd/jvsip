@@ -91,10 +91,35 @@ int vsip\_csvdmatv\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsi
 \hline\end{tabular}\\}
 %
 \\\pyjvsiph
+% table of flags and types
+\begin{table}
+\caption{Flags and Types for SV Decomposition}
+\begin{center}\begin{tabular}{|l l|}
+\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries SV Decomposition Types}}}\Bs\\\hline
+'sv\_d' & Real \ttbf{SV}; double precision \Bs\\\hline
+'sv\_f' & Real \ttbf{SV}; float precision\Bs\\\hline
+'csv\_d' & Complex \ttbf{SV}; double precision\Bs\\\hline
+'csv\_f' & Complex \ttbf{SV}; float precision\Bs\\\hline
+%%%
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Flags \ttbf{opU} and \ttbf{opV} specifying computing options for matrices \ttbf{U} and \ttbf{V}}}}\Bs\\\hline
+\Ts'NOS' or \ttbf{VSIP\_SVD\_UVNOS} & Do not compute.\Bs\\\hline
+'FULL' or \ttbf{VSIP\_SVD\_UVFULL} & Compute full matrix including null space.\Bs\\\hline
+'PART' or \ttbf{VSIP\_SVD\_UVPART} & Compute matrix without the null space.\Bs\\\hline
+%%%
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Matrix Operator Flags (\ttbf{op})}}}\Bs\\\hline
+\Ts'NTRANS' or \ttbf{VSIP\_MAT\_NTRANS} & No Transpose operator\Bs\\\hline
+   'TRANS' or \ttbf{VSIP\_MAT\_TRANS} & Transpose operator\Bs\\\hline
+   'HERM' or \ttbf{VSIP\_MAT\_HERM} & Hermitian operator\Bs\\\hline
+%%%
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Side Flag for \ttbf{matu} and \ttbf{matv}}}}\Bs\\\hline
+\Ts'LSIDE' or \ttbf{VSIP\_MAT\_LSIDE} & \ttbf{U} or \ttbf{V} Matrix on the left side\Bs\\\hline
+   'RSIDE' or \ttbf{VSIP\_MAT\_RSIDE} & \ttbf{U} or \ttbf{V} Matrix on the right side\Bs\\\hline
+ \end{tabular}\end{center}\end{table}
+%%
 \\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 %
 \hspace*{.8cm}{\textbf{LU Class Methods\vspace*{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{SV} object do\\
 \hspace*{1.cm}\ttbf{svObj = SV(t,m,n,opU,opV)} \\
-Where \ttbf{t} is a string indicating the type of \ttbf{SV} object to create, \ttbf{m} and \ttbf{n} indicate the size of the input matrix to \ttbf{ (\ttbf{m,n}), and \ttbf{opU} and  \ttbf{opV} are flags specifying computing options for matrices \ttbf{U} and \ttbf{V} respectively.\\
+Where \ttbf{t} is a string indicating the type of \ttbf{SV} object to create, \ttbf{m} and \ttbf{n} indicate the size (\ttbf{m,n}) of the input matrix to decompose, and \ttbf{opU} and  \ttbf{opV} are flags specifying computing options for matrices \ttbf{U} and \ttbf{V} respectively.\\
 For the class methods table we assume we have created an SV object we call \ttbf{svObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{svObj}.\vspace{.2cm}}\\

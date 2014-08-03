@@ -1009,7 +1009,7 @@ class Block (object):
         @property
         def type(self):
             return self.__type
-        @property 
+        @property
         def size(self):
             if 'vview' in self.type:
                 return (self.length,0)
@@ -3752,24 +3752,23 @@ class FIR(object):
 # vsip_dlusol_p
 class LU(object):
     tLu=['lu_f','lu_d','clu_f','clu_d']
-    tSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d'}
+    tSel={'mview_f':'lu_f','mview_d':'lu_d','cmview_f':'clu_f','cmview_d':'clu_d',
+          'lu_f':'lu_f','lu_d':'lu_d','clu_f':'clu_f','clu_d':'clu_d'}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
     def __init__(self,t,luSize):
         luCreate={'clu_f':vsip_clud_create_f,
               'clu_d':vsip_clud_create_d,
               'lu_f':vsip_lud_create_f,
               'lu_d':vsip_lud_create_d}
+        assert LU.tSel.has_key(t),'Type not recognized for LU'
+        assert luSize > 0,'Size must be greater than 0'
+        assert isinstance(luSize,int),'LU size must be an integer'
         self.__jvsip = JVSIP()
-        self.__type = t
+        self.__type = LU.tSel[t]
         self.__size = luSize
         self.__m = {'matrix':0}
         self.__singular=1
-        if luCreate.has_key(t) and luSize > 0 and isinstance(luSize,int):
-            self.__lu = luCreate[t](luSize)
-        else:
-            print('Type must be one of '+repr(tLu)+ \
-                  ' and size must be an integer greater than 0.')
-            return
+        self.__lu = luCreate[self.__type](luSize)
     def __del__(self):
         del(self.__jvsip)
         vsip.destroy(self.__lu)
@@ -3861,10 +3860,11 @@ class LU(object):
 # vsip_dcholsol_p
 class CHOL(object):
     """
-    Cholesky Decompossition
+    Cholesky Decomposition
     """
     tChol=['chol_f','chol_d','cchol_f','cchol_d']
-    tSel={'mview_f':'chol_f','mview_d':'chol_d','cmview_f':'cchol_f','cmview_d':'cchol_d'}
+    tSel={'mview_f':'chol_f','mview_d':'chol_d','cmview_f':'cchol_f','cmview_d':'cchol_d',
+          'chol_f':'chol_f','chol_d':'chol_d','cchol_f':'cchol_f','cchol_d':'cchol_d' }
     uplowSel={0:VSIP_TR_LOW,1:VSIP_TR_UPP,'UPP':VSIP_TR_UPP,'LOW':VSIP_TR_LOW}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
     def __init__(self,t,uplow,cholSize):
@@ -3883,14 +3883,15 @@ class CHOL(object):
                     'cchol_d':vsip_cchold_create_d,
                     'chol_f':vsip_chold_create_f,
                     'chol_d':vsip_chold_create_d}
+        assert CHOL.tSel.has_key(t),'CHOL type not recognized'
         self.__jvsip = JVSIP()
-        self.__type = t
+        self.__type = CHOL.tSel[t]
         self.__size = cholSize
         self.__m = {'matrix':0}
-        assert cholCreate.has_key(t) and cholSize > 0 and isinstance(cholSize,int), \
+        assert cholCreate.has_key(self.__type) and cholSize > 0 and isinstance(cholSize,int), \
                'CHOL create error. Check type, and size. Size must be an int greater than 0.'
         assert CHOL.uplowSel.has_key(uplow),'Flag for upper or lower matrix not recognized'
-        self.__chol = cholCreate[t](CHOL.uplowSel[uplow],cholSize)
+        self.__chol = cholCreate[self.__type](CHOL.uplowSel[uplow],cholSize)
     def __del__(self):
         cholDestroy={'cchol_f':vsip_cchold_destroy_f,
                     'cchol_d':vsip_cchold_destroy_d,
@@ -3972,7 +3973,8 @@ class QR(object):
                 VSIP_LLS => 1
    """
     tQr=['qr_f','qr_d','cqr_f','cqr_d']
-    tSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d'}
+    tSel={'mview_f':'qr_f','mview_d':'qr_d','cmview_f':'cqr_f','cmview_d':'cqr_d',
+          'qr_f':'qr_f','qr_d':'qr_d','cqr_f':'cqr_f','cqr_d':'cqr_d'}
     supported=['cmview_d','cmview_f','mview_d','mview_f']
     qSave=['NOSAVEQ','SAVEQ','SAVEQ1', VSIP_QRD_NOSAVEQ, VSIP_QRD_SAVEQ, VSIP_QRD_SAVEQ1]
     selQsave = {'NOSAVEQ':0,'SAVEQ':1,'SAVEQ1':2, 0:VSIP_QRD_NOSAVEQ, 1:VSIP_QRD_SAVEQ, 2:VSIP_QRD_SAVEQ1}
@@ -3983,24 +3985,20 @@ class QR(object):
     probSel={0:'COV',1:'LLS'}
     def __init__(self,t,m,n,qSave):
         qrCreate={'cqr_f':vsip_cqrd_create_f,
-              'cqr_d':vsip_cqrd_create_d,
-              'qr_f':vsip_qrd_create_f,
-              'qr_d':vsip_qrd_create_d}
-        assert qrCreate.has_key(t), 'Type <:%s:> not recognized for QR'%repr(t)
+                  'cqr_d':vsip_cqrd_create_d,
+                  'qr_f':vsip_qrd_create_f,
+                  'qr_d':vsip_qrd_create_d}
+        assert QR.tSel.has_key(t), 'Type <:%s:> not recognized for QR'%repr(t)
         assert type(m) is int and type(n) is int,"Row and column sizes must be integers"
         assert m >= n and n > 0, "For QR lengths are greater than zero and column length is >= row length"
         assert QR.selQsave.has_key(qSave), 'Flag for save Q is %s. Flag not recognized for QR'%repr(qSave)
         self.__jvsip = JVSIP()
-        if t in QR.tQr:
-            self.__type = t
-        else:
-            print('Type qr not found')
-            return
+        self.__type = QR.tSel[t]
         self.__qSave = QR.selQsave[qSave]
         self.__collength = m
         self.__rowlength = n
         self.__m = {'matrix':0}
-        self.__qr = qrCreate[t](m,n,QR.selQsave[qSave])
+        self.__qr = qrCreate[self.__type](m,n,QR.selQsave[qSave])
     def __del__(self):
         del(self.__jvsip)
         vsip.destroy(self.__qr)
@@ -4128,12 +4126,20 @@ class SV(object):
                      0:VSIP_MAT_LSIDE,      1:VSIP_MAT_RSIDE}
     matopSel = {'NTRANS':VSIP_MAT_NTRANS,'TRANS':VSIP_MAT_TRANS,'HERM':VSIP_MAT_HERM,
                        0:VSIP_MAT_NTRANS,      1:VSIP_MAT_TRANS,     2:VSIP_MAT_HERM}
-    def __init__(self,t,m,n,opU,opV):
+    def __init__(self,t,*args): # m,n,opU,opV or (m,n),opU,opV
         svCreate={'sv_f':vsip_svd_create_f,
-              'sv_d':vsip_svd_create_d,
-              'csv_f':vsip_csvd_create_f,
-              'csv_d':vsip_csvd_create_d}
+                  'sv_d':vsip_svd_create_d,
+                  'csv_f':vsip_csvd_create_f,
+                  'csv_d':vsip_csvd_create_d}
         assert SV.tSel.has_key(t),'Type <:%s:> not recognized for SV'%repr(t)
+        assert len(args) == 3 or len(args) == 4,'Argument list not a proper length'
+        if len(args) == 3:
+            assert isinstance(args[0],tuple),'Second argument should be m,n or tuple (m,n)'
+            m=args[0][0];n=args[0][1]
+            opU=args[1];opV=args[2]
+        else:
+            m=args[0];n=args[1];
+            opU=args[2];opV=args[3]
         assert isinstance(m,int) and isinstance(n,int),'Length arguments must be integers for SV'
         assert SV.saveSel.has_key(opU) and SV.saveSel.has_key(opV), 'Singular Value flags not recognized'
         self.__jvsip = JVSIP()
@@ -4152,8 +4158,9 @@ class SV(object):
             self.__sizeU = (0,0)
         if self.opV == VSIP_SVD_UVNOS:
             self.__sizeV = (0,0)
-        self.__sv=svCreate[SV.tSel[t]](m,n,SV.saveSel[opU],SV.saveSel[opV])
+        self.__sv=svCreate[self.__type](m,n,SV.saveSel[opU],SV.saveSel[opV])
         self.View=0.0
+        self.__s=0.0
     def __del__(self):
         svDestroy={'sv_f':vsip_svd_destroy_f,
               'sv_d':vsip_svd_destroy_d,
@@ -4161,6 +4168,10 @@ class SV(object):
               'csv_d':vsip_csvd_destroy_d}
         svDestroy[self.type](self.vsip)
         del(self.__jvsip)
+    @property
+    def s(self):
+        assert self.__s != 0.0,'No matrix decompostion assciated with SV object'
+        return self.__s.copy
     @property
     def size(self):
         return(self.m,self.n)
@@ -4183,7 +4194,7 @@ class SV(object):
         Must retain reference to containing SV object to use.
         """
         return self.__sv
-    def svd(self,other,s):
+    def svd(self,other,*sarg):
         """
         Usage:
             given matrix view A of type real or complex, float or double
@@ -4193,54 +4204,110 @@ class SV(object):
             sv.svd(A,s) will calculate the singular values of A and place them in s.
         Note that the matrix A is overwritten by the singular value calculation. To keep
         A use sv.svd(A.copy,s).
+        Note a vector s is returned as a convenience.
+        Note if vector s is not supplied method will create s.
         """
         svdD={'sv_f':vsip_svd_f,
               'sv_d':vsip_svd_d,
               'csv_f':vsip_csvd_f,
               'csv_d':vsip_csvd_d}
         self.View=other
+        assert 'pyJvsip.__View' in repr(other),'Input must be a pyJvsip view object.'
+        if len(sarg) < 1:
+            m,n=other.size
+            if m > n:
+                m = n
+            s=create(SV.svvSel[self.type],m)
+        else:
+            s = sarg[0]
+        assert 'pyJvsip.__View' in repr(s),'Input must be a pyJvsip view object.'
         if SV.svSel[self.type] in other.type and SV.svvSel[self.type] in s.type:
             svdD[self.type](self.vsip,other.view,s.view)
+            self.__s = s.copy
             return s
         else:
             print('svd does not understand argument list\n')
             return
-    def matV(self,low,high,other):
+    def matV(self,*args):
         """
-        valid arguments are (low,high,outView)
+        Return V matrix from SV computation. Assume svObj is the SV object
+        Usage:
+            V=svObj.matV(low,high,V)
+        Where:
+            low is the first column index of V to include.
+            high is the last column index of V to include.
+            V is included as an argument and returned as a convenience (in pyJvsip).
+        As a convenience in pyJvsip
+           V=svObj.matV() will create and return a saved V.
+           V=svObj.matV(low,high) will create and return a suitable V.
         """
+        assert len(args) == 0 or len(args) == 2 or len(args) == 3,'Argument list error.'
         svMatV={'sv_f':vsip_svdmatv_f,
               'sv_d':vsip_svdmatv_d,
               'csv_f':vsip_csvdmatv_f,
               'csv_d':vsip_csvdmatv_d}
         if SV.saveSel['NOS'] == self.opV:
             return
+        elif len(args) < 1:
+            other = create(SV.svSel[self.type],self.sizeV)
+            m,n=self.sizeV
+            return self.matV(0,n-1,other)
+        elif len(args) == 2:
+            other = create(SV.svSel[self.type],self.sizeV)
+            return self.matV(args[0],args[1],other)
         else:
+            low=args[0];high=args[1];other=args[2]
+            assert self.View != 0.0,'No matrix decomposition has taken place'
+            assert isinstance(low,int) and isinstance(high,int),'Column indices must be integers'
+            assert 'pyJvsip.__View' in repr(other),'Output must be pyJvsip view'
+            assert other.type == SV.svSel[self.type],'SV object of type <:%s:> not compatible with output view of type <:%s:>'%(self.type,other.type)
             svMatV[self.type](self.vsip,low,high,other.view)
             return other
-    def matU(self,low,high,other):
+    def matU(self,*args):
         """
-        valid arguments are (low,high,outView)
+        Return U matrix from SU computation. Assume svObj is the SV object
+        Usage:
+            U=svObj.matU(low,high,U)
+        Where:
+            low is the first column index of U to include.
+            high is the last column index of U to include.
+            U is included as an argument and returned as a convenience (in pyJvsip).
+        As a convenience in pyJvsip.
+           U=svObj.matU() will create and return the saved U.
+           U=svObj.matU(low,high) will create and return a suitable U.
         """
         svMatU={'sv_f':vsip_svdmatu_f,
               'sv_d':vsip_svdmatu_d,
               'csv_f':vsip_csvdmatu_f,
               'csv_d':vsip_csvdmatu_d}
+        assert len(args) == 0 or len(args) == 2 or len(args) == 3,'Argument list error.'
         if SV.saveSel['NOS'] == self.opU:
             return
+        elif len(args) < 1:
+            other = create(SV.svSel[self.type],self.sizeU)
+            m,n=self.sizeU
+            return self.matU(0,n-1,other)
+        elif len(args) == 2:
+            other = create(SV.svSel[self.type],self.sizeU)
+            return self.matU(args[0],args[1],other)
         else:
+            low=args[0];high=args[1];other=args[2]
+            assert self.View != 0.0,'No matrix decomposition has taken place'
+            assert isinstance(low,int) and isinstance(high,int),'Column indices must be integers'
+            assert 'pyJvsip.__View' in repr(other),'Output must be pyJvsip view'
+            assert other.type == SV.svSel[self.type],'SV object of type <:%s:> not compatible with output view of type <:%s:>'%(self.type,other.type)
             svMatU[self.type](self.vsip,low,high,other.view)
             return other
-    
     def prodV(self,opMat,opSide,inout):
         assert 'pyJvsip.__View' in repr(inout), 'The Input/Output argument must be a pyJvsip view'
         assert SV.svSel[self.type] == inout.type, 'SV object of type %s not compatible with view of type %s'%(self.type,inout.type)
         assert SV.matopSel.has_key(opMat),'Matrix operator flag not recognized'
         assert SV.sideSel.has_key(opSide),'Side operator flag not recognized'
         assert SV.saveSel['NOS'] != self.opV,'SV object created with no V matrix saved'
+        assert self.View != 0.0,'No matrix decomposition has taken place'
         f={'sv_f':vsip_svdprodv_f,'sv_d':vsip_svdprodv_d,'csv_f':vsip_csvdprodv_f,'csv_d':vsip_csvdprodv_d}
         m,n=sizeOut(self.sizeV,inout.size,opMat,opSide)
-        out=inout.cloneview; out.putrowlength(n); out.putcollength(m);      
+        out=inout.cloneview; out.putrowlength(n); out.putcollength(m);
         f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
         return out
     def prodU(self,opMat,opSide,inout):
@@ -4249,8 +4316,9 @@ class SV(object):
         assert SV.matopSel.has_key(opMat),'Matrix operator flag not recognized'
         assert SV.sideSel.has_key(opSide),'Side operator flag not recognized'
         assert SV.saveSel['NOS'] != self.opU,'SV object created with no U matrix saved'
+        assert self.View != 0.0,'No matrix decomposition has taken place'
         m,n=sizeOut(self.sizeU,inout.size,opMat,opSide)
-        out=inout.cloneview; out.putrowlength(n); out.putcollength(m);    
+        out=inout.cloneview; out.putrowlength(n); out.putcollength(m);
         f={'sv_f':vsip_svdprodu_f,'sv_d':vsip_svdprodu_d,'csv_f':vsip_csvdprodu_f,'csv_d':vsip_csvdprodu_d}
         f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
         return out
@@ -4308,24 +4376,36 @@ def create(atype,*vals):
             return Block(atype,vals[0],vals[1]).w
     elif atype in vectorTypes:
         assert len(vals) == 1, 'Create for %s has a single length argument'%atype
-        assert isinstance(vals[0],int) or isinstance(vals[0],long), 'Length for %s must be an integer'%atype
-        return create(fVector[atype],vals[0]).bind(0,1,vals[0])
+        if isinstance(vals[0],tuple):
+            l=vals[0][0]
+        else:
+            l=vals[0]
+        assert isinstance(l,int) or isinstance(l,long), 'Length for %s must be an integer'%atype
+        return create(fVector[atype],l).bind(0,1,l)
     elif atype in matrixTypes:
-        assert len(vals) > 1 and len(vals) < 4, \
-                'Create for %s has two length arguments and an optional major argument'%atype
-        assert (isinstance(vals[0],int) and isinstance(vals[1],int)) or \
-               (isinstance(vals[0],long) and isinstance(vals[1],long)), 'Lengths for %s must be integers'%atype
-        cl=vals[0]
-        rl= vals[1]
-        l=rl * cl
         offset=0
-        row_stride=1
-        col_stride=rl
-        if len(vals) == 3:
-            assert vals[2] in majorType, 'Flag %s not recognized as a vsip_major type'%repr(vals[2])
-            if vals[2] == VSIP_COL or vals[2] == 'COL':
-                row_stride=cl
-                col_stride=1
+        if isinstance(vals[0],tuple):
+            assert len(vals[0]) == 2,'Size for %s must have two integer entries.'%atype
+            cl,rl=vals[0]
+            assert (isinstance(cl,int) and isinstance(rl,int)) or \
+               (isinstance(cl,long) and isinstance(rl,long)), 'Lengths for %s must be integers.'%atype
+            row_stride=1;col_stride=rl
+            if len(vals) == 2:
+                assert vals[1] in majorType, 'Flag %s not recognized as a vsip_major type'%repr(vals[1])
+                if vals[1] == VSIP_COL or vals[1] == 'COL':
+                    row_stride=cl;col_stride=1
+        else:
+            assert len(vals) > 1 and len(vals) < 4, \
+                'Create for %s has two length arguments and an optional major argument.'%atype
+            assert (isinstance(vals[0],int) and isinstance(vals[1],int)) or \
+               (isinstance(vals[0],long) and isinstance(vals[1],long)), 'Lengths for %s must be integers.'%atype
+            cl=vals[0];rl= vals[1]
+            row_stride=1;col_stride=rl
+            if len(vals) == 3:
+                assert vals[2] in majorType, 'Flag %s not recognized as a vsip_major type'%repr(vals[2])
+                if vals[2] == VSIP_COL or vals[2] == 'COL':
+                    row_stride=cl;col_stride=1
+        l=rl * cl
         return create(fMatrix[atype],l).bind(offset,col_stride,cl,row_stride,rl)
     elif atype in fftTypes:
         nVals = len(vals)
@@ -4508,7 +4588,7 @@ def svdCompose(d,indx):
      you can create a new tuple, say g=(d[0],s,d[2]) if you want
     to create a new matrix but not use the original singular values.
     Note:
-      C=svdCompose(d,pv.create('vview_vi),d[0].length).ramp(0,1))
+      C=svdCompose(d,create('vview_vi),d[0].length).ramp(0,1))
     will return (an estimate of) the original matrix A.
     """
     assert 'vview_vi' in getType(indx)[2]
@@ -4585,7 +4665,7 @@ def sizeIn(s,opMat,opSide):
        opSide indicates location of prime matrix as Left or Right
     Note m or n will be free. This is indicated be a zero for that entry.
     """
-    if opSide==VSIP_MAT_LSIDE or opSide=='LSIDE': 
+    if opSide==VSIP_MAT_LSIDE or opSide=='LSIDE':
         if opMat == VSIP_MAT_NTRANS or opMat == 'NTRANS':
             m = s[1]; n=0;
         else: #must be TRANS or HERM
