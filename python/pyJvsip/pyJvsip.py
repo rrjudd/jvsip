@@ -2909,7 +2909,7 @@ class Block (object):
                 X = A.luSolve(X)
                 A is a matrix of type float or double; real or complex.
                 On input X is a vector or matrix of the same precision as A
-            luSolve solve overwrites input data with output data.
+            luSolve overwrites input data with output data.
             To keep the input use
                 Y = A.luSolve(X.copy)
             LU will overwrite the Calling matrix. To keep everything use
@@ -2924,7 +2924,7 @@ class Block (object):
             assert X.type == self.type, 'Calling view and input/output view must be the same type and precision'
             assert self.collength == X.collength, 'Input/Output view not sized properly for calling view'
             obj=LU(LU.tSel[self.type],self.rowlength).lud(self)
-            assert obj.singular,'The calling matrix is singular'
+            assert obj.singular == False,'The calling matrix is singular'
             obj.solve('NTRANS',X)
             return XB
         #
