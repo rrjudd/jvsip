@@ -5,10 +5,10 @@ def VU_vfrdB(a,rng):
     N_len=int(a.length)
     ca=a.otherEmpty.fill(0.0)
     fftType={'cvview_d':'ccfftip_d','cvview_f':'ccfftip_f'}[ca.type]
-    fft =  pv.FFT(fftType,(N_len,1,pv.VSIP_FFT_FWD,0,0))
+    fft =  pv.FFT(fftType,N_len,1,pv.VSIP_FFT_FWD,0,0)
     ra = ca.realview
     ia = ca.imagview
-    ta = a.clone
+    ta = a.cloneview
     s  = ta.stride
     pv.copy(a,ra)
     fft.dft(ca)
