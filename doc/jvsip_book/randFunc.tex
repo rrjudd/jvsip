@@ -49,3 +49,18 @@ void vsip\_cmrandu\_f(vsip\_randstate*, const vsip\_cmview\_f*);\\
 \end{tabular}
 \end{table}
 \\\pyjvsiph
+\\\hspace*{.05\textwidth}{\textbf{View Methods}\vspace*{1mm}}\\
+\hspace*{.07\textwidth}\parbox{.92\textwidth}{
+\begin{itemize}
+\item{Two convenience methods exist for the random number generator to work with supported \ttbf{view} types.\vspace*{1mm}}
+\subitem{\ttbf{randu} will return a uniform random number.\vspace*{1mm}}
+\subitem{\ttbf{randn} will return a normal random number.\vspace*{1mm}}
+\item{For convenience methods the portable random number generator (\ttbf{VSIP\_PRNG}) is used.\vspace*{1mm}}
+\item{A seed is supplied to the method as an argument for  the initialization\vspace*{1mm}}
+\end{itemize}\vspace*{1mm}}\\
+\hspace*{.09\textwidth}{\textbf{Example:}\vspace*{1mm}}\\
+\hspace*{.09\textwidth}\parbox{.9\textwidth}{Assume we have a floating point \ttbf{view aView} of depth real or complex.\\
+\begin{itemize}
+\item{\ttbf{aView.randn(5)}\vspace*{1mm}\\*Fills \ttbf{aView} with normal $N(0,1)$ random numbers using seed 5.}
+\item{\ttbf{aView.randu(6)}\vspace*{1mm}\\*Fills \ttbf{aView} with uniform random numbers using seed 6.}
+\end{itemize}}\\

@@ -94,32 +94,88 @@ int vsip\_csvdmatv\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsi
 % table of flags and types
 \begin{table}
 \caption{Flags and Types for SV Decomposition}
+\label{tab:svdFlagsAndType}
 \begin{center}\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries SV Decomposition Types}}}\Bs\\\hline
+\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries SV Decomposition Types}}\vspace*{1mm}}\Bs\\\hline
 'sv\_d' & Real \ttbf{SV}; double precision \Bs\\\hline
 'sv\_f' & Real \ttbf{SV}; float precision\Bs\\\hline
 'csv\_d' & Complex \ttbf{SV}; double precision\Bs\\\hline
 'csv\_f' & Complex \ttbf{SV}; float precision\Bs\\\hline
 %%%
-\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Flags \ttbf{opU} and \ttbf{opV} specifying computing options for matrices \ttbf{U} and \ttbf{V}}}}\Bs\\\hline
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Flags \ttbf{opU} and \ttbf{opV} specifying computing options for matrices \ttbf{U} and \ttbf{V}}}\vspace*{1mm}}\Bs\\\hline
 \Ts'NOS' or \ttbf{VSIP\_SVD\_UVNOS} & Do not compute.\Bs\\\hline
 'FULL' or \ttbf{VSIP\_SVD\_UVFULL} & Compute full matrix including null space.\Bs\\\hline
 'PART' or \ttbf{VSIP\_SVD\_UVPART} & Compute matrix without the null space.\Bs\\\hline
 %%%
-\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Matrix Operator Flags (\ttbf{op})}}}\Bs\\\hline
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Matrix Operator Flags (\ttbf{op})}}\vspace*{1mm}}\Bs\\\hline
 \Ts'NTRANS' or \ttbf{VSIP\_MAT\_NTRANS} & No Transpose operator\Bs\\\hline
    'TRANS' or \ttbf{VSIP\_MAT\_TRANS} & Transpose operator\Bs\\\hline
    'HERM' or \ttbf{VSIP\_MAT\_HERM} & Hermitian operator\Bs\\\hline
 %%%
-\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Side Flag for \ttbf{matu} and \ttbf{matv}}}}\Bs\\\hline
+\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Side Flag for \ttbf{matu} and \ttbf{matv}}}\vspace*{1mm}}\Bs\\\hline
 \Ts'LSIDE' or \ttbf{VSIP\_MAT\_LSIDE} & \ttbf{U} or \ttbf{V} Matrix on the left side\Bs\\\hline
    'RSIDE' or \ttbf{VSIP\_MAT\_RSIDE} & \ttbf{U} or \ttbf{V} Matrix on the right side\Bs\\\hline
  \end{tabular}\end{center}\end{table}
 %%
 \\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
-%
-\hspace*{.8cm}{\textbf{LU Class Methods\vspace*{.2cm}}\\
+\hspace*{1.1cm}\parbox{.9\textwidth}{
+\begin{itemize}
+\item{For singular value decomposition the input matrix is overwritten and (basically) owned by the SVD. To retain the calling \ttbf{view} make a copy.}
+\item{Five view methods have been defined for the SVD.}
+\subitem{\ttbf{sv}\hspace{6.5mm}\parbox[t]{.8\textwidth}{A property to obtain a vector of singular values for the calling \ttbf{view}}}
+\subitem{\ttbf{svd }\hspace{2mm}\parbox[t]{.8\textwidth}{A property to obtain full \ttbf{U}, \ttbf{s} and \ttbf{V} \ttbf{view}s for a calling \ttbf{view}}}
+\subitem{\ttbf{svdP }\parbox[t]{.8\textwidth}{A property to obtain \ttbf{U}, \ttbf{s} and \ttbf{V} \ttbf{view}s for a calling \ttbf{view} without the null space (\ttbf{SV} with the 'PART' option).}}
+\subitem{\ttbf{svdU }\parbox[t]{.8\textwidth}{A property to obtain full \ttbf{U} and \ttbf{s} \ttbf{view}s for a calling \ttbf{view}. \ttbf{V} is not calculated.}}
+\subitem{\ttbf{svdV }\parbox[t]{.8\textwidth}{A property to obtain \ttbf{s} and full \ttbf{V} \ttbf{view}s for a calling \ttbf{view}. \ttbf{U} is not calculated.}}
+\end{itemize}\vspace*{2mm}}}\\
+%EXAMPLE
+\hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
+\hspace*{1.9cm}\parbox{.85\textwidth}{\Ts Assume matrix \ttbf{view} \ttbf{A} has been created and has data in it.}\\
+\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{s=A.sv} \\*
+will calculate a vector of singular vales for \ttbf{A}. To retain \ttbf{A} use \ttbf{s=A.copy.sv}\vspace*{3mm}}\\
+%CLASS METHODS
+\hspace*{.8cm}{\textbf{SV Class Methods\vspace*{2mm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{SV} object do\\
 \hspace*{1.cm}\ttbf{svObj = SV(t,m,n,opU,opV)} \\
-Where \ttbf{t} is a string indicating the type of \ttbf{SV} object to create, \ttbf{m} and \ttbf{n} indicate the size (\ttbf{m,n}) of the input matrix to decompose, and \ttbf{opU} and  \ttbf{opV} are flags specifying computing options for matrices \ttbf{U} and \ttbf{V} respectively.\\
-For the class methods table we assume we have created an SV object we call \ttbf{svObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{svObj}.\vspace{.2cm}}\\
+Where \ttbf{t} is a string indicating the type of \ttbf{SV} object to create, \ttbf{m} and \ttbf{n} indicate the size (\ttbf{m,n}) of the input matrix to decompose, and \ttbf{opU} and  \ttbf{opV} are flags specifying computing options for matrices \ttbf{U} and \ttbf{V} respectively. See table \ref{tab:svdFlagsAndType}.\\
+For convenience if the target of method \ttbf{svd} is matrix \ttbf{view A} then you may create a compatible \ttbf{SV} object using\\
+\hspace*{1.cm}\ttbf{svObj=SV(A.type,A.size,opU,opV)}\\
+For the class methods table we assume we have created an \ttbf{SV} object we call \ttbf{svObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{svObj}.\vspace{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{For methods \ttbf{prodU} and \ttbf{prodV} the input/output matrix \ttbf{XB} may have a different size on output. Both views are in the same data space and will overlap (this is an in-place operation). To ensure matrix \ttbf{XB} is sized properly make sure it is large enough to hold all the data for the largest matrix and place the other matrix in a subview with origin at \ttbf{0,0} for both input and output. Note that \pyjv{} has functions \ttbf{sizeIn} and \ttbf{sizeOut} to help in calculating sizes given the somewhat confusing number of options for matrix operators and matrix sides available in matrix product functions.}\\
+\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
+\multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries SV Decomposition Methods}\vspace*{2mm}}}\Bs\\ \hline
+%
+\Ts\ttbf{svObj.svd(A)} & 
+\parbox[t]{.58\textwidth}{Decompose \ttbf{A}. Results are in SV object.\vspace*{1mm}}\Bs\\\hline
+%
+\ttbf{svObj.sizeU} & 
+\parbox[t]{.58\textwidth}{Property. Returns size of U matrix created by \ttbf{svd} method.\vspace*{2mm}}\Bs\\\hline
+%
+\ttbf{svObj.sizeV} & 
+\parbox[t]{.58\textwidth}{Property. Returns size of V matrix created by \ttbf{svd} method.\vspace*{2mm}}\Bs\\\hline
+%
+\ttbf{svObj.size} & 
+\parbox[t]{.58\textwidth}{Property. Returns size of expected input matrix to \ttbf{svd} method \ttbf{(m,n)}\vspace{1mm}}\Bs\\\hline
+%
+\ttbf{svObj.type} & 
+\parbox[t]{.58\textwidth}{Property. Returns string indicating SV type.\vspace*{2mm}}\Bs\\\hline
+%
+\ttbf{svObj.vsip} & 
+\parbox[t]{.58\textwidth}{Property. Returns C VSIPL SV instance.\vspace*{2mm}}\Bs\\\hline
+%
+\ttbf{svObj.s} &
+ \parbox[t]{.58\textwidth}{Property. Returns vector of singular values.\vspace*{1mm}}\Bs\\\hline
+%
+\ttbf{svObj.matU(low,high,U)} &
+ \parbox[t]{.58\textwidth}{Method to get matrix \ttbf{U} from \ttbf{SV} object.  Arguments \ttbf{low} and \ttbf{high} are indices of the first and last column to be returned. Argument \ttbf{U} is the supplied output matrix of proper size. For convenience one may do \ttbf{U = svObj.matU(low,high)} to have the method create the U matrix for you. For convenience one may do \ttbf{U = svObj.matU()} if the entire available \ttbf{U} matrix is desired.\vspace{2mm}}\Bs\\\hline
+%
+\ttbf{svObj.matV(low,high,V)} &
+ \parbox[t]{.58\textwidth}{Method to get matrix \ttbf{V} from \ttbf{SV} object. The \ttbf{matV} method has same optional argument lists as \ttbf{matU}.\vspace*{2mm}}\Bs\\\hline
+%
+\ttbf{svObj.prodU(op,side,XB)} &
+ \parbox[t]{.58\textwidth}{Matrix product of \ttbf{U} with \ttbf{XB}. Input/Output in \ttbf{XB}.\vspace*{1mm}}\Bs\\\hline
+%
+\ttbf{svObj.prodV(op,side,XB)} &
+ \parbox[t]{.58\textwidth}{Matrix product of \ttbf{V} with \ttbf{XB}. Input/Output in \ttbf{XB}.\vspace*{1mm}}\Bs\\\hline
+%
+\end{tabular}\vspace*{.4cm}}\\

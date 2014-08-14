@@ -20,11 +20,6 @@
 \newcounter{pyjvexctr} \setcounter{pyjvexctr}{1}
 \newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
 \newcommand{\ilCode}[1]{{\small {\ttfamily \bfseries #1}}}
-% C Example heading
-\newcommand{\cex}{{\begin{center} \bfseries{c VSIPL Example \arabic{cexctr}} \end{center}}}
-%\newcommand{\pyjvex}{{\begin{center} \bfseries{pyJvsip Example \arabic{pyjvexctr}} \end{center}}}
-%\newcommand*{\mhdr}{\fontfamily{pcr}\selectfont}
-%*********JVSIP Function Commands
 \newcommand{\afuncT}[3]{\clearpage{\Large \textbf{\hypertarget{{\ttfamily \bfseries#1Func}}{#1}}{\hspace*{\fill}\hypertarget{#1Func}{}\hyperlink{#3}{up}}} \vspace{.01\textheight}\\ \hspace*{.02\textwidth} \parbox{.97\textwidth}{#2 } \vspace{.005\textheight}}
 %hlinkFunk used for hyperlink of table name with function page.
 \newcommand{\hlnkFunc}[1]{\hyperlink{#1Func}{\texttt{#1}}}
@@ -45,7 +40,7 @@
 \newcommand{\apyfunc}[2]{\newline \hspace*{.04\textwidth}\textbf{Function} 
 \\ \hspace*{.06\textwidth}\textbf{Available:} #1 
 \\ \hspace*{.06\textwidth}\textbf{Example:} {\ttfamily #2}}
-%use as \pyjv{}
+%use as \pyJvsip{}
 \newcommand{\pyjv}{{\ttbf{pyJvsip}}}
 %use as \jv{}
 \newcommand{\jv}{\ttbf{JVSIP}}
@@ -56,19 +51,5 @@
 \newcommand\Bs{\rule[-1.2ex]{0pt}{0pt}}
 \makeindex
 \begin{document}
-\include{titlePage}
-\frontmatter
-\include{preface}
-\tableofcontents
-\listoffigures
-\listoftables
-\mainmatter
-\include{c1}
-\include{c2}
-\include{c3}
-\include{c4}
-\include{c5}
-\include{c6}
-\include{c7}
-\printindex
+\include{sinFunc}
 \end{document}

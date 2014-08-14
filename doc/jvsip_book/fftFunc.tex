@@ -77,15 +77,15 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \hline\end{tabular}
 }
 \\\pyjvsiph
+% View Methods
 \\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1cm}\parbox{10.5cm}{
 \begin{itemize}
 \item {Special \ttbf{view} methods exist for \ttbf{view}s of type float and double.} 
 \item {\ttbf{View} methods are defined as properties (@property). The scale factor is always one for \ttbf{view} methods.}
-\item {For out of place the method will create and return the output \ttbf{view}.
+\item {For out of place the method will create and return the output \ttbf{view}.}
 \item {\ttbf{View} methods determine if the FFT is a multiple FFT or a vector FFT by the \ttbf{view} type. The \pyjv \ttbf{view} \ttbf{major} attribute is used to determine if the multiple FFT is by row or by column.}
 \item {Out-of-place \ttbf{view} methods \ttbf{fftop} and \ttbf{ifftop} treat real vectors as if they were complex with a zero imaginary part}
-}
 \end{itemize}}\\
 %%
 \hspace*{1.1cm}\textbf{In-Place: }\hspace{.2cm} yes\\
@@ -115,12 +115,12 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \hspace*{.5cm}\ttbf{ y=x.COL.ifftop}}\\\\
  \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex multiple inverse transform of matrix \ttbf{x} out-of-place by row\\
 \hspace*{.5cm}\ttbf{ y=x.ROW.ifftop}}\\\\
-%
+% Class
 \hspace*{.8cm}{\textbf{FFT Class\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an FFT object use \\*
 \hspace*{1.cm} \ttbf{fftObj=FFT(t,*args)}\\*
-where \ttbf{args} is a tuple containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.\vspace{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of the following in the order listed. The exact argument list, and each type string, is shown in the Discrete Fourier Transform Class table below.\\
+where \ttbf{args} is a variable arguments list containing the create parameters for the FFT type selected, and \ttbf{t} is a string indicating the type of FFT to create.\vspace{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{The \ttbf{args} will contain some or all of the following in the order listed. The exact argument list for each type is shown in the Discrete Fourier Transform Class table below.\\
 \begin{tabular}[t]{|l l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Fast Fourier Transform Argument List\vspace{.2cm}}}}\\ \hline
 \ttbf{M} & \parbox[t]{.75\textwidth}{Column Length \vspace*{.1cm}}\\ \hline
