@@ -3287,7 +3287,7 @@ class FFT (object):
                 'ccfftop_d', 'rcfftop_d', 'crfftop_d', 'ccfftmip_f', 'ccfftmop_f',
                 'rcfftmop_f', 'crfftmop_f', 'ccfftmip_d', 'ccfftmop_d', 'rcfftmop_d',
                  'crfftmop_d']
-            arg is a tuple corresponding to one of the VSIPL arguments list for the associated type value.
+            arg is an argument list corresponding to one of the VSIPL arguments list for the associated type value.
         Example:
        If VSIPL enumerated types are available as part of the pyJvsip import.
     """
@@ -3347,7 +3347,10 @@ class FFT (object):
             self.__jvsip = JVSIP()
             self.__arg = args
             self.__type = t
-            l = args
+            if len(args) == 1 and isinstance(args[0],tuple):
+                l = args[0]
+            else:
+                l = args
             self.__fft = eval(FFT.fftCreateDict[t])
         else:
             print("Type <:%s:> not a recognized type for FFT",t)
