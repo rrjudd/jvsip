@@ -1,3 +1,12 @@
-\afuncT{vmmul}{computes the difference of a scalar and a \ttbf{view} or between two \ttbf{view}s.}{binaryOperations}
+\afuncT{vmmul}{Vector-Matrix elementwise multiply by row or column.}{binaryOperations}
 \\\cvsiplh
+\afh
+{\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+void vsip\_cvmmul\_d(const vsip\_cvview\_d*,\\*\hspace*{1cm}const vsip\_cmview\_d*, vsip\_major, const vsip\_cmview\_d*);\Bs\\
+void vsip\_cvmmul\_f(const vsip\_cvview\_f*,\\*\hspace*{1cm}const vsip\_cmview\_f*, vsip\_major, const vsip\_cmview\_f*);\Bs\\
+void vsip\_vmmul\_d(const vsip\_vview\_d*,\\*\hspace*{1cm}const vsip\_mview\_d*, vsip\_major, const vsip\_mview\_d*);\Bs\\
+void vsip\_vmmul\_f(const vsip\_vview\_f*,\\*\hspace*{1cm}const vsip\_mview\_f*, vsip\_major, const vsip\_mview\_f*);\Bs\\
+\end{tabular}
+}
 \\\pyjvsiph

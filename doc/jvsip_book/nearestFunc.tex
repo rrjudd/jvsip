@@ -4,13 +4,14 @@
 \newline \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
-void vsip\_minterp\_nearest\_f ( const vsip\_vview\_f *, const vsip\_mview\_f *, vsip\_major, const vsip\_vview\_f *, const vsip\_mview\_f * ) ;\\
-void vsip\_vinterp\_nearest\_f ( const vsip\_vview\_f *, const vsip\_vview\_f *, const vsip\_vview\_f *, const vsip\_vview\_f * ) ;\\
-void vsip\_vinterp\_nearest\_d( const vsip\_vview\_d *, const vsip\_vview\_d *, const vsip\_vview\_d *, const vsip\_vview\_d *);\\
-void vsip\_minterp\_nearest\_d ( const vsip\_vview\_d*, const vsip\_mview\_d*, vsip\_major, const vsip\_vview\_d*, const vsip\_mview\_d* ) ;\\
+void vsip\_vinterp\_nearest\_f(\\*\hspace*{1cm}const vsip\_vview\_f *, const vsip\_vview\_f *,
+\\*\hspace*{1cm}const vsip\_vview\_f *, const vsip\_vview\_f*);\\
+void vsip\_vinterp\_nearest\_d(\\*\hspace*{1cm}const vsip\_vview\_d *, const vsip\_vview\_d *,
+\\*\hspace*{1cm}const vsip\_vview\_d *, const vsip\_vview\_d*);\\
+void vsip\_minterp\_nearest\_f(\\*\hspace*{1cm}const vsip\_vview\_f *, const vsip\_mview\_f *,
+\\*\hspace*{1cm}vsip\_major, const vsip\_vview\_f *, const vsip\_mview\_f*);\\
+void vsip\_minterp\_nearest\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_mview\_d*,
+\\*\hspace*{1cm}vsip\_major, const vsip\_vview\_d*, const vsip\_mview\_d*);\\
 \end{tabular}
 }\\
 \\\pyjvsiph
-\viewmthd{Yes}{Yes}{NA}{msq=in.meansqval}
-\apyfunc{No}{NA}
-\pyComment{\item{There seemed to be no reason to include this as a separate function for \pyjv}}

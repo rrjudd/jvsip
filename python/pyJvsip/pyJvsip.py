@@ -1062,7 +1062,6 @@ class Block (object):
                 return self
             else:
                 print('View type <:' + t +':> does not support property blackman')
-
         # ### ### ### Element-wise methods
         # Elementary math functions
         @property
@@ -1073,6 +1072,7 @@ class Block (object):
         def asin(self):
             asin(self,self)
             return self
+        @property
         def atan(self):
             return atan(self,self)
         # atan2 only supported by function call
@@ -4326,6 +4326,8 @@ class SV(object):
         f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
         return out
 # pyJvsip Functions
+def ramp(t,start,inc,length):
+    return create(t,length).ramp(start,inc)
 def create(atype,*vals):
     """
        usage:

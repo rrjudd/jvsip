@@ -1,82 +1,71 @@
 \afuncT{add}{Compute the sum of a scalar and a \ttbf{view} or two \ttbf{view}s. A binary operation.}{binaryOperations}
 \\\cvsiplh
-\vspace{.25cm}\\
-\hspace*{1cm}\texttt{
-\begin{tabular}[H]{l}
-\multicolumn{1}{c}{\rmfamily \bfseries Scalar Add Functions}\\ \hline
-vsip\_cscalar\_d vsip\_cadd\_d(vsip\_cscalar\_d, vsip\_cscalar\_d);\\
-vsip\_cscalar\_d vsip\_rcadd\_d(vsip\_scalar\_d, vsip\_cscalar\_d);\\
-vsip\_cscalar\_f vsip\_cadd\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\\
-vsip\_cscalar\_f vsip\_rcadd\_f(vsip\_scalar\_f, vsip\_cscalar\_f);\\
-\end{tabular}
-}\\
-\vspace*{.25cm}\\
-\hspace*{1cm}\texttt{
-\begin{tabular}[H]{l}
-\multicolumn{1}{c}{\rmfamily \bfseries Normal View - View Add Functions}\\ \hline
-void vsip\_vadd\_d(const vsip\_vview\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\\
-void vsip\_vadd\_f(const vsip\_vview\_f*, const vsip\_vview\_f*,const vsip\_vview\_f*);\\
-void vsip\_cvadd\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*,const vsip\_cvview\_d*);\\
-void vsip\_cvadd\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*,const vsip\_cvview\_f*);\\
-void vsip\_madd\_d(const vsip\_mview\_d*, const vsip\_mview\_d*,const vsip\_mview\_d*);\\
-void vsip\_madd\_f(const vsip\_mview\_f*, const vsip\_mview\_f*,const vsip\_mview\_f*);\\
-void vsip\_cmadd\_d(const vsip\_cmview\_d*, const vsip\_cmview\_d*,const vsip\_cmview\_d*);\\
-void vsip\_cmadd\_f(const vsip\_cmview\_f*, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\\
-void vsip\_vadd\_i(const vsip\_vview\_i*, const vsip\_vview\_i*,const vsip\_vview\_i*);\\
-void vsip\_madd\_i(const vsip\_mview\_i*, const vsip\_mview\_i*,const vsip\_mview\_i*);\\
-void vsip\_vadd\_si(const vsip\_mview\_si*, const vsip\_mview\_si*,const vsip\_mview\_si*);\\
-void vsip\_madd\_si(const vsip\_mview\_si*, const vsip\_mview\_si*,const vsip\_mview\_si*);\\
-void vsip\_vadd\_uc(const vsip\_vview\_uc*, const vsip\_vview\_uc*,const vsip\_vview\_uc*);\\
-void vsip\_vadd\_vi(const vsip\_vview\_vi*, const vsip\_vview\_vi*,const vsip\_vview\_vi*);\\
-\end{tabular}
-}\\
-\vspace*{.25cm}\\
-\hspace*{1cm}\texttt{
-\begin{tabular}[H]{l}
-\multicolumn{1}{c}{\rmfamily \bfseries Mixed Depth View - View Add Functions}\\ \hline
-void vsip\_rcvadd\_d(const vsip\_vview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
-void vsip\_rcvadd\_f(const vsip\_vview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
-void vsip\_rcmadd\_d(const vsip\_mview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
-void vsip\_rcmadd\_f(const vsip\_mview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
-\end{tabular}
-}\\
-\vspace*{.25cm}\\
-\hspace*{1cm}\texttt{
-\begin{tabular}[H]{l}
-\multicolumn{1}{c}{\rmfamily \bfseries Mixed Depth Scalar - View Add Functions}\\ \hline
-void vsip\_rscvadd\_d(vsip\_scalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
-void vsip\_rscvadd\_f(vsip\_scalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
-void vsip\_rscmadd\_d(vsip\_scalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
-void vsip\_rscmadd\_f(vsip\_scalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
-\end{tabular}
-}\\
-\vspace*{.25cm}\\
-\hspace*{1cm}\texttt{
-\begin{tabular}[H]{l}
-\multicolumn{1}{c}{\rmfamily \bfseries Normal Scalar - View Add Functions}\\ \hline
-void vsip\_svadd\_d(vsip\_scalar\_d, const vsip\_vview\_d*, const vsip\_vview\_d*);\\
-void vsip\_svadd\_f(vsip\_scalar\_f, const vsip\_vview\_f*, const vsip\_vview\_f*);\\
-void vsip\_smadd\_d(vsip\_scalar\_d, const vsip\_mview\_d*, const vsip\_mview\_d*);\\
-void vsip\_smadd\_f(vsip\_scalar\_f, const vsip\_mview\_f*, const vsip\_mview\_f*);\\
-void vsip\_csvadd\_d(vsip\_cscalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
-void vsip\_csvadd\_f(vsip\_cscalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
-void vsip\_csmadd\_d(vsip\_cscalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
-void vsip\_csmadd\_f(vsip\_cscalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
-void vsip\_svadd\_i(vsip\_scalar\_i, const vsip\_vview\_i*, const vsip\_vview\_i*);\\
-void vsip\_svadd\_si(vsip\_scalar\_si, const vsip\_vview\_si*, const vsip\_vview\_si*);\\
-void vsip\_svadd\_uc(vsip\_scalar\_uc, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\\
-void vsip\_svadd\_vi(vsip\_scalar\_vi, const vsip\_vview\_vi*, const vsip\_vview\_vi*);\\
+\afh
+{
+\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Scalar Add Functions}\\ \hline
+vsip\_cscalar\_d vsip\_cadd\_d(vsip\_cscalar\_d, vsip\_cscalar\_d);\Bs\\
+vsip\_cscalar\_d vsip\_rcadd\_d(vsip\_scalar\_d, vsip\_cscalar\_d);\Bs\\
+vsip\_cscalar\_f vsip\_cadd\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\Bs\\
+vsip\_cscalar\_f vsip\_rcadd\_f(vsip\_scalar\_f, vsip\_cscalar\_f);\Bs\\
+\end{tabular}\\
+\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Normal View - View Add Functions}\\\hline
+void vsip\_vadd\_d(const vsip\_vview\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_vadd\_f(const vsip\_vview\_f*, const vsip\_vview\_f*,const vsip\_vview\_f*);\Bs\\
+void vsip\_cvadd\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*,const vsip\_cvview\_d*);\Bs\\
+void vsip\_cvadd\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*,const vsip\_cvview\_f*);\Bs\\
+void vsip\_madd\_d(const vsip\_mview\_d*, const vsip\_mview\_d*,const vsip\_mview\_d*);\Bs\\
+void vsip\_madd\_f(const vsip\_mview\_f*, const vsip\_mview\_f*,const vsip\_mview\_f*);\Bs\\
+void vsip\_cmadd\_d(const vsip\_cmview\_d*, const vsip\_cmview\_d*,const vsip\_cmview\_d*);\Bs\\
+void vsip\_cmadd\_f(const vsip\_cmview\_f*, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\Bs\\
+void vsip\_vadd\_i(const vsip\_vview\_i*, const vsip\_vview\_i*,const vsip\_vview\_i*);\Bs\\
+void vsip\_madd\_i(const vsip\_mview\_i*, const vsip\_mview\_i*,const vsip\_mview\_i*);\Bs\\
+void vsip\_vadd\_si(const vsip\_mview\_si*, const vsip\_mview\_si*,const vsip\_mview\_si*);\Bs\\
+void vsip\_madd\_si(const vsip\_mview\_si*, const vsip\_mview\_si*,const vsip\_mview\_si*);\Bs\\
+void vsip\_vadd\_uc(const vsip\_vview\_uc*, const vsip\_vview\_uc*,const vsip\_vview\_uc*);\Bs\\
+void vsip\_vadd\_vi(const vsip\_vview\_vi*, const vsip\_vview\_vi*,const vsip\_vview\_vi*);\Bs\\
+\end{tabular}\\
+\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Mixed Depth View - View Add Functions}\\\hline
+void vsip\_rcvadd\_d(const vsip\_vview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_rcvadd\_f(const vsip\_vview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_rcmadd\_d(const vsip\_mview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_rcmadd\_f(const vsip\_mview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+\end{tabular}\\
+\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Mixed Depth Scalar - View Add Functions}\\ \hline
+void vsip\_rscvadd\_d(vsip\_scalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_rscvadd\_f(vsip\_scalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_rscmadd\_d(vsip\_scalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_rscmadd\_f(vsip\_scalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+\end{tabular}\\
+\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Normal Scalar - View Add Functions}\\ \hline
+void vsip\_svadd\_d(vsip\_scalar\_d, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_svadd\_f(vsip\_scalar\_f, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+void vsip\_smadd\_d(vsip\_scalar\_d, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_smadd\_f(vsip\_scalar\_f, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_csvadd\_d(vsip\_cscalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_csvadd\_f(vsip\_cscalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_csmadd\_d(vsip\_cscalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_csmadd\_f(vsip\_cscalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_svadd\_i(vsip\_scalar\_i, const vsip\_vview\_i*, const vsip\_vview\_i*);\Bs\\
+void vsip\_svadd\_si(vsip\_scalar\_si, const vsip\_vview\_si*, const vsip\_vview\_si*);\Bs\\
+void vsip\_svadd\_uc(vsip\_scalar\_uc, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\Bs\\
+void vsip\_svadd\_vi(vsip\_scalar\_vi, const vsip\_vview\_vi*, const vsip\_vview\_vi*);\Bs\\
 \end{tabular}
 }\\
 \\\pyjvsiph
-\\\hspace*{.8cm}{\textbf{View Method}\\
-\hspace*{1.1cm}Overloaded on plus operator.\\
-\hspace*{1.1cm}\textbf{In Place: }\hspace{.2cm} yes\\
-\hspace*{1.1cm}\textbf{Example: }\ttbf{a += b; a += 2}\\*
-\hspace*{1.5cm}Elements of \ttbf{view a} replaced with result.\\
-\hspace*{1.1cm}\textbf{Out of Place: }\hspace{.2cm} yes\\
-\hspace*{1.1cm}\textbf{Example: }\ttbf{c = a + b; d = 2 + c}\\*
-\hspace*{1.5cm}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.\\
+\\\vmthdh
+\hspace*{.06\textwidth}Overloaded on plus operator.\\
+\hspace*{.06\textwidth}\textbf{In Place: }\hspace{.2cm} yes\\
+\hspace*{.08\textwidth}\textbf{Example: }\ttbf{a += b; a += 2}\\*
+\hspace*{.1\textwidth}Elements of \ttbf{view a} replaced with result.\\
+\hspace*{.06\textwidth}\textbf{Out of Place: }\hspace{.2cm} yes\\
+\hspace*{.08\textwidth}\textbf{Example: }\ttbf{c = a + b; d = 2 + c}\\*
+\hspace*{.1\textwidth}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.\\
 \apyfunc{yes}{out = add(in1,in2,out)}
 \pyComment{\item{The \ttbf{add} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. }
 \item{This may be done in-place if \ttbf{in1==out} or \ttbf{in2==out}.}

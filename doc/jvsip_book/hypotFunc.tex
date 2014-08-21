@@ -1,3 +1,14 @@
-\afuncT{hypot}{computes the difference of a scalar and a \ttbf{view} or between two \ttbf{view}s. A binary operation.}{binaryOperations}
+\afuncT{hypot}{Computes the square root of the sum of squares, by element, of two input \ttbf{view}s.}{binaryOperations}
 \\\cvsiplh
+\afh
+{\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+vsip\_scalar\_d vsip\_hypot\_d(vsip\_scalar\_d,vsip\_scalar\_d);\Bs\\
+vsip\_scalar\_f vsip\_hypot\_f(vsip\_scalar\_f,vsip\_scalar\_f);\Bs\\
+void vsip\_mhypot\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_mhypot\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_vhypot\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_vhypot\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+\end{tabular}
+}
 \\\pyjvsiph

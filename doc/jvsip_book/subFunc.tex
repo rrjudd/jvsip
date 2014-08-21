@@ -1,3 +1,86 @@
-\afuncT{sub}{computes the difference of a scalar and a \ttbf{view} or between two \ttbf{view}s. A binary operation.}{binaryOperations}
+\afuncT{sub}{Compute the difference of a scalar and a \ttbf{view} or between two \ttbf{view}s.}{binaryOperations}
 \\\cvsiplh
+\\\hspace*{.04\textwidth}\parbox{.93\textwidth}{
+\textrm{There are many combinations of subtract functions available in \jv{}. The specification provides the normal \ttbf{view} subtractions of complex-complex and real-real types;\Bs but also provides real-complex multiplies as well as mixed \ttbf{scalar-view} multiplies. Consequently the listed available functions are broken up into several tables below.}
+}\vspace{.005\textheight}\\
+\afh
+{
+\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Scalar Subtraction Functions}\\ \hline
+vsip\_cscalar\_d vsip\_crsub\_d(vsip\_cscalar\_d, vsip\_scalar\_d);\Bs\\
+vsip\_cscalar\_d vsip\_csub\_d(vsip\_cscalar\_d, vsip\_cscalar\_d);\Bs\\
+vsip\_cscalar\_d vsip\_rcsub\_d(vsip\_scalar\_d, vsip\_cscalar\_d);\Bs\\
+vsip\_cscalar\_f vsip\_crsub\_f(vsip\_cscalar\_f, vsip\_scalar\_f);\Bs\\
+vsip\_cscalar\_f vsip\_csub\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\Bs\\
+vsip\_cscalar\_f vsip\_rcsub\_f(vsip\_scalar\_f, vsip\_cscalar\_f);\Bs\\
+\end{tabular}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Scalar-\ttbf{view} Subtraction Functions}\\ \hline
+void vsip\_csmsub\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_csmsub\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_csvsub\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_csvsub\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_smsub\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_smsub\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_smsub\_i(\\*\hspace*{1cm}vsip\_scalar\_i, const vsip\_mview\_i*, const vsip\_mview\_i*);\Bs\\
+void vsip\_smsub\_si(\\*\hspace*{1cm}vsip\_scalar\_si, const vsip\_mview\_si*, const vsip\_mview\_si*);\Bs\\
+void vsip\_smsub\_si(\\*\hspace*{1cm}vsip\_scalar\_si, const vsip\_mview\_si*, const vsip\_mview\_si*);\Bs\\
+void vsip\_svsub\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_svsub\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+void vsip\_svsub\_i(\\*\hspace*{1cm}vsip\_scalar\_i, const vsip\_vview\_i*, const vsip\_vview\_i*);\Bs\\
+void vsip\_svsub\_si(\\*\hspace*{1cm}vsip\_scalar\_si, const vsip\_vview\_si*, const vsip\_vview\_si*);\Bs\\
+void vsip\_svsub\_uc(\\*\hspace*{1cm}vsip\_scalar\_uc, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\Bs\\
+void vsip\_svsub\_vi(\\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_vview\_vi*, const vsip\_vview\_vi*);\Bs\\
+\end{tabular}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Mixed Depth scalar-\ttbf{view} Subtraction Functions}\\ \hline
+void vsip\_rscmsub\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_rscmsub\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_rscvsub\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_rscvsub\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+\end{tabular}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries \ttbf{View}-\ttbf{view} Subtraction Functions}\\ \hline
+void vsip\_vsub\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\Bs\\
+void vsip\_vsub\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+void vsip\_cvsub\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_cvsub\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_vsub\_i(\\*\hspace*{1cm}const vsip\_vview\_i*, const vsip\_vview\_i*, const vsip\_vview\_i*);\Bs\\
+void vsip\_vsub\_si(\\*\hspace*{1cm}const vsip\_vview\_si*, const vsip\_vview\_si*, const vsip\_vview\_si*);\Bs\\
+void vsip\_vsub\_uc(\\*\hspace*{1cm}const vsip\_vview\_uc*, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\Bs\\
+void vsip\_msub\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_msub\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_cmsub\_d(\\*\hspace*{1cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_cmsub\_f(\\*\hspace*{1cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_msub\_i(\\*\hspace*{1cm}const vsip\_mview\_i*, const vsip\_mview\_i*, const vsip\_mview\_i*);\Bs\\
+void vsip\_msub\_si(\\*\hspace*{1cm}const vsip\_mview\_si*, const vsip\_mview\_si*, const vsip\_mview\_si*);\Bs\\
+\end{tabular}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Mixed Depth \ttbf{view}-\ttbf{view} Subtraction Functions}\\ \hline
+void vsip\_crmsub\_d(\\*\hspace*{1cm}const vsip\_cmview\_d*, const vsip\_mview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_crmsub\_f(\\*\hspace*{1cm}const vsip\_cmview\_f*, const vsip\_mview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_rcmsub\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_rcmsub\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_rcvsub\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_rcvsub\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_crvsub\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, const vsip\_vview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_crvsub\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_vview\_f*, const vsip\_cvview\_f*);\Bs\\
+\end{tabular}\\
+}
 \\\pyjvsiph
+\\\vmthdh
+\hspace*{.06\textwidth}Overloaded on minus operator.\\
+\hspace*{.06\textwidth}\textbf{In Place: }\hspace{2mm} yes\\
+\hspace*{.08\textwidth}\textbf{Example: }\ttbf{a -= b;\Bs a -= 2}\\*
+\hspace*{.1\textwidth}Elements of \ttbf{view a} replaced with result.\\
+\hspace*{.06\textwidth}\textbf{Out of Place: }\hspace{.2cm} yes\\
+\hspace*{.08\textwidth}\textbf{Example: }\ttbf{c = a - b;\Bs d = 2 - c}\\*
+\hspace*{.1\textwidth}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.\\
+\apyfunc{yes}{out = sub(in1,in2,out)}
+\pyComment{
+\item{For the function arguments \ttbf{in1} may be either a view or a scalar. Argument \ttbf{in2} and \ttbf{out} must be a view for \pyjv.}
+\item{For the overloaded minus operator \pyjv{} has been augmented so that if $\alpha$ is a scalar and $a$ is a view then either $y=a-\alpha$ or $y=\alpha - v$ will work as expected. The first case is actually done with the \ttbf{add} function from \cvl.}
+\item{The \ttbf{sub} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. See the \cvl{} specification for clues on how the function works.}
+\item{This may be done in-place if \ttbf{in1==out} or \ttbf{in2==out}.}
+}

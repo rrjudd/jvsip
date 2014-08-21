@@ -1,3 +1,16 @@
-\afuncT{expoavg}{computes the difference of a scalar and a \ttbf{view} or between two \ttbf{view}s. A binary operation.}{binaryOperations}
+\afuncT{expoavg}{Exponential Average. Computes an exponential weighted average, by element, of two \ttbf{view}s.}{binaryOperations}
 \\\cvsiplh
+\afh
+{\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+void vsip\_cmexpoavg\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_cmexpoavg\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_cvexpoavg\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_cvexpoavg\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_mexpoavg\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_mexpoavg\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_vexpoavg\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_vexpoavg\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+\end{tabular}
+}
 \\\pyjvsiph

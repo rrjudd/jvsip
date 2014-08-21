@@ -1,3 +1,56 @@
-\afuncT{mul}{computes the difference of a scalar and a \ttbf{view} or between two \ttbf{view}s. A binary operation.}{binaryOperations}
+\afuncT{mul}{Computes the product of two \ttbf{view}s by element or a scalar and \ttbf{view}.}{binaryOperations}
 \\\cvsiplh
+\\\hspace*{.04\textwidth}\parbox{.93\textwidth}{
+\textrm{There are many combinations of multiply available in \jv{}. The specification provides the normal \ttbf{view} multiplies of complex-complex and real-real types;\Bs but also provides real-complex multiplies as well as mixed \ttbf{scalar-view} multiplies. Consequently the listed available functions are broken up into several tables below.}
+}\vspace{.005\textheight}\\
+\afh
+{
+\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Scalar-Scalar Multiply Functions}\\ \hline
+vsip\_cscalar\_d vsip\_cmul\_d(vsip\_cscalar\_d, vsip\_cscalar\_d);\Bs\\
+vsip\_cscalar\_d vsip\_rcmul\_d(vsip\_scalar\_d, vsip\_cscalar\_d);\Bs\\
+vsip\_cscalar\_f vsip\_cmul\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\Bs\\
+vsip\_cscalar\_f vsip\_rcmul\_f(vsip\_scalar\_f, vsip\_cscalar\_f);\Bs\\
+\end{tabular}\vspace{.005\textheight}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries \ttbf{View}-\ttbf{view} Multiply Functions}\\ \hline
+void vsip\_cmmul\_d(\\*\hspace*{1cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_cmmul\_f(\\*\hspace*{1cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_mmul\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_mmul\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_cvmul\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_cvmul\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_vmul\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_vmul\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+void vsip\_vmul\_i(\\*\hspace*{1cm}const vsip\_vview\_i*, const vsip\_vview\_i*, const vsip\_vview\_i*);\Bs\\
+void vsip\_vmul\_si(\\*\hspace*{1cm}const vsip\_vview\_si*, const vsip\_vview\_si*, const vsip\_vview\_si*);\Bs\\
+void vsip\_vmul\_uc(\\*\hspace*{1cm}const vsip\_vview\_uc*, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\Bs\\
+\end{tabular}\vspace{.005\textheight}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Mixed Depth \ttbf{view}-\ttbf{view} Multiply Functions}\\ \hline
+void vsip\_rcmmul\_d(\\*\hspace*{1cm}const vsip\_mview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_rcmmul\_f(\\*\hspace*{1cm}const vsip\_mview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_rcvmul\_d(\\*\hspace*{1cm}const vsip\_vview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_rcvmul\_f(\\*\hspace*{1cm}const vsip\_vview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_rscmmul\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_rscmmul\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_rscvmul\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_rscvmul\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+\end{tabular}\vspace{.005\textheight}
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Scalar-\ttbf{view} Multiply Functions}\\ \hline
+void vsip\_csmmul\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_csmmul\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_csvmul\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_csvmul\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_smmul\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_smmul\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_svmul\_d(\\*\hspace*{1cm}vsip\_scalar\_d, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_svmul\_f(\\*\hspace*{1cm}vsip\_scalar\_f, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+void vsip\_svmul\_i(\\*\hspace*{1cm}vsip\_scalar\_i, const vsip\_vview\_i*, const vsip\_vview\_i*);\Bs\\
+void vsip\_svmul\_si(\\*\hspace*{1cm}vsip\_scalar\_si, const vsip\_vview\_si*, const vsip\_vview\_si*);\Bs\\
+void vsip\_svmul\_uc(\\*\hspace*{1cm}vsip\_scalar\_uc, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\Bs\\
+\end{tabular}
+}\vspace{.005\textheight}
 \\\pyjvsiph
