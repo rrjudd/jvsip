@@ -1,3 +1,26 @@
-\afuncT{leq}{Computes the boolean comparison of “equal,” by element, of two views.}{logicalOperations}
+\afuncT{leq}{Logical equal.}{logicalOperations}
 \\\cvsiplh
+\afh
+{
+\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+void vsip\_mleq\_d(\\*\hspace{1cm}const vsip\_mview\_d*, const vsip\_mview\_d*, const vsip\_mview\_bl*);\\
+void vsip\_mleq\_f(\\*\hspace{1cm}const vsip\_mview\_f*, const vsip\_mview\_f*, const vsip\_mview\_bl*);\\
+void vsip\_svleq\_f(\\*\hspace{1cm}vsip\_scalar\_f, const vsip\_vview\_f*, const vsip\_vview\_bl*);\\
+void vsip\_svleq\_d(\\*\hspace{1cm}vsip\_scalar\_d, const vsip\_vview\_d*, const vsip\_vview\_bl*);\\
+void vsip\_vleq\_d(\\*\hspace{1cm}const vsip\_vview\_d*, const vsip\_vview\_d*, const vsip\_vview\_bl*);\\
+void vsip\_vleq\_f(\\*\hspace{1cm}const vsip\_vview\_f*, const vsip\_vview\_f*, const vsip\_vview\_bl*);\\
+void vsip\_vleq\_i(\\*\hspace{1cm}const vsip\_vview\_i*, const vsip\_vview\_i*, const vsip\_vview\_bl*);\\
+void vsip\_vleq\_si(\\*\hspace{1cm}const vsip\_vview\_si*, const vsip\_vview\_si*, const vsip\_vview\_bl*);\\
+void vsip\_vleq\_uc(\\*\hspace{1cm}const vsip\_vview\_uc*, const vsip\_vview\_uc*, const vsip\_vview\_bl*);\\
+\end{tabular}
+}
 \\\pyjvsiph
+\viewmthd{Yes}{No}{No}{out=in.leq(arg)}
+\apyfunc{Yes}{out = leq(in1,in2,out)}
+\pyComment{
+\item{For return value \ttbf{out} precision is of type \ttbf{\_bl} and shape is compliant with input \ttbf{view}s.}
+\item{For method check is \ttbf{in == arg} and for function check is \ttbf{in1 == in2}.}
+\item{For functions input \ttbf{in1} may be scalar for precisions of type \ttbf{\_f} and \ttbf{\_d} with vector shape. Other options are defined but have not been done for \jv{} at this time. The function will complain if comparisons are not available.}
+\item{For methods if input \ttbf{arg} is a scalar it is converted to a constant vector with one element, stride of zero, and compliant length before the comparison. For this reason the \ttbf{view} method will work for some cases the function does not.}
+}

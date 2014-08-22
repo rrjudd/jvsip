@@ -1,3 +1,18 @@
-\afuncT{alltrue}{Returns true if all the elements of a vector/matrix of type \_bl are true.}{logicalOperations}
+\afuncT{alltrue}{Returns true if all the elements of a \ttbf{view} of type \ttbf{\_bl} are true.}{logicalOperations}
 \\\cvsiplh
+\afh
+{
+\ttfamily
+\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+vsip\_scalar\_bl vsip\_malltrue\_bl(const vsip\_mview\_bl*);\Bs\\
+vsip\_scalar\_bl vsip\_valltrue\_bl(const vsip\_vview\_bl*);\Bs\\
+\end{tabular}
+}
 \\\pyjvsiph
+\viewmthd{Yes}{Yes}{NA}{bl=in.alltrue}
+\apyfunc{No}{NA}
+\pyComment{
+\item{Return value \ttbf{bl} is returned as a python \ttbf{True} or \ttbf{False} for \pyjv}
+\item{The \ttbf{view} method is defined as a property}
+\item{There seemed to be no reason to include this as a separate function for \pyjv}
+}
