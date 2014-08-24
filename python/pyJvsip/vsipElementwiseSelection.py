@@ -10,17 +10,17 @@ def __isSizeCompatible(a,b):
     else:
         return False
 # DON'T know how to implement yet
-# vsip_svfirst_p 
+# vsip_svfirst_p
 
 # Functions that return a value are only supported as properties on views
-# vsip_scminmgsqval_p 
-# vsip_sminmgval_p 
+# vsip_scminmgsqval_p
+# vsip_sminmgval_p
 # vsip_sminval_p
-# vsip_scmaxmgsqval_p 
-# vsip_smaxmgval_p 
-# vsip_smaxval_p 
+# vsip_scmaxmgsqval_p
+# vsip_smaxmgval_p
+# vsip_smaxval_p
 
-# vsip_sclip_p 
+# vsip_sclip_p
 def clip(a,t1,t2,c1,c2,r):
     """
     Function clip may be done in-place
@@ -64,14 +64,14 @@ def invclip(a,t1,t2,t3,c1,c2,r):
     assert 'pyJvsip.__View' in repr(r),\
            'Argument seven must be a pyJvsip view object in invclip'
     assert a.type == r.type,'Input and output views for invclip must be the same type'
-    assert __isSizeCompatible(a,r),'Input and output views for invclip must be the same size'    
+    assert __isSizeCompatible(a,r),'Input and output views for invclip must be the same size'
     assert f.has_key(a.type),'Type <:'+a.type+':> not supported for invclip'
     assert isinstance(t1,int) or isinstance(t1,float) or isinstance(t1,long)
     assert isinstance(t2,int) or isinstance(t2,float) or isinstance(t2,long)
     assert isinstance(t3,int) or isinstance(t3,float) or isinstance(t3,long)
     assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
     assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
-    f[t](a.view,t1,t2,t3,c1,c2,r.view)
+    f[a.type](a.view,t1,t2,t3,c1,c2,r.view)
     return r
 
 # vsip_sindexbool
@@ -86,7 +86,7 @@ def indexbool(a,b):
         L is a length indicating number of non-false entries in input view a
     See VSIPL specification for more details.
     """
-    f={'mview_blvview_mi':vsip_mindexbool,                
+    f={'mview_blvview_mi':vsip_mindexbool,
        'vview_blvview_vi':vsip_vindexbool }
     assert 'pyJvsip.__View' in repr(a),\
            'Argument one must be a pyJvsip view object in indexbool'
@@ -95,9 +95,9 @@ def indexbool(a,b):
     t=a.type+b.type
     assert f.has_key(t),'Type <:'+t+':> not supported by indexbool'
     return f[t](a.view,b.view)
-    
+
 # vsip_smax_p
-def max(a,b,c): 
+def max(a,b,c):
     """
     """
     f={'mview_dmview_dmview_d':vsip_mmax_d,
@@ -118,7 +118,7 @@ def max(a,b,c):
     return c
 
 # vsip_smaxmg_p
-def maxmg(a,b,c): 
+def maxmg(a,b,c):
     """
     """
     f={'mview_dmview_dmview_d':vsip_mmaxmg_d,
@@ -138,8 +138,8 @@ def maxmg(a,b,c):
     f[t](a.view,b.view,c.view)
     return c
 
-# vsip_scmaxmgsq_p 
-def cmaxmgsq(a,b,c): 
+# vsip_scmaxmgsq_p
+def cmaxmgsq(a,b,c):
     """
     """
     f={'cmview_dcmview_dmview_d':vsip_mcmaxmgsq_d,
@@ -160,7 +160,7 @@ def cmaxmgsq(a,b,c):
     return c
 
 # vsip_smin_p
-def min(a,b,c): 
+def min(a,b,c):
     """
     """
     f={'mview_dmview_dmview_d':vsip_mmin_d,
@@ -178,10 +178,10 @@ def min(a,b,c):
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by min'
     f[t](a.view,b.view,c.view)
-    return c 
+    return c
 
 # vsip_sminmg_p
-def minmg(a,b,c): 
+def minmg(a,b,c):
     """
     """
     f={'mview_dmview_dmview_d':vsip_mminmg_d,
@@ -199,10 +199,10 @@ def minmg(a,b,c):
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by minmg'
     f[t](a.view,b.view,c.view)
-    return c 
+    return c
 
 # vsip_scminmgsq_p
-def cminmgsq(a,b,c): 
+def cminmgsq(a,b,c):
     """
     """
     f={'cmview_dcmview_dmview_d':vsip_mcminmgsq_d,
