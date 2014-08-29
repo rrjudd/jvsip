@@ -1,9 +1,20 @@
-\afuncT{indexbool}{Index a Boolean}{selectionOperations}
+\afuncT{indexbool}{Index a boolean. Given a boolean \ttbf{view} fill an index vector of indices of true values and return the number of true values found.}{selectionOperations}
 \\\cvsiplh
 \afh
 {
 \ttfamily
 \\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+vsip\_length vsip\_mindexbool(const vsip\_mview\_bl*, vsip\_vview\_mi*);\\
+vsip\_length vsip\_vindexbool(const vsip\_vview\_bl*, vsip\_vview\_vi*);\\
 \end{tabular}
 }
 \\\pyjvsiph
+%
+\viewmthd{Yes}{Yes}{No}{\ttbf{aIndex=aBoolView.indexbool}}
+%
+\apyfunc{Yes}{\ttbf{nTrue=indexbool(aBoolView,aIndexView)}}
+%
+\pyComment{
+\item{The \ttbf{indexbool} function works much the same as the \cvl{} function and returns the number of true values.}
+\item{The \ttbf{indexbool} \ttbf{view} method will create the index vector and return it. The number of true values returned is the length of the returned index vector.}
+}

@@ -15,12 +15,15 @@ void vsip\_vclip\_si(\\*\hspace*{1cm}const vsip\_vview\_si*, vsip\_scalar\_si, v
 void vsip\_vclip\_uc(\\*\hspace*{1cm}const vsip\_vview\_uc*, vsip\_scalar\_uc, vsip\_scalar\_uc,\\*\hspace*{1cm}vsip\_scalar\_uc, vsip\_scalar\_uc, const vsip\_vview\_uc*);\\
 \end{tabular}
 }
+%
 \\\pyjvsiph
 \viewmthd{No}{NA}{NA}{NA}
+%
 \apyfunc{Yes}{\ttbf{clip(in,t1,t2,c1,c2,out)}}
 \inputminted[linenos=true,resetmargins=true,xleftmargin=.12\textwidth,fontfamily=tt,fontsize=\small]{python}{./pyJvsip_examples/eXclip.py}
-\hspace*{.08\textwidth}{\rmfamily For result see figure \ref{fig:ClipExample}.}
-\begin{figure}[t]\centering\includegraphics[width=0.8\textwidth]{./pyJvsip_examples/eXclip}\caption{Clip Example}\label{fig:ClipExample}\end{figure}
+\hspace*{.08\textwidth}{\rmfamily For result see figure \ref{fig:ClipExample}.}\\
+\begin{minipage}[c]{\textwidth}\centering\includegraphics[width=0.8\textwidth]{./pyJvsip_examples/eXclip}\captionof{figure}{Clip Example}
+\label{fig:ClipExample}\end{minipage}
 \pyComment{
 \item{The clip function works much the same as \cvl{} except the output is returned. In line 6 of the example we used the \ttbf{empty} method to create the output vector and saved a reference in the left value.}
 \item{The \ttbf{clip} function is a bit complicated. See the \cvl{} specification for more complete details.}
