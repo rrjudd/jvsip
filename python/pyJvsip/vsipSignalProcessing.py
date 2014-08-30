@@ -62,6 +62,11 @@ def histo(a,b_min,b_max,op,b):
 # vsip_dsfreqswap_f
 def freqswap(a):
     """
+    Usage:
+        freqswqp(a)
+    Where:
+        a is a view of precision float or double and shape vector or float.
+    Frequency swap is an in-place operation. For convenience the input/output view a is returned
     See VSIP specification for more details.
     """
     f={'cvview_d':vsip_cvfreqswap_d,
@@ -75,6 +80,6 @@ def freqswap(a):
     assert 'pyJvsip.__View' in repr(a),\
            'Argument must be a pyJvsip view object for function freqswap'
     t=a.type
-    assert f.has_key(t),'Type <:'+t+':> not supported for freqswap'
+    assert f.has_key(t),'Type <:%s:> not supported for freqswap'%t
     f[t](a.view)
     return a
