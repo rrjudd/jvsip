@@ -1,22 +1,29 @@
 \afuncT{spline}{Interpolation using cubic splines.}{interpolation}
 \\\cvsiplh
-\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\newline \hspace*{1.1cm} {
+\afh
+\\\hspace*{.04\textwidth} {
 \ttfamily
-\begin{tabular}[H]{l}
-typedef struct vsip\_splineattributes\_f vsip\_spline\_f;\\
-typedef struct vsip\_splineattributes\_d vsip\_spline\_d; \\
-void vsip\_minterp\_spline\_d ( const vsip\_vview\_d *, const vsip\_mview\_d *, vsip\_spline\_d *, vsip\_major, const vsip\_vview\_d *, const vsip\_mview\_d * ) ;\\
-void vsip\_minterp\_spline\_f ( const vsip\_vview\_f *, const vsip\_mview\_f *, vsip\_spline\_f *, vsip\_major, const vsip\_vview\_f *, const vsip\_mview\_f * ) ;\\
-void vsip\_spline\_destroy\_d ( vsip\_spline\_d * ) ;\\
-void vsip\_spline\_destroy\_f ( vsip\_spline\_f * ) ;\\
-void vsip\_vinterp\_spline\_d ( const vsip\_vview\_d *, const vsip\_vview\_d *, vsip\_spline\_d *, const vsip\_vview\_d *, const vsip\_vview\_d * ) ;\\
-void vsip\_vinterp\_spline\_f ( const vsip\_vview\_f *, const vsip\_vview\_f *, vsip\_spline\_f *, const vsip\_vview\_f *, const vsip\_vview\_f * ) ;\\
-vsip\_spline\_d* vsip\_spline\_create\_d ( vsip\_length ) ;\\
-vsip\_spline\_f* vsip\_spline\_create\_f ( vsip\_length ) ;\\
+\begin{tabular}[H]{|l|}
+\multicolumn{1}{c}{
+\Ts\rmfamily \bfseries Create Spline Object\vspace{.1cm}}\Bs\\ \hline
+vsip\_spline\_d* vsip\_spline\_create\_d(vsip\_length);\Bs\\
+vsip\_spline\_f* vsip\_spline\_create\_f(vsip\_length);\Bs\\
+\hline\multicolumn{1}{c}{\Ts\rmfamily \bfseries Destroy Spline Object\vspace{.1cm}}\Bs\\ \hline
+void vsip\_spline\_destroy\_d(vsip\_spline\_d*);\Bs\\
+void vsip\_spline\_destroy\_f(vsip\_spline\_f*);\Bs\\
+\hline\multicolumn{1}{c}{\Ts \rmfamily \bfseries Vector Splines\vspace{.1cm}}\Bs\\ \hline
+void vsip\_vinterp\_spline\_d(const vsip\_vview\_d*, const vsip\_vview\_d*,
+\fbrk{}vsip\_spline\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_vinterp\_spline\_f(const vsip\_vview\_f*, const vsip\_vview\_f*,
+\fbrk{}vsip\_spline\_f*, const vsip\_vview\_f*, const vsip\_vview\_f* ) ;\Bs\\
+\hline\multicolumn{1}{c}{\Ts \rmfamily \bfseries Matrix Splines by Row or by Column\vspace{.1cm}}\Bs\\ \hline
+void vsip\_minterp\_spline\_d(\fbrk{}const vsip\_vview\_d*, const vsip\_mview\_d*,
+vsip\_spline\_d*,\fbrk{}vsip\_major,const vsip\_vview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_minterp\_spline\_f(\fbrk{}const vsip\_vview\_f*, const vsip\_mview\_f*,
+vsip\_spline\_f*,\fbrk{}vsip\_major, const vsip\_vview\_f*, const vsip\_mview\_f*);\Bs\\\hline
 \end{tabular}
 }
 \\\pyjvsiph
-\viewmthd{Yes}{Yes}{NA}{msq=in.meansqval}
+\viewmthd{NA}{NA}{NA}{spline}
 \apyfunc{No}{NA}
-\pyComment{\item{There seemed to be no reason to include this as a separate function for \pyjv}}
+\pyComment{\item{No comment}}
