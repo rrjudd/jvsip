@@ -885,24 +885,13 @@ class Block (object):
             return self
         @property
         def length(self):
-            if self.type in Block.vectorTypes:
-                return int(vsip.getlength(self.view))
-            elif self.type in Block.matrixTypes:
-                print('View not a vector type')
-                return False
-            else:
-                print('Object not of the proper type')
-                return False
+            assert self.type in Block.vectorTypes,'View of type %s not a vector view'%self.type
+            return int(vsip.getlength(self.view))
         def putlength(self,length):
-            if self.type in Block.vectorTypes:
-                vsip.putlength(self.view,length)
-                return self
-            elif self.type in Block.matrixTypes:
-                print('View not a vector type')
-                return False
-            else:
-                print('Object not of the proper type')
-                return False
+            assert self.type in Block.vectorTypes,
+                'View of type %s not a vector view. Method putlength only works for vectors.'%self.type
+            vsip.putlength(self.view,length)
+            return self
         @property
         def stride(self):
             if self.type in Block.vectorTypes:
@@ -2635,13 +2624,13 @@ class Block (object):
             for i in range(p.length):
                 p[self[i]]=i
             return p
-        def sort(self,*vals):
+        def sortip(self,*vals):
             """
               Usage:
-                indx=self.sort(mode,dir,fill,indx)
+                indx=self.sortip(mode,dir,fill,indx)
               Default:
-                indx=self.sort() -is the same as-  indx = self.sort('BYVALUE','ASCENDING')
-                indx=self.sort(mode) -is the same as- index = self.sort(mode,'ASCENDING')
+                indx=self.sortip() -is the same as-  indx = self.sortip('BYVALUE','ASCENDING')
+                indx=self.sortip(mode) -is the same as- index = self.sortip(mode,'ASCENDING')
               Where:
                 self is a vector
                 mode is a string 'BYVALUE' or 'BYMAGNITUDE'
@@ -2657,17 +2646,14 @@ class Block (object):
               If an indx vector is included then it is initialized (or not depending on fill), and the
               indices are sorted. If an index is included, indx is returned as a convenience.
             """
-            sptd=['vview_f','vview_d','vview_i','vview_vi']
             t=self.type
-            assert t in sptd,'Type <:' + t + ':> not supported by sort'
             f={'vview_f':vsip_vsortip_f,'vview_d':vsip_vsortip_d,
                'vview_i':vsip_vsortip_i,'vview_vi':vsip_vsortip_vi}
-            m={'BYVALUE':0,'BYMAGNITUDE':1}
-            d={'DESCENDING':1,'ASCENDING':0}
+            m={'BYVALUE':0,'BYMAGNITUDE':1,0:VSIP_SORT_BYVALUE,1:VSIP_SORT_BYMAGNITUDE}
+            d={'DESCENDING':1,'ASCENDING':0,0:VSIP_SORT_ASCENDING,1:VSIP_SORT_DESCENDING}
             nvals=len(vals)
-            if nvals > 4:
-                print('Maximum number of arguments for sort is 4');
-                return
+            assert f.has_key(t),'Type <:%s:> not supported for sortip.'%t
+            assert nvals <5,'Maximum number of arguments for sortip is 4'
             if nvals > 0:
                 mode=m[vals[0]]
             else:
@@ -2676,31 +2662,25 @@ class Block (object):
                 dir=d[vals[1]]
             else:
                 dir=d['ASCENDING']
-            if nvals > 2:
-                if vals[2]:
-                    fill=1
-                else:
-                    fill=0
-            else:
-                fill = 1
+            fill = 1
+            if nvals > 2 and vals[2] == False:
+                fill=0
             if nvals == 4:
-                if vals[3].type == 'vview_vi':
-                    idx = vals[3]
-                    if fill:
-                        idx.ramp(0,1)
-                else:
-                    print('index vector for sort must be of type vview_vi')
-                    return
-            elif fill:
+                assert vals[3].type == 'vview_vi','index vector for sortip must be of type vview_vi'
+                idx = vals[3]
+                if fill==1:
+                    idx.ramp(0,1)
+            elif fill == 1:
                 idx = create('vview_vi',self.length)
             else:
                 idx = None
-            if f.has_key(t):
-                f[t](self.view,mode,dir,fill,idx.view)
-                return idx
+            if idx == None:
+                f[t](self.view,mode,dir,fill,idx)
             else:
-                print('Type <:' + t + ':> not supported by sort')
-                return
+                f[t](self.view,mode,dir,fill,idx.view)
+            return idx
+        def sort(self,*vals):
+            return self.sortip(vals)
         # Signal Processing
         @property
         def fftip(self):
