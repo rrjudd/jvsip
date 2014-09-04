@@ -9,5 +9,5 @@ setup(name='pyJvsip',
       py_modules=['pyJvsip','vsipElementwiseElementary','vsipElementwiseManipulation',\
             'vsipElementwiseUnary','vsipElementwiseBinary','vsipElementwiseTernary',\
             'vsipElementwiseLogical','vsipElementwiseSelection','vsipElementwiseBandB',
-            'vsipElementwiseCopy','vsipSignalProcessing','vsipLinearAlgebra'],
+            'vsipElementwiseCopy','vsipSignalProcessing','vsipLinearAlgebra','vsipAddendum'],
       )

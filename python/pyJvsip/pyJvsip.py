@@ -10,6 +10,7 @@ from vsipElementwiseBandB import *
 from vsipElementwiseCopy import *
 from vsipSignalProcessing import *
 from vsipLinearAlgebra import *
+from vsipAddendum import *
 
 import vsiputils as vsip
 
@@ -477,6 +478,12 @@ class Block (object):
         def MAT(self):
             self.__major = 'MAT'
             return self
+        @property
+        def major(self):
+            """ This is an attribute that is used to determine certain functionality.
+                The major attribue does NOT necessarily agree with the smallest stride direction.
+            """
+            return self.__major
         def compactAttrib(self,b):
             """Function used for introspection of view objects. Output useful for creating
                attributes needed for creation of new views based on existing views.
@@ -486,7 +493,7 @@ class Block (object):
                  attr[0] is the block type of self if b is 0 (see below for b is 1).
                  attr[1] is number of elements in view
                  attr[2] is an attribute (tuple) suitable for entry into bind.
-               NOTE:
+               NOTE that b is a flag either 0 or 1 used to change the depth:
                if b is 1 (not 0) and self.block.type is real then attr[0] will be complex
                if b is 1 and self.block.type is complex then attr[0] will be real
                if self.block.type is not in Block.complexTypes then b is treated as 0
@@ -800,7 +807,7 @@ class Block (object):
                     return True
                 else:
                     return False
-            elif self.type in Block.matrixTypes:
+            else:# must be matrix
                 attrib=self.attrib
                 if attrib['colstride'] == 1 and attrib['rowstride'] == attrib['collength']:
                     return True
@@ -808,15 +815,6 @@ class Block (object):
                     return True
                 else:
                     return False
-            else:
-                print('Type not a matrix or vector view')
-                return False
-        @property
-        def major(self):
-            """ This is an attribute that is used to determine certain functionality.
-                The major attribue does NOT necessarily agree with the smallest stride direction.
-            """
-            return self.__major
         def colview(self,j):
             if self.type in Block.matrixTypes:
                 v = vsip.colview(self.view,j)
@@ -888,8 +886,7 @@ class Block (object):
             assert self.type in Block.vectorTypes,'View of type %s not a vector view'%self.type
             return int(vsip.getlength(self.view))
         def putlength(self,length):
-            assert self.type in Block.vectorTypes,
-                'View of type %s not a vector view. Method putlength only works for vectors.'%self.type
+            assert self.type in Block.vectorTypes,'View of type %s not a vector view. Method putlength only works for vectors.'%self.type
             vsip.putlength(self.view,length)
             return self
         @property
@@ -4305,7 +4302,62 @@ class SV(object):
         f={'sv_f':vsip_svdprodu_f,'sv_d':vsip_svdprodu_d,'csv_f':vsip_csvdprodu_f,'csv_d':vsip_csvdprodu_d}
         f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
         return out
-# pyJvsip Functions
+class Spline(object):
+    """
+    Cubic Spline
+    """
+    Sel={'mview_d':'spline_d','mview_f':'spline_f','vview_d':'spline_d','vview_f':'spline_f',\
+         'spline_d':'spline_d','spline_f':'spline_f'}
+    def __init__(self,t,nMax):
+        assert isinstance(nMax,int),'Spline length argument must be an integer'
+        f={'spline_f':vsip_spline_create_f,'spline_d':vsip_spline_create_d}
+        assert Spline.Sel.has_key(t),'Type <:%s:> not recognized for spline'%t
+        self.__jvsip=JVSIP()
+        self.__type=Spline.Sel[t]
+        self.__spline=f[self.__type](nMax)
+        self.size=nMax
+    def __del__(self):
+        f={'spline_f':vsip_spline_destroy_f,'spline_d':vsip_spline_destroy_d}
+        f[self.type](self.vsip)
+        del(self.__jvsip)
+    def interpolate(self,*args):
+        n=len(args)
+        f={'vview_f':'vsip_vinterp_spline_f(x0.view,y0.view,self.vsip,x.view,y.view)',\
+           'vview_d':'vsip_vinterp_spline_d(x0.view,y0.view,self.vsip,x.view,y.view)',\
+           'mview_f':'vsip_minterp_spline_f(x0.view,y0.view,self.vsip,dim,x.view,y.view)',\
+           'mview_d':'vsip_minterp_spline_d(x0.view,y0.view,self.vsip,dim,x.view,y.view)'}
+        major={'ROW':VSIP_ROW,'COL':VSIP_COL,0:VSIP_ROW,1:VSIP_COL}
+        assert len(args) >= 4 and len(args) < 6,'Argument length should be 4 or 5'
+        x0=args[0];y0=args[1]; x=args[n-2]; y=args[n-1]
+        assert 'pyJvsip.__View' in repr(x0) and 'pyJvsip.__View' in repr(y0) and \
+            'pyJvsip.__View' in repr(x) and 'pyJvsip.__View' in repr(y),\
+            'first two and last two arguments to spline method must be views'
+        if 'mview' in y0.type:
+            if n == 5:
+                assert major.has_key(args[2]),'Major flag not recognized for spline method.'
+                dim=major[args[2]]
+            else:
+                assert major.has_key(x0.major),'Major flag not recognized for spline method.'
+                dim=major[x0.major]
+            if dim==0:
+                assert x0.length == y0.collength,'Input data views not compliant.'
+                assert x.length  == y.collength,'Output data views not compliant.'
+            else:
+                assert x0.length == y0.rowlength,'Input data views not compliant.'
+                assert x.length  == y.rowlength,'Output data views not compliant.'
+        else:
+            assert x0.length == y0.length,'Input data views not compliant.'
+            assert y.length  == x.length, 'Output data views not compliant.'
+        eval(f[y0.type])
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def vsip(self):
+        return self.__spline
+    @property
+    def maxlength(self):
+        return self.size
 def ramp(t,start,inc,length):
     return create(t,length).ramp(start,inc)
 def create(atype,*vals):
