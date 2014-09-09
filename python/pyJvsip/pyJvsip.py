@@ -2928,7 +2928,7 @@ class Block (object):
                 return
             assert A.collength >= A.rowlength,"QR requires column length less than row length"
             retval=QR(QR.tSel[self.type],A.collength,A.rowlength,VSIP_QRD_SAVEQ)
-            retval.lud(A)
+            retval.qrd(A)
             return retval
         @property
         def qrd(self):
@@ -4032,7 +4032,7 @@ class QR(object):
         assert QR.tSel.has_key(X.type),'The input view to prodQ is not supported by QR object'
         assert QR.tSel[X.type] == self.type,\
                  'The input view to prodQ not the type the QR object was created for'
-        m,n=self.qSize
+        m,n=self.sizeQ
         XM=X.collength
         if QR.qSide[side] == VSIP_MAT_LSIDE:
             if QR.qOp[op] == VSIP_MAT_TRANS or QR.qOp[op] == VSIP_MAT_HERM:
