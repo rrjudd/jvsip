@@ -2677,7 +2677,10 @@ class Block (object):
                 f[t](self.view,mode,dir,fill,idx.view)
             return idx
         def sort(self,*vals):
-            return self.sortip(vals)
+            if len(vals) > 0:
+                return self.sortip(vals)
+            else:
+                return self.sortip()
         # Signal Processing
         @property
         def fftip(self):

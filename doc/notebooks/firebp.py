@@ -115,7 +115,7 @@ def firebp(n,w1,w2,Del):
         #H = real(fft([a(1);a(2:n+1)/2;Z;a(n+1:-1:2)/2])); H = H(1:L+1);
         attr=a.attrib; ot=attr['offset'];lt=attr['length'];st=attr['stride'];
         ot+=(lt-1)*st; st=-st;attr['offset']=ot; attr['stride']=st
-        a_rev=a.clone;a_rev.putattrib(attr)
+        a_rev=a.cloneview;a_rev.putattrib(attr)
         H0.fill(0.0);H0[0]=a[0];H0[1:lt]=a[1:]/2.0; H0[H0.length-n:]=a_rev[:lt-1]/2.0
         Hc=H0.rcfft
         H=Hc.realview[:L+1].copy
@@ -144,15 +144,15 @@ def firebp(n,w1,w2,Del):
         # Plot Figures if PF is True
         if PF:
            figure(1)
-    	   plot(w/pi,H)
+    	   plot((w/pi).list,H.list)
     	   hold(True)
-    	   plot(rs/pi,Hr,'o')
+    	   plot((rs/pi).list,Hr.list,'o')
     	   hold(False)
     	   axis([0, 1, -.2, 1.2])
        	   figure(2)
-           plot(Er)
+           plot(Er.list)
            hold(True)
-           plot(Er,'o'),
+           plot(Er.list,'o'),
            hold(False)
     	   pause(0.05)
         # --------------- calculate new interpolation points  -----------------
@@ -244,7 +244,7 @@ def firebp(n,w1,w2,Del):
     h[a.length:]=a[1:]
     atr=a[1:].attrib;atr['offset']=atr['length'];atr['stride']*=-1
     a.putattrib(atr);h[:a.length]=a
-    figure(1); plot(w/pi,H); hold(True); plot(rs/pi,Y,'x'); hold(False)
+    figure(1); plot((w/pi).list,H.list); hold(True); plot((rs/pi).list,Y.list,'x'); hold(False)
     axis([0, 1, -.2, 1.2])
     xlabel('w'); ylabel('H'); title('Frequency Response Amplitude')
     return(h,rs,be)
