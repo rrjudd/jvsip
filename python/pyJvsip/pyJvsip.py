@@ -594,7 +594,9 @@ class Block (object):
             v=vsip.cloneview(self.view)
             b=self.block
             return self.__newView(v,b)
-
+        @property
+        def clone(self):
+            return self.cloneview
         def subview(self,*vals):
             """usage:
                Using Slice (pyJvsip slice does not support negatives at this time):

@@ -23,8 +23,8 @@ narrowBandGen(data,alpha,targets,Fs)
 ccfftmip = pv.FFT('ccfftmip_d',(Mp,Ns/2 + 1,pv.VSIP_FFT_FWD,1,pv.VSIP_COL,0,0))
 windowt=pv.create('vview_d',Ns).hanning
 windowp=pv.create('vview_d',Mp).hanning
-pv.mmul(windowt.ROW,data,data) #window to reduce sidelobes
-pv.mmul(windowp.COL,data,data)  
+pv.vmmul(windowt.ROW,data,data) #window to reduce sidelobes
+pv.vmmul(windowp.COL,data,data)  
 gram_data=data.rcfft
 ccfftmip.dft(gram_data)
 gram = scale(gram_data)
