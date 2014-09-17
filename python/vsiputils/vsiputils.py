@@ -36,7 +36,8 @@ def cscalarToComplex(a):
     elif type(a) == float or type(a) == int:
         return a
     else:
-        assert False,'Type not supported by cscalarToComplex.'
+        print('Type not supported by cscalarToComplex')
+        return False
 def complexToCscalar(t,a):
     if t == 'cscalar_d':
        x=vsip_cscalar_d()
@@ -51,7 +52,9 @@ def complexToCscalar(t,a):
     elif type(a) == float or type(a) == int:
        return a
     else:
-       assert False,'Type %s not supported by complexToCscalar'%t
+       print('Type ' + t + ' not supported by complexToCscalar')
+       return False
+
 def miToTuple(a):
    return (a.r,a.c)
 def index(a):
@@ -65,7 +68,8 @@ def index(a):
     elif t in tv:
         return vindexptr()
     else:
-        assert False,'Type %s not supported by index'%t
+        print('Type ' + t + ' not supported by index')
+        return False
 def pyIndex(a):
     t=getType(a)[1]
     if t == 'scalar_mi':
@@ -73,10 +77,12 @@ def pyIndex(a):
     elif t == 'scalar_vi':
         return vindexptrToInt(a)
     else:
-        assert False,'Type %s not suported by pyIndex'%t
+        print('Type '  + t + ' not suported by pyIndex')
+        return False
 def create(atype,atuple):
     """
     Create a vsipl object associated with a type.
+
     Note that scalar types and attribute types are not created here. The argument 'atuple'
     is a tuple containing necessary data to create the object defined by atype. The contents
     of the tuple are the same as the arguments described in the prototypes of the C VSIPL document.
@@ -90,7 +96,8 @@ def create(atype,atuple):
     elif type(atuple) == tuple:
         l=atuple
     else:
-        assert False,'Second argument must be int or tuple corresponding to C VSIPL argument list'
+        print('Second argument must be int or tuple corresponding to C VSIPL argument list');
+        return False
     f={'block_f':'vsip_blockcreate_f(l[0],l[1])',
        'block_d':'vsip_blockcreate_d(l[0],l[1])',
        'cblock_f':'vsip_cblockcreate_f(l[0],l[1])',
@@ -162,8 +169,11 @@ def create(atype,atuple):
        'cfir_f':'vsip_cfir_create_f(l[0],l[1],l[2],l[3],l[4],l[5],l[6])',
        'cfir_d':'vsip_cfir_create_d(l[0],l[1],l[2],l[3],l[4],l[5],l[6])',
        'randstate':'vsip_randcreate(l[0],l[1],l[2],l[3])'}
-    assert f.has_key(atype),'Type %s Not a valid type for create.'%atype
-    return eval(f[atype])
+    if f.has_key(atype):
+        return eval(f[atype])
+    else:
+        print('Type ' + atype + ' Not a valid type for create')
+        return False
 def destroy(obj):
     """
     Free memory associated with a vsipl object created by the "create" function.
@@ -228,8 +238,11 @@ def destroy(obj):
        'cfir_d'    :vsip_cfir_destroy_d,
        'randstate' :vsip_randdestroy}
     t=getType(obj)[1]
-    assert f.has_key(t),'Type %s not supported by destroy'%t
-    return f[t](obj)
+    if f.has_key(t):
+        return f[t](obj)
+    else:
+        print('Type ' + t + ' not supported by destroy')
+        return False
 
 # VSIPL scalar functions
 # s on front denotes scalar and prevents conflict with overloaded view functions
@@ -237,8 +250,10 @@ def sconj(a):
     t=getType(a)[1]
     f={'cscalar_f':vsip_conj_f,
        'cscalar_d':vsip_conj_d}
-    assert f.has_key(t),'Type %s not supported by sconj'%t
-    return f[t](a)
+    if f.has_key(t):
+        return f[t](a)
+    else:
+        print('Type ' + t + ' not supported by sconj')
 def scmplx(p,a,b):
     """
        p is a string designating a type, either scalar_f or scalar_d.
@@ -248,16 +263,20 @@ def scmplx(p,a,b):
     elif p == 'scalar_d':
         return vsip_cmplx_d(a,b)
     else:
-        assert False,'Type %s not defined for cmplx.'%p
+        print('Type ' + p + ' not defined for cmplx');
+        return False
 def scsub(a,b):
     t=getType(a)[1]
-    assert t == getType(b)[1],'Type of arguments must agree in scsub.'
+    if t != getType(b)[1]:
+        print('Type of arguments must agree')
+        return False
     if t == 'cscalar_f':
         return vsip_csub_f(a,b)
     elif t == 'cscalar_d':
         return vsip_csub_d(a,b)
     else:
-        assert False,'Type %s not defined for complex subtraction scsub.'%p
+        print('Type ' + p + ' not defined for complex subtraction')
+        return False
 def smag(a):
     if type(a) == float or type(a) == int:
         if(a < 0):
@@ -270,7 +289,9 @@ def smag(a):
     elif t == 'cscalar_d':
         return vsip_cmag_d(a)
     else:
-        assert False,'Type %s not recognized by mag.'%t
+        print('Type ' + t + ' not recognized by mag');
+        return False
+
 def _vget(a,b): # used internal to this module
     f={ 'vview_f':vsip_vget_f,
         'vview_d':vsip_vget_d,
@@ -278,8 +299,10 @@ def _vget(a,b): # used internal to this module
         'vview_si':vsip_vget_si,
         'vview_uc':vsip_vget_uc,
         'vview_vi':vsip_vget_vi}
-    assert f.has_key(b),'Type %s not found for private function _vget'%b
-    return [f[b](a,i) for i in range(getlength(a))]
+    if f.has_key(b):
+        return [f[b](a,i) for i in range(getlength(a))]
+    else:
+        return False
 def _cvget(a,b): # used internal to this module
    f={'cvview_f':vsip_cvget_f,
       'cvview_d':vsip_cvget_d}
@@ -366,18 +389,21 @@ def mList(m):
        'mview_bl':()}
     t=getType(m)
     l=[]
-    assert f.has_key(t[1]),'Type <:%s:> not a supporte type for mList.'%t[1]
-    attr=getattrib(m)
-    attr0=getattrib(m)
-    n=range(attr.col_length)
-    attr.col_length=1
-    putattrib(m,attr)
-    for i in n:
-        l.append(vList(m))
-        attr.offset += attr.col_stride
+    if f.has_key(t[1]):
+        attr=getattrib(m)
+        attr0=getattrib(m)
+        n=range(attr.col_length)
+        attr.col_length=1
         putattrib(m,attr)
-    putattrib(m,attr0)
-    return l
+        for i in n:
+            l.append(vList(m))
+            attr.offset += attr.col_stride
+            putattrib(m,attr)
+        putattrib(m,attr0)
+        return l
+    else:
+        print('not a supported type')
+        return []
 def listV(t,v):
     """
        This function is not very 'smart'
@@ -408,7 +434,9 @@ def listV(t,v):
         [put(retval,i,v[i]) for i in range(n)]
         return retval
     else:
-        assert False,'listV failed'
+        print('listV failed')
+        return False
+
 def _sizeVattr(a): # used internal to this module
     return a.offset + a.length * abs(a.stride);
 def _sizeMattr(a): # used internal to this module
@@ -473,12 +501,14 @@ def _blockcreate(l,t): # used internal to this module
     return f[t](l,VSIP_MEM_NONE)
 # VU Functions
 def dataGen(a):
-    #print(getType(a)[1])
+    print getType(a)[1]
     from math import cos as ccos,sin as ssin,pi
     def _gen(a):
-        #print(getType(a)[1])
+        print getType(a)[1]
         N=int(getlength(a))
-        assert N > 1,'Vector input length required to be greater than one.'
+        print(repr(N))
+        if(N==0):
+            return False
         npm=N/2
         c=pi/float(N)
         put(a,0,(float(N) - 1.0)/2.0)
@@ -517,7 +547,8 @@ def dataGen(a):
         _gen(a)
         return a
     else:
-        assert False,'Not a supported type for dataGen. Should be a vsip complex float vector vector'
+        print('Not a supported type. Should be a vsip complex float vector vector')
+        return False
 def randCreate(t,seed,length):
     """
        Create a VSIPL vector view and populate it with random numbers.
@@ -555,8 +586,12 @@ def randCreate(t,seed,length):
        'vview_fnprngU':"rcfu('vview_f',seed,VSIP_NPRNG,length)",
        'cvview_dnprngU':"rcfu('cvview_d',seed,VSIP_NPRNG,length)",
        'cvview_fnprngU':"rcfu('cvview_f',seed,VSIP_NPRNG,length)"}
-    assert f.has_key(t),'Type <:t:> not supported for randCreate'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not supported for randCreate')
+        return False
+
 # functions not closely related to VSIPL defined functionality
 def viewCreate(a):
     """
@@ -588,8 +623,10 @@ def viewCreate(a):
         'mattr_i':putattrib(mbind(_blockcreate(_sizeAttr(a),_blocktype(t[1])),0,1,1,1,1),a),
         'mattr_si':putattrib(mbind(_blockcreate(_sizeAttr(a),_blocktype(t[1])),0,1,1,1,1),a),
         'mattr_uc':putattrib(mbind(_blockcreate(_sizeAttr(a),_blocktype(t[1])),0,1,1,1,1),a)}
-    assert (t[0] and f.has_key(t[1])),'type <:%s:> not supported for viewCreate.'%t[1]
-    return f[t[1]]
+    if t[0] and f.has_key(t[1]):
+        return f[t[1]]
+    else:
+        return False
 def associatedView(v,attr):
     f={ 'block_fvattr_f':'putattrib(vbind(blk,0,1,1),attr)',
         'block_dvattr_d':'putattrib(vbind(blk,0,1,1),attr)',
@@ -616,8 +653,11 @@ def associatedView(v,attr):
         blk=vattr.block
         t1=getType(blk)
         t=t1[1]+t2[1]
-    assert f.has_key(t),'Not a supported type for associatedView'
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Not a supported type')
+        return False
 def attr(t,l):
     """
        This function creates and returns an initialized attribute object.
@@ -654,16 +694,20 @@ def attr(t,l):
         a.col_length=l[2]
         a.row_stride=l[3]
         a.col_stride=l[4]
-    assert f.has_key(t),'Not a supported type for attr.'
-    a = eval(f[t])
-    if len(l) == 3:
-        _vattr(a,l)
-        return a
-    elif len(l) == 5:
-        _mattr(a,l)
-        return a
+    if f.has_key(t):
+        a = eval(f[t])
+        if len(l) == 3:
+            _vattr(a,l)
+            return a
+        elif len(l) == 5:
+            _mattr(a,l)
+            return a
+        else:
+            print('Incorrect list argument')
+            return False
     else:
-        assert False,'Incorrect list argument'
+       print('not a supported type')
+       return False
 def size(a):
     f={'vview_d':'_vsize(getattrib(a))',
        'vview_f': '_vsize(getattrib(a))',
@@ -688,8 +732,12 @@ def size(a):
     def _msize(attr):
         return (attr.offset,attr.col_stride,attr.col_length,attr.row_stride, attr.row_length)
     t=getType(a)
-    assert f.has_key(t[1]), 'Type <:%s:> not supported for size.'%t[1]
-    return eval(f[t[1]])
+    if f.has_key(t[1]):
+        return eval(f[t[1]])
+    else:
+        print('Not a supported type')
+        return False
+
 # view => vcreate,mcreate, ..
 # block => blockcreate
 # bind => vbind, mbind, ...
@@ -707,8 +755,11 @@ def block(t,l):
         'block_vi':vsip_blockcreate_vi,
         'block_mi':vsip_blockcreate_mi,
         'block_bl':vsip_blockcreate_bl}
-    assert f.has_key(t),'Not a supported block type'
-    return f[t](l,VSIP_MEM_NONE)
+    if f.has_key(t):
+        return f[t](l,VSIP_MEM_NONE)
+    else:
+        print('Not a supported block type')
+        return False
 def bind(blk,l_in):
     """
         The function "bind(blk,l)" binds a view to a block.
@@ -744,8 +795,9 @@ def bind(blk,l_in):
     elif t_l == list:
         l=l_in
     else:
-        assert False,"Argument two in bind must be a tuple or list of attribues \
-               for a vector or matrix"
+        print("Argument two in bind must be a tuple or list of attribues \
+               for a vector or matrix")
+        return False
     if len(l) == 3:
         t+='vector'
     elif len(l) == 5:
@@ -753,7 +805,8 @@ def bind(blk,l_in):
     if f.has_key(t):
         return eval(f[t])
     else:
-        assert False,'Bind has no type ' + t
+        print('Bind has no type ' + t)
+        return False
 def view(t,l_in):
     """
        This function creates a vector or matrix view including vector views associated
@@ -814,9 +867,14 @@ def view(t,l_in):
     elif t1 == list:
         l=l_in
     else:
-        assert False,'Attribute input argument is not list, tuple, or int length.'
-    assert f.has_key(t),'Type argument not a supported type for view'
-    return eval(f[t])
+        print('Attribute input argument is not list, tuple, or int length')
+        return False
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type argument not a supported type')
+        return False
+
 # Other Support Functions
 def getblock(v):
     return getattrib(v).block
@@ -897,14 +955,17 @@ def getattrib(a):
         'cqr_f':(vsip_cqrd_getattr_f,vsip_cqr_attr_f),
         'qr_d':(  vsip_qrd_getattr_d,vsip_qr_attr_d),
         'cqr_d':(vsip_cqrd_getattr_d,vsip_cqr_attr_d)}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> not supported for getattrib.'%t[1]
-    attr = f[t[1]][1]()
-    f[t[1]][0](a,attr)
-    return attr
+    if t[0] and f.has_key(t[1]):
+        attr = f[t[1]][1]()
+        f[t[1]][0](a,attr)
+        return attr
+    else:
+        print('Type ' + t[1] + ' Not supported for getattrib')
+        return False
 def putattrib(a,attr):
     """
         Change the attributes of a vector view object
-    """
+        """
     t1=getType(a)
     t2=getType(attr)
     t=t1[1]+t2[1]
@@ -926,13 +987,17 @@ def putattrib(a,attr):
         'mview_imattr_i':vsip_mputattrib_i,
         'mview_simattr_si':vsip_mputattrib_si,
         'mview_ucmattr_uc':vsip_mputattrib_uc}
-    assert t1[0] and t2[0],'Argument not supported for putattrib.'
-    assert f.has_key(t),'Type <:%s:> not supported for putattrib.'%s
-    return f[t](a,attr)
+    if t1[0] and t2[0]:
+        if f.has_key(t):
+            return f[t](a,attr)
+        else:
+            return 0
+    else:
+        return 0
 def getoffset(a):
     """
         Get the offset of a view object
-    """
+        """
     t=getType(a)
     f={'vview_f':vsip_vgetoffset_f,
         'mview_f':vsip_mgetoffset_f,
@@ -952,12 +1017,15 @@ def getoffset(a):
         'vview_mi':vsip_vgetoffset_mi,
         'mview_bl':vsip_mgetoffset_bl,
         'vview_bl':vsip_vgetoffset_bl}
-    assert (t[0] and f.has_key(t[1])),'Not a supported type for getoffset'
-    return f[t[1]](a)
+    if t[0] and f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('not a supported type for getoffset')
+        return 0
 def putoffset(a,s):
     """
         Change the offset of a view object
-    """
+        """
     t=getType(a)
     f={'vview_f':vsip_vputoffset_f,
         'mview_f':vsip_mputoffset_f,
@@ -977,12 +1045,15 @@ def putoffset(a,s):
         'vview_mi':vsip_vputoffset_mi,
         'mview_bl':vsip_mputoffset_bl,
         'vview_bl':vsip_vputoffset_bl }
-    assert (t[0] and f.has_key(t[1])),'Not a supported type for putoffset'
-    return f[t[1]](a,s)
+    if t[0] and f.has_key(t[1]):
+        return f[t[1]](a,s)
+    else:
+        print('not a supported type for putoffset')
+        return 0
 def getstride(a):
     """
         Get the stride of a vector view object
-    """
+        """
     t=getType(a)
     f={'vview_f':vsip_vgetstride_f,
         'vview_d':vsip_vgetstride_d,
@@ -994,12 +1065,14 @@ def getstride(a):
         'cvview_f':vsip_cvgetstride_f,
         'cvview_d':vsip_cvgetstride_d,
         'vview_mi':vsip_vgetstride_mi }
-    assert (t[0]  and f.has_key(t[1])),'Argument not recognized for getstride.'
-    return f[t[1]](a)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        return 0
 def putstride(a,s):
     """
         Change the stride of a vector view object
-    """
+        """
     t=getType(a)
     f={ 'vview_f':vsip_vputstride_f,
         'vview_d':vsip_vputstride_d,
@@ -1011,12 +1084,14 @@ def putstride(a,s):
         'cvview_f':vsip_cvputstride_f,
         'cvview_d':vsip_cvputstride_d,
         'vview_mi':vsip_vputstride_mi }
-    assert t[0],'Type not supported for putstride.'
-    return f[t[1]](a,s)
+    if t[0]:
+        return f[t[1]](a,s)
+    else:
+        return 0
 def getlength(a):
     """
         Get the length of a vector view object
-    """
+        """
     t=getType(a)
     f={'vview_f':vsip_vgetlength_f,
        'vview_d':vsip_vgetlength_d,
@@ -1028,12 +1103,14 @@ def getlength(a):
        'cvview_f':vsip_cvgetlength_f,
        'cvview_d':vsip_cvgetlength_d,
        'vview_mi':vsip_vgetlength_mi }
-    assert t[0],'Not a supported type for getlength.' 
-    return f[t[1]](a)
+    if t[0]:
+        return f[t[1]](a)
+    else:
+        return 0
 def putlength(a,l):
     """
         Change the length of a vector view object
-    """
+        """
     t=getType(a)
     f={'vview_f':vsip_vputlength_f,
         'vview_d':vsip_vputlength_d,
@@ -1045,12 +1122,14 @@ def putlength(a,l):
         'cvview_f':vsip_cvputlength_f,
         'cvview_d':vsip_cvputlength_d,
         'vview_mi':vsip_vputlength_mi }
-    assert t[0],'Not a compatible type for putlength.'
-    return f[t[1]](a,l)
+    if t[0]:
+        return f[t[1]](a,l)
+    else:
+        return 0
 def getrowstride(a):
     """
         Get the stride of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mgetrowstride_f,
         'mview_d':vsip_mgetrowstride_d,
@@ -1060,12 +1139,15 @@ def getrowstride(a):
         'mview_bl':vsip_mgetrowstride_bl,
         'cmview_f':vsip_cmgetrowstride_f,
         'cmview_d':vsip_cmgetrowstride_d }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for getrowstride.'%t[1]
-    return f[t[1]](a)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('not a supported type for getrowstride')
+        return 0
 def getcolstride(a):
     """
         Get the stride of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mgetcolstride_f,
         'mview_d':vsip_mgetcolstride_d,
@@ -1075,12 +1157,15 @@ def getcolstride(a):
         'mview_bl':vsip_mgetcolstride_bl,
         'cmview_f':vsip_cmgetcolstride_f,
         'cmview_d':vsip_cmgetcolstride_d }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for getcolstride.'%t[1]
-    return f[t[1]](a)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('not a supported type for getcolstride')
+        return 0
 def getrowlength(a):
     """
         Get the length of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mgetrowlength_f,
         'mview_d':vsip_mgetrowlength_d,
@@ -1090,12 +1175,15 @@ def getrowlength(a):
         'cmview_f':vsip_cmgetrowlength_f,
         'cmview_d':vsip_cmgetrowlength_d,
         'mview_bl':vsip_mgetcollength_bl}
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for getrowlength'%t[1]
-    return f[t[1]](a)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('not a supported type for getrowlength')
+        return 0
 def getcollength(a):
     """
         Get the length of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mgetcollength_f,
         'mview_d':vsip_mgetcollength_d,
@@ -1105,12 +1193,15 @@ def getcollength(a):
         'cmview_f':vsip_cmgetcollength_f,
         'cmview_d':vsip_cmgetcollength_d,
         'mview_bl':vsip_mgetcollength_bl }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for for getcollength'%t[1]
-    return f[t[1]](a)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('not a supported type for getcollength')
+        return 0
 def putrowstride(a,s):
     """
         Put the stride of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mputrowstride_f,
         'mview_d':vsip_mputrowstride_d,
@@ -1120,12 +1211,15 @@ def putrowstride(a,s):
         'mview_bl':vsip_mputrowstride_bl,
         'cmview_f':vsip_cmputrowstride_f,
         'cmview_d':vsip_cmputrowstride_d }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for for putrowstride'%t[1]
-    return f[t[1]](a,s)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,s)
+    else:
+        print('Not a supported type for putrowstride')
+        return 0
 def putcolstride(a,s):
     """
         Put the stride of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mputcolstride_f,
         'mview_d':vsip_mputcolstride_d,
@@ -1135,12 +1229,15 @@ def putcolstride(a,s):
         'mview_bl':vsip_mputcolstride_bl,
         'cmview_f':vsip_cmputcolstride_f,
         'cmview_d':vsip_cmputcolstride_d }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for for putcolstride'%t[1]
-    return f[t[1]](a,s)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,s)
+    else:
+        print('not a supported type for putcolstride')
+        return 0
 def putrowlength(a,l):
     """
         Put the length of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mputrowlength_f,
         'mview_d':vsip_mputrowlength_d,
@@ -1150,12 +1247,15 @@ def putrowlength(a,l):
         'mview_bl':vsip_mputrowlength_bl,
         'cmview_f':vsip_cmputrowlength_f,
         'cmview_d':vsip_cmputrowlength_d }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for for putrowlength'%t[1]
-    return f[t[1]](a,l)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,l)
+    else:
+        print('not a supported type for getrowlength')
+        return 0
 def putcollength(a,l):
     """
         Put the length of a matrix view object
-    """
+        """
     t=getType(a)
     f={'mview_f':vsip_mputcollength_f,
         'mview_d':vsip_mputcollength_d,
@@ -1165,8 +1265,11 @@ def putcollength(a,l):
         'mview_bl':vsip_mputcollength_bl,
         'cmview_f':vsip_cmputcollength_f,
         'cmview_d':vsip_cmputcollength_d }
-    assert t[0]  and f.has_key(t[1]),'Type <:%s:> not a supported type for for putcollength'%t[1]
-    return f[t[1]](a,l)
+    if t[0]  and f.has_key(t[1]):
+        return f[t[1]](a,l)
+    else:
+        print('not a supported type for putcollength')
+        return 0
 def cloneview(a):
     f={'vview_f':vsip_vcloneview_f,
        'vview_d':vsip_vcloneview_d,
@@ -1187,24 +1290,33 @@ def cloneview(a):
        'vview_uc':vsip_vcloneview_uc,
        'vview_vi':vsip_vcloneview_vi}
     t=getType(a)
-    assert f.has_key(t[1]),'Type <:%s:> not supported for cloneview.'%t[1]
-    return f[t[1]](a)
+    if f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('Not a supported type for clone')
+        return False
 def realview(a):
     t=getType(a)
     f=f={'cmview_d': vsip_mrealview_d,
          'cmview_f': vsip_mrealview_f,
          'cvview_d': vsip_vrealview_d,
          'cvview_f': vsip_vrealview_f}
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for real view.'%t[1]
-    return f[t[1]](a)
+    if f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('Type ' +  t[1] + ' not a valid type for real view')
+        return False
 def imagview(a):
     t=getType(a)
     f = {'cmview_d': vsip_mimagview_d,
          'cmview_f': vsip_mimagview_f,
          'cvview_d': vsip_vimagview_d,
          'cvview_f': vsip_vimagview_f}
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for imag view.'%t[1]
-    return f[t[1]](a)
+    if f.has_key(t[1]):
+        return f[t[1]](a)
+    else:
+        print('Not a valid type for imag view')
+        return False
 def diagview(a,i):
     t=getType(a)
     f = {'mview_i': vsip_mdiagview_i,
@@ -1215,8 +1327,11 @@ def diagview(a,i):
          'mview_d': vsip_mdiagview_d,
          'mview_bl': vsip_mdiagview_bl,
          'mview_f': vsip_mdiagview_f}
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for diagonal view.'%t[1]
-    return f[t[1]](a,i)
+    if f.has_key(t[1]):
+        return f[t[1]](a,i)
+    else:
+        print('Not a valid type for diagonal view')
+        return False
 def rowview(A,i):
     f={'mview_i': vsip_mrowview_i,
        'mview_si': vsip_mrowview_si,
@@ -1227,8 +1342,11 @@ def rowview(A,i):
        'mview_f': vsip_mrowview_f,
        'mview_bl': vsip_mrowview_bl}
     t=getType(A)[1]
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for row view.'%t[1]
-    return f[t](A,i)
+    if f.has_key(t):
+        return f[t](A,i)
+    else:
+        print('Type ' + t + ' not supported by rowview')
+        return False
 def colview(A,i):
     f={'mview_i': vsip_mcolview_i,
        'mview_si': vsip_mcolview_si,
@@ -1239,8 +1357,11 @@ def colview(A,i):
        'mview_f': vsip_mcolview_f,
        'mview_bl': vsip_mcolview_bl}
     t=getType(A)[1]
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for col view.'%t[1]
-    return f[t](A,i)
+    if f.has_key(t):
+        return f[t](A,i)
+    else:
+        print('Type ' + t + ' not supported by rowview')
+        return False
 def subview(v,i):
     """
         Usage
@@ -1277,8 +1398,11 @@ def subview(v,i):
        'mview_si':'vsip_msubview_si(v, i[0], i[1], i[2], i[3])',
        'mview_uc':'vsip_msubview_uc(v, i[0], i[1], i[2], i[3])'}
     t=getType(v)[1]
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for sub view.'%t[1]
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not defined for subview')
+        return False
 def transview(A):
     """
        Note this function creates a transpose view that should
@@ -1293,8 +1417,11 @@ def transview(A):
        'mview_d': vsip_mtransview_d,
        'mview_f': vsip_mtransview_f}
     t=getType(A)[1]
-    assert f.has_key(t[1]),'Type <:%s:> not a valid type for trans view.'%t[1]
-    return f[t](A)
+    if f.has_key(t):
+        return f[t](A)
+    else:
+        print('Type <:' + t + ':> not supported by transview')
+        return False
 def get(a,i):
     """
        get(aView,aIndex) will return a value from a vsip view. Argument aIndex
@@ -1332,7 +1459,8 @@ def get(a,i):
         if type(i) is int or type(i) is float and i >=0:
             t += 'scalar'
         else:
-            assert False,'In get function; index must be an integer >=0 for vector view'
+            print('In <:get:> function; index must be an integer >=0 for vector view')
+            return False
     elif 'mview' in t:
         if type(i) == tuple and len(i) == 2:
             t += 'tuple'
@@ -1341,11 +1469,16 @@ def get(a,i):
         elif 'scalar_mi' in getType(i)[1]:
             t += 'scalar_mi'
         else:
-            assert False,'In get function; index not recognized for matrix.'
+            print('In <:get:> function; index not recognized for matrix')
+            return False
     else:
-        assert False,'Argument not recognized by get as vector or matrix?'
-    assert f.has_key(t),'Type <:%s:> not a supported type.'%t
-    return eval(f[t])
+        print('Input view not recognized as vector or matrix?')
+        return False
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type <:' + t + ':> Not a supported type')
+        return False
 def put(a,i,scl):
     """
        put(aView,aIndex,aScalar) will put aScalar in aView at position aIndex.
@@ -1386,12 +1519,13 @@ def put(a,i,scl):
         elif 'cscalar' in getType(scl)[1]:
             x = scl
         else:
-            assert False,'In vsiutils put; Input scalar type is not recognized for complex view'
+            print('In vsiutils put; Input scalar type is not recognized for complex view')
+            return
     elif '_mi' in t:
         if 'scalar_mi' in getType(scl)[1]:
             x=scl
         else:
-            assert False,'Input to vview_mi type must be scalar_mi'
+            print('Input to vview_mi type must be scalar_mi')
             return
     elif '_i' in t or '_si' in t:
         if type(scl) is int:
@@ -1399,30 +1533,36 @@ def put(a,i,scl):
         elif type(scl) is float:
             x = int(scl)
         else:
-            assert False,'Input to integer view must be float or integer'
+            print('Input to integer view must be float or integer')
+            return
     elif '_vi' in t:
         if type(scl) is float or type(scl) is int and scl >= 0:
             x = int(scl)
         else:
-            assert False,'Type for _vi must be unsigned int'
+            print('Type for _vi must be unsigned int')
+            return
     elif '_uc' in t:
         if type(scl) is float or type(scl) is int and scl >= 0:
             x = int(scl)
         else:
-            assert False,'Type for _uc must be unsigned int'
+            print('Type for _uc must be unsigned int')
+            return
     elif '_d' or '_f' in t:
         if type(scl) is float or type(scl) is int:
             x = float(scl)
         else:
-            assert False,'Type must be float for _d or _f precision views'
+            print('Type must be float for _d or _f precision views')
+            return
     else:
-        assert False,'Precision type of scalar not recognized for function put'
+        print('Precision type of scalar not recognized for function put')
+        return
     #figure out the type
     if 'vview' in t:
         if type(i) is int:
             t+='scalar'
         else:
-            assert False,'Index for function <:put:> must be an int for a vector'
+            print('Index for function <:put:> must be an int for a vector')
+            return False
     elif 'mview' in t:
         if type(i) is tuple or type(i) is list and len(i) is 2:
             r=i[0]; c = i[1]
@@ -1431,12 +1571,17 @@ def put(a,i,scl):
             r=i.r; c = i.c
             t += 'scalar_mi'
         else:
-            assert False,'Index for function put not recognized for a matrix.'
+            print('Index for function <:put:> not recognized for a matrix')
+            return
     else:
-        assert False,'Input argument not a vsip vector or matrix?'
+        print('Input argument not a vsip vector or matrix?')
+        return
     #evaluate the function for type
-    assert f.has_key(t),'Type <:%s:> not supported for put.'%t
-    eval(f[t])
+    if f.has_key(t):
+        eval(f[t])
+    else:
+        print('Type <:' + t + ':> Not a supported type')
+
 # Block and View Destroy functions
 def viewDestroy(a):
     t=getType(a)
@@ -1465,9 +1610,11 @@ def viewDestroy(a):
          'ctview_f':vsip_ctdestroy_f,
          'cmview_f':vsip_cmdestroy_f,
          'cvview_f':vsip_cvdestroy_f}
-    assert (t[0] and f.has_key(t[1])), 'Type <:%s:> not recongnized for viewDestroy.'%t[1]
-    b = f[t[1]](a)
-    return b
+    if t[0] and f.has_key(t[1]):
+        b = f[t[1]](a)
+        return b
+    else:
+        return False
 def blockDestroy(a):
     t=getType(a)
     f={  'block_bl':vsip_blockdestroy_bl,
@@ -1480,8 +1627,10 @@ def blockDestroy(a):
          'block_vi':vsip_blockdestroy_vi,
          'cblock_d':vsip_cblockdestroy_d,
          'cblock_f':vsip_cblockdestroy_f}
-    assert (t[0] and f.has_key(t[1])), 'Type <:%s:> not recongnized for blockDestroy.'%t[1]
-    f[t[1]](a)
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a)
+    else:
+        print('blockDestroy Fail')
 def allDestroy(a):
     t=getType(a)
     f={ 'cmview_d':vsip_cmalldestroy_d,
@@ -1509,8 +1658,11 @@ def allDestroy(a):
         'vview_si':vsip_valldestroy_si,
         'vview_uc':vsip_valldestroy_uc,
         'vview_vi':vsip_valldestroy_vi}
-    assert (t[0] and f.has_key(t[1])), 'Type <:%s:> not recongnized for allDestroy.'%t[1]
-    f[t[1]](a)
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a)
+    else:
+        print('allDestroy Fail')
+
 # Random Number Generation
 class randcreate(object):
     """
@@ -1527,7 +1679,7 @@ class randcreate(object):
         elif t[0] and t[1]=='randstate':
             self.rand = s;
         else:
-            assert False,'argument must be an integer or a randstate object'
+            print('argument must be an integer or a randstate object')
 
     def get(self):
         return self.rand
@@ -1538,18 +1690,24 @@ class randcreate(object):
              'cvview_f':vsip_cvrandu_f,
              'vview_d':vsip_vrandu_d,
              'vview_f':vsip_vrandu_f}
-        assert t[0] and f.has_key(t[1]),'Not a supported type for randu.'
-        f[t[1]](self.rand,a)
-        return a   
+        if t[0] and f.has_key(t[1]):
+            f[t[1]](self.rand,a)
+            return a
+        else:
+            print('Not a supported type')
+
     def randn(self,a):
         t=getType(a)
         f = {'cvview_d':vsip_cvrandn_d,
              'cvview_f':vsip_cvrandn_f,
              'vview_d':vsip_vrandn_d,
              'vview_f':vsip_vrandn_f}
-        assert t[0] and f.has_key(t[1]),'Not a supported type for randn'
-        f[t[1]](self.rand,a)
-        return a
+        if t[0] and f.has_key(t[1]):
+            f[t[1]](self.rand,a)
+            return a
+        else:
+            print('Not a supported type')
+
     def __del__(self):
         t=getType(self.rand)
         if t[0]:
@@ -1562,18 +1720,24 @@ def randn(state, a):
        'vview_d':vsip_vrandn_d,
        'vview_f':vsip_vrandn_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for randn'%t
-    f[t](state,a)
-    return a
+    if f.has_key(t):
+        f[t](state,a)
+        return a
+    else:
+        print(t + 'not a supported type for randn')
+        return False
 def randu(state, a):
     f={'cvview_d':vsip_cvrandu_d,
        'cvview_f':vsip_cvrandu_f,
        'vview_d':vsip_vrandu_d,
        'vview_f':vsip_vrandu_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for randu'%t
-    f[t](state,a)
-    return a
+    if f.has_key(t):
+        f[t](state,a)
+        return a
+    else:
+        print('Type ' + t + ' not a supported type for randu')
+        return False
 def randDestroy(state):
     return vsip_randdestroy(state)
 
@@ -1584,40 +1748,49 @@ def acos(a,b):
          'mview_f':vsip_macos_f,
          'vview_d':vsip_vacos_d,
          'vview_f':vsip_vacos_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by acos.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for acos')
 def asin(a,b):
     t=getType(a)
     f={  'mview_d':vsip_masin_d,
          'mview_f':vsip_masin_f,
          'vview_d':vsip_vasin_d,
          'vview_f':vsip_vasin_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by asin.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for asin')
+        return False
 def cos(a,b):
     t=getType(a)
     f={  'mview_d':vsip_mcos_d,
          'mview_f':vsip_mcos_f,
          'vview_d':vsip_vcos_d,
          'vview_f':vsip_vcos_f}
-    assert t[0] and f.has_key(t[1]),'Type <:%s:> not a supported type for cos.'%t[1]
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for cos')
 def cosh(a,b):
     t=getType(a)
     f={  'mview_d':vsip_mcosh_d,
          'mview_f':vsip_mcosh_f,
          'vview_d':vsip_vcosh_d,
          'vview_f':vsip_vcosh_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by cosh.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for cosh')
 def exp(a,b):
     """"
         Supported for matrix and vector floats of type real and complex
-    """
+        """
     t=getType(a)
     f={ 'cmview_d':vsip_cmexp_d,
         'cmview_f':vsip_cmexp_f,
@@ -1627,22 +1800,27 @@ def exp(a,b):
         'mview_f':vsip_mexp_f,
         'vview_d':vsip_vexp_d,
         'vview_f':vsip_vexp_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by tan.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for exp')
+        return False
 def exp10(a,b):
     t=getType(a)
     f={  'mview_d':vsip_mexp10_d,
          'mview_f':vsip_mexp10_f,
          'vview_d':vsip_vexp10_d,
          'vview_f':vsip_vexp10_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by exp10.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for exp10')
 def log(a,b):
     """"
         Supported for matrix and vector floats of type real and complex
-    """
+        """
     t=getType(a)
     f={ 'cmview_d':vsip_cmlog_d,
         'cmview_f':vsip_cmlog_f,
@@ -1652,40 +1830,52 @@ def log(a,b):
         'mview_f':vsip_mlog_f,
         'vview_d':vsip_vlog_d,
         'vview_f':vsip_vlog_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by log.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for log')
+        return False
 def log10(a,b):
     t=getType(a)
     f={  'mview_d':vsip_mlog10_d,
          'mview_f':vsip_mlog10_f,
          'vview_d':vsip_vlog10_d,
          'vview_f':vsip_vlog10_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by log10.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for log10')
+        return False
 def sin(a,b):
     t=getType(a)
     f={  'mview_d':vsip_msin_d,
          'mview_f':vsip_msin_f,
          'vview_d':vsip_vsin_d,
          'vview_f':vsip_vsin_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by sin.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for sin')
+        return False
 def sinh(a,b):
     t=getType(a)
     f={  'mview_d':vsip_msinh_d,
          'mview_f':vsip_msinh_f,
          'vview_d':vsip_vsinh_d,
          'vview_f':vsip_vsinh_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by sinh.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for sinh')
+        return False
 def sqrt(a,b):
     """"
         Supported for matrix and vector floats of type real and complex
-    """
+        """
     t=getType(a)
     f={ 'cmview_d':vsip_cmsqrt_d,
         'cmview_f':vsip_cmsqrt_f,
@@ -1695,27 +1885,37 @@ def sqrt(a,b):
         'mview_f':vsip_msqrt_f,
         'vview_d':vsip_vsqrt_d,
         'vview_f':vsip_vsqrt_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by sqrt.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for sqrt')
+        return False
 def tan(a,b):
     t=getType(a)
     f={  'mview_d':vsip_mtan_d,
          'mview_f':vsip_mtan_f,
          'vview_d':vsip_vtan_d,
          'vview_f':vsip_vtan_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> note supported by tan.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for tan')
+        return False
 def tanh(a,b):
     t=getType(a)
     f={  'mview_d':vsip_mtanh_d,
          'mview_f':vsip_mtanh_f,
          'vview_d':vsip_vtanh_d,
          'vview_f':vsip_vtanh_f}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> not supported by tanh.'%t
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported type for tanh')
+        return False
+
 #Unary Operations
 def arg(input,output):
     f={'cmview_dmview_d':vsip_marg_d,
@@ -1723,9 +1923,12 @@ def arg(input,output):
        'cvview_dvview_d':vsip_varg_d,
        'cvview_fvview_f':vsip_varg_f}
     t=getType(input)[1]+getType(output)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for arg.'%t
-    f[t](input,output)
-    return output
+    if f.has_key(t):
+        f[t](input,output)
+        return output
+    else:
+        print('Not a supported type')
+        return False
 def conj(input,output):
     f={'cmview_d':vsip_cmconj_d,
        'cmview_f':vsip_cmconj_f,
@@ -1733,14 +1936,17 @@ def conj(input,output):
        'cvview_f':vsip_cvconj_f}
     fr=['vview_d','vview_f','mview_d','mview_f']
     t=getType(input)[1]
-    assert t == getType(output)[1],'Type of input and output must be the same for conj.'
+    if t != getType(output)[1]:
+        print('Type of input and output must be the same')
+        return False
     if f.has_key(t):
         f[t](input,output)
         return output
     elif t in fr:
         return copy(input,output)
     else:
-        assert False,'Type <:%s:> Not a supported type for conj.'%t
+        print('Type' + t + 'Not a supported type for copy')
+        return False
 def cumsum(input,output):
     """
         cumsum(input,output)
@@ -1766,17 +1972,22 @@ def cumsum(input,output):
             t=getType(input)[1]+'tuple'
        else:
             t=getType(input)[1]+getType(output)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for cumsum.'%t
-    eval(f[t])
+    if f.has_key(t):
+        eval(f[t])
+    else:
+        print('Not a supported type')
 def euler(input,output):
     f={'mview_dcmview_d':vsip_meuler_d,
        'mview_fcmview_f':vsip_meuler_f,
        'vview_dcvview_d':vsip_veuler_d,
        'vview_fcvview_f':vsip_veuler_f}
     t=getType(input)[1]+getType(output)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for euler.'%t
-    f[t](input,output)
-    return output
+    if f.has_key(t):
+        f[t](input,output)
+        return output
+    else:
+        print('Type <:' + t + ':> a supported type')
+        return False
 def mag(input,output):
     f={'cmview_d':vsip_cmmag_d,
        'cmview_f':vsip_cmmag_f,
@@ -1789,18 +2000,24 @@ def mag(input,output):
        'vview_i':vsip_vmag_i,
        'vview_si':vsip_vmag_si}
     t = getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for mag.'%t
-    f[t](input,output)
-    return output
+    if f.has_key(t):
+        f[t](input,output)
+        return output;
+    else:
+        print(t + ' Is not a supported type for mag')
+        return False
 def magsq(input,output):
     f={'cmview_d':vsip_mcmagsq_d,
        'cmview_f':vsip_mcmagsq_f,
        'cvview_d':vsip_vcmagsq_d,
        'cvview_f':vsip_vcmagsq_f}
     t = getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for magsq.'%t
-    f[t](input,output)
-    return output
+    if f.has_key(t):
+        f[t](input,output)
+        return output;
+    else:
+        print(t + ' Is not a supported type for magsq')
+        return False
 def meanval(input):
     f={'cmview_d':vsip_cmmeanval_d,
        'cvview_d':vsip_cvmeanval_d,
@@ -1811,8 +2028,11 @@ def meanval(input):
        'mview_f':vsip_mmeanval_f,
        'vview_f':vsip_vmeanval_f}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for meanval.'%t
-    return f[t](input)
+    if f.has_key(t):
+        return f[t](input)
+    else:
+        print(t + ' Is not a supported type for meanval')
+        return False
 def meansqval(input):
     f={'cmview_d':vsip_cmmeansqval_d,
        'cvview_d':vsip_cvmeansqval_d,
@@ -1823,16 +2043,22 @@ def meansqval(input):
        'mview_f':vsip_mmeansqval_f,
        'vview_f':vsip_vmeansqval_f}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for meansqval.'%t
-    return f[t](input)
+    if f.has_key(t):
+        return f[t](input)
+    else:
+        print(t + ' Is not a supported type for meanval')
+        return False
 def modulate(input,nu,phi,output):
     f={'cvview_d':vsip_cvmodulate_d,
        'vview_d':vsip_vmodulate_d,
        'cvview_f':vsip_cvmodulate_f,
        'vview_f':vsip_vmodulate_f}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for modulate.'%t
-    return f[t](input,nu,phi,output)
+    if f.has_key(t):
+        return f[t](input,nu,phi,output)
+    else:
+        print(t + 'Not a supported type for modulate')
+        return False
 def neg(a,b):
     """
         Elementwise place the negative values of a in b. May be done in place using neg(a,a)
@@ -1849,9 +2075,11 @@ def neg(a,b):
         'vview_f':vsip_vneg_f,
         'vview_i':vsip_vneg_i,
         'vview_si':vsip_vneg_si}
-    assert (t[0] and f.has_key(t[1])),'Type <:%s:> not supported for neg.'%t[1]
-    f[t[1]](a,b)
-    return b
+    if t[0] and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        return False
 def recip(a,b):
     f={'cmview_d':vsip_cmrecip_d,
        'cmview_f':vsip_cmrecip_f,
@@ -1862,27 +2090,36 @@ def recip(a,b):
        'vview_d':vsip_vrecip_d,
        'vview_f':vsip_vrecip_f}
     t = getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for recip.'%t
-    f[t](a,b)
-    return b
+    if f.has_key(t):
+        f[t](a,b)
+        return b;
+    else:
+        print(t + ' Is not a supported type for mag')
+        return False
 def rsqrt(a,b):
     f={'mview_d':vsip_mrsqrt_d,
        'mview_f':vsip_mrsqrt_f,
        'vview_d':vsip_vrsqrt_d,
        'vview_f':vsip_vrsqrt_f}
     t = getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for rsqrt.'%t
-    f[t](a,b)
-    return b;
+    if f.has_key(t):
+        f[t](a,b)
+        return b;
+    else:
+        print(t + ' Is not a supported type for rsqrt')
+        return False
 def sq(a,b):
     f={'mview_d':vsip_msq_d,
        'mview_f':vsip_msq_f,
        'vview_d':vsip_vsq_d,
        'vview_f':vsip_vsq_f}
     t = getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for sq.'%t
-    f[t](a,b)
-    return b;
+    if f.has_key(t):
+        f[t](a,b)
+        return b;
+    else:
+        print(t + ' Is not a supported type for sq')
+        return False
 def sumval(input):
     f={'cmview_d':'cscalarToComplex(vsip_cmsumval_d ( input ))',
        'cvview_d':'cscalarToComplex(vsip_cvsumval_d ( input ))',
@@ -1898,16 +2135,23 @@ def sumval(input):
        'mview_bl':'vsip_msumval_bl ( input )',
        'vview_bl':'vsip_vsumval_bl ( input )'}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for sumval.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print(t + ' Is not a supported type for sumval')
+        return False
 def sumsqval(input):
     f={'mview_d':vsip_msumsqval_d,
        'mview_f':vsip_msumsqval_f,
        'vview_d':vsip_vsumsqval_d,
        'vview_f':vsip_vsumsqval_f}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for sumsqval.'%t
-    return f[t](input)
+    if f.has_key(t):
+        return f[t](input)
+    else:
+        print(t + ' Is not a supported type for sumsqval')
+        return False
+
 #Binary Operations
 def add(a,b,c):
     """
@@ -1963,9 +2207,11 @@ def add(a,b,c):
           'scalarvview_si':vsip_svadd_si,
           'scalarvview_uc':vsip_svadd_uc,
           'scalarvview_vi':vsip_svadd_vi}
-    assert f.has_key(t),'Type <:%s:> not supported by add.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+       f[t](a,b,c)
+       return c
+    else:
+       return False
 def expoavg(alpha,b,c):
     f={'cmview_d':vsip_cmexpoavg_d,
        'cmview_f':vsip_cmexpoavg_f,
@@ -1976,18 +2222,24 @@ def expoavg(alpha,b,c):
        'vview_d':vsip_vexpoavg_d,
        'vview_f':vsip_vexpoavg_f}
     t=getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for expoavg.'%t
-    f[t](alpha,b,c)
-    return c
+    if f.has_key(t):
+        f[t](alpha,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for expoavg')
+        return False
 def hypot(a,b,c):
     f={'mview_d':vsip_mhypot_d,
        'mview_f':vsip_mhypot_f,
        'vview_d':vsip_vhypot_d,
        'vview_f':vsip_vhypot_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for hypot.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for hypot')
+        return False
 def sub(a,b,c):
     """
         sub(a,b,c) does a-b returning the result in c. View c is returned as a convenience.
@@ -2045,9 +2297,11 @@ def sub(a,b,c):
        'vview_ivview_i':vsip_vsub_i,
        'vview_sivview_si':vsip_vsub_si,
        'vview_ucvview_uc':vsip_vsub_uc}
-    assert f.has_key(t),'Type <:%s:> not found for sub.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        return False
 def mul(a,b,c):
     """
         Through introspection multiply elementwise two vsipl objects.
@@ -2100,9 +2354,11 @@ def mul(a,b,c):
           'cscalar_fcmview_f':vsip_csmmul_f,
           'cscalar_dcvview_d':vsip_csvmul_d,
           'cscalar_fcvview_f':vsip_csvmul_f}
-    assert f.has_key(t),'Type <:%s:> not found for mul.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        return False
 def vmmul(a,b,flg,c):
     """
        This function does vmmul, -cvmmul, and rvcmmul
@@ -2118,7 +2374,8 @@ def vmmul(a,b,flg,c):
         f[t](a,b,flg,c)
         return c
     else:
-        assert False,'Type %s not supported for vmmul.'%t
+        print('Type ' + t + ' not supported for vmmul')
+        return False
 def jmul(a,b,c):
     f={'cmview_d':vsip_cmjmul_d,
        'cmview_f':vsip_cmjmul_f,
@@ -2128,7 +2385,8 @@ def jmul(a,b,c):
         f[t](a,b,c)
         return c
     else:
-        assert False,'Type %s Not a valid type for jmul'%t
+        print('Type ' + t +' Not a valid type for jmul')
+        return False
 def div(a,b,c):
     """
         Divide a by b puting result in c. Here c is returned as a convenience.
@@ -2195,7 +2453,9 @@ def div(a,b,c):
         g[t](a,b,c)
         return c
     else:
-        assert False,'Type <:%s:> not recognized for div'%t
+        print('Type <:' + t + ':> not recognized for div')
+        return False
+
 # Ternary Operations
 # Logical Operations
 # Selection Operations
@@ -2215,9 +2475,12 @@ def am(a,b,c,d):
        'vview_dscalarvview_d':vsip_vsam_d,
        'vview_fscalarvview_f':vsip_vsam_f}
     t=getType(a)[1]+getType(b)[1]+getType(c)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by am.'%t
-    f[t](a,b,c,d)
-    return d
+    if f.has_key(t):
+        f[t](a,b,c,d)
+        return d
+    else:
+        print('Type ' + t + ' not supported by am')
+        return False
 def ma(a,b,c,d):
     """
         multiply add
@@ -2241,9 +2504,12 @@ def ma(a,b,c,d):
        'vview_dvview_dscalar':vsip_vmsa_d,
        'vview_fvview_fscalar':vsip_vmsa_f}
     t=getType(a)[1]+getType(b)[1]+getType(c)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by ma.'%t
-    f[t](a,b,c,d)
-    return d
+    if f.has_key(t):
+        f[t](a,b,c,d)
+        return d
+    else:
+        print('Type ' + t + ' not supported by ma')
+        return False
 def msb(a,b,c,d):
     """
        multiply subtract
@@ -2254,9 +2520,12 @@ def msb(a,b,c,d):
        'vview_dvview_dvview_d':vsip_vmsb_d,
        'vview_fvview_fvview_f':vsip_vmsb_f}
     t=getType(a)[1]+getType(b)[1]+getType(c)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by msb.'%t
-    f[t](a,b,c,d)
-    return d
+    if f.has_key(t):
+        f[t](a,b,c,d)
+        return d
+    else:
+        print('Type ' + t + ' not supported by msb')
+        return False
 def sbm(a,b,c,d):
     """
        subtract multiply
@@ -2267,22 +2536,31 @@ def sbm(a,b,c,d):
        'vview_dvview_dvview_d':vsip_vsbm_d,
        'vview_fvview_fvview_f':vsip_vsbm_f}
     t=getType(a)[1]+getType(b)[1]+getType(c)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by sbm.'%t
-    f[t](a,b,c,d)
-    return d
+    if f.has_key(t):
+        f[t](a,b,c,d)
+        return d
+    else:
+        print('Type ' + t + ' not supported by sbm')
+        return False
 # Logical Operations
 def alltrue(a):
     f={'mview_bl':vsip_malltrue_bl,
        'vview_bl':vsip_valltrue_bl}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by alltrue.'%t
-    return 1 == f[t](a)
+    if f.has_key(t):
+        return 1 == f[t](a)
+    else:
+        print('Type ' + t + ' not a defined type for alltrue')
+        return False
 def anytrue(a):
     f={'mview_bl':vsip_manytrue_bl,
        'vview_bl':vsip_vanytrue_bl}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by anytrue.'%t
-    return 1 == f[t](a)
+    if f.has_key(t):
+        return 1 == f[t](a)
+    else:
+        print('Type ' + t + ' not a defined type for anytrue')
+        return False
 def leq(a,b,c):
     f={'mview_dmview_d':vsip_mleq_d,
        'mview_fmview_f':vsip_mleq_f,
@@ -2292,9 +2570,12 @@ def leq(a,b,c):
        'vview_sivview_si':vsip_vleq_si,
        'vview_ucvview_uc':vsip_vleq_uc}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by leq.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for leq')
+        return False
 def lge(a,b,c):
     f={'mview_dmview_d':vsip_mlge_d,
        'mview_fmview_f':vsip_mlge_f,
@@ -2304,9 +2585,12 @@ def lge(a,b,c):
        'vview_sivview_si':vsip_vlge_si,
        'vview_ucvview_uc':vsip_vlge_uc}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by lge.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for lge')
+        return False
 def lgt(a,b,c):
     f={'mview_dmview_d':vsip_mlgt_d,
        'mview_fmview_f':vsip_mlgt_f,
@@ -2316,9 +2600,12 @@ def lgt(a,b,c):
        'vview_sivview_si':vsip_vlgt_si,
        'vview_ucvview_uc':vsip_vlgt_uc}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by lgt.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for lgt')
+        return False
 def lle(a,b,c):
     f={'mview_dmview_d':vsip_mlle_d,
        'mview_fmview_f':vsip_mlle_f,
@@ -2328,9 +2615,12 @@ def lle(a,b,c):
        'vview_sivview_si':vsip_vlle_si,
        'vview_ucvview_uc':vsip_vlle_uc}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by lle.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for lle')
+        return False
 def llt(a,b,c):
     f={'mview_dmview_d':vsip_mllt_d,
        'mview_fmview_f':vsip_mllt_f,
@@ -2340,9 +2630,12 @@ def llt(a,b,c):
        'vview_sivview_si':vsip_vllt_si,
        'vview_ucvview_uc':vsip_vllt_uc}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by llt.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for llt')
+        return False
 def lne(a,b,c):
     f={'mview_dmview_d':vsip_mlne_d,
        'mview_fmview_f':vsip_mlne_f,
@@ -2352,9 +2645,12 @@ def lne(a,b,c):
        'vview_sivview_si':vsip_vlne_si,
        'vview_ucvview_uc':sip_vlne_uc}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by lne.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for lne')
+        return False
 # Element Generation and Copy
 def fill(a_scalar,a_view):
     """
@@ -2391,16 +2687,19 @@ def fill(a_scalar,a_view):
         if t1[1] == 'scalar' or type(a_view) == complex:
             x=complexToCscalar(myType,a_scalar)
     t=getType(x)[1] + t2[1]
-    assert f.has_key(t),'Type <:%s:> not supported by fill.'%t
-    f[t](x,a_view)
-    return a_view
+    if f.has_key(t):
+        f[t](x,a_view)
+        return a_view
+    else:
+        print('Type ' + t + ' not supported by fill')
+
 def ramp(a,b,c):
     """
         A ramp is supported for real vector types.
         called as ramp(start, increment, vector).
         Note the length is determined by the vector.
         returns the result as a convienience.
-    """
+        """
     t=getType(c)[1]
     f={'vview_f':vsip_vramp_f,
        'vview_d':vsip_vramp_d,
@@ -2408,9 +2707,12 @@ def ramp(a,b,c):
        'vview_si':vsip_vramp_si,
        'vview_uc':vsip_vramp_uc,
        'vview_vi':vsip_vramp_vi}
-    assert f.has_key(t),'Type <:%s:> not supported by ramp.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type <:' + t + ':> not supported by ramp')
+        return False
 def copy(a,b):
     f={'cmview_dcmview_d':vsip_cmcopy_d_d,
     'cmview_dcmview_f':vsip_cmcopy_d_f,
@@ -2484,7 +2786,9 @@ def copy(a,b):
                 put(b,(i,j),get(a,(i,j)))
         return b
     else:
-        assert False,'Type <:' + t1 + t2 + ':> not supported by copy'
+        print('Type <:' + t1 + t2 + ':> not supported by copy')
+        return False
+
 # Selection Operations
 def clip(a,t1,t2,c1,c2,r):
     f = {'mview_d':vsip_mclip_d,
@@ -2497,9 +2801,12 @@ def clip(a,t1,t2,c1,c2,r):
          'vview_si':vsip_vclip_si,
          'vview_uc':vsip_vclip_uc}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by clip.'%t
-    f[t](a,t1,t2,c1,c2,r)
-    return r
+    if f.has_key(t):
+        f[t](a,t1,t2,c1,c2,r)
+        return r
+    else:
+        print('Not a supported type for clip')
+        return False
 def invclip(a,t1,t2,t3,c1,c2,r):
     f={'mview_d':vsip_minvclip_d,
        'mview_f':vsip_minvclip_f,
@@ -2509,58 +2816,78 @@ def invclip(a,t1,t2,t3,c1,c2,r):
        'vview_si':vsip_vinvclip_si,
        'vview_uc':vsip_vinvclip_uc}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by invclip.'%t
-    f[t](a,t1,t2,t3,c1,c2,r)
-    return r
+    if f.has_key(t):
+        f[t](a,t1,t2,t3,c1,c2,r)
+        return r
+    else:
+        print('Type ' + t + ' not supported for indexbool')
+        return False
 def indexbool(a,b):
     f={'mview_bl':vsip_mindexbool,
        'vview_bl':vsip_vindexbool}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by indexbool.'%t
-    return f[t](a,b)
+    if f.has_key(t):
+        return f[t](a,b)
+    else:
+        print('Type ' + t + ' not supported for indexbool')
+        return False
 def max(a,b,c):
     f={'mview_d':vsip_mmax_d,
        'mview_f':vsip_mmax_f,
        'vview_d':vsip_vmax_d,
        'vview_f':vsip_vmax_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by max.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not supported for max')
+        return False
 def maxmg(a,b,c):
     f={'mview_d':vsip_mmaxmg_d,
        'mview_f':vsip_mmaxmg_f,
        'vview_d':vsip_vmaxmg_d,
        'vview_f':vsip_vmaxmg_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by maxmg.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for maxmg')
+        return False
 def maxmgsq(a,b,c):
     f={'cmview_d':vsip_mcmaxmgsq_d,
        'cmview_f':vsip_mcmaxmgsq_f,
        'cvview_d':vsip_vcmaxmgsq_d,
        'cvview_f':vsip_vcmaxmgsq_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by maxmgsq.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for maxmgsq')
+        return False
 def maxmgsqval(a,idx):
     f={'cmview_dscalar_mi':'vsip_mcmaxmgsqval_d(a,idx)',
        'cvview_dscalar_vi':'vsip_vcmaxmgsqval_d(a,idx)',
        'cmview_fscalar_mi':'vsip_mcmaxmgsqval_f(a,idx)',
        'cvview_fscalar_vi':'vsip_vcmaxmgsqval_f(a,idx)'}
     t=getType(a)[1]+getType(idx)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by maxmgsqval.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not supported for maxmgsqval')
+        return False
 def maxmgval(a,idx):
     f={'mview_dscalar_mi':'vsip_mmaxmgval_d(a,idx)',
        'vview_dscalar_vi':'vsip_vmaxmgval_d(a,idx)',
        'mview_fscalar_mi':'vsip_mmaxmgval_f(a,idx)',
        'vview_fscalar_vi':'vsip_vmaxmgval_f(a,idx)'}
     t=getType(a)[1]+getType(idx)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by maxmgval.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not supported for maxmgval')
 def maxval(a,idx):
     f={'mview_d':'vsip_mmaxval_d(a,idx)',
        'vview_d':'vsip_vmaxval_d(a,idx)',
@@ -2571,51 +2898,69 @@ def maxval(a,idx):
        'mview_si':'vsip_mmaxval_si(a,idx)',
        'vview_si':'vsip_vmaxval_si(a,idx)'}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by maxval.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not suppqorted for maxval')
 def min(a,b,c):
     f={'mview_d':vsip_mmin_d,
        'mview_f':vsip_mmin_f,
        'vview_d':vsip_vmin_d,
        'vview_f':vsip_vmin_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by min.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for min')
+        return False
 def minmg(a,b,c):
     f={'mview_d':vsip_mminmg_d,
        'mview_f':vsip_mminmg_f,
        'vview_d':vsip_vminmg_d,
        'vview_f':vsip_vminmg_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by minmg.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for minmg')
+        return False
 def minmgsq(a,b,c):
     f={'cmview_d':vsip_mcminmgsq_d,
        'cmview_f':vsip_mcminmgsq_f,
        'cvview_d':vsip_vcminmgsq_d,
        'cvview_f':vsip_vcminmgsq_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by minmgsq.'%t
-    f[t](a,b,c)
-    return c
+    if f.has_key(t):
+        f[t](a,b,c)
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for minmgsq')
+        return False
 def minmgval(a,idx):
     f={'mview_dscalar_mi':'vsip_mminmgval_d(a,idx)',
        'vview_dscalar_vi':'vsip_vminmgval_d(a,idx)',
        'mview_fscalar_mi':'vsip_mminmgval_f(a,idx)',
        'vview_fscalar_vi':'vsip_vminmgval_f(a,idx)'}
     t=getType(a)[1]+getType(idx)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by minmgval.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not supported for minmgval')
+        return False
 def minval(a,idx):
     f={'mview_d':'vsip_mminval_d(a,idx)',
        'vview_d':'vsip_vminval_d(a,idx)',
        'mview_f':'vsip_mminval_f(a,idx)',
        'vview_f':'vsip_vminval_f(a,idx)'}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by minval.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Type ' + t + ' not supported for minval')
+        return False
+
 # Bitwise and Boolean
 def andd(a,b,c):
     """
@@ -2628,9 +2973,12 @@ def andd(a,b,c):
        'vview_si':'vsip_vand_si(a,b,c)',
        'vview_uc':'vsip_vand_uc(a,b,c)' }
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by and.'%t
-    eval(f[t])
-    return c
+    if f.has_key(t):
+        eval(f[t])
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for and')
+        return False
 def nott(a,b):
     """
        renamed 'nott' to avoid collision with python keyword
@@ -2640,9 +2988,12 @@ def nott(a,b):
        'vview_si':'vsip_vnot_si(a,b)',
        'vview_uc':'vsip_vnot_uc(a,b)'}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by not.'%t
-    eval(f[t])
-    return b
+    if f.has_key(t):
+        eval(f[t])
+        return b
+    else:
+        print('Type ' + t + ' not a supported type for not')
+        return False
 def orr(a,b,c):
     """
        renamed 'orr' to avoid collision with python keyword.
@@ -2652,27 +3003,36 @@ def orr(a,b,c):
        'vview_si':'vsip_vor_si(a,b,c)',
        'vview_uc':'vsip_vor_uc(a,b,c)'}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by or.'%t
-    eval(f[t])
-    return c
+    if f.has_key(t):
+        eval(f[t])
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for or')
+        return False
 def xor(a,b,c):
     f={'vview_bl':'vsip_vxor_bl(a,b,c)',
        'vview_i':'vsip_vxor_i(a,b,c)',
        'vview_si':'vsip_vxor_si(a,b,c)',
        'vview_uc':'vsip_vxor_uc(a,b,c)'}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by xor.'%t
-    eval(f[t])
-    return c
+    if f.has_key(t):
+        eval(f[t])
+        return c
+    else:
+        print('Type ' + t + ' not a supported type for xor')
+        return False
 
 # Manipulation
 def cmplx(r,i,c):
     f={'vview_d':'vsip_vcmplx_d(r,i,c)',
        'vview_f':'vsip_vcmplx_f(r,i,c)'}
     t=getType(r)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by cmplx.'%t
-    eval(f[t])
-    return c
+    if f.has_key(t):
+        eval(f[t])
+        return c
+    else:
+        print('Type ' + t + ' not supported by cmplx')
+        return False
 def gather(input,indx,output):
     f={'cmview_d':'vsip_cmgather_d(input,indx,output)',
        'cmview_f':'vsip_cmgather_f(input,indx,output)',
@@ -2688,9 +3048,12 @@ def gather(input,indx,output):
        'vview_mi':'vsip_vgather_mi(input,indx,output)',
        'vview_vi':'vsip_vgather_vi(input,indx,output)'}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by gather.'%t
-    eval(f[t])
-    return output
+    if f.has_key(t):
+        eval(f[t])
+        return output
+    else:
+        print('Type ' + t + ' not supported by gather')
+        return False
 def scatter(input,output,indx):
     f={'cvview_d':'vsip_cmscatter_d(input,output,indx)',
        'cvview_f':'vsip_cmscatter_f(input,output,indx)',
@@ -2704,37 +3067,52 @@ def scatter(input,output,indx):
        'vview_si':'vsip_vscatter_si(input,output,indx)',
        'vview_uc':'vsip_vscatter_uc(input,output,indx)'}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by scatter.'%t
-    eval(f[t])
-    return output
+    if f.has_key(t):
+        eval(f[t])
+        return output
+    else:
+        print('Type ' + t + ' not supported by scatter')
+        return False
 def polar(input,r,phi):
     f={'cvview_d':'vsip_vpolar_d(input,r,phi)',
        'cvview_f':'vsip_vpolar_f(input,r,phi)'}
     t=getType(input)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by polar.'%t
-    eval(f[t])
-    return(r,phi)
+    if f.has_key(t):
+        eval(f[t])
+        return(r,phi)
+    else:
+        print('Type ' + t + ' not supported for polar')
+        return False
 def rect(r,phi,ouput):
     f={'vview_d':'vsip_vrect_d(r,phi,output)',
        'vview_f':'vsip_vrect_f(r,phi,output)'}
     t=getType(r)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by rect.'%t
-    eval(f[t])
-    return output
+    if f.has_key(t):
+        eval(f[t])
+        return output
+    else:
+        print('Type ' + t + ' not supported for rect')
+        return False
 def real(c,r):
     f={'cvview_d':'vsip_vreal_d(c,r)',
       'cvview_f':'vsip_vreal_f(c,r)'}
     t=getType(c)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by real.'%t
-    eval(f[t])
-    return r
+    if f.has_key(t):
+        eval(f[t])
+        return r
+    else:
+        print('Type ' + t + ' not supported for real')
+        return False
 def imag(c,i):
     f={'cvview_d':'vsip_vreal_d(c,i)',
       'cvview_f':'vsip_vreal_f(c,i)'}
     t=getType(c)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by imag.'%t
-    eval(f[t])
-    return i
+    if f.has_key(t):
+        eval(f[t])
+        return i
+    else:
+        print('Type ' + t + ' not supported for imag')
+        return False
 def swap(a,b):
     f={'cmview_d':vsip_cmswap_d,
        'cmview_f':vsip_cmswap_f,
@@ -2748,9 +3126,12 @@ def swap(a,b):
        'vview_si':vsip_vswap_si,
        'vview_uc':vsip_vswap_uc}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by swap.'%t
-    f[t](a,b)
-    return(a,b)
+    if f.has_key(t):
+        f[t](a,b)
+        return(a,b)
+    else:
+        print('Type ' + t + ' not supported by swap');
+        return False
 
 # FFT Functions
 def fftCreate(t,arg):
@@ -2784,16 +3165,22 @@ def fftCreate(t,arg):
         'cmview_fmview_f':'vsip_crfftmop_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5]) ',
         'mview_dcmview_d':'vsip_rcfftmop_create_d,(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5])',
         'mview_fcmview_f':'vsip_rcfftmop_create_f(arg[0] , arg[1] , arg[2] , arg[3] , arg[4] , arg[5])' }
-    assert f.has_key(t),'Type <:%s:> not supported by FFT create.'%t
-    return eval(f[t])
+    if f.has_key(t):
+        return eval(f[t])
+    else:
+        print('Not a valid type for FFT create')
+        return False
 def fftip(fftobj,a):
     f={ 'cvview_d':vsip_ccfftip_d,
         'cvview_f':vsip_ccfftip_f,
         'cmview_d':vsip_ccfftmip_d,
         'cmview_f':vsip_ccfftmip_f}
     t=getType(a)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by fftip.'%t
-    return f[t](fftobj,a)
+    if f.has_key(t):
+        return f[t](fftobj,a)
+    else:
+        print('Not a valid type for fftip')
+        return False
 def fftop(fftobj,a,b):
     f={ 'cvview_dcvview_d':vsip_ccfftop_d,
         'cvview_fcvview_f':vsip_ccfftop_f,
@@ -2808,16 +3195,22 @@ def fftop(fftobj,a,b):
         'mview_dcmview_d':vsip_rcfftmop_d,
         'mview_fcmview_f':vsip_rcfftmop_f}
     t=getType(a)[1]+getType(b)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by fftop.'%t
-    return f[t](fftobj,a,b)
+    if f.has_key(t):
+        return f[t](fftobj,a,b)
+    else:
+        print('Not a valid type for fftop')
+        return False
 def fftDestroy(fftobj):
     f={ 'fft_d':vsip_fft_destroy_d,
         'fft_f':vsip_fft_destroy_f,
         'fftm_d':vsip_fftm_destroy_d,
         'fftm_f':vsip_fftm_destroy_f}
     t=getType(fftobj)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by fftDestroy.'%t
-    return f[t](fftobj)
+    if f.has_key(t):
+        return f[t](fftobj)
+    else:
+        print('Not a valid type for fftDestroy')
+        return False
 
 #Fir Functions
 #TVCPP does not seem to handle the rcfir case. may need to fix that.
@@ -2831,33 +3224,44 @@ def firCreate(kernel,sym,length,decimation,state,ntimes,alghint):
         'vview_d':vsip_fir_create_d,
         'vview_f':vsip_fir_create_f}
     t=getType(kernel)[1]
-    assert f.has_key(t),'Type <:%s:> not a supported kernel type for fir Create.'%t
-    return f[t](kernel,sym,length,decimation,state,ntimes,alghint)
+    if f.has_key(t):
+        return f[t](kernel,sym,length,decimation,state,ntimes,alghint)
+    else:
+        print('Not a supported kernel type for fir Create')
+        return False
 def firDestroy(fir):
     f={ 'cfir_d':vsip_cfir_destroy_d,
         'cfir_f':vsip_cfir_destroy_f,
         'fir_d': vsip_fir_destroy_d,
         'fir_f': vsip_fir_destroy_f}
     t=getType(fir)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by firDestroy.'%t
-    f[t](fir)
+    if f.has_key(t):
+        f[t](fir)
+    else:
+        print('not a fir object')
 def firfilt(fir,input,output):
     f={ 'cfir_d': vsip_cfirflt_d,
         'cfir_f': vsip_cfirflt_f,
         'fir_d': vsip_firflt_d,
         'fir_f': vsip_firflt_f}
     t=getType(fir)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by firfilt.'%t
-    return f[t](fir,input,output)
+    if f.has_key(t):
+        return f[t](fir,input,output)
+    else:
+        print('Not a fir object passed to Fir Filt')
+        return False
 def firReset(fir):
     f={ 'cfir_d': vsip_cfir_reset_d,
         'cfir_f': vsip_cfir_reset_f,
         'fir_d': vsip_fir_reset_d,
         'fir_f': vsip_fir_reset_f}
     t=getType(fir)[1]
-    assert f.has_key(t),'Type <:%s:> not a fir object.'%t
-    f[t](fir)
-    return fir
+    if f.has_key(t):
+        f[t](fir)
+        return fir
+    else:
+        print('Type ' + t + ' not a fir object')
+        return False
 
 # Miscellaneous
 def histo(src,min_bin,max_bin,opt,hist):
@@ -2870,9 +3274,12 @@ def histo(src,min_bin,max_bin,opt,hist):
        'vview_f':vsip_vhisto_f,
        'vview_i': vsip_vhisto_i,
        'vview_si': vsip_vhisto_si}
-    assert f.has_key(t),'Type <:%s:> not supported by historgram'%t
-    f[t](src,min_bin,max_bin,opt,hist)
-    return hist
+    if f.has_key(t):
+        f[t](src,min_bin,max_bin,opt,hist)
+        return hist
+    else:
+        print('Type ' + t + ' not supported by histogram')
+        return False
 def freqswap(x):
     """Swaps halves of a vector, or quadrants of a matrix, to remap zero
        frequencies from the origin to the middle.
@@ -2886,39 +3293,55 @@ def freqswap(x):
           'cmview_f':vsip_cmfreqswap_f,
           'mview_f':vsip_mfreqswap_f}
     t=getType(x)[1]
-    assert f.has_key(t),'Type <:%s:> not supported for freqswap'%t
-    f[t](x)
-    return x
+    if f.has_key(t):
+        f[t](x)
+        return x
+    else:
+        print('Type ' + t + ' not supported for freqswap')
+        return(False)
+
 # Matrix and Vector Operations
 def herm(a,b):
     f = {   'cmview_d':vsip_cmherm_d, 'cmview_f':vsip_cmherm_f}
     t = getType(a)
-    assert t[0] and t == getType(b) and f.has_key(t[1]),'Not a supported argument list for cmherm'
-    f[t[1]](a,b)
-    return b
+    if t[0] and t == getType(b) and f.has_key(t[1]):
+        f[t[1]](a,b)
+        return b
+    else:
+        print('Not a supported argument list for cmherm')
+        return False
 def jdot(a,b):
     f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_d}
     t=getType(a)
-    assert t[0] and t == getType(b) and f.has_key(t[1]),'Not a supported argument list for cvjdot'
-    return f[t[1]](a,b)
+    if t[0] and t == getType(b) and f.has_key(t[1]):
+        return f[t[1]](a,b)
+    else:
+        print('Not a supported argument list for cvjdot')
+        return False
 def gemp(alpha,A,opa,B,opB,beta,C):
     f = {   'mview_f':vsip_gemp_f,
             'mview_d':vsip_gemp_d,
             'cmview_d':vsip_cgemp_d,
             'cmview_f':vsip_cgemp_f}
     t=getType(A)
-    assert t == getType(B) and t == getType(C) and t[0] and f.has_key(t[1]),'Not a supported argument type for gemp'
-    f[t[1]](alpha,A,opa,B,opb,beta,C)
-    return C
+    if t == getType(B) and t == getType(C) and t[0] and f.has_key(t[1]):
+        f[t[1]](alpha,A,opa,B,opb,beta,C)
+        return C
+    else:
+        print('Not a supported argument type for gemp')
+        return False
 def gems(alpha,A,opa,beta,C):
     f = {   'mview_f':vsip_gems_f,
             'mview_d':vsip_gems_d,
             'cmview_d':vsip_cgems_d,
             'cmview_f':vsip_cgems_f}
     t=getType(A)
-    assert t == getType(C) and t[0] and f.has_key(t[1]),'Not a supported argument list for gems'
-    f[t[1]](alpha,A,opa,beta,C)
-    return C
+    if t == getType(C) and t[0] and f.has_key(t[1]):
+        f[t[1]](alpha,A,opa,beta,C)
+        return C
+    else:
+        print('Not a supported argument list for gems')
+        return False
 def kron(alpha,a,b,C):
     f={ 'cmview_dcmview_d':vsip_cmkron_d,
         'cmview_fcmview_f':vsip_cmkron_f,
@@ -2933,9 +3356,12 @@ def kron(alpha,a,b,C):
     t=str()
     if t1[0]:
         t=t1[1]+t2[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function kron.'%t
-    f[t](alpha,a,b,C)
-    return C
+    if f.has_key(t):
+        f[t](alpha,a,b,C)
+        return C
+    else:
+        print('Not a supported type')
+        return False
 def prod3(A,B,C):
     f = {   'mview_fmview_f':vsip_mprod3_f,
             'mview_dmview_d':vsip_mprod3_d,
@@ -2950,9 +3376,12 @@ def prod3(A,B,C):
     t=str()
     if t1[0]:
         t=t1[1]+t2[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function prod3.'%t
-    f[t](A,B,C)
-    return C
+    if f.has_key(t):
+        f[t](A,B,C)
+        return C
+    else:
+        print('Not a supported type for prod3')
+        return False
 def prod4(A,B,C):
     f = {   'mview_fmview_f':vsip_mprod4_f,
             'mview_dmview_d':vsip_mprod4_d,
@@ -2967,9 +3396,12 @@ def prod4(A,B,C):
     t=str()
     if t1[0]:
         t=t1[1]+t2[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function prod4.'%t
-    f[t](A,B,C)
-    return C
+    if f.has_key(t):
+        f[t](A,B,C)
+        return C
+    else:
+        print('Not a supported type for prod4')
+        return False
 def prod(A,B,C):
     f={ 'mview_dmview_d':vsip_mprod_d,
         'mview_fmview_f':vsip_mprod_f,
@@ -2988,35 +3420,50 @@ def prod(A,B,C):
     t=str()
     if t1[0]:
         t=t1[1]+t2[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function prod.'%t
-    f[t](A,B,C)
-    return C
+    if f.has_key(t):
+        f[t](A,B,C)
+        return C
+    else:
+        print('Not a supported type')
+        return False
 def prodh(A,B,C):
     f = {'cmview_d':vsip_cmprodh_d,'cmview_f':vsip_cmprodh_f}
     t=getType(A)
-    assert t[0] and t==getType(B) and t==getType(C) and f.has_key(t[1]),'Not a supported argument type for prodh.'
-    f[t[1]](A,B,C)
-    return C
+    if t[0] and t==getType(B) and t==getType(C) and f.has_key(t[1]):
+        f[t[1]](A,B,C)
+        return C
+    else:
+        print('Not a supported argument type for prodh')
+        return False
 def prodj(A,B,C):
     f = {'cmview_d':vsip_cmprodj_d,'cmview_f':vsip_cmprodj_f}
     t=getType(A)
-    assert t[0] and t==getType(B) and t==getType(C) and f.has_key(t[1]),'Not a supported argument type for prodj'
-    f[t[1]](A,B,C)
-    return C
+    if t[0] and t==getType(B) and t==getType(C) and f.has_key(t[1]):
+        f[t[1]](A,B,C)
+        return C
+    else:
+        print('Not a supported argument type for prodj')
+        return False
 def prodt(A,B,C):
     f = {'cmview_d':vsip_cmprodt_d,'cmview_f':vsip_cmprodt_f,
          'mview_d':vsip_mprodt_d,'mview_f':vsip_mprodt_f}
     t=getType(A)
-    assert t[0] and t==getType(B) and t==getType(C) and f.has_key(t[1]),'Not a supported argument type for prodt.'
-    f[t[1]](A,B,C)
-    return C
+    if t[0] and t==getType(B) and t==getType(C) and f.has_key(t[1]):
+        f[t[1]](A,B,C)
+        return C
+    else:
+        print('Not a supported argument type for prodt')
+        return False
 def trans(A,C):
     f = {'cmview_d':vsip_cmtrans_d,'cmview_f':vsip_cmtrans_f,
          'mview_d':vsip_mtrans_d,  'mview_f':vsip_mtrans_f}
     t=getType(A)
-    assert t[0] and t==getType(C) and f.has_key(t[1]),'Not a supported argument type for trans.'
-    f[t[1]](A,C)
-    return C
+    if t[0] and t==getType(C) and f.has_key(t[1]):
+        f[t[1]](A,C)
+        return C
+    else:
+        print('Not a supported argument type for trans')
+        return False
 def outer(alpha,x,y,C):
     f = {   'scalarvview_f':vsip_vouter_f,
             'scalarvview_d':vsip_vouter_d,
@@ -3027,9 +3474,12 @@ def outer(alpha,x,y,C):
     t=str()
     if t2[0] and t1[0]:
         t=t1[1] + t2[1]
-    assert f.has_key(t),'Not a supported argument list for outer product'
-    f[t](alpha,x,y,C)
-    return C
+    if f.has_key(t):
+        f[t](alpha,x,y,C)
+        return C
+    else:
+        print('Not a supported argument list for outer product')
+        return False
 def dot(a,b):
     """
        The dot product can be done on vview_f, vview_d, cvview_f and cvview_d.
@@ -3041,8 +3491,12 @@ def dot(a,b):
             'cvview_f':vsip_cvdot_f,
             'cvview_d':vsip_cvdot_d}
     t=getType(a)
-    assert t[0] and t == getType(b) and f.has_key(t[1]),'Not a supported argument list for dot'
-    return f[t[1]](a,b)
+    if t[0] and t == getType(b) and f.has_key(t[1]):
+        return f[t[1]](a,b)
+    else:
+        print('Not a supported argument list for dot')
+        return False
+
 # General Square System Solver (LU Decompositon)
 def lud_create(t,N):
     """
@@ -3056,34 +3510,45 @@ def lud_create(t,N):
        'clu_f':vsip_clud_create_f,
        'lu_d':vsip_lud_create_d,
        'clu_d':vsip_clud_create_d}
-    assert f.has_key(t),'Type <:%s:> not a supported type for function lud_create.'%t
-    return f[t](N)
+    if f.has_key(t):
+        return f[t](N)
+    else:
+        print('Type ' + t + ' not supported by lud_create')
+        return False
 def lud_destroy(lu):
     t=getType(lu)[1]
     f=f={'lu_f':vsip_lud_destroy_f,
          'clu_f':vsip_clud_destroy_f,
          'lu_d':vsip_lud_destroy_d,
          'clu_d':vsip_clud_destroy_d}
-    assert f.has_key(t),'Type <:%s:> not a supported type for function lud_destroy.'%t
-    return f[t](lu)
+    if f.has_key(t):
+        return f[t](lu)
+    else:
+        print('Type ' + t + ' not supported by lud_destroy')
 def lud(lu,A):
     f=f={'lu_fmview_f':vsip_lud_f,
          'clu_fcmview_f':vsip_clud_f,
          'lu_dmview_d':vsip_lud_d,
          'clu_dcmview_d':vsip_clud_d}
     t=getType(lu)[1] + getType(A)[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function lud.'%t
-    ret= f[t](lu,A)
-    return (ret,lu)
+    if f.has_key(t):
+        ret= f[t](lu,A)
+        return (ret,lu)
+    else:
+        print('Type ' + t + ' not supported by lud')
+        return False
 def lusol(lu,op,A):
     f=f={'lu_fmview_f':vsip_lusol_f,
          'clu_fcmview_f':vsip_clusol_f,
          'lu_dmview_d':vsip_lusol_d,
          'clu_dcmview_d':vsip_clusol_d}
     t=getType(lu)[1] + getType(A)[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function lusol.'%t
-    ret= f[t](lu,op,A)
-    return (ret,A)
+    if f.has_key(t):
+        ret= f[t](lu,op,A)
+        return (ret,A)
+    else:
+        print('Type ' + t + ' not supported by lusol')
+        return False
 
 # Symetric square system solver (Cholesky decomposition)
 def chold(ch,A):
@@ -3092,33 +3557,45 @@ def chold(ch,A):
        'chol_dmview_d':vsip_chold_d,
        'cchol_dcmview_d':vsip_cchold_d}
     t=getType(ch)[1]+getType(A)[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function chold.'%t
-    ret= f[t](ch,A)
-    return(ret,ch)
+    if f.has_key(t):
+        ret= f[t](ch,A)
+        return(ret,ch)
+    else:
+        print('Type ' + t + ' not supported by chold')
+        return False
 def chold_create(t,op,N):
     f={'chol_f':vsip_chold_create_f,
        'cchol_f':vsip_cchold_create_f,
        'chol_d':vsip_chold_create_d,
        'cchold_d':vsip_cchold_create_d}
-    assert f.has_key(t),'Type <:%s:> not a supported type for function chold_create.'%t
-    return f[t](op,N)
+    if f.has_key(t):
+        return f[t](op,N)
+    else:
+        print('Type ' + t + ' not supported by chold_create')
+        return False
 def chold_destroy(ch):
     t=getType(ch)[1]
     f=f={'chol_f':vsip_chold_destroy_f,
          'cchol_f':vsip_cchold_destroy_f,
          'chol_d':vsip_chold_destroy_d,
          'cchol_d':vsip_cchold_destroy_d}
-    assert f.has_key(t),'Type <:%s:> not a supported type for function chold_destroy.'%t
-    return f[t](ch)
+    if f.has_key(t):
+        return f[t](ch)
+    else:
+        print('Type ' + t + ' not supported by chold_destroy')
+        return False
 def cholsol(ch,XB):
     f={'chol_fmview_f':vsip_cholsol_f,
        'cchol_fcmview_f':vsip_ccholsol_f,
        'chol_dmview_d':vsip_cholsol_d,
        'cchol_dcmview_d':vsip_ccholsol_d}
     t=getType(ch)[1]+getType(XB)[1]
-    assert f.has_key(t),'Type <:%s:> not a supported type for function cholsol.'%t
-    ret= f[t](ch,XB)
-    return(ret,XB)
+    if f.has_key(t):
+        ret= f[t](ch,XB)
+        return(ret,XB)
+    else:
+        print('Type ' + t + ' not supported by cholsol')
+        return False
 
 # Over-determined  Linear System Solver (QR Decomposition)
 def qrd(qr,A):
@@ -3127,92 +3604,126 @@ def qrd(qr,A):
        'qr_dmview_d':vsip_qrd_d,
        'cqr_dcmview_d':vsip_cqrd_d}
     t=getType(qr)[1]+getType(A)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by qrd.'%t
-    ret= f[t](qr,A)
-    return(ret,qr)
+    if f.has_key(t):
+        ret= f[t](qr,A)
+        return(ret,qr)
+    else:
+        print('Type ' + t + ' not supported by qrd')
+        return False
 def qrd_create(t,M,N,op):
     f={'qr_f':vsip_qrd_create_f,
        'cqr_f':vsip_cqrd_create_f,
        'qr_d':vsip_qrd_create_d,
        'cqr_d':vsip_cqrd_create_d}
-    assert f.has_key(t),'Type <:%s:> not supported by qrd_create.'%t
-    return f[t](M,N,op)
+    if f.has_key(t):
+        return f[t](M,N,op)
+    else:
+        print('Type ' + t + ' not supported by qrd_create')
+        return False
 def qrd_destroy(qr):
     t=getType(qr)[1]
     f=f={'qr_f':vsip_qrd_destroy_f,
          'cqr_f':vsip_cqrd_destroy_f,
          'qr_d':vsip_qrd_destroy_d,
          'cqr_d':vsip_cqrd_destroy_d}
-    assert f.has_key(t),'Type <:%s:> not supported by qrd_destroy.'%t
-    return f[t](qr)
+    if f.has_key(t):
+        return f[t](qr)
+    else:
+        print('Type ' + t + ' not supported by chold_destroy')
+        return False
 def qrdprodq(qr,op,side,A):
     f={'qr_fmview_f':vsip_qrdprodq_f,
        'cqr_fcmview_f':vsip_cqrdprodq_f,
        'qr_dmview_d':vsip_qrdprodq_d,
        'cqr_dcmview_d':vsip_cqrdprodq_d}
     t=getType(qr)[1] + getType(A)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by qrdprodq.'%t
-    ret=f[t](qr,op,side,A)
-    return(ret,A)  
+    if f.has_key(t):
+        ret=f[t](qr,op,side,A)
+        return(ret,A)
+    else:
+        print('Type ' + t + ' not supported by qrdqrodq')
+        return False
 def qrdsolr(qr,op,scl,XB):
     f={'qr_fmview_f':vsip_qrdsolr_f,
        'cqr_fcmview_f':vsip_cqrdsolr_f,
        'qr_dmview_d':vsip_qrdsolr_d,
        'cqr_dcmview_d':vsip_cqrdsolr_d}
     t=getType(qr)[1] + getType(XB)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by qrdsolr.'%t
-    ret=f[t](qr,op,scl,XB)
-    return(ret,XB)
+    if f.has_key(t):
+        ret=f[t](qr,op,scl,XB)
+        return(ret,XB)
+    else:
+        print('Type ' + t + ' not supported by qrdsolr')
+        return False
 def qrsol(qr,op,XB):
     f={'qr_fmview_f':vsip_qrsol_f,
        'cqr_fcmview_f':vsip_cqrsol_f,
        'qr_dmview_d':vsip_qrsol_d,
        'cqr_dcmview_d':vsip_cqrsol_d}
     t=getType(qr)[1] + getType(XB)[1]
-    assert f.has_key(t),'Type <:%s:> not supported by qrsol.'%t
-    ret=f[t](qr,op,XB)
-    return(ret,XB)
+    if f.has_key(t):
+        ret=f[t](qr,op,XB)
+        return(ret,XB)
+    else:
+        print('Type ' + t + ' not supported by qrdsol')
+        return False
+
 # Singular Value Decomposition
 def svd_create(t,M,N,Usave,Vsave):
     f={'sv_f':vsip_svd_create_f,
        'sv_d':vsip_svd_create_d,
        'csv_f':vsip_csvd_create_f,
        'csv_d':vsip_csvd_create_f}
-    assert f.has_key(t),'Type <:%s:> not supported by svd_create.'%t
-    return f[t](M,N,Usave,Vsave)
+    if f.has_key(t):
+        return f[t](M,N,Usave,Vsave)
+    else:
+        print('Type ' + t + ' not supported by svd_create')
+        return False
 def svd_destroy(sv):
     f={'sv_f':vsip_svd_destroy_f,
        'sv_d':vsip_svd_destroy_d,
        'csv_f':vsip_csvd_destroy_f,
        'csv_d':vsip_csvd_destroy_d}
     t=getType(sv)
-    assert f.has_key(t),'Type <:%s:> not supported by svd_destroy'%t
-    return f[t](sv)
+    if f.has_key(t):
+        return f[t](sv)
+    else:
+        print('Type ' + t + ' not supported by svd_destroy')
+        return False
 def svd(sv,A,s):
     f={'sv_f':vsip_svd_f,
        'sv_d':vsip_svd_d,
        'csv_f':vsip_csvd_f,
        'csv_d':vsip_csvd_f}
     t=getType(sv)
-    assert f.has_key(t),'Type <:%s:> not supported by svd.'%t
-    ret= f[t](sv,A,s)
-    return (ret,A,s)
+    if f.has_key(t):
+        ret= f[t](sv,A,s)
+        return (ret,A,s)
+    else:
+        print('Type ' + t + ' not supported by svd')
+        return False
 def svdmatu(sv,low,high,C):
     f={'sv_f':vsip_svdmatu_f,
        'sv_d':vsip_svdmatu_d,
        'csv_f':vsip_csvdmatu_f,
        'csv_d':vsip_cvsdmatu_d}
     t=getType(sv)
-    assert f.has_key(t),'Type <:%s:> not supported by svdmatu.'%t
-    ret= f[t](sv,low,high,C)
-    return (ret,C)
+    if f.has_key(t):
+        ret= f[t](sv,low,high,C)
+        return (ret,C)
+    else:
+        print('Type ' + t + ' not supported by svdmatu')
+        return False
 def svdmatv(svd,low,high,C):
     f={'sv_f':vsip_svdmatv_f,
        'sv_d':vsip_svdmatv_d,
        'csv_f':vsip_csvdmatv_f,
        'csv_d':vsip_cvsdmatv_d}
     t=getType(sv)
-    assert f.has_key(t),'Type <:%s:> not supported by svdmatv'%t
-    ret= f[t](sv,low,high,C)
-    return (ret,C)
+    if f.has_key(t):
+        ret= f[t](sv,low,high,C)
+        return (ret,C)
+    else:
+        print('Type ' + t + ' not supported by svdmatv')
+        return False
 
