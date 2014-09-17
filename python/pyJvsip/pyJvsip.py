@@ -347,7 +347,7 @@ class Block (object):
                 elif 'scalar_mi' in vsip.getType(val)[1]:
                     return {'row_index':val.r,'col_index':val.i}
                 else:
-                    print('__getitem__ does not recognize<:' +type(val)+ ':>')
+                    print('__getitem__ does not recognize <:' +type(val)+ ':>')
                     return False
             if 'vview' in self.type and isinstance(index,int) and index >= 0:
                 assert index < self.length,'Index out of bounds'
@@ -1934,7 +1934,40 @@ class Block (object):
                 tmp.ramp(start,increment)
             return self
         def fill(self,aScalar):
-            if self.type in Block.complexTypes:
+            def nConv(n):
+                assert type(n) == str,'Input not a string. Function nConv converts a string to a float, integer, or complex'
+                chk='0123456789-+j.'
+                if 'j' in n:# must be complex
+                    assert all(c in chk for c in n),'Only numbers, decimal, and letter j are allowed in complex.'
+                    return(eval(n))
+                elif '.' in n:# must be a float
+                    return float(n)    
+                else: #must be an int
+                    return int(n)
+            def fillList(aView,aList):
+                if 'mview' in aView.type:
+                    m = len(aList)
+                    assert m <= aView.collength,'Data exceeds capacity of matrix view.'
+                    for i in range(m):
+                        l=aList[i]
+                        assert type(l) == list,'For matrix list input must be list of lists'
+                        fillList(aView.rowview(i),l)
+                else:
+                    n = len(aList)
+                    assert n <= aView.length,'Data exceeds capacity of view'
+                    for j in range(n):
+                        aView[j] = aList[j]
+            def stringToList(aString):
+                if ';' in aString:#must be a matrix string
+                    return [[nConv((i)) for i in item.split(',')] for item in aString.split(';')]
+                else:#must be a vector string
+                    return [nConv(item) for item in aString.split(',')]
+            if type(aScalar) == str:
+                self.fill(stringToList(aScalar))
+            elif type(aScalar) == list:
+                fillList(self,aScalar)
+            #must be some sort of scalar
+            elif self.type in Block.complexTypes:#scalar is complex
                 if '_d' in self.type:
                     if type(aScalar) is complex:
                         vsip.fill(vsip_cmplx_d(aScalar.real,aScalar.imag),self.view)
@@ -1945,10 +1978,10 @@ class Block (object):
                         vsip.fill(vsip_cmplx_f(aScalar.real,aScalar.imag),self.view)
                     else:
                         vsip.fill(vsip_cmplx_f(aScalar,0.0),self.view)
-            elif type(aScalar) != complex:
+            elif type(aScalar) != complex:#can't put complex in real block
                 vsip.fill(aScalar,self.view)
             else:
-                print('aScalar must be a type which agrees with vector view')
+                assert False,'Input argument must be a compatible type for view.'
             return self
         def randn(self,seed):
             gen=Rand('PRNG',seed)
