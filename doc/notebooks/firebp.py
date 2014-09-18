@@ -126,10 +126,10 @@ def firebp(n,w1,w2,Del):
             s = 0;
         else:
             s = 1;
-        #ri = sort([v1; v2]);
+        #ri = sortip([v1; v2]);
         ri=pv.create(H.type,v1.length+v2.length)
         ri[:v1.length]=v1;ri[v1.length:]=v2
-        ri.sort()
+        ri.sortip()
         rs = (ri)*pi/L
         rs = frefine(a,rs)
         n1 = rs.llt(w1).sumval

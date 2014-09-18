@@ -100,7 +100,7 @@ def faffine(M,wp,ws,Kp,Ks,eta_p,eta_s):
        # Could use A.copy.neg instead but pay a create/destroy penalty
        lmAn=localmax(A.neg);lmA=localmax(A.neg)
        ri=pv.create('vview_d',lmA.length+lmAn.length).fill(0.0)
-       ri[:lmA.length]=lmA;ri[lmA.length:]=lmAn;ri.sort()
+       ri[:lmA.length]=lmA;ri[lmA.length:]=lmAn;ri.sortip()
        rs=frefine(a,ri*pi/float(L))
        rsp=rs.gather(rs.llt(wp).indexbool)
        rss=rs.gather(rs.lgt(ws).indexbool)
