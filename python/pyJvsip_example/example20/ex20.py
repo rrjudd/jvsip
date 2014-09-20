@@ -123,10 +123,10 @@ VU_vwritexyg("%8.6f %8.6f\n", x,kernel,"Freq_Resp_Kaiser")
 
 plt.clf()
 x,y=VU_vfreadxy('fir_dec1')
-plt.plot(x,y)
+plt.plot(x.list,y.list)
 x,y=VU_vfreadxy('conv_dec1')
 plt.hold=True
-plt.plot(x,y)
+plt.plot(x.list,y.list)
 plt.ylabel('dB');plt.xlabel('F/Fs');plt.title('FIR versus Convolution For Decimation 1')
 fig=plt.gcf()
 fig.set_size_inches(5,2)
@@ -136,9 +136,9 @@ plt.savefig('FirConvOne.eps',bbox_inches='tight')
 
 plt.clf()
 x,y=VU_vfreadxy('fir_dec3')
-plt.plot(x,(y),'r');plt.hold=True
+plt.plot(x.list,y.list,'r');plt.hold=True
 x,y=VU_vfreadxy('conv_dec3')
-plt.plot(x,y,'g')
+plt.plot(x.list,y.list,'g')
 plt.ylabel('dB');plt.xlabel('F/Fs');plt.title('FIR versus Convolution For Decimation 3')
 fig=plt.gcf()
 fig.set_size_inches(5,2)
@@ -148,9 +148,9 @@ plt.savefig('FirConvTwo.eps',bbox_inches='tight')
 
 plt.clf()
 x,y=VU_vfreadxy('kaiser_window')
-plt.plot(x,y,'b.')
+plt.plot(x.list,y.list,'b.')
 plt.hold=True
-plt.plot(x,y,'r-')
+plt.plot(x.list,y.list,'r-')
 fig=plt.gcf()
 fig.set_size_inches(5,1.)
 fig.set_dpi(300)
@@ -159,9 +159,9 @@ plt.savefig('kaiserWindow.eps',bbox_inches='tight')
 
 plt.clf()
 x,y=VU_vfreadxy('Freq_Resp_Kaiser')
-plt.plot(x,y,'c.')
+plt.plot(x.list,y.list,'c.')
 plt.hold=True
-plt.plot(x,y,'r-')
+plt.plot(x.list,y.list,'r-')
 fig=plt.gcf()
 fig.set_size_inches(5,1.)
 fig.set_dpi(300)
