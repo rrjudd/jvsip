@@ -3442,7 +3442,7 @@ class FFT(object):
                      'ccfftmop_f':vsip_fftm_destroy_f,
                      'rcfftmop_f':vsip_fftm_destroy_f,
                      'crfftmop_f':vsip_fftm_destroy_f,
-                     'ccfftmip_d':vsip_fftm_destroy_f,
+                     'ccfftmip_d':vsip_fftm_destroy_d,
                      'ccfftmop_d':vsip_fftm_destroy_d,
                      'rcfftmop_d':vsip_fftm_destroy_d,
                      'crfftmop_d':vsip_fftm_destroy_d}
