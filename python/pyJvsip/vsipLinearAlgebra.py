@@ -23,7 +23,7 @@ def herm(a,b):
     f={'cmview_dcmview_d':vsip_cmherm_d, 'cmview_fcmview_f':vsip_cmherm_f}
     assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b),\
        'Arguments one must by pyJvsip views for function herm'
-    assert __isSizeCompatible(a,b), 'Arguments must be the same size for function herm'
+    assert a.rowlength == b.collength and a.collength == b.rowlength, 'Input sizes not compliant.'
     t=a.type+b.type
     assert f.has_key(t), 'Type <:'+t+':> not supported for function herm'
     f[t](a.view,b.view)
