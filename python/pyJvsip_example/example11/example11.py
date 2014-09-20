@@ -33,7 +33,7 @@ for i in range(avg):
 pv.mul(1.0/avg,spect_avg,spect_avg);
 #print("spect_avg =");spect_avg.mprint('%.4f')
 x=spect_avg.empty.ramp(0,1.0/(spect_avg.length-1))
-pyplot.plot(x,spect_avg)
+pyplot.plot(x.list,spect_avg.list)
 pyplot.title('Decimation 2')
 pyplot.ylabel('Not Normalized')
 pyplot.show()
