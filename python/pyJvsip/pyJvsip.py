@@ -991,8 +991,18 @@ class Block (object):
             return self
         @property
         def length(self):
-            assert self.type in Block.vectorTypes,'View of type %s not a vector view'%self.type
-            return int(vsip.getlength(self.view))
+            f={'vview_f':vsip_vgetlength_f,
+               'vview_d':vsip_vgetlength_d,
+               'vview_i':vsip_vgetlength_i,
+               'vview_si':vsip_vgetlength_si,
+               'vview_uc':vsip_vgetlength_uc,
+               'vview_bl':vsip_vgetlength_bl,
+               'vview_vi':vsip_vgetlength_vi,
+               'cvview_f':vsip_cvgetlength_f,
+               'cvview_d':vsip_cvgetlength_d,
+               'vview_mi':vsip_vgetlength_mi }
+            assert f.has_key(self.type),'View of type %s not a vector view'%self.type
+            return int(f[self.type](self.view))
         def putlength(self,length):
             assert self.type in Block.vectorTypes,'View of type %s not a vector view. Method putlength only works for vectors.'%self.type
             vsip.putlength(self.view,length)
@@ -1111,51 +1121,35 @@ class Block (object):
                 return (self.collength,self.rowlength)
         # window (data taper) functions
         def cheby(self,ripple):
-            t=vsipGetType(self.view)[1]
-            f={'vview_f':vsip_vcreate_cheby_f,
-               'vview_d':vsip_vcreate_cheby_d}
-            if f.has_key(t):
-                v=f[t](vsip.getlength(self.view),ripple,0)
-                vsip.copy(v,self.view)
-                vsip.allDestroy(v)
-                return self
-            else:
-                print('View type <:' + t +':> does not support function cheby')
+            t=self.type
+            wSel={'vview_f':'cheby_f',
+                  'vview_d':'cheby_d'}
+            assert wSel.has_key(t),'View type <:%s:> not supported for function cheby'%self.type
+            copy(Block(wSel[self.type],self.length,ripple).w,self)
+            return self
         def kaiser(self,beta):
-            t=vsipGetType(self.view)[1]
-            f={'vview_f':vsip_vcreate_kaiser_f,
-               'vview_d':vsip_vcreate_kaiser_d}
-            if f.has_key(t):
-                v=f[t](vsip.getlength(self.view),beta,0)
-                vsip.copy(v,self.view)
-                vsip.allDestroy(v)
-                return self
-            else:
-                print('View type <:' + t +':> does not support function kaiser')
+            t=self.type
+            wSel={'vview_f':'kaiser_f',
+                  'vview_d':'kaiser_d'}
+            assert wSel.has_key(t),'View of type <:%s:> does not support kaiser.'%self.type
+            copy(Block(wSel[self.type],self.length,beta).w,self)
+            return self
         @property
         def blackman(self):
             t=vsipGetType(self.view)[1]
-            f={'vview_f':vsip_vcreate_blackman_f,
-               'vview_d':vsip_vcreate_blackman_d}
-            if f.has_key(t):
-                v=f[t](vsip.getlength(self.view),0)
-                vsip.copy(v,self.view)
-                vsip.allDestroy(v)
-                return self
-            else:
-                print('View type <:' + t +':> does not support property blackman')
+            wSel={'vview_f':'blackman_f',
+                  'vview_d':'blackman_d'}
+            assert wSel.has_key(t),'View of type <:%s:> does not support blackman.'%self.type
+            copy(Block(wSel[self.type],self.length).w,self)
+            return self
         @property
         def hanning(self):
             t=vsipGetType(self.view)[1]
-            f={'vview_f':vsip_vcreate_hanning_f,
-               'vview_d':vsip_vcreate_hanning_d}
-            if f.has_key(t):
-                v=f[t](vsip.getlength(self.view),0)
-                vsip.copy(v,self.view)
-                vsip.allDestroy(v)
-                return self
-            else:
-                print('View type <:' + t +':> does not support property blackman')
+            wSel={'vview_f':'hanning_f',
+               'vview_d':'hanning_d'}
+            assert wSel.has_key(t),'View of type <:%s:> does not support hanning.'%self.type
+            copy(Block(wSel[self.type],self.length).w,self)
+            return self
         # ### ### ### Element-wise methods
         # Elementary math functions
         @property
@@ -3366,7 +3360,6 @@ class Rand(object):
             return a
         else:
             print('Not a supported type for rand')
-
 # Signal Processing Classes
 # Not Implemented
 # vsip_fft_setwindow_f
@@ -3477,7 +3470,6 @@ class FFT(object):
     def __del__(self):
         FFT.fftDestroyDict[self.type](self.__fft)
         del (self.__jvsip)
-
     def dft(self,*vars):
         """This method requires one view for in-place dft calculation or two views for out-of-place.
            The dft type may be retrieved using the type property of the FFT object.
