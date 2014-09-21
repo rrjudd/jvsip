@@ -18,7 +18,7 @@ __version__='0.3.1'
 
 def __isView(a):
     return 'pyJvsip.__View' in repr(a)
-    
+
 def vsipGetType(v):
     """
         Returns a tuple with True if a vsip type is found, plus a string indicating the type.
@@ -442,6 +442,49 @@ class Block (object):
                 print('Type not a matrix or vector')
                 return False
         def __getitem__(self,index):
+            def vsipGet(aView,aIndex):
+                gSel={'cvview_dscalar':'vsip_cvget_d(a,int(i))',
+                      'cvview_fscalar':'vsip_cvget_f(a,int(i))',
+                      'vview_dscalar':'vsip_vget_d(a,int(i))',
+                      'vview_fscalar':'vsip_vget_f(a,int(i))',
+                      'vview_iscalar':'vsip_vget_i(a,int(i))',
+                      'vview_viscalar':'vsip_vget_vi(a,int(i))',
+                      'vview_siscalar':'vsip_vget_si(a,int(i))',
+                      'vview_ucscalar':'vsip_vget_uc(a,int(i))',
+                      'vview_blscalar':'_bl(vsip_vget_bl(a,int(i)))',
+                      'vview_miscalar':'vsip_vget_mi(a,int(i))',
+                      'cmview_dtuple':'vsip_cmget_d(a,i[0],i[1])',
+                      'cmview_ftuple':'vsip_cmget_f(a,i[0],i[1])',
+                      'mview_dtuple':'vsip_mget_d(a,i[0],i[1])',
+                      'mview_ftuple':'vsip_mget_f(a,i[0],i[1])',
+                      'mview_ituple':'vsip_mget_i(a,i[0],i[1])',
+                      'mview_situple':'vsip_mget_si(a,i[0],i[1])',
+                      'mview_uctuple':'vsip_mget_uc(a,i[0],i[1])',
+                      'mview_blstuple':'_bl(vsip_mget_bl(a,i[0],i[1]))',
+                      'cmview_dscalar_mi':'vsip_cmget_d(a,i.r,i.c)',
+                      'cmview_fscalar_mi':'vsip_cmget_f(a,i.r,i.c)',
+                      'mview_dscalar_mi':'vsip_mget_d(a,i.r,i.c)',
+                      'mview_fscalar_mi':'vsip_mget_f(a,i.r,i.c)',
+                      'mview_iscalar_mi':'vsip_mget_i(a,i.r,i.c)',
+                      'mview_siscalar_mi':'vsip_mget_si(a,i.r,i.c)',
+                      'mview_ucscalar_mi':'vsip_mget_uc(a,i.r,i.c)',
+                      'mview_blscalar_mi':'vsip_mget_bl(a,i.r,i.c)'}
+                t=aView.type
+                if 'vview' in t:
+                    assert isinstance(aIndex,int) or isinstance(aIndex,float) and aIndex >=0,'In get function; index must be an integer >=0 for vector view'
+                    t += 'scalar'
+                else: # 'mview' in t
+                    assert len(aIndex) == 2 and (isinstance(aIndex,tuple) or isinstance(aIndex,list)) or \
+                       'scalar_mi' in vsipGetType(i)[1],'In get function; index not recognized for matrix.'
+                    if '_mi' in vsipGetType(aIndex)[1]:
+                        t += 'scalar_im'
+                    else:
+                        assert isinstance(aIndex[0],int) and isinstance(aIndex[1],int),'In get function; indices mut be an integer >= 0 for matrix view'
+                        assert aIndex[0]>=0 and aIndex[1] >=0,'In get function; indices mut be an integer >= 0 for matrix view'
+                        t += 'tuple'
+                assert gSel.has_key(t),'Type <:%s:> not supported for __getitem__.'%s#should not get here
+                i=aIndex; a=aView.view
+                return eval(gSel[t])
             def scalarVal(val):
                 if 'cscalar' in vsipGetType(val)[1]:
                     c=complex(val.r,val.i)
@@ -453,11 +496,10 @@ class Block (object):
                 elif 'scalar_mi' in vsipGetType(val)[1]:
                     return {'row_index':val.r,'col_index':val.i}
                 else:
-                    print('__getitem__ does not recognize <:' +type(val)+ ':>')
-                    return False
+                    assert False,'__getitem__ does not recognize <:' +type(val)+ ':>'
             if 'vview' in self.type and isinstance(index,int) and index >= 0:
                 assert index < self.length,'Index out of bounds'
-                val=vsip.get(self.view,index)
+                val=vsipGet(self,index)
                 return scalarVal(val)
             elif 'mview' in self.type and isinstance(index,int) and index >=0:
                 assert index < self.collength,'Index out of bounds'
@@ -470,7 +512,7 @@ class Block (object):
                 assert index[0] < self.collength and index[1] < self.rowlength,\
                         'Index out of bound'
                 i = (index[0],index[1])
-                val=vsip.get(self.view,i)
+                val=vsipGet(self,i)
                 return(scalarVal(val))
             elif 'mview' in self.type and (len(index) is 2) and \
                         isinstance(index[0],slice) and isinstance(index[1],slice):
@@ -482,8 +524,7 @@ class Block (object):
                         isinstance(index[0],int) and isinstance(index[1],slice):
                 return self.subview(slice(index[0],index[0]+1,1),index[1])
             else:
-                print('Failed to parse index arguments')
-                return
+                assert False,'Failed to parse index arguments in __getitem__'
         def __setitem__(self,i,value):
             if 'vview' in self.type:
                 if isinstance(i,int) or isinstance(i,long):
@@ -676,7 +717,7 @@ class Block (object):
                 cl=self.collength; rl=self.rowlength
                 o=0; rs=1;cs=rl
                 newView = b.bind(o,cs,cl,rs,rl)
-                vsip.copy(self.view,newView.view)
+                copy(self,newView)
                 return newView
             else:
                 return self.copy
@@ -691,7 +732,7 @@ class Block (object):
                 cl=self.collength; rl=self.rowlength
                 o=0; rs=cl;cs=1
                 newView = b.bind(o,cs,cl,rs,rl)
-                vsip.copy(self.view,newView.view)
+                copy(self,newView)
                 return newView
             else:
                 return self.copy
@@ -2041,7 +2082,7 @@ class Block (object):
                     assert all(c in chk for c in n),'Only numbers, decimal, and letter j are allowed in complex.'
                     return(eval(n))
                 elif '.' in n:# must be a float
-                    return float(n)    
+                    return float(n)
                 else: #must be an int
                     return int(n)
             def fillList(aView,aList):
@@ -2568,7 +2609,7 @@ class Block (object):
                 print('Views must ba matrices of the same type')
                 return False
         def outer(self,*args):
-            """ 
+            """
             Usage:
                A=b.outer(c)
             or
@@ -4119,7 +4160,7 @@ class QR(object):
     def __del__(self):
         f={'qr_d':vsip_qrd_destroy_d, 'qr_f':vsip_qrd_destroy_f,
            'cqr_d':vsip_cqrd_destroy_d,'cqr_f':vsip_cqrd_destroy_f}
-        del(self.__jvsip) 
+        del(self.__jvsip)
         f[self.type](self.__qr)
     @property
     def type(self):
