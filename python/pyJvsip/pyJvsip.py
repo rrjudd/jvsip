@@ -72,7 +72,6 @@ def vsipScalar(t,scl):
             return 1
     else:
         assert False,'Should not be able to fail here. Implementation error.'
-
 def vsipGetType(v):
     """
         Returns a tuple with True if a vsip type is found, plus a string indicating the type.
@@ -223,9 +222,9 @@ def vsipPutAttrib(v,attrib):
 class GetAttrib(object):
     def __init__(self,v):
         assert 'pyJvsip' in repr(v),'PyJvsipGetAttrib only works on python objects'
-        self.__attr = vsipGetAttrib(v)
-        self.__type = 'attrib'+v.type
-        attr=self.__attr
+        self.__attr = vsipGetAttrib(v) #VSIPL attribute pointer
+        self.__type = 'attrib'+v.type #Unique string to identify attribute
+        attr=self.__attr 
         if 'vview' in self.__type:   
             self.__attrib = {'offset':attr.offset,'stride':attr.stride,'length':attr.length}
         elif 'mview' in self.type:
@@ -233,7 +232,7 @@ class GetAttrib(object):
                              'colstride':attr.col_stride,'collength':attr.col_length,
                              'rowstride':attr.row_stride,'rowlength':attr.row_length}
         else:
-            self.__attrib = None
+            self.__attrib = None # This section to set pyJvsip attribute dictionary
     @property
     def type(self):
         return self.__type
@@ -448,7 +447,6 @@ class Block (object):
             self.__pyBlock   = block
             self.__type      =vsipGetType(view)[1]
             self.__major     ='EW'
-            self.__scalar = 0
             self.__parent = 0
         def __del__(self):
             vd={'vview_f'   :vsip_vdestroy_f,
@@ -789,20 +787,6 @@ class Block (object):
         # Support functions
         # scalar is a place for the implementation to store a value which can be recovered from the view
         # not sure we need this. Currently not used.
-        @property
-        def scalar(self):
-            val=self.__scalar
-            if 'cscalar' in repr(val):
-                return complex(self.__scalar.r,self.__scalar.i)
-            elif 'scalar_mi' in repr(val):
-                return (self.__scalar.r,self.__scalar_c)
-            elif 'scalar_bl' in repr(val):
-                if self.__scalar == 0:
-                    return False
-                else:
-                    return True
-            else:
-                return self.__scalar
         # EW, COL, ROW, MAT are indicators of how the view is to be used
         @property
         def EW(self):
