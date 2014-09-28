@@ -22,6 +22,6 @@ def localmax(A):
         t[:k.length]=k
         t[k.length]=N-1
         k=t.copy
-    k.sort()
+    k.sortip()
     return k
 
