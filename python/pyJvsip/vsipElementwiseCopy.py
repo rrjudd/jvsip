@@ -41,9 +41,9 @@ def copy(a,b):
        'vview_vivview_i':vsip_vcopy_vi_i, 'vview_vivview_vi':vsip_vcopy_vi_vi,
        'vview_vivview_f':vsip_vcopy_vi_f, 'vview_vivview_d':vsip_vcopy_vi_d}
     assert 'pyJvsip.__View' in repr(a),\
-           'Argument one must be a pyJvsip view object in cminmgsq'
+           'Argument one must be a pyJvsip view object in copy'
     assert 'pyJvsip.__View' in repr(b),\
-           'Argument two must be a pyJvsip view object in cminmgsq'
+           'Argument two must be a pyJvsip view object in copy'
     assert __isSizeCompatible(a,b),'Input and output for copy must be the same size'
     t = a.type+b.type
     assert f.has_key(t),'Type <:'+t+':> not recognizedfor copy'

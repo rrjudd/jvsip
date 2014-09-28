@@ -12,12 +12,69 @@ from vsipSignalProcessing import *
 from vsipLinearAlgebra import *
 from vsipAddendum import *
 
-import vsiputils as vsip
-
 __version__='0.3.1'
 
 def __isView(a):
     return 'pyJvsip.__View' in repr(a)
+
+#Functions between here and Block are meant to be used internal to pyJvsip implementation.
+#For the adventuresome your mileage may vary.
+def vsipScalar(t,scl):
+    """
+    alpha=(t,beta)
+        where alpha equivalent to beta
+    This function produces a scalar value suitable for storing into a view of type t.
+    Float input to integers will be converted using the python int() function.
+    Integer values outside the precision range of the view are not checked for.
+    """
+    tScl=getType(scl)
+    ft=tScl[2]
+    assert tScl[1] == 'scalar','Input must be a python or pyJvsip scalar'
+    assert 'view' in t,'Type must corespond to a view object'
+    if   t == 'cvview_d' or t == 'cmview_d':
+        if tScl[0] == 'python':
+            return vsip_cmplx_d(scl.real,scl.imag)
+        else:
+            assert 'cscalar' in tScl[2],'Type <:%s:> not a suitable type for complex scalar'%tScl[2]
+            return vsip_cmplx_d(scl.r,scl.i)
+    elif t == 'cvview_f' or t == 'cmview_f':
+        if tScl[0] == 'python':
+            return vsip_cmplx_f(scl.real,scl.imag)
+        else:
+            assert 'cscalar' in tScl[2],'Type <:%s:> not a suitable type for complex scalar'%tScl[2]
+            return vsip_cmplx_f(scl.r,scl.i)
+    elif '_d' in t or '_f' in t:     
+        assert ft is float or ft is int or ft is long,\
+                      'For real views of type double or float input scalar must be a real number.'
+        return float(scl)
+    elif '_i' in t or '_si' in t:
+        assert ft is float or ft is int or ft is long,\
+                      'For signed integer views input must be a number that can be converted to an integer'
+        return int(scl)
+    elif t == 'vview_vi' or t == 'vview_uc' or t == 'mview_uc':
+        assert float is ft or int is ft or long is ft,'Need a number such that int(aNumber) has a return value of int'
+        assert scl >= 0,'The precision of type vector index (_vi) is an integer >= 0'
+        return int(scl)
+    elif t == 'vview_mi':
+        assert (ft is tuple and len(scl)== 2) or ft == 'scalar_mi',\
+                'Input to views of precision matrix index (_mi) should be of type scalar_mi or a tuple of length 2'
+        if ft is tuple:
+            r=scl[0];c=scl[1]
+        else:
+            r=scl.r; c=scl.c
+        assert isinstance(r,int) or isinstance(r,long) and isinstance(c,int) or isinstance(c,long),\
+                        'Index values are of type integer.'
+        assert r >=0 and c >= 0,'Index values are integers >= 0'
+        return vsip_matindex(int(r),int(c))
+    elif t == 'vview_bl' or t == 'mview_bl':
+        assert isinstance(scl,bool) or isinstance(scl,int) or isinstance(scl,long) or isinstance(scl,float),\
+             'Value <:%s:> not suitable for storing in view of precision _bl'%repr(scl)
+        if scl == False or scl == 0:
+            return 0
+        else:
+            return 1
+    else:
+        assert False,'Should not be able to fail here. Implementation error.'
 
 def vsipGetType(v):
     """
@@ -40,7 +97,6 @@ def vsipGetType(v):
         return(True,'scalar')
     else:
         return(False,'Not a VSIPL Type')
-
 def getType(v):
     """
         Returns a tuple with type information.
@@ -51,32 +107,145 @@ def getType(v):
     """
     if isinstance(v,int) or isinstance(v,long) or isinstance(v,float) or isinstance(v,complex):
         return ('python','scalar',type(v))
-    elif 'Swig' in repr(v) and 'scalar' in repr(v):
-        if 'vsip_scalar_mi' in repr(v):
-            return ('vsip','scalar','scalar_mi')
-        if 'vsip_cscalar_f' in repr(v):
-            return ('vsip','scalar','cscalar_f')
-        if 'vsip_cscalar_d' in repr(v):
-            return ('vsip','scalar','cscalar_d')
-    elif 'pyJvsip' in repr(v):
-        if 'View' in repr(v):
-            return ('pyJvsip','View',v.type)
-        elif 'Block' in repr(v):
-            return ('pyJvsip','Block',v.type)
-        elif 'Rand' in repr(v):
-            return ('pyJvsip','Rand',v.type)
-        elif 'FFT' in repr(v):
-            return ('pyJvsip','FFT',v.type)
-        elif 'LU' in repr(v):
-            return('pyJvsip','LU',v.type)
-        elif 'QR' in repr(v):
-            return('pyJvsip','QR',v.type)
-        else:
-            print('Do not recognize object')
-            return (repr(v),None,None)
+    elif 'vsip_scalar_mi' in repr(v):
+        return ('vsip','scalar','scalar_mi')
+    elif 'vsip_cscalar_f' in repr(v):
+        return ('vsip','scalar','cscalar_f')
+    elif 'vsip_cscalar_d' in repr(v):
+        return ('vsip','scalar','cscalar_d')
+    elif 'pyJvsip.__View' in repr(v):
+        return ('pyJvsip','View',v.type)
+    elif 'pyJvsip.Block' in repr(v):
+        return ('pyJvsip','Block',v.type)
+    elif 'pyJvsip.Rand' in repr(v):
+        return ('pyJvsip','Rand',v.type)
+    elif 'pyJvsip.FFT' in repr(v):
+        return ('pyJvsip','FFT',v.type)
+    elif 'pyJvsip.LU' in repr(v):
+        return('pyJvsip','LU',v.type)
+    elif 'pyJvsip.QR' in repr(v):
+        return('pyJvsip','QR',v.type)
     else:
-        print('Do not recognize object')
         return (repr(v),None,None)
+def vsipGetAttrib(v):
+    f={ 'vview_f': (vsip_vgetattrib_f,vsip_vattr_f),
+        'vview_d': (vsip_vgetattrib_d,vsip_vattr_d),
+        'mview_f': (vsip_mgetattrib_f,vsip_mattr_f),
+        'mview_d': (vsip_mgetattrib_d,vsip_mattr_d),
+        'cvview_f':(vsip_cvgetattrib_f,vsip_cvattr_f),
+        'cvview_d':(vsip_cvgetattrib_d,vsip_cvattr_d),
+        'cmview_f':(vsip_cmgetattrib_f,vsip_cmattr_f),
+        'cmview_d':(vsip_cmgetattrib_d,vsip_cmattr_d),
+        'vview_i': (vsip_vgetattrib_i,vsip_vattr_i),
+        'mview_i': (vsip_mgetattrib_i,vsip_mattr_i),
+        'vview_si':(vsip_vgetattrib_si,vsip_vattr_si),
+        'mview_si':(vsip_mgetattrib_si,vsip_mattr_si),
+        'vview_uc':(vsip_vgetattrib_uc,vsip_vattr_uc),
+        'mview_uc':(vsip_mgetattrib_uc,vsip_mattr_uc),
+        'vview_vi':(vsip_vgetattrib_vi,vsip_vattr_vi),
+        'vview_bl':(vsip_vgetattrib_bl,vsip_vattr_bl),
+        'mview_bl':(vsip_mgetattrib_bl,vsip_mattr_bl),
+        'vview_mi':(vsip_vgetattrib_mi,vsip_vattr_mi),
+        'cfir_d':(vsip_cfir_getattr_d,vsip_cfir_attr),
+        'cfir_f':(vsip_cfir_getattr_f,vsip_cfir_attr),
+        'fir_d':(vsip_fir_getattr_f,vsip_fir_attr),
+        'fir_f':(vsip_fir_getattr_f,vsip_fir_attr),
+        'lu_f':(vsip_lud_getattr_f,vsip_lu_attr_f),
+        'clu_f':(vsip_clud_getattr_f,vsip_clu_attr_f),
+        'lu_d':(vsip_lud_getattr_d,vsip_lu_attr_d),
+        'clu_d':(vsip_clud_getattr_d,vsip_clu_attr_d),
+        'chol_f':(vsip_chold_getattr_f,vsip_chol_attr_f),
+        'cchol_f':(vsip_cchold_getattr_f,vsip_cchol_attr_f),
+        'chol_d':(vsip_chold_getattr_d,vsip_chol_attr_d),
+        'cchold_d':(vsip_cchold_getattr_d,vsip_cchol_attr_d),
+        'qr_f':(  vsip_qrd_getattr_f,vsip_qr_attr_f),
+        'cqr_f':(vsip_cqrd_getattr_f,vsip_cqr_attr_f),
+        'qr_d':(  vsip_qrd_getattr_d,vsip_qr_attr_d),
+        'cqr_d':(vsip_cqrd_getattr_d,vsip_cqr_attr_d)}
+        # svd getattr not implemented yet
+        #'sv_f':(vsip_svd_getattr_f,vsip_sv_attr_f),
+        #'sv_d':(vsip_svd_getattr_d,vsip_sv_attr_d),
+        #'csv_f':(vsip_csvd_getattr_f,vsip_sv_attr_f),
+        #'csv_d':(vsip_csvd_gatattr_d,vsip_sv_attr_d)
+    assert 'pyJvsip' in repr(v),'vsipGetAttrib does not support %s.'%repr(v)
+    assert f.has_key(v.type),'Type <:%s:> not recognized for vsipGetAttrib'%v.type
+    attr=f[v.type][1]()
+    f[v.type][0](v.view,attr)
+    return attr
+def vsipPutAttrib(v,attrib):
+    """
+        Change the attributes of a view object
+    """
+    fv={ 'vview_f':vsip_vputattrib_f,
+        'vview_d':vsip_vputattrib_d,
+        'cvview_f':vsip_cvputattrib_f,
+        'cvview_d':vsip_cvputattrib_d,
+        'vview_vi':vsip_vputattrib_vi,
+        'vview_mi':vsip_vputattrib_mi,
+        'vview_bl':vsip_vputattrib_bl,
+        'vview_i':vsip_vputattrib_i,
+        'vview_si':vsip_vputattrib_si,
+        'vview_uc':vsip_vputattrib_uc}
+    fm={ 'mview_f':vsip_mputattrib_f,
+        'mview_d':vsip_mputattrib_d,
+        'cmview_f':vsip_cmputattrib_f,
+        'cmview_d':vsip_cmputattrib_d,
+        'mview_bl':vsip_mputattrib_bl,
+        'mview_i':vsip_mputattrib_i,
+        'mview_si':vsip_mputattrib_si,
+        'mview_uc':vsip_mputattrib_uc}
+    assert 'pyJvsip' in repr(v),'vsipPutAttrib only works on pyJvsip objects'
+    assert attrib.has_key('offset'),'Key Value Error'
+    attr=vsipGetAttrib(v)
+    if 'mview' in v.type:
+        assert isinstance(attrib,dict),'Attribute is a dictionary object in pyJvsip'
+        assert len(attrib) == 5,'Matrix view attributes have five key value pairs'
+        assert attrib.has_key('rowlength') and attrib.has_key('collength'),'Key Value Error'
+        assert attrib.has_key('rowstride') and attrib.has_key('colstride'),'Key Value Error'
+        attr.offset = attrib['offset']
+        attr.row_length = attrib['rowlength']
+        attr.col_length = attrib['collength']
+        attr.row_stride = attrib['rowstride']
+        attr.col_stride = attrib['colstride']
+        assert attr.offset + (attr.row_length-1) * attr.row_stride + (attr.col_length-1) * attr.col_stride < v.block.length, \
+            'Attribute not allowed. Will allow access beyond the space of the block.'
+        fm[v.type](v.view,attr)
+    elif 'vview' in v.type:
+        assert isinstance(attrib,dict),'Attribute is a dictionary object in pyJvsip'
+        assert len(attrib) == 3,'Vector view attributes have three key value pairs'
+        assert attrib.has_key('length') and attrib.has_key('stride'),'Key Value Error'
+        attr.offset = attrib['offset']
+        attr.length = attrib['length']
+        attr.stride = attrib['stride']
+        assert attr.offset + (attr.length-1) * attr.stride < v.block.length, \
+            'Attribute not allowed. Will allow access beyond the space of the block.'
+        fv[v.type](v.view,attr)
+    else:
+        assert False,'vsipPutAttrib does not support type <:%s:> at this time'%v.stype
+    return v
+class GetAttrib(object):
+    def __init__(self,v):
+        assert 'pyJvsip' in repr(v),'PyJvsipGetAttrib only works on python objects'
+        self.__attr = vsipGetAttrib(v)
+        self.__type = 'attrib'+v.type
+        attr=self.__attr
+        if 'vview' in self.__type:   
+            self.__attrib = {'offset':attr.offset,'stride':attr.stride,'length':attr.length}
+        elif 'mview' in self.type:
+            self.__attrib = {'offset':attr.offset,
+                             'colstride':attr.col_stride,'collength':attr.col_length,
+                             'rowstride':attr.row_stride,'rowlength':attr.row_length}
+        else:
+            self.__attrib = None
+    @property
+    def type(self):
+        return self.__type
+    @property
+    def vsip(self):
+        return self.__attr
+    @property
+    def attrib(self):
+        return self.__attrib
 
 class JVSIP (object):
     init = 0
@@ -430,17 +599,13 @@ class Block (object):
                       'mview_uc':'mcopyToListByCol_uc(self.view)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
-            elif 'ROW' in self.major and fByRow.has_key(self.type):
-                return eval(fByRow[self.type])
             elif 'COL' in self.major and fByCol.has_key(self.type):
                 return eval(fByCol[self.type])
-            elif self.type in Block.vectorTypes:
-                return vsip.vList(self.view)
-            elif self.type in Block.matrixTypes:
-                return vsip.mList(self.view)
+            elif fByRow.has_key(self.type): #default by row for matrices
+                return eval(fByRow[self.type])
             else:
-                print('Type not a matrix or vector')
-                return False
+                assert False, 'Type not supported by list' 
+  
         def __getitem__(self,index):
             def vsipGet(aView,aIndex):
                 gSel={'cvview_dscalar':'vsip_cvget_d(a,int(i))',
@@ -451,7 +616,7 @@ class Block (object):
                       'vview_viscalar':'vsip_vget_vi(a,int(i))',
                       'vview_siscalar':'vsip_vget_si(a,int(i))',
                       'vview_ucscalar':'vsip_vget_uc(a,int(i))',
-                      'vview_blscalar':'_bl(vsip_vget_bl(a,int(i)))',
+                      'vview_blscalar':'vsip_vget_bl(a,int(i))',
                       'vview_miscalar':'vsip_vget_mi(a,int(i))',
                       'cmview_dtuple':'vsip_cmget_d(a,i[0],i[1])',
                       'cmview_ftuple':'vsip_cmget_f(a,i[0],i[1])',
@@ -460,7 +625,7 @@ class Block (object):
                       'mview_ituple':'vsip_mget_i(a,i[0],i[1])',
                       'mview_situple':'vsip_mget_si(a,i[0],i[1])',
                       'mview_uctuple':'vsip_mget_uc(a,i[0],i[1])',
-                      'mview_blstuple':'_bl(vsip_mget_bl(a,i[0],i[1]))',
+                      'mview_blstuple':'vsip_mget_bl(a,i[0],i[1])',
                       'cmview_dscalar_mi':'vsip_cmget_d(a,i.r,i.c)',
                       'cmview_fscalar_mi':'vsip_cmget_f(a,i.r,i.c)',
                       'mview_dscalar_mi':'vsip_mget_d(a,i.r,i.c)',
@@ -526,40 +691,73 @@ class Block (object):
             else:
                 assert False,'Failed to parse index arguments in __getitem__'
         def __setitem__(self,i,value):
+            def vsipVPut(aView,i,aValue):
+                pSel = {'cvview_d':vsip_cvput_d,
+                        'cvview_f':vsip_cvput_f,
+                        'vview_d':vsip_vput_d,
+                        'vview_f':vsip_vput_f,
+                        'vview_i':vsip_vput_i,
+                        'vview_si':vsip_vput_si,
+                        'vview_vi':vsip_vput_vi,
+                        'vview_uc':vsip_vput_uc,
+                        'vview_bl':vsip_vput_bl,
+                        'vview_mi':vsip_vput_mi}
+                t=aView.type
+                a=aView.view
+                x=vsipScalar(t,aValue)
+                return pSel[t](a,i,x)
+            def vsipMPut(aView,r,c,aValue):
+                pSel = {'cmview_d':vsip_cmput_d,
+                        'cmview_f':vsip_cmput_f,
+                        'mview_d':vsip_mput_d,
+                        'mview_f':vsip_mput_f,
+                        'mview_i':vsip_mput_i,
+                        'mview_si':vsip_mput_si,
+                        'mview_uc':vsip_mput_uc,
+                        'mview_bl':vsip_mput_bl}
+                t=aView.type
+                a=aView.view
+                x=vsipScalar(t,aValue)
+                return pSel[t](a,r,c,x)
+            #
+            tValue = getType(value)[1]
+            assert tValue == 'scalar' or tValue == 'View','Value type note recognized for __setitem__'
             if 'vview' in self.type:
                 if isinstance(i,int) or isinstance(i,long):
                     assert i >= 0 and i < self.length,'Index out of bound'
-                    if('cvview' in self.type):
-                        vsip.put(self.view,i,complex(value.real,value.imag))
-                    else:
-                        vsip.put(self.view,i,value)
-                elif isinstance(i,slice) and (isinstance(value,int)\
-                        or isinstance(value,long) or isinstance(value,float)):
-                    self.subview(i).fill(value)
+                    vsipVPut(self,i,value)
+                elif isinstance(i,slice) and getType(value)[1] == 'scalar':
+                    self.subview(i).fill(vsipScalar(self.type,value))
                 elif isinstance(i,slice):
                     copy(value,self.subview(i))
                 else:
-                    print('Failed to recognize index for vector view')
+                    assert False,'Failed to recognize index for vector view'
             elif 'mview' in self.type and isinstance(i,tuple) and len(i) == 2:
                 if isinstance(i[0],slice) and isinstance(i[1],slice):
-                    copy(value,self.subview(i[0],i[1]))
+                    if getType(value)[1] == 'scalar':
+                        self.subview(i[0],i[1]).fill(vsipScalar(self.type,value))
+                    else:
+                        copy(value,self.subview(i[0],i[1]))
                 elif isinstance(i[0],slice) and isinstance(i[1],int):
                     assert i[1] >= 0 and i[1] < self.collength,'Row index out of bound'
-                    copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
+                    if getType(value)[1] == 'scalar':
+                        self.subview(i[0],slice(i[1],i[1]+1,1)).fill(vsipScalar(self.type,value))
+                    else:
+                        copy(value,self.subview(i[0],slice(i[1],i[1]+1,1)))
                 elif (isinstance(i[0],int) and isinstance(i[1],slice)):
-                    copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
+                    if getType(value)[1] == 'scalar':
+                        self.subview(slice(i[0],i[0]+1,1),i[1]).fill(vsipScalar(self.type,value))
+                    else:
+                        copy(value,self.subview(slice(i[0],i[0]+1,1),i[1]))
                 elif (isinstance(i[0],int) or isinstance(i[0],long)) \
                      and (isinstance(i[1],int) or isinstance(i[1],long)):
                     assert i[0] >= 0 and i[0] < self.collength and i[1] >=0 and i[1] < self.rowlength,\
                            'Index out of bound'
-                    if 'cmview' in self.type:
-                        vsip.put(self.view,i,complex(value.real,value.imag))
-                    else:
-                        vsip.put(self.view,i,value)
+                    vsipMPut(self,i[0],i[1],value)
                 else:
-                    print('Failed to recognize index for matrix view')
+                    assert False, 'Failed to recognize index for matrix view'
             else:
-                print('Failed to parse argument list for __setitem__')
+                assert False, 'Failed to parse argument list for __setitem__'
         def __delitem__(self,key): #drop index key
             assert isinstance(key,int) or isinstance(key,long) or isinstance(key,tuple),\
                  'Key must be an integer index or a tuple pair of index integers'
@@ -660,14 +858,13 @@ class Block (object):
                 attr=(0,1,self.length)
             elif self.type in Block.matrixTypes:
                 length=self.rowlength * self.collength
-                size=vsip.size(self.view)
-                if size[1] < size[3]:
-                    attr=(0,      1,size[2],size[2],size[4])
+                vsipAttr=GetAttrib(self).vsip
+                if vsipAttr.col_stride < vsipAttr.row_stride:
+                    attr=(0,1,vsipAttr.col_length,vsipAttr.col_length,vsipAttr.row_length)
                 else:
-                    attr=(0,size[4],size[2],      1,size[4])
+                    attr=(0,vsipAttr.row_length,vsipAttr.col_length,1,vsipAttr.row_length)
             else:
-                print('Type <:' + self.type + ':> not supported for compactAttrib')
-                return False
+                assert False,'Type <:%s:> not supported for compactAttrib. Should not be here. Implementation Error.'%self.type
             return (t,length,attr)
         @property
         def empty(self):
@@ -738,7 +935,26 @@ class Block (object):
                 return self.copy
         @property # A way to get a new in-place view of the object
         def cloneview(self):
-            v=vsip.cloneview(self.view)
+            f={'vview_f':vsip_vcloneview_f,
+               'vview_d':vsip_vcloneview_d,
+               'cvview_f':vsip_cvcloneview_f,
+               'cvview_d':vsip_cvcloneview_d,
+               'cmview_d':vsip_cmcloneview_d,
+               'cmview_f':vsip_cmcloneview_f,
+               'mview_bl':vsip_mcloneview_bl,
+               'mview_d':vsip_mcloneview_d,
+               'mview_f':vsip_mcloneview_f,
+               'mview_i':vsip_mcloneview_i,
+               'mview_si':vsip_mcloneview_si,
+               'mview_uc':vsip_mcloneview_uc,
+               'vview_bl':vsip_vcloneview_bl,
+               'vview_i':vsip_vcloneview_i,
+               'vview_mi':vsip_vcloneview_mi,
+               'vview_si':vsip_vcloneview_si,
+               'vview_uc':vsip_vcloneview_uc,
+               'vview_vi':vsip_vcloneview_vi}
+            assert f.has_key(self.type),'Type <:%s:> not supported for cloneview. Implementation Error. Should not be here.'%self.type
+            v = f[self.type](self.view)
             b=self.block
             return self.__newView(v,b)
         @property
@@ -856,7 +1072,7 @@ class Block (object):
                 else:
                     return False
                 return (no,ncs,ncl,nrs,nrl)
-            attr = vsip.getattrib(self.view)
+            attr = vsipGetAttrib(self)
             if self.type in Block.vectorTypes:
                 return self.block.bind(vAttr(attr,vals))
             elif self.type in Block.matrixTypes:
@@ -908,44 +1124,9 @@ class Block (object):
                 return
         @property
         def attrib(self):
-            attr=vsip.getattrib(self.view)
-            if 'vview' in self.type:
-                return {'offset':attr.offset,'stride':attr.stride,'length':attr.length}
-            elif 'mview' in self.type:
-                return {'offset':attr.offset,
-                        'colstride':attr.col_stride,'collength':attr.col_length,
-                        'rowstride':attr.row_stride,'rowlength':attr.row_length}
-            else:
-                print('Object type not supported for attrib')
-                return False
+            return GetAttrib(self).attrib
         def putattrib(self,attrib):
-            if 'mview' in self.type:
-                if 'collength' in attrib:
-                    attr=vsip.getattrib(self.view)
-                    attr.offset = attrib['offset']
-                    attr.row_length = attrib['rowlength']
-                    attr.col_length = attrib['collength']
-                    attr.row_stride = attrib['rowstride']
-                    attr.col_stride = attrib['rowstride']
-                    vsip.putattrib(self.view,attr)
-                    return self
-                else:
-                    print('Input attribute does not appear to be for a matrix')
-                    return False
-            elif 'vview' in self.type:
-                if 'length' in attrib:
-                    attr=vsip.getattrib(self.view)
-                    attr.offset = attrib['offset']
-                    attr.stride = attrib['stride']
-                    attr.length = attrib['length']
-                    vsip.putattrib(self.view,attr)
-                    return self
-                else:
-                    print('Input attribute does not appear to be for a vector')
-                    return False
-            else:
-                print('Type must be a matrix or vector')
-                return False
+            vsipPutAttrib(self,attrib)
         @property
         def view(self):
             return self.__vsipView
@@ -965,30 +1146,58 @@ class Block (object):
                 else:
                     return False
         def colview(self,j):
-            if self.type in Block.matrixTypes:
-                v = vsip.colview(self.view,j)
-                return self.__newView(v,self.block)
-            else:
-                print('view not a matrix type')
-                return False
+            assert 'mview' in self.type,'Column view function only works on matrices.'
+            f={'mview_i': vsip_mcolview_i,
+               'mview_si': vsip_mcolview_si,
+               'mview_uc': vsip_mcolview_uc,
+               'cmview_d': vsip_cmcolview_d,
+               'cmview_f': vsip_cmcolview_f,
+               'mview_d': vsip_mcolview_d,
+               'mview_f': vsip_mcolview_f,
+               'mview_bl': vsip_mcolview_bl}
+            assert f.has_key(self.type),'Type <:%s:> not a valid type for col view. Implementation Error. Should not be here.'%t
+            v=f[self.type](self.view,j)
+            return self.__newView(v,self.block)
         def rowview(self,i):
-            if self.type in Block.matrixTypes:
-                v=vsip.rowview(self.view,i)
-                return self.__newView(v,self.block)
-            else:
-                print('view not a matrix type')
-                return False
+            assert 'mview' in self.type,'Column view function only works on matrices.'
+            f={'mview_i': vsip_mrowview_i,
+               'mview_si': vsip_mrowview_si,
+               'mview_uc': vsip_mrowview_uc,
+               'cmview_d': vsip_cmrowview_d,
+               'cmview_f': vsip_cmrowview_f,
+               'mview_d': vsip_mrowview_d,
+               'mview_f': vsip_mrowview_f,
+               'mview_bl': vsip_mrowview_bl}
+            assert f.has_key(self.type),'Type <:%s:> not a valid type for row view. Implementation Error. Should not be here.'%t
+            v=f[self.type](self.view,i)
+            return self.__newView(v,self.block)
         def diagview(self,i):
-            if self.type in Block.matrixTypes:
-                v = vsip.diagview(self.view,i)
-                return self.__newView(v,self.block)
+            assert 'mview' in self.type,'Diagonal view method only works on views of shape matrix'
+            assert isinstance(i,int) or isinstance(i,long),'The index value for diagview must be an integer'
+            f = {'mview_i': vsip_mdiagview_i,
+                 'mview_si': vsip_mdiagview_si,
+                 'mview_uc': vsip_mdiagview_uc,
+                 'cmview_d': vsip_cmdiagview_d,
+                 'cmview_f': vsip_cmdiagview_f,
+                 'mview_d': vsip_mdiagview_d,
+                 'mview_bl': vsip_mdiagview_bl,
+                 'mview_f': vsip_mdiagview_f}
+            assert f.has_key(self.type),'Should not be here. Implementation error'
+            v = f[self.type](self.view,i)
+            return self.__newView(v,self.block)
         @property
         def transview(self):
-            if 'mview' in self.type:
-                return self.__newView(vsip.transview(self.view),self.block)
-            else:
-                print('Method transview only works on matrix views')
-                return False
+            f={'mview_bl': vsip_mtransview_bl,
+               'mview_i': vsip_mtransview_i,
+               'mview_si': vsip_mtransview_si,
+               'mview_uc': vsip_mtransview_uc,
+               'cmview_d': vsip_cmtransview_d,
+               'cmview_f': vsip_cmtransview_f,
+               'mview_d': vsip_mtransview_d,
+               'mview_f': vsip_mtransview_f}
+            t=self.type
+            assert f.has_key(t),'Type <:%s:> not a valid type for trans view.'%t
+            return self.__newView(f[t](self.view),self.block)
         @property
         def realview(self):
             v=self.__realview(self)
@@ -1006,11 +1215,8 @@ class Block (object):
             and column length equal one.
             No (direct) C VSIPL equivalent
             """
-            if 'vview' in self.type:
-                return self.block.bind(self.offset,1,1,self.stride,self.length)
-            else:
-                print('The mrowview method only works with a vview input')
-                return
+            assert 'vview' in self.type,'The mrowview method only works with a vector view input'
+            return self.block.bind(self.offset,1,1,self.stride,self.length)
         @property
         def mcolview(self):
             """
@@ -1018,17 +1224,55 @@ class Block (object):
             and row length equal one.
             No (direct) C VSIPL equivalent
             """
-            if 'vview' in self.type:
-                return self.block.bind(self.offset,self.stride,self.length,1,1)
-            else:
-                print('The mcolview method only works with a vview input')
-                return
+            assert 'vview' in self.type,'The mcolview method only works with a vector view input'
+            return self.block.bind(self.offset,self.stride,self.length,1,1)
         #view attributes.
         @property
         def offset(self):
-            return int(vsip.getoffset(self.view))
+            f={'vview_f':vsip_vgetoffset_f,
+               'mview_f':vsip_mgetoffset_f,
+               'vview_d':vsip_vgetoffset_d,
+               'mview_d':vsip_mgetoffset_d,
+               'vview_i':vsip_vgetoffset_i,
+               'mview_i':vsip_mgetoffset_i,
+               'vview_si':vsip_vgetoffset_si,
+               'mview_si':vsip_mgetoffset_si,
+               'vview_uc':vsip_vgetoffset_uc,
+               'mview_uc':vsip_mgetoffset_uc,
+               'vview_vi':vsip_vgetoffset_vi,
+               'cvview_f':vsip_cvgetoffset_f,
+               'cmview_f':vsip_cmgetoffset_f,
+               'cvview_d':vsip_cvgetoffset_d,
+               'cmview_d':vsip_cmgetoffset_d,
+               'vview_mi':vsip_vgetoffset_mi,
+               'mview_bl':vsip_mgetoffset_bl,
+               'vview_bl':vsip_vgetoffset_bl}
+            assert f.has_key(self.type),'View of type %s not supported. Implementation error. Should not be here'%self.type
+            return int(f[self.type](self.view))
         def putoffset(self,o):
-            vsip.putoffset(self.view,o)
+            f={'vview_f':vsip_vputoffset_f,
+               'mview_f':vsip_mputoffset_f,
+               'vview_d':vsip_vputoffset_d,
+               'mview_d':vsip_mputoffset_d,
+               'vview_i':vsip_vputoffset_i,
+               'mview_i':vsip_mputoffset_i,
+               'vview_si':vsip_vputoffset_si,
+               'mview_si':vsip_mputoffset_si,
+               'vview_uc':vsip_vputoffset_uc,
+               'mview_uc':vsip_mputoffset_uc,
+               'vview_vi':vsip_vputoffset_vi,
+               'cvview_f':vsip_cvputoffset_f,
+               'cmview_f':vsip_cmputoffset_f,
+               'cvview_d':vsip_cvputoffset_d,
+               'cmview_d':vsip_cmputoffset_d,
+               'vview_mi':vsip_vputoffset_mi,
+               'mview_bl':vsip_mputoffset_bl,
+               'vview_bl':vsip_vputoffset_bl }
+            assert f.has_key(self.type),'View of type %s not supported. Implementation error. Should not be here'%self.type
+            assert isinstance(o,int) or isinstance(o,long), 'Offsets are integers'
+            assert o >=0,'Offsets are >=0'
+            assert o < self.block.length,'Offset off the end of the block'
+            f[self.type](self.view,int(o))
             return self
         @property
         def length(self):
@@ -1044,110 +1288,99 @@ class Block (object):
                'vview_mi':vsip_vgetlength_mi }
             assert f.has_key(self.type),'View of type %s not a vector view'%self.type
             return int(f[self.type](self.view))
-        def putlength(self,length):
-            assert self.type in Block.vectorTypes,'View of type %s not a vector view. Method putlength only works for vectors.'%self.type
-            vsip.putlength(self.view,length)
+        def putlength(self,l):
+            f={'vview_f':vsip_vputlength_f,
+               'vview_d':vsip_vputlength_d,
+               'vview_i':vsip_vputlength_i,
+               'vview_si':vsip_vputlength_si,
+               'vview_uc':vsip_vputlength_uc,
+               'vview_bl':vsip_vputlength_bl,
+               'vview_vi':vsip_vputlength_vi,
+               'cvview_f':vsip_cvputlength_f,
+               'cvview_d':vsip_cvputlength_d,
+               'vview_mi':vsip_vputlength_mi }
+            assert f.has_key(self.type),'Not a compatible type for putlength.'
+            assert isinstance(l,long) or isinstance(l,int),'Length is a positive integer'
+            assert l > 1,'Length is a positive (>1) integer'
+            assert (l-1) * self.stride + self.offset < self.block.length, 'Length to long. Exceeds block size'
+            f[self.type](self.view,l)
             return self
         @property
         def stride(self):
-            if self.type in Block.vectorTypes:
-                return int(vsip.getstride(self.view))
-            elif self.type in Block.matrixTypes:
-                print('View not a vector type')
-                return False
-            else:
-                print('Object not of the proper type')
-                return False
+            f={'vview_f':vsip_vgetstride_f,
+               'vview_d':vsip_vgetstride_d,
+               'vview_i':vsip_vgetstride_i,
+               'vview_si':vsip_vgetstride_si,
+               'vview_uc':vsip_vgetstride_uc,
+               'vview_bl':vsip_vgetstride_bl,
+               'vview_vi':vsip_vgetstride_vi,
+               'cvview_f':vsip_cvgetstride_f,
+               'cvview_d':vsip_cvgetstride_d,
+               'vview_mi':vsip_vgetstride_mi }
+            assert 'vview' in self.type,'Method stride only works on views of shape vector.'
+            assert f.has_key(self.type),'No Key for stride. Implementation error. Should not be here'
+            return int(f[self.type](self.view))
         def putstride(self,stride):
-            if self.type in Block.vectorTypes:
-                vsip.putstride(self.view,stride)
-                return self
-            elif self.type in Block.matrixTypes:
-                print('View not a vector type')
-                return False
-            else:
-                print('Object not of the proper type')
-                return False
+            f={'vview_f':vsip_vputstride_f,
+               'vview_d':vsip_vputstride_d,
+               'vview_i':vsip_vputstride_i,
+               'vview_si':vsip_vputstride_si,
+               'vview_uc':vsip_vputstride_uc,
+               'vview_bl':vsip_vputstride_bl,
+               'vview_vi':vsip_vputstride_vi,
+               'cvview_f':vsip_cvputstride_f,
+               'cvview_d':vsip_cvputstride_d,
+               'vview_mi':vsip_vputstride_mi }
+            assert 'vview' in self.type,'Method putstride only works on views of shape vector.'
+            assert f.has_key(self.type),'No Key for putstride. Implementation error. Should not be here'
+            assert isinstance(stride,int) or isinstance(stride,long),'Stride is an integer'
+            assert (int(stride) * (self.length-1) + self.offset) < self.block.length,'Stride will cause view to exceed block data space'
+            f[self.type](self.view,int(stride))
+            return self
         @property
         def rowlength(self):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                return int(vsip.getrowlength(self.view))
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Row length only works on views of type matrix'
+            return int(GetAttrib(self).attrib['rowlength'])
         def putrowlength(self,length):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                vsip.putrowlength(self.view,length)
-                return self
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Put row length only works on views of type matrix'
+            assert length > 0 and isinstance(length,int) or isinstance(length,long),'Length is an integer > 0'
+            atr=self.attrib
+            atr['rowlength']=length
+            vsipPutAttrib(self,atr)
+            return self
         @property
         def collength(self):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                return int(vsip.getcollength(self.view))
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Column length only works on views of type matrix'
+            return int(GetAttrib(self).attrib['collength'])
         def putcollength(self,length):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                vsip.putcollength(self.view,length)
-                return self
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Put column length only works on views of type matrix'
+            assert length > 0 and isinstance(length,int) or isinstance(length,long),'Length is an integer > 0'
+            atr=self.attrib
+            atr['collength']=length
+            vsipPutAttrib(self,atr)
+            return self
         @property
         def rowstride(self):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                return int(vsip.getrowstride(self.view))
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Row stride only works on views of type matrix'
+            return int(GetAttrib(self).attrib['rowstride'])
         def putrowstride(self,stride):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                vsip.putrowstride(self.view,stride)
-                return self
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Put row stride only works on views of type matrix'
+            assert isinstance(stride,int) or isinstance(stride,long),'stride is an integer'
+            atr=self.attrib
+            atr['rowstride']=stride
+            vsipPutAttrib(self,atr)
+            return self
         @property
         def colstride(self):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                return int(vsip.getcolstride(self.view))
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Column stride only works on views of type matrix'
+            return int(GetAttrib(self).attrib['colstride'])
         def putcolstride(self,stride):
-            if self.type in Block.vectorTypes:
-                print('View not a matrix type')
-                return False
-            elif self.type in Block.matrixTypes:
-                vsip.putcolstride(self.view,stride)
-                return self
-            else:
-                print('Object not of the proper type')
-                return False
+            assert 'mview' in self.type,'Put column stride only works on views of type matrix'
+            assert isinstance(stride,int) or isinstance(stride,long),'stride is an integer'
+            atr=self.attrib
+            atr['colstride']=stride
+            vsipPutAttrib(self,atr)
+            return self
         @property
         def block(self):
             return self.__pyBlock
@@ -2074,8 +2307,8 @@ class Block (object):
                 tmp=self.realview
                 tmp.ramp(start,increment)
             return self
-        def fill(self,aScalar):
-            def nConv(n):
+        def fill(self,aScalar): # does not support _bl
+            def nConv(n): #convert a string to a number
                 assert type(n) == str,'Input not a string. Function nConv converts a string to a float, integer, or complex'
                 chk='0123456789-+j.'
                 if 'j' in n:# must be complex
@@ -2111,27 +2344,14 @@ class Block (object):
                'vview_f':vsip_vfill_f, 'vview_i':vsip_vfill_i,
                'vview_si':vsip_vfill_si, 'vview_uc':vsip_vfill_uc,
                'vview_vi':vsip_vfill_vi}
-            assert f.has_key(self.type),'Type not recognized. This assert should not be possible to fail.'
+            assert f.has_key(self.type),'Type <:%s:> not recognized.'%self.type
             if type(aScalar) == str:
                 self.fill(stringToList(aScalar))
             elif type(aScalar) == list:
                 fillList(self,aScalar)
-            #must be some sort of scalar
-            elif self.type in Block.complexTypes:#scalar is complex
-                if '_d' in self.type:
-                    if type(aScalar) is complex:
-                        f[self.type](vsip_cmplx_d(aScalar.real,aScalar.imag),self.view)
-                    else:
-                        f[self.type](vsip_cmplx_d(aScalar,0.0),self.view)
-                else:
-                    if type(aScalar) is complex:
-                        f[self.type](vsip_cmplx_f(aScalar.real,aScalar.imag),self.view)
-                    else:
-                        f[self.type](vsip_cmplx_f(aScalar,0.0),self.view)
-            elif type(aScalar) != complex:#can't put complex in real block
-                f[self.type](aScalar,self.view)
-            else:
-                assert False,'Input argument must be a compatible type for view.'
+            else:#must be some sort of scalar
+                val = vsipScalar(self.type,aScalar)
+                f[self.type](val,self.view)
             return self
         def randn(self,seed):
             gen=Rand('PRNG',seed)
@@ -2261,7 +2481,7 @@ class Block (object):
             """
             if ('vview' in self.type) and ('vview' in x.type) and ('mview' in A.type) \
                          and A.rowlength == x.length and A.collength is self.length:
-                attr_A=vsip.getattrib(A.view)
+                attr_A=vsipGetAttrib(A)
                 rs=attr_A.row_stride; cs=attr_A.col_stride
                 if rs < cs: #do by ROW
                     t=A.rowview(0)
@@ -2590,24 +2810,14 @@ class Block (object):
             alpha and beta are scalars
             A and B are float matrices (_d or _f) of type mview or cmview
             """
-            op = {0:VSIP_MAT_NTRANS,'NTRANS':VSIP_MAT_NTRANS,1:VSIP_MAT_TRANS,'TRANS':VSIP_MAT_TRANS,
-                  2:VSIP_MAT_HERM,'HERM':VSIP_MAT_HERM,3:VSIP_MAT_CONJ,'CONJ':VSIP_MAT_CONJ}
-            assert A.type == B.type and A.type == self.type and 'mview' in self.type,'Views must be matrices of the same type'
-            assert op.has_key(opA),'Operator not recognized'
-            assert op.has_key(opB),'Operator not recognized'
-            gemp(alpha,A,op[opA],B,op[opB],beta,self)
+            gemp(alpha,A,opA,B,opB,beta,self)
             return self
         def gems(self,alpha,A,opA,beta):
             """
                self = alpha * op[opA](A) + beta*self
             """
-            op = {'NTRANS':0,'TRANS':1,'HERM':2,'CONJ':3}
-            if A.type == self.type and 'mview' in self.type:
-                vsip.gems(alpha,A.view,op[opA],beta,self.view)
-                return self
-            else:
-                print('Views must ba matrices of the same type')
-                return False
+            gems(alpha,A,opA,beta,self)
+            return self
         def outer(self,*args):
             """
             Usage:
@@ -2849,7 +3059,14 @@ class Block (object):
             return idx
         def sort(self,*vals):
             if len(vals) > 0:
-                return self.sortip(vals)
+                if len(vals) == 1:
+                    return self.sortip(vals[0])
+                elif len(vals) == 2:
+                    return self.sortip(vals[0],vals[1])
+                elif len(vals) == 3:
+                    return self.sortip(vals[0],vals[1],vals[2])
+                else:# len(vals) == 4
+                    return self.sortip(vals[0],vals[1],vals[2],vals[3])
             else:
                 return self.sortip()
         # Signal Processing
@@ -3354,7 +3571,7 @@ class Rand(object):
             print("type must be either 'PRNG' or 'NPRNG'")
 
     def __del__(self):
-        vsip.destroy(self.__rng)
+        vsip_randdestroy(self.__rng)
         del(self.__jvsip)
     @property
     def type(self):
@@ -3372,7 +3589,8 @@ class Rand(object):
     def rng(self):
         return self.__rng
     def randn(self,a):
-        t=vsip.getType(a.view)[1]
+        assert 'pyJvsip.__View' in repr(a),'Normal random method only works on pyJvsip views of precision float or double'
+        t=a.type
         f = {'cvview_d':vsip_cvrandn_d,
              'cvview_f':vsip_cvrandn_f,
              'vview_d':vsip_vrandn_d,
@@ -3381,13 +3599,12 @@ class Rand(object):
              'cmview_f':vsip_cmrandn_f,
              'mview_d':vsip_mrandn_d,
              'mview_f':vsip_mrandn_f}
-        if f.has_key(t):
-            f[t](self.rng,a.view)
-            return a
-        else:
-            print('Not a supported type for rand')
+        assert f.has_key(t),'Type <:%s:> not a supported type for method randn.'%t
+        f[t](self.rng,a.view)
+        return a
     def randu(self,a):
-        t=vsip.getType(a.view)[1]
+        assert 'pyJvsip.__View' in repr(a),'Uniform random method only works on pyJvsip views of precision float or double'
+        t=a.type
         f = {'cvview_d':vsip_cvrandu_d,
              'cvview_f':vsip_cvrandu_f,
              'vview_d':vsip_vrandu_d,
@@ -3396,11 +3613,9 @@ class Rand(object):
              'cmview_f':vsip_cmrandu_f,
              'mview_d':vsip_mrandu_d,
              'mview_f':vsip_mrandu_f}
-        if f.has_key(t):
-            f[t](self.rng,a.view)
-            return a
-        else:
-            print('Not a supported type for rand')
+        assert f.has_key(t),'Type <:%s:> not a supported type for method randu.'%t
+        f[t](self.rng,a.view)
+        return a
 # Signal Processing Classes
 # Not Implemented
 # vsip_fft_setwindow_f
@@ -3845,8 +4060,8 @@ class FIR(object):
         firflt = {'fir_f':vsip_firflt_f,'fir_d':vsip_firflt_d,\
                   'cfir_f':vsip_cfirflt_f,'cfir_d':vsip_cfirflt_d,\
                   'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d}
-        assert x.type == y.type
-        assert filtSptd[self.type] == x.type
+        assert x.type == y.type, 'Input and output views must be the same type.'
+        assert filtSptd[self.type] == x.type,'Filter type does not support input views'
         self.__outLength = firflt[self.type](self.vsip,x.view,y.view)
         return y
     @property
@@ -4055,8 +4270,8 @@ class CHOL(object):
                     'cchol_d':vsip_cchold_destroy_d,
                     'chol_f':vsip_chold_destroy_f,
                     'chol_d':vsip_chold_destroy_d}
-        del(self.__jvsip)
         cholDestroy[self.__type](self.__chol)
+        del(self.__jvsip)
     @property
     def type(self):
         return self.__type
@@ -4160,8 +4375,8 @@ class QR(object):
     def __del__(self):
         f={'qr_d':vsip_qrd_destroy_d, 'qr_f':vsip_qrd_destroy_f,
            'cqr_d':vsip_cqrd_destroy_d,'cqr_f':vsip_cqrd_destroy_f}
-        del(self.__jvsip)
         f[self.type](self.__qr)
+        del(self.__jvsip)
     @property
     def type(self):
         return self.__type
