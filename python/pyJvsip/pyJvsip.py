@@ -12,10 +12,7 @@ from vsipSignalProcessing import *
 from vsipLinearAlgebra import *
 from vsipAddendum import *
 
-__version__='0.3.1'
-
-def __isView(a):
-    return 'pyJvsip.__View' in repr(a)
+__version__='0.5.0'
 
 #Functions between here and Block are meant to be used internal to pyJvsip implementation.
 #For the adventuresome your mileage may vary.
