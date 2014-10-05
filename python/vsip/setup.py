@@ -37,4 +37,5 @@ setup (name = 'vsip',
        author      = "Randall Judd",
        description = """VSIP Extension Module""",
        ext_modules = [vsip_module],
+       py_modules=['vsip'],
     )
