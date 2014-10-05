@@ -3,9 +3,9 @@
 # makefile in the JVSIP home directory. Extension parmaeters listing should be self
 # explanatory for library and include directory expected locations.
 # to build use from the command line
-#   python setup.py build
+#   python setup.py build_ext
 # to build and install use from the command line
-#   python setup.py install
+#   python setup.py build_ext install
 # Note 
 #   To use another vsip implementation you need to edit vsip.i to include the proper vsip.h
 #   and to list the functionality available (or desired) with the other implementation.
