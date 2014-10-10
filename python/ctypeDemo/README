@@ -1,0 +1,18 @@
+In this directory I have a ctypes demo, pyCtypesJvsip.py, which demonstrates
+another way to do a pyJvsip using the ctypes module. This would be a lot of
+work but appears to be doable. There are some hickups requiring work-arounds.
+
+In any case this is a work in progress which may or may not progress.
+
+You need to create a shared object file for the vsip library and copy the
+library into this directory. I did this with
+
+gcc -shared -c *.c -o _vsip.so -I./
+
+while in the c_VSIP_src directory at the top level of JVSIP.
+
+If you have a commercial library which already has a dynamically linked lib
+file you can probably use that one.
+
+This module does not do much. For now read the module or email me for 
+pointers on how to use.
