@@ -405,8 +405,10 @@ class Block (object):
                 _fill(self,val)
             return self
         @property
-        def empty(self):
-            return Block(self.block.type,self.length).vector
+        def empty(self):            
+            tSel= {'block_f':'block_f','cblock_f':'cblock_f','block_i':'block_i',\
+                   'block_vi':'block_vi','imag_f':'block_f','real_f':'block_f'}
+            return Block(tSel[self.block.type],self.length).vector
         def ramp(self,start,increment):
             def vramp_f(start,step,view):
                 lib.vsip_vramp_f(ctypes.c_float(start),ctypes.c_float(step),ctypes.c_void_p(view.vsip))
