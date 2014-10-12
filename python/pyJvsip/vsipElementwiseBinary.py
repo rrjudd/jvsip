@@ -45,13 +45,13 @@ def add(a,b,c):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for add'
     if 'cscalar' in t:
         if 'view_d' in t:
-            f[t](vsip_cmplx_d(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
         else:
-            f[t](vsip_cmplx_f(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_f(a.real,a.imag),b.vsip,c.vsip)
     elif 'scalar' in t:
-        f[t](a,b.view,c.view)
+        f[t](a,b.vsip,c.vsip)
     else:
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
     return c        
 def div(a,b,c):
     """
@@ -97,15 +97,15 @@ def div(a,b,c):
     assert f.has_key(t),'Type <:'+t+':> not recognized for div'
     if 'cscalar' in t1:
         if 'vview_d' in t3:
-            f[t](vsip_cmplx_d(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
         else:
-            f[t](vsip_cmplx_f(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_f(a.real,a.imag),b.vsip,c.vsip)
     elif 'scalar' in t1:
-        f[t](a,b.view,c.view)
+        f[t](a,b.vsip,c.vsip)
     elif 'scalar' in t2:
-        f[t](a.view,b,c.view)
+        f[t](a.vsip,b,c.vsip)
     else:
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
     return c
 def mul(a,b,c):
     """
@@ -139,13 +139,13 @@ def mul(a,b,c):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for mul'
     if 'cscalar' in t:
         if 'view_d' in t:
-            f[t](vsip_cmplx_d(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
         else:
-            f[t](vsip_cmplx_f(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_f(a.real,a.imag),b.vsip,c.vsip)
     elif 'scalar' in t:
-        f[t](a,b.view,c.view)
+        f[t](a,b.vsip,c.vsip)
     else:
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
     return c     
 def jmul(a,b,c):
     f={'cmview_dcmview_dcmview_d':vsip_cmjmul_d,'cmview_fcmview_fcmview_f':vsip_cmjmul_f,
@@ -157,7 +157,7 @@ def jmul(a,b,c):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for jmul'
     assert __isSizeCompatible(a,c), 'Argument one and argument three must be the same size in jmul'
     assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in jmul'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c    
 def vmmul(a,b,c):
     """
@@ -184,10 +184,10 @@ def vmmul(a,b,c):
     assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in mmul'
     if 'COL' in a.major:
         assert a.length == b.collength, err1
-        f[t](a.view,b.view,VSIP_COL,c.view)
+        f[t](a.vsip,b.vsip,VSIP_COL,c.vsip)
     else:
         assert a.length == b.rowlength, err2
-        f[t](a.view,b.view,VSIP_ROW,c.view)
+        f[t](a.vsip,b.vsip,VSIP_ROW,c.vsip)
     return c
 def sub(a,b,c):
     """
@@ -230,13 +230,13 @@ def sub(a,b,c):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for add'
     if 'cscalar' in t:
         if 'view_d' in t:
-            f[t](vsip_cmplx_d(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
         else:
-            f[t](vsip_cmplx_f(a.real,a.imag),b.view,c.view)
+            f[t](vsip_cmplx_f(a.real,a.imag),b.vsip,c.vsip)
     elif 'scalar' in t:
-        f[t](a,b.view,c.view)
+        f[t](a,b.vsip,c.vsip)
     else:
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
     return c
 def expoavg(a,b,c):
     """
@@ -263,7 +263,7 @@ def expoavg(a,b,c):
     assert c.type == b.type, 'Arguments two and three must be views of the same type'
     t='scalar'+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for expoavg'
-    f[t](a,b.view,c.view)
+    f[t](a,b.vsip,c.vsip)
     return c
 def hypot(a,b,c):
     """
@@ -280,6 +280,6 @@ def hypot(a,b,c):
     assert __isSizeCompatible(a,c) and __isSizeCompatible(b,c),err2
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for hypot'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 

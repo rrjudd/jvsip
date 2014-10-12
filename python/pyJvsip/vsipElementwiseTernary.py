@@ -54,13 +54,13 @@ def am(a,b,c,d):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for am'
     if 'cscalar' in t:
         if 'cvview_d' in t:
-            f[t](a.view,vsip_cmplx_d(b.real,b.imag),c.view,d.view)
+            f[t](a.vsip,vsip_cmplx_d(b.real,b.imag),c.vsip,d.vsip)
         else:
-            f[t](a.view,vsip_cmplx_f(b.real,b.imag),c.view,d.view)
+            f[t](a.vsip,vsip_cmplx_f(b.real,b.imag),c.vsip,d.vsip)
     elif 'scalar' in t:
-        f[t](a.view,b,c.view.d.view)
+        f[t](a.vsip,b,c.vsip.d.vsip)
     else:
-        f[t](a.view,b.view,c.view,d.view)
+        f[t](a.vsip,b.vsip,c.vsip,d.vsip)
     return d
 
 #vsip_vma_p
@@ -120,7 +120,7 @@ def ma(a,b,c,d):
              'Argument two must be a pyJvsip view object or scalar in am'
         assert __isSizeCompatible(a,b),'Size error in ma (multiply-add)'
         t2=b.type
-        b0=b.view
+        b0=b.vsip
     if isinstance(c,int) or isinstance(c,long) or isinstance(c,float):
         if 'cvview_d' in t1:
             t3='cscalar'
@@ -142,10 +142,10 @@ def ma(a,b,c,d):
              'Argument three must be a pyJvsip view object or scalar in ma'
         assert __isSizeCompatible(a,c),'Size error in ma (multiply-add)'
         t3=c.type
-        c0=c.view
+        c0=c.vsip
     t=t1+t2+t3+t4
     assert f.has_key(t), 'Type <:'+t+':> not recognized for ma'
-    f[t](a.view,b0,c0,d.view)
+    f[t](a.vsip,b0,c0,d.vsip)
     return d
 
 #vsip_dvmsb_p
@@ -171,7 +171,7 @@ def msb(a,b,c,d):
               ,'Size error in ma (multiply-add)'
     t=a.type+b.type+c.type+d.type
     assert f.has_key(t), 'Type <:'+t+':> not recognized for msb'
-    f[t](a.view,b.view,c.view,d.view)
+    f[t](a.vsip,b.vsip,c.vsip,d.vsip)
     return d
 
 #vsip_dvsbm_p
@@ -197,6 +197,6 @@ def sbm(a,b,c,d):
               ,'Size error in ma (multiply-add)'
     t=a.type+b.type+c.type+d.type
     assert f.has_key(t), 'Type <:'+t+':> not recognized for msb'
-    f[t](a.view,b.view,c.view,d.view)
+    f[t](a.vsip,b.vsip,c.vsip,d.vsip)
     return d
 

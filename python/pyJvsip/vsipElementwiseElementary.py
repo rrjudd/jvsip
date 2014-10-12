@@ -26,9 +26,9 @@ def acos(a,b):
     chk , msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for acos')
             return
@@ -42,9 +42,9 @@ def asin(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for asin')
             return
@@ -58,9 +58,9 @@ def atan(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for atan')
             return
@@ -76,9 +76,9 @@ def atan2(a,b,c):
         chk, msg =__iscompatible(a,c)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view,c.view)
+            vf[a.type](a.vsip,b.vsip,c.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view,c.view)
+            mf[a.type](a.vsip,b.vsip,c.vsip)
         else:
             print('Type <:'+a.type+':> not supported for atan2')
             return
@@ -92,9 +92,9 @@ def cos(a,b):
     chk , msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for cos')
             return
@@ -108,9 +108,9 @@ def cosh(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for cosh')
             return
@@ -126,9 +126,9 @@ def exp(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for exp')
             return
@@ -142,9 +142,9 @@ def exp10(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for exp10')
             return
@@ -160,9 +160,9 @@ def log(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for log')
             return
@@ -176,9 +176,9 @@ def log10(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for log10')
             return
@@ -192,9 +192,9 @@ def sin(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for sin')
             return
@@ -208,9 +208,9 @@ def sinh(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for sinh')
             return
@@ -231,7 +231,7 @@ def sqrt(a,b):
     if chk:
         t=a.type+b.type
         if f.has_key(t):
-            f[t](a.view,b.view)
+            f[t](a.vsip,b.vsip)
         else:
             print('Type <:'+t+':> not supported for sinh')
             return
@@ -245,9 +245,9 @@ def tan(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for tan')
             return
@@ -261,9 +261,9 @@ def tanh(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         if vf.has_key(a.type):
-            vf[a.type](a.view,b.view)
+            vf[a.type](a.vsip,b.vsip)
         elif mf.has_key(a.type):
-            mf[a.type](a.view,b.view)
+            mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for tanh')
             return

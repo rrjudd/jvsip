@@ -24,7 +24,7 @@ def bb_and(a,b,c):
         'Size error in function and'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:'+t+':> not supported for function bb_and.'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 #vsip_snot_p
 def bb_not(a,b):
@@ -38,7 +38,7 @@ def bb_not(a,b):
     assert __isSizeCompatible(a,b),'Size error in function bb_not'
     t=a.type+b.type
     assert f.has_key(t), 'Type <:'+t+':> not supported for function not.'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 
 #vsip_sor_p 
@@ -54,7 +54,7 @@ def bb_or(a,b,c):
         'Size error in function or'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:'+t+':> not supported for function or.'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 #vsip_sxor_p
 def bb_xor(a,b,c):
@@ -69,5 +69,5 @@ def bb_xor(a,b,c):
         'Size error in function xor'
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:'+t+':> not supported for function xor.'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c

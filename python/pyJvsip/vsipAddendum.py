@@ -26,11 +26,11 @@ def linear(x0,y0,*args):
         else:
             assert x0.length == y0.rowlength,'Input data views not compliant.'
             assert x.length  == y.rowlength,'Output data views not compliant.'
-        f[t](x0.view,y0.view,major[dim],x.view,y.view)
+        f[t](x0.vsip,y0.vsip,major[dim],x.vsip,y.vsip)
     else:
         assert x0.length == y0.length,'Input data views not compliant.'
         assert y.length  == x.length, 'Output data views not compliant.'
-        f[t](x0.view,y0.view,x.view,y.view)
+        f[t](x0.vsip,y0.vsip,x.vsip,y.vsip)
     return y
 def nearest(x0,y0,*args):
     f={'vview_fvview_f':vsip_vinterp_nearest_f, 'vview_dvview_d':vsip_vinterp_nearest_d,
@@ -55,9 +55,9 @@ def nearest(x0,y0,*args):
         else:
             assert x0.length == y0.rowlength,'Input data views not compliant.'
             assert x.length  == y.rowlength,'Output data views not compliant.'
-        f[t](x0.view,y0.view,major[dim],x.view,y.view)
+        f[t](x0.vsip,y0.vsip,major[dim],x.vsip,y.vsip)
     else:
         assert x0.length == y0.length,'Input data views not compliant.'
         assert y.length  == x.length, 'Output data views not compliant.'
-        f[t](x0.view,y0.view,x.view,y.view)
+        f[t](x0.vsip,y0.vsip,x.vsip,y.vsip)
     return y

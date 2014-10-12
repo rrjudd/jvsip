@@ -26,7 +26,7 @@ def herm(a,b):
     assert a.rowlength == b.collength and a.collength == b.rowlength, 'Input sizes not compliant.'
     t=a.type+b.type
     assert f.has_key(t), 'Type <:'+t+':> not supported for function herm'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 
 # vsip_dgemp_p
@@ -73,19 +73,19 @@ def gemp(alpha,a,op_a,b,op_b,beta,c):
     assert isinstance(beta,float) or isinstance(beta,int) or isinstance(beta,complex),\
         'Argument six must be a scalar'
     if t=='cmview_d':
-        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.view,opc[op_a],b.view,opc[op_b],\
-             vsip_cmplx_d(beta.real,beta.imag),c.view)
+        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.vsip,opc[op_a],b.vsip,opc[op_b],\
+             vsip_cmplx_d(beta.real,beta.imag),c.vsip)
         return c
     elif t == 'cmview_f':
-        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.view,opc[op_a],b.view,opc[op_b],\
-             vsip_cmplx_f(beta.real,beta.imag),c.view)
+        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.vsip,opc[op_a],b.vsip,opc[op_b],\
+             vsip_cmplx_f(beta.real,beta.imag),c.vsip)
         return c
     else:
         assert isinstance(alpha,float) or isinstance(alpha,int), \
           'For type mview_f or mview_d the first argument must be a real scalar'
         assert isinstance(beta,float) or isinstance(beta,int), \
           'For type mview_f or mview_d the sixth argument must be a real scalar'
-        f[t](float(alpha),a.view,opr[op_a],b.view,opr[op_b],float(beta),c.view)
+        f[t](float(alpha),a.vsip,opr[op_a],b.vsip,opr[op_b],float(beta),c.vsip)
         return c
 
 # vsip_dgems_p
@@ -123,15 +123,15 @@ def gems(alpha,a,op_a,beta,c):
     assert isinstance(beta,float) or isinstance(beta,int) or isinstance(beta,complex),\
         'Argument four must be a scalar'
     if t == 'cmview_d':
-        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.view,opc[op_a],\
-             vsip_cmplx_d(beta.real,beta.imag),c.view)
+        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.vsip,opc[op_a],\
+             vsip_cmplx_d(beta.real,beta.imag),c.vsip)
         return c
     elif t == 'cmview_f':
-        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.view,opc[op_a],\
-             vsip_cmplx_f(beta.real,beta.imag),c.view)
+        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.vsip,opc[op_a],\
+             vsip_cmplx_f(beta.real,beta.imag),c.vsip)
         return c
     else:
-        f[t](float(alpha),a.view,opc[op_a],float(beta),c.view)
+        f[t](float(alpha),a.vsip,opc[op_a],float(beta),c.vsip)
         return c
     
 # vsip_dskron_p
@@ -157,13 +157,13 @@ def kron(alpha,a,b,c):
         N = a.rowlength * b.rowlength; M = a.collength * b.collength
     assert c.rowlength == N and c.collength == M, 'Matrix C is not sized properly'
     if 'cmview_d' in t:
-        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.view,b.view,c.view)
+        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.vsip,b.vsip,c.vsip)
         return c
     elif 'cmview_f' in t:
-        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.view,b.view,c.view)
+        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.vsip,b.vsip,c.vsip)
         return c
     else:
-        f[t](float(alpha),a.view,b.view,c.view)
+        f[t](float(alpha),a.vsip,b.vsip,c.vsip)
         return c
 
 # vsip_dmvprod3_p
@@ -195,7 +195,7 @@ def prod3(a,b,c):
         assert c.collength == 3, 'The third argument to prod3 must have column length of 3'
         assert c.rowlength == b.rowlength, \
             'The size of the second argument and third argument must be the same for function prod3'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_dmvprod4_p
@@ -227,7 +227,7 @@ def prod4(a,b,c):
         assert c.collength == 4, 'The third argument to prod4 must have column length of 4'
         assert c.rowlength == b.rowlength, \
             'The size of the second argument and third argument must be the same for function prod4'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 
@@ -253,17 +253,17 @@ def prod(a,b,c):
     if 'mview' in a.type and 'mview' in b.type:
         assert b.collength == a.rowlength and c.collength == a.collength \
                and b.rowlength == c.rowlength, 'Size error in function prod'
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
         return c
     elif 'mview' in a.type and 'vview' in b.type:
         assert a.rowlength == b.length and a.collength == c.length, \
                'Size error in function prod'
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
         return c
     else: # a.type is vector and b.type is matrix
         assert a.length == b.collength and b.rowlength == c.length, \
                'Size error in function prod'
-        f[t](a.view,b.view,c.view)
+        f[t](a.vsip,b.vsip,c.vsip)
         return c
 
 # vsip_dmtrans_p
@@ -281,7 +281,7 @@ def trans(a,b):
     assert f.has_key(t), 'Type <:'+t+':> not recognized for function trans'
     assert a.rowlength == b.collength and a.collength == b.rowlength, \
            'Size error in function trans'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 
 # vsip_cmprodh_p
@@ -306,7 +306,7 @@ def prodh(a,b,c):
     assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'
     assert a.collength == c.collength and a.rowlength == b.rowlength \
        and b.collength == c.rowlength, 'Size error in prodh'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_cmprodj_p
@@ -331,7 +331,7 @@ def prodj(a,b,c):
     assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'
     assert a.collength == c.collength and a.rowlength == b.collength \
        and b.rowlength == c.rowlength, 'Size error in prodj'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c               
 
 # vsip_dmprodt_p
@@ -356,7 +356,7 @@ def prodt(a,b,c):
     assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'
     assert a.collength == c.collength and a.rowlength == b.rowlength \
        and b.collength == c.rowlength, 'Size error in prodt'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c               
 
 # vsip_dvouter_p
@@ -382,13 +382,13 @@ def outer(alpha,a,b,c):
     assert f.has_key(t)
     assert c.collength == a.length and c.rowlength == b.length, 'Size error in function outer'
     if 'cvview_d' in t:
-        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.view,b.view,c.view)
+        f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.vsip,b.vsip,c.vsip)
     elif 'cvview_f' in t:
-        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.view,b.view,c.view)
+        f[t](vsip_cmplx_f(alpha.real,alpha.imag),a.vsip,b.vsip,c.vsip)
     else:
         assert not isinstance(alpha,complex), \
             'For real views the scalar multiplier must be real for function outer'
-        f[t](float(alpha),a.view,b.view,c.view)
+        f[t](float(alpha),a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_dcovsol_p
@@ -414,7 +414,7 @@ def covsol(A,XB):
         C=XB.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
     assert t == C.type, 'Arguments in function covsol must be the same type'
     assert A.rowlength == C.collength, 'Size error in function covsol'
-    x=f[t](A.view,C.view)
+    x=f[t](A.vsip,C.vsip)
     return x
 
 # vsip_dllsqsol_p 
@@ -440,7 +440,7 @@ def llsqsol(A,XB):
         C=XB.block.bind(inOut.offset,inOut.stride,inOut.length,1,1)
     assert t == C.type, 'Arguments in function llsqsol must be the same type'
     assert A.rowlength == C.collength, 'Size error in function llsqsol'
-    x=f[t](A.view,C.view)
+    x=f[t](A.vsip,C.vsip)
     return x
 
 # vsip_dtoepsol_p
@@ -467,7 +467,7 @@ def toepsol(t,b,w,x):
          'Arguments to toepsol must all be vector views of the same type'
     assert t.length == b.length and t.length == w.length and t.length == x.length, \
          'View lengths must all be the same size for function topsol'
-    x=f[tp](t.view,b.view,w.view,x.view)
+    x=f[tp](t.vsip,b.vsip,w.vsip,x.vsip)
     return x
 
 

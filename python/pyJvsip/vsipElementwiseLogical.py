@@ -39,10 +39,10 @@ def leq(a,b,c):
            'Argument one must be a pyJvsip view object or scalar in leq'
         assert __isSizeCompatible(a,c),'Size error in leq'
         t1=a.type
-        a0=a.view
+        a0=a.vsip
     t=t1+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for leq'
-    f[t](a0,b.view,c.view)
+    f[t](a0,b.vsip,c.vsip)
     return c
 
 # vsip_slge_p 
@@ -71,10 +71,10 @@ def lge(a,b,c):
            'Argument one must be a pyJvsip view object or scalar in lge'
         assert __isSizeCompatible(a,c),'Size error in lge'
         t1=a.type
-        a0=a.view
+        a0=a.vsip
     t=t1+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for lge'
-    f[t](a0,b.view,c.view)
+    f[t](a0,b.vsip,c.vsip)
     return c 
 
 # vsip_slgt_p 
@@ -103,10 +103,10 @@ def lgt(a,b,c):
            'Argument one must be a pyJvsip view object or scalar in lgt'
         assert __isSizeCompatible(a,c),'Size error in lgt'
         t1=a.type
-        a0=a.view
+        a0=a.vsip
     t=t1+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for lgt'
-    f[t](a0,b.view,c.view)
+    f[t](a0,b.vsip,c.vsip)
     return c 
 
 # vsip_slle_p 
@@ -135,10 +135,10 @@ def lle(a,b,c):
            'Argument one must be a pyJvsip view object or scalar in lle'
         assert __isSizeCompatible(a,c),'Size error in lle'
         t1=a.type
-        a0=a.view
+        a0=a.vsip
     t=t1+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for lle'
-    f[t](a0,b.view,c.view)
+    f[t](a0,b.vsip,c.vsip)
     return c
 
 # vsip_sllt_p 
@@ -167,10 +167,10 @@ def llt(a,b,c):
            'Argument one must be a pyJvsip view object or scalar in llt'
         assert __isSizeCompatible(a,c),'Size error in llt'
         t1=a.type
-        a0=a.view
+        a0=a.vsip
     t=t1+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for llt'
-    f[t](a0,b.view,c.view)
+    f[t](a0,b.vsip,c.vsip)
     return c
 
 # vsip_dslne_p 
@@ -199,8 +199,8 @@ def lne(a,b,c):
            'Argument one must be a pyJvsip view object or scalar in lne'
         assert __isSizeCompatible(a,c),'Size error in lne'
         t1=a.type
-        a0=a.view
+        a0=a.vsip
     t=t1+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for lne'
-    f[t](a0,b.view,c.view)
+    f[t](a0,b.vsip,c.vsip)
     return c

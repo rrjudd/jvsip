@@ -53,10 +53,10 @@ def histo(a,b_min,b_max,op,b):
     if '_i' in t or '_si' in t:
         assert isinstance(b_min,int) and isinstance(b_max,int), \
           'Type <:'+t+':> requires int max and min bin arguments'
-        f[t](a.view,int(b_min),int(b_max),vsipOp,b.view)
+        f[t](a.vsip,int(b_min),int(b_max),vsipOp,b.vsip)
         return b
     else:
-        f[t](a.view,float(b_min),float(b_max),vsipOp,b.view)
+        f[t](a.vsip,float(b_min),float(b_max),vsipOp,b.vsip)
         return b
 
 # vsip_dsfreqswap_f
@@ -81,5 +81,5 @@ def freqswap(a):
            'Argument must be a pyJvsip view object for function freqswap'
     t=a.type
     assert f.has_key(t),'Type <:%s:> not supported for freqswap'%t
-    f[t](a.view)
+    f[t](a.vsip)
     return a

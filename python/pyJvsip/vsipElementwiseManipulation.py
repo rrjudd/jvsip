@@ -40,7 +40,7 @@ def swap(a,b):
     assert chk, msg
     t=a.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for swap'
-    f[a.type](a.view,b.view)
+    f[a.type](a.vsip,b.vsip)
 
 # vsip_dsgather_p 
 def gather(a,b,c):
@@ -60,7 +60,7 @@ def gather(a,b,c):
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for gather'
     assert __isSizeCompatible(b,c),'Index vector must be the same length as output vector'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_dsscatter_p
@@ -80,7 +80,7 @@ def scatter(a,b,c):
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for scatter'
     assert __isSizeCompatible(a,c),'Index vector must be the same length as input vector'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_srect_p 
@@ -110,7 +110,7 @@ def rect(a,b,*vars):
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for rect'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in rect'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_sreal_p 
@@ -127,7 +127,7 @@ def real(a,b):
     t=a.type+b.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for real'
     assert __isSizeCompatible(a,b),'Size error in real'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 
 # vsip_simag_p 
@@ -144,7 +144,7 @@ def imag(a,b):
     t=a.type+b.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for imag'
     assert __isSizeCompatible(a,b),'Size error in imag'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 
 # vsip_scmplx_p 
@@ -177,7 +177,7 @@ def cmplx(a,b,*vars):
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for cmplx'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in cmplx'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_spolar_p
@@ -213,7 +213,7 @@ def polar(a,*vars):
     t=a.type+b.type+c.type
     assert f.has_key(t), 'Type <:' +t+ ':> not supported for polar'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in polar'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return(b,c)
 
 # the nary functions are not currently supported in jvsip

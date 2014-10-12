@@ -45,7 +45,7 @@ def clip(a,t1,t2,c1,c2,r):
     assert isinstance(t2,int) or isinstance(t2,float) or isinstance(t2,long)
     assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
     assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
-    f[a.type](a.view,t1,t2,c1,c2,r.view)
+    f[a.type](a.vsip,t1,t2,c1,c2,r.vsip)
     return r
 # vsip_sinvclip_p
 def invclip(a,t1,t2,t3,c1,c2,r):
@@ -71,7 +71,7 @@ def invclip(a,t1,t2,t3,c1,c2,r):
     assert isinstance(t3,int) or isinstance(t3,float) or isinstance(t3,long)
     assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
     assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
-    f[a.type](a.view,t1,t2,t3,c1,c2,r.view)
+    f[a.type](a.vsip,t1,t2,t3,c1,c2,r.vsip)
     return r
 
 # vsip_sindexbool
@@ -94,7 +94,7 @@ def indexbool(a,b):
            'Argument two must be a pyJvsip view object in indexbool'
     t=a.type+b.type
     assert f.has_key(t),'Type <:'+t+':> not supported by indexbool'
-    return f[t](a.view,b.view)
+    return f[t](a.vsip,b.vsip)
 
 # vsip_smax_p
 def max(a,b,c):
@@ -114,7 +114,7 @@ def max(a,b,c):
            'Size error in max'
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by max'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_smaxmg_p
@@ -135,7 +135,7 @@ def maxmg(a,b,c):
            'Size error in maxmg'
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by maxmg'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_scmaxmgsq_p
@@ -156,7 +156,7 @@ def cmaxmgsq(a,b,c):
            'Size error in cmaxmgsq'
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by cmaxmgsq'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_smin_p
@@ -177,7 +177,7 @@ def min(a,b,c):
            'Size error in min'
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by min'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_sminmg_p
@@ -198,7 +198,7 @@ def minmg(a,b,c):
            'Size error in minmg'
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by minmg'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c
 
 # vsip_scminmgsq_p
@@ -219,5 +219,5 @@ def cminmgsq(a,b,c):
            'Size error in minmgsq'
     t=a.type+b.type+c.type
     assert f.has_key(t),'Type <:'+t+':> not supported by cminmgsq'
-    f[t](a.view,b.view,c.view)
+    f[t](a.vsip,b.vsip,c.vsip)
     return c

@@ -20,7 +20,7 @@ def arg(a,b):
     t=a.type+b.type
     assert f.has_key(t), 'Type <:%s:> not recognized for function arg'%t
     assert __isSizeCompatible(a,b), 'Input views must be the same size'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def conj(a,b):
     f={'cvview_fcvview_f':vsip_cvconj_f,
@@ -31,7 +31,7 @@ def conj(a,b):
     t=a.type+b.type
     assert f.has_key(t), 'Type <:%s:> not recognized for function cconj'%t
     assert __isSizeCompatible(a,b), 'Input views must be the same size'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def cumsum(a,b):
     """
@@ -55,11 +55,11 @@ def cumsum(a,b):
     assert f.has_key(t),'Type <:'+t+':> not supported by cumsum'
     if 'mview' in t:
         if a.major is 'COL':
-            f[t](a.view,VSIP_COL,b.view)
+            f[t](a.vsip,VSIP_COL,b.vsip)
         else:
-            f[t](a.view,VSIP_ROW,b.view)
+            f[t](a.vsip,VSIP_ROW,b.vsip)
     else:
-        f[t](a.view,b.view)
+        f[t](a.vsip,b.vsip)
         return b
 def euler(a,b):
     assert __isView(a) and __isView(b), 'Arguments must be pyJvsip views in function cumsum'
@@ -68,7 +68,7 @@ def euler(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Arguments must be the same size for euler'
     assert f.has_key(t),'Type <:'+t+':>not supported by euler'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def mag(a,b):
     f={'cmview_dmview_d':vsip_cmmag_d,'cmview_fmview_f':vsip_cmmag_f,
@@ -80,7 +80,7 @@ def mag(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b), 'Arguments must be the same size for mag'
     assert f.has_key(t),'Type <:'+t+':> not supported by mag'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def cmagsq(a,b):
     f={'cmview_dmview_d':vsip_mcmagsq_d, 'cmview_fmview_f':vsip_mcmagsq_f,
@@ -89,7 +89,7 @@ def cmagsq(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b), 'Arguments must be the same size for cmagq'
     assert f.has_key(t),'Type <:'+t+':> not supported by cmagsq'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def modulate(a,nu,phi,b):
     """
@@ -117,7 +117,7 @@ def neg(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for neg'
     assert f.has_key(t),'Type <:'+t+':> not supported for neg'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def recip(a,b):
     f={'cmview_dcmview_d':vsip_cmrecip_d, 'cmview_fcmview_f':vsip_cmrecip_f,
@@ -128,7 +128,7 @@ def recip(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for recip'
     assert f.has_key(t),'Type <:'+t+':> not supported for recip'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def rsqrt(a,b):
     f={'mview_dmview_d':vsip_mrsqrt_d, 'mview_fmview_f':vsip_mrsqrt_f,
@@ -137,7 +137,7 @@ def rsqrt(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for rsqrt'
     assert f.has_key(t),'Type <:'+t+':> not supported for rsqrt'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 def sq(a,b):
     f={'mview_dmview_d':vsip_msq_d, 'mview_fmview_f':vsip_msq_f,
@@ -146,7 +146,7 @@ def sq(a,b):
     t=a.type+b.type
     assert __isSizeCompatible(a,b),'Input/Output views must be the same size for sq'
     assert f.has_key(t),'Type <:'+t+':> not supported for sq'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 #vsip_sfloor_p_p
 def floor(a,r):
@@ -158,7 +158,7 @@ def floor(a,r):
     t=a.type+r.type
     assert __isSizeCompatible(a,r),'Input/Output views must be the same size for floor'
     assert f.has_key(t),'Type <:%s:> not supported for floor'%t
-    f[t](a.view,r.view)
+    f[t](a.vsip,r.vsip)
     return r
 # vsip_sceil_p_p
 def ceil(a,r):
@@ -170,7 +170,7 @@ def ceil(a,r):
     t=a.type+r.type
     assert __isSizeCompatible(a,r),'Input/Output views must be the same size for ceil'
     assert f.has_key(t),'Type <:%s:> not supported for ceil'%t
-    f[t](a.view,r.view)
+    f[t](a.vsip,r.vsip)
     return r
 # vsip_sround_p_p
 def round(a,r):
@@ -182,5 +182,5 @@ def round(a,r):
     t=a.type+r.type
     assert __isSizeCompatible(a,r),'Input/Output views must be the same size for round'
     assert f.has_key(t),'Type <:%s:> not supported for round'%t
-    f[t](a.view,r.view)
+    f[t](a.vsip,r.vsip)
     return r

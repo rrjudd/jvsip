@@ -166,7 +166,7 @@ def vsipGetAttrib(v):
     assert 'pyJvsip' in repr(v),'vsipGetAttrib does not support %s.'%repr(v)
     assert f.has_key(v.type),'Type <:%s:> not recognized for vsipGetAttrib'%v.type
     attr=f[v.type][1]()
-    f[v.type][0](v.view,attr)
+    f[v.type][0](v.vsip,attr)
     return attr
 def vsipPutAttrib(v,attrib):
     """
@@ -205,7 +205,7 @@ def vsipPutAttrib(v,attrib):
         attr.col_stride = attrib['colstride']
         assert attr.offset + (attr.row_length-1) * attr.row_stride + (attr.col_length-1) * attr.col_stride < v.block.length, \
             'Attribute not allowed. Will allow access beyond the space of the block.'
-        fm[v.type](v.view,attr)
+        fm[v.type](v.vsip,attr)
     elif 'vview' in v.type:
         assert isinstance(attrib,dict),'Attribute is a dictionary object in pyJvsip'
         assert len(attrib) == 3,'Vector view attributes have three key value pairs'
@@ -215,7 +215,7 @@ def vsipPutAttrib(v,attrib):
         attr.stride = attrib['stride']
         assert attr.offset + (attr.length-1) * attr.stride < v.block.length, \
             'Attribute not allowed. Will allow access beyond the space of the block.'
-        fv[v.type](v.view,attr)
+        fv[v.type](v.vsip,attr)
     else:
         assert False,'vsipPutAttrib does not support type <:%s:> at this time'%v.stype
     return v
@@ -496,7 +496,7 @@ class Block (object):
                 'cmview_f':vsip_mgetblock_f,'cmview_d':vsip_mgetblock_d}
             assert db.has_key(V.type),'View of type <:%s:> not supported for realview.'%V.type
             t=db[V.type] #type of derived block
-            v=rv[V.type](V.view) #get real vsip view
+            v=rv[V.type](V.vsip) #get real vsip view
             b=gb[V.type](v) #get derived (vsip) block from real (vsip) view
             B=V.block
             l=B.length
@@ -512,7 +512,7 @@ class Block (object):
                 'cmview_f':vsip_mgetblock_f,'cmview_d':vsip_mgetblock_d}
             assert db.has_key(V.type),'View of type <:%s:> not supported for imagview.'%V.type
             t=db[V.type] #type of derived block
-            v=rv[V.type](V.view) #get imag vsip view
+            v=rv[V.type](V.vsip) #get imag vsip view
             b=gb[V.type](v) #get derived (vsip) block from imag (vsip) view
             B=V.block
             l=B.length
@@ -569,29 +569,29 @@ class Block (object):
             return neg(self,self)
         @property
         def list(self):
-            f = {'cvview_f':'cvcopyToList_f(self.view)',
-                 'cvview_d':'cvcopyToList_d(self.view)',
-                 'vview_f':'vcopyToList_f(self.view)',
-                 'vview_d':'vcopyToList_d(self.view)',
-                 'vview_i':'vcopyToList_i(self.view)',
-                 'vview_si':'vcopyToList_si(self.view)',
-                 'vview_uc':'vcopyTolist_uc(self.view)',
-                 'vview_vi':'vcopyToList_vi(self.view)',
-                 'vview_mi':'vcopyToList_mi(self.view)'}
-            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.view)',
-                      'mview_f':'mcopyToListByRow_f(self.view)',
-                      'cmview_d':'cmcopyToListByRow_d(self.view)',
-                      'mview_d':'mcopyToListByRow_d(self.view)',
-                      'mview_i':'mcopyToListByRow_i(self.view)',
-                      'mview_si':'mcopyToListByRow_si(self.view)',
-                      'mview_uc':'mcopyToListByRow_uc(self.view)'}
-            fByCol = {'cmview_f':'cmcopyToListByCol_f(self.view)',
-                      'mview_f':'mcopyToListByCol_f(self.view)',
-                      'cmview_d':'cmcopyToListByCol_d(self.view)',
-                      'mview_d':'mcopyToListByCol_d(self.view)',
-                      'mview_i':'mcopyToListByCol_i(self.view)',
-                      'mview_si':'mcopyToListByCol_si(self.view)',
-                      'mview_uc':'mcopyToListByCol_uc(self.view)'}
+            f = {'cvview_f':'cvcopyToList_f(self.vsip)',
+                 'cvview_d':'cvcopyToList_d(self.vsip)',
+                 'vview_f':'vcopyToList_f(self.vsip)',
+                 'vview_d':'vcopyToList_d(self.vsip)',
+                 'vview_i':'vcopyToList_i(self.vsip)',
+                 'vview_si':'vcopyToList_si(self.vsip)',
+                 'vview_uc':'vcopyTolist_uc(self.vsip)',
+                 'vview_vi':'vcopyToList_vi(self.vsip)',
+                 'vview_mi':'vcopyToList_mi(self.vsip)'}
+            fByRow = {'cmview_f':'cmcopyToListByRow_f(self.vsip)',
+                      'mview_f':'mcopyToListByRow_f(self.vsip)',
+                      'cmview_d':'cmcopyToListByRow_d(self.vsip)',
+                      'mview_d':'mcopyToListByRow_d(self.vsip)',
+                      'mview_i':'mcopyToListByRow_i(self.vsip)',
+                      'mview_si':'mcopyToListByRow_si(self.vsip)',
+                      'mview_uc':'mcopyToListByRow_uc(self.vsip)'}
+            fByCol = {'cmview_f':'cmcopyToListByCol_f(self.vsip)',
+                      'mview_f':'mcopyToListByCol_f(self.vsip)',
+                      'cmview_d':'cmcopyToListByCol_d(self.vsip)',
+                      'mview_d':'mcopyToListByCol_d(self.vsip)',
+                      'mview_i':'mcopyToListByCol_i(self.vsip)',
+                      'mview_si':'mcopyToListByCol_si(self.vsip)',
+                      'mview_uc':'mcopyToListByCol_uc(self.vsip)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             elif 'COL' in self.major and fByCol.has_key(self.type):
@@ -643,7 +643,7 @@ class Block (object):
                         assert aIndex[0]>=0 and aIndex[1] >=0,'In get function; indices mut be an integer >= 0 for matrix view'
                         t += 'tuple'
                 assert gSel.has_key(t),'Type <:%s:> not supported for __getitem__.'%s#should not get here
-                i=aIndex; a=aView.view
+                i=aIndex; a=aView.vsip
                 return eval(gSel[t])
             def scalarVal(val):
                 if 'cscalar' in vsipGetType(val)[1]:
@@ -698,7 +698,7 @@ class Block (object):
                         'vview_bl':vsip_vput_bl,
                         'vview_mi':vsip_vput_mi}
                 t=aView.type
-                a=aView.view
+                a=aView.vsip
                 x=vsipScalar(t,aValue)
                 return pSel[t](a,i,x)
             def vsipMPut(aView,r,c,aValue):
@@ -711,7 +711,7 @@ class Block (object):
                         'mview_uc':vsip_mput_uc,
                         'mview_bl':vsip_mput_bl}
                 t=aView.type
-                a=aView.view
+                a=aView.vsip
                 x=vsipScalar(t,aValue)
                 return pSel[t](a,r,c,x)
             #
@@ -935,7 +935,7 @@ class Block (object):
                'vview_uc':vsip_vcloneview_uc,
                'vview_vi':vsip_vcloneview_vi}
             assert f.has_key(self.type),'Type <:%s:> not supported for cloneview. Implementation Error. Should not be here.'%self.type
-            v = f[self.type](self.view)
+            v = f[self.type](self.vsip)
             b=self.block
             return self.__newView(v,b)
         @property
@@ -1115,7 +1115,10 @@ class Block (object):
         def putattrib(self,attrib):
             vsipPutAttrib(self,attrib)
         @property
-        def view(self):
+        def view(self): # Deprecated. May be removed in the future
+            return self.__vsipView
+        @property
+        def vsip(self):
             return self.__vsipView
         @property
         def compact(self):
@@ -1146,7 +1149,7 @@ class Block (object):
                'mview_f': vsip_mcolview_f,
                'mview_bl': vsip_mcolview_bl}
             assert f.has_key(self.type),'Type <:%s:> not a valid type for col view. Implementation Error. Should not be here.'%t
-            v=f[self.type](self.view,j)
+            v=f[self.type](self.vsip,j)
             return self.__newView(v,self.block)
         def rowview(self,i):
             assert 'mview' in self.type,'Column view function only works on matrices.'
@@ -1159,7 +1162,7 @@ class Block (object):
                'mview_f': vsip_mrowview_f,
                'mview_bl': vsip_mrowview_bl}
             assert f.has_key(self.type),'Type <:%s:> not a valid type for row view. Implementation Error. Should not be here.'%t
-            v=f[self.type](self.view,i)
+            v=f[self.type](self.vsip,i)
             return self.__newView(v,self.block)
         def diagview(self,i):
             assert 'mview' in self.type,'Diagonal view method only works on views of shape matrix'
@@ -1173,7 +1176,7 @@ class Block (object):
                  'mview_bl': vsip_mdiagview_bl,
                  'mview_f': vsip_mdiagview_f}
             assert f.has_key(self.type),'Should not be here. Implementation error'
-            v = f[self.type](self.view,i)
+            v = f[self.type](self.vsip,i)
             return self.__newView(v,self.block)
         @property
         def transview(self):
@@ -1187,7 +1190,7 @@ class Block (object):
                'mview_f': vsip_mtransview_f}
             t=self.type
             assert f.has_key(t),'Type <:%s:> not a valid type for trans view.'%t
-            return self.__newView(f[t](self.view),self.block)
+            return self.__newView(f[t](self.vsip),self.block)
         @property
         def realview(self):
             v=self.__realview(self)
@@ -1238,7 +1241,7 @@ class Block (object):
                'mview_bl':vsip_mgetoffset_bl,
                'vview_bl':vsip_vgetoffset_bl}
             assert f.has_key(self.type),'View of type %s not supported. Implementation error. Should not be here'%self.type
-            return int(f[self.type](self.view))
+            return int(f[self.type](self.vsip))
         def putoffset(self,o):
             f={'vview_f':vsip_vputoffset_f,
                'mview_f':vsip_mputoffset_f,
@@ -1262,7 +1265,7 @@ class Block (object):
             assert isinstance(o,int) or isinstance(o,long), 'Offsets are integers'
             assert o >=0,'Offsets are >=0'
             assert o < self.block.length,'Offset off the end of the block'
-            f[self.type](self.view,int(o))
+            f[self.type](self.vsip,int(o))
             return self
         @property
         def length(self):
@@ -1277,7 +1280,7 @@ class Block (object):
                'cvview_d':vsip_cvgetlength_d,
                'vview_mi':vsip_vgetlength_mi }
             assert f.has_key(self.type),'View of type %s not a vector view'%self.type
-            return int(f[self.type](self.view))
+            return int(f[self.type](self.vsip))
         def putlength(self,l):
             f={'vview_f':vsip_vputlength_f,
                'vview_d':vsip_vputlength_d,
@@ -1293,7 +1296,7 @@ class Block (object):
             assert isinstance(l,long) or isinstance(l,int),'Length is a positive integer'
             assert l > 1,'Length is a positive (>1) integer'
             assert (l-1) * self.stride + self.offset < self.block.length, 'Length to long. Exceeds block size'
-            f[self.type](self.view,l)
+            f[self.type](self.vsip,l)
             return self
         @property
         def stride(self):
@@ -1309,7 +1312,7 @@ class Block (object):
                'vview_mi':vsip_vgetstride_mi }
             assert 'vview' in self.type,'Method stride only works on views of shape vector.'
             assert f.has_key(self.type),'No Key for stride. Implementation error. Should not be here'
-            return int(f[self.type](self.view))
+            return int(f[self.type](self.vsip))
         def putstride(self,stride):
             f={'vview_f':vsip_vputstride_f,
                'vview_d':vsip_vputstride_d,
@@ -1325,7 +1328,7 @@ class Block (object):
             assert f.has_key(self.type),'No Key for putstride. Implementation error. Should not be here'
             assert isinstance(stride,int) or isinstance(stride,long),'Stride is an integer'
             assert (int(stride) * (self.length-1) + self.offset) < self.block.length,'Stride will cause view to exceed block data space'
-            f[self.type](self.view,int(stride))
+            f[self.type](self.vsip,int(stride))
             return self
         @property
         def rowlength(self):
@@ -1400,7 +1403,7 @@ class Block (object):
             return self
         @property
         def blackman(self):
-            t=vsipGetType(self.view)[1]
+            t=vsipGetType(self.vsip)[1]
             wSel={'vview_f':'blackman_f',
                   'vview_d':'blackman_d'}
             assert wSel.has_key(t),'View of type <:%s:> does not support blackman.'%self.type
@@ -1408,7 +1411,7 @@ class Block (object):
             return self
         @property
         def hanning(self):
-            t=vsipGetType(self.view)[1]
+            t=vsipGetType(self.vsip)[1]
             wSel={'vview_f':'hanning_f',
                'vview_d':'hanning_d'}
             assert wSel.has_key(t),'View of type <:%s:> does not support hanning.'%self.type
@@ -1615,12 +1618,12 @@ class Block (object):
                'vview_bl':vsip_vsumval_bl}
             assert f.has_key(self.type), 'Type <:%s:> not recognized for sumval'%self.type
             if 'cmview' in self.type or 'cvview' in self.type:
-                x=f[self.type](self.view)
+                x=f[self.type](self.vsip)
                 return complex(x.r,x.i)
             elif '_f' in self.type or '_d' in self.type:
-                return f[self.type](self.view)
+                return f[self.type](self.vsip)
             else:
-                return int(f[self.type](self.view))
+                return int(f[self.type](self.vsip))
         @property
         def sumsqval(self):
             """ returns a scalar
@@ -1628,7 +1631,7 @@ class Block (object):
             f={'mview_d':vsip_msumsqval_d, 'vview_d':vsip_vsumsqval_d,
                 'mview_f':vsip_msumsqval_f, 'vview_f':vsip_vsumsqval_f}
             assert f.has_key(self.type),'Type <:%s:> not recognized for sumsqval'%self.type
-            return f[self.type](self.view)
+            return f[self.type](self.vsip)
 
         # ### Binary
         # add, mull, div, sub incorporated into python built in __add__, __div__, __sub__, etc.
@@ -1658,7 +1661,7 @@ class Block (object):
                'cvview_f':vsip_cvmeansqval_f,'mview_d':vsip_mmeansqval_d,'vview_d':vsip_vmeansqval_d,
                'mview_f':vsip_mmeansqval_f,'vview_f':vsip_vmeansqval_f}
             assert f.has_key(self.type), 'Type <:%s:> not recognized for meansqval'%self.type
-            return f[self.type](self.view)
+            return f[self.type](self.vsip)
         @property
         def meanval(self):
             """ returns scalar value
@@ -1667,7 +1670,7 @@ class Block (object):
                'cvview_f':vsip_cvmeanval_f,'mview_d':vsip_mmeanval_d,'vview_d':vsip_vmeanval_d,
                'mview_f':vsip_mmeanval_f,'vview_f':vsip_vmeanval_f}
             assert f.has_key(self.type), 'Type <:%s:> not recognized for meanval'%self.type
-            return f[self.type](self.view)
+            return f[self.type](self.vsip)
 
         #logical operations
         @property
@@ -1676,7 +1679,7 @@ class Block (object):
                'vview_bl':vsip_valltrue_bl}
             t=self.type
             if f.has_key(t):
-                return 1 == f[t](self.view)
+                return 1 == f[t](self.vsip)
             else:
                 print('Type ' + t + ' not a defined type for alltrue')
         @property
@@ -1685,7 +1688,7 @@ class Block (object):
                'vview_bl':vsip_vanytrue_bl}
             t=self.type
             if f.has_key(t):
-                return 1 == f[t](self.view)
+                return 1 == f[t](self.vsip)
             else:
                 print('View type must be boolean for alltrue')
         def leq(self,other):
@@ -1723,10 +1726,10 @@ class Block (object):
             fs={'vview_fscalar':vsip_svleq_f,
                 'vview_dscalar':vsip_svleq_d}
             if f.has_key(t):
-                f[t](self.view,other.view,out.view)
+                f[t](self.vsip,other.vsip,out.vsip)
                 return out
             elif fs.has_key(t):
-                fs[t](other,self.view,out.view)
+                fs[t](other,self.vsip,out.vsip)
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for leq')
@@ -1772,7 +1775,7 @@ class Block (object):
                'vview_sivview_si':vsip_vlge_si,
                'vview_ucvview_uc':vsip_vlge_uc}
             if f.has_key(t):
-                f[t](self.view,other.view,out.view)
+                f[t](self.vsip,other.vsip,out.vsip)
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lge')
@@ -1818,7 +1821,7 @@ class Block (object):
                'vview_sivview_si':vsip_vlgt_si,
                'vview_ucvview_uc':vsip_vlgt_uc}
             if f.has_key(t):
-                f[t](self.view,other.view,out.view)
+                f[t](self.vsip,other.vsip,out.vsip)
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lgt')
@@ -1864,7 +1867,7 @@ class Block (object):
                'vview_ucvview_uc':vsip_vlle_uc}
             t=self.type+other.type
             if f.has_key(t):
-                f[t](self.view,other.view,out.view)
+                f[t](self.vsip,other.vsip,out.vsip)
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lle')
@@ -1910,7 +1913,7 @@ class Block (object):
                'vview_sivview_si':vsip_vllt_si,
                'vview_ucvview_uc':vsip_vllt_uc}
             if f.has_key(t):
-                f[t](self.view,other.view,out.view)
+                f[t](self.vsip,other.vsip,out.vsip)
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for llt')
@@ -1940,7 +1943,7 @@ class Block (object):
                'vview_ucvview_uc':vsip_vlne_uc}
             t=self.type+other.type
             if f.has_key(t):
-                f[t](self.view,other.view,out.view)
+                f[t](self.vsip,other.vsip,out.vsip)
                 return out
             else:
                 print('Argument type <:'+t+':> not recognized for lne')
@@ -1958,7 +1961,7 @@ class Block (object):
                 return
             if self.anytrue:
                 f={'mview_bl':vsip_mindexbool,'vview_bl':vsip_vindexbool}
-                f[self.type](self.view,out.view)
+                f[self.type](self.vsip,out.vsip)
                 return out
             else:
                 print('Method indexbool should only be called if there is at least one true entry')
@@ -1983,15 +1986,15 @@ class Block (object):
             """
             This method returns the index of the first maximum value found.
             """
-            f={'mview_d':'vsip_mmaxval_d(self.view,idx)',
-              'vview_d':'vsip_vmaxval_d(self.view,idx)',
-              'mview_f':'vsip_mmaxval_f(self.view,idx)',
-              'vview_f':'vsip_vmaxval_f(self.view,idx)',
-              'mview_i':'vsip_mmaxval_i(self.view,idx)',
-              'vview_i':'vsip_vmaxval_i(self.view,idx)',
-              'mview_si':'vsip_mmaxval_si(self.view,idx)',
-              'vview_si':'vsip_vmaxval_si(self.view,idx)',
-              'vview_vi':'vsip_vmaxval_vi(self.view.idx)'}
+            f={'mview_d':'vsip_mmaxval_d(self.vsip,idx)',
+              'vview_d':'vsip_vmaxval_d(self.vsip,idx)',
+              'mview_f':'vsip_mmaxval_f(self.vsip,idx)',
+              'vview_f':'vsip_vmaxval_f(self.vsip,idx)',
+              'mview_i':'vsip_mmaxval_i(self.vsip,idx)',
+              'vview_i':'vsip_vmaxval_i(self.vsip,idx)',
+              'mview_si':'vsip_mmaxval_si(self.vsip,idx)',
+              'vview_si':'vsip_vmaxval_si(self.vsip,idx)',
+              'vview_vi':'vsip_vmaxval_vi(self.vsip.idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -2011,15 +2014,15 @@ class Block (object):
             """
             This method returns the maximum value found.
             """
-            f={'mview_d':'vsip_mmaxval_d(self.view,None)',
-              'vview_d':'vsip_vmaxval_d(self.view,None)',
-              'mview_f':'vsip_mmaxval_f(self.view,None)',
-              'vview_f':'vsip_vmaxval_f(self.view,None)',
-              'mview_i':'vsip_mmaxval_i(self.view,None)',
-              'vview_i':'vsip_vmaxval_i(self.view,None)',
-              'mview_si':'vsip_mmaxval_si(self.view,None)',
-              'vview_si':'vsip_vmaxval_si(self.view,None)',
-              'vview_vi':'vsip_vmaxval_vi(self.view,None)'}
+            f={'mview_d':'vsip_mmaxval_d(self.vsip,None)',
+              'vview_d':'vsip_vmaxval_d(self.vsip,None)',
+              'mview_f':'vsip_mmaxval_f(self.vsip,None)',
+              'vview_f':'vsip_vmaxval_f(self.vsip,None)',
+              'mview_i':'vsip_mmaxval_i(self.vsip,None)',
+              'vview_i':'vsip_vmaxval_i(self.vsip,None)',
+              'mview_si':'vsip_mmaxval_si(self.vsip,None)',
+              'vview_si':'vsip_vmaxval_si(self.vsip,None)',
+              'vview_vi':'vsip_vmaxval_vi(self.vsip,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -2030,10 +2033,10 @@ class Block (object):
             """
             This method returns the index of the first maximum value found.
             """
-            f={'mview_d':'vsip_mmaxmgval_d(self.view,idx)',
-               'vview_d':'vsip_vmaxmgval_d(self.view,idx)',
-               'mview_f':'vsip_mmaxmgval_f(self.view,idx)',
-               'vview_f':'vsip_vmaxmgval_f(self.view,idx)'}
+            f={'mview_d':'vsip_mmaxmgval_d(self.vsip,idx)',
+               'vview_d':'vsip_vmaxmgval_d(self.vsip,idx)',
+               'mview_f':'vsip_mmaxmgval_f(self.vsip,idx)',
+               'vview_f':'vsip_vmaxmgval_f(self.vsip,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -2053,10 +2056,10 @@ class Block (object):
             """
             This method returns the first maximum value found.
             """
-            f={'mview_d':'vsip_mmaxmgval_d(self.view,None)',
-               'vview_d':'vsip_vmaxmgval_d(self.view,None)',
-               'mview_f':'vsip_mmaxmgval_f(self.view,None)',
-               'vview_f':'vsip_vmaxmgval_f(self.view,None)'}
+            f={'mview_d':'vsip_mmaxmgval_d(self.vsip,None)',
+               'vview_d':'vsip_vmaxmgval_d(self.vsip,None)',
+               'mview_f':'vsip_mmaxmgval_f(self.vsip,None)',
+               'vview_f':'vsip_vmaxmgval_f(self.vsip,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -2068,10 +2071,10 @@ class Block (object):
             This method returns the index of the first maximum complex magnitude squared
             value found.
             """
-            f={'cmview_d':'vsip_mcmaxmgsqval_d(self.view,idx)',
-               'cvview_d':'vsip_vcmaxmgsqval_d(self.view,idx)',
-               'cmview_f':'vsip_mcmaxmgsqval_f(self.view,idx)',
-               'cvview_f':'vsip_vcmaxmgsqval_f(self.view,idx)'}
+            f={'cmview_d':'vsip_mcmaxmgsqval_d(self.vsip,idx)',
+               'cvview_d':'vsip_vcmaxmgsqval_d(self.vsip,idx)',
+               'cmview_f':'vsip_mcmaxmgsqval_f(self.vsip,idx)',
+               'cvview_f':'vsip_vcmaxmgsqval_f(self.vsip,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -2092,10 +2095,10 @@ class Block (object):
             This method returns the  maximum complex magnitude squared
             value found..
             """
-            f={'cmview_d':'vsip_mcmaxmgsqval_d(self.view,None)',
-               'cvview_d':'vsip_vcmaxmgsqval_d(self.view,None)',
-               'cmview_f':'vsip_mcmaxmgsqval_f(self.view,None)',
-               'cvview_f':'vsip_vcmaxmgsqval_f(self.view,None)'}
+            f={'cmview_d':'vsip_mcmaxmgsqval_d(self.vsip,None)',
+               'cvview_d':'vsip_vcmaxmgsqval_d(self.vsip,None)',
+               'cmview_f':'vsip_mcmaxmgsqval_f(self.vsip,None)',
+               'cvview_f':'vsip_vcmaxmgsqval_f(self.vsip,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -2106,15 +2109,15 @@ class Block (object):
             """
             This method returns the index of the first minimum value found.
             """
-            f={'mview_d':'vsip_mminval_d(self.view,idx)',
-              'vview_d':'vsip_vminval_d(self.view,idx)',
-              'mview_f':'vsip_mminval_f(self.view,idx)',
-              'vview_f':'vsip_vminval_f(self.view,idx)',
-              'mview_i':'vsip_mminval_i(self.view,idx)',
-              'vview_i':'vsip_vminval_i(self.view,idx)',
-              'mview_si':'vsip_mminval_si(self.view,idx)',
-              'vview_si':'vsip_vminval_si(self.view,idx)',
-              'vview_vi':'vsip_vminval_vi(self.view,idx)'}
+            f={'mview_d':'vsip_mminval_d(self.vsip,idx)',
+              'vview_d':'vsip_vminval_d(self.vsip,idx)',
+              'mview_f':'vsip_mminval_f(self.vsip,idx)',
+              'vview_f':'vsip_vminval_f(self.vsip,idx)',
+              'mview_i':'vsip_mminval_i(self.vsip,idx)',
+              'vview_i':'vsip_vminval_i(self.vsip,idx)',
+              'mview_si':'vsip_mminval_si(self.vsip,idx)',
+              'vview_si':'vsip_vminval_si(self.vsip,idx)',
+              'vview_vi':'vsip_vminval_vi(self.vsip,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -2134,15 +2137,15 @@ class Block (object):
             """
             This method returns the minimum value found.
             """
-            f={'mview_d':'vsip_mminval_d(self.view,None)',
-              'vview_d':'vsip_vminval_d(self.view,None)',
-              'mview_f':'vsip_mminval_f(self.view,None)',
-              'vview_f':'vsip_vminval_f(self.view,None)',
-              'mview_i':'vsip_mminval_i(self.view,None)',
-              'vview_i':'vsip_vminval_i(self.view,None)',
-              'mview_si':'vsip_mminval_si(self.view,None)',
-              'vview_si':'vsip_vminval_si(self.view,None)',
-              'vview_vi':'vsip_vminval_vi(self.view,None)'}
+            f={'mview_d':'vsip_mminval_d(self.vsip,None)',
+              'vview_d':'vsip_vminval_d(self.vsip,None)',
+              'mview_f':'vsip_mminval_f(self.vsip,None)',
+              'vview_f':'vsip_vminval_f(self.vsip,None)',
+              'mview_i':'vsip_mminval_i(self.vsip,None)',
+              'vview_i':'vsip_vminval_i(self.vsip,None)',
+              'mview_si':'vsip_mminval_si(self.vsip,None)',
+              'vview_si':'vsip_vminval_si(self.vsip,None)',
+              'vview_vi':'vsip_vminval_vi(self.vsip,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -2153,10 +2156,10 @@ class Block (object):
             """
             This method returns the index of the first minimum value found.
             """
-            f={'mview_d':'vsip_mminmgval_d(self.view,idx)',
-               'vview_d':'vsip_vminmgval_d(self.view,idx)',
-               'mview_f':'vsip_mminmgval_f(self.view,idx)',
-               'vview_f':'vsip_vminmgval_f(self.view,idx)'}
+            f={'mview_d':'vsip_mminmgval_d(self.vsip,idx)',
+               'vview_d':'vsip_vminmgval_d(self.vsip,idx)',
+               'mview_f':'vsip_mminmgval_f(self.vsip,idx)',
+               'vview_f':'vsip_vminmgval_f(self.vsip,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -2176,10 +2179,10 @@ class Block (object):
             """
             This method returns the first minimum value found.
             """
-            f={'mview_d':'vsip_mminmgval_d(self.view,None)',
-               'vview_d':'vsip_vminmgval_d(self.view,None)',
-               'mview_f':'vsip_mminmgval_f(self.view,None)',
-               'vview_f':'vsip_vminmgval_f(self.view,None)'}
+            f={'mview_d':'vsip_mminmgval_d(self.vsip,None)',
+               'vview_d':'vsip_vminmgval_d(self.vsip,None)',
+               'mview_f':'vsip_mminmgval_f(self.vsip,None)',
+               'vview_f':'vsip_vminmgval_f(self.vsip,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -2191,10 +2194,10 @@ class Block (object):
             This method returns the index of the first minimum complex magnitude squared
             value found.
             """
-            f={'cmview_d':'vsip_mcminmgsqval_d(self.view,idx)',
-               'cvview_d':'vsip_vcminmgsqval_d(self.view,idx)',
-               'cmview_f':'vsip_mcminmgsqval_f(self.view,idx)',
-               'cvview_f':'vsip_vcminmgsqval_f(self.view,idx)'}
+            f={'cmview_d':'vsip_mcminmgsqval_d(self.vsip,idx)',
+               'cvview_d':'vsip_vcminmgsqval_d(self.vsip,idx)',
+               'cmview_f':'vsip_mcminmgsqval_f(self.vsip,idx)',
+               'cvview_f':'vsip_vcminmgsqval_f(self.vsip,idx)'}
             if f.has_key(self.type):
                 if 'mview' in self.type:
                     idx=vsip_scalar_mi()
@@ -2215,10 +2218,10 @@ class Block (object):
             This method returns the  minimum complex magnitude squared
             value found..
             """
-            f={'cmview_d':'vsip_mcminmgsqval_d(self.view,None)',
-               'cvview_d':'vsip_vcminmgsqval_d(self.view,None)',
-               'cmview_f':'vsip_mcminmgsqval_f(self.view,None)',
-               'cvview_f':'vsip_vcminmgsqval_f(self.view,None)'}
+            f={'cmview_d':'vsip_mcminmgsqval_d(self.vsip,None)',
+               'cvview_d':'vsip_vcminmgsqval_d(self.vsip,None)',
+               'cmview_f':'vsip_mcminmgsqval_f(self.vsip,None)',
+               'cvview_f':'vsip_vcminmgsqval_f(self.vsip,None)'}
             if f.has_key(self.type):
                 return eval(f[self.type])
             else:
@@ -2237,7 +2240,7 @@ class Block (object):
             assert self.type in other.type
             assert self.type in sptd
             out=self.empty
-            f[self.type](self.view,other.view,out.view)
+            f[self.type](self.vsip,other.vsip,out.vsip)
             return out
         def bbnot(self,other):
             """
@@ -2250,7 +2253,7 @@ class Block (object):
             assert self.type in other.type
             assert self.type in sptd
             out=self.empty
-            f[self.type](self.view,other.view,out.view)
+            f[self.type](self.vsip,other.vsip,out.vsip)
             return out
         def bbor(self,other):
             """
@@ -2263,7 +2266,7 @@ class Block (object):
             assert self.type in other.type
             assert self.type in sptd
             out=self.empty
-            f[self.type](self.view,other.view,out.view)
+            f[self.type](self.vsip,other.vsip,out.vsip)
             return out
         def bbxor(self,other):
             """
@@ -2276,7 +2279,7 @@ class Block (object):
             assert self.type in other.type
             assert self.type in sptd
             out=self.empty
-            f[self.type](self.view,other.view,out.view)
+            f[self.type](self.vsip,other.vsip,out.vsip)
             return out
 
         # data generators
@@ -2291,7 +2294,7 @@ class Block (object):
             t=self.type
             assert f.has_key(t) or t in extended,'Type <:%s:> not support for ramp'
             if f.has_key(t):
-                f[t](start,increment,self.view)
+                f[t](start,increment,self.vsip)
             else:
                 self.fill(0)
                 tmp=self.realview
@@ -2341,7 +2344,7 @@ class Block (object):
                 fillList(self,aScalar)
             else:#must be some sort of scalar
                 val = vsipScalar(self.type,aScalar)
-                f[self.type](val,self.view)
+                f[self.type](val,self.vsip)
             return self
         def randn(self,seed):
             gen=Rand('PRNG',seed)
@@ -2904,7 +2907,7 @@ class Block (object):
                 'cvview_d':vsip_cvdot_d}
             assert f.has_key(self.type),'Type <:%s:> not supported for dot product.'%self.type
             assert self.type == other.type,'Input view types must agree for dot.'
-            retval=f[self.type](self.view,other.view)
+            retval=f[self.type](self.vsip,other.vsip)
             if 'cscalar' in repr(retval):
                 return complex(retval.r,retval.i)
             else:
@@ -2921,7 +2924,7 @@ class Block (object):
                 return
             if 'cvview' in self.type and 'cvview' in other.type:
                 t=self.type
-                retval = f[t](self.view,other.view)
+                retval = f[t](self.vsip,other.vsip)
                 if 'cscalar' in repr(retval):
                     return complex(retval.r,retval.i)
                 else:
@@ -2947,10 +2950,10 @@ class Block (object):
                 self.mcolview.permute(p,'ROW')
             elif len(major) == 1 and major[0] == 'COL':
                 assert p.length == self.rowlength,'In permute method index vector is not sized properly'
-                f[self.type](self.view,VSIP_COL,pc.view,self.view)
+                f[self.type](self.vsip,VSIP_COL,pc.vsip,self.vsip)
             else: #do by ROW
                 assert p.length == self.collength,'In permute method index vector is not sized properly'
-                f[self.type](self.view,VSIP_ROW,pc.view,self.view)
+                f[self.type](self.vsip,VSIP_ROW,pc.vsip,self.vsip)
             return self
         @property
         def permuteTranspose(self):
@@ -3017,9 +3020,9 @@ class Block (object):
             else:
                 idx = None
             if idx == None:
-                f[t](self.view,mode,dir,fill,idx)
+                f[t](self.vsip,mode,dir,fill,idx)
             else:
-                f[t](self.view,mode,dir,fill,idx.view)
+                f[t](self.vsip,mode,dir,fill,idx.vsip)
             return idx
         def sort(self,*vals):
             if len(vals) > 0:
@@ -3564,7 +3567,7 @@ class Rand(object):
              'mview_d':vsip_mrandn_d,
              'mview_f':vsip_mrandn_f}
         assert f.has_key(t),'Type <:%s:> not a supported type for method randn.'%t
-        f[t](self.rng,a.view)
+        f[t](self.rng,a.vsip)
         return a
     def randu(self,a):
         assert 'pyJvsip.__View' in repr(a),'Uniform random method only works on pyJvsip views of precision float or double'
@@ -3578,7 +3581,7 @@ class Rand(object):
              'mview_d':vsip_mrandu_d,
              'mview_f':vsip_mrandu_f}
         assert f.has_key(t),'Type <:%s:> not a supported type for method randu.'%t
-        f[t](self.rng,a.view)
+        f[t](self.rng,a.vsip)
         return a
 # Signal Processing Classes
 # Not Implemented
@@ -3659,22 +3662,22 @@ class FFT(object):
                      'ccfftmop_d':vsip_fftm_destroy_d,
                      'rcfftmop_d':vsip_fftm_destroy_d,
                      'crfftmop_d':vsip_fftm_destroy_d}
-    fftFuncDict={'cvview_d':'vsip_ccfftip_d(self.vsip,inpt.view)',
-                 'cvview_f':'vsip_ccfftip_f(self.vsip,inpt.view)',
-                 'cvview_dcvview_d':'vsip_ccfftop_d(self.vsip,inpt.view,outpt.view)',
-                 'cvview_fcvview_f':'vsip_ccfftop_f(self.vsip,inpt.view,outpt.view)',
-                 'vview_dcvview_d':'vsip_rcfftop_d(self.vsip,inpt.view,outpt.view)',
-                 'vview_fcvview_f':'vsip_rcfftop_f(self.vsip,inpt.view,outpt.view)',
-                 'cvview_dvview_d':'vsip_crfftop_d(self.vsip,inpt.view,outpt.view)',
-                 'cvview_fvview_f':'vsip_crfftop_f(self.vsip,inpt.view,outpt.view)',
-                 'cmview_d':'vsip_ccfftmip_d(self.vsip,inpt.view)',
-                 'cmview_f':'vsip_ccfftmip_f(self.vsip,inpt.view)',
-                 'cmview_dcmview_d':'vsip_ccfftmop_d(self.vsip,inpt.view,outpt.view)',
-                 'cmview_fcmview_f':'vsip_ccfftmop_f(self.vsip,inpt.view,outpt.view)',
-                 'mview_dcmview_d':'vsip_rcfftmop_d(self.vsip,inpt.view,outpt.view)',
-                 'mview_fcmview_f':'vsip_rcfftmop_f(self.vsip,inpt.view,outpt.view)',
-                 'cmview_dmview_d':'vsip_crfftmop_d(self.vsip,inpt.view,outpt.view)',
-                 'cmview_fmview_f':'vsip_crfftmop_f(self.vsip,inpt.view,outpt.view)'}
+    fftFuncDict={'cvview_d':'vsip_ccfftip_d(self.vsip,inpt.vsip)',
+                 'cvview_f':'vsip_ccfftip_f(self.vsip,inpt.vsip)',
+                 'cvview_dcvview_d':'vsip_ccfftop_d(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cvview_fcvview_f':'vsip_ccfftop_f(self.vsip,inpt.vsip,outpt.vsip)',
+                 'vview_dcvview_d':'vsip_rcfftop_d(self.vsip,inpt.vsip,outpt.vsip)',
+                 'vview_fcvview_f':'vsip_rcfftop_f(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cvview_dvview_d':'vsip_crfftop_d(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cvview_fvview_f':'vsip_crfftop_f(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cmview_d':'vsip_ccfftmip_d(self.vsip,inpt.vsip)',
+                 'cmview_f':'vsip_ccfftmip_f(self.vsip,inpt.vsip)',
+                 'cmview_dcmview_d':'vsip_ccfftmop_d(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cmview_fcmview_f':'vsip_ccfftmop_f(self.vsip,inpt.vsip,outpt.vsip)',
+                 'mview_dcmview_d':'vsip_rcfftmop_d(self.vsip,inpt.vsip,outpt.vsip)',
+                 'mview_fcmview_f':'vsip_rcfftmop_f(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cmview_dmview_d':'vsip_crfftmop_d(self.vsip,inpt.vsip,outpt.vsip)',
+                 'cmview_fmview_f':'vsip_crfftmop_f(self.vsip,inpt.vsip,outpt.vsip)'}
     def __init__(self,t,*args):
         if FFT.fftCreateDict.has_key(t):
             self.__jvsip = JVSIP()
@@ -3763,7 +3766,7 @@ class CONV(object):
         assert M <= dtaLength, 'The kernel length is to long for the data length'
         self.__jvsip = JVSIP()
         self.__type = t
-        self.__conv = f[t](h.view,CONV.symmetry[symm],dtaLength,dec,CONV.supportRegion[sup],ntimes,CONV.algHint[hint])
+        self.__conv = f[t](h.vsip,CONV.symmetry[symm],dtaLength,dec,CONV.supportRegion[sup],ntimes,CONV.algHint[hint])
         self.__kernel_len = int(M)
         self.__dtaLength = int(dtaLength)
         self.__decimation = int(dec)
@@ -3809,7 +3812,7 @@ class CONV(object):
         t=self.type+x.type+y.type
         assert f.has_key(t),'Type <:' + t + ':> not recognized by convolve method'
         assert y.length == self.out_len, 'Output vector length not equal to calculated output length'
-        f[t](self.vsip,x.view,y.view)
+        f[t](self.vsip,x.vsip,y.vsip)
         return y
 # vsip_dcorr1d_create_f
 # vsip_dcorr1d_destroy_f
@@ -3907,7 +3910,7 @@ class CORR(object):
             'Reference vector length not in correlate object'
         assert x.length == self.data_len, \
             'data vector length not in correlate object'
-        f[t](self.vsip,biasSelect[bias],ref.view,x.view,y.view)
+        f[t](self.vsip,biasSelect[bias],ref.vsip,x.vsip,y.vsip)
         return y
 # filter Class
 class FIR(object):
@@ -3971,7 +3974,7 @@ class FIR(object):
             state = stateType[args[4]]
         algHint=VSIP_ALG_TIME
         ntimes=0
-        filt=args[0].view
+        filt=args[0].vsip
         sym=symType[args[1]]
         N=args[2]
         D=args[3]
@@ -4010,7 +4013,7 @@ class FIR(object):
                   'rcfir_f':vsip_rcfirflt_f,'rcfir_d':vsip_rcfirflt_d}
         assert x.type == y.type, 'Input and output views must be the same type.'
         assert filtSptd[self.type] == x.type,'Filter type does not support input views'
-        self.__outLength = firflt[self.type](self.vsip,x.view,y.view)
+        self.__outLength = firflt[self.type](self.vsip,x.vsip,y.vsip)
         return y
     @property
     def reset(self):
@@ -4125,7 +4128,7 @@ class LU(object):
         assert m.type in LU.supported, 'Matrix not supported by LU'
         assert self.size == m.rowlength,\
                      'LU object of size %d but matrix of size %d'%(self.size,m.rowlength)
-        self.__singular=luDecompose[self.type](self.vsip,m.view)
+        self.__singular=luDecompose[self.type](self.vsip,m.vsip)
         self.__m['matrix'] = m
         return self
     def solve(self,opIn,inOut):
@@ -4169,7 +4172,7 @@ class LU(object):
                 print('LU object has no matrix associated with it')
                 return
             else:
-                luSol[self.type](self.vsip,opM,XB.view)
+                luSol[self.type](self.vsip,opM,XB.vsip)
                 return inOut
         else:
             print('Input matrix must be conformant with lu')
@@ -4248,7 +4251,7 @@ class CHOL(object):
         assert tMatrix[m.type] == self.type, 'Type <:'+m.type+':> not supported by CHOL object'
         assert m.rowlength == m.collength and m.rowlength == self.size,\
             'For chold object (decomposition) matrix must be square and of size '+repr(self.size)
-        cholDecompose[self.type](self.vsip,m.view)
+        cholDecompose[self.type](self.vsip,m.vsip)
         self.__m['matrix'] = m
         return self
     def solve(self,inOut):
@@ -4275,7 +4278,7 @@ class CHOL(object):
         assert tMatrix.has_key(a.type), 'Type <:'+inOut.type+':> not supported by CHOL solve'
         assert tMatrix[a.type] == self.type, 'Cholesky object does not match input view'
         assert self.__m['matrix'] != 0, 'Cholesky object not associated with a matrix'
-        cholSol[self.type](a.view)
+        cholSol[self.type](a.vsip)
         return inOut
 #QR
 class QR(object):
@@ -4359,7 +4362,7 @@ class QR(object):
                  'View of type <:%s:> not compliant with QR object of type <:%s:>'%(m.type,self.type)
         assert self.__collength==m.collength and self.__rowlength==m.rowlength, \
                  'Matrix to decompose and QR object are not the same size.'
-        qrDecompose[self.type](self.vsip,m.view)
+        qrDecompose[self.type](self.vsip,m.vsip)
         self.__m['matrix'] = m
         return self
     def prodQ(self,op,side,X):
@@ -4387,7 +4390,7 @@ class QR(object):
                 assert n == XM,'Matrix product Size Error in prodQ'
             else: #must be NTRANS
                 assert m == XM, 'Matrix product Size Error in prodQ'
-        qrProd[self.type](self.vsip,QR.qOp[op],QR.qSide[side],X.view)
+        qrProd[self.type](self.vsip,QR.qOp[op],QR.qSide[side],X.vsip)
         return X
     def solveR(self,op,alpha,XB):
         qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
@@ -4406,7 +4409,7 @@ class QR(object):
             sclr=alpha
         assert self.__rowlength == XB.rowlength,'Size error for solveR.'
         assert self.type == tSel[XB.type], 'The input view does not comply with QR object type'
-        qrSol[self.type](self.vsip,QR.qOp[op],sclr,XB.view)
+        qrSol[self.type](self.vsip,QR.qOp[op],sclr,XB.vsip)
         return XB
     def solve(self,prob,XB):
         qrSol={'qr_d':vsip_qrsol_d,'qr_f':vsip_qrsol_f,\
@@ -4421,7 +4424,7 @@ class QR(object):
             assert XB.collength == self.__rowlength, 'Size error for solve covariance problem'
         else: # must be LLS
             assert XB.collength == self.__collength, 'Size error for solve least square problem'
-        qrSol[self.type](self.vsip,QR.qProb[prob],XB.view)
+        qrSol[self.type](self.vsip,QR.qProb[prob],XB.vsip)
         return XB
 #Singular Value
 class SV(object):
@@ -4545,7 +4548,7 @@ class SV(object):
             s = sarg[0]
         assert 'pyJvsip.__View' in repr(s),'Input must be a pyJvsip view object.'
         if SV.svSel[self.type] in other.type and SV.svvSel[self.type] in s.type:
-            svdD[self.type](self.vsip,other.view,s.view)
+            svdD[self.type](self.vsip,other.vsip,s.vsip)
             self.__s = s.copy
             return s
         else:
@@ -4584,7 +4587,7 @@ class SV(object):
             assert isinstance(low,int) and isinstance(high,int),'Column indices must be integers'
             assert 'pyJvsip.__View' in repr(other),'Output must be pyJvsip view'
             assert other.type == SV.svSel[self.type],'SV object of type <:%s:> not compatible with output view of type <:%s:>'%(self.type,other.type)
-            svMatV[self.type](self.vsip,low,high,other.view)
+            svMatV[self.type](self.vsip,low,high,other.vsip)
             return other
     def matU(self,*args):
         """
@@ -4619,7 +4622,7 @@ class SV(object):
             assert isinstance(low,int) and isinstance(high,int),'Column indices must be integers'
             assert 'pyJvsip.__View' in repr(other),'Output must be pyJvsip view'
             assert other.type == SV.svSel[self.type],'SV object of type <:%s:> not compatible with output view of type <:%s:>'%(self.type,other.type)
-            svMatU[self.type](self.vsip,low,high,other.view)
+            svMatU[self.type](self.vsip,low,high,other.vsip)
             return other
     def prodV(self,opMat,opSide,inout):
         assert 'pyJvsip.__View' in repr(inout), 'The Input/Output argument must be a pyJvsip view'
@@ -4631,7 +4634,7 @@ class SV(object):
         f={'sv_f':vsip_svdprodv_f,'sv_d':vsip_svdprodv_d,'csv_f':vsip_csvdprodv_f,'csv_d':vsip_csvdprodv_d}
         m,n=sizeOut(self.sizeV,inout.size,opMat,opSide)
         out=inout.cloneview; out.putrowlength(n); out.putcollength(m);
-        f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
+        f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.vsip)
         return out
     def prodU(self,opMat,opSide,inout):
         assert 'pyJvsip.__View' in repr(inout), 'The Input/Output argument must be a pyJvsip view'
@@ -4643,7 +4646,7 @@ class SV(object):
         m,n=sizeOut(self.sizeU,inout.size,opMat,opSide)
         out=inout.cloneview; out.putrowlength(n); out.putcollength(m);
         f={'sv_f':vsip_svdprodu_f,'sv_d':vsip_svdprodu_d,'csv_f':vsip_csvdprodu_f,'csv_d':vsip_csvdprodu_d}
-        f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.view)
+        f[self.type](self.vsip,SV.matopSel[opMat],SV.sideSel[opSide],inout.vsip)
         return out
 class Spline(object):
     """
@@ -4665,10 +4668,10 @@ class Spline(object):
         del(self.__jvsip)
     def interpolate(self,*args):
         n=len(args)
-        f={'vview_f':'vsip_vinterp_spline_f(x0.view,y0.view,self.vsip,x.view,y.view)',\
-           'vview_d':'vsip_vinterp_spline_d(x0.view,y0.view,self.vsip,x.view,y.view)',\
-           'mview_f':'vsip_minterp_spline_f(x0.view,y0.view,self.vsip,dim,x.view,y.view)',\
-           'mview_d':'vsip_minterp_spline_d(x0.view,y0.view,self.vsip,dim,x.view,y.view)'}
+        f={'vview_f':'vsip_vinterp_spline_f(x0.vsip,y0.vsip,self.vsip,x.vsip,y.vsip)',\
+           'vview_d':'vsip_vinterp_spline_d(x0.vsip,y0.vsip,self.vsip,x.vsip,y.vsip)',\
+           'mview_f':'vsip_minterp_spline_f(x0.vsip,y0.vsip,self.vsip,dim,x.vsip,y.vsip)',\
+           'mview_d':'vsip_minterp_spline_d(x0.vsip,y0.vsip,self.vsip,dim,x.vsip,y.vsip)'}
         major={'ROW':VSIP_ROW,'COL':VSIP_COL,0:VSIP_ROW,1:VSIP_COL}
         assert len(args) >= 4 and len(args) < 6,'Argument length should be 4 or 5'
         x0=args[0];y0=args[1]; x=args[n-2]; y=args[n-1]

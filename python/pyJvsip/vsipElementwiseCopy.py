@@ -47,7 +47,7 @@ def copy(a,b):
     assert __isSizeCompatible(a,b),'Input and output for copy must be the same size'
     t = a.type+b.type
     assert f.has_key(t),'Type <:'+t+':> not recognizedfor copy'
-    f[t](a.view,b.view)
+    f[t](a.vsip,b.vsip)
     return b
 
  
