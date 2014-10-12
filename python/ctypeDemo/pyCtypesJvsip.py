@@ -41,6 +41,15 @@ class JVSIP (object):
         JVSIP.jinit -= 1
         if JVSIP.jinit == 0:
             vsipFinalize()
+def _tType(a):
+    if isinstance(a,complex):
+        return 'cscalar'
+    elif isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+        return 'scalar'
+    elif 'View' in repr(a):
+        return a.type
+    else:
+        return repr(a)
 def _nlength(b,e,s): #begin(start),end(stop),step(step)=>b,e,s; Slice Length
     d=int(e)-int(b)
     chk=d%int(s)
@@ -174,6 +183,30 @@ def _add(a,b,c):
     assert f.has_key(t), 'Type <:%s:> not recognized for add'%t
     f[t](a,b,c)
     return c
+def _sub(a,b,c):
+    f={ 'cvview_fvview_fcvview_f':lib.vsip_crvsub_f,
+        'cscalarcvview_fcvview_f':lib.vsip_csvsub_f,
+        'cvview_fcvview_fcvview_f':lib.vsip_cvsub_f,
+        'vview_fcvview_fcvview_f':lib.vsip_rcvsub_f,
+        'scalarcvview_fcvview_f':lib.vsip_rscvsub_f,
+        'scalarvview_fvview_f':lib.vsip_svsub_f,
+        'vview_fvview_fvview_f':lib.vsip_vsub_f, 
+        'scalarvview_ivview_i':lib.vsip_svsub_i,
+        'vview_ivview_ivview_i':lib.vsip_vsub_i,
+        'scalarvview_vivview_vi':lib.vsip_svsub_vi}
+    t=_tType(a)+_tType(b)+_tType(c)
+    assert f.has_key(t), 'Type <:%s:> not recognized for sub'%t
+    if 'cscalar' in t:
+        _sub(a.real,b.realview,c.realview)
+        _sub(a.imag,b.imagview,c.imagview)
+    elif 'scalar' in t:
+        if '_f' in t:
+            f[t](ctypes.c_float(a),ctypes.c_void_p(b.vsip),ctypes.c_void_p(c.vsip))
+        else:
+            f[t](ctypes.c_int(a),ctypes.c_void_p(b.vsip),ctypes.c_void_p(c.vsip))
+    else:
+        f[t](ctypes.c_void_p(a.vsip),ctypes.c_void_p(b.vsip),ctypes.c_void_p(c.vsip))
+    return c
 def _mul(a,b,c):
     """
     The mul function includes view+view muls and scalar+view muls.
@@ -289,6 +322,8 @@ class Block (object):
     @property
     def length(self):
         return self.__length
+    def __len__(self):
+        return self.length
     @property
     def vector(self):
         return self.bind(0,1,self.length)
@@ -367,6 +402,8 @@ class Block (object):
         @property
         def length(self):
             return self.attrib.length
+        def __len__(self):
+            return self.length
         @property
         def offset(self):
             return self.attrib.offset
@@ -478,3 +515,18 @@ class Block (object):
             return _mul(other,self,self.empty)
         def __rmul__(self,other): # other * self
             return _mul(other,self,self.empty)
+        def __isub__(self,other): # -=other
+            if '__View' in repr(other):
+                _sub(self,other,self)
+            else:
+                _add(-other,self,self)
+            return self
+        def __sub__(self,other):#self - other
+            retval=self.empty
+            if '__View' in repr(other):
+                return _sub(self,other,retval)
+            else:
+                return _add(-other,self,retval)
+        def __rsub__(self,other): #other - self
+            retval=self.empty
+            return _sub(other,self,retval)
