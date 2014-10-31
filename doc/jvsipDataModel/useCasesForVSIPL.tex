@@ -1,0 +1,30 @@
+\documentclass[11pt, oneside]{article}
+\usepackage{geometry} 
+\geometry{letterpaper} 
+\usepackage{graphicx}
+\usepackage{minted}
+\newcommand{\cvl}{\ttbf{C VSIPL}}
+\newcommand{\pyjv}{{\ttbf{pyJvsip}}}
+\newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
+\newcommand{\jv}{{\ttbf{JVSIP}}}
+
+
+\title{JVSIP Use Models}
+\author{Randall Judd}
+\begin{document}
+\maketitle
+ \section{Introduction}
+As I try to define the data model for \jv{} I find I need to consider the expected usage for a particular \ttbf{VSIPL} implementation.  Currently I am only considering two models. The first is the original primary model for \cvl{} and the second is the \pyjv{} model. 
+\\[6pt]
+The \cvl{} model was interested in a portable \ttbf{User} code base with high performance across multiple hardware platforms not only with variable vendors at a particular time but also across time as platforms improve and an embedded system is upgraded. The goal was to avoid vendor lock-in and improve code lifetime.
+\\[6pt]
+For \pyjv{} my primary goal is ease of use.  Although I consider \pyjv{} to be a \ttbf{VSIPL} implementation I want to create a platform for development of algorithms to be ported back to \cvl{} and for debugging of \cvl{} algorithms.  With this in mind I have maintained an interface that allows the \cvl{} programmer to call underlying C routines directly in python and to mix these routines with \pyjv{} code.  The \pyjv{} model expects one to extend python with a \cvl{} library.  Additional code is done within \pyjv{} which makes the \pyjv{} implementation object oriented and I have added some code to include some functionality not in \cvl{} but fundamentally \pyjv{} is a straightforward example of extending python.
+\\[6pt]
+So these two models seem to require some minor differences in the data model at the scalar interface. But, for the most part, they have identical data models since they are fundamentally based in \cvl{} code and the \cvl{} specification.
+\\[6pt]
+I think it would be useful to explore other use cases.  It has been suggested we might want to define a \ttbf{VSIPL} for python that uses only python baseline. What does this use case look like and what does the data model look like.
+\\[6pt]
+I am also interested in the use case for the current \ttbf{C++ VSIPL}. What is it for single processor version and for parallel version? There are different models for parallel programing.  How does the \ttbf{C++ VSIPL} fit into those models?
+\end{document} 
+
+

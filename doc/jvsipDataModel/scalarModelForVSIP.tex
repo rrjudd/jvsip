@@ -1,0 +1,26 @@
+\documentclass[11pt, oneside]{article}
+\usepackage{geometry} 
+\geometry{letterpaper} 
+\usepackage{graphicx}
+\usepackage{minted}
+\newcommand{\cvl}{\ttbf{C VSIPL}}
+\newcommand{\pyjv}{{\ttbf{pyJvsip}}}
+\newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
+\newcommand{\jv}{{\ttbf{JVSIP}}}
+
+
+\title{JVSIP Scalar Model}
+\author{Randall Judd}
+\begin{document}
+\maketitle
+ \section{Introduction}
+ Defining scalars in general is problematic because every language will have fundamental types and from language to language the fundamental types may vary. For instance baseline python has no unsigned type but C does. Many languages have defined a complex scalar but  C does not. 
+ \\[6pt]
+ Python's base line types are very limited but from the context of extending I still have the \cvl{} types available in the \ttbf{VSIP} objects (matrices, vectors, etc) and all the math done is done with the \cvl{} precisions. I convert everything to a python scalar at the interface but there are also other ways to do this.
+ \\[6pt]
+ Baseline types are only part of the story.  Defining scalar types using structures in C (such as matrix index, complex, tensor index) or perhaps Class definitions in C++ or Python needs to be generalized in some way.  
+ \\[6pt]
+ For the general case I plan to leave scalars in a state of \emph{not very well defined} for now with the caveat that when creating a Block object the \ttbf{block} creation infrastructure needs to know about the scalar in order to allocate the machine dependent memory space.  Keep in mind the information contained within the block is \ttbf{Vendor} dependent. Blocks don't necessarily store scalars as scalars.  The scalar only exists at the interface between the library and the \ttbf{User}.
+ \end{document} 
+
+
