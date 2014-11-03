@@ -65,7 +65,7 @@ def freqswap(a):
     Usage:
         freqswqp(a)
     Where:
-        a is a view of precision float or double and shape vector or float.
+        a is a view of precision float or double.
     Frequency swap is an in-place operation. For convenience the input/output view a is returned
     See VSIP specification for more details.
     """
