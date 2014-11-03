@@ -1,0 +1,10 @@
+\subsection{Scalar}
+Scalars exist at the interface between the library and the user. Operations on views may return a scalar value but the scalar is produced by the operation.  The storage of the scalar internal to the library may not be scalar values at all.  When a block is created it enables storage of some number of scalar values but it need not store actual scalars; only the information the scalars will hold.
+\\[6pt] 
+For \cvl{} all scalars are defined in the public header file \ttbf{vsip.h} and are strongly tied to the \cvl{} specification. Scalar functions are defined to allow one to work directly with these scalars in some cases.  In \pyjv{} I convert all scalars to a type that is consistent with normal \ttbf{python} data types and expect python functions to be used with these scalars. Under the covers, so to speak, I convert \pyjv{} scalars to \cvl{} scalars when calling underlying \cvl{} code.
+\\[6pt]
+As I consider the differences between how I have done scalars in \pyjv{} compared to how I do it in \cvl{} I see there are really two models.  One model is a baseline VSIP library, the other is a false VSIP library with direct ties to a real VSIP library. 
+\\[6pt]
+In \cvl{} we have baseline atomic scalars such as integers and floating point values, and we have the library defined scalars \ttbf{complex}, \ttbf{matrix index,} and \ttbf{tensor index}.  We describe these scalars in terms of depth and precision. Generally precision is understood to be some number of bits of precision and depth is understood to be a number indicating how many atomic pieces a library defined scalar can be decomposed into. For instance a \ttbf{matrix index} can be decomposed into a \ttbf{row index} and a \ttbf{column index} and a \ttbf{complex} can be decomposed into two real floats one associated with the imaginary part  and one associated with the real part of the \ttbf{complex}.
+\\[6pt]
+I would like to extend scalar to a more abstract definition to include UML class definitions for Vendor defined scalars. This would allow a vendor to support any scalar type that made sense for a VSIPL library for a particular platform.
