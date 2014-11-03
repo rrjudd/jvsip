@@ -1,0 +1,9 @@
+\section{VSIPL++ Comments and comparison to C VSIPL}
+In this section I will comment on the VSIPL++ data model as best as I understand it given my limited understanding of C++.  Comments and corrections from those more connected to the spec are welcome.
+\subsection{Domains}
+\ttbf{Domain}s are specific to VSIPL++ and not defined in \cvl{} at all; however they do not appear to interfere with the data model at all and can be implemented, at least functionaly, by \ttbf{User} code in \cvl{} if the user has a need. In \pyjv{} I have implemented the functionality in order to support python slice notation.  For \cvl{} they only have meaning in terms of the \vw{} since they supply an index set which depends upon an offset (index) into the view, strides through the respective view dimensions.
+\\[6pt]
+Everything you can do with a domain you can do with a \ttbf{bind} and a litte work; however with a \ttbf{bind} you can create any \vw{} on a \blk{} but I don't see any way to do this with \Domain{objects}.  You always seem to be a subset of data with is less than or equal to the current set of data even if the \blk{} contains a lot more data.
+Using a \ttbf{Domain} object se 
+\subsection{Blocks}
+\Blk{}s and \Blk{} objects are much more complicated in VSIPL++ than in \cvl{}.

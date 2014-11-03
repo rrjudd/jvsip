@@ -1,0 +1,19 @@
+\subsection{View}
+A view is basically an index set on a block. It provides an interface between a subset of data stored in a block and a function needing to calculate on that data.  In \cvl{} we say the blocks have a shape which is for \cvl{} a matrix, vector, or tensor but in general you should be able to define many types of views including for sparse data.
+\\[6pt]
+For \cvl{} a view must be bound to a block and the binding is immutable. I am not sure what the reason was to make the binding immutable in \cvl{} but in general some types of views may not bind to some types of blocks. \\ 
+For \cvl{} the primary view creation routine is the \\*
+\ttbf{\emph{ds}view\_\emph{p}* vsip\_\emph{ds}bind\_\emph{p}(length,hint)}\\*
+routine.
+\paragraph{Comment on view creation} The primary method to create a view is the bind operation. Necessary information to create a view (bind parameters) is the block object the view will index, and the shape information (offset, strides(s), lengths). For \cvl{} the \ttbf{bind} functionality is in the \vw sections for the particular \vw shape. In \pyjv{} I made \ttbf{bind} a method within the Block class. So to create a vector view instance you would do 
+\begin{minted}{python}
+aView=aBlock.bind(aOffset,aStride,aLength)
+\end{minted}
+or to create a matrix view instance you would do 
+\begin{minted}{python}
+aView=aBlock.bind(aOffset, aColStride, aColLength,aRowStride,aRowlength}
+ \end{minted}
+\paragraph{Comment on Sub View Types} Both C++ VSIPL and Mark Haymans data model seem to have some special View type for Subviews. I don't know what this is. For \cvl{} we have a subview function but it just returns a \vw{}. It has no special type. Ditto for rowview, colview, transview, etc.  They all just return \vw{}s. Perhaps somebody could explain what the subview type is about.  See, for instance, line 27 in figure 1\\*
+\begin{minted}{cpp}
+ vsip::Matrix<vsip::scalar_f>::subview_type  Auu(A(uu));
+ \end{minted}

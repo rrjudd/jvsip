@@ -1,0 +1,38 @@
+\subsection{Block}
+I consider the \blk{} to be an abstract notion of memory. It provides an interface between the library and  physical memory.  Although there is only one block class internally blocks need to account for details of how the data is accessed given the particular block create process. For \cvl{} the special blocks are \ttbf{derived} blocks and interface blocks.  We cover these below. 
+\paragraph{Comments} VSIPL ++ seems to have blocks but it is not clear to me exactly how or why they are used.  For instance they have dense blocks and direct data access blocks as well as regular blocks.  I have very poor understanding of the VSIPl++ methods here or how views are bound to these blocks.  Perhaps the block is bound to a view?  It seems like they create and destroy views with data in them already. Anyway some explanation from a knowledgable person would be helpful. I find the spec to be difficult to parse.   (end Comments)
+\\[6pt]
+Data are stored in block objects as scalar values in contiguous order. Where and how the block object stores the data in the physical machine is not defined. The block/machine interface is an implementation detail left to the library implementor.  One of the primary purposes of defining the \cvl{} specification was software portability. Whenever the user directly accesses any machine dependent resource the probability of producing non-portable code is increased. Defining the block object as an abstract notion of memory allows the VSIPL API to not be dependent on whatever machine you happen to be on.  
+\\[6pt]
+Blocks store scalars.  The scalar is not necessarily just a float value or an integer value.  The idea includes complex scalars, matrix or tensor indices, or any sort of value which is acted upon in an atomic fashion. Necessary information to create a block is the number and description of the scalar values the block will store.
+\\[6pt]
+For \cvl{} we define scalars using the naming convention defined in the specification. We have a  \ttbf{depth} parameter and a \ttbf{precision} parameter where depths are real, complex, matrix index and tensor index. Given the nature of C the depth and precision is set by the particular function call. For \pyjv{} I have decided to stay with the naming convention but I set the depth and precision with a string parameter with obvious connections to the \cvl{} function names. For instance to get a block of depth real and precision float in \cvl{} you do something like
+vsip\_block\_f *aBlock = vsip\_blockcreate\_f(aLength, aHint)
+and in \pyjv{} you do
+aBlock=Block('block\_f',aLength)
+\\[6pt]
+A way we might look at depth is how many individual pieces can you break a scalar into. For instance with real there is only one piece but with complex you have the real piece and the imaginary piece and with matrix index you have the column piece and the row piece. There are three pieces to a tensor index. 
+\subsubsection{Derived Block}
+So this brings us to the need for a derived block.  This is a little out of order because I talk about views below but most of you should be able to follow this. 
+\\[6pt]
+In \cvl{} we want to be able to have views of the real or imaginary portion of a complex view.  This means we need to attach the view to a real block and precision the same as the complex view.  We do this with something called a derived block.  A derived block accesses the same data space as the parent block but does not own the data space. The data can be modified or read but the parent block is responsible for freeing the underlying data storage memory when the block is no longer being used.
+\\[6pt]
+In \cvl{} we only have derived blocks for complex but in a general sense anytime you want to define a block for a particular scalar and you need functionality to allow division of the scalar into component parts at the level of a \vw{} you will need to support derived blocks for that if you need in-place functionality. 
+\paragraph{comment}
+You can define functionality to create a new \Blk{} object of the proper type and do a copy of the particular portion of the parent to the new object. For instance in \cvl{} we need a derived block for
+\begin{minted}{c}
+vsip_vview_d* vsip_vrealview_d(const vsip_cvview_d*)
+\end{minted}
+but for 
+\begin{minted}{c}
+void vsip_vreal_d(const vsip_cvview_d*, const vsip_vview_d*)
+\end{minted}
+no derived block is required.  
+\paragraph{Discussion}
+The only way to create a derived block in \cvl{} is with a \vw{} function such as \ttbf{vsip\_\emph{s}realview\_\emph{p}}. There probably should also be a block function to do this since the derived block is at the scope of the entire \blk{}, not just the scope of the \vw{}, but currently this is not the case.
+\subsubsection{Interface block}
+The user may want to create a block with a special relationship to physical machine memory for the purpose of efficient input and output of data between the library and the user program. In \cvl{} these type blocks look and act the same as any other type block but they have special functionality (block bind, rebind, admit and release) associated with them to allow control of the memory they are associated with, and who owns the right to use the memory at any particular time. For this article I will call these an interface blocks.  In \cvl{} these blocks are created with the \ttbf{vsip\_\emph{d}block\_bind\_\emph{p}} function. We talk more about interface blocks in the data interface section below.  Currently \pyjv{} has no counterpart for the interface block.
+\paragraph{Comment} In \cvl{} we have interface \blk{}s but we don't call them that.  This is a new term I started using for this document.
+\paragraph*{Comments and Questions VSIPL++}
+So in \cvl{} we have a \Blk{} class and the object created, depending upon the method used, may support an interface to user memory and it may support derived \blk{}s.  I know (from reading source code so I don't know for sure) that in VSIPL++ there is a \blk{} associated with direct data access and dense \blk{}s seem to be talked about. There may be other \Blk{} classes. How do these fit into the VSIPL++ data model and how do they compare with the way \cvl{} does it?
+%

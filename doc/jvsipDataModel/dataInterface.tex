@@ -1,0 +1,13 @@
+\subsection{Data Input and Output}
+There are three methods to move data in or out of VSIPL. There is a low performance method using a \vw{} interface to move scalars, a higher performance method to copy all data referenced by a \vw{} into \ttbf{User} allocated memory using a \vw{} interface, and a high performance method to access data in a \Blk{} object by associating the \blk{} with \ttbf{User} allocated memory.
+\subsubsection{Simple data input/output}
+In the \cvl{} specification you may move data into and out of the library a scalar value at a time using the \ttbf{get} and \ttbf{put} functions. These methods are fundamental, necessary, and not very efficient.
+\paragraph{In \pyjv{}} \ttbf{get} and \ttbf{put} are fully implemented and integrated with the python \ttbf{\_\_getitem\_\_} and \ttbf{\_\_setitem\_\_} functions
+\\[6pt]
+In the \cvl{} specification copy functions are defined which allow one to copy data referenced by a view directly into user specified memory buffers.  The \cvl{} specification specifies the layout of the buffers. Options are available to allow matrix transpose between the view and the user data.  Whether or not a corner turn happens is vendor dependent since the actual layout of the data within memory referenced by the block is vendor dependent; however it is reasonable to assume the \blk{} access pattern defined by the \vw{} is similar to the memory access pattern of the \ttbf{User} defined memory storage.
+\\[6pt]
+Although the interface copy functions may be implemented with the \ttbf{get/put} functionality I consider them to be primary functions because of the performance penalty one would pay using \ttbf{get/put} to implement them.
+\paragraph{Copy from and Copy to in \pyjv{}} are not implemented directly.  There is a add on module which extend python to use these functions along with some numpy functionality to allow one to copy from/to a VSIPL View and compatilbel Numpy object.
+\subsubsection{Low Level Bulk data access to/from the \blk{} object}
+In \cvl{} there is a \blk{} instantiation method which allows one to associate a \Blk{} object with \ttbf{User} allocated memory.  The actual interface to the implementation defined \Blk{} storage is not defined; however the opportunity is available for the \ttbf{Implementor} to support high performance data access between the \Blk{} object and the \ttbf{User} allocated  memory.
+%
