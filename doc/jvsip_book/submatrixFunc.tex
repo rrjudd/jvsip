@@ -1,6 +1,12 @@
-\afuncT{submatrix}{Create indexed sub-matrix.}{}
+\afuncT{submatrix}{Create indexed sub-matrix. The method \ttbf{submatrix} is done out-of-place by \ttbf{view}s of type matrix. It will either create a new child matrix by first dropping an indexed row and column from the parent matrix, or by copying selected rows and columns from a parent matrix to the child matrix. A new block space and matrix is created for the output by the method.}{}
 \\\cvsiplh
-Not supported in C VSIPL. 
+\\\hspace*{.06\textwidth}Not supported in C VSIPL. 
 \\\pyjvsiph
-\viewmthd{yes}{No}{No}{out=in.submatrix(cols,rows)}
-\apyfunc{No}{}
+\viewmthdu{yes}{No}{No}{out=in.submatrix(cols,rows)}{
+\item{\ttbf{cols} is an integer (index) indicating the column to drop or a \ttbf{view} of type \ttbf{vview\_vi} indicating the columns to keep}
+\item{\ttbf{out} is a new output matrix \ttbf{view} created by the method.}
+\item{\ttbf{in} is a \ttbf{view} of shape matrix.}
+\item{\ttbf{rows} is an integer (index) indicating the row to drop or a \ttbf{view} of type \ttbf{vview\_vi} indicating the rows to keep.}
+\item{Mixing an index vector with an integer index is not supported.}
+}
+\apyfunc{No}{NA}
