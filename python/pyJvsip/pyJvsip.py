@@ -347,43 +347,49 @@ class Block (object):
         return self.__vsipBlock
     # major for bind of matrix in attr is 'ROW', or 'COL'
     def bind(self,*args):
-        def vsipBind(blk,l):
-            f={ 'block_fvector':'vsip_vbind_f(blk,l[0],l[1],l[2])',
-                'block_dvector':'vsip_vbind_d(blk,l[0],l[1],l[2])',
-                'cblock_fvector':'vsip_cvbind_f(blk,l[0],l[1],l[2])',
-                'cblock_dvector':'vsip_cvbind_d(blk,l[0],l[1],l[2])',
-                'block_ivector':'vsip_vbind_i(blk,l[0],l[1],l[2])',
-                'block_sivector':'vsip_vbind_si(blk,l[0],l[1],l[2])',
-                'block_ucvector':'vsip_vbind_uc(blk,l[0],l[1],l[2])',
-                'block_vivector':'vsip_vbind_vi(blk,l[0],l[1],l[2])',
-                'block_mivector':'vsip_vbind_mi(blk,l[0],l[1],l[2])',
-                'block_blvector':'vsip_vbind_bl(blk,l[0],l[1],l[2])',
-                'block_fmatrix':'vsip_mbind_f(blk,l[0],l[1],l[2],l[3],l[4])',
-                'block_dmatrix':'vsip_mbind_d(blk,l[0],l[1],l[2],l[3],l[4])',
-                'cblock_fmatrix':'vsip_cmbind_f(blk,l[0],l[1],l[2],l[3],l[4])',
-                'cblock_dmatrix':'vsip_cmbind_d(blk,l[0],l[1],l[2],l[3],l[4])',
-                'block_imatrix':'vsip_mbind_i(blk,l[0],l[1],l[2],l[3],l[4])',
-                'block_simatrix':'vsip_mbind_si(blk,l[0],l[1],l[2],l[3],l[4])',
-                'block_ucmatrix':'vsip_mbind_uc(blk,l[0],l[1],l[2],l[3],l[4])',
-                'block_blmatrix':'vsip_mbind_bl(blk,l[0],l[1],l[2],l[3],l[4])'}
-            t=vsipGetType(blk)[1]
+        def vsipBind(blkType,blk,l):
+            f={ 'block_fvector':('vview_f','vsip_vbind_f(blk,l[0],l[1],l[2])'   ),
+                'block_dvector':('vview_d','vsip_vbind_d(blk,l[0],l[1],l[2])'   ),
+                'cblock_fvector':('cvview_f','vsip_cvbind_f(blk,l[0],l[1],l[2])'),
+                'cblock_dvector':('cvview_d','vsip_cvbind_d(blk,l[0],l[1],l[2])'),
+                'block_ivector':('vview_i','vsip_vbind_i(blk,l[0],l[1],l[2])'   ),
+                'block_sivector':('vview_si','vsip_vbind_si(blk,l[0],l[1],l[2])'),
+                'block_ucvector':('vview_uc','vsip_vbind_uc(blk,l[0],l[1],l[2])'),
+                'block_vivector':('vview_vi','vsip_vbind_vi(blk,l[0],l[1],l[2])'),
+                'block_mivector':('vview_mi','vsip_vbind_mi(blk,l[0],l[1],l[2])'),
+                'block_blvector':('vview_bl','vsip_vbind_bl(blk,l[0],l[1],l[2])'),
+                'block_fmatrix':('mview_f','vsip_mbind_f(blk,l[0],l[1],l[2],l[3],l[4])'   ),
+                'block_dmatrix':('mview_d','vsip_mbind_d(blk,l[0],l[1],l[2],l[3],l[4])'   ),
+                'cblock_fmatrix':('cmview_f','vsip_cmbind_f(blk,l[0],l[1],l[2],l[3],l[4])'),
+                'cblock_dmatrix':('cmview_d','vsip_cmbind_d(blk,l[0],l[1],l[2],l[3],l[4])'),
+                'block_imatrix':('mview_i','vsip_mbind_i(blk,l[0],l[1],l[2],l[3],l[4])'   ),
+                'block_simatrix':('mview_si','vsip_mbind_si(blk,l[0],l[1],l[2],l[3],l[4])'),
+                'block_ucmatrix':('mview_uc','vsip_mbind_uc(blk,l[0],l[1],l[2],l[3],l[4])'),
+                'block_blmatrix':('mview_bl','vsip_mbind_bl(blk,l[0],l[1],l[2],l[3],l[4])')}
             if len(l) == 3:
-                t+='vector'
+                t=blkType+'vector'
             elif len(l) == 5:
-                t+='matrix'
-            assert f.has_key(t),'Bind has not type <:%s:>.'%t
-            return eval(f[t])
+                t=blkType+'matrix'
+            assert f.has_key(t),'Bind has no type <:%s:>.'%t
+            vsipBlk=eval(f[t][1])
+            viewType=f[t][0]
+            return (viewType,vsipBlk)
+        bSel={'real_f':'block_f','real_d':'block_d','imag_f':'block_f','imag_d':'block_d'}
         if isinstance(args[0],tuple):
             arg=[item for item in args[0]]
         else:
             arg = args
-        assert len(arg) == 3 or len(arg) == 5,'Argument list <:%s:> to block bind must be 3 (for vectors) or 5 (for matrices) integers.'
+        assert len(arg) == 3 or len(arg) == 5,\
+                  'Argument list to block bind must be 3 (for vectors) or 5 (for matrices) integers.'
         if len(arg) is 3:
             attr=(arg[0],arg[1],arg[2])
         else:# len(arg) is 5:
             attr=(arg[0],arg[1],arg[2],arg[3],arg[4])
-        view = vsipBind(self.__vsipBlock,attr)
-        retval = self.__View(view,self)
+        bType=self.type
+        if bSel.has_key(self.type):
+            bType=bSel[self.type]
+        viewType,vsipView = vsipBind(bType,self.__vsipBlock,attr)
+        retval = self.__View(viewType,vsipView,self)
         retval.EW
         return retval
     @property
@@ -402,8 +408,8 @@ class Block (object):
     def supported(cls):
         return {'tBlock':Block.tBlock,'viewTypes':Block.__View.supported()}
     @property
-    def copy(self):
-        """ This makes a new block object identical to the calling block object.
+    def empty(self):
+        """ This makes a new block object of the same type and size of the calling block object.
             Data in the old block object is NOT copied to the  new block object.
         """
         return self.otherBlock(self.type,self.length)
@@ -441,11 +447,11 @@ class Block (object):
                  'vview_f','vview_d','cvview_f','cvview_d',
                  'vview_si','vview_i','vview_uc',
                  'vview_mi', 'vview_vi','vview_bl']
-        def __init__(self,view,block):
+        def __init__(self,vType,view,block):
             self.__jvsip = JVSIP()
             self.__vsipView = view
             self.__pyBlock   = block
-            self.__type      =vsipGetType(view)[1]
+            self.__type      = vType
             self.__major     ='EW'
             self.__parent = 0
         def __del__(self):
@@ -478,16 +484,18 @@ class Block (object):
         def supported(self):
             self.supported()
         @classmethod
-        def __newView(cls,v,b):
+        def __newView(cls,viewType,v,b):
             """
             Given a C VSIP view v which is associated with block b.block
             where b is a pyJvsip block create a new pyJvsip view encapsulating v.
             This method is used internally to create pyJvsip equivalents for
             subviews like rowview, colview, diagview, etc.
             """
-            return cls(v,b)
+            return cls(viewType,v,b)
         @classmethod
         def __realview(cls,V):
+            vSel={'cvview_f':'vview_f','cvview_d':'vview_d',
+                   'cmview_f':'mview_f','cmview_d':'mview_d'}
             db={'cvview_f':'real_f','cvview_d':'real_d',
                    'cmview_f':'real_f','cmview_d':'real_d'}
             rv={'cmview_d': vsip_mrealview_d,'cmview_f': vsip_mrealview_f,
@@ -501,9 +509,11 @@ class Block (object):
             B=V.block
             l=B.length
             newB = B.otherBlock(t,(b,l))# create new pyJvsip derived block
-            return cls(v,newB)#create new pyJvsip real view with associated derived block
+            return cls(vSel[V.type],v,newB)#create new pyJvsip real view with associated derived block
         @classmethod
         def __imagview(cls,V):
+            vSel={'cvview_f':'vview_f','cvview_d':'vview_d',
+                   'cmview_f':'mview_f','cmview_d':'mview_d'}
             db={'cvview_f':'imag_f','cvview_d':'imag_d',
                    'cmview_f':'imag_f','cmview_d':'imag_d'}
             rv={'cmview_d': vsip_mimagview_d,'cmview_f': vsip_mimagview_f,
@@ -517,7 +527,7 @@ class Block (object):
             B=V.block
             l=B.length
             newB = B.otherBlock(t,(b,l))# create new pyJvsip derived block
-            return cls(v,newB)
+            return cls(vSel[V.type],v,newB)#create new pyJvsip real view with associated derived block
         # Elementwise add, sub, mul, div
         def __iadd__(self,other): # self += other
             add(other,self,self)
@@ -631,15 +641,17 @@ class Block (object):
                       'mview_blscalar_mi':'vsip_mget_bl(a,i.r,i.c)'}
                 t=aView.type
                 if 'vview' in t:
-                    assert isinstance(aIndex,int) or isinstance(aIndex,float) and aIndex >=0,'In get function; index must be an integer >=0 for vector view'
+                    assert isinstance(aIndex,int) or isinstance(aIndex,float) and aIndex >=0,\
+                        'In get function; index must be an integer >=0 for vector view'
                     t += 'scalar'
                 else: # 'mview' in t
                     assert len(aIndex) == 2 and (isinstance(aIndex,tuple) or isinstance(aIndex,list)) or \
                        'scalar_mi' in vsipGetType(i)[1],'In get function; index not recognized for matrix.'
                     if '_mi' in vsipGetType(aIndex)[1]:
-                        t += 'scalar_im'
+                        t += 'scalar_mi'
                     else:
-                        assert isinstance(aIndex[0],int) and isinstance(aIndex[1],int),'In get function; indices mut be an integer >= 0 for matrix view'
+                        assert isinstance(aIndex[0],int) and isinstance(aIndex[1],int),\
+                            'In get function; indices mut be an integer >= 0 for matrix view'
                         assert aIndex[0]>=0 and aIndex[1] >=0,'In get function; indices mut be an integer >= 0 for matrix view'
                         t += 'tuple'
                 assert gSel.has_key(t),'Type <:%s:> not supported for __getitem__.'%s#should not get here
@@ -937,7 +949,7 @@ class Block (object):
             assert f.has_key(self.type),'Type <:%s:> not supported for cloneview. Implementation Error. Should not be here.'%self.type
             v = f[self.type](self.vsip)
             b=self.block
-            return self.__newView(v,b)
+            return self.__newView(self.type,v,b)
         @property
         def clone(self):
             return self.cloneview
@@ -1148,9 +1160,18 @@ class Block (object):
                'mview_d': vsip_mcolview_d,
                'mview_f': vsip_mcolview_f,
                'mview_bl': vsip_mcolview_bl}
+            viewSel={'mview_i': 'vview_i',
+               'mview_si': 'vview_si',
+               'mview_uc': 'vview_uc',
+               'cmview_d': 'cvview_d',
+               'cmview_f': 'cvview_f',
+               'mview_d': 'vview_d',
+               'mview_f': 'vview_f',
+               'mview_bl': 'vview_bl'}
             assert f.has_key(self.type),'Type <:%s:> not a valid type for col view. Implementation Error. Should not be here.'%t
             v=f[self.type](self.vsip,j)
-            return self.__newView(v,self.block)
+            t=viewSel[self.type]
+            return self.__newView(t,v,self.block)
         def rowview(self,i):
             assert 'mview' in self.type,'Column view function only works on matrices.'
             f={'mview_i': vsip_mrowview_i,
@@ -1161,9 +1182,18 @@ class Block (object):
                'mview_d': vsip_mrowview_d,
                'mview_f': vsip_mrowview_f,
                'mview_bl': vsip_mrowview_bl}
+            viewSel={'mview_i': 'vview_i',
+               'mview_si': 'vview_si',
+               'mview_uc': 'vview_uc',
+               'cmview_d': 'cvview_d',
+               'cmview_f': 'cvview_f',
+               'mview_d': 'vview_d',
+               'mview_f': 'vview_f',
+               'mview_bl': 'vview_bl'}
             assert f.has_key(self.type),'Type <:%s:> not a valid type for row view. Implementation Error. Should not be here.'%t
             v=f[self.type](self.vsip,i)
-            return self.__newView(v,self.block)
+            t=viewSel[self.type]
+            return self.__newView(t,v,self.block)
         def diagview(self,i):
             assert 'mview' in self.type,'Diagonal view method only works on views of shape matrix'
             assert isinstance(i,int) or isinstance(i,long),'The index value for diagview must be an integer'
@@ -1175,9 +1205,18 @@ class Block (object):
                  'mview_d': vsip_mdiagview_d,
                  'mview_bl': vsip_mdiagview_bl,
                  'mview_f': vsip_mdiagview_f}
+            viewSel={'mview_i': 'vview_i',
+               'mview_si': 'vview_si',
+               'mview_uc': 'vview_uc',
+               'cmview_d': 'cvview_d',
+               'cmview_f': 'cvview_f',
+               'mview_d': 'vview_d',
+               'mview_f': 'vview_f',
+               'mview_bl': 'vview_bl'}
             assert f.has_key(self.type),'Should not be here. Implementation error'
             v = f[self.type](self.vsip,i)
-            return self.__newView(v,self.block)
+            t=viewSel[self.type]
+            return self.__newView(t,v,self.block)
         @property
         def transview(self):
             f={'mview_bl': vsip_mtransview_bl,
@@ -1190,7 +1229,7 @@ class Block (object):
                'mview_f': vsip_mtransview_f}
             t=self.type
             assert f.has_key(t),'Type <:%s:> not a valid type for trans view.'%t
-            return self.__newView(f[t](self.vsip),self.block)
+            return self.__newView(t,f[t](self.vsip),self.block)
         @property
         def realview(self):
             v=self.__realview(self)
@@ -3511,7 +3550,9 @@ class Block (object):
         def mprint(self,fmt):
             assert isinstance(fmt,str), 'Format for mprint is a string'
             print(self.mstring(fmt))
-
+def View(blk,*args):
+    assert 'pyJvsip.Block' in repr(blk),'First parameter to View must be a block'
+    return blk.bind(args)
 class Rand(object):
     """
        Usage
