@@ -326,7 +326,7 @@ class Block (object):
             self.__vsipBlock=blk
             self.__type=b
             self.__length=args[0]
-            self.w = self.__View(v,self) #create a pyJvsip view object with window in it.
+            self.w = self.__View({'block_d':'vview_d','block_f':'vview_f'}[b],v,self) #create a pyJvsip view object with window in it.
     def __del__(self):
         bd={'block_f':vsip_blockdestroy_f,
             'block_bl':vsip_blockdestroy_bl,
