@@ -8,4 +8,7 @@ ab_bl = b.lgt(a)
 assert ab_bl.anytrue,'No true values in boolean vector.'
 ab_vi=ab_bl.indexbool
 pjv.gather(b,ab_vi,a.putlength(ab_vi.length))
-b.mprint('%.3f')
+b.fill(0.0)
+pjv.scatter(a,b,ab_vi)
+for i in range(L):
+    print('%.3f'%b[i])

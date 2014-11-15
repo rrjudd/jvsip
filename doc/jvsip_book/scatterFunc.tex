@@ -1,11 +1,32 @@
 \afuncT{scatter}{Scatter data from a view into another (indexed) view} {elementGenerationOperations}
 \\\cvsiplh
+\afh
+\\\hspace*{.04\textwidth} {
+\ttfamily
+\begin{tabular}[H]{l}
+void vsip\_cmscatter\_d(const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cmview\_d*, const vsip\_vview\_mi*\\
+void vsip\_cmscatter\_f(const vsip\_cvview\_f*,\\*\hspace{.7cm}const vsip\_cmview\_f*, const vsip\_vview\_mi*\\
+void vsip\_cvscatter\_d(const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_cvview\_d*, const vsip\_vview\_vi*\\
+void vsip\_cvscatter\_f(const vsip\_cvview\_f*,\\*\hspace{.7cm}const vsip\_cvview\_f*, const vsip\_vview\_vi*\\
+void vsip\_mscatter\_d(const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_mview\_d*, const vsip\_vview\_mi*\\
+void vsip\_mscatter\_f(const vsip\_vview\_f*,\\*\hspace{.7cm}const vsip\_mview\_f*, const vsip\_vview\_mi*\\
+void vsip\_vscatter\_d(const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_vview\_d*, const vsip\_vview\_vi*\\
+void vsip\_vscatter\_f(const vsip\_vview\_f*,\\*\hspace{.7cm}const vsip\_vview\_f*, const vsip\_vview\_vi*\\
+void vsip\_vscatter\_i(const vsip\_vview\_i*,\\*\hspace{.7cm}const vsip\_vview\_i*, const vsip\_vview\_vi*\\
+void vsip\_vscatter\_si(const vsip\_vview\_si*,\\*\hspace{.7cm}const vsip\_vview\_si*, const vsip\_vview\_vi*\\
+void vsip\_vscatter\_uc(const vsip\_vview\_uc*,\\*\hspace{.7cm}const vsip\_vview\_uc*, const vsip\_vview\_vi*\\
+\end{tabular}
 \\\pyjvsiph
 %
-\viewmthd{No}{NA}{NA}{NA}
+\viewmthd{Yes}{No}{No}{out=in.scatter(out,indx)}
 %
-\apyfunc{No}{NA}
+\apyfunc{Yes}{out=scatter(in,out,indx)}
 %
 \pyComment{
-\item{No comments}
+\item{Parameter \ttbf{in} is a view of shape vector and precision \emph{\ttbf{p}}}
+\item{Parameter \ttbf{out} is a view with precision \emph{\ttbf{p}}}
+\item{Parameter \ttbf{indx} is a view of shape vector and type \ttbf{vi} or \ttbf{mi} depending on the shape of view \ttbf{out}.}
+\item{The length of \ttbf{in} and \ttbf{indx} must be the same length.}
+\item{Elementwise an index is selected from \ttbf{indx} and a value is selected from \ttbf{in}. The value is placed into \ttbf{out} at the indexed location.}
+\item{The user of the function is responsible to ensure indices in \ttbf{indx} are valid for \ttbf{out}}
 }

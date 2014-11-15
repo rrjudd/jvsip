@@ -1,11 +1,34 @@
 \afuncT{gather}{Gather indexed data from an input \ttbf{view} and copy it elementwise into an output \ttbf{view}.}{elementGenerationOperations}
 \\\cvsiplh
+\afh
+\\\hspace*{.04\textwidth} {
+\ttfamily
+\begin{tabular}[H]{l}
+void vsip\_cmgather\_d(const vsip\_cmview\_d*,\\*\hspace{.7cm}const vsip\_vview\_mi*, const vsip\_cvview\_d*);\\
+void vsip\_cmgather\_f(const vsip\_cmview\_f*,\\*\hspace{.7cm}const vsip\_vview\_mi*, const vsip\_cvview\_f*);\\
+void vsip\_cvgather\_d(const vsip\_cvview\_d*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_cvview\_d*);\\
+void vsip\_cvgather\_f(const vsip\_cvview\_f*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_cvview\_f*);\\
+void vsip\_mgather\_d(const vsip\_mview\_d*,\\*\hspace{.7cm}const vsip\_vview\_mi*, const vsip\_vview\_d*);\\
+void vsip\_mgather\_f(const vsip\_mview\_f*,\\*\hspace{.7cm}const vsip\_vview\_mi*, const vsip\_vview\_f*);\\
+void vsip\_vgather\_d(const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_d*);\\
+void vsip\_vgather\_f(const vsip\_vview\_f*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_f*);\\
+void vsip\_vgather\_i(const vsip\_vview\_i*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_i*);\\
+void vsip\_vgather\_si(const vsip\_vview\_si*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_si*);\\
+void vsip\_vgather\_uc(const vsip\_vview\_uc*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_uc*);\\
+void vsip\_vgather\_mi (const vsip\_vview\_mi*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_mi*);\\
+void vsip\_vgather\_vi (const vsip\_vview\_vi*,\\*\hspace{.7cm}const vsip\_vview\_vi*, const vsip\_vview\_vi*);\\
+\end{tabular}
 \\\pyjvsiph
 %
-\viewmthd{No}{NA}{NA}{NA}
+\viewmthd{Yes}{No}{No}{out=in.gather(indx,out)}
 %
-\apyfunc{No}{NA}
+\apyfunc{Yes}{out=gather(in,indx,out)}
 %
 \pyComment{
-\item{No comments}
+\item{Method \ttbf{gather} will create an output view if none is supplied. Function \ttbf{gather} requires an output view be supplied.}
+\item{Argument \ttbf{out} has the same precision as \ttbf{in}.}
+\item{Argument \ttbf{out} has shape vector.}
+\item{Argument \ttbf{in} has shape matrix or vector.}
+\item{Argument \ttbf{indx} has shape vector of precision \ttbf{vi} or \ttbf{mi} depending on the shape of \ttbf{in}.}
+\item{The length of \ttbf{indx} must be the same as the length of \ttbf{out}.}
 }

@@ -1,11 +1,29 @@
-\afuncT{swap}{Swap data between two views}{elementGenerationOperations}
+\afuncT{swap}{Swap data between two views.}{elementGenerationOperations}
 \\\cvsiplh
+\afh
+\\\hspace*{.04\textwidth} {
+\ttfamily
+\begin{tabular}[H]{l}
+void vsip\_cmswap\_d(const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\ 
+void vsip\_cmswap\_f(const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\ 
+void vsip\_cvswap\_d(const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\ 
+void vsip\_cvswap\_f(const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\ 
+void vsip\_mswap\_d(const vsip\_mview\_d*, const vsip\_mview\_d*);\\ 
+void vsip\_mswap\_f(const vsip\_mview\_f*, const vsip\_mview\_f*);\\ 
+void vsip\_vswap\_d(const vsip\_vview\_d*, const vsip\_vview\_d*);\\ 
+void vsip\_vswap\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\ 
+void vsip\_vswap\_i(const vsip\_vview\_i*, const vsip\_vview\_i*);\\ 
+void vsip\_vswap\_si(const vsip\_vview\_si*, const vsip\_vview\_si*);\\ 
+void vsip\_vswap\_uc(const vsip\_vview\_uc*, const vsip\_vview\_uc*);\\ 
+\end{tabular}
 \\\pyjvsiph
 %
 \viewmthd{No}{NA}{NA}{NA}
 %
-\apyfunc{No}{NA}
+\apyfunc{Yes}{swap(a,b)}
 %
 \pyComment{
-\item{No comments}
+\item{Views \ttbf{a} and \ttbf{b} must be the same type and size.}
+\item{Done in-place.}
+\item{Function has no return value. Results are in \ttbf{a} and \ttbf{b}.}
 }

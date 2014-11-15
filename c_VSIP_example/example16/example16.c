@@ -8,7 +8,6 @@
  // product, or process disclosed, or represents that its use would    /
  // not infringe privately owned rights                                /
  **********************************************************************/
-/* $Id: example16.c,v 2.0 2003/02/22 15:27:32 judd Exp $ */
 
 #include<vsip.h>
 #define L 20 /* A length*/
