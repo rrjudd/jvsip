@@ -10,29 +10,29 @@
 	<string>jvsipF</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>98CE807A-110B-468E-95D2-38734B471B19</key>
+		<key>227043504A58C848CEF317B577FE0EFB9446A85F</key>
 		<string>https://github.com/rrjudd/jvsip</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>AppleXcode/jvsipF/jvsipF.xcodeproj/project.xcworkspace</string>
+	<string>AppleXcode/jvsipF/jvsipF.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>98CE807A-110B-468E-95D2-38734B471B19</key>
+		<key>227043504A58C848CEF317B577FE0EFB9446A85F</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/rrjudd/jvsip</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>98CE807A-110B-468E-95D2-38734B471B19</string>
+	<string>227043504A58C848CEF317B577FE0EFB9446A85F</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>98CE807A-110B-468E-95D2-38734B471B19</string>
+			<string>227043504A58C848CEF317B577FE0EFB9446A85F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>jvsip</string>
 		</dict>
