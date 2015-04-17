@@ -31,8 +31,8 @@ static void msumsqval_d(void){
        printf("msumsqval_d(m1) = %f\n",vsip_msumsqval_d(m1));
        printf("msumsqval_d(m) = %f\n",vsip_msumsqval_d(m));
        printf("ans should be 14.6 \n");
-       if((fabs(14.6000-vsip_msumsqval_d(m) > .0001)) ||
-          (fabs(14.6000-vsip_msumsqval_d(m1) > .0001))) {
+       if(fabs(14.6000-vsip_msumsqval_d(m)) > .0001 ||
+          fabs(14.6000-vsip_msumsqval_d(m1)) > .0001) {
           printf("error\n");
        }else{
            printf("correct\n");

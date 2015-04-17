@@ -31,8 +31,8 @@ static void msumval_f(void){
        printf("msumval_f(m1) = %f\n",vsip_msumval_f(m1));
        printf("msumval_f(m) = %f\n",vsip_msumval_f(m));
        printf("ans should be 12 \n");
-       if((fabs(12.0-vsip_msumval_f(m) > .0001)) || 
-          (fabs(12.0-vsip_msumval_f(m1) > .0001))){
+       if(((fabs(12.0-vsip_msumval_f(m)) > .0001)) || 
+          ((fabs(12.0-vsip_msumval_f(m1)) > .0001))){
           printf("error\n");
        }else{
            printf("correct\n");

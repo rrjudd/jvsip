@@ -31,8 +31,8 @@ static void mmeansqval_f(void){
        printf("mmeansqval_f(m1) = %f\n",vsip_mmeansqval_f(m1));
        printf("mmeansqval_f(m) = %f\n",vsip_mmeansqval_f(m));
        printf("ans should be 1.46 \n");
-       if((fabs(1.4600-vsip_mmeansqval_f(m) > .0001)) ||
-          (fabs(1.4600-vsip_mmeansqval_f(m1) > .0001))) {
+       if(fabs(1.4600-vsip_mmeansqval_f(m)) > .0001 ||
+          fabs(1.4600-vsip_mmeansqval_f(m1)) > .0001) {
           printf("error\n");
        }else{
            printf("correct\n");

@@ -32,8 +32,7 @@ static void mminmgval_f(void){
      printf("val = vsip_mminmgval_f(a,index)\n matrix a = \n");VU_mprintm_f("8.6",a);
      printf("val = %f\n",val); 
      printf("index = (%ld, %ld)\n",vsip_colindex(index),vsip_rowindex(index));
-     if((fabs(0 - val > .0001)))
-        printf("value error\n");
+     if(fabs(0 - val) > .0001) printf("value error\n");
      else
         printf("value correct\n");
      if((vsip_colindex(index) != vsip_colindex(ind_ans)) ||

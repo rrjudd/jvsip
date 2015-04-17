@@ -34,8 +34,8 @@ static void msumval_bl(void){
        printf("msumval_bl(m1) = %ld\n",vsip_msumval_bl(m1));
        printf("msumval_bl(m) = %ld\n",vsip_msumval_bl(m));
        printf("ans should be 6 \n");
-       if((fabs(6 - vsip_msumval_bl(m) > .0001)) || 
-          (fabs(6.- vsip_msumval_bl(m1) > .0001))){
+       if((6 - vsip_msumval_bl(m)) != 0 || 
+          (6 - vsip_msumval_bl(m1))!= 0 ){
           printf("error\n");
        }else{
            printf("correct\n");

@@ -32,25 +32,20 @@ static void mminmgval_d(void){
      printf("val = vsip_mminmgval_d(a,index)\n matrix a = \n");VU_mprintm_d("8.6",a);
      printf("val = %f\n",val); 
      printf("index = (%ld, %ld)\n",vsip_colindex(index),vsip_rowindex(index));
-     if((fabs(0 - val > .0001)))
-        printf("value error\n");
-     else
-        printf("value correct\n");
+     if(fabs(0 - val) > .0001) printf("value error\n");
+     else printf("value correct\n");
      if((vsip_colindex(index) != vsip_colindex(ind_ans)) ||
         (vsip_rowindex(index) != vsip_rowindex(ind_ans)))
         printf("index error\n");
      else
         printf("index correct\n");
-
      printf("case for non-compact matrix with negative strides\n");
      val = vsip_mminmgval_d(b,&index);
      printf("val = vsip_mminmgval_d(b,index)\n matrix b = \n");VU_mprintm_d("8.6",b);
      printf("val = %f\n",val); 
      printf("index = (%ld, %ld)\n",vsip_colindex(index),vsip_rowindex(index));
-     if(fabs(0 - val) > .0001)
-        printf("value error\n");
-     else
-        printf("value correct\n");
+     if(fabs(0 - val) > .0001) printf("value error\n");
+     else printf("value correct\n");
      if((vsip_colindex(index) != vsip_colindex(ind_ans)) ||
         (vsip_rowindex(index) != vsip_rowindex(ind_ans)))
         printf("index error\n");

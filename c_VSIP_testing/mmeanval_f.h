@@ -31,8 +31,8 @@ static void mmeanval_f(void){
        printf("mmeanval_f(m1) = %f\n",vsip_mmeanval_f(m1));
        printf("mmeanval_f(m) = %f\n",vsip_mmeanval_f(m));
        printf("ans should be 1.2 \n");
-       if((fabs(1.2000-vsip_mmeanval_f(m) > .0001)) ||
-          (fabs(1.2000-vsip_mmeanval_f(m1) > .0001))) {
+       if(fabs(1.2000-vsip_mmeanval_f(m)) > .0001 ||
+          fabs(1.2000-vsip_mmeanval_f(m1)) > .0001) {
           printf("error\n");
        }else{
            printf("correct\n");
