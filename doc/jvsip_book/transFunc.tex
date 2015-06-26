@@ -1,9 +1,31 @@
-\afuncT{trans}{Matrix transpose.}{matrixOperations}
+\afuncT{trans}{Matrix transpose. This function is done out of place unless the input Matrix
+is square and the input and output matrix resolve to the same object; otherwise the function
+moves data from an input matrix into an output matrix.}{matrixOperations}
 \\\cvsiplh
-\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\\\hspace*{.06\textwidth}\parbox{.94\textwidth}{The output matrix must be created of 
+the proper size and attributes to accomodate the transpose of the input data.\Bs}
+\afh
+\\\hspace*{.04\textwidth} {
+\ttfamily
+\begin{tabular}[H]{l}
+void vsip\_mtrans\_f(\\*\hspace{.5cm}const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_cmtrans\_f(\\*\hspace{.5cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_mtrans\_d(\\*\hspace{.5cm}const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_cmtrans\_d(\\*\hspace{.5cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+\end{tabular}
+}
 \\ \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
 \end{tabular}
 }
 \\\pyjvsiph
+\viewmthd{yes}{yes}{No}{out=in.trans}
+\apyfunc{yes}{out = trans(in,out)}
+\pyComment{\item {The \ttbf{trans} method creates a compact row major matrix of the proper
+type to store the output of the transpose and returns it.  The method is defined as a 
+property since no arguments are required and is always done out-of-place}
+\item{The \ttbf{trans} function works much the same as the C VSIPL version except that a 
+convenience pointer to the output view is returned. This must be done out-of-place unless
+the matrix is square.}
+}

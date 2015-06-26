@@ -4,6 +4,20 @@
 \\ \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
+void vsip\_cmprodt\_d(\\*\hspace{.6cm}
+    const vsip\_cmview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\\
+void vsip\_cmprodt\_f(\\*\hspace{.6cm}
+    const vsip\_cmview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\\
+void vsip\_mprodt\_d(\\*\hspace{.6cm}
+    const vsip\_mview\_d*, const vsip\_mview\_d*, const vsip\_mview\_d*);\\
+void vsip\_mprodt\_f(\\*\hspace{.6cm}
+    const vsip\_mview\_f*, const vsip\_mview\_f*, const vsip\_mview\_f*);\\
 \end{tabular}
 }
 \\\pyjvsiph
+\viewmthd{yes}{No}{No}{out=inOne.prodt(inTwo)}
+\apyfunc{yes}{out = prodt(inOne,inTwo,out)}
+\pyComment{
+\item{The \ttbf{prodt} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may not be done in-place.}
+\item{The \ttbf{prodt} method creates and returns a new \ttbf{view} with the result.}
+}

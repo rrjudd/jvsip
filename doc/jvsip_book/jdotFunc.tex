@@ -1,9 +1,20 @@
 \afuncT{jdot}{Complex Vector Conjugate Dot Product}{matrixOperations}
+\\ \hspace*{.8cm}For complex vector views $a$ and $b$
+\begin{equation*}
+\alpha = \sum \limits_{i=0}^{N-1} a_i \cdot \opConj(b_i)
+\end{equation*}
 \\\cvsiplh
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 \\ \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
+vsip\_cscalar\_d vsip\_cvjdot\_d(\\*\hspace{.6cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*);\\
+vsip\_cscalar\_f vsip\_cvjdot\_f(\\*\hspace{.6cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*);\\
 \end{tabular}
 }
 \\\pyjvsiph
+\viewmthd{yes}{No}{NA}{$\alpha$=a.jdot(b)}
+\apyfunc{No}{}
+\pyComment{\item {For C VSPL only complex vectors are supported. For \pyjv{} \ttbf{jdot} has been extended to support mixed depth vectors.}
+\item{Precision of input vectors must agree.}
+}

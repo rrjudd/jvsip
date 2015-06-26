@@ -4,6 +4,24 @@
 \\ \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
+void vsip\_cmprod3\_d(\\*\hspace{.6cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
+void vsip\_cmprod3\_f(\\*\hspace{.6cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
+void vsip\_cmvprod3\_d(\\*\hspace{.6cm}const vsip\_cmview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
+void vsip\_cmvprod3\_f(\\*\hspace{.6cm}const vsip\_cmview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
+void vsip\_mprod3\_d(\\*\hspace{.6cm}const vsip\_mview\_d*, const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
+void vsip\_mprod3\_f(\\*\hspace{.6cm}const vsip\_mview\_f*, const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
+void vsip\_mvprod3\_d(\\*\hspace{.6cm}const vsip\_mview\_d*, const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
+void vsip\_mvprod3\_f(\\*\hspace{.6cm}const vsip\_mview\_f*, const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
+
 \end{tabular}
 }
 \\\pyjvsiph
+\viewmthd{yes}{No}{No}{out=inOne.prod(inTwo)}
+\apyfunc{yes}{out = prod3(inOne,inTwo,out)}
+\pyComment{
+\item{The \ttbf{prod3} function works much the same as the C VSIPL version except that a
+ convenience pointer to the output view is returned. This may not be done in-place.}
+\item{There is no special \ttbf{prod3} method. The \ttbf{prod} method will select and 
+use the \ttbf{prod3} C VSIPL routine if the conditions
+exist to support it.}
+}

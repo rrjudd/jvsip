@@ -4,6 +4,20 @@
 \\ \hspace*{1.1cm} {
 \ttfamily
 \begin{tabular}[H]{l}
+void vsip\_cmkron\_d(vsip\_cscalar\_d, const vsip\_cmview\_d *,\\*\hspace{.6cm}const vsip\_cmview\_d *, const vsip\_cmview\_d *);\\
+void vsip\_cmkron\_f(vsip\_cscalar\_f, const vsip\_cmview\_f *,\\*\hspace{.6cm}const vsip\_cmview\_f *, const vsip\_cmview\_f *);\\
+void vsip\_cvkron\_d(vsip\_cscalar\_d, const vsip\_cvview\_d *,\\*\hspace{.6cm}const vsip\_cvview\_d *, const vsip\_cmview\_d *);\\
+void vsip\_cvkron\_f(vsip\_cscalar\_f, const vsip\_cvview\_f *,\\*\hspace{.6cm}const vsip\_cvview\_f *, const vsip\_cmview\_f *);\\
+void vsip\_mkron\_d(vsip\_scalar\_d, const vsip\_mview\_d *,\\*\hspace{.6cm}const vsip\_mview\_d *, const vsip\_mview\_d *);\\
+void vsip\_mkron\_f(vsip\_scalar\_f, const vsip\_mview\_f *,\\*\hspace{.6cm}const vsip\_mview\_f *, const vsip\_mview\_f *);\\
+void vsip\_vkron\_d(vsip\_scalar\_d, const vsip\_vview\_d *,\\*\hspace{.6cm}const vsip\_vview\_d *, const vsip\_mview\_d *);\\
+void vsip\_vkron\_f(vsip\_scalar\_f, const vsip\_vview\_f *,\\*\hspace{.6cm}const vsip\_vview\_f *, const vsip\_mview\_f *);\\
 \end{tabular}
 }
 \\\pyjvsiph
+\viewmthd{No}{No}{No}{}
+\apyfunc{yes}{out = kron(alpha,inOne,inTwo,out)}
+\pyComment{
+\item{The \ttbf{kron} function works much the same as the C VSIPL version except that a 
+convenience pointer to the output view is returned. This must be done out-of-place.}
+}
