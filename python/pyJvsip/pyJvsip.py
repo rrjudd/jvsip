@@ -1320,6 +1320,8 @@ class Block (object):
                'vview_mi':vsip_vgetlength_mi }
             assert f.has_key(self.type),'View of type %s not a vector view'%self.type
             return int(f[self.type](self.vsip))
+        def length(self,l):
+            return putlength(l);
         def putlength(self,l):
             f={'vview_f':vsip_vputlength_f,
                'vview_d':vsip_vputlength_d,
@@ -2909,9 +2911,10 @@ class Block (object):
         def trans(self):
             """
             Done out of place.
-            A new block and view and view are created and the transpose
-            of the calling view is copied into it. See transview for a transpose view on
-            the same block.
+            A new block and row major view are created and the transpose of the 
+            calling view is copied into it. 
+            See transview method for a transpose view on the same block.
+            See trans function for the general case of transpose.
             Usage:
                 B=A.trans
             """
@@ -2953,21 +2956,15 @@ class Block (object):
                 return retval
         def jdot(self,other):
             assert 'pyJvsip.__View' in repr(other),'Argument must be a pyJvsip view.'
-            assert self.type.rpartition('_')[2] == other.type.rpartition('_')[2],'Precisions of input views must agree for jdot.'
+            assert self.type.rpartition('_')[2] == other.type.rpartition('_')[2],\
+            'Precisions of input views must agree for jdot.'
             f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_d}
             reTypes=['vview_f','vview_d']
             imTypes=['cvview_f','cvview_d']
-            if ('vview_d' in other.type) and ('vview_f' in self.type) or \
-               ('vview_f' in other.type) and ('vview_d' in self.type):
-                print('Precision of views must agree')
-                return
             if 'cvview' in self.type and 'cvview' in other.type:
                 t=self.type
                 retval = f[t](self.vsip,other.vsip)
-                if 'cscalar' in repr(retval):
-                    return complex(retval.r,retval.i)
-                else:
-                    return retval
+                return complex(retval.r,retval.i)
             elif (self.type in reTypes) and (other.type in reTypes):
                 return self.dot(other)
             elif (self.type in imTypes) and (other.type in reTypes):
@@ -2975,7 +2972,7 @@ class Block (object):
             elif (self.type in reTypes) and (other.type in imTypes):
                 return complex(self.dot(other.realview),-self.dot(other.imagview))
             else:
-                assert False,'Input views must be float vectors of the same precision'
+                assert False,'Input views not supported by jdot'
         def permute(self,p,*major):
             """
             The permute method will permute a matrix by row or by column given an index vector.
