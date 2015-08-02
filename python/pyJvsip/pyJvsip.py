@@ -1320,8 +1320,6 @@ class Block (object):
                'vview_mi':vsip_vgetlength_mi }
             assert f.has_key(self.type),'View of type %s not a vector view'%self.type
             return int(f[self.type](self.vsip))
-        def length(self,l):
-            return putlength(l);
         def putlength(self,l):
             f={'vview_f':vsip_vputlength_f,
                'vview_d':vsip_vputlength_d,
