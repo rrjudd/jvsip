@@ -2053,6 +2053,7 @@ vsip_mview_d* vsip_mputrowlength_d( vsip_mview_d*, vsip_length);
 vsip_mview_bl* vsip_mputrowlength_bl( vsip_mview_bl*, vsip_length);
 vsip_mview_l* vsip_mputrowlength_l( vsip_mview_l*, vsip_length);
 vsip_mview_si* vsip_mputrowlength_si( vsip_mview_si*, vsip_length);
+vsip_mview_i* vsip_mputrowlength_i( vsip_mview_i*, vsip_length);
 vsip_mview_bl* vsip_msubview_bl( const vsip_mview_bl*, vsip_index, vsip_index, vsip_length, vsip_length);
 vsip_mview_i* vsip_msubview_i( const vsip_mview_i*, vsip_index, vsip_index, vsip_length, vsip_length);
 vsip_mview_l* vsip_msubview_l( const vsip_mview_l*, vsip_index, vsip_index, vsip_length, vsip_length);
