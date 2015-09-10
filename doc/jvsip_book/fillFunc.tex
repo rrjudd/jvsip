@@ -1,11 +1,32 @@
 \afuncT{fill}{Fill a \ttbf{view} with a value.}{elementGenerationOperations}
 \\\cvsiplh
+\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
+\\ \hspace*{1cm} {\ttfamily
+\begin{tabular}[H]{l}
+void vsip\_cmfill\_d(vsip\_cscalar\_d, const vsip\_cmview\_d*);\\
+void vsip\_cmfill\_f(vsip\_cscalar\_f, const vsip\_cmview\_f*);\\
+void vsip\_cvfill\_d(vsip\_cscalar\_d, const vsip\_cvview\_d*);\\
+void vsip\_cvfill\_f(vsip\_cscalar\_f, const vsip\_cvview\_f*);\\
+void vsip\_mfill\_d(vsip\_scalar\_d, const vsip\_mview\_d*);\\
+void vsip\_mfill\_f(vsip\_scalar\_f, const vsip\_mview\_f*);\\
+void vsip\_mfill\_i(vsip\_scalar\_i, const vsip\_mview\_i*);\\
+void vsip\_mfill\_si(vsip\_scalar\_si, const vsip\_mview\_si*);\\
+void vsip\_mfill\_uc(vsip\_scalar\_uc, const vsip\_mview\_uc*);\\
+void vsip\_vfill\_d(vsip\_scalar\_d, const vsip\_vview\_d*);\\
+void vsip\_vfill\_f(vsip\_scalar\_f, const vsip\_vview\_f*);\\
+void vsip\_vfill\_i(vsip\_scalar\_i, const vsip\_vview\_i*);\\
+void vsip\_vfill\_si(vsip\_scalar\_si, const vsip\_vview\_si*);\\
+void vsip\_vfill\_uc(vsip\_scalar\_uc, const vsip\_vview\_uc*);\\
+void vsip\_vfill\_vi(vsip\_scalar\_vi, const vsip\_vview\_vi*);\\
+\end{tabular}}
 \\\pyjvsiph
 %
-\viewmthd{No}{NA}{NA}{NA}
+\viewmthd{Yes}{No}{Yes}{aView.fill(aScalarValue)}
 %
 \apyfunc{No}{NA}
 %
 \pyComment{
-\item{No comments}
+\item{Using slicing operator overloaded on equal.}
+\subitem {\ttbf{For instance:} \ilCode{aView[:]=aScalarValue} or \ilCode{aView[3:4:3]=aScalarValue}.}
+\subitem \ttbf{Caution:} \ilCode{aView=aScalarValue} will turn \ilCode{aView} into \ilCode{aScalarValue} releasing the \ttbf{View}.}
 }
