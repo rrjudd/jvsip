@@ -1,0 +1,68 @@
+\documentclass[11pt, oneside]{article}
+\usepackage{geometry} 
+\geometry{letterpaper} 
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc} 
+\usepackage{lmodern}
+\usepackage{listings} 
+\usepackage{float}
+\usepackage{makeidx}
+\usepackage{minted}
+\usepackage[hypcap]{caption}
+\usepackage{pdflscape}
+\newcommand{\cvl}{\ttbf{C VSIPL}}
+\newcommand{\cvpp}{\ttbf{C++ VSIPL}}
+\newcommand{\pyjv}{{\ttbf{pyJvsip}}}
+\newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
+\newcommand{\jv}{{\ttbf{JVSIP}}}
+\newcommand{\Blk}{\ttbf{Block}}
+\newcommand{\blk}{\ttbf{block}}
+\newcommand{\Vw}{\ttbf{View}}
+\newcommand{\vw}{\ttbf{view}}
+\title{JVSIP Data Model}
+\author{Randall Judd}
+\begin{document}
+\maketitle
+\section{Scope}
+This discussion will be limited because my understanding of the C++ VSIPL specification is limited. Although I have participated in the meetings I am not an architect of the spec in any sense.  However; there are some observations one can make even with an imperfect understanding of the specification.
+\subsection{Why does the spec need to be so obfuscated?}
+It is easy to assume I am not smart enough to understand this spec and it is a good spec.  But the fact of the matter is I do have two masters degrees, one in physics from Oregon state and one in electrical engineering from the University of Washington.  I have written a fairly complete \cvl{} implementation and I wrote all my code from scratch.  My FFT and my SVD and all the other routines come from math books; not Lapack or any other encapsulated library.  So I have some evidence I am reasonably smart.
+\\[6pt]
+So I have to ask myself who out their can read this spec and actually produce an implementation from it.  Is it really an OK spec or is it only as good as the reference implementation that comes with it?  Can some normal person pick up this spec and write a ground up C++ VSIPL. I mean does any other person participating in the forum read this spec and actually understand it?  I ask questions but I seldom get answers.
+\\[6pt]
+In any case, rant above aside, it would be nice if somebody who understands the spec would write some explanatory text to go with it.  Something that does not depend on in-depth knowledge of C++ and templates. Something that will compare the objects defined in the original \cvl{} spec with the new objects in the C++ spec and explain the differences, and reasons for the differences. Some sort of explanation that goes beyond "we need to do it this way because we are a parallel spec and \cvl{} is not".
+\subsection{Domains}
+In this section I talk about the \ttbf{Domain} class in \cvpp{} since they seem to be fundamental to \cvpp{} although I don't know how they fit the \cvpp{} data model. 
+\\[6pt]
+Also note that when I use the term \ttbf{bind} that is a \cvl{} term.  I do not think \cvpp{} has a \ttbf{bind} functionality.  For \cvl{} \ttbf{bind} is the baseline constructor for a \vw{} 
+\\[6pt]
+\ttbf{Domain}s are specific to VSIPL++ and not defined in \cvl{} at all; however they do not appear to interfere with the \cvl{}  data model and can be implemented, at least functionaly, by \ttbf{User} code in \cvl{}. In \pyjv{} I have implemented the functionality in order to support python slice notation.  In \cvpp{} \ttbf{domain}s seem to be used to create subviews and also they are used with \blk{}s  although I am not sure exactly what they are doing with \ttbf{block}s. In \cvl{} one can write functionality to use a \ttbf{Domain} type class using user code and the \ttbf{bind} function or encapsulate \ttbf{Block} create functionality.  \ttbf{Domain} objects basically supply an index set which depends upon an offset (index) into the view, strides through the respective view dimensions, and dimension lengths.
+\\[6pt]
+Everything you can do with a \ttbf{domain} you can do with a \ttbf{bind} and a litte work; however with a \ttbf{bind} you can create any \vw{} on a \blk{} but I don't see any way to do this with \ttbf{Domain} objects.  You always seem to be a subset of data which is less than or equal to the current set of data even if the \blk{} contains a lot more data.
+\subsection{Blocks}
+\Blk{}s and \Blk{} objects have a more complicated interface in \cvpp{} than in \cvl{}. 
+\\[6pt]
+\ttbf{Block} objects in \cvl{} appear as contiguous data where each data element is presented as a scalar element.  To access the data (Ignoring the \ttbf{blockbind} interface case) you bind a \Vw{} object to the \blk{} with an index set that allows the data to be accessed by library functions. You do not access the \blk{} data directly. The \vw{}(s) act as an interface, and any view shape may be associated with the \blk{}.  Although \blk{}s in \cvl{} are incomplete and the method of accessing machine memory is implementation dependent the idea of a generator block which has no memory associated with it is foreign in the \cvl{} data model; although I don't believe it is prohibited.
+\\[6pt]
+In \cvpp{} I actually could not find a \Blk{} class.  They have a \ttbf{Dense} class which seems to make a \ttbf{Dense} block but I don't know why they have done this.  I think all \blk{}s in \cvl{} are dense.  This is not the case for \cvpp{} so they define this special class. In \cvpp{} when a block is created it has dimension limitations placed on it.  These do not exist in \cvl{} and I do not know why they exist in \cvpp{}. No reason is given.
+\\[6pt]
+In \cvpp{} they specifically make note that a \blk{} may not actually contain memory but may instead generate data on the fly.  I don't see anything wrong with this but I also don't know why they did this.
+\subsubsection{The \ttbf{subblock}}
+In \cvl{} there are no objects called subblocks. These are apparently needed for \cvpp{} and I am fine with that. But they get to the heart of my problems with this spec. In the serial specification for \cvpp{} I downloaded (formal-14-08-05) we have the statement\\[3pt]
+\emph{This main specification document mainly contains declarations, definitions, and requirements for uniprocessor execution. Because VSIPL++ supports both uniprocessor and distributed execution using the same programs, some aspects of distributed execution occur in this document. Some of these items and terms specified in the distributed specification that occasionally appear in this document include processor, subblock, distribution, and maps. For uniprocessor execution, these distributed aspects can be safely ignored since default arguments are provided by the library.}\\[3pt]
+So \ttbf{subblock}s may be an implementation detail to a user programmer and may be safely ignored; but this is supposed to be a specification for the implementor. This is not a help manual for the user. It is a circular argument to say we can ignore this because it is provided by the library if we are writing the library.
+\\ We need to know enough about \ttbf{subblock}s so that the implementor of a serial library can implement the interface at least. Ditto for maps.
+\\[6pt]
+Another example, in section 8 of the \cvpp{} spec we have the statement\\[3pt]
+\emph{A map specifies how a block can be divided into subblocks. [Note: For a program executing on a single processor, there should be no need to indicate any particular map since default template arguments and default function arguments should suffice. A VSIPL++ implementation restricted to supporting only a single processor will probably just define empty map classes and will probably not define the view constructors in [view.vector.constructors] , [view.matrix.constructors] , and [view.tensor.constructors] . ]}
+\\[3pt]
+We need advice to implementors here.  Not guesses about what the implementor might do.
+\\[6pt]
+Is \ttbf{subblock} a function producing a new \blk{}, or is \ttbf{subblock} a new type?  If \ttbf{subblock} is a new type how do you associate it with a \vw{}? 
+\subsection{Views, Vectors, Matrices and Tensors}
+\subsection{Maps}
+\end{document}
+
+
