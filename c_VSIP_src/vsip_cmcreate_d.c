@@ -21,7 +21,7 @@ vsip_cmview_d* (vsip_cmcreate_d)(
   vsip_length n, 
   vsip_major rc, 
   vsip_memory_hint h) {
-   vsip_cblock_d* b = VI_cblockcreate_d((size_t)(m*n), h);
+   vsip_cblock_d* b = VI_cblockcreate_d((vsip_length)(m*n), h);
    vsip_cmview_d* v = (vsip_cmview_d*)NULL;
    if(b != (vsip_cblock_d*)NULL){
 

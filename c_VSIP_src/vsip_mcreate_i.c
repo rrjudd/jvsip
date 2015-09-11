@@ -22,7 +22,7 @@ vsip_mview_i* (vsip_mcreate_i)(
   vsip_major major, 
   vsip_memory_hint mem_hint) {
    vsip_block_i* b = VI_blockcreate_i(
-              (size_t)(col_length * row_length), mem_hint); 
+              (vsip_length)(col_length * row_length), mem_hint); 
    vsip_mview_i* v = (vsip_mview_i*)NULL;
    if(b != NULL){
 

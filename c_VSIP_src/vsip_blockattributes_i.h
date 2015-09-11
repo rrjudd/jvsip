@@ -38,7 +38,7 @@ struct vsip_blockattributes_i {
   vsip_scalar_i*   array;       /* external data array         */
   int              kind;        /* 0 ==> private, 1 ==> public */
   int              admit;       /* 0 ==> No,      1 ==> Yes    */
-  size_t           size;        /* block size in elements      */
+  vsip_length      size;        /* block size in elements      */
   int              bindings;    /* reference counter           */
   int              markings;    /* valid|destoyed block object */
   vsip_memory_hint hint;        /* Not used in this implementation */

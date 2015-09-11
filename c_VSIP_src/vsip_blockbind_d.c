@@ -17,7 +17,7 @@
 
 vsip_block_d* (vsip_blockbind_d)(
   vsip_scalar_d* const p,
-  size_t N, 
+  vsip_length N, 
   vsip_memory_hint h) {
   vsip_block_d* b = (vsip_block_d*)malloc(sizeof(vsip_block_d));
   {

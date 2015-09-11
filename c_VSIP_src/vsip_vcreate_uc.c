@@ -19,7 +19,7 @@
 vsip_vview_uc* (vsip_vcreate_uc)(
   vsip_length n, 
   vsip_memory_hint h) {
-   vsip_block_uc* b = VI_blockcreate_uc((size_t)n, h);
+   vsip_block_uc* b = VI_blockcreate_uc((vsip_length)n, h);
    vsip_vview_uc* v = (vsip_vview_uc*)NULL;
    if(b != (vsip_block_uc*)NULL){
        v = vsip_vbind_uc(b, (vsip_offset)0, (vsip_stride)1, n);
