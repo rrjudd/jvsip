@@ -325,7 +325,7 @@ def prodj(a,b,c):
     assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
        and 'pyJvsip.__View' in repr(c),\
        'Arguments must by pyJvsip views for function prodj'
-    assert a.type == b.type and a.type == c.type,'View types must agree for prodt'
+    assert a.type == b.type and a.type == c.type,'View types must agree for prodj'
     f={'cmview_d':vsip_cmprodj_d, 'cmview_f':vsip_cmprodj_f}
     t=a.type
     assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'

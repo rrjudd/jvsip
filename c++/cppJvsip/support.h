@@ -8,12 +8,12 @@
 
 #ifndef jvsip_pp0_support_h
 #define jvsip_pp0_support_h
-#include <iostream>
-#include <cassert>
 #include <cstring>
 extern "C"{
 #include<vsip.h>
 }
+#include <iostream>
+#include <cassert>
 namespace vsip {
     using std::endl;
     using std::cout;
@@ -33,6 +33,10 @@ namespace vsip {
     }
     void create(vsip_block_vi**b,vsip_length l){
         *b=vsip_blockcreate_vi(l,VSIP_MEM_NONE);
+        assert(b != NULL);
+    }
+    void create(vsip_block_mi**b,vsip_length l){
+        *b=vsip_blockcreate_mi(l,VSIP_MEM_NONE);
         assert(b != NULL);
     }
     void create(vsip_block_d**b,vsip_length l){
@@ -230,6 +234,7 @@ namespace vsip {
     void destroy(vsip_cblock_d* b){vsip_cblockdestroy_d(b);b=nullptr;}
     void destroy(vsip_block_i* b){vsip_blockdestroy_i(b);b=nullptr;}
     void destroy(vsip_block_vi* b){vsip_blockdestroy_vi(b);b=nullptr;}
+    void destroy(vsip_block_mi* b){vsip_blockdestroy_mi(b);b=nullptr;}
     void destroy(vsip_block_si* b){vsip_blockdestroy_si(b);b=nullptr;}
     void destroy(vsip_block_uc* b){vsip_blockdestroy_uc(b);b=nullptr;}
  
@@ -258,7 +263,9 @@ namespace vsip {
     void destroy(vsip_vview_i *v){vsip_vdestroy_i(v);v=nullptr;}
     void destroy(vsip_vview_vi *v){vsip_vdestroy_vi(v);v=nullptr;}
     void destroy(vsip_vview_si *v){vsip_vdestroy_si(v);v=nullptr;}
-    void destroy(vsip_vview_uc *v){vsip_vdestroy_uc(v);v=nullptr;}
+    void destroy(vsip_mview_uc *v){vsip_mdestroy_uc(v);v=nullptr;}
+    void destroy(vsip_mview_i *v){vsip_mdestroy_i(v);v=nullptr;}
+    void destroy(vsip_mview_si *v){vsip_mdestroy_si(v);v=nullptr;}
 
     vsip_vview_f * realview(vsip_vview_f **rv,vsip_cvview_f*cv){
         *rv = vsip_vrealview_f(cv);

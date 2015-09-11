@@ -3,28 +3,132 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		060323271AED2B32004313AA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 060323261AED2B32004313AA /* main.cpp */; };
+		0603232B1AED2B61004313AA /* libvsip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0609F9151AE68CF900C6FCFA /* libvsip.a */; };
+		0603232C1AED2B62004313AA /* libvsip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0609F9151AE68CF900C6FCFA /* libvsip.a */; };
+		0609F91B1AE6947000C6FCFA /* scalar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0609F9191AE6947000C6FCFA /* scalar.cpp */; };
+		0609F91C1AE6947000C6FCFA /* scalar.h in Headers */ = {isa = PBXBuildFile; fileRef = 0609F91A1AE6947000C6FCFA /* scalar.h */; };
+		0672FFBC1AF15DF900C80DFF /* Block.h in Headers */ = {isa = PBXBuildFile; fileRef = 06DE5D221AEE7B71002258A8 /* Block.h */; };
+		0672FFBD1AF15DFD00C80DFF /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06DE5D281AEFCDB1002258A8 /* Block.cpp */; };
+		0672FFBE1AF15E1100C80DFF /* jvsipView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06DE5D241AEE7C26002258A8 /* jvsipView.cpp */; };
+		0672FFBF1AF15E1500C80DFF /* View.h in Headers */ = {isa = PBXBuildFile; fileRef = 06DE5D251AEE7C26002258A8 /* View.h */; };
+		0685C1FB1AF41B2E00D47D1E /* jvsiph.h in Headers */ = {isa = PBXBuildFile; fileRef = 06C68A941AE5797700615DCF /* jvsiph.h */; };
+		06A0EFAE1AE7631A00D299EE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06A0EFAD1AE7631A00D299EE /* main.cpp */; };
+		06A0EFB51AE765BA00D299EE /* libcppJvsip.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06C68A7C1AE5775000615DCF /* libcppJvsip.dylib */; };
+		06C68A951AE5797700615DCF /* elementary.h in Headers */ = {isa = PBXBuildFile; fileRef = 06C68A911AE5797700615DCF /* elementary.h */; };
+		06C68A961AE5797700615DCF /* gen.h in Headers */ = {isa = PBXBuildFile; fileRef = 06C68A921AE5797700615DCF /* gen.h */; };
+		06C68A971AE5797700615DCF /* support.h in Headers */ = {isa = PBXBuildFile; fileRef = 06C68A931AE5797700615DCF /* support.h */; };
+		06DE5D301AF08D6B002258A8 /* libvsip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0609F9151AE68CF900C6FCFA /* libvsip.a */; };
+		06DE5D311AF09154002258A8 /* libcppJvsip.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06C68A7C1AE5775000615DCF /* libcppJvsip.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		060323221AED2B32004313AA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		06A0EFA91AE7631A00D299EE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		060323241AED2B32004313AA /* test2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test2; sourceTree = BUILT_PRODUCTS_DIR; };
+		060323261AED2B32004313AA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		0609F9151AE68CF900C6FCFA /* libvsip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvsip.a; path = ../../lib/libvsip.a; sourceTree = "<group>"; };
+		0609F9191AE6947000C6FCFA /* scalar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scalar.cpp; sourceTree = "<group>"; };
+		0609F91A1AE6947000C6FCFA /* scalar.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = scalar.h; sourceTree = "<group>"; };
+		06A0EFAB1AE7631A00D299EE /* test1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test1; sourceTree = BUILT_PRODUCTS_DIR; };
+		06A0EFAD1AE7631A00D299EE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		06C68A7C1AE5775000615DCF /* libcppJvsip.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcppJvsip.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		06C68A911AE5797700615DCF /* elementary.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = elementary.h; sourceTree = "<group>"; };
+		06C68A921AE5797700615DCF /* gen.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = gen.h; sourceTree = "<group>"; };
+		06C68A931AE5797700615DCF /* support.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = support.h; sourceTree = "<group>"; };
+		06C68A941AE5797700615DCF /* jvsiph.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = jvsiph.h; sourceTree = "<group>"; };
+		06DE5D221AEE7B71002258A8 /* Block.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Block.h; sourceTree = "<group>"; };
+		06DE5D241AEE7C26002258A8 /* jvsipView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jvsipView.cpp; sourceTree = "<group>"; };
+		06DE5D251AEE7C26002258A8 /* View.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = View.h; sourceTree = "<group>"; };
+		06DE5D281AEFCDB1002258A8 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Block.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		060323211AED2B32004313AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0603232B1AED2B61004313AA /* libvsip.a in Frameworks */,
+				06DE5D311AF09154002258A8 /* libcppJvsip.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06A0EFA81AE7631A00D299EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06A0EFB51AE765BA00D299EE /* libcppJvsip.dylib in Frameworks */,
+				0603232C1AED2B62004313AA /* libvsip.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06C68A791AE5775000615DCF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06DE5D301AF08D6B002258A8 /* libvsip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		060323251AED2B32004313AA /* test2 */ = {
+			isa = PBXGroup;
+			children = (
+				060323261AED2B32004313AA /* main.cpp */,
+			);
+			path = test2;
+			sourceTree = "<group>";
+		};
+		06A0EFAC1AE7631A00D299EE /* test1 */ = {
+			isa = PBXGroup;
+			children = (
+				06A0EFAD1AE7631A00D299EE /* main.cpp */,
+			);
+			path = test1;
+			sourceTree = "<group>";
+		};
 		06C68A731AE5775000615DCF = {
 			isa = PBXGroup;
 			children = (
+				06C68A911AE5797700615DCF /* elementary.h */,
+				06C68A921AE5797700615DCF /* gen.h */,
+				06C68A931AE5797700615DCF /* support.h */,
+				0609F9191AE6947000C6FCFA /* scalar.cpp */,
+				0609F91A1AE6947000C6FCFA /* scalar.h */,
+				06C68A941AE5797700615DCF /* jvsiph.h */,
+				06DE5D221AEE7B71002258A8 /* Block.h */,
+				06DE5D281AEFCDB1002258A8 /* Block.cpp */,
+				06DE5D241AEE7C26002258A8 /* jvsipView.cpp */,
+				06DE5D251AEE7C26002258A8 /* View.h */,
+				06A0EFAC1AE7631A00D299EE /* test1 */,
+				060323251AED2B32004313AA /* test2 */,
 				06C68A7D1AE5775000615DCF /* Products */,
+				0609F9151AE68CF900C6FCFA /* libvsip.a */,
 			);
 			sourceTree = "<group>";
 		};
@@ -32,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				06C68A7C1AE5775000615DCF /* libcppJvsip.dylib */,
+				06A0EFAB1AE7631A00D299EE /* test1 */,
+				060323241AED2B32004313AA /* test2 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -43,12 +149,53 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06C68A971AE5797700615DCF /* support.h in Headers */,
+				0672FFBF1AF15E1500C80DFF /* View.h in Headers */,
+				06C68A961AE5797700615DCF /* gen.h in Headers */,
+				06C68A951AE5797700615DCF /* elementary.h in Headers */,
+				0672FFBC1AF15DF900C80DFF /* Block.h in Headers */,
+				0685C1FB1AF41B2E00D47D1E /* jvsiph.h in Headers */,
+				0609F91C1AE6947000C6FCFA /* scalar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		060323231AED2B32004313AA /* test2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0603232A1AED2B32004313AA /* Build configuration list for PBXNativeTarget "test2" */;
+			buildPhases = (
+				060323201AED2B32004313AA /* Sources */,
+				060323211AED2B32004313AA /* Frameworks */,
+				060323221AED2B32004313AA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test2;
+			productName = test2;
+			productReference = 060323241AED2B32004313AA /* test2 */;
+			productType = "com.apple.product-type.tool";
+		};
+		06A0EFAA1AE7631A00D299EE /* test1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06A0EFB11AE7631A00D299EE /* Build configuration list for PBXNativeTarget "test1" */;
+			buildPhases = (
+				06A0EFA71AE7631A00D299EE /* Sources */,
+				06A0EFA81AE7631A00D299EE /* Frameworks */,
+				06A0EFA91AE7631A00D299EE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = test1;
+			productName = test1;
+			productReference = 06A0EFAB1AE7631A00D299EE /* test1 */;
+			productType = "com.apple.product-type.tool";
+		};
 		06C68A7B1AE5775000615DCF /* cppJvsip */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06C68A801AE5775000615DCF /* Build configuration list for PBXNativeTarget "cppJvsip" */;
@@ -75,13 +222,19 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "RANDALL JUDD";
 				TargetAttributes = {
+					060323231AED2B32004313AA = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					06A0EFAA1AE7631A00D299EE = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
 					06C68A7B1AE5775000615DCF = {
 						CreatedOnToolsVersion = 6.3;
 					};
 				};
 			};
 			buildConfigurationList = 06C68A771AE5775000615DCF /* Build configuration list for PBXProject "cppJvsip" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -93,21 +246,118 @@
 			projectRoot = "";
 			targets = (
 				06C68A7B1AE5775000615DCF /* cppJvsip */,
+				06A0EFAA1AE7631A00D299EE /* test1 */,
+				060323231AED2B32004313AA /* test2 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		060323201AED2B32004313AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				060323271AED2B32004313AA /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06A0EFA71AE7631A00D299EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06A0EFAE1AE7631A00D299EE /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06C68A781AE5775000615DCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0672FFBE1AF15E1100C80DFF /* jvsipView.cpp in Sources */,
+				0609F91B1AE6947000C6FCFA /* scalar.cpp in Sources */,
+				0672FFBD1AF15DFD00C80DFF /* Block.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		060323281AED2B32004313AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/judd/local/src/jvsip/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/judd/local/src/jvsip/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		060323291AED2B32004313AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/judd/local/src/jvsip/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/judd/local/src/jvsip/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		06A0EFAF1AE7631A00D299EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/judd/local/src/jvsip/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/judd/local/src/jvsip/lib,
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		06A0EFB01AE7631A00D299EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Users/judd/local/src/jvsip/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/judd/local/src/jvsip/lib,
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		06C68A7E1AE5775000615DCF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -188,26 +438,70 @@
 		06C68A811AE5775000615DCF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../lib";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../include",
+					/Users/judd/local/src/jvsip/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/judd/local/src/jvsip/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = /Users/judd/local/src/include;
 			};
 			name = Debug;
 		};
 		06C68A821AE5775000615DCF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../lib";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../include",
+					/Users/judd/local/src/jvsip/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/judd/local/src/jvsip/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = /Users/judd/local/src/include;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0603232A1AED2B32004313AA /* Build configuration list for PBXNativeTarget "test2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				060323281AED2B32004313AA /* Debug */,
+				060323291AED2B32004313AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06A0EFB11AE7631A00D299EE /* Build configuration list for PBXNativeTarget "test1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06A0EFAF1AE7631A00D299EE /* Debug */,
+				06A0EFB01AE7631A00D299EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		06C68A771AE5775000615DCF /* Build configuration list for PBXProject "cppJvsip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -224,6 +518,7 @@
 				06C68A821AE5775000615DCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

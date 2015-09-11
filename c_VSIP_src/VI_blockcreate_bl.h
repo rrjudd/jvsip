@@ -21,7 +21,7 @@
 static
 vsip_block_bl* 
 VI_blockcreate_bl(
-  size_t N, 
+  vsip_length N, 
   vsip_memory_hint h) {
   vsip_block_bl* b = (vsip_block_bl*)malloc(sizeof(vsip_block_bl));
   if(b != NULL){

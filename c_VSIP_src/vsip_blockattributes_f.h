@@ -43,7 +43,7 @@ struct vsip_blockattributes_f {
   int              kind;       /* 0 ==> private, 1 ==> public, 2==> derived              */
   int              admit;      /* 0 ==> No,      1 ==> Yes                               */
   vsip_stride      rstride;    /* real block stride; stride = view_stride * block_stride */
-  size_t           size;       /* block size in elements                                 */
+  vsip_length      size;       /* block size in elements                                 */
   int              bindings;   /* reference counter                                      */
   int              markings;   /* valid|destoyed block object                            */
   vsip_memory_hint hint;       /* Not used in this implementation                        */

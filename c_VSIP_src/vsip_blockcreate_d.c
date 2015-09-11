@@ -16,7 +16,7 @@
 #include<vsip_blockattributes_d.h>
 
 vsip_block_d* (vsip_blockcreate_d)(
-  size_t N, 
+  vsip_length N, 
   vsip_memory_hint h) {
   vsip_block_d* b = (vsip_block_d*)malloc(sizeof(vsip_block_d));
   if(b != NULL){

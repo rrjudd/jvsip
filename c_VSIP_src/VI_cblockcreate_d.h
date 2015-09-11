@@ -23,7 +23,7 @@
 static
 vsip_cblock_d* 
 VI_cblockcreate_d(
-   size_t N, 
+   vsip_length N, 
    vsip_memory_hint h) {
   vsip_cblock_d* b = (vsip_cblock_d*)malloc(sizeof(vsip_cblock_d));
   if(b != NULL){

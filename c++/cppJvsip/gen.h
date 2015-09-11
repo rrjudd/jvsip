@@ -8,12 +8,26 @@
 
 #ifndef jvsip_pp0_gen_h
 #define jvsip_pp0_gen_h
-#include <cassert>
 #include "support.h"
-extern "C"{
-#include<vsip.h>
-}
 namespace vsip {
+    vsip_vview_vi * fill(vsip_scalar_vi x0, vsip_length l){
+        vsip_vview_vi *v;create(&v,l);
+        vsip_vfill_vi(x0,v);
+        return v;
+    }
+    vsip_vview_vi * fill(vsip_scalar_vi x0, vsip_vview_vi *v){
+        vsip_vfill_vi(x0,v);
+        return v;
+    }
+    vsip_vview_i * fill(vsip_scalar_i x0, vsip_length l){
+        vsip_vview_i *v;create(&v,l);
+        vsip_vfill_i(x0,v);
+        return v;
+    }
+    vsip_vview_i * fill(vsip_scalar_i x0, vsip_vview_i *v){
+        vsip_vfill_i(x0,v);
+        return v;
+    }
    vsip_vview_f * fill(vsip_scalar_f x0, vsip_length l){
       vsip_vview_f *v;create(&v,l);
       vsip_vfill_f(x0,v);

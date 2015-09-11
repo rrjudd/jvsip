@@ -32,3 +32,29 @@ void vsip\_cblockdestroy\_f(vsip\_cblock\_f*);\\
 \end{tabular}
 }}
 \\\pyjvsiph
+\\ \hspace*{.8cm}\parbox{.9\textwidth}{For \pyjv{} a block class has been defined. Methods which expand on the functionality of \cvl{} have been defined.  The \ttbf{Block} object will contain a reference to a \cvl{} block. This block is freed when the \pyjv{} block is destroyed.}
+\\[6pt] \hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
+\hspace*{1.1cm}\parbox{.9\textwidth}{
+No special view methods exist for the block class but a derived block will be created if a real or imaginary view is extracted from a view associated with a complex block.}
+\\[6pt]
+%%
+\hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
+%
+\hspace*{.8cm}{\textbf{Block Class Methods\vspace*{.2cm}}\\
+\hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{Block} object do\\
+\hspace*{1.cm}\ttbf{aBlock = Block(t,length)} \\
+Where \ttbf{t} is a string indicating the type of \ttbf{Block} object to create and \ttbf{length} is the number of scalar values the \ttbf{Block} object will store.}
+\\
+\begin{table}
+\caption{Types for Block Creation}
+\begin{center}\begin{tabular}{|l l|}
+%%
+\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Block Types}}}\Bs\\\hline
+'block\_d' & Real \ttbf{block}; double precision \Bs\\\hline
+'block\_f' & Real \ttbf{block}; float precision\Bs\\\hline
+'cblock\_d' & Complex \ttbf{block}; double precision\Bs\\\hline
+'cblock\_f' & Complex \ttbf{block}; float precision\Bs\\\hline
+%%%
+\end{tabular}
+\end{center}
+\end{table}

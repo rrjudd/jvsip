@@ -24,7 +24,7 @@ vsip_vview_d*
 VI_vcreate_d(
           vsip_length n, 
           vsip_memory_hint h) {
-   vsip_block_d* b = VI_blockcreate_d((size_t)n, h);
+   vsip_block_d* b = VI_blockcreate_d((vsip_length)n, h);
    vsip_vview_d* v = (vsip_vview_d*)NULL;
    if(b != (vsip_block_d*)NULL){
       v = vsip_vbind_d(b, (vsip_offset)0, (vsip_stride)1, n);

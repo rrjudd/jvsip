@@ -7,9 +7,13 @@
 //
 
 #include <iostream>
+#include <jvsiph.h>
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
+    jvsip::view aView("f",10);
+    aView.ramp(.1f, .2f);
+    jvsip::scalar aScalar(100.0f);
     return 0;
 }

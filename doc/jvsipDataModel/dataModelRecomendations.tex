@@ -1,0 +1,64 @@
+\documentclass[11pt, oneside]{article}
+\usepackage{geometry} 
+\geometry{letterpaper} 
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc} 
+\usepackage{lmodern}
+\usepackage{listings} 
+\usepackage{float}
+\usepackage{makeidx}
+\usepackage{minted}
+\usepackage[hypcap]{caption}
+\usepackage{pdflscape}
+\newcommand{\cvl}{\ttbf{C VSIPL}}
+\newcommand{\pyjv}{{\ttbf{pyJvsip}}}
+\newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
+\newcommand{\jv}{{\ttbf{JVSIP}}}
+\newcommand{\Blk}{\ttbf{Block}}
+\newcommand{\blk}{\ttbf{block}}
+\newcommand{\Vw}{\ttbf{View}}
+\newcommand{\vw}{\ttbf{view}}
+\title{JVSIP Data Model Recommendations}
+\author{Randall Judd}
+\begin{document}
+\maketitle
+\section{Recommendations for Single Thread Library Data Model}
+\subsection{Scope}
+The scope of a library implementation has become more complicated as compute hardware has become more complicated.  For this document I assume a library implementor who is implementing the library for a particular machine or a particular class of machine.   No thread library is specified and the idea of thread safe requires one.  I expect the implementor to write a library which will operate on a single thread and it is the responsibility of the User who wants to run multiple contexts to provide sufficient locks around VSIPL objects to keep the code thread safe.
+\\[6pt]
+For instance when I write the JVSIP demonstration \cvl{} library I assume only an ANSI C compliant compiler available for the platform. I assume no thread library and if the User uses one it is their responsibility to ensure their code is thread safe.  That said the underlying executable, if the compiler supports it, may have low level threads running on vector units or multiple cores of the chip.  But from the Users point of view the \cvl{} appears as a single thread.
+\\[6pt]
+An Implementor may do a lot of work to optimize their library on a particular platform, and the platform may include a great deal of concurrency which the implementor can use to optimize  VSIPL routines. These particular recommendations do not support an API which would expose that concurrency to the User program.
+\subsection{Scalars}
+Almost any scalar supported by the underlying language should be supported by the data model. Since programming languages don't all support the same types of scalars we need to keep the definitions simple. So we only consider two types of scalars.  
+\\[6pt]
+The first is primary and are those scalars which are supported at a fundamental level by a particular complier and programing language.  The second is constructed of fundamental scalar types using features available in the programing language such as type definitions, structures, and classes.
+\subsubsection{The Interface}
+In a library such as VSIPL where data are stored and processed in a batch the atomic data item (scalar) resides at an interface between the bulk data storage and the user program.  How data are stored in bulk may not be a simple interface to memory so the storage internal to a \blk{} may not be just an array of scalars.
+\subsection{\Blk{}s}
+We define a \blk{} as an abstraction of memory having an Implementor defined memory interface and providing a library interface supplying access to linear, contiguous data stored as a particular scalar type.  So to instantiate a \blk{} we need the scalar type and the number of scalars to store.  
+\begin{itemize}
+\item{A \blk{} has a method to recover the length of the \blk{}. }
+\subitem{Not currently in \cvl{}.}
+\subitem{Added in \pyjv{} as a method}
+\item{A \Blk{} has a constructor which creates a \blk{} with enough space to store a user defined number of data items of a particular scalar type.}
+\subitem{In \cvl{} this is a block create function}
+\subitem{In \pyjv{} this is a class constructor}
+\item{A \Blk{} has a constructor which creates a \blk{} with enough space to store a user defined number of data items of a particular scalar type and an association with user defined memory to allow an implementation defined interface between user data and block storage. (block bind; requires block admitt/release and rebind methods)}
+\subitem{Termed a user block}
+\subitem{In \pyjv{} this is not currently supported.}
+\subsubitem{It didn't seem to make sense for the language}
+\subsubitem{I am not quite sure how to do it.}
+\item{If a \blk{} is associated with a scalar such that the scalar is not atomic but has parts which may be associated with another scalar type and the library has functionality requiring block objects defined on these parts then the block may have associated with it special blocks called derived blocks which may be extracted from the original block.}
+\item{A \blk{} has a method or is associated with a function which allows creation of a data interface called a \vw{}. The \vw{} allows access to the block via methods or functions associated with the \vw{}.} 
+\subitem{In \cvl{} this is block bind function}
+\end{itemize}
+\subsection{\Vw{}s}
+A \Vw{} object ore \vw{} provides an interface to a selection of data in the \blk{}.  
+\subsection{Data Interface}
+\section{Recommendations for a Parallel or Multithread Library}
+\end{document}
+
+

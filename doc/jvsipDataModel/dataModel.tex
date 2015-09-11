@@ -3,7 +3,17 @@
 \geometry{letterpaper} 
 \usepackage{graphicx}
 \usepackage{minted}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc} 
+\usepackage{lmodern}
+\usepackage{listings} 
+\usepackage{float}
+\usepackage{makeidx}
+\usepackage{minted}
+\usepackage[hypcap]{caption}
+\usepackage{pdflscape}
 \newcommand{\cvl}{\ttbf{C VSIPL}}
+\newcommand{\cvpp}{\ttbf{C++ VSIPL}}
 \newcommand{\pyjv}{{\ttbf{pyJvsip}}}
 \newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
 \newcommand{\jv}{{\ttbf{JVSIP}}}
@@ -17,6 +27,7 @@
 \maketitle
 \input{dataModelIntroduction}
 \input{dataModelParts}
+\input{domains}
 \begin{figure}[t]
 \caption{VSIPL++ Strassen Routine}
 \inputminted[linenos=true,resetmargins=true,xleftmargin=.50cm,fontfamily=tt, fontsize= \small]{cpp}{./codeEx/strassFunc.cpp}
@@ -37,6 +48,30 @@
 {The \ttbf{mgetsub} routine was implemented to mimic functionality available in C++ VSIPL using \ttbf{Domain} objects (for instance see lines 27-42 of c++ Strass Example)  to define some portion of a view object as a new view object. I don't think there is a direct counterpart in \cvl{}.}
 \inputminted[linenos=true,resetmargins=true,xleftmargin=.50cm,fontfamily=tt, fontsize= \small]{python}{./codeEx/mgetsub.py}
 \end{figure}
-\end{document} 
+\begin{minipage}[c]{1\textwidth}
+\centering
+\includegraphics[width=.7\textwidth]{./InterfaceBlockMemoryRelationship}
+\captionof{figure}{Memory, Block and View Relation}
+\label{fig:MemoryBlockView}
+\end{minipage}
+\begin{minipage}[c]{1.1\textwidth}
+\centering
+\includegraphics[width=1.05\textwidth]{./BlockBasicsOne}
+\captionof{figure}{Basic Block Class for \cvl{} and Example Showing Complex and Derived Block for \jv{} \cvl{} \\[12pt]}
+\label{fig:BasicBlockOne}
+\end{minipage}
+\begin{minipage}[c]{1\textwidth}
+\centering
+\includegraphics[width=.7\textwidth]{./BlockBasicsTwo}
+\captionof{figure}{Basic Block Showing Complex and Derived \jv{} \blk{} for \cvl{} Interface \blk{}}
+\label{fig:BasicBlockTwo}
+\end{minipage}
+\begin{minipage}[c]{1\textwidth}
+\centering
+\includegraphics[width=.7\textwidth]{./BlockViewRelationshipDerived}
+\captionof{figure}{Block and View and Subview Relation}
+\label{fig:BlockViewSubview}
+\end{minipage}
+\end{document}
 
 

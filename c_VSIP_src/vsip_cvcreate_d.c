@@ -19,7 +19,7 @@
 vsip_cvview_d* (vsip_cvcreate_d)(
   vsip_length n, 
   vsip_memory_hint h) {
-   vsip_cblock_d* b = VI_cblockcreate_d((size_t)n, h);
+   vsip_cblock_d* b = VI_cblockcreate_d((vsip_length)n, h);
    vsip_cvview_d* v = (vsip_cvview_d*)NULL;
    if(b != (vsip_cblock_d*)NULL){
        v = vsip_cvbind_d(b, (vsip_offset)0, (vsip_stride)1, n);

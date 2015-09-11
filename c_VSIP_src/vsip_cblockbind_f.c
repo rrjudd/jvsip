@@ -19,7 +19,7 @@
 vsip_cblock_f* (vsip_cblockbind_f)(
   vsip_scalar_f*  const Rp,
   vsip_scalar_f*  const Ip,
-  size_t N, 
+  vsip_length N, 
   vsip_memory_hint h) {
   vsip_cblock_f* b = (vsip_cblock_f*)malloc(sizeof(vsip_cblock_f));
   if(b != (vsip_cblock_f*)NULL) b->hint = h;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0609F9091AE6149B00C6FCFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0609F9081AE6149B00C6FCFA /* main.cpp */; };
+		0609F9181AE68D1800C6FCFA /* libvsip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0609F9171AE68D1800C6FCFA /* libvsip.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		0609F9051AE6149B00C6FCFA /* supportTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = supportTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0609F9081AE6149B00C6FCFA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		0609F9171AE68D1800C6FCFA /* libvsip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvsip.a; path = ../../../lib/libvsip.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0609F9181AE68D1800C6FCFA /* libvsip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +44,7 @@
 		0609F8FC1AE6149B00C6FCFA = {
 			isa = PBXGroup;
 			children = (
+				0609F9171AE68D1800C6FCFA /* libvsip.a */,
 				0609F9071AE6149B00C6FCFA /* supportTest */,
 				0609F9061AE6149B00C6FCFA /* Products */,
 			);
@@ -205,6 +209,19 @@
 		0609F90D1AE6149B00C6FCFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../cppJvsip",
+					"$(SRCROOT)/../../../include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../lib",
+					/Users/judd/local/src/jvsip/lib,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cppJvsip-agzracixiephysbyrzmbbrpjnktj/Build/Products/Debug",
+					"/Users/judd/Library/Developer/Xcode/DerivedData/cppJvsip-agzracixiephysbyrzmbbrpjnktj/Build/Products/Debug",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -212,6 +229,19 @@
 		0609F90E1AE6149B00C6FCFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../cppJvsip",
+					"$(SRCROOT)/../../../include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../lib",
+					/Users/judd/local/src/jvsip/lib,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cppJvsip-agzracixiephysbyrzmbbrpjnktj/Build/Products/Debug",
+					"/Users/judd/Library/Developer/Xcode/DerivedData/cppJvsip-agzracixiephysbyrzmbbrpjnktj/Build/Products/Debug",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -235,6 +265,7 @@
 				0609F90E1AE6149B00C6FCFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

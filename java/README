@@ -1,1 +1,15 @@
 In this directory is Java Code for a proof-of-concept of C VSIPL working in Java. 
+
+I use SWIG and a vsip.i file created for java to create JNI code.
+
+For this example the SWIG incantation is
+swig -java -package cvsip vsip.i
+
+To create the object file for the wrapper I use (Your Include directories may not be the same)
+cc -c vsip_wrap.c -I/Users/judd/local/src/jvsip/include -I/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers
+
+
+To make the library on OS X I use
+
+To make the cvsip package do
+javac *.java
