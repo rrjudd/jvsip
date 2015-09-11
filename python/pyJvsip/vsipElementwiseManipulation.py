@@ -153,12 +153,12 @@ def cmplx(a,b,*vars):
     See VSIP specification for Information
     Convert Convert real, imaginary (a,b) into complex
     Usage:
-       rect(a,b,c)
+       cmplx(a,b,c)
     where
         a and b are views of type vview_f or vview_d
         c is a compliant view of type cvview_f or cvview_d
     OR:
-        c = rect(a,b)
+        c = cmplx(a,b)
         compliant output c is created by function call.
     """
 

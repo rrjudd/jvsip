@@ -1333,7 +1333,7 @@ class Block (object):
                'vview_mi':vsip_vputlength_mi }
             assert f.has_key(self.type),'Not a compatible type for putlength.'
             assert isinstance(l,long) or isinstance(l,int),'Length is a positive integer'
-            assert l > 1,'Length is a positive (>1) integer'
+            assert l >= 1,'Length is a positive (>=1) integer'
             assert (l-1) * self.stride + self.offset < self.block.length, 'Length to long. Exceeds block size'
             f[self.type](self.vsip,l)
             return self
@@ -2909,9 +2909,10 @@ class Block (object):
         def trans(self):
             """
             Done out of place.
-            A new block and view and view are created and the transpose
-            of the calling view is copied into it. See transview for a transpose view on
-            the same block.
+            A new block and row major view are created and the transpose of the 
+            calling view is copied into it. 
+            See transview method for a transpose view on the same block.
+            See trans function for the general case of transpose.
             Usage:
                 B=A.trans
             """
@@ -2953,21 +2954,15 @@ class Block (object):
                 return retval
         def jdot(self,other):
             assert 'pyJvsip.__View' in repr(other),'Argument must be a pyJvsip view.'
-            assert self.type.rpartition('_')[2] == other.type.rpartition('_')[2],'Precisions of input views must agree for jdot.'
+            assert self.type.rpartition('_')[2] == other.type.rpartition('_')[2],\
+            'Precisions of input views must agree for jdot.'
             f  = {  'cvview_f':vsip_cvjdot_f, 'cvview_d':vsip_cvjdot_d}
             reTypes=['vview_f','vview_d']
             imTypes=['cvview_f','cvview_d']
-            if ('vview_d' in other.type) and ('vview_f' in self.type) or \
-               ('vview_f' in other.type) and ('vview_d' in self.type):
-                print('Precision of views must agree')
-                return
             if 'cvview' in self.type and 'cvview' in other.type:
                 t=self.type
                 retval = f[t](self.vsip,other.vsip)
-                if 'cscalar' in repr(retval):
-                    return complex(retval.r,retval.i)
-                else:
-                    return retval
+                return complex(retval.r,retval.i)
             elif (self.type in reTypes) and (other.type in reTypes):
                 return self.dot(other)
             elif (self.type in imTypes) and (other.type in reTypes):
@@ -2975,7 +2970,7 @@ class Block (object):
             elif (self.type in reTypes) and (other.type in imTypes):
                 return complex(self.dot(other.realview),-self.dot(other.imagview))
             else:
-                assert False,'Input views must be float vectors of the same precision'
+                assert False,'Input views not supported by jdot'
         def permute(self,p,*major):
             """
             The permute method will permute a matrix by row or by column given an index vector.
@@ -3352,6 +3347,13 @@ class Block (object):
             else:
                 qr.prodQ('TRANS','LSIDE',A)
             return(Q,A)
+        @property
+        def qrInv(self):
+            assert QR.tSel.has_key(self.type), 'Type <:'+ self.type + ':> not supported for qrInv'
+            assert self.rowlength == self.collength, 'Method qrInv only works for square matrices'
+            retval=self.empty.identity
+            qr=self.qr
+            return qr.solveR('NTRANS',1.,qr.prodQ('NTRANS','LSIDE',retval))
         #SVD Decomposition
         @property
         def sv(self):
@@ -4434,8 +4436,8 @@ class QR(object):
         qrProd[self.type](self.vsip,QR.qOp[op],QR.qSide[side],X.vsip)
         return X
     def solveR(self,op,alpha,XB):
-        qrSol={'qr_d':vsip_qrsolr_d,'qr_f':vsip_qrsolr_f,\
-               'cqr_d':vsip_cqrsolr_d,'cqr_f':vsip_cqrsolr_f}
+        qrSol={'qr_d':vsip_qrdsolr_d,'qr_f':vsip_qrdsolr_f,\
+               'cqr_d':vsip_cqrdsolr_d,'cqr_f':vsip_cqrdsolr_f}
         assert 'pyJvsip.__View' in repr(self.__m['matrix']), 'No matrix associated with QR object.'
         assert isinstance(alpha,int) or isinstance(alpha,float) or isinstance(alpha,complex),\
             'Second argument must be a number compatible with input/output view'
@@ -4449,7 +4451,7 @@ class QR(object):
         else:
             sclr=alpha
         assert self.__rowlength == XB.rowlength,'Size error for solveR.'
-        assert self.type == tSel[XB.type], 'The input view does not comply with QR object type'
+        assert self.type == QR.tSel[XB.type], 'The input view does not comply with QR object type'
         qrSol[self.type](self.vsip,QR.qOp[op],sclr,XB.vsip)
         return XB
     def solve(self,prob,XB):
@@ -5034,7 +5036,7 @@ def listToJv(t,a):
     handle. Lists must agree with the data type t. Currently only vectors of type
     float and double are supported.
     """
-    assert t in ['vview_d','vview_f','cvview_d','cvview_d'], 'Requested type not supported'
+    assert t in ['vview_d','vview_f','cvview_d','cvview_d','vview_vi'], 'Requested type not supported'
     assert isinstance(a,list),'Input must be a list'
     n=len(a)
     v=create(t,n)
@@ -5100,3 +5102,19 @@ def sizeIn(s,opMat,opSide):
         else: #must be TRANS or HERM
             m = 0; n = s[1]
     return(m,n)
+def reshape(x,cl,rl):
+    """Return matrix view of vector; column major. In Place Operation.
+    """
+    assert 'vview' in x.type,'input view must be a vector for reshape'
+    assert cl*rl==x.length, 'size of input data must agree with size of output data'
+    return x.block.bind(x.offset,x.stride,cl,x.stride*cl,rl)
+def flattenByCol(A):
+    """ Turn matrix into vector by column.  Out of place operation
+    """
+    B=A.copycm
+    return B.block.bind(0,1,A.rowlength*A.collength)
+def flattenByRow(A):
+    """ Turn matrix into vector by row.  Out of place operation
+    """
+    B=A.copyrm
+    return B.block.bind(0,1,A.rowlength*A.collength)
