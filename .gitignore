@@ -31,3 +31,8 @@ Untitled*
 *.so
 *~
 .DS_Store
+/java/JavaJniVsipLib/nbproject/private/
+/java/cvsip/nbproject/private/
+/java/cvsip/dist/
+/java/JavaVsip/nbproject/private/
+/java/JavaVsip/dist/
