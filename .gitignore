@@ -31,3 +31,5 @@ Untitled*
 *.so
 *~
 .DS_Store
+/java/vsip/jvsip/javaEx/nbproject/private/
+
