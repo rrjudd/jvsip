@@ -10,3 +10,5 @@ with libvsip.a .
 
 There are other ways to make this library and lots of flags you can try. This is the most brain dead way if you just want to try it out; don't know a lot about C or libraries; and can't get the Makefile to work properly for you. This code
 depends only on an ansi C89 compliant compiler to build.
+
+For minor version 0.3.0 the major change is moving long integer code to use _li as the precision indicator.  Previously I was using _l but that is defined as long double and _li is long integer.  This mistake has been in the code for years and I only just noticed it. If people have problems email me.
