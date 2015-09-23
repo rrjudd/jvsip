@@ -23,7 +23,11 @@ static void svd6_f(void){
       vsip_mview_f *V = vsip_mcreate_f(N,N,VSIP_ROW,VSIP_MEM_NONE);
       vsip_mview_f *B = vsip_mcreate_f(M,N,VSIP_ROW,VSIP_MEM_NONE);
       vsip_vrandn_f(state,va0);
+      /* Numbers below using gcc from Xcode7 upgrade fail accuracy test */
+      /* gcc-5 using homebrew instalation in /usr/local/bin works */
       vsip_svmul_f(1E-10,va0,va0);
+      /* Numbers below pass accuracy test for Xcode7 version of gcc */
+      /*vsip_svmul_f(1E-8,va0,va0);*/
       vsip_mcopy_f_f(A0,A);
       if(vsip_svd_f(svd,A,s)){
          printf("svd error\n");
