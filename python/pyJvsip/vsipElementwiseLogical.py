@@ -25,23 +25,23 @@ def leq(a,b,c):
        'vview_ivview_ivview_bl':vsip_vleq_i,
        'vview_sivview_sivview_bl':vsip_vleq_si,
        'vview_ucvview_ucvview_bl':vsip_vleq_uc}
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in leq'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in leq'
     assert __isSizeCompatible(b,c),'Size error in leq'
     assert 'view_bl' in c.type, 'Argument c must be a boolean'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
         a0=a
     else:
-        assert 'pyJvsip.__View' in repr(a),\
+        assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object or scalar in leq'
         assert __isSizeCompatible(a,c),'Size error in leq'
         t1=a.type
         a0=a.vsip
     t=t1+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for leq'
+    assert t in f,'Type <:'+t+':> not recognized for leq'
     f[t](a0,b.vsip,c.vsip)
     return c
 
@@ -57,23 +57,23 @@ def lge(a,b,c):
        'vview_ivview_ivview_bl':vsip_vlge_i,
        'vview_sivview_sivview_bl':vsip_vlge_si,
        'vview_ucvview_ucvview_bl':vsip_vlge_uc}
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in lge'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in lge'
     assert __isSizeCompatible(b,c),'Size error in lge'
     assert 'view_bl' in c.type, 'Argument c must be a boolean'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
         a0=a
     else:
-        assert 'pyJvsip.__View' in repr(a),\
+        assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object or scalar in lge'
         assert __isSizeCompatible(a,c),'Size error in lge'
         t1=a.type
         a0=a.vsip
     t=t1+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for lge'
+    assert t in f,'Type <:'+t+':> not recognized for lge'
     f[t](a0,b.vsip,c.vsip)
     return c 
 
@@ -89,23 +89,23 @@ def lgt(a,b,c):
        'vview_ivview_ivview_bl':vsip_vlgt_i,
        'vview_sivview_sivview_bl':vsip_vlgt_si,
        'vview_ucvview_ucvview_bl':vsip_vlgt_uc}
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in lgt'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in lgt'
     assert __isSizeCompatible(b,c),'Size error in lgt'
     assert 'view_bl' in c.type, 'Argument c must be a boolean'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
         a0=a
     else:
-        assert 'pyJvsip.__View' in repr(a),\
+        assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object or scalar in lgt'
         assert __isSizeCompatible(a,c),'Size error in lgt'
         t1=a.type
         a0=a.vsip
     t=t1+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for lgt'
+    assert t in f,'Type <:'+t+':> not recognized for lgt'
     f[t](a0,b.vsip,c.vsip)
     return c 
 
@@ -121,23 +121,23 @@ def lle(a,b,c):
        'vview_ivview_ivview_bl':vsip_vlle_i,
        'vview_sivview_sivview_bl':vsip_vlle_si,
        'vview_ucvview_ucvview_bl':vsip_vlle_uc}
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in lle'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in lle'
     assert __isSizeCompatible(b,c),'Size error in lle'
     assert 'view_bl' in c.type, 'Argument c must be a boolean'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
         a0=a
     else:
-        assert 'pyJvsip.__View' in repr(a),\
+        assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object or scalar in lle'
         assert __isSizeCompatible(a,c),'Size error in lle'
         t1=a.type
         a0=a.vsip
     t=t1+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for lle'
+    assert t in f,'Type <:'+t+':> not recognized for lle'
     f[t](a0,b.vsip,c.vsip)
     return c
 
@@ -153,23 +153,23 @@ def llt(a,b,c):
        'vview_ivview_ivview_bl':vsip_vllt_i,
        'vview_sivview_sivview_bl':vsip_vllt_si,
        'vview_ucvview_ucvview_bl':vsip_vllt_uc}
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in llt'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in llt'
     assert __isSizeCompatible(b,c),'Size error in llt'
     assert 'view_bl' in c.type, 'Argument c must be a boolean'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
         a0=a
     else:
-        assert 'pyJvsip.__View' in repr(a),\
+        assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object or scalar in llt'
         assert __isSizeCompatible(a,c),'Size error in llt'
         t1=a.type
         a0=a.vsip
     t=t1+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for llt'
+    assert t in f,'Type <:'+t+':> not recognized for llt'
     f[t](a0,b.vsip,c.vsip)
     return c
 
@@ -185,22 +185,22 @@ def lne(a,b,c):
        'vview_ivview_ivview_bl':vsip_vlne_i,
        'vview_sivview_sivview_bl':vsip_vlne_si,
        'vview_ucvview_ucvview_bl':vsip_vlne_uc}
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in lne'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in lne'
     assert __isSizeCompatible(b,c),'Size error in lne'
     assert 'view_bl' in c.type, 'Argument c must be a boolean'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
         a0=a
     else:
-        assert 'pyJvsip.__View' in repr(a),\
+        assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object or scalar in lne'
         assert __isSizeCompatible(a,c),'Size error in lne'
         t1=a.type
         a0=a.vsip
     t=t1+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for lne'
+    assert t in f,'Type <:'+t+':> not recognized for lne'
     f[t](a0,b.vsip,c.vsip)
     return c

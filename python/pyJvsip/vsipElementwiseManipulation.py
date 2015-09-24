@@ -3,7 +3,7 @@ from vsip import *
 def __iscompatible(a,b):
     chk = True
     msg='None'
-    if ('pyJvsip.__View' not in repr(a)) or ('pyJvsip.__View' not in repr(b)):
+    if ('pyJvsip' not in repr(a)) or ('pyJvsip' not in repr(b)):
         chk = False
         msg='Input must be a pyJvsip View'
     elif a.type != b.type:
@@ -39,7 +39,7 @@ def swap(a,b):
     chk, msg = __iscompatible(a,b)
     assert chk, msg
     t=a.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for swap'
+    assert t in f, 'Type <:' +t+ ':> not supported for swap'
     f[a.type](a.vsip,b.vsip)
 
 # vsip_dsgather_p 
@@ -54,11 +54,11 @@ def gather(a,b,c):
        'vview_ivview_vivview_i':vsip_vgather_i, 'vview_sivview_vivview_si':vsip_vgather_si,
        'vview_ucvview_vivview_uc':vsip_vgather_uc, 'vview_mivview_vivview_mi':vsip_vgather_mi,
        'vview_vivview_vivview_vi':vsip_vgather_vi}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function gather'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function gather'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function gather'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function gather'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function gather'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in function gather'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for gather'
+    assert t in f, 'Type <:' +t+ ':> not supported for gather'
     assert __isSizeCompatible(b,c),'Index vector must be the same length as output vector'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
@@ -74,11 +74,11 @@ def scatter(a,b,c):
        'vview_dvview_dvview_vi':vsip_vscatter_d, 'vview_fvview_fvview_vi':vsip_vscatter_f,
        'vview_i,vview_i,vview_vi':vsip_vscatter_i, 'vview_sivview_sivview_vi':vsip_vscatter_si,
        'vview_ucvview_ucvview_vi':vsip_vscatter_uc}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function scatter'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function scatter'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function scatter'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function scatter'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function scatter'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in function scatter'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for scatter'
+    assert t in f, 'Type <:' +t+ ':> not supported for scatter'
     assert __isSizeCompatible(a,c),'Index vector must be the same length as input vector'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
@@ -99,16 +99,16 @@ def rect(a,b,*vars):
     """
     f={'vview_dvview_dcvview_d':vsip_vrect_d, 'vview_fvview_fcvview_f':vsip_vrect_f,
        'mview_dmview_dcmview_d':vsip_mrect_d, 'mview_fmview_fcmview_f':vsip_mrect_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function rect'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function rect'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function rect'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function rect'
     assert len(vars) < 2, 'To many arguments to rect function'
     if len(vars) == 1:
         c = vars[0]
     else:
         c = a.otherEmpty
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function rect'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in function rect'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for rect'
+    assert t in f, 'Type <:' +t+ ':> not supported for rect'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in rect'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
@@ -122,10 +122,10 @@ def real(a,b):
     """
     f={'cvview_dvview_d':vsip_vreal_d, 'cvview_fvview_f':vsip_vreal_f,
        'cmview_dmview_d':vsip_mreal_d, 'cmview_fmview_f':vsip_mreal_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function real'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function real'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function real'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function real'
     t=a.type+b.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for real'
+    assert t in f, 'Type <:' +t+ ':> not supported for real'
     assert __isSizeCompatible(a,b),'Size error in real'
     f[t](a.vsip,b.vsip)
     return b
@@ -139,10 +139,10 @@ def imag(a,b):
     """
     f={'cvview_dvview_d':vsip_vimag_d, 'cvview_fvview_f':vsip_vimag_f,
        'cmview_dmview_d':vsip_mimag_d, 'cmview_fmview_f':vsip_mimag_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function imag'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function imag'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function imag'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function imag'
     t=a.type+b.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for imag'
+    assert t in f, 'Type <:' +t+ ':> not supported for imag'
     assert __isSizeCompatible(a,b),'Size error in imag'
     f[t](a.vsip,b.vsip)
     return b
@@ -166,16 +166,16 @@ def cmplx(a,b,*vars):
        'vview_fvview_fcvview_f':vsip_vcmplx_f,
        'mview_dmview_dcmview_d':vsip_mcmplx_d,
        'mview_fmview_fcmview_f':vsip_mcmplx_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function cmplx'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function cmplx'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function cmplx'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function cmplx'
     assert len(vars) < 2, 'To many arguments to rect function'
     if len(vars) == 1:
         c = vars[0]
     else:
         c = a.otherEmpty
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function cmplx'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in function cmplx'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for cmplx'
+    assert t in f, 'Type <:' +t+ ':> not supported for cmplx'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in cmplx'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
@@ -198,7 +198,7 @@ def polar(a,*vars):
        'cvview_fvview_fvview_f':vsip_vpolar_f,
        'cmview_dmview_dmview_d':vsip_mpolar_d,
        'cmview_fmview_fmview_f':vsip_mpolar_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in function polar'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in function polar'
     assert len(vars) < 3, 'To many arguments to function polar'
     assert len(vars) == 2 or len(vars) == 0, 'In Polar argument two and three must both be present or both be absent'
     if len(vars) == 0:
@@ -207,11 +207,11 @@ def polar(a,*vars):
     else:
         b=vars[0]
         c=vars[1]
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in function polar'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in function polar'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in function polar'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in function polar'
     
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:' +t+ ':> not supported for polar'
+    assert t in f, 'Type <:' +t+ ':> not supported for polar'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),'Size error in polar'
     f[t](a.vsip,b.vsip,c.vsip)
     return(b,c)

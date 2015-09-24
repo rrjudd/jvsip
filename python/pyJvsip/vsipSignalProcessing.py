@@ -31,12 +31,12 @@ def histo(a,b_min,b_max,op,b):
        'vview_fvview_f':vsip_vhisto_f,
        'vview_ivview_i':vsip_vhisto_i,
        'vview_sivview_si':vsip_vhisto_si}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Input argument must be a pyJvsip view object for function histo'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Output argument must be a pyJvsip view object for function histo'
     t=a.type+b.type
-    assert f.has_key(t),'Type <:'+t+':> not supported for freqswap'
+    assert t in f,'Type <:'+t+':> not supported for freqswap'
     assert (isinstance(b_min,float) or isinstance(b_min,int)) and \
            (isinstance(b_max,float) or isinstance(b_max,int))
     if op == 1:
@@ -77,9 +77,9 @@ def freqswap(a):
        'vview_f':vsip_vfreqswap_f,
        'cmview_f':vsip_cmfreqswap_f,
        'mview_f':vsip_mfreqswap_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument must be a pyJvsip view object for function freqswap'
     t=a.type
-    assert f.has_key(t),'Type <:%s:> not supported for freqswap'%t
+    assert t in f,'Type <:%s:> not supported for freqswap'%t
     f[t](a.vsip)
     return a

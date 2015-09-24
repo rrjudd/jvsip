@@ -34,17 +34,17 @@ def clip(a,t1,t2,c1,c2,r):
        'vview_i':vsip_vclip_i,
        'vview_si':vsip_vclip_si,
        'vview_uc':vsip_vclip_uc}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in clip'
-    assert 'pyJvsip.__View' in repr(r),\
+    assert 'pyJvsip' in repr(r),\
            'Argument six must be a pyJvsip view object in clip'
     assert a.type == r.type,'Input and output views for clip must be the same type'
     assert __isSizeCompatible(a,r),'Input and output views for clip must be the same size'
-    assert f.has_key(a.type),'Type <:'+a.type+':> not supported for clip'
-    assert isinstance(t1,int) or isinstance(t1,float) or isinstance(t1,long)
-    assert isinstance(t2,int) or isinstance(t2,float) or isinstance(t2,long)
-    assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
-    assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
+    assert a.type in f,'Type <:'+a.type+':> not supported for clip'
+    assert isinstance(t1,int) or isinstance(t1,float)
+    assert isinstance(t2,int) or isinstance(t2,float) 
+    assert isinstance(c1,int) or isinstance(c1,float) 
+    assert isinstance(c2,int) or isinstance(c2,float) 
     f[a.type](a.vsip,t1,t2,c1,c2,r.vsip)
     return r
 # vsip_sinvclip_p
@@ -59,18 +59,18 @@ def invclip(a,t1,t2,t3,c1,c2,r):
        'vview_i':vsip_vinvclip_i,
        'vview_si':vsip_vinvclip_si,
        'vview_uc':vsip_vinvclip_uc}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in invclip'
-    assert 'pyJvsip.__View' in repr(r),\
+    assert 'pyJvsip' in repr(r),\
            'Argument seven must be a pyJvsip view object in invclip'
     assert a.type == r.type,'Input and output views for invclip must be the same type'
     assert __isSizeCompatible(a,r),'Input and output views for invclip must be the same size'
-    assert f.has_key(a.type),'Type <:'+a.type+':> not supported for invclip'
-    assert isinstance(t1,int) or isinstance(t1,float) or isinstance(t1,long)
-    assert isinstance(t2,int) or isinstance(t2,float) or isinstance(t2,long)
-    assert isinstance(t3,int) or isinstance(t3,float) or isinstance(t3,long)
-    assert isinstance(c1,int) or isinstance(c1,float) or isinstance(c1,long)
-    assert isinstance(c2,int) or isinstance(c2,float) or isinstance(c2,long)
+    assert a.type in f,'Type <:'+a.type+':> not supported for invclip'
+    assert isinstance(t1,int) or isinstance(t1,float) 
+    assert isinstance(t2,int) or isinstance(t2,float) 
+    assert isinstance(t3,int) or isinstance(t3,float) 
+    assert isinstance(c1,int) or isinstance(c1,float) 
+    assert isinstance(c2,int) or isinstance(c2,float) 
     f[a.type](a.vsip,t1,t2,t3,c1,c2,r.vsip)
     return r
 
@@ -88,12 +88,12 @@ def indexbool(a,b):
     """
     f={'mview_blvview_mi':vsip_mindexbool,
        'vview_blvview_vi':vsip_vindexbool }
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in indexbool'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in indexbool'
     t=a.type+b.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by indexbool'
+    assert t in f,'Type <:'+t+':> not supported by indexbool'
     return f[t](a.vsip,b.vsip)
 
 # vsip_smax_p
@@ -104,16 +104,16 @@ def max(a,b,c):
        'mview_fmview_fmview_f':vsip_mmax_f,
        'vview_dvview_dvview_d':vsip_vmax_d,
        'vview_fvview_fvview_f':vsip_vmax_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in max'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument two must be a pyJvsip view object in max'
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument three must be a pyJvsip view object in max'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in max'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by max'
+    assert t in f,'Type <:'+t+':> not supported by max'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 
@@ -125,16 +125,16 @@ def maxmg(a,b,c):
        'mview_fmview_fmview_f':vsip_mmaxmg_f,
        'vview_dvview_dvview_d':vsip_vmaxmg_d,
        'vview_fvview_fvview_f':vsip_vmaxmg_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in maxmg'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in maxmg'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in maxmg'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in maxmg'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by maxmg'
+    assert t in f,'Type <:'+t+':> not supported by maxmg'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 
@@ -146,16 +146,16 @@ def cmaxmgsq(a,b,c):
        'cmview_fcmview_fmview_f':vsip_mcmaxmgsq_f,
        'cvview_dcvview_dvview_d':vsip_vcmaxmgsq_d,
        'cvview_fcvview_fvview_f':vsip_vcmaxmgsq_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in cmaxmgsq'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in cmaxmgsq'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in cmaxmgsq'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in cmaxmgsq'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by cmaxmgsq'
+    assert t in f,'Type <:'+t+':> not supported by cmaxmgsq'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 
@@ -167,16 +167,16 @@ def min(a,b,c):
        'mview_fmview_fmview_f':vsip_mmin_f,
        'vview_dvview_dvview_d':vsip_vmin_d,
        'vview_fvview_fvview_f':vsip_vmin_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in min'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in min'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in min'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in min'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by min'
+    assert t in f,'Type <:'+t+':> not supported by min'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 
@@ -188,16 +188,16 @@ def minmg(a,b,c):
        'mview_fmview_fmview_f':vsip_mminmg_f,
        'vview_dvview_dvview_d':vsip_vminmg_d,
        'vview_fvview_fvview_f':vsip_vminmg_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in minmg'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in minmg'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in minmg'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in minmg'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by minmg'
+    assert t in f,'Type <:'+t+':> not supported by minmg'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 
@@ -209,15 +209,15 @@ def cminmgsq(a,b,c):
        'cmview_fcmview_fmview_f':vsip_mcminmgsq_f,
        'cvview_dcvview_dvview_d':vsip_vcminmgsq_d,
        'cvview_fcvview_fvview_f':vsip_vcminmgsq_f}
-    assert 'pyJvsip.__View' in repr(a),\
+    assert 'pyJvsip' in repr(a),\
            'Argument one must be a pyJvsip view object in cminmgsq'
-    assert 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(b),\
            'Argument two must be a pyJvsip view object in cminmgsq'
-    assert 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(c),\
            'Argument three must be a pyJvsip view object in cminmgsq'
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
            'Size error in minmgsq'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not supported by cminmgsq'
+    assert t in f,'Type <:'+t+':> not supported by cminmgsq'
     f[t](a.vsip,b.vsip,c.vsip)
     return c

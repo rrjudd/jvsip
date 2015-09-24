@@ -23,7 +23,7 @@ def bb_and(a,b,c):
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
         'Size error in function and'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported for function bb_and.'
+    assert t in f, 'Type <:'+t+':> not supported for function bb_and.'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 #vsip_snot_p
@@ -37,7 +37,7 @@ def bb_not(a,b):
        'vview_ucvview_uc':vsip_vnot_uc}
     assert __isSizeCompatible(a,b),'Size error in function bb_not'
     t=a.type+b.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported for function not.'
+    assert t in f, 'Type <:'+t+':> not supported for function not.'
     f[t](a.vsip,b.vsip)
     return b
 
@@ -53,7 +53,7 @@ def bb_or(a,b,c):
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
         'Size error in function or'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported for function or.'
+    assert t in f, 'Type <:'+t+':> not supported for function or.'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 #vsip_sxor_p
@@ -68,6 +68,6 @@ def bb_xor(a,b,c):
     assert __isSizeCompatible(a,b) and __isSizeCompatible(a,c),\
         'Size error in function xor'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported for function xor.'
+    assert t in f, 'Type <:'+t+':> not supported for function xor.'
     f[t](a.vsip,b.vsip,c.vsip)
     return c

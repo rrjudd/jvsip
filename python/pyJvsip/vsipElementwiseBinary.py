@@ -10,7 +10,7 @@ def __isSizeCompatible(a,b):
     else:
         return False
 def __isView(a):
-    return 'pyJvsip.__View' in repr(a)
+    return 'pyJvsip' in repr(a)
 def add(a,b,c):
     """
     The add function includes view+view adds and scalar+view adds.
@@ -35,14 +35,14 @@ def add(a,b,c):
     assert __isView(b),'Argument two must be a pyJvsip view object in add'
     assert __isView(c),'Argument three must be a pyJvsip view object in add'
     assert __isSizeCompatible(b,c),'Size error in add function'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int)  or isinstance(a,float):
         t='scalar'+b.type+c.type
     elif isinstance(a,complex):
         t='cscalar'+b.type+c.type
     else:
         assert __isView(a),'Argument one must be a scalar or a pyJvsip view object in add'
         t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for add'
+    assert t in f, 'Type <:'+t+':> not recognized for add'
     if 'cscalar' in t:
         if 'view_d' in t:
             f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
@@ -77,24 +77,24 @@ def div(a,b,c):
        'scalarvview_dvview_d':vsip_svdiv_d, 'scalarvview_fvview_f':vsip_svdiv_f,
        'cscalarcmview_dcmview_d':vsip_csmdiv_d, 'cscalarcmview_fcmview_f':vsip_csmdiv_f,
        'cscalarcvview_dcvview_d':vsip_csvdiv_d, 'cscalarcvview_fcvview_f':vsip_csvdiv_f}
-    assert 'pyJvsip.__View' in repr(c),'Argument 3 is not a pyJvsip view in div'
+    assert 'pyJvsip' in repr(c),'Argument 3 is not a pyJvsip view in div'
     t3=c.type
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t1='scalar'
     elif isinstance(a,complex):
         t1='cscalar'
     else:
-        assert 'pyJvsip.__View' in repr(a),'Argument one must be a scalar or a pyJvsip view object in div'
+        assert 'pyJvsip' in repr(a),'Argument one must be a scalar or a pyJvsip view object in div'
         assert __isSizeCompatible(a,c), err1
         t1=a.type
-    if isinstance(b,int) or isinstance(b,long) or isinstance(b,float):
+    if isinstance(b,int) or isinstance(b,float):
         t2='scalar'
     else:
-        assert 'pyJvsip.__View' in repr(b),'Argument two must be a real scalar or a pyJvsip view object in div'
+        assert 'pyJvsip' in repr(b),'Argument two must be a real scalar or a pyJvsip view object in div'
         assert __isSizeCompatible(b,c), err2
         t2=b.type
     t=t1+t2+t3
-    assert f.has_key(t),'Type <:'+t+':> not recognized for div'
+    assert t in f,'Type <:'+t+':> not recognized for div'
     if 'cscalar' in t1:
         if 'vview_d' in t3:
             f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
@@ -126,17 +126,17 @@ def mul(a,b,c):
        'scalarvview_ucvview_uc':vsip_svmul_uc, 'vview_dvview_dvview_d':vsip_vmul_d,
        'vview_fvview_fvview_f':vsip_vmul_f, 'vview_ivview_ivview_i':vsip_vmul_i,
        'vview_sivview_sivview_si':vsip_vmul_si, 'vview_ucvview_ucvview_uc':vsip_vmul_uc}
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in mul'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in mul'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in mul'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in mul'
     assert __isSizeCompatible(b,c),'Size error in mul function'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int)  or isinstance(a,float):
         t='scalar'+b.type+c.type
     elif isinstance(a,complex):
         t='cscalar'+b.type+c.type
     else:
-        assert 'pyJvsip.__View' in repr(a),'Argument one must be a scalar or a pyJvsip view object in mul'
+        assert 'pyJvsip' in repr(a),'Argument one must be a scalar or a pyJvsip view object in mul'
         t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for mul'
+    assert t in f, 'Type <:'+t+':> not recognized for mul'
     if 'cscalar' in t:
         if 'view_d' in t:
             f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
@@ -154,7 +154,7 @@ def jmul(a,b,c):
     assert __isView(b),'Argument two must be a pyJvsip view object in jmul'
     assert __isView(c),'Argument two must be a pyJvsip view object in jmul'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for jmul'
+    assert t in f, 'Type <:'+t+':> not recognized for jmul'
     assert __isSizeCompatible(a,c), 'Argument one and argument three must be the same size in jmul'
     assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in jmul'
     f[t](a.vsip,b.vsip,c.vsip)
@@ -176,11 +176,11 @@ def vmmul(a,b,c):
        'vview_fmview_fmview_f':vsip_vmmul_f,
        'vview_dcmview_dcmview_d':vsip_rvcmmul_d,
        'vview_fcmview_fcmview_f':vsip_rvcmmul_f}
-    assert 'pyJvsip.__View' in repr(a),'Argument one must be a pyJvsip view object in mmul'
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in mmul'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in mmul'
+    assert 'pyJvsip' in repr(a),'Argument one must be a pyJvsip view object in mmul'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in mmul'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in mmul'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for mmul'
+    assert t in f, 'Type <:'+t+':> not recognized for mmul'
     assert __isSizeCompatible(b,c), 'Argument two and argument three must be the same size in mmul'
     if 'COL' in a.major:
         assert a.length == b.collength, err1
@@ -217,17 +217,17 @@ def sub(a,b,c):
         'scalarvview_vivview_vi':vsip_svsub_vi, 'vview_dvview_dvview_d':vsip_vsub_d,
         'vview_fvview_fvview_f':vsip_vsub_f, 'vview_ivview_ivview_i':vsip_vsub_i,
         'vview_sivview_sivview_si':vsip_vsub_si, 'vview_ucvview_ucvview_uc':vsip_vsub_uc}
-    assert 'pyJvsip.__View' in repr(b),'Argument two must be a pyJvsip view object in sub'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view object in sub'
+    assert 'pyJvsip' in repr(b),'Argument two must be a pyJvsip view object in sub'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view object in sub'
     assert __isSizeCompatible(b,c),'Size error in sub function'
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t='scalar'+b.type+c.type
     elif isinstance(a,complex):
         t='cscalar'+b.type+c.type
     else:
-        assert 'pyJvsip.__View' in repr(a),'Argument one must be a scalar or a pyJvsip view object in sub'
+        assert 'pyJvsip' in repr(a),'Argument one must be a scalar or a pyJvsip view object in sub'
         t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for add'
+    assert t in f, 'Type <:'+t+':> not recognized for add'
     if 'cscalar' in t:
         if 'view_d' in t:
             f[t](vsip_cmplx_d(a.real,a.imag),b.vsip,c.vsip)
@@ -257,19 +257,19 @@ def expoavg(a,b,c):
        'scalarvview_dvview_d':vsip_vexpoavg_d,
        'scalarvview_fvview_f':vsip_vexpoavg_f}
     assert isinstance(a,int) or isinstance(a,float),'Argument one of expoavg is a scalar float'
-    assert 'pyJvsip.__View' in repr(b) and 'vview' in b.type,'Argument two of expoavg should b a vector view'
-    assert 'pyJvsip.__View' in repr(c),'Argument three must be a pyJvsip view in expoavg'
+    assert 'pyJvsip' in repr(b) and 'vview' in b.type,'Argument two of expoavg should b a vector view'
+    assert 'pyJvsip' in repr(c),'Argument three must be a pyJvsip view in expoavg'
     assert __isSizeCompatible(b,c),'Arguments two and three must be the same size in expoavg'
     assert c.type == b.type, 'Arguments two and three must be views of the same type'
     t='scalar'+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for expoavg'
+    assert t in f,'Type <:'+t+':> not recognized for expoavg'
     f[t](a,b.vsip,c.vsip)
     return c
 def hypot(a,b,c):
     """
     See VSIP specification for information on hypot.
     """
-    t0='pyJvsip.__View'
+    t0='pyJvsip'
     err1='Arguments must be a pyJvsip view'
     err2='Arguments are not of the same size'
     f={'mview_dmview_dmview_d':vsip_mhypot_d,
@@ -279,7 +279,7 @@ def hypot(a,b,c):
     assert t0 in repr(a) and t0 in repr(b) and t0 in repr(c),err1
     assert __isSizeCompatible(a,c) and __isSizeCompatible(b,c),err2
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for hypot'
+    assert t in f,'Type <:'+t+':> not recognized for hypot'
     f[t](a.vsip,b.vsip,c.vsip)
     return c
 

@@ -5,7 +5,7 @@ def __iscompatible(a,b):
     """
     chk = True
     msg='None'
-    if ('pyJvsip.__View' not in repr(a)) or ('pyJvsip.__View' not in repr(b)):
+    if ('pyJvsip' not in repr(a)) or ('pyJvsip' not in repr(b)):
         chk = False
         msg='Input must be a pyJvsip View'
     elif a.type != b.type:
@@ -25,9 +25,9 @@ def acos(a,b):
     mf={'mview_f':vsip_macos_f,'mview_d':vsip_macos_d}
     chk , msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for acos')
@@ -41,9 +41,9 @@ def asin(a,b):
     mf={'mview_f':vsip_masin_f,'mview_d':vsip_masin_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for asin')
@@ -57,9 +57,9 @@ def atan(a,b):
     mf={'mview_f':vsip_matan_f,'mview_d':vsip_matan_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for atan')
@@ -75,9 +75,9 @@ def atan2(a,b,c):
     if chk:
         chk, msg =__iscompatible(a,c)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip,c.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip,c.vsip)
         else:
             print('Type <:'+a.type+':> not supported for atan2')
@@ -91,9 +91,9 @@ def cos(a,b):
     mf={'mview_f':vsip_mcos_f,'mview_d':vsip_mcos_d}
     chk , msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for cos')
@@ -107,9 +107,9 @@ def cosh(a,b):
     mf={'mview_f':vsip_mcosh_f,'mview_d':vsip_mcosh_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for cosh')
@@ -125,9 +125,9 @@ def exp(a,b):
         'cmview_f':vsip_cmexp_f,'cmview_d':vsip_cmexp_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for exp')
@@ -141,9 +141,9 @@ def exp10(a,b):
     mf={'mview_f':vsip_mexp10_f,'mview_d':vsip_mexp10_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for exp10')
@@ -159,9 +159,9 @@ def log(a,b):
         'cmview_f':vsip_cmlog_f,'cmview_d':vsip_cmlog_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for log')
@@ -175,9 +175,9 @@ def log10(a,b):
     mf={'mview_f':vsip_mlog10_f,'mview_d':vsip_mlog10_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for log10')
@@ -191,9 +191,9 @@ def sin(a,b):
     mf={'mview_f':vsip_msin_f,'mview_d':vsip_msin_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for sin')
@@ -207,9 +207,9 @@ def sinh(a,b):
     mf={'mview_f':vsip_msinh_f,'mview_d':vsip_msinh_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for sinh')
@@ -230,7 +230,7 @@ def sqrt(a,b):
     chk, msg = __iscompatible(a,b)
     if chk:
         t=a.type+b.type
-        if f.has_key(t):
+        if t in f:
             f[t](a.vsip,b.vsip)
         else:
             print('Type <:'+t+':> not supported for sinh')
@@ -244,9 +244,9 @@ def tan(a,b):
     mf={'mview_f':vsip_mtan_f,'mview_d':vsip_mtan_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for tan')
@@ -260,9 +260,9 @@ def tanh(a,b):
     mf={'mview_f':vsip_mtanh_f,'mview_d':vsip_mtanh_d}
     chk, msg = __iscompatible(a,b)
     if chk:
-        if vf.has_key(a.type):
+        if a.type in vf:
             vf[a.type](a.vsip,b.vsip)
-        elif mf.has_key(a.type):
+        elif a.type in mf:
             mf[a.type](a.vsip,b.vsip)
         else:
             print('Type <:'+a.type+':> not supported for tanh')

@@ -21,11 +21,11 @@ def herm(a,b):
     of an M by N matrix. If N==M (the matrix is square) then this may be done in-place.
     """
     f={'cmview_dcmview_d':vsip_cmherm_d, 'cmview_fcmview_f':vsip_cmherm_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b),\
        'Arguments one must by pyJvsip views for function herm'
     assert a.rowlength == b.collength and a.collength == b.rowlength, 'Input sizes not compliant.'
     t=a.type+b.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported for function herm'
+    assert t in f, 'Type <:'+t+':> not supported for function herm'
     f[t](a.vsip,b.vsip)
     return b
 
@@ -59,15 +59,15 @@ def gemp(alpha,a,op_a,b,op_b,beta,c):
        'cmview_f':vsip_cgemp_f,
        'mview_d':vsip_gemp_d,
        'mview_f':vsip_gemp_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments 2, 4,and 7 must by pyJvsip views for function gemp'
     assert b.type == a.type and c.type == a.type,\
        'Arguments 2, 4 and 7 must be the same type'
     t = a.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported by function gemp'
-    assert opc.has_key(op_a),'Matrix operation flag not recognized'
-    assert opc.has_key(op_b),'Matrix operation flag not recognized'
+    assert t in f, 'Type <:'+t+':> not supported by function gemp'
+    assert op_a in opc,'Matrix operation flag not recognized'
+    assert op_b in opc,'Matrix operation flag not recognized'
     assert isinstance(alpha,float) or isinstance(alpha,int) or isinstance(alpha,complex),\
         'Argument one must be a scalar'
     assert isinstance(beta,float) or isinstance(beta,int) or isinstance(beta,complex),\
@@ -112,12 +112,12 @@ def gems(alpha,a,op_a,beta,c):
          'CONJ':VSIP_MAT_NTRANS}
     f={'cmview_d':vsip_cgems_d,'cmview_f':vsip_cgems_f,
        'mview_d':vsip_gems_d,'mview_f':vsip_gems_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(c),\
         'Arguments 2, 5 must by pyJvsip views for function gems' 
     assert a.type==c.type, 'View arguments must be the same type for functions gems'
     t=a.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported for function gems'
-    assert opc.has_key(op_a), 'Matrix operation flag not recognized'
+    assert t in f, 'Type <:'+t+':> not supported for function gems'
+    assert op_a in opc, 'Matrix operation flag not recognized'
     assert isinstance(alpha,float) or isinstance(alpha,int) or isinstance(alpha,complex),\
         'Argument one must be a scalar'
     assert isinstance(beta,float) or isinstance(beta,int) or isinstance(beta,complex),\
@@ -144,13 +144,13 @@ def kron(alpha,a,b,c):
        'cvview_dcvview_dcmview_d':vsip_cvkron_d, 'cvview_fcvview_fcmview_f':vsip_cvkron_f,
        'mview_dmview_dmview_d':vsip_mkron_d, 'mview_fmview_fmview_f':vsip_mkron_f,
        'vview_dvview_dmview_d':vsip_vkron_d, 'vview_fvview_fmview_f':vsip_vkron_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments 2, 3, and 4 must by pyJvsip views for function kron'
     assert isinstance(alpha,float) or isinstance(alpha,int) or isinstance(alpha,complex),\
         'Argument one must be a scalar'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for function kron'
+    assert t in f, 'Type <:'+t+':> not recognized for function kron'
     if 'vview' in a.type:
         N=a.length; M=b.length
     else:
@@ -181,11 +181,11 @@ def prod3(a,b,c):
        'mview_dmview_dmview_d':vsip_mprod3_d, 'mview_fmview_fmview_f':vsip_mprod3_f,
        'cmview_dcvview_dcvview_d':vsip_cmvprod3_d,'cmview_fcvview_fcvview_f':vsip_cmvprod3_f,                                              
        'mview_dvview_dvview_d':vsip_mvprod3_d,'mview_fvview_fvview_f':vsip_mvprod3_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments by pyJvsip views for function prod3'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported by prod3'
+    assert t in f, 'Type <:'+t+':> not supported by prod3'
     assert a.rowlength == 3 and a.collength == 3,\
         'The first argument to prod3 must be size (3,3)'
     if 'vview' in t:
@@ -213,11 +213,11 @@ def prod4(a,b,c):
        'mview_dmview_dmview_d':vsip_mprod4_d, 'mview_fmview_fmview_f':vsip_mprod4_f,
        'cmview_dcvview_dcvview_d':vsip_cmvprod4_d,'cmview_fcvview_fcvview_f':vsip_cmvprod4_f,                                              
        'mview_dvview_dvview_d':vsip_mvprod4_d,'mview_fvview_fvview_f':vsip_mvprod4_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments by pyJvsip views for function prod4'
     t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:'+t+':> not supported by prod4'
+    assert t in f, 'Type <:'+t+':> not supported by prod4'
     assert a.rowlength == 4 and a.collength == 4,\
         'The first argument to prod4 must be size (4,4)'
     if 'vview' in t:
@@ -246,10 +246,10 @@ def prod(a,b,c):
        'mview_dmview_dmview_d':vsip_mprod_d, 'mview_fmview_fmview_f':vsip_mprod_f,
        'vview_dmview_dvview_d':vsip_vmprod_d, 'vview_fmview_fvview_f':vsip_vmprod_f,
        'mview_dvview_dvview_d':vsip_mvprod_d, 'mview_fvview_fvview_f':vsip_mvprod_f}
-    assert  'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b) \
-       and 'pyJvsip.__View' in repr(c), 'Arguments to prod must be pyJvsip views'
+    assert  'pyJvsip' in repr(a) and 'pyJvsip' in repr(b) \
+       and 'pyJvsip' in repr(c), 'Arguments to prod must be pyJvsip views'
     t=a.type+b.type+c.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized by function prod'
+    assert t in f,'Type <:'+t+':> not recognized by function prod'
     if 'mview' in a.type and 'mview' in b.type:
         assert b.collength == a.rowlength and c.collength == a.collength \
                and b.rowlength == c.rowlength, 'Size error in function prod'
@@ -275,10 +275,10 @@ def trans(a,b):
        'cmview_fcmview_f':vsip_cmtrans_f,
        'mview_dmview_d':vsip_mtrans_d,
        'mview_fmview_f':vsip_mtrans_f}
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b),\
             'Argmuments to function trans must be pyJvsip views'
     t=a.type+b.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for function trans'
+    assert t in f, 'Type <:'+t+':> not recognized for function trans'
     assert a.rowlength == b.collength and a.collength == b.rowlength, \
            'Size error in function trans'
     f[t](a.vsip,b.vsip)
@@ -297,13 +297,13 @@ def prodh(a,b,c):
         c View of output M by N matrix.
     Matrices are complex float.
     """
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments must by pyJvsip views for function prodh'
     assert a.type == b.type and a.type == c.type,'View types must agree for prodh'
     f={'cmview_d':vsip_cmprodh_d,'cmview_f':vsip_cmprodh_f}
     t=a.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'
+    assert t in f,'Type <:'+t+':> not recognized for function prodh'
     assert a.collength == c.collength and a.rowlength == b.rowlength \
        and b.collength == c.rowlength, 'Size error in prodh'
     f[t](a.vsip,b.vsip,c.vsip)
@@ -322,13 +322,13 @@ def prodj(a,b,c):
         c View of output M by N matrix.
     Matrices are complex float.
     """
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments must by pyJvsip views for function prodj'
     assert a.type == b.type and a.type == c.type,'View types must agree for prodj'
     f={'cmview_d':vsip_cmprodj_d, 'cmview_f':vsip_cmprodj_f}
     t=a.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'
+    assert t in f,'Type <:'+t+':> not recognized for function prodh'
     assert a.collength == c.collength and a.rowlength == b.collength \
        and b.rowlength == c.rowlength, 'Size error in prodj'
     f[t](a.vsip,b.vsip,c.vsip)
@@ -346,14 +346,14 @@ def prodt(a,b,c):
         c View of output M by N matrix.
     Matrices are real or complex float.
     """
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments must by pyJvsip views for function prodt'
     assert a.type == b.type and a.type == c.type,'View types must agree for prodt'
     f={'cmview_d':vsip_cmprodt_d, 'cmview_f':vsip_cmprodt_f,                
        'mview_d':vsip_mprodt_d, 'mview_f':vsip_mprodt_f}           
     t=a.type
-    assert f.has_key(t),'Type <:'+t+':> not recognized for function prodh'
+    assert t in f,'Type <:'+t+':> not recognized for function prodh'
     assert a.collength == c.collength and a.rowlength == b.rowlength \
        and b.collength == c.rowlength, 'Size error in prodt'
     f[t](a.vsip,b.vsip,c.vsip)
@@ -375,11 +375,11 @@ def outer(alpha,a,b,c):
        'vview_dvview_dmview_d':vsip_vouter_d,'vview_fvview_fmview_f':vsip_vouter_f}
     assert isinstance(alpha,float) or isinstance(alpha,int) or isinstance(alpha,complex),\
         'Argument one must be a scalar'
-    assert 'pyJvsip.__View' in repr(a) and 'pyJvsip.__View' in repr(b)\
-       and 'pyJvsip.__View' in repr(c),\
+    assert 'pyJvsip' in repr(a) and 'pyJvsip' in repr(b)\
+       and 'pyJvsip' in repr(c),\
        'Arguments 2,3 & 4 must be pyJvsip views for function outer'
     t=a.type+b.type+c.type
-    assert f.has_key(t)
+    assert t in f
     assert c.collength == a.length and c.rowlength == b.length, 'Size error in function outer'
     if 'cvview_d' in t:
         f[t](vsip_cmplx_d(alpha.real,alpha.imag),a.vsip,b.vsip,c.vsip)
@@ -404,10 +404,10 @@ def covsol(A,XB):
     """
     f={'cmview_d':vsip_ccovsol_d, 'cmview_f':vsip_ccovsol_f,
        'mview_d':vsip_covsol_d, 'mview_f':vsip_covsol_f}
-    assert 'pyJvsip.__View' in repr(A) and 'pyJvsip.__View' in repr(XB),\
+    assert 'pyJvsip' in repr(A) and 'pyJvsip' in repr(XB),\
        'Arguments must by pyJvsip views for function covsol'
     t=A.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for function covsol'
+    assert t in f, 'Type <:'+t+':> not recognized for function covsol'
     if 'mview' in XB.type:
         C = XB
     else:
@@ -430,10 +430,10 @@ def llsqsol(A,XB):
     """
     f={'cmview_d':vsip_cllsqsol_d, 'cmview_f':vsip_cllsqsol_f,
        'mview_d':vsip_llsqsol_d, 'mview_f':vsip_llsqsol_f}
-    assert 'pyJvsip.__View' in repr(A) and 'pyJvsip.__View' in repr(XB),\
+    assert 'pyJvsip' in repr(A) and 'pyJvsip' in repr(XB),\
        'Arguments must by pyJvsip views for function llsqsol'
     t=A.type
-    assert f.has_key(t), 'Type <:'+t+':> not recognized for function llsqsol'
+    assert t in f, 'Type <:'+t+':> not recognized for function llsqsol'
     if 'mview' in XB.type:
         C = XB
     else:
@@ -458,11 +458,11 @@ def toepsol(t,b,w,x):
     """
     f={'cvview_d':vsip_ctoepsol_d,'cvview_f':vsip_ctoepsol_f,
        'vview_d':vsip_toepsol_d,'vview_f':vsip_toepsol_f}
-    assert 'pyJvsip.__View' in repr(t) and 'pyJvsip.__View' in repr(b) \
-        and'pyJvsip.__View' in repr(w) and 'pyJvsip.__View' in repr(x),\
+    assert 'pyJvsip' in repr(t) and 'pyJvsip' in repr(b) \
+        and'pyJvsip' in repr(w) and 'pyJvsip' in repr(x),\
         'Arguments must be pyJvsip views'
     tp=t.type
-    assert f.has_key(tp), 'Type <:'+tp+':> not recognized by toepsol'
+    assert tp in f, 'Type <:'+tp+':> not recognized by toepsol'
     assert tp == b.type and tp == w.type and tp == x.type,\
          'Arguments to toepsol must all be vector views of the same type'
     assert t.length == b.length and t.length == w.length and t.length == x.length, \

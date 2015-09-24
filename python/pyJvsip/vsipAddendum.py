@@ -10,16 +10,16 @@ def linear(x0,y0,*args):
     n=len(args)
     assert n >= 2 and n <=3,'Argument list error for linear.'
     x=args[n-2];y=args[n-1]
-    assert 'pyJvsip.__View' in repr(x0) and 'pyJvsip.__View' in repr(y0) and \
-           'pyJvsip.__View' in repr(x) and 'pyJvsip.__View' in repr(y), 'First two and last two arguments must be pyJvsip views.'
+    assert 'pyJvsip' in repr(x0) and 'pyJvsip' in repr(y0) and \
+           'pyJvsip' in repr(x) and 'pyJvsip' in repr(y), 'First two and last two arguments must be pyJvsip views.'
     t=x0.type+y0.type
-    assert f.has_key(t),'View types not recognized for linear interpolations'
+    assert t in f,'View types not recognized for linear interpolations'
     if n == 3:
         dim = arg[0]
     else:
         dim = x0.major
     if 'mview' in y0.type:
-        assert major.has_key(dim),'Dimension flag not recognized for linear interpolation.'
+        assert dim in major,'Dimension flag not recognized for linear interpolation.'
         if major[dim]==0:
             assert x0.length == y0.collength,'Input data views not compliant.'
             assert x.length  == y.collength,'Output data views not compliant.'
@@ -39,16 +39,16 @@ def nearest(x0,y0,*args):
     n=len(args)
     assert n >= 2 and n <=3,'Argument list error for linear.'
     x=args[n-2];y=args[n-1]
-    assert 'pyJvsip.__View' in repr(x0) and 'pyJvsip.__View' in repr(y0) and \
-           'pyJvsip.__View' in repr(x) and 'pyJvsip.__View' in repr(y), 'First two and last two arguments must be pyJvsip views.'
+    assert 'pyJvsip' in repr(x0) and 'pyJvsip' in repr(y0) and \
+           'pyJvsip' in repr(x) and 'pyJvsip' in repr(y), 'First two and last two arguments must be pyJvsip views.'
     t=x0.type+y0.type
-    assert f.has_key(t),'View types not recognized for nearest interpolations'
+    assert t in f,'View types not recognized for nearest interpolations'
     if n == 3:
         dim = arg[0]
     else:
         dim = x0.major
     if 'mview' in y0.type:
-        assert major.has_key(dim),'Dimension flag not recognized for nearest interpolation.'
+        assert dim in major,'Dimension flag not recognized for nearest interpolation.'
         if major[dim]==0:
             assert x0.length == y0.collength,'Input data views not compliant.'
             assert x.length  == y.collength,'Output data views not compliant.'
