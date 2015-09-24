@@ -52,40 +52,48 @@ PyObject *vcopyToList_d(vsip_vview_d *v){
 PyObject *vcopyToList_i(vsip_vview_i *v){
     vsip_length N = vsip_vgetlength_i(v);
     PyObject *retval = PyList_New(N);
+    PyObject *aval;
     vsip_index i;
     for(i=0; i<N; i++){
-       long int x = (long int)vsip_vget_i(v,i);
-       PyList_SetItem(retval,i,PyInt_FromLong(x));
+         int x = (int)vsip_vget_i(v,i);
+        aval=Py_BuildValue("i",x);
+        PyList_SetItem(retval,i,aval);
     }
     return retval;
 }
 PyObject *vcopyToList_si(vsip_vview_si *v){
     vsip_length N = vsip_vgetlength_si(v);
     PyObject *retval = PyList_New(N);
+    PyObject *aval;
     vsip_index i;
     for(i=0; i<N; i++){
        long int x = (long int)vsip_vget_si(v,i);
-       PyList_SetItem(retval,i,PyInt_FromLong(x));
+        aval=Py_BuildValue("i",x);
+        PyList_SetItem(retval,i,aval);
     }
     return retval;
 }
 PyObject *vcopyToList_vi(vsip_vview_vi *v){
     vsip_length N = vsip_vgetlength_vi(v);
     PyObject *retval = PyList_New(N);
+    PyObject *aval;
     vsip_index i;
     for(i=0; i<N; i++){
        long int x = (long int)vsip_vget_vi(v,i);
-       PyList_SetItem(retval,i,PyInt_FromLong(x));
+        aval=Py_BuildValue("l",x);
+        PyList_SetItem(retval,i,aval);
     }
     return retval;
 }
 PyObject *vcopyToList_uc(vsip_vview_uc *v){
     vsip_length N = vsip_vgetlength_uc(v);
     PyObject *retval = PyList_New(N);
+    PyObject *aval;
     vsip_index i;
     for(i=0; i<N; i++){
-       long int x = (long int)vsip_vget_uc(v,i);
-       PyList_SetItem(retval,i,PyInt_FromLong(x));
+        int x = (int)vsip_vget_uc(v,i);
+        aval=Py_BuildValue("i",x);
+        PyList_SetItem(retval,i,aval);
     }
     return retval;
 }
@@ -176,12 +184,14 @@ PyObject *mcopyToListByRow_i(vsip_mview_i *v){
     vsip_length M = vsip_mgetcollength_i(v);
     vsip_length N = vsip_mgetrowlength_i(v);
     PyObject *retval = PyList_New(M);
+    PyObject *aval;
     vsip_index i,j;
     for(i=0; i<M; i++){
         PyObject *row = PyList_New(N);
         for(j=0; j<N; j++){
-           long int x = (long int)vsip_mget_i(v,i,j);
-           PyList_SetItem(row,j,PyInt_FromLong(x));
+            int x = ( int)vsip_mget_i(v,i,j);
+            aval=Py_BuildValue("i",x);
+           PyList_SetItem(row,j,aval);
         }
         PyList_SetItem(retval,i,row);
     }
@@ -192,12 +202,14 @@ PyObject *mcopyToListByRow_si(vsip_mview_si *v){
     vsip_length M = vsip_mgetcollength_si(v);
     vsip_length N = vsip_mgetrowlength_si(v);
     PyObject *retval = PyList_New(M);
+    PyObject *aval;
     vsip_index i,j;
     for(i=0; i<M; i++){
         PyObject *row = PyList_New(N);
         for(j=0; j<N; j++){
-           long int x = (long int)vsip_mget_si(v,i,j);
-           PyList_SetItem(row,j,PyInt_FromLong(x));
+            int x = ( int)vsip_mget_si(v,i,j);
+            aval=Py_BuildValue("i",x);
+           PyList_SetItem(row,j,aval);
         }
         PyList_SetItem(retval,i,row);
     }
@@ -208,12 +220,14 @@ PyObject *mcopyToListByRow_uc(vsip_mview_uc *v){
     vsip_length M = vsip_mgetcollength_uc(v);
     vsip_length N = vsip_mgetrowlength_uc(v);
     PyObject *retval = PyList_New(M);
+    PyObject *aval;
     vsip_index i,j;
     for(i=0; i<M; i++){
         PyObject *row = PyList_New(N);
         for(j=0; j<N; j++){
-           long int x = (long int)vsip_mget_uc(v,i,j);
-           PyList_SetItem(row,j,PyInt_FromLong(x));
+            int x = ( int)vsip_mget_uc(v,i,j);
+            aval=Py_BuildValue("i",x);
+           PyList_SetItem(row,j,aval);
         }
         PyList_SetItem(retval,i,row);
     }
@@ -295,12 +309,14 @@ PyObject *mcopyToListByCol_i(vsip_mview_i *v){
     vsip_length M = vsip_mgetcollength_i(v);
     vsip_length N = vsip_mgetrowlength_i(v);
     PyObject *retval = PyList_New(M);
+    PyObject *aval;
     vsip_index i,j;
     for(j=0; j<N; j++){
         PyObject *col = PyList_New(M);
         for(i=0; i<M; i++){
-           long int x = (long int)vsip_mget_i(v,i,j);
-           PyList_SetItem(col,i,PyInt_FromLong(x));
+            int x = (int)vsip_mget_i(v,i,j);
+            aval=Py_BuildValue("i",x);
+           PyList_SetItem(col,i,aval);
         }
         PyList_SetItem(retval,j,col);
     }
@@ -311,12 +327,14 @@ PyObject *mcopyToListByCol_si(vsip_mview_si *v){
     vsip_length M = vsip_mgetcollength_si(v);
     vsip_length N = vsip_mgetrowlength_si(v);
     PyObject *retval = PyList_New(M);
+    PyObject *aval;
     vsip_index i,j;
     for(j=0; j<N; j++){
         PyObject *col = PyList_New(M);
         for(i=0; i<M; i++){
-           long int x = (long int)vsip_mget_si(v,i,j);
-           PyList_SetItem(col,i,PyInt_FromLong(x));
+            int x = ( int)vsip_mget_si(v,i,j);
+            aval=Py_BuildValue("i",x);
+           PyList_SetItem(col,i,aval);
         }
         PyList_SetItem(retval,j,col);
     }
@@ -327,12 +345,14 @@ PyObject *mcopyToListByCol_uc(vsip_mview_uc *v){
     vsip_length M = vsip_mgetcollength_uc(v);
     vsip_length N = vsip_mgetrowlength_uc(v);
     PyObject *retval = PyList_New(M);
+    PyObject *aval;
     vsip_index i,j;
     for(j=0; j<N; j++){
         PyObject *col = PyList_New(M);
         for(i=0; i<M; i++){
-           long int x = (long int)vsip_mget_uc(v,i,j);
-           PyList_SetItem(col,i,PyInt_FromLong(x));
+            int x = ( int)vsip_mget_uc(v,i,j);
+            aval=Py_BuildValue("i",x);
+           PyList_SetItem(col,i,aval);
         }
         PyList_SetItem(retval,j,col);
     }
