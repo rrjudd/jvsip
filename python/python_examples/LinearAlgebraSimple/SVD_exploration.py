@@ -30,7 +30,9 @@ U=V.copy
 S=V.copy
 S[0,0]=sigma0;S[1,1]=sigma1
 U[0:2,0]=Y[0:2,i];U[0:2,1]=Y[0:2,j]
-U[0:2,0] /=sigma0;U[0:2,1]/=sigma1 #normalize u1,u2
+ut=U[0:2,0];pv.div(ut,sigma0,ut);
+ut=U[0:2,1];pv.div(ut,sigma1,ut);
+# U[0:2,0] /=sigma0; U[0:2,1]/=sigma1 #normalize u1,u2
 V[0:2,0]=X[0:2,i];V[0:2,1]=X[0:2,j] #v0, v1 already normalized
 #estimate A from results of U,V,S
 Aest=U.prod(S).prod(V.transview)
@@ -58,9 +60,9 @@ text(-1.25,1.65,eval(eqn),fontsize=20)
 text(x1[i],x0[i],'x',horizontalalignment='center',\
                      verticalalignment='center')
 plot([0,x1[0]],[0,x0[0]],'k')
-plot([0,x1[N/4]],[0,x0[N/4]],'g')
-plot([0,x1[N/2]],[0,x0[N/2]],'r')
-plot([0,x1[3*N/4]],[0,x0[3*N/4]],'m')
+plot([0,x1[int(N/4)]],[0,x0[int(N/4)]],'g')
+plot([0,x1[int(N/2)]],[0,x0[int(N/2)]],'r')
+plot([0,x1[3*int(N/4)]],[0,x0[3*int(N/4)]],'m')
 subplot(1,2,2).set_aspect('equal')
 title(r'Transformed Unit Ball in $\Re^2$',fontsize=14)
 ylabel(r'$y_0$',fontsize=14)
@@ -70,9 +72,9 @@ text(y1[i],y0[i],'x',horizontalalignment='center',\
                      verticalalignment='center')
 text(-1.9,2.0,tne,fontname='sarif',fontsize=10)
 plot([0,y1[0]],[0,y0[0]],'k')
-plot([0,y1[N/4]],[0,y0[N/4]],'g')
-plot([0,y1[N/2]],[0,y0[N/2]],'r')
-plot([0,y1[3*N/4]],[0,y0[3*N/4]],'m')
+plot([0,y1[int(N/4)]],[0,y0[int(N/4)]],'g')
+plot([0,y1[int(N/2)]],[0,y0[int(N/2)]],'r')
+plot([0,y1[3*int(N/4)]],[0,y0[3*int(N/4)]],'m')
 #Plot results for singular values
 a00='{'+'%.4f'%Aest[0,0]+'}';a01='{'+'%.4f'%Aest[0,1]+'}'
 a10='{'+'%.4f'%Aest[1,0]+'}';a11='{'+'%.4f'%Aest[1,1]+'}'
