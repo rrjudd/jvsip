@@ -32,7 +32,7 @@ def size(a):
     def _msize(attr):
         return (attr.offset,attr.col_stride,attr.col_length,attr.row_stride, attr.row_length)
     t=vsip.getType(a)
-    if f.has_key(t[1]):
+    if t[1] in f:
         return eval(f[t[1]])
     else:
         print('Not a supported type')
@@ -123,7 +123,7 @@ def randCreate(t,seed,length):
        'vview_fnprngU':"rcfu('vview_f',seed,VSIP_NPRNG,length)",
        'cvview_dnprngU':"rcfu('cvview_d',seed,VSIP_NPRNG,length)",
        'cvview_fnprngU':"rcfu('cvview_f',seed,VSIP_NPRNG,length)"}
-    if f.has_key(t):
+    if t in f:
         return eval(f[t])
     else:
         print('Type ' + t + ' not supported for randCreate')
