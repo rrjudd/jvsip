@@ -41,11 +41,11 @@ def vsipScalar(t,scl):
             assert 'cscalar' in tScl[2],'Type <:%s:> not a suitable type for complex scalar'%tScl[2]
             return vsip_cmplx_f(scl.r,scl.i)
     elif '_d' in t or '_f' in t:
-        assert ft is float or ft is int or ft is long,\
+        assert ft is float or ft is int,\
                       'For real views of type double or float input scalar must be a real number.'
         return float(scl)
     elif '_i' in t or '_si' in t:
-        assert ft is float or ft is int or ft is long,\
+        assert ft is float or ft is int,\
                       'For signed integer views input must be a number that can be converted to an integer'
         return int(scl)
     elif t == 'vview_vi' or t == 'vview_uc' or t == 'mview_uc':
@@ -617,26 +617,26 @@ class Block (object):
                       'cvview_fscalar':'vsip_cvget_f(a,int(i))',
                       'vview_dscalar':'vsip_vget_d(a,int(i))',
                       'vview_fscalar':'vsip_vget_f(a,int(i))',
-                      'vview_iscalar':'vsip_vget_i(a,int(i))',
-                      'vview_viscalar':'vsip_vget_vi(a,int(i))',
-                      'vview_siscalar':'vsip_vget_si(a,int(i))',
-                      'vview_ucscalar':'vsip_vget_uc(a,int(i))',
+                      'vview_iscalar':'int(vsip_vget_i(a,int(i)))',
+                      'vview_viscalar':'int(vsip_vget_vi(a,int(i)))',
+                      'vview_siscalar':'int(vsip_vget_si(a,int(i)))',
+                      'vview_ucscalar':'int(vsip_vget_uc(a,int(i)))',
                       'vview_blscalar':'vsip_vget_bl(a,int(i))',
                       'vview_miscalar':'vsip_vget_mi(a,int(i))',
                       'cmview_dtuple':'vsip_cmget_d(a,i[0],i[1])',
                       'cmview_ftuple':'vsip_cmget_f(a,i[0],i[1])',
                       'mview_dtuple':'vsip_mget_d(a,i[0],i[1])',
                       'mview_ftuple':'vsip_mget_f(a,i[0],i[1])',
-                      'mview_ituple':'vsip_mget_i(a,i[0],i[1])',
-                      'mview_situple':'vsip_mget_si(a,i[0],i[1])',
+                      'mview_ituple':'int(vsip_mget_i(a,i[0],i[1]))',
+                      'mview_situple':'int(vsip_mget_si(a,i[0],i[1]))',
                       'mview_uctuple':'vsip_mget_uc(a,i[0],i[1])',
                       'mview_blstuple':'vsip_mget_bl(a,i[0],i[1])',
                       'cmview_dscalar_mi':'vsip_cmget_d(a,i.r,i.c)',
                       'cmview_fscalar_mi':'vsip_cmget_f(a,i.r,i.c)',
                       'mview_dscalar_mi':'vsip_mget_d(a,i.r,i.c)',
                       'mview_fscalar_mi':'vsip_mget_f(a,i.r,i.c)',
-                      'mview_iscalar_mi':'vsip_mget_i(a,i.r,i.c)',
-                      'mview_siscalar_mi':'vsip_mget_si(a,i.r,i.c)',
+                      'mview_iscalar_mi':'int(vsip_mget_i(a,i.r,i.c))',
+                      'mview_siscalar_mi':'int(vsip_mget_si(a,i.r,i.c))',
                       'mview_ucscalar_mi':'vsip_mget_uc(a,i.r,i.c)',
                       'mview_blscalar_mi':'vsip_mget_bl(a,i.r,i.c)'}
                 t=aView.type
@@ -668,7 +668,7 @@ class Block (object):
                 elif 'scalar_mi' in vsipGetType(val)[1]:
                     return {'row_index':val.r,'col_index':val.i}
                 else:
-                    assert False,'__getitem__ does not recognize <:' +type(val)+ ':>'
+                    assert False,'__getitem__ does not recognize <:'+repr(type(val))+ ':>'
             if 'vview' in self.type and isinstance(index,int) and index >= 0:
                 assert index < self.length,'Index out of bounds'
                 val=vsipGet(self,index)
@@ -2530,7 +2530,7 @@ class Block (object):
                  for A. Using A.opu(x,y) will do an in-place operation in A.
             """
             assert 'mview' in self.type,'Calling view must be a matrix for opu.'
-            assert 'pyJvsip' in repr(x) and 'pyJvsip._View' in repr(y),'Parameters to opu must be pyJvsip views.'
+            assert 'pyJvsip' in repr(x) and 'pyJvsip' in repr(y),'Parameters to opu must be pyJvsip views.'
             assert 'vview' in x.type and 'vview' in y.type,'Input views must be vectors for opu'
             # we select a method with the += on the major stride.
             # This may not necessarily be the fastest method if calling matrix
@@ -2564,7 +2564,7 @@ class Block (object):
                  for A. Using A.opu(x,y) will do an in-place operation in A.
             """
             assert 'mview' in self.type,'Calling view must be a matrix for nopu.'
-            assert 'pyJvsip' in repr(x) and 'pyJvsip._View' in repr(y),'Parameters to nopu must be pyJvsip views.'
+            assert 'pyJvsip' in repr(x) and 'pyJvsip' in repr(y),'Parameters to nopu must be pyJvsip views.'
             assert 'vview' in x.type and 'vview' in y.type,'Input views must be vectors for nopu'
             # we select a method with the -= on the major stride.
             # This may not necessarily be the fastest method if calling matrix
@@ -2687,7 +2687,7 @@ class Block (object):
                     p[k+pk]=t
                 pvt=U[k,k]
                 assert pvt != 0.0, 'Matrix is singular'
-                U[k+1:n,k] /= pvt
+                div(U[k+1:n,k],pvt,U[k+1:n,k])
                 uc=U.colview(k)[k+1:n];ur=U.rowview(k)[k+1:n]
                 # to do in place use nopu else use product.
                 U[k+1:n,k+1:n].nopu(uc,ur)
