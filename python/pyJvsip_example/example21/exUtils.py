@@ -2,7 +2,7 @@ import pyJvsip as pv
 from math import pi as M_PI
 from math import cos as cos
 def view_store(M,fname): #VU_mprintgram
-    assert 'pyJvsip.__View' in repr(M),'First input argument must be a pyJvsip view'
+    assert 'pyJvsip' in repr(M),'First input argument must be a pyJvsip view'
     assert M.type in ['vview_f','mview_f','vview_d','mview_d'], 'View type not supported'
     assert isinstance(fname,str), 'File name is a string'
     if 'mview' in M.type:

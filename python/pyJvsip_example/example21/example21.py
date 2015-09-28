@@ -20,7 +20,7 @@ data = noiseGen('mview_d',alpha,Mp,Nn,Ns)
 targets=[(F0,Theta_o,1.5),(F1,Theta_o,2.0),(F2,Theta_o,2.0),(F3,Theta_o,3.0)]
 narrowBandGen(data,alpha,targets,Fs)
 # beamform data and output in a form sutiable for display
-ccfftmip = pv.FFT('ccfftmip_d',(Mp,Ns/2 + 1,pv.VSIP_FFT_FWD,1,pv.VSIP_COL,0,0))
+ccfftmip = pv.FFT('ccfftmip_d',(Mp,int(Ns/2) + 1,pv.VSIP_FFT_FWD,1,pv.VSIP_COL,0,0))
 windowt=pv.create('vview_d',Ns).hanning
 windowp=pv.create('vview_d',Mp).hanning
 pv.vmmul(windowt.ROW,data,data) #window to reduce sidelobes
