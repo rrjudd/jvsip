@@ -2,7 +2,6 @@ print('TEST vsiputils create and destroy routines')
 print('this test just does a create and destroy for each supported VSIP type')
 print('No \'additional\' output means the test passes')
 import vsiputils as vsip
-reload(vsip)
 #block create/destroy
 a=vsip.create('block_f',(100,vsip.VSIP_MEM_NONE))
 vsip.destroy(a)
