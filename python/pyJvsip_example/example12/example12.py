@@ -4,7 +4,7 @@ import pyJvsip as pjv
 # This is just to demo pyJvsip API features. There is no good reason to actually use this code
 
 def madd(A,B,C):
-    assert 'pyJvsip.__View' in repr(A),'Input parameters must be views of type pyJvsip.__View.'
+    assert 'pyJvsip' in repr(A) and '__View' in repr(A),'Input parameters must be views of type pyJvsip.__View.'
     assert type(A) == type(B) and type(A) == type(C),'Input paramteters must be the same type'
     assert 'mview' in A.type,'Only matrix views are supported for madd.'
     L = A.rowlength
