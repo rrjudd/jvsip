@@ -3,7 +3,7 @@
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_create}
-\\ \hspace*{1.cm} {
+\\ \hspace*{.9cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create LU Object\vspace{.1cm}}\\ \hline
@@ -14,7 +14,7 @@ vsip\_clu\_f* vsip\_clud\_create\_f(vsip\_length);\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_destroy}
-\\ \hspace*{1.cm} {
+\\ \hspace*{.9cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy LU Object\vspace{.1cm}}\\ \hline
@@ -25,7 +25,7 @@ int vsip\_clud\_destroy\_f(vsip\_clu\_f*);\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud}
-\\ \hspace*{1.cm}{
+\\ \hspace*{.9cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Calculate LU Decomposition\vspace{.1cm}}\\ \hline
@@ -36,18 +36,22 @@ int vsip\_clud\_f(vsip\_clu\_f*, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lusol}\\
-\\ \hspace*{1.cm}{
+\\ \hspace*{.9cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated LU Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_lusol\_d(const vsip\_lu\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
-int vsip\_lusol\_f(const vsip\_lu\_f*, vsip\_mat\_op, const vsip\_mview\_f*);\\
-int vsip\_clusol\_d(const vsip\_clu\_d*, vsip\_mat\_op, const vsip\_cmview\_d*);\\
-int vsip\_clusol\_f(const vsip\_clu\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
+\multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated LU Decomposition\vspace{.3cm}}\\ \hline
+int vsip\_lusol\_d(\\
+\hspace*{3.cm}const vsip\_lu\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
+int vsip\_lusol\_f(\\
+\hspace*{3.cm}const vsip\_lu\_f*, vsip\_mat\_op, const vsip\_mview\_f*);\\
+int vsip\_clusol\_d(\\
+\hspace*{3.cm}const vsip\_clu\_d*, vsip\_mat\_op, const vsip\_cmview\_d*);\\
+int vsip\_clusol\_f(\\
+\hspace*{3.cm}const vsip\_clu\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_getattr}
-\\ \hspace*{1.cm}{
+\\ \hspace*{.8cm}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill LU Attribute Structure\vspace{.1cm}}\\ \hline

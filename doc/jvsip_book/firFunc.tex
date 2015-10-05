@@ -95,8 +95,8 @@ void vsip\_fir\_reset\_f(vsip\_fir\_f*)\\\hline
 \hspace*{1.cm} \ttbf{firObj=FIR(t,*args)}\\*
 where \ttbf{args} is a tuple containing the create parameters for the FIR type selected, and \ttbf{t} is a string indicating the type of FIR to create.\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{Note \ttbf{args} will contain some or all of items listed in the FIR argument list in the order listed. The type string \ttbf{t} is shown in the FIR Types table below the argument list.}\\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{
-\begin{tabular}[t]{|l l|}
+\hspace*{1.cm}\parbox[t]{.9\textwidth}{
+\begin{tabular}[t]{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Argument List\vspace{.2cm}}}}\\ \hline
 \ttbf{filt} & \parbox[t]{.74\textwidth}{A vector \ttbf{view} of filter coefficients.\\*Required argument \vspace*{.1cm}}\\ \hline
 \ttbf{sym} & \parbox[t]{.74\textwidth}{Symmetry of \ttbf{filt} kernel. \\* Required argument\vspace*{.1cm}} \\\hline
@@ -107,7 +107,7 @@ where \ttbf{args} is a tuple containing the create parameters for the FIR type s
 \ttbf{ntimes} & \parbox[t]{.74\textwidth}{Hint for how much the FIR object will be used. Zero indicates many times.\\*For \jv{} this argument is only supported at the interface level and defaults to zero.\vspace*{.1cm}} \\\hline
 \ttbf{algHint} & \parbox[t]{.74\textwidth}{Algorithm hint to optimize for\\*speed (\ttbf{VSIP\_ALG\_TIME}),\\*size (\ttbf{VSIP\_ALG\_SPACE}),\\* or accuracy (\ttbf{VSIP\_ALG\_NOISE}).\\*For \jv{} this argument is only supported at the interface level and defaults to time.\vspace*{.1cm}}\\
 \hline \end{tabular}\\
-\begin{tabular}{|l l|}
+\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Types\vspace{.2cm}}}}\\ \hline
 'fir\_f' & \parbox[t]{.68\textwidth}{Real \ttbf{FIR}; float precision \vspace*{.1cm}}\\\hline
 'cfir\_f' & \parbox[t]{.68\textwidth}{ Complex \ttbf{FIR}; float precision \vspace*{.1cm}}\\\hline
@@ -120,7 +120,7 @@ where \ttbf{args} is a tuple containing the create parameters for the FIR type s
 \hspace*{.8cm}{\textbf{FIR Class Methods}\\
 \hspace*{1.1cm} \parbox[t]{.9\textwidth}{For class methods table we assume we have created an FIR object we call \ttbf{firObj} and we have an input \ttbf{view x} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
 \\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
+\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries Finite Impulse Response Filter Methods\vspace{.2cm}}}}\\ \hline
 \ttbf{firObj.flt(x,y)} & \parbox[t]{.58\textwidth}{Filter the data \ttbf{x} and place the results in \ttbf{y}}\\\hline
 \ttbf{firObj.decimation} & \parbox[t]{.58\textwidth}{ Returns integer decimation factor. \vspace*{.1cm}}\\\hline

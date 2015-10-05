@@ -3,7 +3,7 @@
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
 %
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Calculate QR Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -13,7 +13,7 @@ int vsip\_cqrd\_d(vsip\_cqr\_d*, const vsip\_cmview\_d*);\Bs\\
 int vsip\_cqrd\_f(vsip\_cqr\_f*, const vsip\_cmview\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
-\hspace*{1.cm} {
+\hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create QRD Object\vspace{.1cm}}\\ \hline\Ts
@@ -23,7 +23,7 @@ vsip\_cqr\_d* vsip\_cqrd\_create\_d(vsip\_length);\Bs\\
 vsip\_cqr\_f* vsip\_cqrd\_create\_f(vsip\_length);\Bs\\
 \hline\end{tabular}\\}
 %
-\\ \hspace*{1.cm} {
+\\ \hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy QRD Object\vspace{.1cm}}\\ \hline\Ts
@@ -33,7 +33,7 @@ int vsip\_cqrd\_destroy\_d(vsip\_cqr\_d*);\Bs\\
 int vsip\_cqrd\_destroy\_f(vsip\_cqr\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill QRD Attribute Structure\vspace{.1cm}}\\ \hline\Ts
@@ -43,7 +43,7 @@ void vsip\_cqrd\_getattr\_d(const vsip\_cqr\_d*, vsip\_cqr\_attr\_d*);\Bs\\
 void vsip\_cqrd\_getattr\_f(const vsip\_cqr\_f*, vsip\_cqr\_attr\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Product with Q from QR Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -51,10 +51,11 @@ int vsip\_qrdprodq\_d(const vsip\_qr\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\hsp
 int vsip\_qrdprodq\_f(const vsip\_qr\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_mview\_f*);\Bs\\
 int vsip\_cqrdprodq\_d(const vsip\_cqr\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_d*);\Bs\\
 int vsip\_cqrdprodq\_f(const vsip\_cqr\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_f*);\Bs\\
-\hline\end{tabular}\Bs\\}
+\hline
+\end{tabular}\\}
 %
 %
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Solve Linear System Based on R from QR Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -64,7 +65,7 @@ int vsip\_cqrdsolr\_d(const vsip\_cqr\_d *, vsip\_mat\_op opR, vsip\_cscalar\_d,
 int vsip\_cqrdsolr\_f(const vsip\_cqr\_f *, vsip\_mat\_op opR, vsip\_cscalar\_f,\\*\hspace*{1cm}const vsip\_cmview\_f *);\Bs\\
 \hline\end{tabular}\Bs\\}
 %
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Use QRD to Solve a Covariance or LLSQ System\vspace{.1cm}}\\ \hline\Ts
@@ -95,7 +96,7 @@ will create matrix \ttbf{Q} and matrix \ttbf{R} using \ttbf{QR} and \ttbf{A} suc
 %
 \hspace*{.8cm}\textbf{QR Class\vspace{.2cm}}\\
 \hspace*{1.1cm}\parbox{.9\textwidth}{To create an QR object use \\*
-\hspace*{1.cm} \ttbf{qrObj=QR(t,m,n,qSave)}\\*
+\hspace*{.03\textwidth} \ttbf{qrObj=QR(t,m,n,qSave)}\\*
 where:
 \begin{itemize}
 \item \ttbf{t} is a string indicating the QR type
@@ -135,8 +136,8 @@ where:
 \hspace*{1.1cm}{\textbf{QR Class Methods}\\
 \hspace*{1.1cm} \parbox[t]{.9\textwidth}{For class methods table we assume we have created an QR object we call \ttbf{qrObj} and we have an input \ttbf{view A} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
 \\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries QR Decomposition Methods\vspace{.2cm}}}}\Bs\\ \hline
+\hspace*{.03\textwidth}\parbox[t]{.96\textwidth}{\begin{tabular}{|l|l|}
+\multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries QR Decomposition Methods\vspace{.2cm}}}}\Bs\\ \hline
 %
 \Ts\ttbf{qrObj.lud(A)} & 
 \parbox[t]{.58\textwidth}{Decompose \ttbf{A}. Results are in QR object}\Bs\\\hline

@@ -40,10 +40,14 @@ int vsip\_cchold\_f(vsip\_cchol\_f*, const vsip\_cmview\_f*);\\
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated CHOL Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_cholsol\_d(const vsip\_chol\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
-int vsip\_cholsol\_f(const vsip\_chol\_f*, vsip\_mat\_op, const vsip\_mview\_f*);\\
-int vsip\_ccholsol\_d(const vsip\_cchol\_d*, vsip\_mat\_op, const vsip\_cmview\_d*);\\
-int vsip\_ccholsol\_f(const vsip\_cchol\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
+int vsip\_cholsol\_d(\\
+\hspace*{3.cm}const vsip\_chol\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
+int vsip\_cholsol\_f(\\
+\hspace*{3.cm}const vsip\_chol\_f*, vsip\_mat\_op, const vsip\_mview\_f*);\\
+int vsip\_ccholsol\_d(\\
+\hspace*{3.cm}const vsip\_cchol\_d*, vsip\_mat\_op, const vsip\_cmview\_d*);\\
+int vsip\_ccholsol\_f(\\
+\hspace*{3.cm}const vsip\_cchol\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{chold\_getattr}
@@ -87,12 +91,12 @@ For class methods table we assume we have created an CHOL object we call \ttbf{c
 %%%
  \end{tabular}\end{center}\end{table}
 %%
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
-\multicolumn{2}{c}{\parbox[t]{.8\textwidth}{\center{\rmfamily \bfseries CHOL Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
-\ttbf{cholObj.chold(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{cholObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
-\ttbf{cholObj.solve(op,XB)} & \parbox[t]{.6\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
-\ttbf{cholObj.size} & \parbox[t]{.6\textwidth}{ Property. Returns integer length size of square matrix \ttbf{CHOL} object will decompose.\Bs}\\\hline
-\ttbf{cholObj.singular} & \parbox[t]{.6\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline
-\ttbf{cholObj.type} & \parbox[t]{.6\textwidth}{Returns string indicating CHOL type.\Bs}\\\hline
-\ttbf{cholObj.vsip} & \parbox[t]{.6\textwidth}{Returns C VSIPL CHOL instance.\vspace*{.1cm}\Bs}\\\hline
+\hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l l|}
+\multicolumn{2}{c}{\parbox[t]{.85\textwidth}{\center{\rmfamily \bfseries CHOL Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
+\ttbf{cholObj.chold(A)} & \parbox[t]{.58\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{cholObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
+\ttbf{cholObj.solve(op,XB)} & \parbox[t]{.58\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
+\ttbf{cholObj.size} & \parbox[t]{.58\textwidth}{ Property. Returns integer length size of square matrix \ttbf{CHOL} object will decompose.\Bs}\\\hline
+\ttbf{cholObj.singular} & \parbox[t]{.58\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline
+\ttbf{cholObj.type} & \parbox[t]{.58\textwidth}{Returns string indicating CHOL type.\Bs}\\\hline
+\ttbf{cholObj.vsip} & \parbox[t]{.58\textwidth}{Returns C VSIPL CHOL instance.\vspace*{.1cm}\Bs}\\\hline
 \end{tabular}\vspace*{.4cm}}\\

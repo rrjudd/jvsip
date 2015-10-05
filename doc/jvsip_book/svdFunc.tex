@@ -3,7 +3,7 @@
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_create}
-\\ \hspace*{1.cm} {
+\\ \hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create SVD Object\vspace{.1cm}}\\ \hline \Ts
@@ -14,7 +14,7 @@ vsip\_csv\_f* vsip\_csvd\_create\_f(vsip\_length, vsip\_length,\\*\hspace*{1cm}v
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_destroy}
-\\ \hspace*{1.cm} {
+\\ \hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy SVD Object\vspace{.1cm}}\\ \hline\Ts
@@ -25,7 +25,7 @@ int vsip\_csvd\_destroy\_f(vsip\_csv\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd}
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Compute SVD\vspace{.1cm}}\\ \hline \Ts
@@ -36,7 +36,7 @@ int vsip\_csvd\_f(vsip\_csv\_f*, const vsip\_cmview\_f*, vsip\_vview\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_getattr}
-\\ \hspace*{1.cm}{
+\\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill SVD Attribute Structure\vspace{.1cm}}\\ \hline \Ts
@@ -70,7 +70,7 @@ int vsip\_csvdprodv\_d(const vsip\_csv\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\h
 int vsip\_csvdprodv\_f(const vsip\_csv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
-\\ \hspace*{1.cm} {
+\\ \hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Return with U from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -80,7 +80,7 @@ int vsip\_svdmatu\_d(const vsip\_sv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\
 int vsip\_csvdmatu\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_d*);\Bs\\
 \hline\end{tabular}\\}
 %
-\\ \hspace*{1.cm} {
+\\ \hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Return with V from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -118,15 +118,15 @@ int vsip\_csvdmatv\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsi
  \end{tabular}\end{center}\end{table}
 %%
 \\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
-\hspace*{1.1cm}\parbox{.9\textwidth}{
+\hspace*{.04\textwidth}\parbox{.93\textwidth}{
 \begin{itemize}
 \item{For singular value decomposition the input matrix is overwritten and (basically) owned by the SVD. To retain the calling \ttbf{view} make a copy.}
 \item{Five view methods have been defined for the SVD.}
-\subitem{\ttbf{sv}\hspace{6.5mm}\parbox[t]{.8\textwidth}{A property to obtain a vector of singular values for the calling \ttbf{view}}}
-\subitem{\ttbf{svd }\hspace{2mm}\parbox[t]{.8\textwidth}{A property to obtain full \ttbf{U}, \ttbf{s} and \ttbf{V} \ttbf{view}s for a calling \ttbf{view}}}
-\subitem{\ttbf{svdP }\parbox[t]{.8\textwidth}{A property to obtain \ttbf{U}, \ttbf{s} and \ttbf{V} \ttbf{view}s for a calling \ttbf{view} without the null space (\ttbf{SV} with the 'PART' option).}}
-\subitem{\ttbf{svdU }\parbox[t]{.8\textwidth}{A property to obtain full \ttbf{U} and \ttbf{s} \ttbf{view}s for a calling \ttbf{view}. \ttbf{V} is not calculated.}}
-\subitem{\ttbf{svdV }\parbox[t]{.8\textwidth}{A property to obtain \ttbf{s} and full \ttbf{V} \ttbf{view}s for a calling \ttbf{view}. \ttbf{U} is not calculated.}}
+\subitem{\ttbf{sv}\hspace{6.5mm}\parbox[t]{.7\textwidth}{A property to obtain a vector of singular values for the calling \ttbf{view}}}
+\subitem{\ttbf{svd }\hspace{2mm}\parbox[t]{.7\textwidth}{A property to obtain full \ttbf{U}, \ttbf{s} and \ttbf{V} \ttbf{view}s for a calling \ttbf{view}}}
+\subitem{\ttbf{svdP }\parbox[t]{.7\textwidth}{A property to obtain \ttbf{U}, \ttbf{s} and \ttbf{V} \ttbf{view}s for a calling \ttbf{view} without the null space (\ttbf{SV} with the 'PART' option).}}
+\subitem{\ttbf{svdU }\parbox[t]{.7\textwidth}{A property to obtain full \ttbf{U} and \ttbf{s} \ttbf{view}s for a calling \ttbf{view}. \ttbf{V} is not calculated.}}
+\subitem{\ttbf{svdV }\parbox[t]{.7\textwidth}{A property to obtain \ttbf{s} and full \ttbf{V} \ttbf{view}s for a calling \ttbf{view}. \ttbf{U} is not calculated.}}
 \end{itemize}\vspace*{2mm}}}\\
 %EXAMPLE
 \hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
@@ -135,14 +135,14 @@ int vsip\_csvdmatv\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsi
 will calculate a vector of singular vales for \ttbf{A}. To retain \ttbf{A} use \ttbf{s=A.copy.sv}\vspace*{3mm}}\\
 %CLASS METHODS
 \hspace*{.8cm}{\textbf{SV Class Methods\vspace*{2mm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{SV} object do\\
-\hspace*{1.cm}\ttbf{svObj = SV(t,m,n,opU,opV)} \\
+\hspace*{.03\textwidth}\parbox{.9\textwidth}{To create an \ttbf{SV} object do\\
+\hspace*{.03\textwidth}\ttbf{svObj = SV(t,m,n,opU,opV)} \\
 Where \ttbf{t} is a string indicating the type of \ttbf{SV} object to create, \ttbf{m} and \ttbf{n} indicate the size (\ttbf{m,n}) of the input matrix to decompose, and \ttbf{opU} and  \ttbf{opV} are flags specifying computing options for matrices \ttbf{U} and \ttbf{V} respectively. See table \ref{tab:svdFlagsAndType}.\\
 For convenience if the target of method \ttbf{svd} is matrix \ttbf{view A} then you may create a compatible \ttbf{SV} object using\\
-\hspace*{1.cm}\ttbf{svObj=SV(A.type,A.size,opU,opV)}\\
+\hspace*{.03\textwidth}\ttbf{svObj=SV(A.type,A.size,opU,opV)}\\
 For the class methods table we assume we have created an \ttbf{SV} object we call \ttbf{svObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{svObj}.\vspace{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{For methods \ttbf{prodU} and \ttbf{prodV} the input/output matrix \ttbf{XB} may have a different size on output. Both views are in the same data space and will overlap (this is an in-place operation). To ensure matrix \ttbf{XB} is sized properly make sure it is large enough to hold all the data for the largest matrix and place the other matrix in a subview with origin at \ttbf{0,0} for both input and output. Note that \pyjv{} has functions \ttbf{sizeIn} and \ttbf{sizeOut} to help in calculating sizes given the somewhat confusing number of options for matrix operators and matrix sides available in matrix product functions.}\\
-\hspace*{1.cm}\parbox[t]{.85\textwidth}{\begin{tabular}{|l l|}
+\hspace*{.03\textwidth}\parbox{.9\textwidth}{For methods \ttbf{prodU} and \ttbf{prodV} the input/output matrix \ttbf{XB} may have a different size on output. Both views are in the same data space and will overlap (this is an in-place operation). To ensure matrix \ttbf{XB} is sized properly make sure it is large enough to hold all the data for the largest matrix and place the other matrix in a subview with origin at \ttbf{0,0} for both input and output. Note that \pyjv{} has functions \ttbf{sizeIn} and \ttbf{sizeOut} to help in calculating sizes given the somewhat confusing number of options for matrix operators and matrix sides available in matrix product functions.}\\
+\hspace*{.03\textwidth}\parbox[t]{.94\textwidth}{\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.58\textwidth}{\center{\rmfamily \bfseries SV Decomposition Methods}\vspace*{2mm}}}\Bs\\ \hline
 %
 \Ts\ttbf{svObj.svd(A)} & 
