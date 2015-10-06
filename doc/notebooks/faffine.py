@@ -92,7 +92,7 @@ def faffine(M,wp,ws,Kp,Ks,eta_p,eta_s):
            del_p = 0;
            del_s = x[M+1];
        A=pv.create('vview_d',a.length*2-1+Z).fill(0.0)
-       A[:a.length]=a; A[1:a.length] /=2.0; A[a.length+Z:]=A.block.bind(a.length-1,-1,a.length-1)
+       A[:a.length]=a; A[1:a.length] *= 0.5; A[a.length+Z:]=A.block.bind(a.length-1,-1,a.length-1)
        Ac=A.rcfft
        A=Ac.realview.copy
        # --------------- determine new reference set-----------------------------
@@ -101,7 +101,7 @@ def faffine(M,wp,ws,Kp,Ks,eta_p,eta_s):
        lmAn=localmax(A.neg);lmA=localmax(A.neg)
        ri=pv.create('vview_d',lmA.length+lmAn.length).fill(0.0)
        ri[:lmA.length]=lmA;ri[lmA.length:]=lmAn;ri.sortip()
-       rs=frefine(a,ri*pi/float(L))
+       rs=frefine(a,ri*(pi/float(L)))
        rsp=rs.gather(rs.llt(wp).indexbool)
        rss=rs.gather(rs.lgt(ws).indexbool)
        rs=pv.create(rsp.type,rsp.length+rss.length+2).fill(0.0)
@@ -143,11 +143,12 @@ def faffine(M,wp,ws,Kp,Ks,eta_p,eta_s):
        Err = ((Ar - D) - ((Kp*del_+eta_p)*sp + (Ks*del_+eta_s)*ss)).mag.maxval
        print('Err = %20.15f\n'%Err)
     h = pv.create(a.type,2 * a.length -1).fill(0.0)
-    a[1:] /= 2.0;a2=a[1:];a1=a.block.bind(a2.length -1 + a2.offset,-1,a2.length);
+    a[1:] *= 0.5;a2=a[1:];a1=a.block.bind(a2.length -1 + a2.offset,-1,a2.length);
     h[:a1.length]=a1; h[a1.length]=a[0]; h[a1.length+1:]=a2   # h : filter coefficients
+    pi_inv=1.0/pi
     pyplot.figure(1) 
-    pyplot.plot((w/pi).list,A.list,'r'); pyplot.hold(True); 
-    pyplot.plot((rs/pi).list,Ar.list,'+'); pyplot.hold(False)
+    pyplot.plot((w*pi_inv).list,A.list,'r'); pyplot.hold(True); 
+    pyplot.plot((rs*pi_inv).list,Ar.list,'+'); pyplot.hold(False)
     pyplot.xlabel('w/pi',fontsize=14);pyplot.ylabel('A',fontsize=14)
     pyplot.title('Frequency Response Amplitude',fontsize=16)
     return (h,rs,del_p,del_s)

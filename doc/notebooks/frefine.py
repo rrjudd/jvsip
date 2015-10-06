@@ -12,5 +12,5 @@ def frefine(a,rs):
         H = w.outer(m).cos.prod(a)
         H1 = (w.outer(m).sin.neg).prod(m * a);
         H2 = (w.outer(m).cos.neg).prod(m.copy.sq * a)
-        w -= H1/H2;
+        w -= H1*H2.recip;
     return w

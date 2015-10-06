@@ -17,7 +17,7 @@ def firebp(n,w1,w2,Del):
         be  : band edges of h
         w1  : first half-magnitude frequency
         w2  : second half-magnitude frequency
-       	w1 < w2,  w1,w2 should be in the interval (0,pi)
+           w1 < w2,  w1,w2 should be in the interval (0,pi)
         Del : [ripple size in first stopband, passband, second stopband]
        subprograms needed
         localmax, frefine, firfbe
@@ -44,7 +44,7 @@ def firebp(n,w1,w2,Del):
         retview[:lngth:2].fill(-1.0)
         return retview
     def diff(a):
-        assert 'pyJvsip.__View' in repr(a),'diff only works with pyJvsip views'
+        assert 'pyJvsip' in repr(a),'diff only works with pyJvsip views'
         assert 'vview' in a.type, 'diff only works with vector views'
         if a.length > 1:
             retview = a[1:a.length] - a[:a.length - 1]
@@ -67,7 +67,7 @@ def firebp(n,w1,w2,Del):
         A.rowview(m-1)[:]=V[:]
         return A.luSolve(y)
     # ------------------ initialize constants ---------------------------
-    assert 'pyJvsip.__View' in repr(Del) and Del.type in ['vview_f','vview_d'],\
+    assert 'pyJvsip' in repr(Del) and Del.type in ['vview_f','vview_d'],\
                 "last argument is a vector view of type 'vview_f' or 'vview_d'"
     t=Del.type
     L = int(pow(2,int(ceil(log2(10*n)))))
@@ -79,9 +79,9 @@ def firebp(n,w1,w2,Del):
     ideal = Del.empty.fill(0.0); ideal[1]=1.0
     up = ideal + Del
     lo = ideal - Del
-    D1 = 0.5				# half-magnitude value at w1
-    D2 = 0.5				# half-magnitude value at w2
-    PF = False				# PF : flag : Plot Figures
+    D1 = 0.5                # half-magnitude value at w1
+    D2 = 0.5                # half-magnitude value at w2
+    PF = False                # PF : flag : Plot Figures
     # ------------------ initialize reference set ----------------------------
     # n1 : number of reference frequencies in first stopband
     # n2 : number of reference frequencies in passband
@@ -116,7 +116,7 @@ def firebp(n,w1,w2,Del):
         attr=a.attrib; ot=attr['offset'];lt=attr['length'];st=attr['stride'];
         ot+=(lt-1)*st; st=-st;attr['offset']=ot; attr['stride']=st
         a_rev=a.cloneview;a_rev.putattrib(attr)
-        H0.fill(0.0);H0[0]=a[0];H0[1:lt]=a[1:]/2.0; H0[H0.length-n:]=a_rev[:lt-1]/2.0
+        H0.fill(0.0);H0[0]=a[0];H0[1:lt]=a[1:]*0.5; H0[H0.length-n:]=a_rev[:lt-1]*0.5
         Hc=H0.rcfft
         H=Hc.realview[:L+1].copy
         # --------------- determine local max and min -------------------------
@@ -130,7 +130,7 @@ def firebp(n,w1,w2,Del):
         ri=pv.create(H.type,v1.length+v2.length)
         ri[:v1.length]=v1;ri[v1.length:]=v2
         ri.sortip()
-        rs = (ri)*pi/L
+        rs = (ri)*(pi/L)
         rs = frefine(a,rs)
         n1 = rs.llt(w1).sumval
         n2 = pv.bb_and(rs.lgt(w1), rs.llt(w2), pv.create('vview_bl',rs.length)).sumval
@@ -140,21 +140,21 @@ def firebp(n,w1,w2,Del):
         Id=pv.create(Del.type,n1+n2+n3);Dr=Id.empty
         Id[:n1].fill(ideal[0]);Id[n1:n1+n2].fill(ideal[1]);Id[n1+n2:].fill(ideal[2])
         Dr[:n1].fill(Del[0]);Dr[n1:n1+n2].fill(Del[1]);Dr[n1+n2:].fill(Del[2])
-        Er = (Hr - Id)/Dr;
+        Er = (Hr - Id)*Dr.recip
         # Plot Figures if PF is True
         if PF:
-           figure(1)
-    	   plot((w/pi).list,H.list)
-    	   hold(True)
-    	   plot((rs/pi).list,Hr.list,'o')
-    	   hold(False)
-    	   axis([0, 1, -.2, 1.2])
-       	   figure(2)
-           plot(Er.list)
-           hold(True)
-           plot(Er.list,'o'),
-           hold(False)
-    	   pause(0.05)
+            figure(1)
+            plot((w*(1./pi)).list,H.list)
+            hold(True)
+            plot((rs*(1.0/pi)).list,Hr.list,'o')
+            hold(False)
+            axis([0, 1, -.2, 1.2])
+            figure(2)
+            plot(Er.list)
+            hold(True)
+            plot(Er.list,'o'),
+            hold(False)
+            pause(0.05)
         # --------------- calculate new interpolation points  -----------------
         Y=Id.empty
         if n1 % 2 == 0:
@@ -237,14 +237,14 @@ def firebp(n,w1,w2,Del):
     be = firfbe(a,pv.listToJv(Del.type,[w1,w1,w2,w2]),pv.listToJv(Del.type,[up[0],lo[1],lo[1],up[2]]))
     # ------------------ calcuate filter coefficients ----------------------------
     #h = [a(n+1:-1:2)/2; a(1); a(2:n+1)/2]
-    a[1:]/=2.0
+    a[1:]*=0.5
     atr=a[1:].attrib
     h=pv.create(Del.type,2*a.length-1)
     h[a.length-1]=a[0]
     h[a.length:]=a[1:]
     atr=a[1:].attrib;atr['offset']=atr['length'];atr['stride']*=-1
     a.putattrib(atr);h[:a.length]=a
-    figure(1); plot((w/pi).list,H.list); hold(True); plot((rs/pi).list,Y.list,'x'); hold(False)
+    figure(1); plot((w*(1.0/pi)).list,H.list); hold(True); plot((rs*(1.0/pi)).list,Y.list,'x'); hold(False)
     axis([0, 1, -.2, 1.2])
     xlabel('w'); ylabel('H'); title('Frequency Response Amplitude')
     return(h,rs,be)

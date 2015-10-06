@@ -14,5 +14,5 @@ def firfbe(a,wi,Abe):
     for k in range(15):
         A = w.outer(m).cos.prod(a)-Abe
         A1 = w.outer(m).sin.neg.prod(m*a)
-        w -=  A/A1
+        w -=  A*A1.recip
     return w
