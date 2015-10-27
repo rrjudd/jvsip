@@ -1,8 +1,8 @@
-\afuncT{herm}{Matrix Hermitian. This function must be done out-of-place unless the input
+\afuncT{herm}{Matrix Hermitian.\\*This function must be done out-of-place unless the input
 matrix is square.}{matrixOperations}
 \\\cvsiplh
-\\\hspace*{.06\textwidth}\parbox{.94\textwidth}{The output matrix must be created of the 
-proper size and attributes to accomodate the transpose of the input data.\Bs}
+\\\hspace*{.06\textwidth}\parbox{.94\textwidth}{The output matrix must be created with the 
+proper size and attributes to\\*accomodate the transpose of the input data.\Bs}
 \afh
 \\\hspace*{.03\textwidth} {
 \ttfamily
@@ -21,10 +21,10 @@ void vsip\_cmherm\_d(\\*\hspace{.5cm}const vsip\_cmview\_d*, const vsip\_cmview\
 \apyfunc{yes}{out = herm(in,out)}
 \pyComment{
 \item {The \ttbf{herm} method creates a compact row major matrix of the proper
-type to store the output of the transpose and returns it.  The method is defined as a 
-property since no arguments are required and is always done out-of-place}
+type to store\\*the output of the transpose and returns it.}
+\item{The method is defined as a property since no arguments are required and is always\\*done out-of-place}
 \item{For the \ttbf{herm} method if the calling view is real then the transpose is returned.}
-\item{The \ttbf{herm} function works much the same as the C VSIPL version except that a 
-convenience pointer to the output view is returned. This must be done out-of-place unless
-the matrix is square.}
+\item{The \ttbf{herm} function works much the same as the C VSIPL version except that\\* a 
+convenience pointer to the output view is returned.}
+\item{This must be done out-of-place unless the matrix is square.}
 }

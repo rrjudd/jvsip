@@ -56,7 +56,7 @@ void vsip\_svadd\_si(vsip\_scalar\_si, const vsip\_vview\_si*, const vsip\_vview
 void vsip\_svadd\_uc(vsip\_scalar\_uc, const vsip\_vview\_uc*, const vsip\_vview\_uc*);\Bs\\
 void vsip\_svadd\_vi(vsip\_scalar\_vi, const vsip\_vview\_vi*, const vsip\_vview\_vi*);\Bs\\
 \end{tabular}
-}\\
+}
 \\\pyjvsiph
 \\\vmthdh
 \hspace*{.06\textwidth}Overloaded on plus operator.\\
@@ -65,8 +65,16 @@ void vsip\_svadd\_vi(vsip\_scalar\_vi, const vsip\_vview\_vi*, const vsip\_vview
 \hspace*{.1\textwidth}Elements of \ttbf{view a} replaced with result.\\
 \hspace*{.06\textwidth}\textbf{Out of Place: }\hspace{.2cm} yes\\
 \hspace*{.08\textwidth}\textbf{Example: }\ttbf{c = a + b; d = 2 + c}\\*
-\hspace*{.1\textwidth}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.\\
+\hspace*{.1\textwidth}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.
 \apyfunc{yes}{out = add(in1,in2,out)}
-\pyComment{\item{The \ttbf{add} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. }
+\\\begin{minipage}{\textwidth}
+\hspace*{.04\textwidth}\textbf{Comments}\\ 
+\hspace*{.04\textwidth}\parbox{.95\textwidth}
+{\vspace*{.1cm}
+\begin{itemize}
+\item{The \ttbf{add} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned.}
 \item{This may be done in-place if \ttbf{in1==out} or \ttbf{in2==out}.}
-\item{Argument \ttbf{in1} may be a scalar. For clues to what is allowed see C VSIPL function list.}}
+\item{Argument \ttbf{in1} may be a scalar. For clues to what is allowed see C VSIPL function list.}
+\end{itemize}
+}
+\end{minipage}

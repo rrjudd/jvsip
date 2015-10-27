@@ -91,30 +91,30 @@ void vsip\_fftm\_getattr\_f(\\*\hspace{.7cm}const vsip\_fftm\_f*, vsip\_fftm\_at
 \hspace*{1.1cm}\textbf{In-Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\\
 \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Forward transform of vector \ttbf{x} in-place\\
-\hspace*{.5cm}\ttbf{x.fftip}}\\\\
+\hspace*{.5cm}\ttbf{x.fftip}}\\[6pt]
 \hspace*{1.4cm}\parbox[t]{.8\textwidth}{For matrix FFT multiple use major attribute.\\
 \hspace*{.5cm}\ttbf{x.ROW.fftip}\\
-\hspace*{.5cm}\ttbf{x.COL.fftip}}\\\\
+\hspace*{.5cm}\ttbf{x.COL.fftip}}\\[6pt]
 \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Inverse transform of vector \ttbf{x} in-place\\
-\hspace*{.5cm}\ttbf{x.ifftip}}\\\\
+\hspace*{.5cm}\ttbf{x.ifftip}}\\[6pt]
 %%
 \hspace*{1.1cm}\textbf{Out-of-Place: }\hspace{.2cm} yes\\
 \hspace*{1.1cm}\textbf{Example: }\\
 \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Real to complex and complex to real FFT\\
 \hspace*{.5cm}\ttbf{ y=x.rcfft}\\
-\hspace*{.5cm}\ttbf{ z=y.crfft}}\\\\
+\hspace*{.5cm}\ttbf{ z=y.crfft}}\\[6pt]
 \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex transform of vector \ttbf{x} out-of-place\\
-\hspace*{.5cm}\ttbf{ y=x.fftop}}\\\\
+\hspace*{.5cm}\ttbf{ y=x.fftop}}\\[6pt]
  \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex inverse transform of vector \ttbf{x} out-of-place\\
-\hspace*{.5cm}\ttbf{ y=x.ifftop}}\\\\
+\hspace*{.5cm}\ttbf{ y=x.ifftop}}\\[6pt]
  \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex multiple transform of matrix \ttbf{x} out-of-place by column\\
-\hspace*{.5cm}\ttbf{ y=x.COL.fftop}}\\\\
+\hspace*{.5cm}\ttbf{ y=x.COL.fftop}}\\[6pt]
  \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex multiple transform of matrix \ttbf{x} out-of-place by row\\
-\hspace*{.5cm}\ttbf{ y=x.ROW.fftop}}\\\\
+\hspace*{.5cm}\ttbf{ y=x.ROW.fftop}}\\[6pt]
  \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex multiple inverse transform of matrix \ttbf{x} out-of-place by column\\
-\hspace*{.5cm}\ttbf{ y=x.COL.ifftop}}\\\\
+\hspace*{.5cm}\ttbf{ y=x.COL.ifftop}}\\[6pt]
  \hspace*{1.4cm}\parbox[t]{.8\textwidth}{Complex to complex multiple inverse transform of matrix \ttbf{x} out-of-place by row\\
-\hspace*{.5cm}\ttbf{ y=x.ROW.ifftop}}\\\\
+\hspace*{.5cm}\ttbf{ y=x.ROW.ifftop}}\\[6pt]
 % Class
 \hspace*{.8cm}{\textbf{FFT Class\vspace{.2cm}}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an FFT object use \\*
@@ -129,7 +129,7 @@ where \ttbf{args} is a variable arguments list containing the create parameters 
 \ttbf{dir} & \parbox[t]{.70\textwidth}{Direction flag for FFT either VSIP\_FFT\_FWD or VSIP\_FFT\_INV \vspace*{.1cm}}\\\hline
 \ttbf{major} & \parbox[t]{.70\textwidth}{For multiple FFT by row (VSIP\_ROW) or by column (VSIP\_COL) \vspace*{.1cm}}\\\hline
 \ttbf{ntimes} & \parbox[t]{.70\textwidth}{Hint for how much the FFT object will be used. Zero indicates many times\vspace*{.1cm}} \\\hline
-\ttbf{alghint} & \parbox[t]{.70\textwidth}{Algorithm hint to optimize for speed (VSIP\_ALG\_TIME), size (VSIP\_ALG\_SPACE), or accuracy (VSIP\_ALG\_NOISE)\vspace*{.1cm}}\\
+\ttbf{alghint} & \parbox[t]{.70\textwidth}{Algorithm hint to optimize for speed, size, or accuracy (VSIP\_ALG\_TIME, VSIP\_ALG\_SPACE, VSIP\_ALG\_NOISE)\vspace*{.1cm}}\\
 \hline \end{tabular}}
 \\
 \hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l|l|}

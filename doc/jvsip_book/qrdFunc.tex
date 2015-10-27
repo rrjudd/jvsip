@@ -5,7 +5,7 @@
 %
 \\ \hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Calculate QR Decomposition\vspace{.1cm}}\\ \hline\Ts
 int vsip\_qrd\_d(vsip\_qr\_d*, const vsip\_mview\_d*);\Bs\\
 int vsip\_qrd\_f(vsip\_qr\_f*, const vsip\_mview\_f*);\Bs\\
@@ -15,7 +15,7 @@ int vsip\_cqrd\_f(vsip\_cqr\_f*, const vsip\_cmview\_f*);\Bs\\
 %
 \hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create QRD Object\vspace{.1cm}}\\ \hline\Ts
 vsip\_qr\_d* vsip\_qrd\_create\_d(vsip\_length);\Bs\\
 vsip\_qr\_f* vsip\_qrd\_create\_f(vsip\_length);\Bs\\
@@ -23,29 +23,27 @@ vsip\_cqr\_d* vsip\_cqrd\_create\_d(vsip\_length);\Bs\\
 vsip\_cqr\_f* vsip\_cqrd\_create\_f(vsip\_length);\Bs\\
 \hline\end{tabular}\\}
 %
-\\ \hspace*{.03\textwidth} {
+\hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy QRD Object\vspace{.1cm}}\\ \hline\Ts
 int vsip\_qrd\_destroy\_d(vsip\_qr\_d*);\Bs\\
 int vsip\_qrd\_destroy\_f(vsip\_qr\_f*);\Bs\\
 int vsip\_cqrd\_destroy\_d(vsip\_cqr\_d*);\Bs\\
 int vsip\_cqrd\_destroy\_f(vsip\_cqr\_f*);\Bs\\
 \hline\end{tabular}\\}
-%
-\\ \hspace*{.03\textwidth}{
+\hspace*{.03\textwidth}
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill QRD Attribute Structure\vspace{.1cm}}\\ \hline\Ts
 void vsip\_qrd\_getattr\_d(const vsip\_qr\_d*, vsip\_qr\_attr\_d*);\Bs\\
 void vsip\_qrd\_getattr\_f(const vsip\_qr\_f*, vsip\_qr\_attr\_f*);\Bs\\
 void vsip\_cqrd\_getattr\_d(const vsip\_cqr\_d*, vsip\_cqr\_attr\_d*);\Bs\\
 void vsip\_cqrd\_getattr\_f(const vsip\_cqr\_f*, vsip\_cqr\_attr\_f*);\Bs\\
 \hline\end{tabular}\\}
-%
-\\ \hspace*{.03\textwidth}{
+\hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Product with Q from QR Decomposition\vspace{.1cm}}\\ \hline\Ts
 int vsip\_qrdprodq\_d(const vsip\_qr\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_mview\_d*);\Bs\\
 int vsip\_qrdprodq\_f(const vsip\_qr\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_mview\_f*);\Bs\\
@@ -55,9 +53,9 @@ int vsip\_cqrdprodq\_f(const vsip\_cqr\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\h
 \end{tabular}\\}
 %
 %
-\\ \hspace*{.03\textwidth}{
+\hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Solve Linear System Based on R from QR Decomposition\vspace{.1cm}}\\ \hline\Ts
 int vsip\_qrdsolr\_d(const vsip\_qr\_d *, vsip\_mat\_op opR, vsip\_scalar\_d,\\*\hspace*{1cm}const vsip\_mview\_d *);\Bs\\
 int vsip\_qrdsolr\_f(const vsip\_qr\_f *, vsip\_mat\_op opR, vsip\_scalar\_f,\\*\hspace*{1cm}const vsip\_mview\_f *);\Bs\\
@@ -65,9 +63,9 @@ int vsip\_cqrdsolr\_d(const vsip\_cqr\_d *, vsip\_mat\_op opR, vsip\_cscalar\_d,
 int vsip\_cqrdsolr\_f(const vsip\_cqr\_f *, vsip\_mat\_op opR, vsip\_cscalar\_f,\\*\hspace*{1cm}const vsip\_cmview\_f *);\Bs\\
 \hline\end{tabular}\Bs\\}
 %
-\\ \hspace*{.03\textwidth}{
+\hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Use QRD to Solve a Covariance or LLSQ System\vspace{.1cm}}\\ \hline\Ts
 int vsip\_qrsol\_d(const vsip\_qr\_d*, vsip\_qrd\_prob,\\*\hspace*{1cm}const vsip\_mview\_d*);\Bs\\
 int vsip\_qrsol\_f(const vsip\_qr\_f*, vsip\_qrd\_prob,\\*\hspace*{1cm}const vsip\_mview\_f*);\Bs\\
@@ -75,7 +73,7 @@ int vsip\_cqrsol\_d(const vsip\_cqr\_d*, vsip\_qrd\\\*\hspace*{1cm}, const vsip\
 int vsip\_cqrsol\_f(const vsip\_cqr\_f*, vsip\_qrd\_prob,\\*\hspace*{1cm}const vsip\_cmview\_f*);\Bs\\
 \hline\end{tabular}\Bs\\}
 %
-\\\pyjvsiph
+\pyjvsiph
 %
 \\ \hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1.1cm}\parbox{.9\textwidth}{
@@ -134,7 +132,7 @@ where:
  \end{tabular}\end{center}\end{table}
 %%
 \hspace*{1.1cm}{\textbf{QR Class Methods}\\
-\hspace*{1.1cm} \parbox[t]{.9\textwidth}{For class methods table we assume we have created an QR object we call \ttbf{qrObj} and we have an input \ttbf{view A} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
+\hspace*{1.1cm} \parbox[t]{.9\textwidth}{\raggedright For class methods table we assume we have created an QR object we call \ttbf{qrObj} and we have an input \ttbf{view A} compliant with \ttbf{firObj} and a compliant output \ttbf{view y}.\vspace{.2cm}}
 \\
 \hspace*{.03\textwidth}\parbox[t]{.96\textwidth}{\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.68\textwidth}{\center{\rmfamily \bfseries QR Decomposition Methods\vspace{.2cm}}}}\Bs\\ \hline
@@ -143,30 +141,30 @@ where:
 \parbox[t]{.58\textwidth}{Decompose \ttbf{A}. Results are in QR object}\Bs\\\hline
 %
 \ttbf{qrObj.args} & 
-\parbox[t]{.58\textwidth}{Property. Return tuple consisting of input argument \ttbf{(m,n,qSave)} list for creation of QR}\Bs\\\hline
+\parbox[t]{.58\textwidth}{\raggedright Property. Return tuple consisting of input argument \ttbf{(m,n,qSave)} list for creation of QR}\Bs\\\hline
 %
 \ttbf{qrObj.qSize} & 
-\parbox[t]{.58\textwidth}{Returns size of Q matrix represented by QR decomposition.}\Bs\\\hline
+\parbox[t]{.58\textwidth}{\raggedright Returns size of Q matrix represented by QR decomposition.}\Bs\\\hline
 %
 \ttbf{qrObj.size} & 
-\parbox[t]{.58\textwidth}{Property. Returns size of input matrix to \ttbf{lud} method \ttbf{(m,n)} \vspace*{.1cm}}\Bs\\\hline
+\parbox[t]{.58\textwidth}{\raggedright Property. Returns size of input matrix to \ttbf{lud} method \ttbf{(m,n)} \vspace*{.1cm}}\Bs\\\hline
 %
 \ttbf{qrObj.type} & 
-\parbox[t]{.58\textwidth}{Property. Returns string indicating QR type.\vspace*{.1cm}}\Bs\\\hline
+\parbox[t]{.58\textwidth}{\raggedright Property. Returns string indicating QR type.\vspace*{.1cm}}\Bs\\\hline
 %
 \ttbf{qrObj.vsip} & 
-\parbox[t]{.58\textwidth}{Property. Returns C VSIPL QR instance.\vspace*{.1cm}}\\\hline
+\parbox[t]{.58\textwidth}{\raggedright Property. Returns C VSIPL QR instance.\vspace*{.1cm}}\\\hline
 %
-\ttbf{qrObj.solve(prob,XB)} & \parbox[t]{.58\textwidth}{Solve}\\\hline
+\ttbf{qrObj.solve(prob,XB)} & \parbox[t]{.58\textwidth}{\raggedright Solve}\\\hline
 %
-\ttbf{qrObj.solveR(op,alpha,XB)} & \parbox[t]{.58\textwidth}{Solve using \ttbf{R} matrix from QR decompostion.\vspace*{.1cm}}\\\hline
+\ttbf{qrObj.solveR(op,alpha,XB)} & \parbox[t]{.58\textwidth}{\raggedright Solve using \ttbf{R} matrix from QR decompostion.\vspace*{.1cm}}\\\hline
 %
 \ttbf{qrObj.prodQ(op,side,XB)} &
- \parbox[t]{.58\textwidth}{Matrix product of \ttbf{Q} with \ttbf{X}.}\\\hline
+ \parbox[t]{.58\textwidth}{\raggedright Matrix product of \ttbf{Q} with \ttbf{X}.}\\\hline
 %
 \end{tabular}\vspace*{.4cm}}\\
 \hspace*{.7cm} \parbox[t]{.91\textwidth}{
-\begin{itemize}
+\begin{itemize}\raggedright
 \item{View \ttbf{XB} is an input-output view. Since the output may be of a different size than the input care must be used to use an input view with a block large enough to handle the expected output. Note for the solvers one would consider \ttbf{B} as the input and \ttbf{X} as the output and for the product vice versa.}
 \item{There is no method defined by the \ttbf{VSIPL} specification to get the \ttbf{Q} or \ttbf{R} matrices explicitly. This information is held in the \ttbf{QR} object. For the \ttbf{qrd view} method these are calculated using the \ttbf{QR prodQ} method.}
 \item{Constant \ttbf{alpha} in the \ttbf{solveR} method is a multiplier on input \ttbf{B}.}

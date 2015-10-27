@@ -2,7 +2,7 @@
 \\\cvsiplh
 \\\hspace*{.04\textwidth}\parbox{.93\textwidth}{
 \textrm{There are many combinations of subtract functions available in \jv{}. The specification provides the normal \ttbf{view} subtractions of complex-complex and real-real types;\Bs but also provides real-complex multiplies as well as mixed \ttbf{scalar-view} multiplies. Consequently the listed available functions are broken up into several tables below.}
-}\vspace{.005\textheight}\\
+}\vspace{.005\textheight}
 \afh
 {
 \ttfamily
@@ -68,7 +68,7 @@ void vsip\_crvsub\_d(\\*\hspace*{1cm}const vsip\_cvview\_d*, const vsip\_vview\_
 void vsip\_crvsub\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_vview\_f*, const vsip\_cvview\_f*);\Bs\\
 \end{tabular}\\
 }
-\\\pyjvsiph
+\pyjvsiph
 \\\vmthdh
 \hspace*{.06\textwidth}Overloaded on minus operator.\\
 \hspace*{.06\textwidth}\textbf{In Place: }\hspace{2mm} yes\\
@@ -76,7 +76,7 @@ void vsip\_crvsub\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_vview\_
 \hspace*{.1\textwidth}Elements of \ttbf{view a} replaced with result.\\
 \hspace*{.06\textwidth}\textbf{Out of Place: }\hspace{.2cm} yes\\
 \hspace*{.08\textwidth}\textbf{Example: }\ttbf{c = a - b;\Bs d = 2 - c}\\*
-\hspace*{.1\textwidth}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.\\
+\hspace*{.1\textwidth}\ttbf{view c} and \ttbf{view d} created and filled with result of operation.
 \apyfunc{yes}{out = sub(in1,in2,out)}
 \pyComment{
 \item{For the function arguments \ttbf{in1} may be either a view or a scalar. Argument \ttbf{in2} and \ttbf{out} must be a view for \pyjv.}

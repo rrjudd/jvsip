@@ -1,4 +1,21 @@
 \afuncT{Window}{Window or Data Taper}{windowFunctions}
-\\\cvsiplh
-\\\pyjvsiph
+\\\cvsiplh\\
+\begin{cfuncs}
+\multicolumn{1}{c}{\rmfamily \bfseries Blackman Window Create Function}\\ \hline
+vsip\_vview\_d* vsip\_vcreate\_blackman\_d(vsip\_length, vsip\_memory\_hint);\\
+vsip\_vview\_f* vsip\_vcreate\_blackman\_f(vsip\_length, vsip\_memory\_hint);\\
+\\
+\multicolumn{1}{c}{\rmfamily \bfseries Kaiser Window Create Function}\\ \hline
+vsip\_vview\_d* vsip\_vcreate\_kaiser\_d(vsip\_length, vsip\_scalar\_d, vsip\_memory\_hint);\\
+vsip\_vview\_f* vsip\_vcreate\_kaiser\_f(vsip\_length, vsip\_scalar\_f,  vsip\_memory\_hint);\\
+\\
+\multicolumn{1}{c}{\rmfamily \bfseries Hanning Window Create Function}\\ \hline
+vsip\_vview\_d* vsip\_vcreate\_hanning\_d(vsip\_length, vsip\_memory\_hint);\\
+vsip\_vview\_f* vsip\_vcreate\_hanning\_f(vsip\_length, vsip\_memory\_hint);\\
+\\
+\multicolumn{1}{c}{\rmfamily \bfseries Chebychev Window Create Function}\\ \hline
+vsip\_vview\_d* vsip\_vcreate\_cheby\_d(vsip\_length, vsip\_scalar\_d, vsip\_memory\_hint);\\
+vsip\_vview\_f* vsip\_vcreate\_cheby\_f(vsip\_length, vsip\_scalar\_f, vsip\_memory\_hint);\\
+\end{cfuncs}
+\pyjvsiph
 

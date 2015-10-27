@@ -1,4 +1,4 @@
-\afuncT{gems}{General Matrix Sum. For scalar $\alpha$ and $\beta$ and Matrix $A$ and $C$ and a matrix operator flag $\opM$ do the operation $C \leftarrow \alpha \cdot \opM_{a}(A) + \beta \cdot C$. }{matrixOperations}
+\afuncT{gems}{General Matrix Sum.\\*For scalar\\* $\alpha$ and $\beta$\\* and Matrix $A$ and $C$\\*and a matrix operator flag $\opM$\\*do the operation\\* $C \leftarrow \alpha \cdot \opM_{a}(A) + \beta \cdot C$\\*. }{matrixOperations}
 \\\cvsiplh
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 \\ \hspace*{0.03\textwidth} {
@@ -14,7 +14,8 @@ void vsip\_gems\_f(\\*\hspace{.6cm}vsip\_scalar\_f, const vsip\_mview\_f *,\\*\h
 \viewmthd{No}{No}{No}{}
 \apyfunc{yes}{out = gems(alpha,A,opM,beta,C)}
 \pyComment{
-\item{The \ttbf{gems} function works much the same as the C VSIPL version except that a 
-convenience pointer to the output view is returned. This must be done out-of-place.}
-\item{Matrix operator flag $\opM_a$ may be entered as strings 'NTRANS', 'TRANS', 'HERM', or 'CONJ'}
+\item{The \ttbf{gems} function works much the same as the C VSIPL version except that\\* a 
+convenience pointer to the output view is returned.}
+\item{This must be done out-of-place.}
+\item{Matrix operator flag $\opM_a$ may be entered as strings 'NTRANS', 'TRANS',\\* 'HERM', or 'CONJ'}
 }

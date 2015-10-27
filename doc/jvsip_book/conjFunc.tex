@@ -16,6 +16,7 @@ void vsip\_cvconj\_f(\\*\hspace*{1cm}const vsip\_cvview\_f*, const vsip\_cvview\
 \viewmthd{yes}{yes}{yes}{inOut.conj}
 \apyfunc{yes}{out = conj(in,out)}
 \pyComment{
+
 \item{The \ttbf{conj} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}
 \item{If the calling \ttbf{view} for the \ttbf{conj} method is real no error is generated. This case is basically a no operation. This is not true for the \ttbf{conj} function call which will generate an assert error as an unsupported type.}
 }

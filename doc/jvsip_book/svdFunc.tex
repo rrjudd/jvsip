@@ -1,5 +1,6 @@
 \afuncT{svd}{Singular Value Decomposition Class}{singularValueDecompostion}
 \\\cvsiplh 
+\raggedright
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_create}
@@ -14,7 +15,7 @@ vsip\_csv\_f* vsip\_csvd\_create\_f(vsip\_length, vsip\_length,\\*\hspace*{1cm}v
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_destroy}
-\\ \hspace*{.03\textwidth} {
+\hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy SVD Object\vspace{.1cm}}\\ \hline\Ts
@@ -25,7 +26,7 @@ int vsip\_csvd\_destroy\_f(vsip\_csv\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd}
-\\ \hspace*{.03\textwidth}{
+\hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Compute SVD\vspace{.1cm}}\\ \hline \Ts
@@ -36,7 +37,7 @@ int vsip\_csvd\_f(vsip\_csv\_f*, const vsip\_cmview\_f*, vsip\_vview\_f*);\Bs\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{svd\_getattr}
-\\ \hspace*{.03\textwidth}{
+\hspace*{.03\textwidth}{
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill SVD Attribute Structure\vspace{.1cm}}\\ \hline \Ts
@@ -45,8 +46,7 @@ void vsip\_svd\_getattr\_f(const vsip\_sv\_f*,  vsip\_sv\_attr\_f*);\Bs\\
 void vsip\_csvd\_getattr\_d(const vsip\_csv\_d*,  vsip\_csv\_attr\_d*);\Bs\\
 void vsip\_csvd\_getattr\_f(const vsip\_csv\_f*,  vsip\_csv\_attr\_f*);\Bs\\
 \hline\end{tabular}\\}
-%
-\\ \hspace*{0.4cm} {
+ \hspace*{0.4cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Product with U from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -57,8 +57,7 @@ int vsip\_svdprodu\_f(const vsip\_sv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hsp
 int vsip\_csvdprodu\_d(const vsip\_csv\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_d*);\Bs\\
 int vsip\_csvdprodu\_f(const vsip\_csv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_f*);\Bs\\
 \hline\end{tabular}\\}
-%
-\\ \hspace*{0.4cm} {
+\hspace*{0.4cm} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Product with U from SV Decomposition\vspace{.1cm}}\\ \hline \Ts
@@ -69,8 +68,7 @@ int vsip\_svdprodv\_f(const vsip\_sv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hsp
 int vsip\_csvdprodv\_d(const vsip\_csv\_d*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_d*);\Bs\\
 int vsip\_csvdprodv\_f(const vsip\_csv\_f*, vsip\_mat\_op, vsip\_mat\_side,\\*\hspace*{1cm}const vsip\_cmview\_f*);\Bs\\
 \hline\end{tabular}\\}
-%
-\\ \hspace*{.03\textwidth} {
+\hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Return with U from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -79,8 +77,7 @@ int vsip\_csvdmatu\_f(const vsip\_csv\_f*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsi
 int vsip\_svdmatu\_d(const vsip\_sv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_mview\_d*);\Bs\\
 int vsip\_csvdmatu\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_d*);\Bs\\
 \hline\end{tabular}\\}
-%
-\\ \hspace*{.03\textwidth} {
+\hspace*{.03\textwidth} {
 \ttfamily\vspace{.3cm}
 \begin{tabular}[H]{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Return with V from SV Decomposition\vspace{.1cm}}\\ \hline\Ts
@@ -90,7 +87,7 @@ int vsip\_svdmatv\_d(const vsip\_sv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\
 int vsip\_csvdmatv\_d(const vsip\_csv\_d*, vsip\_scalar\_vi, \\*\hspace*{1cm}vsip\_scalar\_vi, const vsip\_cmview\_d*);\Bs\\
 \hline\end{tabular}\\}
 %
-\\\pyjvsiph
+\pyjvsiph
 % table of flags and types
 \begin{table}
 \caption{Flags and Types for SV Decomposition}

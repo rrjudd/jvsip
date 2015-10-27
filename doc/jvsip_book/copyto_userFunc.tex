@@ -1,6 +1,20 @@
 \afuncT{copyto\_user}{Copy data out of a view into user memory.}{elementGenerationOperations}
 \\\cvsiplh
-\\\pyjvsiph
+\\\begin{cfuncs}
+void vsip\_cmcopyto\_user\_d (const vsip\_cmview\_d*, vsip\_major, vsip\_scalar\_d*~const, vsip\_scalar\_d*~const);\\
+void vsip\_cmcopyto\_user\_f (const vsip\_cmview\_f*, vsip\_major, vsip\_scalar\_f*~const, vsip\_scalar\_f*~const);\\
+void vsip\_cvcopyto\_user\_d (const vsip\_cvview\_d*, vsip\_scalar\_d*~const, vsip\_scalar\_d*~const);\\
+void vsip\_cvcopyto\_user\_f (const vsip\_cvview\_f*, vsip\_scalar\_f*~const, vsip\_scalar\_f*~const);\\
+void vsip\_mcopyto\_user\_d (const vsip\_mview\_d*, vsip\_major, vsip\_scalar\_d*~const);\\
+void vsip\_mcopyto\_user\_f (const vsip\_mview\_f*, vsip\_major, vsip\_scalar\_f*~const);\\
+void vsip\_vcopyto\_user\_d (const vsip\_vview\_d*, vsip\_scalar\_d*~const);\\
+void vsip\_vcopyto\_user\_f (const vsip\_vview\_f*, vsip\_scalar\_f*~const);\\
+void vsip\_vcopyto\_user\_i (const vsip\_vview\_i*, vsip\_scalar\_i*~const);\\
+void vsip\_vcopyto\_user\_li (const vsip\_vview\_li*, vsip\_scalar\_li *~const);\\
+void vsip\_vcopyto\_user\_si (const vsip\_vview\_si*, vsip\_scalar\_si*~const);\\
+void vsip\_vcopyto\_user\_vi (const vsip\_vview\_vi*, vsip\_scalar\_vi*~const);\\
+\end{cfuncs}
+\pyjvsiph
 %
 \viewmthd{No}{NA}{NA}{NA}
 %

@@ -1,20 +1,16 @@
 \afuncT{gemp}{General matrix product }{matrixOperations}
 \\\cvsiplh
-\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\\ \hspace*{0.03\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
-void vsip\_cgemp\_d(vsip\_cscalar\_d,\\*\hspace{.6cm}const vsip\_cmview\_d *, vsip\_mat\_op, const vsip\_cmview\_d *,\\*\hspace{.6cm}vsip\_mat\_op,vsip\_cscalar\_d, const vsip\_cmview\_d *);\\
-void vsip\_cgemp\_f(vsip\_cscalar\_f,\\*\hspace{.6cm}const vsip\_cmview\_f *, vsip\_mat\_op, const vsip\_cmview\_f *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_cscalar\_f, const vsip\_cmview\_f *);\\
-void vsip\_gemp\_d(vsip\_scalar\_d,\\*\hspace{.6cm}const vsip\_mview\_d *, vsip\_mat\_op, const vsip\_mview\_d *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_scalar\_d, const vsip\_mview\_d *);\\
-void vsip\_gemp\_f(vsip\_scalar\_f,\\*\hspace{.6cm}const vsip\_mview\_f *, vsip\_mat\_op, const vsip\_mview\_f *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_scalar\_f, const vsip\_mview\_f *);\\
-\end{tabular}
-}
-\\\pyjvsiph
+\\\begin{cfuncs}
+void vsip\_cgemp\_d(vsip\_cscalar\_d, const~vsip\_cmview\_d~*, vsip\_mat\_op, const~vsip\_cmview\_d~*, vsip\_mat\_op, vsip\_cscalar\_d, const~vsip\_cmview\_d~*);\\
+void vsip\_cgemp\_f(vsip\_cscalar\_f, const~vsip\_cmview\_f~*, vsip\_mat\_op, const~vsip\_cmview\_f~*, vsip\_mat\_op, vsip\_cscalar\_f, const~vsip\_cmview\_f~*);\\
+void vsip\_gemp\_d(vsip\_scalar\_d, const~vsip\_mview\_d~*, vsip\_mat\_op, const~vsip\_mview\_d~*, vsip\_mat\_op, vsip\_scalar\_d, const~vsip\_mview\_d~*);\\
+void vsip\_gemp\_f(vsip\_scalar\_f, const~vsip\_mview\_f~*, vsip\_mat\_op, const~vsip\_mview\_f~*, vsip\_mat\_op, vsip\_scalar\_f, const~vsip\_mview\_f~*);\\
+\end{cfuncs}
+\pyjvsiph
 \viewmthd{No}{No}{No}{}
 \apyfunc{yes}{out = gemp(alpha, a, op\_a, b, op\_b, beta, c)}
 \pyComment{
-\item{For matrix \ttbf{view} a and matrix \ttbf{view} b the general matrix product does $c \leftarrow \alpha \cdot op\_a(a) * op\_b(b) + \beta \cdot c$ where $ * $ indicates a matrix product and $\cdot$ indicates an elementwise multiply.}
-\item{The \ttbf{gemp} function works much the same as the C VSIPL version except that a 
+\item{For matrix \ttbf{view} a and matrix \ttbf{view} b the general matrix product does\\* $c \leftarrow \alpha \cdot \opA(a) * \opB(b) + \beta \cdot c$\\* where $ * $\\* indicates a matrix product\\* and $\cdot$\\* indicates an elementwise multiply.}
+\item{The \ttbf{gemp} function works much the same as the C VSIPL version except that\\* a 
 convenience pointer to the output view is returned.}
 }

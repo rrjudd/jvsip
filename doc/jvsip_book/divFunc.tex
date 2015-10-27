@@ -4,7 +4,6 @@
 \hspace*{.04\textwidth}\parbox{.93\textwidth}{
 \textrm{There are many combinations of divide available in \jv{}. The specification provides the normal \ttbf{view} divides of complex-complex and real-real types;\Bs but also provides real-complex and complex-real divides as well as mixed \ttbf{scalar-view} and \ttbf{view-scalar} divides. Consequently the listed available functions are broken up into several tables below.}
 }\vspace{2mm}
-\\
 \afh
 {
 \ttfamily
@@ -64,7 +63,7 @@ void vsip\_csmdiv\_d(\\*\hspace*{1cm}vsip\_cscalar\_d, const vsip\_cmview\_d*,co
 void vsip\_csmdiv\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*,const vsip\_cmview\_f*);\Bs\\
 \end{tabular}\\
 }
-\\\pyjvsiph
+\pyjvsiph
 \\\vmthdh
 \hspace*{.06\textwidth}Overloaded on divide operator.\\
 \hspace*{.06\textwidth}\textbf{In Place: }\hspace{.2cm} yes\\
@@ -73,7 +72,7 @@ void vsip\_csmdiv\_f(\\*\hspace*{1cm}vsip\_cscalar\_f, const vsip\_cmview\_f*,co
 \hspace*{.06\textwidth}\textbf{Out of Place: }\hspace{.2cm} yes\\
 \hspace*{.08\textwidth}\textbf{Example: }\ttbf{c = a / b; d = 2 / c; e = c / 2}\\*
 \hspace*{.1\textwidth}\parbox{.85\textwidth}{\ttbf{view c}, \ttbf{view d}, and \ttbf{view e}  created and filled with result of operation.}\\
-\\\hspace*{.04\textwidth}{\textbf{Function}\vspace{.2cm}}\\
+\hspace*{.04\textwidth}{\textbf{Function}\vspace{.2cm}}\\
 \hspace*{.06\textwidth}\parbox{.93\textwidth}{The divide function works the same as C VSIPL except a convenience copy of the output view will return.\vspace{.2cm}}\\
 \hspace*{.08\textwidth}\textbf{Example: }\ttbf{c = div(a,b,c)}\\
 \hspace*{.1\textwidth}Variables \ttbf{a} and \ttbf{b} are both \ttbf{view}s or \ttbf{a} OR \ttbf{b} may be a scalar.\\

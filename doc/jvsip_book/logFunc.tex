@@ -3,7 +3,7 @@
 \afh
 \\\hspace*{.04\textwidth} {
 \ttfamily
-\begin{tabular}[H]{l}
+\begin{tabular}{l}
 vsip\_scalar\_d vsip\_log\_d(vsip\_scalar\_d);\\
 vsip\_scalar\_f vsip\_log\_f(vsip\_scalar\_f);\\
 vsip\_cscalar\_d vsip\_clog\_d(vsip\_cscalar\_d);\\
@@ -21,4 +21,7 @@ void vsip\_vlog\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\
 \\\pyjvsiph
 \viewmthd{yes}{yes}{yes}{inOut.log}
 \apyfunc{yes}{out = log(in,out)}
-\\\hspace*{1.2cm}\parbox{10.8cm}{\vspace*{.1cm}The \ttbf{log} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{in==out}.}
+\pyComment{
+\item The \ttbf{log} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned.
+\item This may be done in-place if \ttbf{in==out}.
+}

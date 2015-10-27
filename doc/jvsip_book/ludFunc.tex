@@ -2,10 +2,9 @@
 \\\cvsiplh 
 \\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
 %
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_create}
 \\ \hspace*{.9cm} {
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Create LU Object\vspace{.1cm}}\\ \hline
 vsip\_lu\_d* vsip\_lud\_create\_d(vsip\_length);\\
 vsip\_lu\_f* vsip\_lud\_create\_f(vsip\_length);\\
@@ -14,20 +13,18 @@ vsip\_clu\_f* vsip\_clud\_create\_f(vsip\_length);\\
 \hline\end{tabular}\\}
 %
 %\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_destroy}
-\\ \hspace*{.9cm} {
+\hspace*{.9cm} {
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Destroy LU Object\vspace{.1cm}}\\ \hline
 int vsip\_lud\_destroy\_d(vsip\_lu\_d*);\\
 int vsip\_lud\_destroy\_f(vsip\_lu\_f*);\\
 int vsip\_clud\_destroy\_d(vsip\_clu\_d*);\\
 int vsip\_clud\_destroy\_f(vsip\_clu\_f*);\\
 \hline\end{tabular}\\}
-%
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud}
-\\ \hspace*{.9cm}{
+\hspace*{.9cm}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Calculate LU Decomposition\vspace{.1cm}}\\ \hline
 int vsip\_lud\_d(vsip\_lu\_d*, const vsip\_mview\_d*);\\
 int vsip\_lud\_f(vsip\_lu\_f*, const vsip\_mview\_f*);\\
@@ -35,10 +32,9 @@ int vsip\_clud\_d(vsip\_clu\_d*, const vsip\_cmview\_d*);\\
 int vsip\_clud\_f(vsip\_clu\_f*, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lusol}\\
-\\ \hspace*{.9cm}{
+\hspace*{.9cm}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated LU Decomposition\vspace{.3cm}}\\ \hline
 int vsip\_lusol\_d(\\
 \hspace*{3.cm}const vsip\_lu\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
@@ -50,68 +46,80 @@ int vsip\_clusol\_f(\\
 \hspace*{3.cm}const vsip\_clu\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
 \hline\end{tabular}\\}
 %
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{lud\_getattr}
-\\ \hspace*{.8cm}{
+\hspace*{.8cm}{
 \ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
+\begin{tabular}{|l|}
 \multicolumn{1}{c}{\rmfamily \bfseries Fill LU Attribute Structure\vspace{.1cm}}\\ \hline
 void vsip\_lud\_getattr\_d(const vsip\_lu\_d*, vsip\_lu\_attr\_d*);\\
 void vsip\_lud\_getattr\_f(const vsip\_lu\_f*, vsip\_lu\_attr\_f*);\\
 void vsip\_clud\_getattr\_d(const vsip\_clu\_d*, vsip\_clu\_attr\_d*);\\
 void vsip\_clud\_getattr\_f(const vsip\_clu\_f*, vsip\_clu\_attr\_f*);\\
 \hline\end{tabular}\\}
-%
-\\ \pyjvsiph
+\pyjvsiph
 \\ \hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1.1cm}\parbox{.9\textwidth}{
-\begin{itemize}
-\item {three \ttbf{view} methods have been defined for LU Decompostion.}
-\subitem{\ttbf{luSolve{(xb)}} -Calculate an in-place solution to $A\vec{x}=\vec{b}$ or $A X = B$.\Bs}
+\begin{itemize}\raggedright
+\item {Three \ttbf{view} methods have been defined for LU Decompostion.}
+\subitem{\ttbf{luSolve{(xb)}} - Calculate an in-place solution to $A\vec{x}=\vec{b}$ or $A X = B$.\Bs}
 \subitem{\ttbf{luInv} - A method to obtain a matrix inverse using LU for computation.}
 \subitem{\ttbf{lu} - A method to obtain a computed LU object from a matrix.\Bs}
 \item{\Ts Methods \ttbf{lu} and \ttbf{luInv} are defined as properties.}
 \item{LU decomposition will overwrite the input matrix so use a copy to preserve the calling view.}
 \end{itemize}\vspace{2mm}}}\\
-%%
 \hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
-\hspace*{1.9cm}\parbox{.85\textwidth}{\Ts Assume square matrix \ttbf{view} \ttbf{A} has been created and has data in it. Also assume we have a known matrix or vector (assumed to be a column vector) \ttbf{B} and we need to solve for unknown \ttbf{X} in $A X = B$.}\\
-\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{luObj=A.lu} \\*
-will create an \ttbf{LU} decomposition object and decompose calling view A.}\\
-\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{invA=A.luInv} \\*
-will return an inverse matrix for A.}\\
-\hspace*{1.9cm}\parbox{.8\textwidth}{\vspace{.3cm}\hspace*{1cm}\ttbf{A.luSolve(B)} \\*
-will in-place solve \ttbf{B} for \ttbf{X}}.\vspace*{.3cm}\\
-%
-%
+\hspace*{1.9cm}\parbox{.85\textwidth}{\raggedright \Ts Given a square data matrix \ttbf{view} \ttbf{A} and a known 
+matrix or (column) vector \ttbf{B} solve for unknown \ttbf{X} in $A X = B$.\\*
+\hspace*{1cm}\ttbf{A.luSolve(B)} \\*
+Done in-place. Matrix \ttbf{B} contains the answer \ttbf{X}}.\\
 \hspace*{.8cm}{\textbf{LU Class Methods\vspace*{.2cm}}\\
-\hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{LU} object do\\
+\hspace*{1.cm}\parbox{.9\textwidth}{\raggedright To create an \ttbf{LU} object do\\
 \hspace*{1.cm}\ttbf{luObj = LU(t,size)} \\
 Where \ttbf{t} is a string indicating the type of \ttbf{LU} object to create and \ttbf{size} is the size of the square matrix the \ttbf{LU} object will decompose.\\
 For class methods table we assume we have created an LU object we call \ttbf{luObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{luObj} and some compliant \ttbf{view B} where we want to solve for the unknown \ttbf{X} in $A X = B $.\vspace{.2cm}}\\
 \begin{table}
 \caption{Flags and Types for LU Decomposition}
-\begin{center}\begin{tabular}{|l l|}
-%%
+\begin{center}\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries LU Decomposition Types}}}\Bs\\\hline
 'lu\_d' & Real \ttbf{LU}; double precision \Bs\\\hline
 'lu\_f' & Real \ttbf{LU}; float precision\Bs\\\hline
 'clu\_d' & Complex \ttbf{LU}; double precision\Bs\\\hline
 'clu\_f' & Complex \ttbf{LU}; float precision\Bs\\\hline
-%%%
+\end{tabular}
+\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Matrix Operator Flags (\ttbf{op})}}}\Bs\\\hline
 \Ts'NTRANS' or \ttbf{VSIP\_MAT\_NTRANS} & No Transpose operator\Bs\\\hline
    'TRANS' or \ttbf{VSIP\_MAT\_TRANS} & Transpose operator\Bs\\\hline
    'HERM' or \ttbf{VSIP\_MAT\_HERM} & Hermitian operator\Bs\\\hline
-%%%
  \end{tabular}\end{center}\end{table}
-%%
-\\
-\hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l l|}
+\hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.8\textwidth}{\center{\rmfamily \bfseries LU Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
-\ttbf{luObj.lud(A)} & \parbox[t]{.6\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{luObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
-\ttbf{luObj.solve(op,XB)} & \parbox[t]{.6\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
-\ttbf{luObj.size} & \parbox[t]{.6\textwidth}{ Property. Returns integer length size of square matrix \ttbf{LU} object will decompose.\Bs}\\\hline
-\ttbf{luObj.singular} & \parbox[t]{.6\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline
-\ttbf{luObj.type} & \parbox[t]{.6\textwidth}{Returns string indicating LU type.\Bs}\\\hline
-\ttbf{luObj.vsip} & \parbox[t]{.6\textwidth}{Returns C VSIPL LU instance.\vspace*{.1cm}\Bs}\\\hline
-\end{tabular}\vspace*{.4cm}}\\
+\ttbf{luObj.lud(A)} & \parbox[t]{.6\textwidth}{\raggedright Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{luObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
+\ttbf{luObj.solve(op,XB)} & \parbox[t]{.6\textwidth}{\raggedright Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
+\ttbf{luObj.size} & \parbox[t]{.6\textwidth}{\raggedright Property. Returns integer length size of square matrix \ttbf{LU} object will decompose.\Bs}\\\hline
+\ttbf{luObj.singular} & \parbox[t]{.6\textwidth}{\raggedright Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline
+\ttbf{luObj.type} & \parbox[t]{.6\textwidth}{\raggedright Returns string indicating LU type.\Bs}\\\hline
+\ttbf{luObj.vsip} & \parbox[t]{.6\textwidth}{\raggedright Returns C VSIPL LU instance.\vspace*{.1cm}\Bs}\\\hline
+\end{tabular}\vspace*{.4cm}}
+\hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
+\hspace*{1.9cm}\parbox{.85\textwidth}{\raggedright
+\Ts Given a square data matrix \ttbf{view} \ttbf{A} and a known 
+matrix \ttbf{B} solve for unknown \ttbf{X} in $A X = B$. \\*
+\hspace*{1cm}\ttbf{asize=A.rowlength; t=A.type} \\*
+\hspace*{1cm}\ttbf{luType=\{'mview\_d':'lu\_d','mview\_f':'lu\_f',}\\*
+\hspace*{2.1cm}\ttbf{'cmview\_d':'clu\_d','cmview\_f':'clu\_f'\}} \\*
+\hspace*{1cm}\ttbf{assert A.collength==asize,'Matrix must be square'}\\*
+\hspace*{1cm}\ttbf{assert t in luType,'Matrix type not supported for LU decomposition'}\\*
+\hspace*{1cm}\ttbf{luObj=LU(luType[t],asize)} \\*
+\hspace*{1cm}\ttbf{luObj.lud(A)} \\*
+\hspace*{1cm}\ttbf{luObj.solve('NTRANS',B)} \\*
+\hspace*{1cm}
+Done in-place. Matrix \ttbf{B} contains the answer \ttbf{X}.}
+\begin{minted}{python}
+asize=A.rowlength; t=A.type
+luType={'mview_d':'lu_d','mview_f','lu_f','cmview_d':'clu_d','cmview_f':'clu_f'}
+assert A.collength==asize,'Matrix must be square'
+assert t in luType,'Matrix type not supported for LU decomposition'
+luObj=LU(luType[t],asize)
+luObj.lud(A)
+luObj.solve('NTRANS',B)
+\end{minted}

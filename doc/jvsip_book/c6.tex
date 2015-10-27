@@ -1,6 +1,5 @@
 \chapter{Signal Processing}
 \section*{Introduction}
-
 \newpage
 \cex
 \inputminted[linenos=true,resetmargins=true]{c}{./c_examples/example18.c}
@@ -10,9 +9,18 @@
 \subsection*(Vector FFT by Row or Column}\addcontentsline{toc}{subsection}{Vector FFT by Row or Column}
 \section*{Convolution, Correlation and FIR Filtering}\addcontentsline{toc}{section}{Convolution, Correlation and FIR Filtering}
 \section*{Window Creation}\addcontentsline{toc}{section}{Window Creation}
-VSIPL provides functions to create Blackman, Chebyshev, Hanning and Kaiser windows. Unlike most functions in C VSIPL the window creation routines do not use an already created vector and fill it. Instead they actually create a block, allocate data for the block, create a unit stride full length vector on the block, fill the vector with the window coefficients, and then return the pointer to the vector view. The return value will be \ilCode{NULL} on an allocation failure.
+{VSIPL provides functions to create Blackman, Chebyshev, Hanning and Kaiser windows. 
+Unlike most functions in C VSIPL the window creation routines do not use an already 
+created vector and fill it. Instead they actually create a block, allocate data for the 
+block, create a unit stride full length vector on the block, fill the vector with the window 
+coefficients, and then return the pointer to the vector view. The return value will be 
+\ilCode{NULL} on an allocation failure.
 
-For pyJvsip the windows are defined as a method on a view so the functionality, from a user perspective, is to create a vector of a certain type and length and then fill the vector with a window.  Size information are taken from the calling view. Under the covers the C VSIPL window functions are used so a copy is actually taking place to meet the requirements of pyJvsip.
+For pyJvsip the windows are defined as a method on a view so the functionality, from a 
+user perspective, is to create a vector of a certain type and length and then fill the 
+vector with a window.  Size information are taken from the calling view. Under the covers 
+the C VSIPL window functions are used so a copy is actually taking place to meet the 
+requirements of pyJvsip.}
 
 \section*{Miscellaneous}\addcontentsline{toc}{section}{Miscellaneous}
 \subsection*{Histogram}\addcontentsline{toc}{subsection}{Histogram}

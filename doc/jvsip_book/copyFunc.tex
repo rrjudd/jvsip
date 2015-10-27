@@ -21,6 +21,5 @@ $\cdots$  \emph{etc.} \end{tabular}
 \\\pyjvsiph
 \viewmthd{yes}{yes}{no}{\parbox[t]{4cm}{out=in.copy\\out=in.copyrm\\out=in.copycm}}
 \\\hspace*{1cm}\parbox{11cm}{The \ttbf{copy} method creates a new view and data space that is the same shape, precision and depth as the input view and copies the data from the \ilCode{in} view to the \ilCode{out} view. The block in the \ilCode{out} view will be the exact size needed to hold the data and will be unit stride along the major direction of the \ilCode{in} view.\\The {\texttt{\bfseries{copycm}}} method is the same as the \ilCode{copy} method except the output view will always be row major independent of the input views major direction.\\The \ttbf{copyrm} method is the same as the \ilCode{copy} method except the output view will always be column major independent of the input views major direction.\\If the input view is a vector the three copy methods have identical results.}
-\\
 \apyfunc{yes}{out = copy(in,out)}
 \\\hspace*{1cm}\parbox{11cm}{The \ttbf{copy} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned.}
