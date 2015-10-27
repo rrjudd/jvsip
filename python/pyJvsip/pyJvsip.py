@@ -3228,7 +3228,7 @@ class Block (object):
             fSel={'vview_fvview_f':'fir_f','vview_fcvview_f':'rcfir_f','cvview_fcvview_f':'cfir_f',
                    'vview_dvview_d':'fir_d','vview_dcvview_d':'rcfir_d','cvview_dcvview_d':'cfir_d'}
             sel=self.type+x.type
-            assert t in fSel,'type <:%s:> not supported for fir method'%sel
+            assert sel in fSel,'type <:%s:> not supported for fir method'%sel
             t=fSel[sel]
             saveState='NO'
             sym='NONE'
