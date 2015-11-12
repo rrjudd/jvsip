@@ -32,15 +32,15 @@
 %
 \newcommand{\pyjvComment}[1]{\newline \hspace*{.02\textwidth}\textbf{Comments}\\ \hspace*{.02\textwidth}\parbox{.95\textwidth}{ \vspace*{.005\textheight}\begin{itemize}{ #1}\end{itemize}}}
 %
-\newcommand{\pyComment}[1]{\\\begin{minipage}{\textwidth}\hspace*{.04\textwidth}\textbf{Comments}\\ \hspace*{.04\textwidth}\parbox{.95\textwidth}{\vspace*{.1cm}\begin{itemize}\raggedright{ #1} \end{itemize}}\end{minipage}}
+\newcommand{\pyComment}[1]{\begin{minipage}{\textwidth}\hspace*{.04\textwidth}\textbf{Comments}\\ \hspace*{.04\textwidth}\parbox{.95\textwidth}{\vspace*{.1cm}\begin{itemize}\raggedright{ #1} \end{itemize}}\end{minipage}}
 %
 \newcommand{\viewmthd}[4]{\\\hspace*{.04\textwidth}\textbf{View Method}
-\\ \hspace*{.06\textwidth}\textbf{Available: }#1\hspace{.25cm}\textbf{Property: }#2\hspace{.25cm}\textbf{In-Place: } #3 
-\\ \hspace*{.06\textwidth}\textbf{Example:} {\ttfamily #4}}
+\\ \hspace*{.05\textwidth}\textbf{Available:#1}\hspace{.5cm}\textbf{Property:#2}\hspace{.5cm}\textbf{In-Place:#3}  
+\\ \hspace*{.05\textwidth}\textbf{Example:} {\ttfamily #4}}
 %
 %
 \newcommand{\viewmthdu}[5]{\\\hspace*{.04\textwidth}\textbf{View Method}
-\\ \hspace*{.06\textwidth}\textbf{Available: }#1\hspace{.25cm}\textbf{Property: }#2\hspace{.25cm}\textbf{In-Place: } #3 
+\\ \hspace*{.06\textwidth}\textbf{Available:#1 }\hspace{.5cm}\textbf{Property:#2}\hspace{.5cm}\textbf{In-Place:#3}  
 \\ \hspace*{.06\textwidth}\textbf{Usage:} {\ttfamily #4}
 \\ \hspace*{.07\textwidth}\textbf{Where:}
 \\ \hspace*{.07\textwidth}\parbox{.91\textwidth}{\begin{itemize}{ #5} \end{itemize}}}
@@ -48,8 +48,8 @@
 \newcommand{\vmthdh}{\hspace*{.04\textwidth} \textbf{View Method}\vspace*{.005\textheight}}
 %
 \newcommand{\apyfunc}[2]{\newline \hspace*{.04\textwidth}\textbf{Function} 
-\\ \hspace*{.06\textwidth}\textbf{Available:} #1 
-\\ \hspace*{.06\textwidth}\textbf{Example:} {\ttfamily #2}}
+\\ \hspace*{.06\textwidth}\textbf{Available:#1}  
+\\ \hspace*{.06\textwidth}\textbf{Example: \ttfamily #2}}
 %
 \newcommand{\aclassInstantiate}[3]{\\ \hspace*{.06\textwidth}{\textbf{#1 Instantiation}}
 \\ \hspace*{.08\textwidth}\ttbf{#2}
@@ -81,7 +81,7 @@
 \DeclareMathOperator{\opB}{opB}
 \newcommand{\fp}{\hangindent=1cm \hangafter=1}
 \newenvironment{cfuncs}{
-\hspace*{.8cm} \vspace*{.1cm}  \textbf{\large Available Functions }
+\hspace*{.8cm} \\ \textbf{\large \hspace*{.04\textwidth} Available Functions }
 \begin{flushleft}
 \hspace*{0.03\textwidth} 
 \ttfamily 

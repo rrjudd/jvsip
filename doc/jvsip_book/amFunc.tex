@@ -1,19 +1,15 @@
 \afuncT{am}{Add and multiply. An element-wise function.}{ternaryOperations}
 \\\cvsiplh
-\afh
-{
-\ttfamily
-\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
-void vsip\_cvam\_d(const vsip\_cvview\_d*,const vsip\_cvview\_d*, \\*\hspace{.7cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
-void vsip\_cvam\_f(const vsip\_cvview\_f*,const vsip\_cvview\_f*, \\*\hspace{.7cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
-void vsip\_cvsam\_d(const vsip\_cvview\_d*,vsip\_cscalar\_d, \\*\hspace{.7cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
-void vsip\_cvsam\_f(const vsip\_cvview\_f*,vsip\_cscalar\_f, \\*\hspace{.7cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
-void vsip\_vam\_d(const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_vview\_d*,\\*\hspace{.7cm}const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
-void vsip\_vam\_f(const vsip\_vview\_f*,const vsip\_vview\_f*,\\*\hspace{.7cm}const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
-void vsip\_vsam\_d(const vsip\_vview\_d*,\\*\hspace{.7cm}vsip\_scalar\_d,const vsip\_vview\_d*, const vsip\_vview\_d*);\Bs\\
-void vsip\_vsam\_f(const vsip\_vview\_f*,\\*\hspace{.7cm}vsip\_scalar\_f,\\*\hspace{.7cm}const vsip\_vview\_f*, const vsip\_vview\_f*);\Bs\\
-\end{tabular}
-}
+\begin{cfuncs}
+void vsip\_cvam\_d(const~vsip\_cvview\_d*,const~vsip\_cvview\_d*, const~vsip\_cvview\_d*, const~vsip\_cvview\_d*);\Bs\\
+void vsip\_cvam\_f(const~vsip\_cvview\_f*,const~vsip\_cvview\_f*, const~vsip\_cvview\_f*, const~vsip\_cvview\_f*);\Bs\\
+void vsip\_cvsam\_d(const~vsip\_cvview\_d*,vsip\_cscalar\_d, const~vsip\_cvview\_d*, const~vsip\_cvview\_d*);\Bs\\
+void vsip\_cvsam\_f(const~vsip\_cvview\_f*,vsip\_cscalar\_f, const~vsip\_cvview\_f*, const~vsip\_cvview\_f*);\Bs\\
+void vsip\_vam\_d(const~vsip\_vview\_d*, const~vsip\_vview\_d*, const~vsip\_vview\_d*, const~vsip\_vview\_d*);\Bs\\
+void vsip\_vam\_f(const~vsip\_vview\_f*,const~vsip\_vview\_f*, const~vsip\_vview\_f*, const~vsip\_vview\_f*);\Bs\\
+void vsip\_vsam\_d(const~vsip\_vview\_d*, vsip\_scalar\_d,const~vsip\_vview\_d*, const~vsip\_vview\_d*);\Bs\\
+void vsip\_vsam\_f(const~vsip\_vview\_f*, vsip\_scalar\_f,  const~vsip\_vview\_f*, const~vsip\_vview\_f*);\Bs\\
+\end{cfuncs}
 \pyComment{
 \item{The C VSIPL spec has separate man pages for add-multiply functions containing scalar arguments, and those containing only \ttbf{view} arguments.}}
 \\\pyjvsiph

@@ -1,37 +1,32 @@
 \afuncT{block}{Block Function Set}{BlockObjects}
 %\hypertarget{blockFunc}{\large \textbf{Block Function Set}}\vspace{.2cm}\\
 \\\cvsiplh 
-\newline \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-%
-\newline \hspace*{0.5cm} {
-\texttt{
-\begin{tabular}[H]{l}
-\multicolumn{1}{c}{\rmfamily \bfseries Create Block Object\vspace{.1cm}}\\\hline
-vsip\_block\_bl* vsip\_blockcreate\_bl(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_d* vsip\_blockcreate\_d(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_f* vsip\_blockcreate\_f(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_i* vsip\_blockcreate\_i(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_mi* vsip\_blockcreate\_mi(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_si* vsip\_blockcreate\_si(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_uc* vsip\_blockcreate\_uc(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_block\_vi* vsip\_blockcreate\_vi(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_cblock\_d* vsip\_cblockcreate\_d(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\\
-vsip\_cblock\_f* vsip\_cblockcreate\_f(\\*\hspace{1cm}size\_t, vsip\_memory\_hint);\vspace{.2cm}\\ 
+\begin{cfuncs}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Create Block Object\Bs}\\\hline
+vsip\_block\_bl* vsip\_blockcreate\_bl(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_d* vsip\_blockcreate\_d(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_f* vsip\_blockcreate\_f(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_i* vsip\_blockcreate\_i(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_mi* vsip\_blockcreate\_mi(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_si* vsip\_blockcreate\_si(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_uc* vsip\_blockcreate\_uc(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_block\_vi* vsip\_blockcreate\_vi(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_cblock\_d* vsip\_cblockcreate\_d(size\_t, vsip\_memory\_hint);\Bs\\
+vsip\_cblock\_f* vsip\_cblockcreate\_f(size\_t, vsip\_memory\_hint);\Bs\\ 
 \hline\hline\\
-\multicolumn{1}{c}{\rmfamily \bfseries Free Block Object\vspace{.1cm}}\\\hline
-void vsip\_blockdestroy\_bl(vsip\_block\_bl*);\\
-void vsip\_blockdestroy\_d(vsip\_block\_d*);\\
-void vsip\_blockdestroy\_f(vsip\_block\_f*);\\
-void vsip\_blockdestroy\_i(vsip\_block\_i*);\\
-void vsip\_blockdestroy\_mi(vsip\_block\_mi*);\\
-void vsip\_blockdestroy\_si(vsip\_block\_si*);\\
-void vsip\_blockdestroy\_uc(vsip\_block\_uc*);\\
-void vsip\_blockdestroy\_vi(vsip\_block\_vi *);\\
-void vsip\_cblockdestroy\_d(vsip\_cblock\_d*);\\
-void vsip\_cblockdestroy\_f(vsip\_cblock\_f*);\\
-\end{tabular}
-}}
-\\\pyjvsiph
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Free Block Object\Bs}\\\hline
+void vsip\_blockdestroy\_bl(vsip\_block\_bl*);\Bs\\
+void vsip\_blockdestroy\_d(vsip\_block\_d*);\Bs\\
+void vsip\_blockdestroy\_f(vsip\_block\_f*);\Bs\\
+void vsip\_blockdestroy\_i(vsip\_block\_i*);\Bs\\
+void vsip\_blockdestroy\_mi(vsip\_block\_mi*);\Bs\\
+void vsip\_blockdestroy\_si(vsip\_block\_si*);\Bs\\
+void vsip\_blockdestroy\_uc(vsip\_block\_uc*);\Bs\\
+void vsip\_blockdestroy\_vi(vsip\_block\_vi *);\Bs\\
+void vsip\_cblockdestroy\_d(vsip\_cblock\_d*);\Bs\\
+void vsip\_cblockdestroy\_f(vsip\_cblock\_f*);\Bs\\
+\end{cfuncs}
+\pyjvsiph
 \\ \hspace*{.8cm}\parbox{.9\textwidth}{For \pyjv{} a block class has been defined. Methods which expand on the functionality of \cvl{} have been defined.  The \ttbf{Block} object will contain a reference to a \cvl{} block. This block is freed when the \pyjv{} block is destroyed.}
 \\[6pt] \hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
 \hspace*{1.1cm}\parbox{.9\textwidth}{
@@ -45,11 +40,10 @@ No special view methods exist for the block class but a derived block will be cr
 \hspace*{1.cm}\ttbf{aBlock = Block(t,length)} \\
 Where \ttbf{t} is a string indicating the type of \ttbf{Block} object to create and \ttbf{length} is the number of scalar values the \ttbf{Block} object will store.}
 \\
-\begin{table}
+\begin{table}[h!]
 \caption{Types for Block Creation}
-\begin{center}\begin{tabular}{|l l|}
-%%
-\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Block Types}}}\Bs\\\hline
+\begin{center}
+\begin{tabular}{|l|l|}\hline
 'block\_d' & Real \ttbf{block}; double precision \Bs\\\hline
 'block\_f' & Real \ttbf{block}; float precision\Bs\\\hline
 'cblock\_d' & Complex \ttbf{block}; double precision\Bs\\\hline

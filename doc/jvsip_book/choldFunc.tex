@@ -1,63 +1,33 @@
 \afuncT{chold}{Cholesky Decomposition Class.}{symmetricPositiveDefiniteSolver}
 \\\cvsiplh 
-\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-%
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{chold\_create}
-\\ \hspace*{1.cm} {
-\ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Create CHOL Object\vspace{.1cm}}\\ \hline
-vsip\_chol\_d* vsip\_chold\_create\_d(vsip\_length);\\
-vsip\_chol\_f* vsip\_chold\_create\_f(vsip\_length);\\
-vsip\_cchol\_d* vsip\_cchold\_create\_d(vsip\_length);\\
-vsip\_cchol\_f* vsip\_cchold\_create\_f(vsip\_length);\\
-\hline\end{tabular}\\}
-\hspace*{1.cm} {
-\ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Destroy CHOL Object\vspace{.1cm}}\\ \hline
-int vsip\_chold\_destroy\_d(vsip\_chol\_d*);\\
-int vsip\_chold\_destroy\_f(vsip\_chol\_f*);\\
-int vsip\_cchold\_destroy\_d(vsip\_cchol\_d*);\\
-int vsip\_cchold\_destroy\_f(vsip\_cchol\_f*);\\
-\hline\end{tabular}\\}
-%
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{chold}
-\hspace*{1.cm}{
-\ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Calculate CHOL Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_chold\_d(vsip\_chol\_d*, const vsip\_mview\_d*);\\
-int vsip\_chold\_f(vsip\_chol\_f*, const vsip\_mview\_f*);\\
-int vsip\_cchold\_d(vsip\_cchol\_d*, const vsip\_cmview\_d*);\\
-int vsip\_cchold\_f(vsip\_cchol\_f*, const vsip\_cmview\_f*);\\
-\hline\end{tabular}\\}
-%
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{cholsol}\\
-\hspace*{1.cm}{
-\ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Solve Using Calculated CHOL Decomposition\vspace{.1cm}}\\ \hline
-int vsip\_cholsol\_d(\\
-\hspace*{3.cm}const vsip\_chol\_d*, vsip\_mat\_op, const vsip\_mview\_d*);\\
-int vsip\_cholsol\_f(\\
-\hspace*{3.cm}const vsip\_chol\_f*, vsip\_mat\_op, const vsip\_mview\_f*);\\
-int vsip\_ccholsol\_d(\\
-\hspace*{3.cm}const vsip\_cchol\_d*, vsip\_mat\_op, const vsip\_cmview\_d*);\\
-int vsip\_ccholsol\_f(\\
-\hspace*{3.cm}const vsip\_cchol\_f*, vsip\_mat\_op, const vsip\_cmview\_f*);\\
-\hline\end{tabular}\\}
-%
-%\\ \hspace*{.8cm} \vspace*{.1cm} \texttt{chold\_getattr}
-\hspace*{1.cm}{
-\ttfamily\vspace{.3cm}
-\begin{tabular}[H]{|l|}
-\multicolumn{1}{c}{\rmfamily \bfseries Fill CHOL Attribute Structure\vspace{.1cm}}\\ \hline
-void vsip\_chold\_getattr\_d(const vsip\_chol\_d*, vsip\_chol\_attr\_d*);\\
-void vsip\_chold\_getattr\_f(const vsip\_chol\_f*, vsip\_chol\_attr\_f*);\\
-void vsip\_cchold\_getattr\_d(const vsip\_cchol\_d*, vsip\_cchol\_attr\_d*);\\
-void vsip\_cchold\_getattr\_f(const vsip\_cchol\_f*, vsip\_cchol\_attr\_f*);\\
-\hline\end{tabular}\\}
+\begin{cfuncs}
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Create CHOL Object\Bs}\\ \hline
+vsip\_chol\_d* vsip\_chold\_create\_d(vsip\_length);\Bs\\
+vsip\_chol\_f* vsip\_chold\_create\_f(vsip\_length);\Bs\\
+vsip\_cchol\_d* vsip\_cchold\_create\_d(vsip\_length);\Bs\\
+vsip\_cchol\_f* vsip\_cchold\_create\_f(vsip\_length);\Bs\\
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Destroy CHOL Object\Bs}\\ \hline
+int vsip\_chold\_destroy\_d(vsip\_chol\_d*);\Bs\\
+int vsip\_chold\_destroy\_f(vsip\_chol\_f*);\Bs\\
+int vsip\_cchold\_destroy\_d(vsip\_cchol\_d*);\Bs\\
+int vsip\_cchold\_destroy\_f(vsip\_cchol\_f*);\Bs\\
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Calculate CHOL Decomposition\Bs}\\ \hline
+int vsip\_chold\_d(vsip\_chol\_d*, const~vsip\_mview\_d*);\Bs\\
+int vsip\_chold\_f(vsip\_chol\_f*, const~vsip\_mview\_f*);\Bs\\
+int vsip\_cchold\_d(vsip\_cchol\_d*, const~vsip\_cmview\_d*);\Bs\\
+int vsip\_cchold\_f(vsip\_cchol\_f*, const~vsip\_cmview\_f*);\Bs\\
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Solve Using Calculated CHOL Decomposition\Bs}\\ \hline
+int vsip\_cholsol\_d(const~vsip\_chol\_d*, vsip\_mat\_op, const~vsip\_mview\_d*);\Bs\\
+int vsip\_cholsol\_f(const~vsip\_chol\_f*, vsip\_mat\_op, const~vsip\_mview\_f*);\Bs\\
+int vsip\_ccholsol\_d(const~vsip\_cchol\_d*, vsip\_mat\_op, const~vsip\_cmview\_d*);\Bs\\
+int vsip\_ccholsol\_f(const~vsip\_cchol\_f*, vsip\_mat\_op, const~vsip\_cmview\_f*);\Bs\\
+\multicolumn{1}{c}{\Ts\rmfamily \bfseries Fill Attribute Structure With Current Attributes\Bs}\\ \hline
+void vsip\_chold\_getattr\_d(const~vsip\_chol\_d*, vsip\_chol\_attr\_d*);\Bs\\
+void vsip\_chold\_getattr\_f(const~vsip\_chol\_f*, vsip\_chol\_attr\_f*);\Bs\\
+void vsip\_cchold\_getattr\_d(const~vsip\_cchol\_d*, vsip\_cchol\_attr\_d*);\Bs\\
+void vsip\_cchold\_getattr\_f(const~vsip\_cchol\_f*, vsip\_cchol\_attr\_f*);\Bs\\
+\hline
+\end{cfuncs}
 %
 \pyjvsiph
 \\\hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
@@ -70,25 +40,9 @@ void vsip\_cchold\_getattr\_f(const vsip\_cchol\_f*, vsip\_cchol\_attr\_f*);\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{CHOL} object do\\
 \hspace*{1.cm}\ttbf{cholObj = CHOL(t,sp,size)} \\
 Where \ttbf{t} is a string indicating the type of \ttbf{CHOL} object to create and \ttbf{size} is the size of the square matrix the \ttbf{CHOL} object will decompose. Since CHOL works on positive definite symmetric matrices the flag \ttbf{sp} indicates if the lower or upper triangular portion should be used. See table \ref{tab:cholFlags}\\[6pt]
-For class methods table we assume we have created an CHOL object we call \ttbf{cholObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{cholObj} and some compliant \ttbf{view B} where we want to solve for the unknown \ttbf{X} in $A X = B $.}\\[6pt]
-\begin{table}
-\caption{Flags and Types for CHOL Decomposition}
-\label{tab:cholFlags}
-\begin{center}\begin{tabular}{|l l|}
-%%
-\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries CHOL Decomposition Types}}}\Bs\\\hline
-'chol\_d' & Real \ttbf{CHOL}; double precision \Bs\\\hline
-'chol\_f' & Real \ttbf{CHOL}; float precision\Bs\\\hline
-'cchol\_d' & Complex \ttbf{CHOL}; double precision\Bs\\\hline
-'cchol\_f' & Complex \ttbf{CHOL}; float precision\Bs\\\hline
-%%%
-\multicolumn{2}{c}{\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Significant Part of Matrix (\ttbf{sp})}}}\Bs\\\hline
-\Ts'UP' or \ttbf{VSIP\_TR\_UP} & Use upper triangular portion of matrix.\Bs\\\hline
-   'LOW' or \ttbf{VSIP\_TR\_LOW} & Use lower triangular portion of matrix.\Bs\\\hline
-%%%
- \end{tabular}\end{center}\end{table}
-%%
-\hspace*{1.cm}\parbox[t]{.9\textwidth}{\begin{tabular}{|l l|}
+For class methods table we assume we have created an CHOL object we call \ttbf{cholObj} and we have an input matrix \ttbf{view A} compliant with \ttbf{cholObj} and some compliant \ttbf{view B} where we want to solve for the unknown \ttbf{X} in $A X = B $.}\\[6pt]}
+%
+\begin{center}\begin{tabular}{|l|l|}
 \multicolumn{2}{c}{\parbox[t]{.85\textwidth}{\center{\rmfamily \bfseries CHOL Decomposition Methods\vspace{.2cm}}}\Bs} \\ \hline
 \ttbf{cholObj.chold(A)} & \parbox[t]{.58\textwidth}{Decompose matrix \ttbf{A}. The decomposition is stored in the \ttbf{cholObj} but \ttbf{view A} may be overwritten so use a copy if you want to preserve \ttbf{A}\Bs}\\\hline
 \ttbf{cholObj.solve(op,XB)} & \parbox[t]{.58\textwidth}{Solve problem $\text{op}(A) X = B$ in-place where \ttbf{XB} is input/output \ttbf{view} and \ttbf{op} is matrix operator flag.\Bs}\\\hline
@@ -96,4 +50,25 @@ For class methods table we assume we have created an CHOL object we call \ttbf{c
 \ttbf{cholObj.singular} & \parbox[t]{.58\textwidth}{Property. Returns \ttbf{True} if singular; \ttbf{False} if inverse exists.\Bs}\\\hline
 \ttbf{cholObj.type} & \parbox[t]{.58\textwidth}{Returns string indicating CHOL type.\Bs}\\\hline
 \ttbf{cholObj.vsip} & \parbox[t]{.58\textwidth}{Returns C VSIPL CHOL instance.\vspace*{.1cm}\Bs}\\\hline
-\end{tabular}\vspace*{.4cm}}\\
+\end{tabular}\end{center}
+%
+\begin{table}[h!]
+\caption{Flags and Types for CHOL Decomposition}
+\label{tab:cholFlags}
+\begin{center}\begin{tabular}{|l|l|}
+%%
+\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries CHOL Decomposition Types}}}\Bs\\\hline
+'chol\_d' & Real \ttbf{CHOL}; double precision \Bs\\\hline
+'chol\_f' & Real \ttbf{CHOL}; float precision\Bs\\\hline
+'cchol\_d' & Complex \ttbf{CHOL}; double precision\Bs\\\hline
+'cchol\_f' & Complex \ttbf{CHOL}; float precision\Bs\\\hline
+%%%
+\multicolumn{2}{c}{\Ts\parbox[t]{.6\textwidth}{\center{\rmfamily \bfseries Significant Part of Matrix (\ttbf{sp})}}}\Bs\\\hline
+\Ts'UP' or \ttbf{VSIP\_TR\_UP} & Use upper triangular portion of matrix.\Bs\\\hline
+   'LOW' or \ttbf{VSIP\_TR\_LOW} & Use lower triangular portion of matrix.\Bs\\\hline
+%%
+\end{tabular}\end{center}
+\end{table}
+
+
+

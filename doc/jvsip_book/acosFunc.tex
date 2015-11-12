@@ -1,18 +1,14 @@
 \afuncT{acos}{Inverse Cosine. An elementary math function.}{elementaryMath}
 \\\cvsiplh
-\afh
-\\\hspace*{.04\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
-vsip\_scalar\_f vsip\_acos\_f(vsip\_scalar\_f a);\\
-vsip\_scalar\_d vsip\_acos\_d(vsip\_scalar\_d a);\\
-void vsip\_macos\_d(const vsip\_mview\_d*, const vsip\_mview\_d*);\\
-void vsip\_macos\_f(const vsip\_mview\_f*, const vsip\_mview\_f*);\\
-void vsip\_vacos\_d(const vsip\_vview\_d*, const vsip\_vview\_d*);\\
-void vsip\_vacos\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\
-\end{tabular}
-}
-\\\pyjvsiph
+\begin{cfuncs}
+vsip\_scalar\_f~vsip\_acos\_f(vsip\_scalar\_f);\\
+vsip\_scalar\_d~vsip\_acos\_d(vsip\_scalar\_d);\\
+void vsip\_macos\_d(const~vsip\_mview\_d*, const~vsip\_mview\_d*);\\
+void vsip\_macos\_f(const~vsip\_mview\_f*, const~vsip\_mview\_f*);\\
+void vsip\_vacos\_d(const~vsip\_vview\_d*, const~vsip\_vview\_d*);\\
+void vsip\_vacos\_f(const~vsip\_vview\_f*, const~vsip\_vview\_f*);\\
+\end{cfuncs}
+\pyjvsiph
 \viewmthd{yes}{yes}{yes}{inOut.acos}
 \apyfunc{yes}{out = acos(in,out)}
 \\\begin{minipage}{\textwidth}

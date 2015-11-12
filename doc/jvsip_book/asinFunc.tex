@@ -1,18 +1,14 @@
 \afuncT{asin}{Inverse Cosine. An elementary math function.}{elementaryMath}
 \\\cvsiplh
-\afh
-\\\hspace*{.04\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
-vsip\_scalar\_f vsip\_asin\_f(vsip\_scalar\_f a);\\
-vsip\_scalar\_d vsip\_asin\_d(vsip\_scalar\_d a);\\
-void vsip\_masin\_d(const vsip\_mview\_d*, const vsip\_mview\_d*);\\
-void vsip\_masin\_f(const vsip\_mview\_f*, const vsip\_mview\_f*);\\
-void vsip\_vasin\_d(const vsip\_vview\_d*, const vsip\_vview\_d*);\\
-void vsip\_vasin\_f(const vsip\_vview\_f*, const vsip\_vview\_f*);\\
-\end{tabular}
-}
-\\\pyjvsiph
+\begin{cfuncs}
+vsip\_scalar\_f vsip\_asin\_f(vsip\_scalar\_f a);\Bs\\
+vsip\_scalar\_d vsip\_asin\_d(vsip\_scalar\_d a);\Bs\\
+void vsip\_masin\_d(const~vsip\_mview\_d*, const~vsip\_mview\_d*);\Bs\\
+void vsip\_masin\_f(const~vsip\_mview\_f*, const~vsip\_mview\_f*);\Bs\\
+void vsip\_vasin\_d(const~vsip\_vview\_d*, const~vsip\_vview\_d*);\Bs\\
+void vsip\_vasin\_f(const~vsip\_vview\_f*, const~vsip\_vview\_f*);\Bs\\
+\end{cfuncs}
+\pyjvsiph
 \viewmthd{yes}{yes}{yes}{inOut.asin}
 \apyfunc{yes}{out = asin(in,out)}
 \pyComment{

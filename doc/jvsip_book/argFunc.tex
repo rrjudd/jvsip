@@ -1,18 +1,14 @@
 \afuncT{arg}{Compute the radian value argument of complex elements in the interval $[-\pi,\pi]$. An Unary Operation.}{unaryOperations}
 \\\cvsiplh
-\afh
-\\\hspace*{.04\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
-vsip\_scalar\_d vsip\_arg\_d(vsip\_cscalar\_d);\\
-vsip\_scalar\_f vsip\_arg\_f(vsip\_cscalar\_f);\\
-void vsip\_marg\_d(\\*\hspace{.5cm}const vsip\_cmview\_d*, const vsip\_mview\_d*);\\
-void vsip\_marg\_f(\\*\hspace{.5cm}const vsip\_cmview\_f*, const vsip\_mview\_f*);\\
-void vsip\_varg\_d(\\*\hspace{.5cm}const vsip\_cvview\_d*, const vsip\_vview\_d*);\\
-void vsip\_varg\_f(\\*\hspace{.5cm}const vsip\_cvview\_f*, const vsip\_vview\_f*);\\
-\end{tabular}
-}
-\\\pyjvsiph
+\begin{cfuncs}
+vsip\_scalar\_d vsip\_arg\_d(vsip\_cscalar\_d);\Bs\\
+vsip\_scalar\_f vsip\_arg\_f(vsip\_cscalar\_f);\Bs\\
+void vsip\_marg\_d(const~vsip\_cmview\_d*, const~vsip\_mview\_d*);\Bs\\
+void vsip\_marg\_f(const~vsip\_cmview\_f*, const~vsip\_mview\_f*);\Bs\\
+void vsip\_varg\_d(const~vsip\_cvview\_d*, const~vsip\_vview\_d*);\Bs\\
+void vsip\_varg\_f(const~vsip\_cvview\_f*, const~vsip\_vview\_f*);\Bs\\
+\end{cfuncs}
+\pyjvsiph
 \viewmthd{yes}{yes}{No}{out=in.arg}
 \apyfunc{yes}{out = arg(in,out)}
 \\ \hspace*{.8cm}\textbf{Comment}\\
