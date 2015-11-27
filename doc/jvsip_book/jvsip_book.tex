@@ -1,6 +1,7 @@
 \documentclass[pdftex,10pt,oneside,a4paper]{book}
 \usepackage[margin=2cm]{geometry}
 \usepackage{array}
+\usepackage{enumitem}
 %\usepackage{showframe}
 \usepackage{graphicx}
 \usepackage{parskip}
@@ -26,7 +27,7 @@
 %
 \newcommand{\cvsiplh}{ \hspace*{.02\textwidth} {\large \textbf{C VSIPL}}\vspace{.005\textheight}}
 %
-\newcommand{\pyjvsiph}{\hspace*{.02\textwidth} {\large \textbf{pyJvsip}}\vspace*{.005\textheight}}
+\newcommand{\pyjvsiph}{\hspace*{.02\textwidth} {\large \textbf{pyJvsip}}\Ts\Bs}
 % Available Functions heading
 \newcommand{\afh}{\\\hspace*{.04\textwidth} \vspace*{.005\textheight}\textbf{Available Functions }}
 %
@@ -80,16 +81,26 @@
 \DeclareMathOperator{\opA}{opA}
 \DeclareMathOperator{\opB}{opB}
 \newcommand{\fp}{\hangindent=1cm \hangafter=1}
+%
 \newenvironment{cfuncs}{
 \hspace*{.8cm} \\ \textbf{\large \hspace*{.04\textwidth} Available Functions }
 \begin{flushleft}
 \hspace*{0.03\textwidth} 
 \ttfamily 
-\begin{tabular}{>{\fp}p{.9\textwidth}<{\Bs}}
+\begin{tabular}{>{\fp}p{.93\textwidth}<{\Bs}}
 }{
 \end{tabular}
 \end{flushleft}
 }
+%
+\newenvironment{comments}{
+    \newline
+    \Ts\hspace*{.04\textwidth}\textbf{Comments} 
+    \begin{itemize}[leftmargin=1.25cm]
+}{
+    \end{itemize}
+}
+%
 \newcounter{cexctr} \setcounter{cexctr}{1}
 \newcommand{\cex}{{\begin{center} \bfseries{c VSIPL Example \arabic{cexctr}} \end{center}}}
 \makeindex

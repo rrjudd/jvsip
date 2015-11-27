@@ -11,5 +11,7 @@ void vsip\_vatan2\_f(const~vsip\_vview\_f*, const~vsip\_vview\_f*, const~vsip\_v
 \pyjvsiph
 \viewmthd{no}{NA}{NA}{NA}
 \apyfunc{yes}{out = atan2(inOne,inTwo,out)}
-\pyComment{
-\item{The \ttbf{atan2} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. This may be done in-place if \ttbf{inOne==out} or \ttbf{inTwo==out}.}}
+\begin{comments}
+\item{The \ttbf{atan2} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned. 
+\item The \ttbf{atan2} function may be done in-place if \ttbf{inOne==out} or \ttbf{inTwo==out}.}
+\end{comments}

@@ -11,10 +11,9 @@ void vsip\_varg\_f(const~vsip\_cvview\_f*, const~vsip\_vview\_f*);\Bs\\
 \pyjvsiph
 \viewmthd{yes}{yes}{No}{out=in.arg}
 \apyfunc{yes}{out = arg(in,out)}
-\\ \hspace*{.8cm}\textbf{Comment}\\
-\hspace*{.8cm}\parbox{11cm}{\vspace*{.2cm}
-\begin{itemize}
-\item{Since \ttbf{arg} takes a view of \emph{depth} complex and outputs to a view of \emph{depth} real of the same \emph{shape} and \emph{precision} as the input view the \ttbf{arg} method will create a view of the proper type and size and return it.}
+\begin{comments}
+\item{The \ttbf{arg} method takes a view of \emph{depth} complex and outputs to a view of \emph{depth} real of the same \emph{shape} and \emph{precision} as the input view.
+\subitem The \ttbf{arg} method will create a view of the proper type and size and return it.}
 \item{The \ttbf{arg} function works the same as the C VSIPL function except a convenience pointer is returned to the output view}
 \item{For the function limited in-place functionality exists with replacement of the real or imaginary view of the input with the output. For instance \ilCode{out=arg(in,in.realview)} works fine.}
-\end{itemize}}
+\end{comments}

@@ -27,15 +27,40 @@ void vsip\_cblockdestroy\_d(vsip\_cblock\_d*);\Bs\\
 void vsip\_cblockdestroy\_f(vsip\_cblock\_f*);\Bs\\
 \end{cfuncs}
 \pyjvsiph
-\\ \hspace*{.8cm}\parbox{.9\textwidth}{For \pyjv{} a block class has been defined. Methods which expand on the functionality of \cvl{} have been defined.  The \ttbf{Block} object will contain a reference to a \cvl{} block. This block is freed when the \pyjv{} block is destroyed.}
-\\[6pt] \hspace*{.8cm}{\textbf{View Methods\vspace{.2cm}}\\
+\\\hspace*{1cm}\parbox{.9\textwidth}{For \pyjv{} a block class has been defined. For comments below assume we have an instantiated block called \ttbf{aBlock}.}
+\begin{itemize}[leftmargin=1.35cm]
+\item Methods which expand on the functionality of {\cvl{}} have been defined.
+\item In \cvl{} there is no method to recover a blocks length after it has been created. In \pyjv{} \ttbf{block} class we define two methods to recover a blocks length.
+    \begin{itemize}
+    \item{Blocks support the \ttbf{len} python function so the number of elements a block can hold (the blocks length) may be found with \ilCode{len(aBlock)}.}
+    \item{We can also get a blocks length using a property as in \ilCode{aBlock.length}.}
+     \end{itemize}
+\item The data stored in a \ttbf{block} is accessed through a \ttbf{view} object.
+    \begin{itemize}
+    \item The \ttbf{bind} method is the general way to create and bind a \ttbf{view} to a block as in\\* \ilCode{aMatrix = aBlock.bind(offset,colstride,collength,rowstride,rowlength)}\\* or \\*\ilCode{aVector = aBlock.bind(offset,stride,length)}.
+    \item There is a convenience method to return a vector \ttbf{view} of the block elements as in\\* \ilCode{aVector = aBlock.vector}.\\* This is equivalent to\\* \ilCode{aVector = aBlock.bind(0,1,aBlock.length)}.
+    \end{itemize}
+%
+\item The \ttbf{Block} object will contain a reference to a \cvl{} block.
+    \begin{itemize} 
+    \item To recover the \cvl{} block object use the \ilCode{vsip} property as in \\*
+    \ilCode{aCVSIPLblock = aBlock.vsip}
+    \item The \cvl{} block contained in the \pyjv{} block object is freed when the \pyjv{} block is destroyed by the python garbage collector.
+    \end{itemize}
+\item A block will create a new block of the same size, depth and precision with the \ilCode{empty} property as in\\*
+\ilCode{aNewBlock = aBlock.empty}\\*
+There is no equivalent \cvl{} function.
+\end{itemize}
+%
+\Ts\hspace*{.8cm}{\textbf{Derived Block\vspace{.2cm}}\\
 \hspace*{1.1cm}\parbox{.9\textwidth}{
-No special view methods exist for the block class but a derived block will be created if a real or imaginary view is extracted from a view associated with a complex block.}
-\\[6pt]
+A derived block will be created if a real or imaginary view is extracted from a view associated with a complex block. You can recover the derived block from the new view and use it like any other block. There is no function to create a derived block directly.}
+\\
 %%
 \hspace*{1.1cm}\textbf{Example: }\vspace*{.1cm}\\
-%
-\hspace*{.8cm}{\textbf{Block Class Methods\vspace*{.2cm}}\\
+\hspace*{1.1cm}\parbox{.9\textwidth}{\ilCode{aRealView=aComplexView.realview} or \ilCode{aRealView=aComplexView.imagview}\\*
+\ilCode{aDerivedBlock=aRealView.block}\Ts}
+\hspace*{.8cm}{\Ts\textbf{Block Class\vspace*{.2cm}\Bs}\\
 \hspace*{1.cm}\parbox{.9\textwidth}{To create an \ttbf{Block} object do\\
 \hspace*{1.cm}\ttbf{aBlock = Block(t,length)} \\
 Where \ttbf{t} is a string indicating the type of \ttbf{Block} object to create and \ttbf{length} is the number of scalar values the \ttbf{Block} object will store.}
