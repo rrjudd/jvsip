@@ -577,6 +577,17 @@ class Block (object):
             return div(other,self,self.empty)
         def __neg__(self):
             return neg(self,self)
+        def __iter__(self):
+            ind = 0
+            if 'vview' in self.type:
+                while ind < self.length:
+                    yield self[ind]
+                    ind +=1    
+            else: # must be a matrix
+                while ind < self.collength:
+                    yield self.rowview(ind)
+                    ind +=1
+            return
         @property
         def list(self):
             f = {'cvview_f':'cvcopyToList_f(self.vsip)',
