@@ -61,3 +61,21 @@ def nearest(x0,y0,*args):
         assert y.length  == x.length, 'Output data views not compliant.'
         f[t](x0.vsip,y0.vsip,x.vsip,y.vsip)
     return y
+def permute_once(inpt,m,indx,outpt):
+    major={'ROW':VSIP_ROW,'COL':VSIP_COL,0:VSIP_ROW,1:VSIP_COL}
+    f={'cmview_d':vsip_cmpermute_once_d,\
+       'cmview_f':vsip_cmpermute_once_f,\
+       'mview_d':vsip_mpermute_once_d,\
+       'mview_f':vsip_mpermute_once_f}
+    assert m in major,"Major argument should be one of 'ROW' or VSIP_ROW;  'COL' or VSIP_COL"
+    assert 'vview_vi' == indx.type,'Index vector must be of type vview_vi'
+    assert inpt.type==outpt.type,'Input and output matrix must be the same shape'
+    assert inpt.size==outpt.size,'Input and output matrix must be the same size'
+    assert inpt.type in f,'Input view not supported for permute once'
+    if major[m] == VSIP_ROW:
+        assert indx.length==inpt.collength,'error in index size'
+    else:
+        assert indx.length==inpt.rowlength,'error in index size'
+    f[inpt.type](inpt.vsip,major[m],indx.vsip,outpt.vsip)
+    return outpt
+    

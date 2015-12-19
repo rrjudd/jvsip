@@ -253,7 +253,6 @@ class JVSIP (object):
             self.vsipInit = vsip_init(None)
             assert self.vsipInit == 0,'VSIP failed to initialize'
             JVSIP.init = 1;
-
     def __del__(self):
         JVSIP.init -= 1
         if JVSIP.init == 0:
@@ -2985,8 +2984,19 @@ class Block (object):
         def permute(self,p,*major):
             """
             The permute method will permute a matrix by row or by column given an index vector.
+            Usage:
+                 aView.permute(p,major)
+            Where:
+                 aView is a matrix view of type float or double. 
+                       vector views supported as if they were a column vector.
+                 p is a vector of type index (vview_vi) 
+                 major is a string indicating permutatioln is by row ('ROW') or column ('COL')
+            The permute method is done in place using the appropriate c VSIPL call to vsip_mpermute_once
             """
-            f={'cmview_f':vsip_cmpermute_once_f,'cmview_d':vsip_cmpermute_once_d,'mview_f':vsip_mpermute_once_f,'mview_d':vsip_mpermute_once_d}
+            f={'cmview_f':vsip_cmpermute_once_f,\
+               'cmview_d':vsip_cmpermute_once_d,\
+               'mview_f':vsip_mpermute_once_f,\
+               'mview_d':vsip_mpermute_once_d}
             assert p.type in 'vview_vi','The index vector for method permute must be of type "vview_vi".'
             pc=p.copy
             assert self.type in ['cmview_f','cmview_d','mview_f','mview_d','vview_f','vview_d'],\
@@ -4767,6 +4777,40 @@ class Spline(object):
     @property
     def maxlength(self):
         return self.size
+class Permute(object):
+    from pyJvsip import JVSIP
+    fcreateSel={'mview_d':vsip_mpermute_create_d,'mview_f':vsip_mpermute_create_f}
+    fdestroySel={'mview_d':vsip_permute_destroy,'mview_f':vsip_permute_destroy}
+    fpermuteSel={'mview_d':vsip_mpermute_d,'mview_f':vsip_mpermute_f}
+    major={'ROW':VSIP_ROW,'COL':VSIP_COL,0:VSIP_ROW,1:VSIP_COL}
+    def __init__(self,t,m,n,major):
+        assert t in Permute.fcreateSel, 'Permute class only supports matrices of type float and depth real'
+        assert major in Permute.major, "Major argument is 0 (VSIP_ROW),1 (VSIP_COL), or 'ROW', 'COL'"
+        self.__jvsip=JVSIP()
+        self.__vsip=Permute.fcreateSel[t](m,n,Permute.major[major])
+        self.__m=m
+        self.__n=n
+        self.__t=t
+    def __del__(self):
+        vsip_permute_destroy(self.vsip)
+        del(self.__jvsip)
+    @property
+    def size(self):
+        return(self.__m,self.__n)
+    @property
+    def type(self):
+        return self.__t
+    @property
+    def vsip(self):
+        return self.__vsip
+    def permuteInit(self,p):
+        vsip_permute_init(self.vsip,p.vsip)
+    def permute(self,input,output):
+        assert self.type == input.type,'Permute object not created for input type'
+        assert input.type == output.type,'input and output types must agree'
+        assert input.size == self.size,'permute object must be the same size as the input'
+        assert input.size==output.size,'input and output views must be the same size'
+        Permute.fpermuteSel[input.type](input.vsip,self.vsip,output.vsip)
 def ramp(t,start,inc,length):
     return create(t,length).ramp(start,inc)
 def create(atype,*vals):
