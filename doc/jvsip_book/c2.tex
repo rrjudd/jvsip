@@ -1,4 +1,4 @@
-\chapter{Functions}
+\chapter{Functions and Methods}
 \section*{Introduction}
 \raggedright 
 In this chapter I give basic usage information for the functions included in the JVSIP implementation of the C VSIPL specification and also related information for the \pyjv{} python module.  I only include functions implemented in \jv{}; either in the C VSIPL library or the \pyjv{} module. Functions covered in the C specification not (currently) supported in \ttbf{JVSIP} are not covered in this manual.\\[6pt]
@@ -11,6 +11,8 @@ When a C VSIPL function requires a special object it needs support functions to 
 As discussed in chapter one python supports polymorphism, and object oriented programing. A \pyjv{} object is an instantiation of a python class definition. The python object will contain a C VSIPL object as an instance variable as well as other information needed by \pyjv. For this reason the python garbage collector will destroy C VSIPL objects when no reference to the \pyjv{} object exists.\\[6pt]
 Because of the true object oriented nature of \pyjv{} there are methods defined for every class which accomplish most of the functionality of C VSIPL. \ttbf{PyJvsip} also defines many functions which operate on the \pyjv{} objects. Frequently you can use either a method or a function. This information is reflected in the JVSIP function list.\\[6pt]
 No attempt is made to be exhaustive in the function descriptions. Those interested in more detail are directed to the VSIPL specification document included with the \jv{} distribution. In addition various examples included in this document will provide more detail on the use of some of the more complicated functions.
+\subsection*{Commentary on use of terms function and method}
+I have found some conflicting information in articles about what is a method and what is a function in the literature generally revolving around whatever programing language the article is discussing.  In \cvl{} we only have functions.  
 \input{VSIP1p3Chapters} %table of
 \section*{VSIP Types}
 This section covers the enumerated types and special structures. These are declared in the public header file \ilCode{vsip.h}.

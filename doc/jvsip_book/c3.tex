@@ -1,11 +1,10 @@
 \chapter{Introduction to JVSIP Programming}
 \section*{Introduction}
-In this section we cover some basics to programing in the JVSIP environment. The expectation is the user will
-prototype a function in python, perhaps using the ipython and notebook environments, and then write the
-working function in C and then encapsulate the C routine using SWIG to test in the python environment.
-\section*{Support Functions}
-\subsection*{Block Creation}
-\subsection*{Vector Creation}
+In this section we cover some basics to programing in the JVSIP environment. The expectation is the user will prototype a function in python, perhaps using the ipython and notebook environments, and then write the working function in C and then encapsulate the C routine using SWIG to test in the python environment.
+\section*{C VSIPL Support Functions and pyJvsip Equivalents}
+C VSIPL has many functions to support a pseudo object oriented approach to programing in a standard C environment.  Many of these functions allocate and deallocate memory for data storage and metdata storage of the views, blocks, and other objects such as FFT, LU, SVD, etc.  In pyJvsip this functionality is hidden in the Class definitions.  
+\subsection*{Block Create in \cvl{} compared To python \ttbf{Block class} }
+\subsection*{View Create in \cvl{} and python \ttbf{View Class}}
 \subsection*{Other methods of view creation and view modification}
 \subsection*{Viewing the Real and Imaginary portions of a Complex Vector}
 \section*{VSIPL Input and Output Methods}
