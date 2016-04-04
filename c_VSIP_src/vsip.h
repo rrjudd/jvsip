@@ -1731,6 +1731,7 @@ vsip_length vsip_vgetlength_bl ( const vsip_vview_bl* ) ;
 vsip_length vsip_vgetlength_d ( const vsip_vview_d* ) ;
 vsip_length vsip_vgetlength_f ( const vsip_vview_f* ) ;
 vsip_length vsip_vgetlength_i ( const vsip_vview_i* ) ;
+vsip_length vsip_vgetlength_li ( const vsip_vview_li* ) ;
 vsip_length vsip_vgetlength_mi ( const vsip_vview_mi* ) ;
 vsip_length vsip_vgetlength_si ( const vsip_vview_si* ) ;
 vsip_length vsip_vgetlength_uc ( const vsip_vview_uc* ) ;
