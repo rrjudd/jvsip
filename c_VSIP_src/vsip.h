@@ -13,7 +13,7 @@
 #define _VSIP_H
 #define JVSIP_VSIPL 1
 #define JVSIP_VERSION_MAJOR 1.0
-#define JVSIP_VERSION_MINOR 0.3.0
+#define JVSIP_VERSION_MINOR 0.4.0
 #include<stdio.h>
 #include<stdlib.h>
 #include<float.h>
@@ -1404,6 +1404,7 @@ void vsip_vexpoavg_f ( vsip_scalar_f, const vsip_vview_f*, const vsip_vview_f* )
 void vsip_vfill_d ( vsip_scalar_d, const vsip_vview_d* ) ;
 void vsip_vfill_f ( vsip_scalar_f, const vsip_vview_f* ) ;
 void vsip_vfill_i ( vsip_scalar_i, const vsip_vview_i* ) ;
+void vsip_vfill_li ( vsip_scalar_li, const vsip_vview_li* ) ;
 void vsip_vfill_si ( vsip_scalar_si, const vsip_vview_si* ) ;
 void vsip_vfill_uc ( vsip_scalar_uc, const vsip_vview_uc* ) ;
 void vsip_vfill_vi ( vsip_scalar_vi, const vsip_vview_vi* ) ;
@@ -1512,11 +1513,13 @@ void vsip_vmsb_f ( const vsip_vview_f*, const vsip_vview_f*, const vsip_vview_f*
 void vsip_vmul_d ( const vsip_vview_d*, const vsip_vview_d*, const vsip_vview_d* ) ;
 void vsip_vmul_f ( const vsip_vview_f*, const vsip_vview_f*, const vsip_vview_f* ) ;
 void vsip_vmul_i ( const vsip_vview_i*, const vsip_vview_i*, const vsip_vview_i* ) ;
+void vsip_vmul_li ( const vsip_vview_li*, const vsip_vview_li*, const vsip_vview_li* ) ;
 void vsip_vmul_si ( const vsip_vview_si*, const vsip_vview_si*, const vsip_vview_si* ) ;
 void vsip_vmul_uc ( const vsip_vview_uc*, const vsip_vview_uc*, const vsip_vview_uc* ) ;
 void vsip_vneg_d ( const vsip_vview_d*, const vsip_vview_d* ) ;
 void vsip_vneg_f ( const vsip_vview_f*, const vsip_vview_f* ) ;
 void vsip_vneg_i ( const vsip_vview_i*, const vsip_vview_i* ) ;
+void vsip_vneg_li ( const vsip_vview_li*, const vsip_vview_li* ) ;
 void vsip_vneg_si ( const vsip_vview_si*, const vsip_vview_si* ) ;
 void vsip_vnot_bl ( const vsip_vview_bl*, const vsip_vview_bl* ) ;
 void vsip_vnot_i ( const vsip_vview_i*, const vsip_vview_i* ) ;
@@ -1537,6 +1540,7 @@ void vsip_vput_bl ( const vsip_vview_bl*, vsip_index, vsip_scalar_bl ) ;
 void vsip_vput_d ( const vsip_vview_d*, vsip_index, vsip_scalar_d ) ;
 void vsip_vput_f ( const vsip_vview_f*, vsip_index, vsip_scalar_f ) ;
 void vsip_vput_i ( const vsip_vview_i*, vsip_index, vsip_scalar_i ) ;
+void vsip_vput_li ( const vsip_vview_li*, vsip_index, vsip_scalar_li ) ;
 void vsip_vput_mi ( const vsip_vview_mi*, vsip_index, vsip_scalar_mi ) ;
 void vsip_vput_si ( const vsip_vview_si*, vsip_index, vsip_scalar_si ) ;
 void vsip_vput_uc ( const vsip_vview_uc*, vsip_index, vsip_scalar_uc ) ;
@@ -1625,6 +1629,7 @@ vsip_offset vsip_mgetoffset_bl ( const vsip_mview_bl* ) ;
 vsip_offset vsip_mgetoffset_d ( const vsip_mview_d* ) ;
 vsip_offset vsip_mgetoffset_f ( const vsip_mview_f* ) ;
 vsip_offset vsip_mgetoffset_i ( const vsip_mview_i* ) ;
+vsip_offset vsip_mgetoffset_li ( const vsip_mview_li* ) ;
 vsip_offset vsip_mgetoffset_si ( const vsip_mview_si* ) ;
 vsip_offset vsip_mgetoffset_uc ( const vsip_mview_uc* ) ;
 vsip_offset vsip_tgetoffset_d ( const vsip_tview_d* ) ;
@@ -1636,6 +1641,7 @@ vsip_offset vsip_vgetoffset_bl ( const vsip_vview_bl* ) ;
 vsip_offset vsip_vgetoffset_d ( const vsip_vview_d* ) ;
 vsip_offset vsip_vgetoffset_f ( const vsip_vview_f* ) ;
 vsip_offset vsip_vgetoffset_i ( const vsip_vview_i* ) ;
+vsip_offset vsip_vgetoffset_li ( const vsip_vview_li* ) ;
 vsip_offset vsip_vgetoffset_mi ( const vsip_vview_mi* ) ;
 vsip_offset vsip_vgetoffset_si ( const vsip_vview_si* ) ;
 vsip_offset vsip_vgetoffset_uc ( const vsip_vview_uc* ) ;
@@ -1656,12 +1662,14 @@ vsip_stride vsip_mgetcolstride_bl ( const vsip_mview_bl* ) ;
 vsip_stride vsip_mgetcolstride_d ( const vsip_mview_d* ) ;
 vsip_stride vsip_mgetcolstride_f ( const vsip_mview_f* ) ;
 vsip_stride vsip_mgetcolstride_i ( const vsip_mview_i* ) ;
+vsip_stride vsip_mgetcolstride_li ( const vsip_mview_li* ) ;
 vsip_stride vsip_mgetcolstride_si ( const vsip_mview_si* ) ;
 vsip_stride vsip_mgetcolstride_uc ( const vsip_mview_uc* ) ;
 vsip_stride vsip_mgetrowstride_bl ( const vsip_mview_bl* ) ;
 vsip_stride vsip_mgetrowstride_d ( const vsip_mview_d* ) ;
 vsip_stride vsip_mgetrowstride_f ( const vsip_mview_f* ) ;
 vsip_stride vsip_mgetrowstride_i ( const vsip_mview_i* ) ;
+vsip_stride vsip_mgetrowstride_li ( const vsip_mview_li* ) ;
 vsip_stride vsip_mgetrowstride_si ( const vsip_mview_si* ) ;
 vsip_stride vsip_mgetrowstride_uc ( const vsip_mview_uc* ) ;
 vsip_stride vsip_tgetxstride_d ( const vsip_tview_d* ) ;
@@ -1683,6 +1691,7 @@ vsip_stride vsip_vgetstride_bl ( const vsip_vview_bl* ) ;
 vsip_stride vsip_vgetstride_d ( const vsip_vview_d* ) ;
 vsip_stride vsip_vgetstride_f ( const vsip_vview_f* ) ;
 vsip_stride vsip_vgetstride_i ( const vsip_vview_i* ) ;
+vsip_stride vsip_vgetstride_li ( const vsip_vview_li* ) ;
 vsip_stride vsip_vgetstride_mi ( const vsip_vview_mi* ) ;
 vsip_stride vsip_vgetstride_si ( const vsip_vview_si* ) ;
 vsip_stride vsip_vgetstride_uc ( const vsip_vview_uc* ) ;
@@ -1703,12 +1712,14 @@ vsip_length vsip_mgetcollength_bl ( const vsip_mview_bl* ) ;
 vsip_length vsip_mgetcollength_d ( const vsip_mview_d* ) ;
 vsip_length vsip_mgetcollength_f ( const vsip_mview_f* ) ;
 vsip_length vsip_mgetcollength_i ( const vsip_mview_i* ) ;
+vsip_length vsip_mgetcollength_li ( const vsip_mview_li* ) ;
 vsip_length vsip_mgetcollength_si ( const vsip_mview_si* ) ;
 vsip_length vsip_mgetcollength_uc ( const vsip_mview_uc* ) ;
 vsip_length vsip_mgetrowlength_bl ( const vsip_mview_bl* ) ;
 vsip_length vsip_mgetrowlength_d ( const vsip_mview_d* ) ;
 vsip_length vsip_mgetrowlength_f ( const vsip_mview_f* ) ;
 vsip_length vsip_mgetrowlength_i ( const vsip_mview_i* ) ;
+vsip_length vsip_mgetrowlength_li ( const vsip_mview_li* ) ;
 vsip_length vsip_mgetrowlength_si ( const vsip_mview_si* ) ;
 vsip_length vsip_mgetrowlength_uc ( const vsip_mview_uc* ) ;
 vsip_length vsip_mindexbool ( const vsip_mview_bl*, vsip_vview_mi* ) ;
@@ -1847,15 +1858,15 @@ vsip_vview_bl* vsip_mcolview_bl( const vsip_mview_bl*, vsip_index);
 vsip_vview_i* vsip_mcolview_i( const vsip_mview_i*, vsip_index);
 vsip_vview_li* vsip_mcolview_li( const vsip_mview_li*, vsip_index);
 vsip_vview_si* vsip_mcolview_si( const vsip_mview_si*, vsip_index);
-vsip_vview_i* vsip_mdiagview_i( const vsip_mview_i*, int);
-vsip_vview_li* vsip_mdiagview_li( const vsip_mview_li*, int);
-vsip_vview_si* vsip_mdiagview_si( const vsip_mview_si*, int);
-vsip_vview_uc* vsip_mdiagview_uc( const vsip_mview_uc*, int);
-vsip_cvview_d* vsip_cmdiagview_d( const vsip_cmview_d*, int);
-vsip_cvview_f* vsip_cmdiagview_f( const vsip_cmview_f*, int);
-vsip_vview_d* vsip_mdiagview_d( const vsip_mview_d*, int);
-vsip_vview_bl* vsip_mdiagview_bl( const vsip_mview_bl*, int);
-vsip_vview_f* vsip_mdiagview_f( const vsip_mview_f*, int);
+vsip_vview_i* vsip_mdiagview_i( const vsip_mview_i*, vsip_stride);
+vsip_vview_li* vsip_mdiagview_li( const vsip_mview_li*, vsip_stride);
+vsip_vview_si* vsip_mdiagview_si( const vsip_mview_si*, vsip_stride);
+vsip_vview_uc* vsip_mdiagview_uc( const vsip_mview_uc*, vsip_stride);
+vsip_cvview_d* vsip_cmdiagview_d( const vsip_cmview_d*, vsip_stride);
+vsip_cvview_f* vsip_cmdiagview_f( const vsip_cmview_f*, vsip_stride);
+vsip_vview_d* vsip_mdiagview_d( const vsip_mview_d*, vsip_stride);
+vsip_vview_bl* vsip_mdiagview_bl( const vsip_mview_bl*, vsip_stride);
+vsip_vview_f* vsip_mdiagview_f( const vsip_mview_f*, vsip_stride);
 vsip_mview_bl* vsip_mtransview_bl( const vsip_mview_bl*);
 vsip_mview_i* vsip_mtransview_i( const vsip_mview_i*);
 vsip_mview_li* vsip_mtransview_li( const vsip_mview_li*);
