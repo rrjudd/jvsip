@@ -1675,13 +1675,12 @@ class Block (object):
                 return int(f[self.type](self.vsip))
         @property
         def sumsqval(self):
-            """ returns a scalar
+            """ Returns a scalar equal to the sum of the squares of the view elements.
             """
             f={'mview_d':vsip_msumsqval_d, 'vview_d':vsip_vsumsqval_d,
                 'mview_f':vsip_msumsqval_f, 'vview_f':vsip_vsumsqval_f}
             assert self.type in f,'Type <:%s:> not recognized for sumsqval'%self.type
             return f[self.type](self.vsip)
-
         # ### Binary
         # add, mull, div, sub incorporated into python built in __add__, __div__, __sub__, etc.
         def mmul(self,other):
@@ -2033,7 +2032,8 @@ class Block (object):
         @property
         def maxvalindx(self):
             """
-            This method returns the index of the first maximum value found.
+            This method returns the index of the first maximum value found 
+            for views of depth real. See cmaxmgsqvalindx for views of depth complex.
             """
             f={'mview_d':'vsip_mmaxval_d(self.vsip,idx)',
               'vview_d':'vsip_vmaxval_d(self.vsip,idx)',
@@ -2061,7 +2061,8 @@ class Block (object):
         @property
         def maxval(self):
             """
-            This method returns the maximum value found.
+            This method returns the maximum value found for views of depth real.
+            For views of depth complex see cmaxmgsqval.
             """
             f={'mview_d':'vsip_mmaxval_d(self.vsip,None)',
               'vview_d':'vsip_vmaxval_d(self.vsip,None)',
@@ -2080,7 +2081,8 @@ class Block (object):
         @property
         def maxmgvalindx(self):
             """
-            This method returns the index of the first maximum value found.
+            This method returns the index of the first maximum value found for views
+            of depth real. For views of depth complex see cmaxmgsqvalindx.
             """
             f={'mview_d':'vsip_mmaxmgval_d(self.vsip,idx)',
                'vview_d':'vsip_vmaxmgval_d(self.vsip,idx)',
@@ -2115,10 +2117,10 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported by maxmgval')
                 return
         @property
-        def maxmgsqvalindx(self):
+        def cmaxmgsqvalindx(self):
             """
             This method returns the index of the first maximum complex magnitude squared
-            value found.
+            value found. For views of depth real see maxmgvalindx.
             """
             f={'cmview_d':'vsip_mcmaxmgsqval_d(self.vsip,idx)',
                'cvview_d':'vsip_vcmaxmgsqval_d(self.vsip,idx)',
@@ -2139,10 +2141,11 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported by maxmgsqvalindx')
                 return
         @property
-        def maxmgsqval(self):
+        def cmaxmgsqval(self):
             """
             This method returns the  maximum complex magnitude squared
-            value found..
+            value found. It is only defined for views of depth complex. 
+            See also maxmgval for views of depth real.
             """
             f={'cmview_d':'vsip_mcmaxmgsqval_d(self.vsip,None)',
                'cvview_d':'vsip_vcmaxmgsqval_d(self.vsip,None)',
@@ -2151,12 +2154,13 @@ class Block (object):
             if self.type in f:
                 return eval(f[self.type])
             else:
-                print('Type <:'+self.type+':> not supported by maxmgsqval')
+                print('Type <:'+self.type+':> not supported by cmaxmgsqval')
                 return
         @property
         def minvalindx(self):
             """
-            This method returns the index of the first minimum value found.
+            For views of depth real this method returns the index of the first 
+            minimum value found. For views of depth complex see cminmgsqvalindx.
             """
             f={'mview_d':'vsip_mminval_d(self.vsip,idx)',
               'vview_d':'vsip_vminval_d(self.vsip,idx)',
@@ -2184,7 +2188,8 @@ class Block (object):
         @property
         def minval(self):
             """
-            This method returns the minimum value found.
+            For views of depth real this method returns the minimum value found.
+            For views of depth complex see cminmgsqval.
             """
             f={'mview_d':'vsip_mminval_d(self.vsip,None)',
               'vview_d':'vsip_vminval_d(self.vsip,None)',
@@ -2203,7 +2208,8 @@ class Block (object):
         @property
         def minmgvalindx(self):
             """
-            This method returns the index of the first minimum value found.
+            For views of depth real this method returns the index of the first 
+            minimum value found. For views of depth complex see cminmgsqvalindx.
             """
             f={'mview_d':'vsip_mminmgval_d(self.vsip,idx)',
                'vview_d':'vsip_vminmgval_d(self.vsip,idx)',
@@ -2238,10 +2244,10 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported by minmgval')
                 return
         @property
-        def minmgsqvalindx(self):
+        def cminmgsqvalindx(self):
             """
             This method returns the index of the first minimum complex magnitude squared
-            value found.
+            value found. For depths of type real use minmgvalindx or minmvalindx.
             """
             f={'cmview_d':'vsip_mcminmgsqval_d(self.vsip,idx)',
                'cvview_d':'vsip_vcminmgsqval_d(self.vsip,idx)',
@@ -2262,10 +2268,10 @@ class Block (object):
                 print('Type <:'+self.type+':> not supported by minmgsqvalindx')
                 return
         @property
-        def minmgsqval(self):
+        def cminmgsqval(self):
             """
             This method returns the  minimum complex magnitude squared
-            value found..
+            value found. For views of depth real se minmgval or minval.
             """
             f={'cmview_d':'vsip_mcminmgsqval_d(self.vsip,None)',
                'cvview_d':'vsip_vcminmgsqval_d(self.vsip,None)',
@@ -3266,6 +3272,10 @@ class Block (object):
             firObj.flt(x,y)
             y.putlength(firObj.lengthOut)
             return y
+        @property
+        def freqswap(self):
+            freqswap(self)
+            return self
         #
         # General Square Solver
         @property
@@ -5075,7 +5085,7 @@ def svdCompose(d,indx):
      you can create a new tuple, say g=(d[0],s,d[2]) if you want
     to create a new matrix but not use the original singular values.
     Note:
-      C=svdCompose(d,create('vview_vi),d[0].length).ramp(0,1))
+      C=svdCompose(d,create('vview_vi',d[1].length).ramp(0,1))
     will return (an estimate of) the original matrix A.
     """
     assert 'vview_vi' in getType(indx)[2]
