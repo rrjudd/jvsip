@@ -6,8 +6,4 @@
 //  Copyright © 2016 Independent Consultant. All rights reserved.
 //
 
-#ifndef jvsipF_Bridging_Header_h
-#define jvsipF_Bridging_Header_h
-
-
-#endif /* jvsipF_Bridging_Header_h */
+#import </Users/judd/local/src/jvsip/c_VSIP_src/vsip.h>

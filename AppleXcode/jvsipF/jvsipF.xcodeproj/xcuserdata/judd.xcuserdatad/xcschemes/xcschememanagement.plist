@@ -14,9 +14,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>jvsipFTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>06198E891DA1649200138F73</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>061C2923172845EB00773972</key>
 		<dict>
 			<key>primary</key>

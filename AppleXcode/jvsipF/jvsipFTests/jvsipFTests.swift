@@ -31,5 +31,27 @@ class jvsipFTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    func testAdd(){
+        let _ = vsip_init(nil)
+        let v = vsip_vcreate_f(10, VSIP_MEM_NONE)
+        vsip_vramp_f(0,1.0,v)
+        vsip_vadd_f(v,v,v)
+        for i in 0..<10{
+            print(vsip_vget_f(v,vsip_index(i)))
+        }
+        vsip_valldestroy_f(v)
+        vsip_finalize(nil)
+    }
+    func testMul(){
+        let _ = vsip_init(nil)
+        let v = vsip_vcreate_d(10, VSIP_MEM_NONE)
+        vsip_vramp_d(0.0,1.0,v)
+        vsip_vmul_d(v,v,v)
+        for i in 0..<10{
+            print(vsip_vget_d(v,vsip_index(i)))
+        }
+        vsip_valldestroy_d(v)
+        vsip_finalize(nil)
+    }
     
 }
