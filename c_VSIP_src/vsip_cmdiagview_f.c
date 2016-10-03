@@ -17,7 +17,7 @@
 
 vsip_cvview_f* (vsip_cmdiagview_f)(
   const vsip_cmview_f* v,
-  int idiag) {
+  vsip_stride idiag) {
     vsip_index i = (idiag < 0) ? -idiag : 0,  /* row index of origin       */
                j = (idiag > 0) ?  idiag : 0;  /* col index of origin       */
     vsip_length n_row = v->col_length - i;    /* # rows from origin to end */
