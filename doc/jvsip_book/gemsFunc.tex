@@ -1,16 +1,12 @@
 \afuncT{gems}{General Matrix Sum.\\*For scalar\\* $\alpha$ and $\beta$\\* and Matrix $A$ and $C$\\*and a matrix operator flag $\opM$\\*do the operation\\* $C \leftarrow \alpha \cdot \opM_{a}(A) + \beta \cdot C$\\*. }{matrixOperations}
 \\\cvsiplh
-\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\\ \hspace*{0.03\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
-void vsip\_cgems\_d(\\*\hspace{.6cm}vsip\_cscalar\_d, const vsip\_cmview\_d *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_cscalar\_d, const vsip\_cmview\_d *);\\
-void vsip\_cgems\_f(\\*\hspace{.6cm}vsip\_cscalar\_f, const vsip\_cmview\_f *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_cscalar\_f, const vsip\_cmview\_f *);\\
-void vsip\_gems\_d(\\*\hspace{.6cm}vsip\_scalar\_d, const vsip\_mview\_d *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_scalar\_d, const vsip\_mview\_d *);\\
-void vsip\_gems\_f(\\*\hspace{.6cm}vsip\_scalar\_f, const vsip\_mview\_f *,\\*\hspace{.6cm}vsip\_mat\_op, vsip\_scalar\_f, const vsip\_mview\_f *);\\
-\end{tabular}
-}
-\\\pyjvsiph
+\begin{cfuncs}
+void vsip\_cgems\_d(vsip\_cscalar\_d, const~vsip\_cmview\_d *, vsip\_mat\_op, vsip\_cscalar\_d, const~vsip\_cmview\_d *);\\
+void vsip\_cgems\_f(vsip\_cscalar\_f, const vsip\_cmview\_f *,vsip\_mat\_op, vsip\_cscalar\_f, const~vsip\_cmview\_f *);\\
+void vsip\_gems\_d(vsip\_scalar\_d, const~vsip\_mview\_d *, vsip\_mat\_op, vsip\_scalar\_d, const vsip\_mview\_d *);\\
+void vsip\_gems\_f(vsip\_scalar\_f, const~vsip\_mview\_f *, vsip\_mat\_op, vsip\_scalar\_f, const~vsip\_mview\_f *);\\
+\end{cfuncs}
+\pyjvsiph
 \viewmthd{No}{No}{No}{}
 \apyfunc{yes}{out = gems(alpha,A,opM,beta,C)}
 \pyComment{

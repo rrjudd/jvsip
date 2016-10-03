@@ -4,22 +4,13 @@ moves data from an input matrix into an output matrix.}{matrixOperations}
 \\\cvsiplh
 \\\hspace*{.06\textwidth}\parbox{.94\textwidth}{\raggedright The output matrix must be created of 
 the proper size and attributes to accomodate the transpose of the input data.\Bs}
-\afh
-\\\hspace*{.03\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
-void vsip\_mtrans\_f(\\*\hspace{.5cm}const vsip\_mview\_f*, const vsip\_mview\_f*);\Bs\\
-void vsip\_cmtrans\_f(\\*\hspace{.5cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
-void vsip\_mtrans\_d(\\*\hspace{.5cm}const vsip\_mview\_d*, const vsip\_mview\_d*);\Bs\\
-void vsip\_cmtrans\_d(\\*\hspace{.5cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
-\end{tabular}
-}
-\\ \hspace*{1.1cm} {
-\ttfamily
-\begin{tabular}[H]{l}
-\end{tabular}
-}
-\\\pyjvsiph
+\begin{cfuncs}
+void vsip\_mtrans\_f(const~vsip\_mview\_f*, const~vsip\_mview\_f*);\Bs\\
+void vsip\_cmtrans\_f(const~vsip\_cmview\_f*, const~vsip\_cmview\_f*);\Bs\\
+void vsip\_mtrans\_d(const~vsip\_mview\_d*, const~vsip\_mview\_d*);\Bs\\
+void vsip\_cmtrans\_d(const~vsip\_cmview\_d*, const~vsip\_cmview\_d*);\Bs\\
+\end{cfuncs}
+\pyjvsiph
 \viewmthd{yes}{yes}{No}{out=in.trans}
 \apyfunc{yes}{out = trans(in,out)}
 \pyComment{

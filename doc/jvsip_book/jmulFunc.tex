@@ -1,13 +1,11 @@
-\afuncT{jmul}{Computes the product of a complex \ttbf{view} with the conjugate of a second complex \ttbf{view}, by element.}{binaryOperations}
+\afuncT{jmul}{Computes the product of a complex \ttbf{view} with the conjugate of a second complex \ttbf{view}, by element. In C VSIPL specification this is called (in overloaded format) \ilCode{vsip\_c\emph{s}jmul\_\emph{p}} because it only works with complex views of shape vector or matrix.  For pyJvsip view methods it has been extended to work with any float views by assuming zero imaginary entries for a real view.}{binaryOperations}
 \\\cvsiplh
-\afh
-{\ttfamily
-\\\hspace*{.04\textwidth}\begin{tabular}[H]{l}
+\begin{cfuncs}
 vsip\_cscalar\_d vsip\_cjmul\_d(vsip\_cscalar\_d, vsip\_cscalar\_d);\Bs\\
-vsip\_cscalar\_f vsip\_cjmul\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\Bs\\void vsip\_cmjmul\_d(\\*\hspace{1cm}const vsip\_cmview\_d*, const vsip\_cmview\_d*, const vsip\_cmview\_d*);\Bs\\
-void vsip\_cmjmul\_f(\\*\hspace{1cm}const vsip\_cmview\_f*, const vsip\_cmview\_f*, const vsip\_cmview\_f*);\Bs\\
-void vsip\_cvjmul\_d(\\*\hspace{1cm}const vsip\_cvview\_d*, const vsip\_cvview\_d*, const vsip\_cvview\_d*);\Bs\\
-void vsip\_cvjmul\_f(\\*\hspace{1cm}const vsip\_cvview\_f*, const vsip\_cvview\_f*, const vsip\_cvview\_f*);\Bs\\
-\end{tabular}
+vsip\_cscalar\_f vsip\_cjmul\_f(vsip\_cscalar\_f, vsip\_cscalar\_f);\Bs\\void vsip\_cmjmul\_d(const~vsip\_cmview\_d*, const~vsip\_cmview\_d*, const~vsip\_cmview\_d*);\Bs\\
+void vsip\_cmjmul\_f(const~vsip\_cmview\_f*, const~vsip\_cmview\_f*, const~vsip\_cmview\_f*);\Bs\\
+void vsip\_cvjmul\_d(const~vsip\_cvview\_d*, const~vsip\_cvview\_d*, const~vsip\_cvview\_d*);\Bs\\
+void vsip\_cvjmul\_f(const~vsip\_cvview\_f*, const~vsip\_cvview\_f*, const~vsip\_cvview\_f*);\Bs\\
+\end{cfuncs}
 }
 \pyjvsiph

@@ -1,4 +1,18 @@
-\afuncT{freqswap}{Swaps halves of a vector or quadrants of a matrix to remap zero frequencies from the origin to the middle.}{miscSigProcFunctions}
+\afuncT{freqswap}{Swaps halves of a vector or quadrants of a matrix to remap zero frequencies from the origin to the middle. Always done in place.}{miscSigProcFunctions}
 \\\cvsiplh
-\\\pyjvsiph
-
+\begin{cfuncs}
+void vsip\_cvfreqswap\_d(const~vsip\_cvview\_d*);\Bs\\
+void vsip\_vfreqswap\_d(const~vsip\_vview\_d*);\Bs\\
+void vsip\_cmfreqswap\_d(const~vsip\_cmview\_d*);\Bs\\
+void vsip\_mfreqswap\_d(const~vsip\_mview\_d*);\Bs\\
+void vsip\_cvfreqswap\_f(const~vsip\_cvview\_f*);\Bs\\
+void vsip\_vfreqswap\_f(const~vsip\_vview\_f*);\Bs\\
+void vsip\_cmfreqswap\_f(const~vsip\_cmview\_f*);\Bs\\
+void vsip\_mfreqswap\_f(const~vsip\_mview\_f*);\Bs\\
+\end{cfuncs}
+\pyjvsiph
+\viewmthd{yes}{yes}{yes}{inOut.freqswap}
+\apyfunc{yes}{inOut = freqswap(inOut)}
+\begin{comments}
+\item{The \ttbf{freqswap} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned.}
+\end{comments}

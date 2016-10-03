@@ -1,13 +1,17 @@
 \afuncT{outer}{Vector outer product.}{matrixOperations}
 \\\cvsiplh
-\\ \hspace*{.8cm} \vspace*{.1cm} \textbf{Available Functions }
-\\ \hspace*{0.03\textwidth} {
-\ttfamily
-\begin{tabular}[H]{l}
+\begin{cfuncs}
 void vsip\_cvouter\_d(vsip\_cscalar\_d, const vsip\_cvview\_d *,\\*\hspace{.6cm}const vsip\_cvview\_d *, const vsip\_cmview\_d *);\\
 void vsip\_cvouter\_f(vsip\_cscalar\_f, const vsip\_cvview\_f *,\\*\hspace{.6cm}const vsip\_cvview\_f *, const vsip\_cmview\_f *);\\
 void vsip\_vouter\_d(vsip\_scalar\_d, const vsip\_vview\_d*,\\*\hspace{.6cm}const vsip\_vview\_d*, const vsip\_mview\_d*);\\
 void vsip\_vouter\_f(vsip\_scalar\_f, const vsip\_vview\_f*,\\*\hspace{.6cm}const vsip\_vview\_f*, const vsip\_mview\_f*);\\
-\end{tabular}
-}
-\\\pyjvsiph
+\end{cfuncs}
+\pyjvsiph
+\viewmthd{yes}{no}{no}{out=inOne.outer(inTwo) or inOne.outer(aScalar,inTwo)}
+\apyfunc{yes}{out = outer(aScalar,inOne,inTwo,out)}
+\begin{comments}
+\item{The \ttbf{inOne} will be the first (column) vector and \ttbf{inTwo} will be the second (row) vector.}
+\item{The element \ttbf{aScalar} is a constant multiplier times the resultant outer product. For the view method if no constant is supplied it is assumed to be one}
+\item{The \ttbf{outer} function works much the same as the C VSIPL version except that a convenience pointer to the output view is returned.}
+\item{The \ttbf{view} method will create an output view for you.}
+\end{comments}

@@ -1,9 +1,10 @@
-\documentclass[10pt,oneside,a4paper]{book}
+\documentclass[pdftex,10pt,oneside,a4paper]{book}
 \usepackage[margin=2cm]{geometry}
+\usepackage{array}
+\usepackage{enumitem}
 %\usepackage{showframe}
 \usepackage{graphicx}
 \usepackage{parskip}
-\usepackage{blindtext}
 \usepackage[linktoc=all]{hyperref}
 \setcounter{tocdepth}{3}
 \usepackage{hyperref}
@@ -18,34 +19,49 @@
 \usepackage[hypcap]{caption}
 \newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
 \newcommand{\ilCode}[1]{{\small {\ttfamily \bfseries #1}}}
-\newcommand{\afuncT}[3]{\clearpage{\Large \textbf{\hypertarget{{\ttfamily \bfseries#1Func}}{#1}}{\hspace*{\fill}\hypertarget{#1Func}{}\hyperlink{#3}{up}}} \vspace{.01\textheight}\\ \hspace*{.02\textwidth} \parbox{.97\textwidth}{#2 } \vspace{.005\textheight}}
+%*********JVSIP Function Commands
+\newcommand{\afuncT}[3]{\hypertarget{#1Func}{} {\Large \textbf{#1} \hfill \hyperlink{#3}{(up)}}  \vspace{.01\textheight} \hspace*{.02\textwidth} \parbox{.94\textwidth}{\raggedright #2 \hfill} \vspace{.005\textheight}}
 %hlinkFunk used for hyperlink of table name with function page.
 \newcommand{\hlnkFunc}[1]{\hyperlink{#1Func}{\texttt{#1}}}
 \newcommand{\hlnkFuncT}[2]{\hyperlink{#1Func}{\texttt{#2}}}
 %
 \newcommand{\cvsiplh}{ \hspace*{.02\textwidth} {\large \textbf{C VSIPL}}\vspace{.005\textheight}}
 %
-\newcommand{\pyjvsiph}{\hspace*{.02\textwidth} {\large \textbf{pyJvsip}}\vspace*{.005\textheight}}
+\newcommand{\pyjvsiph}{\hspace*{.02\textwidth} {\large \textbf{pyJvsip}}\Ts\Bs}
 % Available Functions heading
 \newcommand{\afh}{\\\hspace*{.04\textwidth} \vspace*{.005\textheight}\textbf{Available Functions }}
 %
 \newcommand{\pyjvComment}[1]{\newline \hspace*{.02\textwidth}\textbf{Comments}\\ \hspace*{.02\textwidth}\parbox{.95\textwidth}{ \vspace*{.005\textheight}\begin{itemize}{ #1}\end{itemize}}}
 %
-\newcommand{\pyComment}[1]{\newline \hspace*{.04\textwidth}\textbf{Comments}\\ \hspace*{.04\textwidth}\parbox{.95\textwidth}{\vspace*{.1cm}\begin{itemize}{ #1} \end{itemize}}}
+\newcommand{\pyComment}[1]{\begin{minipage}{\textwidth}\hspace*{.04\textwidth}\textbf{Comments}\\ \hspace*{.04\textwidth}\parbox{.95\textwidth}{\vspace*{.1cm}\begin{itemize}\raggedright{ #1} \end{itemize}}\end{minipage}}
 %
 \newcommand{\viewmthd}[4]{\\\hspace*{.04\textwidth}\textbf{View Method}
-\\ \hspace*{.06\textwidth}\textbf{Available: }#1\hspace{.25cm}\textbf{Property: }#2\hspace{.25cm}\textbf{In-Place: } #3 
-\\ \hspace*{.06\textwidth}\textbf{Example:} {\ttfamily #4}}
+\\ \hspace*{.05\textwidth}\textbf{Available:#1}\hspace{.5cm}\textbf{Property:#2}\hspace{.5cm}\textbf{In-Place:#3}  
+\\ \hspace*{.05\textwidth}\textbf{Example:} {\ttfamily #4}}
+%
+%
+\newcommand{\viewmthdu}[5]{\\\hspace*{.04\textwidth}\textbf{View Method}
+\\ \hspace*{.06\textwidth}\textbf{Available:#1 }\hspace{.5cm}\textbf{Property:#2}\hspace{.5cm}\textbf{In-Place:#3}  
+\\ \hspace*{.06\textwidth}\textbf{Usage:} {\ttfamily #4}
+\\ \hspace*{.07\textwidth}\textbf{Where:}
+\\ \hspace*{.07\textwidth}\parbox{.91\textwidth}{\begin{itemize}{ #5} \end{itemize}}}
 %
 \newcommand{\vmthdh}{\hspace*{.04\textwidth} \textbf{View Method}\vspace*{.005\textheight}}
 %
 \newcommand{\apyfunc}[2]{\newline \hspace*{.04\textwidth}\textbf{Function} 
-\\ \hspace*{.06\textwidth}\textbf{Available:} #1 
-\\ \hspace*{.06\textwidth}\textbf{Example:} {\ttfamily #2}}
+\\ \hspace*{.06\textwidth}\textbf{Available:#1}  
+\\ \hspace*{.06\textwidth}\textbf{Example: \ttfamily #2}}
+%
+\newcommand{\aclassInstantiate}[3]{\\ \hspace*{.06\textwidth}{\textbf{#1 Instantiation}}
+\\ \hspace*{.08\textwidth}\ttbf{#2}
+\\ \hspace*{.08\textwidth}{#3}}
+%
+\newcommand{\aclassMethods}[1]{\\ \hspace*{.06\textwidth}{\textbf{#1 Methods}}}
 %
 \newcommand{\apyclass}[1]{\newline \hspace*{.04\textwidth}\textbf{Class} 
 \\ \hspace*{.06\textwidth}\textbf{Available:} #1 
 \\ \hspace*{.06\textwidth}\textbf{Example:} }
+
 %use as \pyjv{}
 \newcommand{\pyjv}{{\ttbf{pyJvsip}}}
 %use as \jv{}
@@ -55,7 +71,39 @@
 % from http://mirrors.rit.edu/CTAN/info/digests/ttn/ttn2n3.pdf
 \newcommand\Ts{\rule{0pt}{2.6ex}}
 \newcommand\Bs{\rule[-1.2ex]{0pt}{0pt}}
+\newcommand\Bsf{\rule[-.8\baselineskip]{0pt}{\baselineskip}}
+% function break
+\newcommand{\fbrk}{\\*\hspace*{1cm}}
+\DeclareMathOperator{\opConj}{opConj}
+\DeclareMathOperator{\opTrans}{opTrans}
+\DeclareMathOperator{\opHerm}{opHerm}
+\DeclareMathOperator{\opM}{opM}
+\DeclareMathOperator{\opA}{opA}
+\DeclareMathOperator{\opB}{opB}
+\newcommand{\fp}{\hangindent=1cm \hangafter=1}
+%
+\newenvironment{cfuncs}{
+\hspace*{.8cm} \\ \textbf{\large \hspace*{.04\textwidth} Available Functions }
+\begin{flushleft}
+\hspace*{0.03\textwidth} 
+\ttfamily 
+\begin{tabular}{>{\fp}p{.93\textwidth}<{\Bs}}
+}{
+\end{tabular}
+\end{flushleft}
+}
+%
+\newenvironment{comments}{
+    \newline
+    \Ts\hspace*{.04\textwidth}\textbf{Comments} 
+    \begin{itemize}[leftmargin=1.25cm]
+}{
+    \end{itemize}
+}
+%
+\newcounter{cexctr} \setcounter{cexctr}{1}
+\newcommand{\cex}{{\begin{center} \bfseries{c VSIPL Example \arabic{cexctr}} \end{center}}}
 \makeindex
 \begin{document}
-\include{indexboolFunc}
+\clearpage\include{indexboolFunc}\relax
 \end{document}

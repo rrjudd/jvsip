@@ -1,17 +1,39 @@
-%\subsection*{Interpolation, Permutation, and Sorting (VSIP Addendum) \hfill \hyperlink{VSIPspecHead}{(up)}}\hypertarget{Addendum}{}\addcontentsline{toc}{subsection}{Interpolation, Permutation, and Sorting}
+\subsection*{Interpolation, Permutation, and Sorting (VSIP Addendum) \hfill \hyperlink{VSIPspecHead}{(up)}}\hypertarget{Addendum}{}\addcontentsline{toc}{subsection}{Interpolation, Permutation, and Sorting}
 Editing the VSIPL specification was becoming difficult because of its length and instabilities in the MS Word source document. When functions were added to the specification for interpolation, permutation and sorting they were added as separate documents in an addendum and basically glued onto the pdf. This allowed for much less editing of the MS Word source document.\\
-%The new functions in the addendum support interpolation, permutation and data sorting.
-%\subsubsection*{VSIPL Interpolation \hfill \hyperlink{Addendum}{(up)}\hypertarget{interpolation}{}}\addcontentsline{toc}{subsubsection}{VSIPL Interpolation}
-%\begin{table}[H]
-%\caption{Interpolation}
-%\label{tab:interpolation}
-%\begin{center}
-%\begin{tabular}{|l|l|}\hline
-%\hlnkFunc{spline} & Cubic spline interpolation\\
-%\hlnkFunc{nearest} & Interpolate to the nearest point\\
-%\hlnkFunc{linear} & Linear Interpolation\\
-%\hline\end{tabular}
-%\end{center}
-%\end{table}
-%\subsubsection*{VSIPL Permute \hfill \hyperlink{Addendum}{(up)}\hypertarget{permute}{}}\addcontentsline{toc}{subsubsection}{VSIPL Permute}
-%\subsubsection*{VSIPL Sort \hfill \hyperlink{Addendum}{(up)}\hypertarget{sort}{}}\addcontentsline{toc}{subsubsection}{VSIPL Sort}
+The new functions in the addendum support interpolation, permutation and data sorting.
+\subsubsection*{VSIPL Interpolation \hfill \hyperlink{Addendum}{(up)}\hypertarget{interpolation}{}}\addcontentsline{toc}{subsubsection}{VSIPL Interpolation}
+\begin{table}[H]
+\caption{Interpolation}
+\label{tab:interpolation}
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{spline} & Cubic spline interpolation\\
+\hlnkFunc{nearest} & Interpolate to the nearest point\\
+\hlnkFunc{linear} & Linear Interpolation\\
+\hline\end{tabular}
+\end{center}
+\end{table}
+\subsubsection*{VSIPL Permute \hfill 
+\hyperlink{Addendum}{(up)}\hypertarget{permute}{}}\addcontentsline{toc}{subsubsection}{VSIPL Permute}
+Permute functionality permutes a matrix by row or by column given an index vector.  A permute function set is available if multiple permutes are needed using the same index vector; and a permute function designed for a single permute is available if the index vector is not needed again.
+\begin{table}[H]
+\caption{Permute}
+\label{tab:permute}
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{permute} & Reusable and single permutation\\
+\hline\end{tabular}
+\end{center}
+\end{table}
+%
+\subsubsection*{VSIPL Sort \hfill \hyperlink{Addendum}{(up)}\hypertarget{sort}{}}\addcontentsline{toc}{subsubsection}{VSIPL Sort}
+Sort functionality is supplied to sort vectors of real numbers using flags supporting sorting by value or by magnitude in ascending or descending order.  Sorting is done in-place.  An index vector may be supplied.  The index vector is also sorted using the conditions of the input vector (mirror sort).  This would allow, for instance, recovery of the original vector from the sorted vector.
+\begin{table}[H]
+\caption{Sort}
+\label{tab:sort}
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+\hlnkFunc{sortip} & Sort in place\\
+\hline\end{tabular}
+\end{center}
+\end{table}
