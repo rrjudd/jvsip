@@ -19,7 +19,7 @@
 #include<vsip_vviewattributes_li.h>
 #include<vsip_vviewattributes_vi.h>
 
-void vsip_vgather_l(
+void vsip_vgather_li(
                     const vsip_vview_li* a,
                     const vsip_vview_vi* x,
                     const vsip_vview_li* r) {

@@ -51,7 +51,7 @@
 
 static
 void
-VI_qsort_l(vsip_vview_li *v, vsip_index left, vsip_index right, vsip_vview_vi *vi){
+VI_qsort_li(vsip_vview_li *v, vsip_index left, vsip_index right, vsip_vview_vi *vi){
    vsip_index i,last;
    vsip_index iright;
    if(left >= right){
@@ -71,14 +71,14 @@ VI_qsort_l(vsip_vview_li *v, vsip_index left, vsip_index right, vsip_vview_vi *v
    }
    SWAP(v,left,last);
    if(vi) SWAP_VI(vi,left,last);
-   if(last > 0) VI_qsort_l(v,left,last-1,vi);
-   VI_qsort_l(v,last+1,right,vi);
+   if(last > 0) VI_qsort_li(v,left,last-1,vi);
+   VI_qsort_li(v,last+1,right,vi);
    return;
 }
 
 static
 void
-VI_qsortmag_l(vsip_vview_li *v, vsip_index left, vsip_index right, vsip_vview_vi *vi){
+VI_qsortmag_li(vsip_vview_li *v, vsip_index left, vsip_index right, vsip_vview_vi *vi){
    vsip_index i,last;
    vsip_index iright;
    if(left >= right){
@@ -98,12 +98,12 @@ VI_qsortmag_l(vsip_vview_li *v, vsip_index left, vsip_index right, vsip_vview_vi
    }
    SWAP(v,left,last);
    if(vi) SWAP_VI(vi,left,last);
-   if(last > 0) VI_qsortmag_l(v,left,last-1,vi);
-   VI_qsortmag_l(v,last+1,right,vi);
+   if(last > 0) VI_qsortmag_li(v,left,last-1,vi);
+   VI_qsortmag_li(v,last+1,right,vi);
    return;
 }
 
-void vsip_vsortip_l(const vsip_vview_li *in_out, 
+void vsip_vsortip_li(const vsip_vview_li *in_out,
                   vsip_sort_mode mode, 
                   vsip_sort_dir dir, 
                   vsip_bool fill,
@@ -126,9 +126,9 @@ void vsip_vsortip_l(const vsip_vview_li *in_out,
       }
    }
    if(mode == VSIP_SORT_BYMAGNITUDE){
-      VI_qsortmag_l(&in,(vsip_index) 0,(vsip_index)(in.length-1),vi);
+      VI_qsortmag_li(&in,(vsip_index) 0,(vsip_index)(in.length-1),vi);
    } else {
-      VI_qsort_l(&in,(vsip_index) 0,(vsip_index)(in.length-1),vi);
+      VI_qsort_li(&in,(vsip_index) 0,(vsip_index)(in.length-1),vi);
    }
    return;
 }

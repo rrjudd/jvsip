@@ -18,21 +18,19 @@
 
 #include<vsip.h>
 #include<vsip_vviewattributes_li.h>
-#include<vsip_vviewattributes_i.h>
 
-
-void (vsip_vcopy_i_li)(
-  const vsip_vview_i* a,
+void (vsip_vcopy_li_li)(
+  const vsip_vview_li* a,
   const vsip_vview_li* r) {
   {
       /* register */ vsip_length n   = r->length;
       /* register */ vsip_stride ast = a->stride,
                                  rst = r->stride;
-      vsip_scalar_i *ap = (a->block->array) + a->offset;
-      vsip_scalar_li *rp = (r->block->array) + r->offset;
+      vsip_scalar_li *ap = (a->block->array) + a->offset,
+                    *rp = (r->block->array) + r->offset;
       /*end define*/
       while(n-- > 0){
-         *rp = (vsip_scalar_li) *ap;
+         *rp = *ap;
          ap += ast; rp += rst;
       }
    }

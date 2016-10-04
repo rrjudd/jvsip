@@ -1,17 +1,17 @@
 #include<vsip.h>
-#include<vsip_mviewattributes_i.h>
+#include<vsip_mviewattributes_li.h>
 #include<vsip_mviewattributes_li.h>
 
 
-void (vsip_mcopy_i_li)(
-         const vsip_mview_i* a,
+void (vsip_mcopy_li_li)(
+         const vsip_mview_li* a,
          const vsip_mview_li* r) 
 {
     vsip_length n_mj, /* major length */
                 n_mn; /* minor length */
     vsip_stride ast_mj, ast_mn;
-    vsip_scalar_i *ap = (a->block->array) + a->offset;
-    vsip_scalar_i *ap0 = ap;
+    vsip_scalar_li *ap = (a->block->array) + a->offset;
+    vsip_scalar_li *ap0 = ap;
     vsip_index i=0,j=0;
     /* pick direction dependent on input */
     if(a->row_stride < a->col_stride){ /* Row Major */

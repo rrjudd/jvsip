@@ -15,7 +15,7 @@
 
 #include"VI_support_priv_li.h"
 
-vsip_offset vsip_tgetoffset_l(
+vsip_offset vsip_tgetoffset_li(
   const vsip_tview_li *v) {
     return v->offset;
 }

@@ -13,7 +13,7 @@
 #include<vsip.h>
 #include<vsip_mviewattributes_li.h>
 
-vsip_scalar_li vsip_mminval_l(
+vsip_scalar_li vsip_mminval_li(
   const vsip_mview_li *r,
   vsip_scalar_mi *index)
 { 
