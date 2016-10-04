@@ -21,6 +21,168 @@
 		0604AC2A151A631C00DF6A91 /* vsip_rcfir_getattr_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0604AC29151A631C00DF6A91 /* vsip_rcfir_getattr_d.c */; };
 		06198E8D1DA1649300138F73 /* jvsipFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06198E8C1DA1649300138F73 /* jvsipFTests.swift */; };
 		06198E8F1DA1649300138F73 /* jvsipF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06307E44150BB71E00EF9D00 /* jvsipF.framework */; };
+		06198EBE1DA2C61100138F73 /* vsip_svlge_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EB81DA2C61100138F73 /* vsip_svlge_d.c */; };
+		06198EBF1DA2C61100138F73 /* vsip_svlge_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EB91DA2C61100138F73 /* vsip_svlge_f.c */; };
+		06198EC01DA2C61100138F73 /* vsip_svlgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EBA1DA2C61100138F73 /* vsip_svlgt.c */; };
+		06198EC11DA2C61100138F73 /* vsip_svlle.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EBB1DA2C61100138F73 /* vsip_svlle.c */; };
+		06198EC21DA2C61100138F73 /* vsip_svllt.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EBC1DA2C61100138F73 /* vsip_svllt.c */; };
+		06198EC31DA2C61100138F73 /* vsip_svlne.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EBD1DA2C61100138F73 /* vsip_svlne.c */; };
+		06198EC81DA2C66F00138F73 /* vsip_mrandn_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EC41DA2C66F00138F73 /* vsip_mrandn_d.c */; };
+		06198EC91DA2C66F00138F73 /* vsip_mrandn_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EC51DA2C66F00138F73 /* vsip_mrandn_f.c */; };
+		06198ECA1DA2C66F00138F73 /* vsip_mrandu_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EC61DA2C66F00138F73 /* vsip_mrandu_d.c */; };
+		06198ECB1DA2C66F00138F73 /* vsip_mrandu_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EC71DA2C66F00138F73 /* vsip_mrandu_f.c */; };
+		06198F331DA2C73F00138F73 /* vsip_msubview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ECC1DA2C73A00138F73 /* vsip_msubview_li.c */; };
+		06198F341DA2C73F00138F73 /* vsip_mtransview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ECD1DA2C73A00138F73 /* vsip_mtransview_li.c */; };
+		06198F351DA2C73F00138F73 /* vsip_smsub_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ECE1DA2C73A00138F73 /* vsip_smsub_li.c */; };
+		06198F361DA2C73F00138F73 /* vsip_svmul_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ECF1DA2C73A00138F73 /* vsip_svmul_li.c */; };
+		06198F371DA2C73F00138F73 /* vsip_svsub_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED01DA2C73A00138F73 /* vsip_svsub_li.c */; };
+		06198F381DA2C73F00138F73 /* vsip_talldestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED11DA2C73A00138F73 /* vsip_talldestroy_li.c */; };
+		06198F391DA2C73F00138F73 /* vsip_tcloneview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED21DA2C73A00138F73 /* vsip_tcloneview_li.c */; };
+		06198F3A1DA2C73F00138F73 /* vsip_tdestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED31DA2C73A00138F73 /* vsip_tdestroy_li.c */; };
+		06198F3B1DA2C73F00138F73 /* vsip_tget_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED41DA2C73B00138F73 /* vsip_tget_li.c */; };
+		06198F3C1DA2C73F00138F73 /* vsip_tgetattrib_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED51DA2C73B00138F73 /* vsip_tgetattrib_li.c */; };
+		06198F3D1DA2C73F00138F73 /* vsip_tgetblock_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED61DA2C73B00138F73 /* vsip_tgetblock_li.c */; };
+		06198F3E1DA2C73F00138F73 /* vsip_tgetxlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED71DA2C73B00138F73 /* vsip_tgetxlength_li.c */; };
+		06198F3F1DA2C73F00138F73 /* vsip_tgetxstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED81DA2C73B00138F73 /* vsip_tgetxstride_li.c */; };
+		06198F401DA2C73F00138F73 /* vsip_tgetylength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198ED91DA2C73B00138F73 /* vsip_tgetylength_li.c */; };
+		06198F411DA2C73F00138F73 /* vsip_tgetystride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EDA1DA2C73B00138F73 /* vsip_tgetystride_li.c */; };
+		06198F421DA2C73F00138F73 /* vsip_tgetzlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EDB1DA2C73B00138F73 /* vsip_tgetzlength_li.c */; };
+		06198F431DA2C73F00138F73 /* vsip_tgetzstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EDC1DA2C73B00138F73 /* vsip_tgetzstride_li.c */; };
+		06198F441DA2C73F00138F73 /* vsip_tmatrixview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EDD1DA2C73B00138F73 /* vsip_tmatrixview_li.c */; };
+		06198F451DA2C73F00138F73 /* vsip_tput_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EDE1DA2C73B00138F73 /* vsip_tput_li.c */; };
+		06198F461DA2C73F00138F73 /* vsip_tputattrib_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EDF1DA2C73B00138F73 /* vsip_tputattrib_li.c */; };
+		06198F471DA2C73F00138F73 /* vsip_tputxlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE01DA2C73B00138F73 /* vsip_tputxlength_li.c */; };
+		06198F481DA2C73F00138F73 /* vsip_tputxstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE11DA2C73B00138F73 /* vsip_tputxstride_li.c */; };
+		06198F491DA2C73F00138F73 /* vsip_tputylength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE21DA2C73B00138F73 /* vsip_tputylength_li.c */; };
+		06198F4A1DA2C73F00138F73 /* vsip_tputystride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE31DA2C73B00138F73 /* vsip_tputystride_li.c */; };
+		06198F4B1DA2C73F00138F73 /* vsip_tputzlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE41DA2C73B00138F73 /* vsip_tputzlength_li.c */; };
+		06198F4C1DA2C73F00138F73 /* vsip_tputzstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE51DA2C73B00138F73 /* vsip_tputzstride_li.c */; };
+		06198F4D1DA2C73F00138F73 /* vsip_tsubview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE61DA2C73B00138F73 /* vsip_tsubview_li.c */; };
+		06198F4E1DA2C73F00138F73 /* vsip_ttransview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE71DA2C73B00138F73 /* vsip_ttransview_li.c */; };
+		06198F4F1DA2C73F00138F73 /* vsip_tvectview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EE81DA2C73B00138F73 /* vsip_tvectview_li.c */; };
+		06198F501DA2C73F00138F73 /* VI_blockcreate_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EE91DA2C73C00138F73 /* VI_blockcreate_li.h */; };
+		06198F511DA2C73F00138F73 /* VI_blockdestroy_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EEA1DA2C73C00138F73 /* VI_blockdestroy_li.h */; };
+		06198F521DA2C73F00138F73 /* VI_mcolview_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EEB1DA2C73C00138F73 /* VI_mcolview_li.h */; };
+		06198F531DA2C73F00138F73 /* VI_mrowview_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EEC1DA2C73C00138F73 /* VI_mrowview_li.h */; };
+		06198F541DA2C73F00138F73 /* vsip_blockbind_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EED1DA2C73C00138F73 /* vsip_blockbind_li.c */; };
+		06198F551DA2C73F00138F73 /* vsip_blockcreate_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EEE1DA2C73C00138F73 /* vsip_blockcreate_li.c */; };
+		06198F561DA2C73F00138F73 /* vsip_blockdestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EEF1DA2C73C00138F73 /* vsip_blockdestroy_li.c */; };
+		06198F571DA2C73F00138F73 /* vsip_blockrebind_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EF01DA2C73C00138F73 /* vsip_blockrebind_li.c */; };
+		06198F581DA2C73F00138F73 /* vsip_tcreate_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EF11DA2C73C00138F73 /* vsip_tcreate_li.c */; };
+		06198F591DA2C73F00138F73 /* vsip_tviewattributes_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EF21DA2C73C00138F73 /* vsip_tviewattributes_li.h */; };
+		06198F5A1DA2C73F00138F73 /* vsip_tbind_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EF31DA2C73C00138F73 /* vsip_tbind_li.c */; };
+		06198F5B1DA2C73F00138F73 /* vsip_mcumsum_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EF41DA2C73C00138F73 /* vsip_mcumsum_li.c */; };
+		06198F5C1DA2C73F00138F73 /* vsip_mcreate_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EF51DA2C73C00138F73 /* vsip_mcreate_li.c */; };
+		06198F5D1DA2C73F00138F73 /* vsip_vviewattributes_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EF61DA2C73C00138F73 /* vsip_vviewattributes_li.h */; };
+		06198F5E1DA2C73F00138F73 /* vsip_mviewattributes_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EF71DA2C73C00138F73 /* vsip_mviewattributes_li.h */; };
+		06198F5F1DA2C74000138F73 /* vsip_blockattributes_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EF81DA2C73C00138F73 /* vsip_blockattributes_li.h */; };
+		06198F601DA2C74000138F73 /* VI_vramp_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EF91DA2C73C00138F73 /* VI_vramp_li.h */; };
+		06198F611DA2C74000138F73 /* VI_vcumsum_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EFA1DA2C73C00138F73 /* VI_vcumsum_li.h */; };
+		06198F621DA2C74000138F73 /* VI_vfill_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198EFB1DA2C73C00138F73 /* VI_vfill_li.h */; };
+		06198F631DA2C74000138F73 /* vsip_blockadmit_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EFC1DA2C73C00138F73 /* vsip_blockadmit_li.c */; };
+		06198F641DA2C74000138F73 /* vsip_blockfind_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EFD1DA2C73C00138F73 /* vsip_blockfind_li.c */; };
+		06198F651DA2C74000138F73 /* vsip_blockrelease_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EFE1DA2C73D00138F73 /* vsip_blockrelease_li.c */; };
+		06198F661DA2C74000138F73 /* vsip_madd_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EFF1DA2C73D00138F73 /* vsip_madd_li.c */; };
+		06198F671DA2C74000138F73 /* vsip_mand_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F001DA2C73D00138F73 /* vsip_mand_li.c */; };
+		06198F681DA2C74000138F73 /* vsip_mclip_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F011DA2C73D00138F73 /* vsip_mclip_li.c */; };
+		06198F691DA2C74000138F73 /* vsip_mcopy_d_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F021DA2C73D00138F73 /* vsip_mcopy_d_li.c */; };
+		06198F6A1DA2C74000138F73 /* vsip_mcopy_f_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F031DA2C73D00138F73 /* vsip_mcopy_f_li.c */; };
+		06198F6B1DA2C74000138F73 /* vsip_mcopy_i_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F041DA2C73D00138F73 /* vsip_mcopy_i_li.c */; };
+		06198F6C1DA2C74000138F73 /* vsip_mfill_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F051DA2C73D00138F73 /* vsip_mfill_li.c */; };
+		06198F6D1DA2C74000138F73 /* vsip_mgetoffset_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F061DA2C73D00138F73 /* vsip_mgetoffset_li.c */; };
+		06198F6E1DA2C74000138F73 /* vsip_mhisto_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F071DA2C73D00138F73 /* vsip_mhisto_li.c */; };
+		06198F6F1DA2C74000138F73 /* vsip_mmaxval_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F081DA2C73D00138F73 /* vsip_mmaxval_li.c */; };
+		06198F701DA2C74000138F73 /* vsip_mputoffset_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F091DA2C73D00138F73 /* vsip_mputoffset_li.c */; };
+		06198F711DA2C74000138F73 /* vsip_svadd_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F0A1DA2C73D00138F73 /* vsip_svadd_li.c */; };
+		06198F721DA2C74000138F73 /* vsip_tputoffset_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F0B1DA2C73D00138F73 /* vsip_tputoffset_li.c */; };
+		06198F731DA2C74000138F73 /* vsip_vadd_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F0C1DA2C73D00138F73 /* vsip_vadd_li.c */; };
+		06198F741DA2C74000138F73 /* vsip_vand_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F0D1DA2C73D00138F73 /* vsip_vand_li.c */; };
+		06198F751DA2C74000138F73 /* vsip_vclip_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F0E1DA2C73D00138F73 /* vsip_vclip_li.c */; };
+		06198F761DA2C74000138F73 /* vsip_vfill_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F0F1DA2C73D00138F73 /* vsip_vfill_li.c */; };
+		06198F771DA2C74000138F73 /* vsip_vfirst_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F101DA2C73D00138F73 /* vsip_vfirst_li.c */; };
+		06198F781DA2C74000138F73 /* vsip_vgetoffset_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F111DA2C73D00138F73 /* vsip_vgetoffset_li.c */; };
+		06198F791DA2C74000138F73 /* vsip_vhisto_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F121DA2C73D00138F73 /* vsip_vhisto_li.c */; };
+		06198F7A1DA2C74000138F73 /* vsip_vinvclip_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F131DA2C73E00138F73 /* vsip_vinvclip_li.c */; };
+		06198F7B1DA2C74000138F73 /* vsip_vleq_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F141DA2C73E00138F73 /* vsip_vleq_li.c */; };
+		06198F7C1DA2C74000138F73 /* vsip_vlge_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F151DA2C73E00138F73 /* vsip_vlge_li.c */; };
+		06198F7D1DA2C74000138F73 /* vsip_vlgt_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F161DA2C73E00138F73 /* vsip_vlgt_li.c */; };
+		06198F7E1DA2C74000138F73 /* vsip_vlle_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F171DA2C73E00138F73 /* vsip_vlle_li.c */; };
+		06198F7F1DA2C74000138F73 /* vsip_vllt_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F181DA2C73E00138F73 /* vsip_vllt_li.c */; };
+		06198F801DA2C74000138F73 /* vsip_vlne_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F191DA2C73E00138F73 /* vsip_vlne_li.c */; };
+		06198F811DA2C74000138F73 /* vsip_vmag_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F1A1DA2C73E00138F73 /* vsip_vmag_li.c */; };
+		06198F821DA2C74000138F73 /* vsip_vmaxval_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F1B1DA2C73E00138F73 /* vsip_vmaxval_li.c */; };
+		06198F831DA2C74000138F73 /* vsip_vminval_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F1C1DA2C73E00138F73 /* vsip_vminval_li.c */; };
+		06198F841DA2C74000138F73 /* vsip_vneg_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F1D1DA2C73E00138F73 /* vsip_vneg_li.c */; };
+		06198F851DA2C74000138F73 /* vsip_vnot_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F1E1DA2C73E00138F73 /* vsip_vnot_li.c */; };
+		06198F861DA2C74000138F73 /* vsip_vor_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F1F1DA2C73E00138F73 /* vsip_vor_li.c */; };
+		06198F871DA2C74000138F73 /* vsip_vputoffset_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F201DA2C73E00138F73 /* vsip_vputoffset_li.c */; };
+		06198F881DA2C74000138F73 /* vsip_vramp_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F211DA2C73E00138F73 /* vsip_vramp_li.c */; };
+		06198F891DA2C74000138F73 /* vsip_vscatter_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F221DA2C73E00138F73 /* vsip_vscatter_li.c */; };
+		06198F8A1DA2C74000138F73 /* vsip_vsumval_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F231DA2C73E00138F73 /* vsip_vsumval_li.c */; };
+		06198F8B1DA2C74000138F73 /* vsip_vswap_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F241DA2C73E00138F73 /* vsip_vswap_li.c */; };
+		06198F8C1DA2C74000138F73 /* vsip_vxor_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F251DA2C73E00138F73 /* vsip_vxor_li.c */; };
+		06198F8D1DA2C74000138F73 /* vsip_vcopyto_user_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F261DA2C73E00138F73 /* vsip_vcopyto_user_li.c */; };
+		06198F8E1DA2C74000138F73 /* vsip_vcopyfrom_user_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F271DA2C73F00138F73 /* vsip_vcopyfrom_user_li.c */; };
+		06198F8F1DA2C74000138F73 /* vsip_vcopy_vi_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F281DA2C73F00138F73 /* vsip_vcopy_vi_li.c */; };
+		06198F901DA2C74000138F73 /* vsip_vcopy_i_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F291DA2C73F00138F73 /* vsip_vcopy_i_li.c */; };
+		06198F911DA2C74000138F73 /* vsip_vcopy_f_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F2A1DA2C73F00138F73 /* vsip_vcopy_f_li.c */; };
+		06198F921DA2C74000138F73 /* vsip_vcopy_d_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F2B1DA2C73F00138F73 /* vsip_vcopy_d_li.c */; };
+		06198F931DA2C74000138F73 /* VI_support_priv_li.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198F2C1DA2C73F00138F73 /* VI_support_priv_li.h */; };
+		06198F941DA2C74000138F73 /* vsip_mminval_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F2D1DA2C73F00138F73 /* vsip_mminval_li.c */; };
+		06198F951DA2C74000138F73 /* vsip_tgetoffset_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F2E1DA2C73F00138F73 /* vsip_tgetoffset_li.c */; };
+		06198F961DA2C74000138F73 /* vsip_vcumsum_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F2F1DA2C73F00138F73 /* vsip_vcumsum_li.c */; };
+		06198F971DA2C74000138F73 /* vsip_vgather_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F301DA2C73F00138F73 /* vsip_vgather_li.c */; };
+		06198F981DA2C74000138F73 /* vsip_vsortip_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F311DA2C73F00138F73 /* vsip_vsortip_li.c */; };
+		06198F991DA2C74000138F73 /* vsipprivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 06198F321DA2C73F00138F73 /* vsipprivate.h */; };
+		06198F9D1DA2C91A00138F73 /* jvsip_ceil.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F9A1DA2C91A00138F73 /* jvsip_ceil.c */; };
+		06198F9E1DA2C91A00138F73 /* jvsip_floor.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F9B1DA2C91A00138F73 /* jvsip_floor.c */; };
+		06198F9F1DA2C91A00138F73 /* jvsip_round.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198F9C1DA2C91A00138F73 /* jvsip_round.c */; };
+		06198FC51DA2C98700138F73 /* vsip_malldestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA01DA2C98500138F73 /* vsip_malldestroy_li.c */; };
+		06198FC61DA2C98700138F73 /* vsip_mbind_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA11DA2C98500138F73 /* vsip_mbind_li.c */; };
+		06198FC71DA2C98700138F73 /* vsip_mcloneview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA21DA2C98500138F73 /* vsip_mcloneview_li.c */; };
+		06198FC81DA2C98700138F73 /* vsip_mcolview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA31DA2C98500138F73 /* vsip_mcolview_li.c */; };
+		06198FC91DA2C98700138F73 /* vsip_mdestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA41DA2C98500138F73 /* vsip_mdestroy_li.c */; };
+		06198FCA1DA2C98700138F73 /* vsip_mget_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA51DA2C98500138F73 /* vsip_mget_li.c */; };
+		06198FCB1DA2C98700138F73 /* vsip_mgetattrib_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA61DA2C98500138F73 /* vsip_mgetattrib_li.c */; };
+		06198FCC1DA2C98700138F73 /* vsip_mgetblock_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA71DA2C98600138F73 /* vsip_mgetblock_li.c */; };
+		06198FCD1DA2C98700138F73 /* vsip_mgetcollength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA81DA2C98600138F73 /* vsip_mgetcollength_li.c */; };
+		06198FCE1DA2C98700138F73 /* vsip_mgetcolstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FA91DA2C98600138F73 /* vsip_mgetcolstride_li.c */; };
+		06198FCF1DA2C98700138F73 /* vsip_mgetrowlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FAA1DA2C98600138F73 /* vsip_mgetrowlength_li.c */; };
+		06198FD01DA2C98700138F73 /* vsip_mgetrowstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FAB1DA2C98600138F73 /* vsip_mgetrowstride_li.c */; };
+		06198FD11DA2C98700138F73 /* vsip_mput_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FAC1DA2C98600138F73 /* vsip_mput_li.c */; };
+		06198FD21DA2C98700138F73 /* vsip_mputattrib_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FAD1DA2C98600138F73 /* vsip_mputattrib_li.c */; };
+		06198FD31DA2C98700138F73 /* vsip_mputcollength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FAE1DA2C98600138F73 /* vsip_mputcollength_li.c */; };
+		06198FD41DA2C98700138F73 /* vsip_mputcolstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FAF1DA2C98600138F73 /* vsip_mputcolstride_li.c */; };
+		06198FD51DA2C98700138F73 /* vsip_mputrowlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB01DA2C98600138F73 /* vsip_mputrowlength_li.c */; };
+		06198FD61DA2C98700138F73 /* vsip_mputrowstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB11DA2C98600138F73 /* vsip_mputrowstride_li.c */; };
+		06198FD71DA2C98700138F73 /* vsip_mrowview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB21DA2C98600138F73 /* vsip_mrowview_li.c */; };
+		06198FD81DA2C98700138F73 /* vsip_msub_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB31DA2C98600138F73 /* vsip_msub_li.c */; };
+		06198FD91DA2C98700138F73 /* vsip_valldestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB41DA2C98600138F73 /* vsip_valldestroy_li.c */; };
+		06198FDA1DA2C98800138F73 /* vsip_vbind_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB51DA2C98600138F73 /* vsip_vbind_li.c */; };
+		06198FDB1DA2C98800138F73 /* vsip_vcloneview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB61DA2C98600138F73 /* vsip_vcloneview_li.c */; };
+		06198FDC1DA2C98800138F73 /* vsip_vcreate_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB71DA2C98600138F73 /* vsip_vcreate_li.c */; };
+		06198FDD1DA2C98800138F73 /* vsip_vdestroy_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB81DA2C98700138F73 /* vsip_vdestroy_li.c */; };
+		06198FDE1DA2C98800138F73 /* vsip_vget_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FB91DA2C98700138F73 /* vsip_vget_li.c */; };
+		06198FDF1DA2C98800138F73 /* vsip_vgetattrib_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FBA1DA2C98700138F73 /* vsip_vgetattrib_li.c */; };
+		06198FE01DA2C98800138F73 /* vsip_vgetblock_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FBB1DA2C98700138F73 /* vsip_vgetblock_li.c */; };
+		06198FE11DA2C98800138F73 /* vsip_vgetlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FBC1DA2C98700138F73 /* vsip_vgetlength_li.c */; };
+		06198FE21DA2C98800138F73 /* vsip_vgetstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FBD1DA2C98700138F73 /* vsip_vgetstride_li.c */; };
+		06198FE31DA2C98800138F73 /* vsip_vmul_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FBE1DA2C98700138F73 /* vsip_vmul_li.c */; };
+		06198FE41DA2C98800138F73 /* vsip_vput_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FBF1DA2C98700138F73 /* vsip_vput_li.c */; };
+		06198FE51DA2C98800138F73 /* vsip_vputattrib_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FC01DA2C98700138F73 /* vsip_vputattrib_li.c */; };
+		06198FE61DA2C98800138F73 /* vsip_vputlength_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FC11DA2C98700138F73 /* vsip_vputlength_li.c */; };
+		06198FE71DA2C98800138F73 /* vsip_vputstride_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FC21DA2C98700138F73 /* vsip_vputstride_li.c */; };
+		06198FE81DA2C98800138F73 /* vsip_vsub_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FC31DA2C98700138F73 /* vsip_vsub_li.c */; };
+		06198FE91DA2C98800138F73 /* vsip_vsubview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FC41DA2C98700138F73 /* vsip_vsubview_li.c */; };
+		06198FEB1DA2DA2A00138F73 /* vsip_mcopy_li_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FEA1DA2DA2A00138F73 /* vsip_mcopy_li_li.c */; };
+		06198FED1DA2DB7600138F73 /* vsip_vcopy_li_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FEC1DA2DB7500138F73 /* vsip_vcopy_li_li.c */; };
+		06198FF41DA2DDE600138F73 /* vsip_cmrandn_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FF01DA2DDE600138F73 /* vsip_cmrandn_d.c */; };
+		06198FF51DA2DDE600138F73 /* vsip_cmrandn_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FF11DA2DDE600138F73 /* vsip_cmrandn_f.c */; };
+		06198FF61DA2DDE600138F73 /* vsip_cmrandu_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FF21DA2DDE600138F73 /* vsip_cmrandu_d.c */; };
+		06198FF71DA2DDE600138F73 /* vsip_cmrandu_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FF31DA2DDE600138F73 /* vsip_cmrandu_f.c */; };
+		06198FF91DA2DE1500138F73 /* vsip_mcopy_i_i.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FF81DA2DE1500138F73 /* vsip_mcopy_i_i.c */; };
+		06198FFC1DA2DE4600138F73 /* vsip_vcopy_vi_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FFA1DA2DE4600138F73 /* vsip_vcopy_vi_d.c */; };
+		06198FFD1DA2DE4600138F73 /* vsip_vcopy_vi_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FFB1DA2DE4600138F73 /* vsip_vcopy_vi_f.c */; };
 		061C291A17249E8200773972 /* jvsip_svd_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 061C291917249E8200773972 /* jvsip_svd_f.c */; };
 		062836C61517749C001EBA82 /* vsip_mrect_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C41517749C001EBA82 /* vsip_mrect_d.c */; };
 		062836C71517749C001EBA82 /* vsip_mrect_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C51517749C001EBA82 /* vsip_mrect_f.c */; };
@@ -3694,6 +3856,168 @@
 		06198E8C1DA1649300138F73 /* jvsipFTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jvsipFTests.swift; sourceTree = "<group>"; };
 		06198E8E1DA1649300138F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06198E951DA1669700138F73 /* jvsipF-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jvsipF-Bridging-Header.h"; sourceTree = "<group>"; };
+		06198EB81DA2C61100138F73 /* vsip_svlge_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlge_d.c; sourceTree = "<group>"; };
+		06198EB91DA2C61100138F73 /* vsip_svlge_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlge_f.c; sourceTree = "<group>"; };
+		06198EBA1DA2C61100138F73 /* vsip_svlgt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlgt.c; sourceTree = "<group>"; };
+		06198EBB1DA2C61100138F73 /* vsip_svlle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlle.c; sourceTree = "<group>"; };
+		06198EBC1DA2C61100138F73 /* vsip_svllt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svllt.c; sourceTree = "<group>"; };
+		06198EBD1DA2C61100138F73 /* vsip_svlne.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlne.c; sourceTree = "<group>"; };
+		06198EC41DA2C66F00138F73 /* vsip_mrandn_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrandn_d.c; sourceTree = "<group>"; };
+		06198EC51DA2C66F00138F73 /* vsip_mrandn_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrandn_f.c; sourceTree = "<group>"; };
+		06198EC61DA2C66F00138F73 /* vsip_mrandu_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrandu_d.c; sourceTree = "<group>"; };
+		06198EC71DA2C66F00138F73 /* vsip_mrandu_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrandu_f.c; sourceTree = "<group>"; };
+		06198ECC1DA2C73A00138F73 /* vsip_msubview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_msubview_li.c; sourceTree = "<group>"; };
+		06198ECD1DA2C73A00138F73 /* vsip_mtransview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mtransview_li.c; sourceTree = "<group>"; };
+		06198ECE1DA2C73A00138F73 /* vsip_smsub_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_smsub_li.c; sourceTree = "<group>"; };
+		06198ECF1DA2C73A00138F73 /* vsip_svmul_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svmul_li.c; sourceTree = "<group>"; };
+		06198ED01DA2C73A00138F73 /* vsip_svsub_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svsub_li.c; sourceTree = "<group>"; };
+		06198ED11DA2C73A00138F73 /* vsip_talldestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_talldestroy_li.c; sourceTree = "<group>"; };
+		06198ED21DA2C73A00138F73 /* vsip_tcloneview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tcloneview_li.c; sourceTree = "<group>"; };
+		06198ED31DA2C73A00138F73 /* vsip_tdestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tdestroy_li.c; sourceTree = "<group>"; };
+		06198ED41DA2C73B00138F73 /* vsip_tget_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tget_li.c; sourceTree = "<group>"; };
+		06198ED51DA2C73B00138F73 /* vsip_tgetattrib_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetattrib_li.c; sourceTree = "<group>"; };
+		06198ED61DA2C73B00138F73 /* vsip_tgetblock_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetblock_li.c; sourceTree = "<group>"; };
+		06198ED71DA2C73B00138F73 /* vsip_tgetxlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetxlength_li.c; sourceTree = "<group>"; };
+		06198ED81DA2C73B00138F73 /* vsip_tgetxstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetxstride_li.c; sourceTree = "<group>"; };
+		06198ED91DA2C73B00138F73 /* vsip_tgetylength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetylength_li.c; sourceTree = "<group>"; };
+		06198EDA1DA2C73B00138F73 /* vsip_tgetystride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetystride_li.c; sourceTree = "<group>"; };
+		06198EDB1DA2C73B00138F73 /* vsip_tgetzlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetzlength_li.c; sourceTree = "<group>"; };
+		06198EDC1DA2C73B00138F73 /* vsip_tgetzstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetzstride_li.c; sourceTree = "<group>"; };
+		06198EDD1DA2C73B00138F73 /* vsip_tmatrixview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tmatrixview_li.c; sourceTree = "<group>"; };
+		06198EDE1DA2C73B00138F73 /* vsip_tput_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tput_li.c; sourceTree = "<group>"; };
+		06198EDF1DA2C73B00138F73 /* vsip_tputattrib_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputattrib_li.c; sourceTree = "<group>"; };
+		06198EE01DA2C73B00138F73 /* vsip_tputxlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputxlength_li.c; sourceTree = "<group>"; };
+		06198EE11DA2C73B00138F73 /* vsip_tputxstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputxstride_li.c; sourceTree = "<group>"; };
+		06198EE21DA2C73B00138F73 /* vsip_tputylength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputylength_li.c; sourceTree = "<group>"; };
+		06198EE31DA2C73B00138F73 /* vsip_tputystride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputystride_li.c; sourceTree = "<group>"; };
+		06198EE41DA2C73B00138F73 /* vsip_tputzlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputzlength_li.c; sourceTree = "<group>"; };
+		06198EE51DA2C73B00138F73 /* vsip_tputzstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputzstride_li.c; sourceTree = "<group>"; };
+		06198EE61DA2C73B00138F73 /* vsip_tsubview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tsubview_li.c; sourceTree = "<group>"; };
+		06198EE71DA2C73B00138F73 /* vsip_ttransview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_ttransview_li.c; sourceTree = "<group>"; };
+		06198EE81DA2C73B00138F73 /* vsip_tvectview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tvectview_li.c; sourceTree = "<group>"; };
+		06198EE91DA2C73C00138F73 /* VI_blockcreate_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_blockcreate_li.h; sourceTree = "<group>"; };
+		06198EEA1DA2C73C00138F73 /* VI_blockdestroy_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_blockdestroy_li.h; sourceTree = "<group>"; };
+		06198EEB1DA2C73C00138F73 /* VI_mcolview_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_mcolview_li.h; sourceTree = "<group>"; };
+		06198EEC1DA2C73C00138F73 /* VI_mrowview_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_mrowview_li.h; sourceTree = "<group>"; };
+		06198EED1DA2C73C00138F73 /* vsip_blockbind_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockbind_li.c; sourceTree = "<group>"; };
+		06198EEE1DA2C73C00138F73 /* vsip_blockcreate_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockcreate_li.c; sourceTree = "<group>"; };
+		06198EEF1DA2C73C00138F73 /* vsip_blockdestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockdestroy_li.c; sourceTree = "<group>"; };
+		06198EF01DA2C73C00138F73 /* vsip_blockrebind_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockrebind_li.c; sourceTree = "<group>"; };
+		06198EF11DA2C73C00138F73 /* vsip_tcreate_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tcreate_li.c; sourceTree = "<group>"; };
+		06198EF21DA2C73C00138F73 /* vsip_tviewattributes_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_tviewattributes_li.h; sourceTree = "<group>"; };
+		06198EF31DA2C73C00138F73 /* vsip_tbind_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tbind_li.c; sourceTree = "<group>"; };
+		06198EF41DA2C73C00138F73 /* vsip_mcumsum_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcumsum_li.c; sourceTree = "<group>"; };
+		06198EF51DA2C73C00138F73 /* vsip_mcreate_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcreate_li.c; sourceTree = "<group>"; };
+		06198EF61DA2C73C00138F73 /* vsip_vviewattributes_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_vviewattributes_li.h; sourceTree = "<group>"; };
+		06198EF71DA2C73C00138F73 /* vsip_mviewattributes_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_mviewattributes_li.h; sourceTree = "<group>"; };
+		06198EF81DA2C73C00138F73 /* vsip_blockattributes_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_blockattributes_li.h; sourceTree = "<group>"; };
+		06198EF91DA2C73C00138F73 /* VI_vramp_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_vramp_li.h; sourceTree = "<group>"; };
+		06198EFA1DA2C73C00138F73 /* VI_vcumsum_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_vcumsum_li.h; sourceTree = "<group>"; };
+		06198EFB1DA2C73C00138F73 /* VI_vfill_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_vfill_li.h; sourceTree = "<group>"; };
+		06198EFC1DA2C73C00138F73 /* vsip_blockadmit_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockadmit_li.c; sourceTree = "<group>"; };
+		06198EFD1DA2C73C00138F73 /* vsip_blockfind_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockfind_li.c; sourceTree = "<group>"; };
+		06198EFE1DA2C73D00138F73 /* vsip_blockrelease_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_blockrelease_li.c; sourceTree = "<group>"; };
+		06198EFF1DA2C73D00138F73 /* vsip_madd_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_madd_li.c; sourceTree = "<group>"; };
+		06198F001DA2C73D00138F73 /* vsip_mand_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mand_li.c; sourceTree = "<group>"; };
+		06198F011DA2C73D00138F73 /* vsip_mclip_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mclip_li.c; sourceTree = "<group>"; };
+		06198F021DA2C73D00138F73 /* vsip_mcopy_d_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcopy_d_li.c; sourceTree = "<group>"; };
+		06198F031DA2C73D00138F73 /* vsip_mcopy_f_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcopy_f_li.c; sourceTree = "<group>"; };
+		06198F041DA2C73D00138F73 /* vsip_mcopy_i_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcopy_i_li.c; sourceTree = "<group>"; };
+		06198F051DA2C73D00138F73 /* vsip_mfill_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mfill_li.c; sourceTree = "<group>"; };
+		06198F061DA2C73D00138F73 /* vsip_mgetoffset_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetoffset_li.c; sourceTree = "<group>"; };
+		06198F071DA2C73D00138F73 /* vsip_mhisto_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mhisto_li.c; sourceTree = "<group>"; };
+		06198F081DA2C73D00138F73 /* vsip_mmaxval_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mmaxval_li.c; sourceTree = "<group>"; };
+		06198F091DA2C73D00138F73 /* vsip_mputoffset_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mputoffset_li.c; sourceTree = "<group>"; };
+		06198F0A1DA2C73D00138F73 /* vsip_svadd_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svadd_li.c; sourceTree = "<group>"; };
+		06198F0B1DA2C73D00138F73 /* vsip_tputoffset_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tputoffset_li.c; sourceTree = "<group>"; };
+		06198F0C1DA2C73D00138F73 /* vsip_vadd_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vadd_li.c; sourceTree = "<group>"; };
+		06198F0D1DA2C73D00138F73 /* vsip_vand_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vand_li.c; sourceTree = "<group>"; };
+		06198F0E1DA2C73D00138F73 /* vsip_vclip_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vclip_li.c; sourceTree = "<group>"; };
+		06198F0F1DA2C73D00138F73 /* vsip_vfill_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vfill_li.c; sourceTree = "<group>"; };
+		06198F101DA2C73D00138F73 /* vsip_vfirst_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vfirst_li.c; sourceTree = "<group>"; };
+		06198F111DA2C73D00138F73 /* vsip_vgetoffset_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vgetoffset_li.c; sourceTree = "<group>"; };
+		06198F121DA2C73D00138F73 /* vsip_vhisto_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vhisto_li.c; sourceTree = "<group>"; };
+		06198F131DA2C73E00138F73 /* vsip_vinvclip_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vinvclip_li.c; sourceTree = "<group>"; };
+		06198F141DA2C73E00138F73 /* vsip_vleq_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vleq_li.c; sourceTree = "<group>"; };
+		06198F151DA2C73E00138F73 /* vsip_vlge_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vlge_li.c; sourceTree = "<group>"; };
+		06198F161DA2C73E00138F73 /* vsip_vlgt_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vlgt_li.c; sourceTree = "<group>"; };
+		06198F171DA2C73E00138F73 /* vsip_vlle_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vlle_li.c; sourceTree = "<group>"; };
+		06198F181DA2C73E00138F73 /* vsip_vllt_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vllt_li.c; sourceTree = "<group>"; };
+		06198F191DA2C73E00138F73 /* vsip_vlne_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vlne_li.c; sourceTree = "<group>"; };
+		06198F1A1DA2C73E00138F73 /* vsip_vmag_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vmag_li.c; sourceTree = "<group>"; };
+		06198F1B1DA2C73E00138F73 /* vsip_vmaxval_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vmaxval_li.c; sourceTree = "<group>"; };
+		06198F1C1DA2C73E00138F73 /* vsip_vminval_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vminval_li.c; sourceTree = "<group>"; };
+		06198F1D1DA2C73E00138F73 /* vsip_vneg_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vneg_li.c; sourceTree = "<group>"; };
+		06198F1E1DA2C73E00138F73 /* vsip_vnot_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vnot_li.c; sourceTree = "<group>"; };
+		06198F1F1DA2C73E00138F73 /* vsip_vor_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vor_li.c; sourceTree = "<group>"; };
+		06198F201DA2C73E00138F73 /* vsip_vputoffset_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vputoffset_li.c; sourceTree = "<group>"; };
+		06198F211DA2C73E00138F73 /* vsip_vramp_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vramp_li.c; sourceTree = "<group>"; };
+		06198F221DA2C73E00138F73 /* vsip_vscatter_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vscatter_li.c; sourceTree = "<group>"; };
+		06198F231DA2C73E00138F73 /* vsip_vsumval_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vsumval_li.c; sourceTree = "<group>"; };
+		06198F241DA2C73E00138F73 /* vsip_vswap_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vswap_li.c; sourceTree = "<group>"; };
+		06198F251DA2C73E00138F73 /* vsip_vxor_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vxor_li.c; sourceTree = "<group>"; };
+		06198F261DA2C73E00138F73 /* vsip_vcopyto_user_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopyto_user_li.c; sourceTree = "<group>"; };
+		06198F271DA2C73F00138F73 /* vsip_vcopyfrom_user_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopyfrom_user_li.c; sourceTree = "<group>"; };
+		06198F281DA2C73F00138F73 /* vsip_vcopy_vi_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_vi_li.c; sourceTree = "<group>"; };
+		06198F291DA2C73F00138F73 /* vsip_vcopy_i_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_i_li.c; sourceTree = "<group>"; };
+		06198F2A1DA2C73F00138F73 /* vsip_vcopy_f_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_f_li.c; sourceTree = "<group>"; };
+		06198F2B1DA2C73F00138F73 /* vsip_vcopy_d_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_d_li.c; sourceTree = "<group>"; };
+		06198F2C1DA2C73F00138F73 /* VI_support_priv_li.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VI_support_priv_li.h; sourceTree = "<group>"; };
+		06198F2D1DA2C73F00138F73 /* vsip_mminval_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mminval_li.c; sourceTree = "<group>"; };
+		06198F2E1DA2C73F00138F73 /* vsip_tgetoffset_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_tgetoffset_li.c; sourceTree = "<group>"; };
+		06198F2F1DA2C73F00138F73 /* vsip_vcumsum_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcumsum_li.c; sourceTree = "<group>"; };
+		06198F301DA2C73F00138F73 /* vsip_vgather_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vgather_li.c; sourceTree = "<group>"; };
+		06198F311DA2C73F00138F73 /* vsip_vsortip_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vsortip_li.c; sourceTree = "<group>"; };
+		06198F321DA2C73F00138F73 /* vsipprivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsipprivate.h; sourceTree = "<group>"; };
+		06198F9A1DA2C91A00138F73 /* jvsip_ceil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_ceil.c; sourceTree = "<group>"; };
+		06198F9B1DA2C91A00138F73 /* jvsip_floor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_floor.c; sourceTree = "<group>"; };
+		06198F9C1DA2C91A00138F73 /* jvsip_round.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_round.c; sourceTree = "<group>"; };
+		06198FA01DA2C98500138F73 /* vsip_malldestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_malldestroy_li.c; sourceTree = "<group>"; };
+		06198FA11DA2C98500138F73 /* vsip_mbind_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mbind_li.c; sourceTree = "<group>"; };
+		06198FA21DA2C98500138F73 /* vsip_mcloneview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcloneview_li.c; sourceTree = "<group>"; };
+		06198FA31DA2C98500138F73 /* vsip_mcolview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcolview_li.c; sourceTree = "<group>"; };
+		06198FA41DA2C98500138F73 /* vsip_mdestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mdestroy_li.c; sourceTree = "<group>"; };
+		06198FA51DA2C98500138F73 /* vsip_mget_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mget_li.c; sourceTree = "<group>"; };
+		06198FA61DA2C98500138F73 /* vsip_mgetattrib_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetattrib_li.c; sourceTree = "<group>"; };
+		06198FA71DA2C98600138F73 /* vsip_mgetblock_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetblock_li.c; sourceTree = "<group>"; };
+		06198FA81DA2C98600138F73 /* vsip_mgetcollength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetcollength_li.c; sourceTree = "<group>"; };
+		06198FA91DA2C98600138F73 /* vsip_mgetcolstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetcolstride_li.c; sourceTree = "<group>"; };
+		06198FAA1DA2C98600138F73 /* vsip_mgetrowlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetrowlength_li.c; sourceTree = "<group>"; };
+		06198FAB1DA2C98600138F73 /* vsip_mgetrowstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mgetrowstride_li.c; sourceTree = "<group>"; };
+		06198FAC1DA2C98600138F73 /* vsip_mput_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mput_li.c; sourceTree = "<group>"; };
+		06198FAD1DA2C98600138F73 /* vsip_mputattrib_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mputattrib_li.c; sourceTree = "<group>"; };
+		06198FAE1DA2C98600138F73 /* vsip_mputcollength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mputcollength_li.c; sourceTree = "<group>"; };
+		06198FAF1DA2C98600138F73 /* vsip_mputcolstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mputcolstride_li.c; sourceTree = "<group>"; };
+		06198FB01DA2C98600138F73 /* vsip_mputrowlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mputrowlength_li.c; sourceTree = "<group>"; };
+		06198FB11DA2C98600138F73 /* vsip_mputrowstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mputrowstride_li.c; sourceTree = "<group>"; };
+		06198FB21DA2C98600138F73 /* vsip_mrowview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrowview_li.c; sourceTree = "<group>"; };
+		06198FB31DA2C98600138F73 /* vsip_msub_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_msub_li.c; sourceTree = "<group>"; };
+		06198FB41DA2C98600138F73 /* vsip_valldestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_valldestroy_li.c; sourceTree = "<group>"; };
+		06198FB51DA2C98600138F73 /* vsip_vbind_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vbind_li.c; sourceTree = "<group>"; };
+		06198FB61DA2C98600138F73 /* vsip_vcloneview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcloneview_li.c; sourceTree = "<group>"; };
+		06198FB71DA2C98600138F73 /* vsip_vcreate_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcreate_li.c; sourceTree = "<group>"; };
+		06198FB81DA2C98700138F73 /* vsip_vdestroy_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vdestroy_li.c; sourceTree = "<group>"; };
+		06198FB91DA2C98700138F73 /* vsip_vget_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vget_li.c; sourceTree = "<group>"; };
+		06198FBA1DA2C98700138F73 /* vsip_vgetattrib_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vgetattrib_li.c; sourceTree = "<group>"; };
+		06198FBB1DA2C98700138F73 /* vsip_vgetblock_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vgetblock_li.c; sourceTree = "<group>"; };
+		06198FBC1DA2C98700138F73 /* vsip_vgetlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vgetlength_li.c; sourceTree = "<group>"; };
+		06198FBD1DA2C98700138F73 /* vsip_vgetstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vgetstride_li.c; sourceTree = "<group>"; };
+		06198FBE1DA2C98700138F73 /* vsip_vmul_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vmul_li.c; sourceTree = "<group>"; };
+		06198FBF1DA2C98700138F73 /* vsip_vput_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vput_li.c; sourceTree = "<group>"; };
+		06198FC01DA2C98700138F73 /* vsip_vputattrib_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vputattrib_li.c; sourceTree = "<group>"; };
+		06198FC11DA2C98700138F73 /* vsip_vputlength_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vputlength_li.c; sourceTree = "<group>"; };
+		06198FC21DA2C98700138F73 /* vsip_vputstride_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vputstride_li.c; sourceTree = "<group>"; };
+		06198FC31DA2C98700138F73 /* vsip_vsub_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vsub_li.c; sourceTree = "<group>"; };
+		06198FC41DA2C98700138F73 /* vsip_vsubview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vsubview_li.c; sourceTree = "<group>"; };
+		06198FEA1DA2DA2A00138F73 /* vsip_mcopy_li_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcopy_li_li.c; sourceTree = "<group>"; };
+		06198FEC1DA2DB7500138F73 /* vsip_vcopy_li_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_li_li.c; sourceTree = "<group>"; };
+		06198FF01DA2DDE600138F73 /* vsip_cmrandn_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmrandn_d.c; sourceTree = "<group>"; };
+		06198FF11DA2DDE600138F73 /* vsip_cmrandn_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmrandn_f.c; sourceTree = "<group>"; };
+		06198FF21DA2DDE600138F73 /* vsip_cmrandu_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmrandu_d.c; sourceTree = "<group>"; };
+		06198FF31DA2DDE600138F73 /* vsip_cmrandu_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmrandu_f.c; sourceTree = "<group>"; };
+		06198FF81DA2DE1500138F73 /* vsip_mcopy_i_i.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcopy_i_i.c; sourceTree = "<group>"; };
+		06198FFA1DA2DE4600138F73 /* vsip_vcopy_vi_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_vi_d.c; sourceTree = "<group>"; };
+		06198FFB1DA2DE4600138F73 /* vsip_vcopy_vi_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vcopy_vi_f.c; sourceTree = "<group>"; };
 		061C291917249E8200773972 /* jvsip_svd_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_svd_f.c; sourceTree = "<group>"; };
 		061C2924172845EB00773972 /* jvsipD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = jvsipD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		061C2926172845EB00773972 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -5807,6 +6131,168 @@
 		06307E5C150BB7E700EF9D00 /* c_VSIP_src */ = {
 			isa = PBXGroup;
 			children = (
+				06198FFA1DA2DE4600138F73 /* vsip_vcopy_vi_d.c */,
+				06198FFB1DA2DE4600138F73 /* vsip_vcopy_vi_f.c */,
+				06198FF81DA2DE1500138F73 /* vsip_mcopy_i_i.c */,
+				06198FF01DA2DDE600138F73 /* vsip_cmrandn_d.c */,
+				06198FF11DA2DDE600138F73 /* vsip_cmrandn_f.c */,
+				06198FF21DA2DDE600138F73 /* vsip_cmrandu_d.c */,
+				06198FF31DA2DDE600138F73 /* vsip_cmrandu_f.c */,
+				06198FEC1DA2DB7500138F73 /* vsip_vcopy_li_li.c */,
+				06198FEA1DA2DA2A00138F73 /* vsip_mcopy_li_li.c */,
+				06198FA01DA2C98500138F73 /* vsip_malldestroy_li.c */,
+				06198FA11DA2C98500138F73 /* vsip_mbind_li.c */,
+				06198FA21DA2C98500138F73 /* vsip_mcloneview_li.c */,
+				06198FA31DA2C98500138F73 /* vsip_mcolview_li.c */,
+				06198FA41DA2C98500138F73 /* vsip_mdestroy_li.c */,
+				06198FA51DA2C98500138F73 /* vsip_mget_li.c */,
+				06198FA61DA2C98500138F73 /* vsip_mgetattrib_li.c */,
+				06198FA71DA2C98600138F73 /* vsip_mgetblock_li.c */,
+				06198FA81DA2C98600138F73 /* vsip_mgetcollength_li.c */,
+				06198FA91DA2C98600138F73 /* vsip_mgetcolstride_li.c */,
+				06198FAA1DA2C98600138F73 /* vsip_mgetrowlength_li.c */,
+				06198FAB1DA2C98600138F73 /* vsip_mgetrowstride_li.c */,
+				06198FAC1DA2C98600138F73 /* vsip_mput_li.c */,
+				06198FAD1DA2C98600138F73 /* vsip_mputattrib_li.c */,
+				06198FAE1DA2C98600138F73 /* vsip_mputcollength_li.c */,
+				06198FAF1DA2C98600138F73 /* vsip_mputcolstride_li.c */,
+				06198FB01DA2C98600138F73 /* vsip_mputrowlength_li.c */,
+				06198FB11DA2C98600138F73 /* vsip_mputrowstride_li.c */,
+				06198FB21DA2C98600138F73 /* vsip_mrowview_li.c */,
+				06198FB31DA2C98600138F73 /* vsip_msub_li.c */,
+				06198FB41DA2C98600138F73 /* vsip_valldestroy_li.c */,
+				06198FB51DA2C98600138F73 /* vsip_vbind_li.c */,
+				06198FB61DA2C98600138F73 /* vsip_vcloneview_li.c */,
+				06198FB71DA2C98600138F73 /* vsip_vcreate_li.c */,
+				06198FB81DA2C98700138F73 /* vsip_vdestroy_li.c */,
+				06198FB91DA2C98700138F73 /* vsip_vget_li.c */,
+				06198FBA1DA2C98700138F73 /* vsip_vgetattrib_li.c */,
+				06198FBB1DA2C98700138F73 /* vsip_vgetblock_li.c */,
+				06198FBC1DA2C98700138F73 /* vsip_vgetlength_li.c */,
+				06198FBD1DA2C98700138F73 /* vsip_vgetstride_li.c */,
+				06198FBE1DA2C98700138F73 /* vsip_vmul_li.c */,
+				06198FBF1DA2C98700138F73 /* vsip_vput_li.c */,
+				06198FC01DA2C98700138F73 /* vsip_vputattrib_li.c */,
+				06198FC11DA2C98700138F73 /* vsip_vputlength_li.c */,
+				06198FC21DA2C98700138F73 /* vsip_vputstride_li.c */,
+				06198FC31DA2C98700138F73 /* vsip_vsub_li.c */,
+				06198FC41DA2C98700138F73 /* vsip_vsubview_li.c */,
+				06198F9A1DA2C91A00138F73 /* jvsip_ceil.c */,
+				06198F9B1DA2C91A00138F73 /* jvsip_floor.c */,
+				06198F9C1DA2C91A00138F73 /* jvsip_round.c */,
+				06198ECC1DA2C73A00138F73 /* vsip_msubview_li.c */,
+				06198ECD1DA2C73A00138F73 /* vsip_mtransview_li.c */,
+				06198ECE1DA2C73A00138F73 /* vsip_smsub_li.c */,
+				06198ECF1DA2C73A00138F73 /* vsip_svmul_li.c */,
+				06198ED01DA2C73A00138F73 /* vsip_svsub_li.c */,
+				06198ED11DA2C73A00138F73 /* vsip_talldestroy_li.c */,
+				06198ED21DA2C73A00138F73 /* vsip_tcloneview_li.c */,
+				06198ED31DA2C73A00138F73 /* vsip_tdestroy_li.c */,
+				06198ED41DA2C73B00138F73 /* vsip_tget_li.c */,
+				06198ED51DA2C73B00138F73 /* vsip_tgetattrib_li.c */,
+				06198ED61DA2C73B00138F73 /* vsip_tgetblock_li.c */,
+				06198ED71DA2C73B00138F73 /* vsip_tgetxlength_li.c */,
+				06198ED81DA2C73B00138F73 /* vsip_tgetxstride_li.c */,
+				06198ED91DA2C73B00138F73 /* vsip_tgetylength_li.c */,
+				06198EDA1DA2C73B00138F73 /* vsip_tgetystride_li.c */,
+				06198EDB1DA2C73B00138F73 /* vsip_tgetzlength_li.c */,
+				06198EDC1DA2C73B00138F73 /* vsip_tgetzstride_li.c */,
+				06198EDD1DA2C73B00138F73 /* vsip_tmatrixview_li.c */,
+				06198EDE1DA2C73B00138F73 /* vsip_tput_li.c */,
+				06198EDF1DA2C73B00138F73 /* vsip_tputattrib_li.c */,
+				06198EE01DA2C73B00138F73 /* vsip_tputxlength_li.c */,
+				06198EE11DA2C73B00138F73 /* vsip_tputxstride_li.c */,
+				06198EE21DA2C73B00138F73 /* vsip_tputylength_li.c */,
+				06198EE31DA2C73B00138F73 /* vsip_tputystride_li.c */,
+				06198EE41DA2C73B00138F73 /* vsip_tputzlength_li.c */,
+				06198EE51DA2C73B00138F73 /* vsip_tputzstride_li.c */,
+				06198EE61DA2C73B00138F73 /* vsip_tsubview_li.c */,
+				06198EE71DA2C73B00138F73 /* vsip_ttransview_li.c */,
+				06198EE81DA2C73B00138F73 /* vsip_tvectview_li.c */,
+				06198EE91DA2C73C00138F73 /* VI_blockcreate_li.h */,
+				06198EEA1DA2C73C00138F73 /* VI_blockdestroy_li.h */,
+				06198EEB1DA2C73C00138F73 /* VI_mcolview_li.h */,
+				06198EEC1DA2C73C00138F73 /* VI_mrowview_li.h */,
+				06198EED1DA2C73C00138F73 /* vsip_blockbind_li.c */,
+				06198EEE1DA2C73C00138F73 /* vsip_blockcreate_li.c */,
+				06198EEF1DA2C73C00138F73 /* vsip_blockdestroy_li.c */,
+				06198EF01DA2C73C00138F73 /* vsip_blockrebind_li.c */,
+				06198EF11DA2C73C00138F73 /* vsip_tcreate_li.c */,
+				06198EF21DA2C73C00138F73 /* vsip_tviewattributes_li.h */,
+				06198EF31DA2C73C00138F73 /* vsip_tbind_li.c */,
+				06198EF41DA2C73C00138F73 /* vsip_mcumsum_li.c */,
+				06198EF51DA2C73C00138F73 /* vsip_mcreate_li.c */,
+				06198EF61DA2C73C00138F73 /* vsip_vviewattributes_li.h */,
+				06198EF71DA2C73C00138F73 /* vsip_mviewattributes_li.h */,
+				06198EF81DA2C73C00138F73 /* vsip_blockattributes_li.h */,
+				06198EF91DA2C73C00138F73 /* VI_vramp_li.h */,
+				06198EFA1DA2C73C00138F73 /* VI_vcumsum_li.h */,
+				06198EFB1DA2C73C00138F73 /* VI_vfill_li.h */,
+				06198EFC1DA2C73C00138F73 /* vsip_blockadmit_li.c */,
+				06198EFD1DA2C73C00138F73 /* vsip_blockfind_li.c */,
+				06198EFE1DA2C73D00138F73 /* vsip_blockrelease_li.c */,
+				06198EFF1DA2C73D00138F73 /* vsip_madd_li.c */,
+				06198F001DA2C73D00138F73 /* vsip_mand_li.c */,
+				06198F011DA2C73D00138F73 /* vsip_mclip_li.c */,
+				06198F021DA2C73D00138F73 /* vsip_mcopy_d_li.c */,
+				06198F031DA2C73D00138F73 /* vsip_mcopy_f_li.c */,
+				06198F041DA2C73D00138F73 /* vsip_mcopy_i_li.c */,
+				06198F051DA2C73D00138F73 /* vsip_mfill_li.c */,
+				06198F061DA2C73D00138F73 /* vsip_mgetoffset_li.c */,
+				06198F071DA2C73D00138F73 /* vsip_mhisto_li.c */,
+				06198F081DA2C73D00138F73 /* vsip_mmaxval_li.c */,
+				06198F091DA2C73D00138F73 /* vsip_mputoffset_li.c */,
+				06198F0A1DA2C73D00138F73 /* vsip_svadd_li.c */,
+				06198F0B1DA2C73D00138F73 /* vsip_tputoffset_li.c */,
+				06198F0C1DA2C73D00138F73 /* vsip_vadd_li.c */,
+				06198F0D1DA2C73D00138F73 /* vsip_vand_li.c */,
+				06198F0E1DA2C73D00138F73 /* vsip_vclip_li.c */,
+				06198F0F1DA2C73D00138F73 /* vsip_vfill_li.c */,
+				06198F101DA2C73D00138F73 /* vsip_vfirst_li.c */,
+				06198F111DA2C73D00138F73 /* vsip_vgetoffset_li.c */,
+				06198F121DA2C73D00138F73 /* vsip_vhisto_li.c */,
+				06198F131DA2C73E00138F73 /* vsip_vinvclip_li.c */,
+				06198F141DA2C73E00138F73 /* vsip_vleq_li.c */,
+				06198F151DA2C73E00138F73 /* vsip_vlge_li.c */,
+				06198F161DA2C73E00138F73 /* vsip_vlgt_li.c */,
+				06198F171DA2C73E00138F73 /* vsip_vlle_li.c */,
+				06198F181DA2C73E00138F73 /* vsip_vllt_li.c */,
+				06198F191DA2C73E00138F73 /* vsip_vlne_li.c */,
+				06198F1A1DA2C73E00138F73 /* vsip_vmag_li.c */,
+				06198F1B1DA2C73E00138F73 /* vsip_vmaxval_li.c */,
+				06198F1C1DA2C73E00138F73 /* vsip_vminval_li.c */,
+				06198F1D1DA2C73E00138F73 /* vsip_vneg_li.c */,
+				06198F1E1DA2C73E00138F73 /* vsip_vnot_li.c */,
+				06198F1F1DA2C73E00138F73 /* vsip_vor_li.c */,
+				06198F201DA2C73E00138F73 /* vsip_vputoffset_li.c */,
+				06198F211DA2C73E00138F73 /* vsip_vramp_li.c */,
+				06198F221DA2C73E00138F73 /* vsip_vscatter_li.c */,
+				06198F231DA2C73E00138F73 /* vsip_vsumval_li.c */,
+				06198F241DA2C73E00138F73 /* vsip_vswap_li.c */,
+				06198F251DA2C73E00138F73 /* vsip_vxor_li.c */,
+				06198F261DA2C73E00138F73 /* vsip_vcopyto_user_li.c */,
+				06198F271DA2C73F00138F73 /* vsip_vcopyfrom_user_li.c */,
+				06198F281DA2C73F00138F73 /* vsip_vcopy_vi_li.c */,
+				06198F291DA2C73F00138F73 /* vsip_vcopy_i_li.c */,
+				06198F2A1DA2C73F00138F73 /* vsip_vcopy_f_li.c */,
+				06198F2B1DA2C73F00138F73 /* vsip_vcopy_d_li.c */,
+				06198F2C1DA2C73F00138F73 /* VI_support_priv_li.h */,
+				06198F2D1DA2C73F00138F73 /* vsip_mminval_li.c */,
+				06198F2E1DA2C73F00138F73 /* vsip_tgetoffset_li.c */,
+				06198F2F1DA2C73F00138F73 /* vsip_vcumsum_li.c */,
+				06198F301DA2C73F00138F73 /* vsip_vgather_li.c */,
+				06198F311DA2C73F00138F73 /* vsip_vsortip_li.c */,
+				06198F321DA2C73F00138F73 /* vsipprivate.h */,
+				06198EC41DA2C66F00138F73 /* vsip_mrandn_d.c */,
+				06198EC51DA2C66F00138F73 /* vsip_mrandn_f.c */,
+				06198EC61DA2C66F00138F73 /* vsip_mrandu_d.c */,
+				06198EC71DA2C66F00138F73 /* vsip_mrandu_f.c */,
+				06198EB81DA2C61100138F73 /* vsip_svlge_d.c */,
+				06198EB91DA2C61100138F73 /* vsip_svlge_f.c */,
+				06198EBA1DA2C61100138F73 /* vsip_svlgt.c */,
+				06198EBB1DA2C61100138F73 /* vsip_svlle.c */,
+				06198EBC1DA2C61100138F73 /* vsip_svllt.c */,
+				06198EBD1DA2C61100138F73 /* vsip_svlne.c */,
 				0604AC17151A424600DF6A91 /* vsip_rcfir_reset_f.c */,
 				0672482D15978A22002AD475 /* vsip_mfill_uc.c */,
 				061C291917249E8200773972 /* jvsip_svd_f.c */,
@@ -7819,6 +8305,7 @@
 				06308615150BB7EB00EF9D00 /* VI_blockcreate_uc.h in Headers */,
 				06308616150BB7EB00EF9D00 /* VI_blockcreate_vi.h in Headers */,
 				06308617150BB7EB00EF9D00 /* VI_blockdestroy_bl.h in Headers */,
+				06198F991DA2C74000138F73 /* vsipprivate.h in Headers */,
 				06308618150BB7EB00EF9D00 /* VI_blockdestroy_d.h in Headers */,
 				06308619150BB7EB00EF9D00 /* VI_blockdestroy_f.h in Headers */,
 				0630861A150BB7EB00EF9D00 /* VI_blockdestroy_i.h in Headers */,
@@ -7859,6 +8346,7 @@
 				0630863D150BB7EB00EF9D00 /* VI_cblockfind_d_di.h in Headers */,
 				0630863E150BB7EB00EF9D00 /* VI_cblockfind_d_ds.h in Headers */,
 				0630863F150BB7EB00EF9D00 /* VI_cblockfind_f_ai.h in Headers */,
+				06198F5D1DA2C73F00138F73 /* vsip_vviewattributes_li.h in Headers */,
 				06308640150BB7EB00EF9D00 /* VI_cblockfind_f_as.h in Headers */,
 				06308641150BB7EB00EF9D00 /* VI_cblockfind_f_di.h in Headers */,
 				06308642150BB7EB00EF9D00 /* VI_cblockfind_f_ds.h in Headers */,
@@ -7898,9 +8386,11 @@
 				06308664150BB7EB00EF9D00 /* VI_ccfftmip_f_loop.h in Headers */,
 				06308665150BB7EB00EF9D00 /* VI_ccfftmop_create_d_def.h in Headers */,
 				06308666150BB7EB00EF9D00 /* VI_ccfftmop_create_d_loop.h in Headers */,
+				06198F5E1DA2C73F00138F73 /* vsip_mviewattributes_li.h in Headers */,
 				06308667150BB7EB00EF9D00 /* VI_ccfftmop_create_f_def.h in Headers */,
 				06308668150BB7EB00EF9D00 /* VI_ccfftmop_create_f_loop.h in Headers */,
 				06308669150BB7EB00EF9D00 /* VI_ccfftmop_d_def.h in Headers */,
+				06198F521DA2C73F00138F73 /* VI_mcolview_li.h in Headers */,
 				0630866A150BB7EB00EF9D00 /* VI_ccfftmop_d_loop.h in Headers */,
 				0630866B150BB7EB00EF9D00 /* VI_ccfftmop_f_def.h in Headers */,
 				0630866C150BB7EB00EF9D00 /* VI_ccfftmop_f_loop.h in Headers */,
@@ -7916,6 +8406,7 @@
 				06308676150BB7EB00EF9D00 /* VI_cmcolview_f.h in Headers */,
 				06308677150BB7EB00EF9D00 /* VI_cmcopy_d_d.h in Headers */,
 				06308678150BB7EB00EF9D00 /* VI_cmcopy_f_f.h in Headers */,
+				06198F531DA2C73F00138F73 /* VI_mrowview_li.h in Headers */,
 				06308679150BB7EB00EF9D00 /* VI_cmfill_d.h in Headers */,
 				0630867A150BB7EB00EF9D00 /* VI_cmfill_f.h in Headers */,
 				0630867B150BB7EB00EF9D00 /* VI_cmrowview_d.h in Headers */,
@@ -7923,6 +8414,7 @@
 				0630867D150BB7EB00EF9D00 /* VI_cmtransview_d.h in Headers */,
 				0630867E150BB7EB00EF9D00 /* VI_cmtransview_f.h in Headers */,
 				0630867F150BB7EB00EF9D00 /* VI_crfftmop_create_d_def.h in Headers */,
+				06198F5F1DA2C74000138F73 /* vsip_blockattributes_li.h in Headers */,
 				06308680150BB7EB00EF9D00 /* VI_crfftmop_create_d_loop.h in Headers */,
 				06308681150BB7EB00EF9D00 /* VI_crfftmop_create_f_def.h in Headers */,
 				06308682150BB7EB00EF9D00 /* VI_crfftmop_create_f_loop.h in Headers */,
@@ -7974,6 +8466,7 @@
 				063086B0150BB7EB00EF9D00 /* VI_mcopy_d_d.h in Headers */,
 				063086B1150BB7EB00EF9D00 /* VI_mcopy_f_f.h in Headers */,
 				063086B2150BB7EB00EF9D00 /* VI_mfill_d.h in Headers */,
+				06198F621DA2C74000138F73 /* VI_vfill_li.h in Headers */,
 				063086B3150BB7EB00EF9D00 /* VI_mfill_f.h in Headers */,
 				063086B4150BB7EB00EF9D00 /* VI_mimagview_d.h in Headers */,
 				063086B5150BB7EB00EF9D00 /* VI_mimagview_f.h in Headers */,
@@ -7984,6 +8477,7 @@
 				063086BA150BB7EB00EF9D00 /* VI_mrowview_i.h in Headers */,
 				063086BB150BB7EB00EF9D00 /* VI_mrowview_si.h in Headers */,
 				063086BC150BB7EB00EF9D00 /* VI_mtransview_d.h in Headers */,
+				06198F931DA2C74000138F73 /* VI_support_priv_li.h in Headers */,
 				063086BD150BB7EB00EF9D00 /* VI_mtransview_f.h in Headers */,
 				063086BE150BB7EB00EF9D00 /* VI_nuV.h in Headers */,
 				063086BF150BB7EB00EF9D00 /* VI_rcfftmop_create_d_def.h in Headers */,
@@ -8055,6 +8549,7 @@
 				06308701150BB7EB00EF9D00 /* VI_vramp_f.h in Headers */,
 				06308702150BB7EB00EF9D00 /* VI_vramp_i.h in Headers */,
 				06308703150BB7EB00EF9D00 /* VI_vrealview_d.h in Headers */,
+				06198F501DA2C73F00138F73 /* VI_blockcreate_li.h in Headers */,
 				06308704150BB7EB00EF9D00 /* VI_vrealview_f.h in Headers */,
 				06308705150BB7EB00EF9D00 /* VI_vsin_d.h in Headers */,
 				06308706150BB7EB00EF9D00 /* VI_vsin_f.h in Headers */,
@@ -8073,6 +8568,7 @@
 				06308775150BB7EC00EF9D00 /* vsip_ccholdattributes_f.h in Headers */,
 				0630877E150BB7EC00EF9D00 /* vsip_ccorr1dattributes_d.h in Headers */,
 				0630877F150BB7EC00EF9D00 /* vsip_ccorr1dattributes_f.h in Headers */,
+				06198F511DA2C73F00138F73 /* VI_blockdestroy_li.h in Headers */,
 				06308790150BB7EC00EF9D00 /* vsip_cfirattributes_d.h in Headers */,
 				06308791150BB7EC00EF9D00 /* vsip_cfirattributes_f.h in Headers */,
 				063087A0150BB7EC00EF9D00 /* vsip_choldattributes_d.h in Headers */,
@@ -8121,14 +8617,17 @@
 				06308BEE150BB7EC00EF9D00 /* vsip_tviewattributes_uc.h in Headers */,
 				06308DAD150BB7EC00EF9D00 /* vsip_vviewattributes_bl.h in Headers */,
 				06308DAE150BB7EC00EF9D00 /* vsip_vviewattributes_d.h in Headers */,
+				06198F601DA2C74000138F73 /* VI_vramp_li.h in Headers */,
 				06308DAF150BB7EC00EF9D00 /* vsip_vviewattributes_f.h in Headers */,
 				06308DB0150BB7EC00EF9D00 /* vsip_vviewattributes_i.h in Headers */,
 				06308DB1150BB7EC00EF9D00 /* vsip_vviewattributes_mi.h in Headers */,
+				06198F591DA2C73F00138F73 /* vsip_tviewattributes_li.h in Headers */,
 				06308DB2150BB7EC00EF9D00 /* vsip_vviewattributes_si.h in Headers */,
 				06308DB3150BB7EC00EF9D00 /* vsip_vviewattributes_uc.h in Headers */,
 				06308DB4150BB7EC00EF9D00 /* vsip_vviewattributes_vi.h in Headers */,
 				0604AC1B151A424600DF6A91 /* vsip_rcfirattributes_f.h in Headers */,
 				0604AC22151A62DC00DF6A91 /* vsip_rcfirattributes_d.h in Headers */,
+				06198F611DA2C74000138F73 /* VI_vcumsum_li.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9968,6 +10467,7 @@
 				0630872D150BB7EB00EF9D00 /* vsip_blockdestroy_i.c in Sources */,
 				0630872E150BB7EB00EF9D00 /* vsip_blockdestroy_mi.c in Sources */,
 				0630872F150BB7EB00EF9D00 /* vsip_blockdestroy_si.c in Sources */,
+				06198F3D1DA2C73F00138F73 /* vsip_tgetblock_li.c in Sources */,
 				06308730150BB7EB00EF9D00 /* vsip_blockdestroy_uc.c in Sources */,
 				06308731150BB7EB00EF9D00 /* vsip_blockdestroy_vi.c in Sources */,
 				06308732150BB7EB00EF9D00 /* vsip_blockfind_bl.c in Sources */,
@@ -9977,12 +10477,15 @@
 				06308736150BB7EB00EF9D00 /* vsip_blockfind_mi.c in Sources */,
 				06308737150BB7EB00EF9D00 /* vsip_blockfind_si.c in Sources */,
 				06308738150BB7EC00EF9D00 /* vsip_blockfind_uc.c in Sources */,
+				06198F551DA2C73F00138F73 /* vsip_blockcreate_li.c in Sources */,
 				06308739150BB7EC00EF9D00 /* vsip_blockfind_vi.c in Sources */,
+				06198FF41DA2DDE600138F73 /* vsip_cmrandn_d.c in Sources */,
 				0630873A150BB7EC00EF9D00 /* vsip_blockrebind_bl.c in Sources */,
 				0630873B150BB7EC00EF9D00 /* vsip_blockrebind_d.c in Sources */,
 				0630873C150BB7EC00EF9D00 /* vsip_blockrebind_f.c in Sources */,
 				0630873D150BB7EC00EF9D00 /* vsip_blockrebind_i.c in Sources */,
 				0630873E150BB7EC00EF9D00 /* vsip_blockrebind_mi.c in Sources */,
+				06198FDF1DA2C98800138F73 /* vsip_vgetattrib_li.c in Sources */,
 				0630873F150BB7EC00EF9D00 /* vsip_blockrebind_si.c in Sources */,
 				06308740150BB7EC00EF9D00 /* vsip_blockrebind_uc.c in Sources */,
 				06308741150BB7EC00EF9D00 /* vsip_blockrebind_vi.c in Sources */,
@@ -10001,6 +10504,7 @@
 				06308750150BB7EC00EF9D00 /* vsip_cblockbind_d.c in Sources */,
 				06308751150BB7EC00EF9D00 /* vsip_cblockbind_f.c in Sources */,
 				06308752150BB7EC00EF9D00 /* vsip_cblockcreate_d.c in Sources */,
+				06198FC61DA2C98700138F73 /* vsip_mbind_li.c in Sources */,
 				06308753150BB7EC00EF9D00 /* vsip_cblockcreate_f.c in Sources */,
 				06308754150BB7EC00EF9D00 /* vsip_cblockdestroy_d.c in Sources */,
 				06308755150BB7EC00EF9D00 /* vsip_cblockdestroy_f.c in Sources */,
@@ -10032,6 +10536,8 @@
 				0630876F150BB7EC00EF9D00 /* vsip_cchold_destroy_d.c in Sources */,
 				06308770150BB7EC00EF9D00 /* vsip_cchold_destroy_f.c in Sources */,
 				06308771150BB7EC00EF9D00 /* vsip_cchold_f.c in Sources */,
+				06198F451DA2C73F00138F73 /* vsip_tput_li.c in Sources */,
+				06198EBE1DA2C61100138F73 /* vsip_svlge_d.c in Sources */,
 				06308772150BB7EC00EF9D00 /* vsip_cchold_getattr_d.c in Sources */,
 				06308773150BB7EC00EF9D00 /* vsip_cchold_getattr_f.c in Sources */,
 				06308776150BB7EC00EF9D00 /* vsip_ccholsol_d.c in Sources */,
@@ -10040,6 +10546,7 @@
 				06308779150BB7EC00EF9D00 /* vsip_ccorr1d_create_f.c in Sources */,
 				0630877A150BB7EC00EF9D00 /* vsip_ccorr1d_destroy_d.c in Sources */,
 				0630877B150BB7EC00EF9D00 /* vsip_ccorr1d_destroy_f.c in Sources */,
+				06198F861DA2C74000138F73 /* vsip_vor_li.c in Sources */,
 				0630877C150BB7EC00EF9D00 /* vsip_ccorr1d_getattr_d.c in Sources */,
 				0630877D150BB7EC00EF9D00 /* vsip_ccorr1d_getattr_f.c in Sources */,
 				06308780150BB7EC00EF9D00 /* vsip_ccorrelate1d_d.c in Sources */,
@@ -10060,19 +10567,23 @@
 				0630878F150BB7EC00EF9D00 /* vsip_cfir_reset_f.c in Sources */,
 				06308792150BB7EC00EF9D00 /* vsip_cfirflt_d.c in Sources */,
 				06308793150BB7EC00EF9D00 /* vsip_cfirflt_f.c in Sources */,
+				06198F831DA2C74000138F73 /* vsip_vminval_li.c in Sources */,
 				06308794150BB7EC00EF9D00 /* vsip_cgemp_d.c in Sources */,
 				06308795150BB7EC00EF9D00 /* vsip_cgemp_f.c in Sources */,
 				06308796150BB7EC00EF9D00 /* vsip_cgems_d.c in Sources */,
 				06308797150BB7EC00EF9D00 /* vsip_cgems_f.c in Sources */,
 				06308798150BB7EC00EF9D00 /* vsip_chold_create_d.c in Sources */,
+				06198F3E1DA2C73F00138F73 /* vsip_tgetxlength_li.c in Sources */,
 				06308799150BB7EC00EF9D00 /* vsip_chold_create_f.c in Sources */,
 				0630879A150BB7EC00EF9D00 /* vsip_chold_d.c in Sources */,
 				0630879B150BB7EC00EF9D00 /* vsip_chold_destroy_d.c in Sources */,
 				0630879C150BB7EC00EF9D00 /* vsip_chold_destroy_f.c in Sources */,
+				06198F751DA2C74000138F73 /* vsip_vclip_li.c in Sources */,
 				0630879D150BB7EC00EF9D00 /* vsip_chold_f.c in Sources */,
 				0630879E150BB7EC00EF9D00 /* vsip_chold_getattr_d.c in Sources */,
 				0630879F150BB7EC00EF9D00 /* vsip_chold_getattr_f.c in Sources */,
 				063087A2150BB7EC00EF9D00 /* vsip_cholsol_d.c in Sources */,
+				06198FCB1DA2C98700138F73 /* vsip_mgetattrib_li.c in Sources */,
 				063087A3150BB7EC00EF9D00 /* vsip_cholsol_f.c in Sources */,
 				063087A4150BB7EC00EF9D00 /* vsip_cjmul_d.c in Sources */,
 				063087A5150BB7EC00EF9D00 /* vsip_cjmul_f.c in Sources */,
@@ -10097,6 +10608,7 @@
 				063087BA150BB7EC00EF9D00 /* vsip_cmagsq_d.c in Sources */,
 				063087BB150BB7EC00EF9D00 /* vsip_cmagsq_f.c in Sources */,
 				063087BC150BB7EC00EF9D00 /* vsip_cmalldestroy_d.c in Sources */,
+				06198F731DA2C74000138F73 /* vsip_vadd_li.c in Sources */,
 				063087BD150BB7EC00EF9D00 /* vsip_cmalldestroy_f.c in Sources */,
 				063087BE150BB7EC00EF9D00 /* vsip_cmbind_d.c in Sources */,
 				063087BF150BB7EC00EF9D00 /* vsip_cmbind_f.c in Sources */,
@@ -10106,6 +10618,7 @@
 				063087C3150BB7EC00EF9D00 /* vsip_cmcolview_f.c in Sources */,
 				063087C4150BB7EC00EF9D00 /* vsip_cmconj_d.c in Sources */,
 				063087C5150BB7EC00EF9D00 /* vsip_cmconj_f.c in Sources */,
+				06198F341DA2C73F00138F73 /* vsip_mtransview_li.c in Sources */,
 				063087C6150BB7EC00EF9D00 /* vsip_cmcopy_d_d.c in Sources */,
 				063087C7150BB7EC00EF9D00 /* vsip_cmcopy_d_f.c in Sources */,
 				063087C8150BB7EC00EF9D00 /* vsip_cmcopy_f_d.c in Sources */,
@@ -10145,10 +10658,12 @@
 				063087EA150BB7EC00EF9D00 /* vsip_cmgetoffset_d.c in Sources */,
 				063087EB150BB7EC00EF9D00 /* vsip_cmgetoffset_f.c in Sources */,
 				063087EC150BB7EC00EF9D00 /* vsip_cmgetrowlength_d.c in Sources */,
+				06198FFD1DA2DE4600138F73 /* vsip_vcopy_vi_f.c in Sources */,
 				063087ED150BB7EC00EF9D00 /* vsip_cmgetrowlength_f.c in Sources */,
 				063087EE150BB7EC00EF9D00 /* vsip_cmgetrowstride_d.c in Sources */,
 				063087EF150BB7EC00EF9D00 /* vsip_cmgetrowstride_f.c in Sources */,
 				063087F0150BB7EC00EF9D00 /* vsip_cmherm_d.c in Sources */,
+				06198F631DA2C74000138F73 /* vsip_blockadmit_li.c in Sources */,
 				063087F1150BB7EC00EF9D00 /* vsip_cmherm_f.c in Sources */,
 				063087F2150BB7EC00EF9D00 /* vsip_cmjmul_d.c in Sources */,
 				063087F3150BB7EC00EF9D00 /* vsip_cmjmul_f.c in Sources */,
@@ -10164,6 +10679,7 @@
 				063087FD150BB7EC00EF9D00 /* vsip_cmmeanval_f.c in Sources */,
 				063087FE150BB7EC00EF9D00 /* vsip_cmmul_d.c in Sources */,
 				063087FF150BB7EC00EF9D00 /* vsip_cmmul_f.c in Sources */,
+				06198F8A1DA2C74000138F73 /* vsip_vsumval_li.c in Sources */,
 				06308800150BB7EC00EF9D00 /* vsip_cmneg_d.c in Sources */,
 				06308801150BB7EC00EF9D00 /* vsip_cmneg_f.c in Sources */,
 				06308802150BB7EC00EF9D00 /* vsip_cmplx_d.c in Sources */,
@@ -10176,6 +10692,7 @@
 				06308809150BB7EC00EF9D00 /* vsip_cmprod_f.c in Sources */,
 				0630880A150BB7EC00EF9D00 /* vsip_cmprodh_d.c in Sources */,
 				0630880B150BB7EC00EF9D00 /* vsip_cmprodh_f.c in Sources */,
+				06198F881DA2C74000138F73 /* vsip_vramp_li.c in Sources */,
 				0630880C150BB7EC00EF9D00 /* vsip_cmprodj_d.c in Sources */,
 				0630880D150BB7EC00EF9D00 /* vsip_cmprodj_f.c in Sources */,
 				0630880E150BB7EC00EF9D00 /* vsip_cmprodt_d.c in Sources */,
@@ -10195,6 +10712,8 @@
 				0630881C150BB7EC00EF9D00 /* vsip_cmputrowstride_d.c in Sources */,
 				0630881D150BB7EC00EF9D00 /* vsip_cmputrowstride_f.c in Sources */,
 				0630881E150BB7EC00EF9D00 /* vsip_cmrecip_d.c in Sources */,
+				06198FD11DA2C98700138F73 /* vsip_mput_li.c in Sources */,
+				06198FE11DA2C98800138F73 /* vsip_vgetlength_li.c in Sources */,
 				0630881F150BB7EC00EF9D00 /* vsip_cmrecip_f.c in Sources */,
 				06308820150BB7EC00EF9D00 /* vsip_cmrowview_d.c in Sources */,
 				06308821150BB7EC00EF9D00 /* vsip_cmrowview_f.c in Sources */,
@@ -10202,6 +10721,7 @@
 				06308823150BB7EC00EF9D00 /* vsip_cmrsdiv_f.c in Sources */,
 				06308824150BB7EC00EF9D00 /* vsip_cmscatter_d.c in Sources */,
 				06308825150BB7EC00EF9D00 /* vsip_cmscatter_f.c in Sources */,
+				06198F571DA2C73F00138F73 /* vsip_blockrebind_li.c in Sources */,
 				06308826150BB7EC00EF9D00 /* vsip_cmsqrt_d.c in Sources */,
 				06308827150BB7EC00EF9D00 /* vsip_cmsqrt_f.c in Sources */,
 				06308828150BB7EC00EF9D00 /* vsip_cmsub_d.c in Sources */,
@@ -10238,6 +10758,7 @@
 				0630884B150BB7EC00EF9D00 /* vsip_convolve1d_f.c in Sources */,
 				0630884C150BB7EC00EF9D00 /* vsip_corr1d_create_d.c in Sources */,
 				0630884D150BB7EC00EF9D00 /* vsip_corr1d_create_f.c in Sources */,
+				06198F3F1DA2C73F00138F73 /* vsip_tgetxstride_li.c in Sources */,
 				0630884E150BB7EC00EF9D00 /* vsip_corr1d_destroy_d.c in Sources */,
 				0630884F150BB7EC00EF9D00 /* vsip_corr1d_destroy_f.c in Sources */,
 				06308850150BB7EC00EF9D00 /* vsip_corr1d_getattr_d.c in Sources */,
@@ -10257,12 +10778,14 @@
 				06308862150BB7EC00EF9D00 /* vsip_cqrdprodq_d.c in Sources */,
 				06308863150BB7EC00EF9D00 /* vsip_cqrdprodq_f.c in Sources */,
 				06308864150BB7EC00EF9D00 /* vsip_cqrdsolr_d.c in Sources */,
+				06198EC81DA2C66F00138F73 /* vsip_mrandn_d.c in Sources */,
 				06308865150BB7EC00EF9D00 /* vsip_cqrdsolr_f.c in Sources */,
 				06308866150BB7EC00EF9D00 /* vsip_cqrsol_d.c in Sources */,
 				06308867150BB7EC00EF9D00 /* vsip_cqrsol_f.c in Sources */,
 				06308868150BB7EC00EF9D00 /* vsip_crandn_d.c in Sources */,
 				06308869150BB7EC00EF9D00 /* vsip_crandn_f.c in Sources */,
 				0630886A150BB7EC00EF9D00 /* vsip_crandu_d.c in Sources */,
+				06198F4B1DA2C73F00138F73 /* vsip_tputzlength_li.c in Sources */,
 				0630886B150BB7EC00EF9D00 /* vsip_crandu_f.c in Sources */,
 				0630886C150BB7EC00EF9D00 /* vsip_crdiv_d.c in Sources */,
 				0630886D150BB7EC00EF9D00 /* vsip_crdiv_f.c in Sources */,
@@ -10291,6 +10814,7 @@
 				06308884150BB7EC00EF9D00 /* vsip_csmdiv_d.c in Sources */,
 				06308885150BB7EC00EF9D00 /* vsip_csmdiv_f.c in Sources */,
 				06308886150BB7EC00EF9D00 /* vsip_csmmul_d.c in Sources */,
+				06198EBF1DA2C61100138F73 /* vsip_svlge_f.c in Sources */,
 				06308887150BB7EC00EF9D00 /* vsip_csmmul_f.c in Sources */,
 				06308888150BB7EC00EF9D00 /* vsip_csmsub_d.c in Sources */,
 				06308889150BB7EC00EF9D00 /* vsip_csmsub_f.c in Sources */,
@@ -10298,16 +10822,21 @@
 				0630888B150BB7EC00EF9D00 /* vsip_csqrt_f.c in Sources */,
 				0630888C150BB7EC00EF9D00 /* vsip_cstorage.c in Sources */,
 				0630888D150BB7EC00EF9D00 /* vsip_csub_d.c in Sources */,
+				06198FF91DA2DE1500138F73 /* vsip_mcopy_i_i.c in Sources */,
+				06198FE41DA2C98800138F73 /* vsip_vput_li.c in Sources */,
 				0630888E150BB7EC00EF9D00 /* vsip_csub_f.c in Sources */,
 				0630888F150BB7EC00EF9D00 /* vsip_csvadd_d.c in Sources */,
 				06308890150BB7EC00EF9D00 /* vsip_csvadd_f.c in Sources */,
 				06308891150BB7EC00EF9D00 /* vsip_csvdiv_d.c in Sources */,
+				06198FCA1DA2C98700138F73 /* vsip_mget_li.c in Sources */,
+				06198F391DA2C73F00138F73 /* vsip_tcloneview_li.c in Sources */,
 				06308892150BB7EC00EF9D00 /* vsip_csvdiv_f.c in Sources */,
 				06308893150BB7EC00EF9D00 /* vsip_csvmul_d.c in Sources */,
 				06308894150BB7EC00EF9D00 /* vsip_csvmul_f.c in Sources */,
 				06308895150BB7EC00EF9D00 /* vsip_csvsub_d.c in Sources */,
 				06308896150BB7EC00EF9D00 /* vsip_csvsub_f.c in Sources */,
 				06308897150BB7EC00EF9D00 /* vsip_ctalldestroy_d.c in Sources */,
+				06198F6D1DA2C74000138F73 /* vsip_mgetoffset_li.c in Sources */,
 				06308898150BB7EC00EF9D00 /* vsip_ctalldestroy_f.c in Sources */,
 				06308899150BB7EC00EF9D00 /* vsip_ctbind_d.c in Sources */,
 				0630889A150BB7EC00EF9D00 /* vsip_ctbind_f.c in Sources */,
@@ -10317,6 +10846,7 @@
 				0630889E150BB7EC00EF9D00 /* vsip_ctcreate_f.c in Sources */,
 				0630889F150BB7EC00EF9D00 /* vsip_ctdestroy_d.c in Sources */,
 				063088A0150BB7EC00EF9D00 /* vsip_ctdestroy_f.c in Sources */,
+				06198FF51DA2DDE600138F73 /* vsip_cmrandn_f.c in Sources */,
 				063088A1150BB7EC00EF9D00 /* vsip_ctget_d.c in Sources */,
 				063088A2150BB7EC00EF9D00 /* vsip_ctget_f.c in Sources */,
 				063088A3150BB7EC00EF9D00 /* vsip_ctgetattrib_d.c in Sources */,
@@ -10324,6 +10854,7 @@
 				063088A5150BB7EC00EF9D00 /* vsip_ctgetblock_d.c in Sources */,
 				063088A6150BB7EC00EF9D00 /* vsip_ctgetblock_f.c in Sources */,
 				063088A7150BB7EC00EF9D00 /* vsip_ctgetoffset_d.c in Sources */,
+				06198F361DA2C73F00138F73 /* vsip_svmul_li.c in Sources */,
 				063088A8150BB7EC00EF9D00 /* vsip_ctgetoffset_f.c in Sources */,
 				063088A9150BB7EC00EF9D00 /* vsip_ctgetxlength_d.c in Sources */,
 				063088AA150BB7EC00EF9D00 /* vsip_ctgetxlength_f.c in Sources */,
@@ -10348,6 +10879,7 @@
 				063088BD150BB7EC00EF9D00 /* vsip_ctputoffset_d.c in Sources */,
 				063088BE150BB7EC00EF9D00 /* vsip_ctputoffset_f.c in Sources */,
 				063088BF150BB7EC00EF9D00 /* vsip_ctputxlength_d.c in Sources */,
+				06198F671DA2C74000138F73 /* vsip_mand_li.c in Sources */,
 				063088C0150BB7EC00EF9D00 /* vsip_ctputxlength_f.c in Sources */,
 				063088C1150BB7EC00EF9D00 /* vsip_ctputxstride_d.c in Sources */,
 				063088C2150BB7EC00EF9D00 /* vsip_ctputxstride_f.c in Sources */,
@@ -10359,6 +10891,8 @@
 				063088C8150BB7EC00EF9D00 /* vsip_ctputzlength_f.c in Sources */,
 				063088C9150BB7EC00EF9D00 /* vsip_ctputzstride_d.c in Sources */,
 				063088CA150BB7EC00EF9D00 /* vsip_ctputzstride_f.c in Sources */,
+				06198F3A1DA2C73F00138F73 /* vsip_tdestroy_li.c in Sources */,
+				06198FD61DA2C98700138F73 /* vsip_mputrowstride_li.c in Sources */,
 				063088CB150BB7EC00EF9D00 /* vsip_ctsubview_d.c in Sources */,
 				063088CC150BB7EC00EF9D00 /* vsip_ctsubview_f.c in Sources */,
 				063088CD150BB7EC00EF9D00 /* vsip_cttransview_d.c in Sources */,
@@ -10368,6 +10902,8 @@
 				063088D3150BB7EC00EF9D00 /* vsip_cvadd_d.c in Sources */,
 				063088D4150BB7EC00EF9D00 /* vsip_cvadd_f.c in Sources */,
 				063088D5150BB7EC00EF9D00 /* vsip_cvalldestroy_d.c in Sources */,
+				06198EC01DA2C61100138F73 /* vsip_svlgt.c in Sources */,
+				06198F411DA2C73F00138F73 /* vsip_tgetystride_li.c in Sources */,
 				063088D6150BB7EC00EF9D00 /* vsip_cvalldestroy_f.c in Sources */,
 				063088D7150BB7EC00EF9D00 /* vsip_cvam_d.c in Sources */,
 				063088D8150BB7EC00EF9D00 /* vsip_cvam_f.c in Sources */,
@@ -10378,6 +10914,7 @@
 				063088DD150BB7EC00EF9D00 /* vsip_cvconj_d.c in Sources */,
 				063088DE150BB7EC00EF9D00 /* vsip_cvconj_f.c in Sources */,
 				063088DF150BB7EC00EF9D00 /* vsip_cvcopy_d_d.c in Sources */,
+				06198F841DA2C74000138F73 /* vsip_vneg_li.c in Sources */,
 				063088E0150BB7EC00EF9D00 /* vsip_cvcopy_d_f.c in Sources */,
 				063088E1150BB7EC00EF9D00 /* vsip_cvcopy_f_d.c in Sources */,
 				063088E2150BB7EC00EF9D00 /* vsip_cvcopy_f_f.c in Sources */,
@@ -10385,22 +10922,29 @@
 				063088E4150BB7EC00EF9D00 /* vsip_cvcopyfrom_user_f.c in Sources */,
 				063088E5150BB7EC00EF9D00 /* vsip_cvcopyto_user_d.c in Sources */,
 				063088E6150BB7EC00EF9D00 /* vsip_cvcopyto_user_f.c in Sources */,
+				06198F8E1DA2C74000138F73 /* vsip_vcopyfrom_user_li.c in Sources */,
 				063088E7150BB7EC00EF9D00 /* vsip_cvcreate_d.c in Sources */,
 				063088E8150BB7EC00EF9D00 /* vsip_cvcreate_f.c in Sources */,
 				063088E9150BB7EC00EF9D00 /* vsip_cvdestroy_d.c in Sources */,
 				063088EA150BB7EC00EF9D00 /* vsip_cvdestroy_f.c in Sources */,
 				063088EB150BB7EC00EF9D00 /* vsip_cvdiv_d.c in Sources */,
 				063088EC150BB7EC00EF9D00 /* vsip_cvdiv_f.c in Sources */,
+				06198F981DA2C74000138F73 /* vsip_vsortip_li.c in Sources */,
 				063088ED150BB7EC00EF9D00 /* vsip_cvdot_d.c in Sources */,
 				063088EE150BB7EC00EF9D00 /* vsip_cvdot_f.c in Sources */,
 				063088EF150BB7EC00EF9D00 /* vsip_cvexp_d.c in Sources */,
+				06198F5C1DA2C73F00138F73 /* vsip_mcreate_li.c in Sources */,
 				063088F0150BB7EC00EF9D00 /* vsip_cvexp_f.c in Sources */,
 				063088F1150BB7EC00EF9D00 /* vsip_cvexpoavg_d.c in Sources */,
+				06198FED1DA2DB7600138F73 /* vsip_vcopy_li_li.c in Sources */,
 				063088F2150BB7EC00EF9D00 /* vsip_cvexpoavg_f.c in Sources */,
 				063088F3150BB7EC00EF9D00 /* vsip_cvfill_d.c in Sources */,
+				06198FE61DA2C98800138F73 /* vsip_vputlength_li.c in Sources */,
 				063088F4150BB7EC00EF9D00 /* vsip_cvfill_f.c in Sources */,
 				063088F5150BB7EC00EF9D00 /* vsip_cvfreqswap_d.c in Sources */,
+				06198F741DA2C74000138F73 /* vsip_vand_li.c in Sources */,
 				063088F6150BB7EC00EF9D00 /* vsip_cvfreqswap_f.c in Sources */,
+				06198F381DA2C73F00138F73 /* vsip_talldestroy_li.c in Sources */,
 				063088F7150BB7EC00EF9D00 /* vsip_cvgather_d.c in Sources */,
 				063088F8150BB7EC00EF9D00 /* vsip_cvgather_f.c in Sources */,
 				063088F9150BB7EC00EF9D00 /* vsip_cvget_d.c in Sources */,
@@ -10426,17 +10970,20 @@
 				0630890D150BB7EC00EF9D00 /* vsip_cvma_d.c in Sources */,
 				0630890E150BB7EC00EF9D00 /* vsip_cvma_f.c in Sources */,
 				0630890F150BB7EC00EF9D00 /* vsip_cvmag_d.c in Sources */,
+				06198F911DA2C74000138F73 /* vsip_vcopy_f_li.c in Sources */,
 				06308910150BB7EC00EF9D00 /* vsip_cvmag_f.c in Sources */,
 				06308911150BB7EC00EF9D00 /* vsip_cvmeansqval_d.c in Sources */,
 				06308912150BB7EC00EF9D00 /* vsip_cvmeansqval_f.c in Sources */,
 				06308913150BB7EC00EF9D00 /* vsip_cvmeanval_d.c in Sources */,
 				06308914150BB7EC00EF9D00 /* vsip_cvmeanval_f.c in Sources */,
+				06198FC81DA2C98700138F73 /* vsip_mcolview_li.c in Sources */,
 				06308915150BB7EC00EF9D00 /* vsip_cvmmul_d.c in Sources */,
 				06308916150BB7EC00EF9D00 /* vsip_cvmmul_f.c in Sources */,
 				06308917150BB7EC00EF9D00 /* vsip_cvmodulate_d.c in Sources */,
 				06308918150BB7EC00EF9D00 /* vsip_cvmodulate_f.c in Sources */,
 				06308919150BB7EC00EF9D00 /* vsip_cvmprod_d.c in Sources */,
 				0630891A150BB7EC00EF9D00 /* vsip_cvmprod_f.c in Sources */,
+				06198F5A1DA2C73F00138F73 /* vsip_tbind_li.c in Sources */,
 				0630891B150BB7EC00EF9D00 /* vsip_cvmsa_d.c in Sources */,
 				0630891C150BB7EC00EF9D00 /* vsip_cvmsa_f.c in Sources */,
 				0630891D150BB7EC00EF9D00 /* vsip_cvmsb_d.c in Sources */,
@@ -10448,6 +10995,7 @@
 				06308923150BB7EC00EF9D00 /* vsip_cvouter_d.c in Sources */,
 				06308924150BB7EC00EF9D00 /* vsip_cvouter_f.c in Sources */,
 				06308925150BB7EC00EF9D00 /* vsip_cvput_d.c in Sources */,
+				06198F971DA2C74000138F73 /* vsip_vgather_li.c in Sources */,
 				06308926150BB7EC00EF9D00 /* vsip_cvput_f.c in Sources */,
 				06308927150BB7EC00EF9D00 /* vsip_cvputattrib_d.c in Sources */,
 				06308928150BB7EC00EF9D00 /* vsip_cvputattrib_f.c in Sources */,
@@ -10471,6 +11019,7 @@
 				0630893A150BB7EC00EF9D00 /* vsip_cvsbm_f.c in Sources */,
 				0630893B150BB7EC00EF9D00 /* vsip_cvscatter_d.c in Sources */,
 				0630893C150BB7EC00EF9D00 /* vsip_cvscatter_f.c in Sources */,
+				06198EC91DA2C66F00138F73 /* vsip_mrandn_f.c in Sources */,
 				0630893D150BB7EC00EF9D00 /* vsip_cvsma_d.c in Sources */,
 				0630893E150BB7EC00EF9D00 /* vsip_cvsma_f.c in Sources */,
 				0630893F150BB7EC00EF9D00 /* vsip_cvsmsa_d.c in Sources */,
@@ -10511,6 +11060,7 @@
 				0630896A150BB7EC00EF9D00 /* vsip_init.c in Sources */,
 				0630896B150BB7EC00EF9D00 /* vsip_llsqsol_d.c in Sources */,
 				0630896C150BB7EC00EF9D00 /* vsip_llsqsol_f.c in Sources */,
+				06198F661DA2C74000138F73 /* vsip_madd_li.c in Sources */,
 				0630896D150BB7EC00EF9D00 /* vsip_lud_create_d.c in Sources */,
 				0630896E150BB7EC00EF9D00 /* vsip_lud_create_f.c in Sources */,
 				0630896F150BB7EC00EF9D00 /* vsip_lud_d.c in Sources */,
@@ -10551,6 +11101,7 @@
 				06308994150BB7EC00EF9D00 /* vsip_mbind_d.c in Sources */,
 				06308995150BB7EC00EF9D00 /* vsip_mbind_f.c in Sources */,
 				06308996150BB7EC00EF9D00 /* vsip_mbind_i.c in Sources */,
+				06198EC31DA2C61100138F73 /* vsip_svlne.c in Sources */,
 				06308997150BB7EC00EF9D00 /* vsip_mbind_si.c in Sources */,
 				06308998150BB7EC00EF9D00 /* vsip_mbind_uc.c in Sources */,
 				06308999150BB7EC00EF9D00 /* vsip_mclip_d.c in Sources */,
@@ -10568,6 +11119,7 @@
 				063089A5150BB7EC00EF9D00 /* vsip_mcmaxmgsq_d.c in Sources */,
 				063089A6150BB7EC00EF9D00 /* vsip_mcmaxmgsq_f.c in Sources */,
 				063089A7150BB7EC00EF9D00 /* vsip_mcmaxmgsqval_d.c in Sources */,
+				06198EC21DA2C61100138F73 /* vsip_svllt.c in Sources */,
 				063089A8150BB7EC00EF9D00 /* vsip_mcmaxmgsqval_f.c in Sources */,
 				063089A9150BB7EC00EF9D00 /* vsip_mcminmgsq_d.c in Sources */,
 				063089AA150BB7EC00EF9D00 /* vsip_mcminmgsq_f.c in Sources */,
@@ -10577,8 +11129,10 @@
 				063089AE150BB7EC00EF9D00 /* vsip_mcolview_d.c in Sources */,
 				063089AF150BB7EC00EF9D00 /* vsip_mcolview_f.c in Sources */,
 				063089B0150BB7EC00EF9D00 /* vsip_mcolview_i.c in Sources */,
+				06198F681DA2C74000138F73 /* vsip_mclip_li.c in Sources */,
 				063089B1150BB7EC00EF9D00 /* vsip_mcolview_si.c in Sources */,
 				063089B2150BB7EC00EF9D00 /* vsip_mcolview_uc.c in Sources */,
+				06198F721DA2C74000138F73 /* vsip_tputoffset_li.c in Sources */,
 				063089B3150BB7EC00EF9D00 /* vsip_mcopy_bl_bl.c in Sources */,
 				063089B4150BB7EC00EF9D00 /* vsip_mcopy_bl_d.c in Sources */,
 				063089B5150BB7EC00EF9D00 /* vsip_mcopy_bl_f.c in Sources */,
@@ -10586,9 +11140,11 @@
 				063089B7150BB7EC00EF9D00 /* vsip_mcopy_d_d.c in Sources */,
 				063089B8150BB7EC00EF9D00 /* vsip_mcopy_d_f.c in Sources */,
 				063089B9150BB7EC00EF9D00 /* vsip_mcopy_d_i.c in Sources */,
+				06198FE81DA2C98800138F73 /* vsip_vsub_li.c in Sources */,
 				063089BA150BB7EC00EF9D00 /* vsip_mcopy_d_uc.c in Sources */,
 				063089BB150BB7EC00EF9D00 /* vsip_mcopy_f_bl.c in Sources */,
 				063089BC150BB7EC00EF9D00 /* vsip_mcopy_f_d.c in Sources */,
+				06198F471DA2C73F00138F73 /* vsip_tputxlength_li.c in Sources */,
 				063089BD150BB7EC00EF9D00 /* vsip_mcopy_f_f.c in Sources */,
 				063089BE150BB7EC00EF9D00 /* vsip_mcopy_f_i.c in Sources */,
 				063089BF150BB7EC00EF9D00 /* vsip_mcopy_f_uc.c in Sources */,
@@ -10601,6 +11157,7 @@
 				063089C6150BB7EC00EF9D00 /* vsip_mcos_d.c in Sources */,
 				063089C7150BB7EC00EF9D00 /* vsip_mcos_f.c in Sources */,
 				063089C8150BB7EC00EF9D00 /* vsip_mcosh_d.c in Sources */,
+				06198F801DA2C74000138F73 /* vsip_vlne_li.c in Sources */,
 				063089C9150BB7EC00EF9D00 /* vsip_mcosh_f.c in Sources */,
 				063089CA150BB7EC00EF9D00 /* vsip_mcreate_bl.c in Sources */,
 				063089CB150BB7EC00EF9D00 /* vsip_mcreate_d.c in Sources */,
@@ -10609,11 +11166,13 @@
 				063089CE150BB7EC00EF9D00 /* vsip_mcreate_si.c in Sources */,
 				063089CF150BB7EC00EF9D00 /* vsip_mcreate_uc.c in Sources */,
 				063089D0150BB7EC00EF9D00 /* vsip_mcumsum_d.c in Sources */,
+				06198FD41DA2C98700138F73 /* vsip_mputcolstride_li.c in Sources */,
 				063089D1150BB7EC00EF9D00 /* vsip_mcumsum_f.c in Sources */,
 				063089D2150BB7EC00EF9D00 /* vsip_mcumsum_i.c in Sources */,
 				063089D3150BB7EC00EF9D00 /* vsip_mcumsum_si.c in Sources */,
 				063089D4150BB7EC00EF9D00 /* vsip_mdestroy_bl.c in Sources */,
 				063089D5150BB7EC00EF9D00 /* vsip_mdestroy_d.c in Sources */,
+				06198F4D1DA2C73F00138F73 /* vsip_tsubview_li.c in Sources */,
 				063089D6150BB7EC00EF9D00 /* vsip_mdestroy_f.c in Sources */,
 				063089D7150BB7EC00EF9D00 /* vsip_mdestroy_i.c in Sources */,
 				063089D8150BB7EC00EF9D00 /* vsip_mdestroy_si.c in Sources */,
@@ -10634,10 +11193,13 @@
 				063089E7150BB7EC00EF9D00 /* vsip_mexp_f.c in Sources */,
 				063089E8150BB7EC00EF9D00 /* vsip_mexpoavg_d.c in Sources */,
 				063089E9150BB7EC00EF9D00 /* vsip_mexpoavg_f.c in Sources */,
+				06198F541DA2C73F00138F73 /* vsip_blockbind_li.c in Sources */,
 				063089EA150BB7EC00EF9D00 /* vsip_mfill_d.c in Sources */,
 				063089EB150BB7EC00EF9D00 /* vsip_mfill_f.c in Sources */,
+				06198ECA1DA2C66F00138F73 /* vsip_mrandu_d.c in Sources */,
 				063089EC150BB7EC00EF9D00 /* vsip_mfill_i.c in Sources */,
 				063089ED150BB7EC00EF9D00 /* vsip_mfill_si.c in Sources */,
+				06198F691DA2C74000138F73 /* vsip_mcopy_d_li.c in Sources */,
 				063089EE150BB7EC00EF9D00 /* vsip_mfreqswap_d.c in Sources */,
 				063089EF150BB7EC00EF9D00 /* vsip_mfreqswap_f.c in Sources */,
 				063089F0150BB7EC00EF9D00 /* vsip_mgather_d.c in Sources */,
@@ -10649,16 +11211,20 @@
 				063089F6150BB7EC00EF9D00 /* vsip_mget_si.c in Sources */,
 				063089F7150BB7EC00EF9D00 /* vsip_mget_uc.c in Sources */,
 				063089F8150BB7EC00EF9D00 /* vsip_mgetattrib_bl.c in Sources */,
+				06198F961DA2C74000138F73 /* vsip_vcumsum_li.c in Sources */,
 				063089F9150BB7EC00EF9D00 /* vsip_mgetattrib_d.c in Sources */,
 				063089FA150BB7EC00EF9D00 /* vsip_mgetattrib_f.c in Sources */,
 				063089FB150BB7EC00EF9D00 /* vsip_mgetattrib_i.c in Sources */,
+				06198F6E1DA2C74000138F73 /* vsip_mhisto_li.c in Sources */,
 				063089FC150BB7EC00EF9D00 /* vsip_mgetattrib_si.c in Sources */,
 				063089FD150BB7EC00EF9D00 /* vsip_mgetattrib_uc.c in Sources */,
 				063089FE150BB7EC00EF9D00 /* vsip_mgetblock_bl.c in Sources */,
 				063089FF150BB7EC00EF9D00 /* vsip_mgetblock_d.c in Sources */,
 				06308A00150BB7EC00EF9D00 /* vsip_mgetblock_f.c in Sources */,
+				06198FDA1DA2C98800138F73 /* vsip_vbind_li.c in Sources */,
 				06308A01150BB7EC00EF9D00 /* vsip_mgetblock_i.c in Sources */,
 				06308A02150BB7EC00EF9D00 /* vsip_mgetblock_si.c in Sources */,
+				06198FD01DA2C98700138F73 /* vsip_mgetrowstride_li.c in Sources */,
 				06308A03150BB7EC00EF9D00 /* vsip_mgetblock_uc.c in Sources */,
 				06308A04150BB7EC00EF9D00 /* vsip_mgetcollength_bl.c in Sources */,
 				06308A05150BB7EC00EF9D00 /* vsip_mgetcollength_d.c in Sources */,
@@ -10684,6 +11250,7 @@
 				06308A19150BB7EC00EF9D00 /* vsip_mgetrowlength_i.c in Sources */,
 				06308A1A150BB7EC00EF9D00 /* vsip_mgetrowlength_si.c in Sources */,
 				06308A1B150BB7EC00EF9D00 /* vsip_mgetrowlength_uc.c in Sources */,
+				06198F951DA2C74000138F73 /* vsip_tgetoffset_li.c in Sources */,
 				06308A1C150BB7EC00EF9D00 /* vsip_mgetrowstride_bl.c in Sources */,
 				06308A1D150BB7EC00EF9D00 /* vsip_mgetrowstride_d.c in Sources */,
 				06308A1E150BB7EC00EF9D00 /* vsip_mgetrowstride_f.c in Sources */,
@@ -10702,7 +11269,9 @@
 				06308A2B150BB7EC00EF9D00 /* vsip_minterp_linear_d.c in Sources */,
 				06308A2C150BB7EC00EF9D00 /* vsip_minterp_linear_f.c in Sources */,
 				06308A2D150BB7EC00EF9D00 /* vsip_minterp_nearest_d.c in Sources */,
+				06198FCE1DA2C98700138F73 /* vsip_mgetcolstride_li.c in Sources */,
 				06308A2E150BB7EC00EF9D00 /* vsip_minterp_nearest_f.c in Sources */,
+				06198F441DA2C73F00138F73 /* vsip_tmatrixview_li.c in Sources */,
 				06308A2F150BB7EC00EF9D00 /* vsip_minterp_spline_d.c in Sources */,
 				06308A30150BB7EC00EF9D00 /* vsip_minterp_spline_f.c in Sources */,
 				06308A31150BB7EC00EF9D00 /* vsip_minvclip_d.c in Sources */,
@@ -10710,6 +11279,8 @@
 				06308A33150BB7EC00EF9D00 /* vsip_mkron_d.c in Sources */,
 				06308A34150BB7EC00EF9D00 /* vsip_mkron_f.c in Sources */,
 				06308A35150BB7EC00EF9D00 /* vsip_mleq_d.c in Sources */,
+				06198F761DA2C74000138F73 /* vsip_vfill_li.c in Sources */,
+				06198F9F1DA2C91A00138F73 /* jvsip_round.c in Sources */,
 				06308A36150BB7EC00EF9D00 /* vsip_mleq_f.c in Sources */,
 				06308A37150BB7EC00EF9D00 /* vsip_mlge_d.c in Sources */,
 				06308A38150BB7EC00EF9D00 /* vsip_mlge_f.c in Sources */,
@@ -10721,12 +11292,14 @@
 				06308A3E150BB7EC00EF9D00 /* vsip_mllt_f.c in Sources */,
 				06308A3F150BB7EC00EF9D00 /* vsip_mlne_d.c in Sources */,
 				06308A40150BB7EC00EF9D00 /* vsip_mlne_f.c in Sources */,
+				06198F481DA2C73F00138F73 /* vsip_tputxstride_li.c in Sources */,
 				06308A41150BB7EC00EF9D00 /* vsip_mlog10_d.c in Sources */,
 				06308A42150BB7EC00EF9D00 /* vsip_mlog10_f.c in Sources */,
 				06308A43150BB7EC00EF9D00 /* vsip_mlog_d.c in Sources */,
 				06308A44150BB7EC00EF9D00 /* vsip_mlog_f.c in Sources */,
 				06308A45150BB7EC00EF9D00 /* vsip_mmag_d.c in Sources */,
 				06308A46150BB7EC00EF9D00 /* vsip_mmag_f.c in Sources */,
+				06198F7D1DA2C74000138F73 /* vsip_vlgt_li.c in Sources */,
 				06308A47150BB7EC00EF9D00 /* vsip_mmax_d.c in Sources */,
 				06308A48150BB7EC00EF9D00 /* vsip_mmax_f.c in Sources */,
 				06308A49150BB7EC00EF9D00 /* vsip_mmaxmg_d.c in Sources */,
@@ -10741,6 +11314,7 @@
 				06308A52150BB7EC00EF9D00 /* vsip_mmeansqval_f.c in Sources */,
 				06308A53150BB7EC00EF9D00 /* vsip_mmeanval_d.c in Sources */,
 				06308A54150BB7EC00EF9D00 /* vsip_mmeanval_f.c in Sources */,
+				06198F7A1DA2C74000138F73 /* vsip_vinvclip_li.c in Sources */,
 				06308A55150BB7EC00EF9D00 /* vsip_mmin_d.c in Sources */,
 				06308A56150BB7EC00EF9D00 /* vsip_mmin_f.c in Sources */,
 				06308A57150BB7EC00EF9D00 /* vsip_mminmg_d.c in Sources */,
@@ -10758,8 +11332,10 @@
 				06308A63150BB7EC00EF9D00 /* vsip_mpermute_d.c in Sources */,
 				06308A64150BB7EC00EF9D00 /* vsip_mpermute_f.c in Sources */,
 				06308A65150BB7EC00EF9D00 /* vsip_mpermute_once_d.c in Sources */,
+				06198F6F1DA2C74000138F73 /* vsip_mmaxval_li.c in Sources */,
 				06308A66150BB7EC00EF9D00 /* vsip_mpermute_once_f.c in Sources */,
 				06308A67150BB7EC00EF9D00 /* vsip_mprod3_d.c in Sources */,
+				06198FC91DA2C98700138F73 /* vsip_mdestroy_li.c in Sources */,
 				06308A68150BB7EC00EF9D00 /* vsip_mprod3_f.c in Sources */,
 				06308A69150BB7EC00EF9D00 /* vsip_mprod4_d.c in Sources */,
 				06308A6A150BB7EC00EF9D00 /* vsip_mprod4_f.c in Sources */,
@@ -10774,7 +11350,9 @@
 				06308A73150BB7EC00EF9D00 /* vsip_mput_si.c in Sources */,
 				06308A74150BB7EC00EF9D00 /* vsip_mput_uc.c in Sources */,
 				06308A75150BB7EC00EF9D00 /* vsip_mputattrib_bl.c in Sources */,
+				06198F351DA2C73F00138F73 /* vsip_smsub_li.c in Sources */,
 				06308A76150BB7EC00EF9D00 /* vsip_mputattrib_d.c in Sources */,
+				06198F651DA2C74000138F73 /* vsip_blockrelease_li.c in Sources */,
 				06308A77150BB7EC00EF9D00 /* vsip_mputattrib_f.c in Sources */,
 				06308A78150BB7EC00EF9D00 /* vsip_mputattrib_i.c in Sources */,
 				06308A79150BB7EC00EF9D00 /* vsip_mputattrib_si.c in Sources */,
@@ -10812,9 +11390,11 @@
 				06308A99150BB7EC00EF9D00 /* vsip_mrealview_d.c in Sources */,
 				06308A9A150BB7EC00EF9D00 /* vsip_mrealview_f.c in Sources */,
 				06308A9B150BB7EC00EF9D00 /* vsip_mrecip_d.c in Sources */,
+				06198FE21DA2C98800138F73 /* vsip_vgetstride_li.c in Sources */,
 				06308A9C150BB7EC00EF9D00 /* vsip_mrecip_f.c in Sources */,
 				06308A9D150BB7EC00EF9D00 /* vsip_mrowview_bl.c in Sources */,
 				06308A9E150BB7EC00EF9D00 /* vsip_mrowview_d.c in Sources */,
+				06198F711DA2C74000138F73 /* vsip_svadd_li.c in Sources */,
 				06308A9F150BB7EC00EF9D00 /* vsip_mrowview_f.c in Sources */,
 				06308AA0150BB7EC00EF9D00 /* vsip_mrowview_i.c in Sources */,
 				06308AA1150BB7EC00EF9D00 /* vsip_mrowview_si.c in Sources */,
@@ -10827,6 +11407,7 @@
 				06308AA8150BB7EC00EF9D00 /* vsip_msdiv_f.c in Sources */,
 				06308AA9150BB7EC00EF9D00 /* vsip_msin_d.c in Sources */,
 				06308AAA150BB7EC00EF9D00 /* vsip_msin_f.c in Sources */,
+				06198F7E1DA2C74000138F73 /* vsip_vlle_li.c in Sources */,
 				06308AAB150BB7EC00EF9D00 /* vsip_msinh_d.c in Sources */,
 				06308AAC150BB7EC00EF9D00 /* vsip_msinh_f.c in Sources */,
 				06308AAD150BB7EC00EF9D00 /* vsip_msq_d.c in Sources */,
@@ -10838,8 +11419,10 @@
 				06308AB3150BB7EC00EF9D00 /* vsip_msub_i.c in Sources */,
 				06308AB4150BB7EC00EF9D00 /* vsip_msub_si.c in Sources */,
 				06308AB5150BB7EC00EF9D00 /* vsip_msubview_bl.c in Sources */,
+				06198FDC1DA2C98800138F73 /* vsip_vcreate_li.c in Sources */,
 				06308AB6150BB7EC00EF9D00 /* vsip_msubview_d.c in Sources */,
 				06308AB7150BB7EC00EF9D00 /* vsip_msubview_f.c in Sources */,
+				06198F4E1DA2C73F00138F73 /* vsip_ttransview_li.c in Sources */,
 				06308AB8150BB7EC00EF9D00 /* vsip_msubview_i.c in Sources */,
 				06308AB9150BB7EC00EF9D00 /* vsip_msubview_si.c in Sources */,
 				06308ABA150BB7EC00EF9D00 /* vsip_msubview_uc.c in Sources */,
@@ -10854,6 +11437,7 @@
 				06308AC3150BB7EC00EF9D00 /* vsip_mtan_f.c in Sources */,
 				06308AC4150BB7EC00EF9D00 /* vsip_mtanh_d.c in Sources */,
 				06308AC5150BB7EC00EF9D00 /* vsip_mtanh_f.c in Sources */,
+				06198F431DA2C73F00138F73 /* vsip_tgetzstride_li.c in Sources */,
 				06308AC6150BB7EC00EF9D00 /* vsip_mtrans_d.c in Sources */,
 				06308AC7150BB7EC00EF9D00 /* vsip_mtrans_f.c in Sources */,
 				06308AC8150BB7EC00EF9D00 /* vsip_mtransview_bl.c in Sources */,
@@ -10870,6 +11454,7 @@
 				06308AD9150BB7EC00EF9D00 /* vsip_mvprod_f.c in Sources */,
 				06308ADA150BB7EC00EF9D00 /* vsip_permute_destroy.c in Sources */,
 				06308ADB150BB7EC00EF9D00 /* vsip_permute_init.c in Sources */,
+				06198FE91DA2C98800138F73 /* vsip_vsubview_li.c in Sources */,
 				06308ADD150BB7EC00EF9D00 /* vsip_polar_d.c in Sources */,
 				06308ADE150BB7EC00EF9D00 /* vsip_polar_f.c in Sources */,
 				06308ADF150BB7EC00EF9D00 /* vsip_qrd_create_d.c in Sources */,
@@ -10889,6 +11474,7 @@
 				06308AEF150BB7EC00EF9D00 /* vsip_randcreate.c in Sources */,
 				06308AF0150BB7EC00EF9D00 /* vsip_randdestroy.c in Sources */,
 				06308AF1150BB7EC00EF9D00 /* vsip_randn_d.c in Sources */,
+				06198FD31DA2C98700138F73 /* vsip_mputcollength_li.c in Sources */,
 				06308AF2150BB7EC00EF9D00 /* vsip_randn_f.c in Sources */,
 				06308AF4150BB7EC00EF9D00 /* vsip_randu_d.c in Sources */,
 				06308AF5150BB7EC00EF9D00 /* vsip_randu_f.c in Sources */,
@@ -10899,6 +11485,7 @@
 				06308AFA150BB7EC00EF9D00 /* vsip_rcfftmop_d.c in Sources */,
 				06308AFB150BB7EC00EF9D00 /* vsip_rcfftmop_f.c in Sources */,
 				06308AFC150BB7EC00EF9D00 /* vsip_rcfftop_create_d.c in Sources */,
+				06198F8F1DA2C74000138F73 /* vsip_vcopy_vi_li.c in Sources */,
 				06308AFD150BB7EC00EF9D00 /* vsip_rcfftop_create_f.c in Sources */,
 				06308AFE150BB7EC00EF9D00 /* vsip_rcfftop_d.c in Sources */,
 				06308AFF150BB7EC00EF9D00 /* vsip_rcfftop_f.c in Sources */,
@@ -10906,12 +11493,14 @@
 				06308B01150BB7EC00EF9D00 /* vsip_rcmadd_f.c in Sources */,
 				06308B02150BB7EC00EF9D00 /* vsip_rcmdiv_d.c in Sources */,
 				06308B03150BB7EC00EF9D00 /* vsip_rcmdiv_f.c in Sources */,
+				06198F5B1DA2C73F00138F73 /* vsip_mcumsum_li.c in Sources */,
 				06308B04150BB7EC00EF9D00 /* vsip_rcmmul_d.c in Sources */,
 				06308B05150BB7EC00EF9D00 /* vsip_rcmmul_f.c in Sources */,
 				06308B06150BB7EC00EF9D00 /* vsip_rcmsub_d.c in Sources */,
 				06308B07150BB7EC00EF9D00 /* vsip_rcmsub_f.c in Sources */,
 				06308B08150BB7EC00EF9D00 /* vsip_rcmul_d.c in Sources */,
 				06308B09150BB7EC00EF9D00 /* vsip_rcmul_f.c in Sources */,
+				06198FEB1DA2DA2A00138F73 /* vsip_mcopy_li_li.c in Sources */,
 				06308B0A150BB7EC00EF9D00 /* vsip_rcsub_d.c in Sources */,
 				06308B0B150BB7EC00EF9D00 /* vsip_rcsub_f.c in Sources */,
 				06308B0C150BB7EC00EF9D00 /* vsip_rcvadd_d.c in Sources */,
@@ -10920,12 +11509,14 @@
 				06308B0F150BB7EC00EF9D00 /* vsip_rcvdiv_f.c in Sources */,
 				06308B10150BB7EC00EF9D00 /* vsip_rcvmul_d.c in Sources */,
 				06308B11150BB7EC00EF9D00 /* vsip_rcvmul_f.c in Sources */,
+				06198FD91DA2C98700138F73 /* vsip_valldestroy_li.c in Sources */,
 				06308B12150BB7EC00EF9D00 /* vsip_rcvsub_d.c in Sources */,
 				06308B13150BB7EC00EF9D00 /* vsip_rcvsub_f.c in Sources */,
 				06308B14150BB7EC00EF9D00 /* vsip_rect_d.c in Sources */,
 				06308B15150BB7EC00EF9D00 /* vsip_rect_f.c in Sources */,
 				06308B16150BB7EC00EF9D00 /* vsip_rscmadd_d.c in Sources */,
 				06308B17150BB7EC00EF9D00 /* vsip_rscmadd_f.c in Sources */,
+				06198F871DA2C74000138F73 /* vsip_vputoffset_li.c in Sources */,
 				06308B18150BB7EC00EF9D00 /* vsip_rscmdiv_d.c in Sources */,
 				06308B19150BB7EC00EF9D00 /* vsip_rscmdiv_f.c in Sources */,
 				06308B1A150BB7EC00EF9D00 /* vsip_rscmmul_d.c in Sources */,
@@ -10933,14 +11524,17 @@
 				06308B1C150BB7EC00EF9D00 /* vsip_rscmsub_d.c in Sources */,
 				06308B1D150BB7EC00EF9D00 /* vsip_rscmsub_f.c in Sources */,
 				06308B1E150BB7EC00EF9D00 /* vsip_rscvadd_d.c in Sources */,
+				06198F4A1DA2C73F00138F73 /* vsip_tputystride_li.c in Sources */,
 				06308B1F150BB7EC00EF9D00 /* vsip_rscvadd_f.c in Sources */,
 				06308B20150BB7EC00EF9D00 /* vsip_rscvdiv_d.c in Sources */,
 				06308B21150BB7EC00EF9D00 /* vsip_rscvdiv_f.c in Sources */,
 				06308B22150BB7EC00EF9D00 /* vsip_rscvmul_d.c in Sources */,
 				06308B23150BB7EC00EF9D00 /* vsip_rscvmul_f.c in Sources */,
+				06198FC71DA2C98700138F73 /* vsip_mcloneview_li.c in Sources */,
 				06308B24150BB7EC00EF9D00 /* vsip_rscvsub_d.c in Sources */,
 				06308B25150BB7EC00EF9D00 /* vsip_rscvsub_f.c in Sources */,
 				06308B26150BB7EC00EF9D00 /* vsip_rvcmmul_d.c in Sources */,
+				06198F6A1DA2C74000138F73 /* vsip_mcopy_f_li.c in Sources */,
 				06308B27150BB7EC00EF9D00 /* vsip_rvcmmul_f.c in Sources */,
 				06308B29150BB7EC00EF9D00 /* vsip_smadd_d.c in Sources */,
 				06308B2A150BB7EC00EF9D00 /* vsip_smadd_f.c in Sources */,
@@ -10969,6 +11563,7 @@
 				06308B4F150BB7EC00EF9D00 /* vsip_svmul_i.c in Sources */,
 				06308B50150BB7EC00EF9D00 /* vsip_svmul_si.c in Sources */,
 				06308B51150BB7EC00EF9D00 /* vsip_svmul_uc.c in Sources */,
+				06198F6C1DA2C74000138F73 /* vsip_mfill_li.c in Sources */,
 				06308B52150BB7EC00EF9D00 /* vsip_svsub_d.c in Sources */,
 				06308B53150BB7EC00EF9D00 /* vsip_svsub_f.c in Sources */,
 				06308B54150BB7EC00EF9D00 /* vsip_svsub_i.c in Sources */,
@@ -10987,8 +11582,11 @@
 				06308B61150BB7EC00EF9D00 /* vsip_tbind_uc.c in Sources */,
 				06308B62150BB7EC00EF9D00 /* vsip_tcloneview_d.c in Sources */,
 				06308B63150BB7EC00EF9D00 /* vsip_tcloneview_f.c in Sources */,
+				06198F701DA2C74000138F73 /* vsip_mputoffset_li.c in Sources */,
+				06198F4C1DA2C73F00138F73 /* vsip_tputzstride_li.c in Sources */,
 				06308B64150BB7EC00EF9D00 /* vsip_tcloneview_i.c in Sources */,
 				06308B65150BB7EC00EF9D00 /* vsip_tcloneview_si.c in Sources */,
+				06198F771DA2C74000138F73 /* vsip_vfirst_li.c in Sources */,
 				06308B66150BB7EC00EF9D00 /* vsip_tcloneview_uc.c in Sources */,
 				06308B67150BB7EC00EF9D00 /* vsip_tcreate_d.c in Sources */,
 				06308B68150BB7EC00EF9D00 /* vsip_tcreate_f.c in Sources */,
@@ -11000,11 +11598,13 @@
 				06308B6E150BB7EC00EF9D00 /* vsip_tdestroy_i.c in Sources */,
 				06308B6F150BB7EC00EF9D00 /* vsip_tdestroy_si.c in Sources */,
 				06308B70150BB7EC00EF9D00 /* vsip_tdestroy_uc.c in Sources */,
+				06198F8C1DA2C74000138F73 /* vsip_vxor_li.c in Sources */,
 				06308B71150BB7EC00EF9D00 /* vsip_tget_d.c in Sources */,
 				06308B72150BB7EC00EF9D00 /* vsip_tget_f.c in Sources */,
 				06308B73150BB7EC00EF9D00 /* vsip_tget_i.c in Sources */,
 				06308B74150BB7EC00EF9D00 /* vsip_tget_si.c in Sources */,
 				06308B75150BB7EC00EF9D00 /* vsip_tget_uc.c in Sources */,
+				06198FF61DA2DDE600138F73 /* vsip_cmrandu_d.c in Sources */,
 				06308B76150BB7EC00EF9D00 /* vsip_tgetattrib_d.c in Sources */,
 				06308B77150BB7EC00EF9D00 /* vsip_tgetattrib_f.c in Sources */,
 				06308B78150BB7EC00EF9D00 /* vsip_tgetattrib_i.c in Sources */,
@@ -11018,6 +11618,7 @@
 				06308B80150BB7EC00EF9D00 /* vsip_tgetoffset_d.c in Sources */,
 				06308B81150BB7EC00EF9D00 /* vsip_tgetoffset_f.c in Sources */,
 				06308B82150BB7EC00EF9D00 /* vsip_tgetoffset_i.c in Sources */,
+				06198F941DA2C74000138F73 /* vsip_mminval_li.c in Sources */,
 				06308B83150BB7EC00EF9D00 /* vsip_tgetoffset_si.c in Sources */,
 				06308B84150BB7EC00EF9D00 /* vsip_tgetoffset_uc.c in Sources */,
 				06308B85150BB7EC00EF9D00 /* vsip_tgetxlength_d.c in Sources */,
@@ -11027,6 +11628,7 @@
 				06308B89150BB7EC00EF9D00 /* vsip_tgetxlength_uc.c in Sources */,
 				06308B8A150BB7EC00EF9D00 /* vsip_tgetxstride_d.c in Sources */,
 				06308B8B150BB7EC00EF9D00 /* vsip_tgetxstride_f.c in Sources */,
+				06198FD51DA2C98700138F73 /* vsip_mputrowlength_li.c in Sources */,
 				06308B8C150BB7EC00EF9D00 /* vsip_tgetxstride_i.c in Sources */,
 				06308B8D150BB7EC00EF9D00 /* vsip_tgetxstride_si.c in Sources */,
 				06308B8E150BB7EC00EF9D00 /* vsip_tgetxstride_uc.c in Sources */,
@@ -11050,11 +11652,14 @@
 				06308BA0150BB7EC00EF9D00 /* vsip_tgetzstride_i.c in Sources */,
 				06308BA1150BB7EC00EF9D00 /* vsip_tgetzstride_si.c in Sources */,
 				06308BA2150BB7EC00EF9D00 /* vsip_tgetzstride_uc.c in Sources */,
+				06198FFC1DA2DE4600138F73 /* vsip_vcopy_vi_d.c in Sources */,
 				06308BA3150BB7EC00EF9D00 /* vsip_timagview_d.c in Sources */,
 				06308BA4150BB7EC00EF9D00 /* vsip_timagview_f.c in Sources */,
+				06198F7C1DA2C74000138F73 /* vsip_vlge_li.c in Sources */,
 				06308BA5150BB7EC00EF9D00 /* vsip_tmatrixview_d.c in Sources */,
 				06308BA6150BB7EC00EF9D00 /* vsip_tmatrixview_f.c in Sources */,
 				06308BA7150BB7EC00EF9D00 /* vsip_tmatrixview_i.c in Sources */,
+				06198FF71DA2DDE600138F73 /* vsip_cmrandu_f.c in Sources */,
 				06308BA8150BB7EC00EF9D00 /* vsip_tmatrixview_si.c in Sources */,
 				06308BA9150BB7EC00EF9D00 /* vsip_tmatrixview_uc.c in Sources */,
 				06308BAA150BB7EC00EF9D00 /* vsip_toepsol_d.c in Sources */,
@@ -11064,6 +11669,7 @@
 				06308BAE150BB7EC00EF9D00 /* vsip_tput_i.c in Sources */,
 				06308BAF150BB7EC00EF9D00 /* vsip_tput_si.c in Sources */,
 				06308BB0150BB7EC00EF9D00 /* vsip_tput_uc.c in Sources */,
+				06198F4F1DA2C73F00138F73 /* vsip_tvectview_li.c in Sources */,
 				06308BB1150BB7EC00EF9D00 /* vsip_tputattrib_d.c in Sources */,
 				06308BB2150BB7EC00EF9D00 /* vsip_tputattrib_f.c in Sources */,
 				06308BB3150BB7EC00EF9D00 /* vsip_tputattrib_i.c in Sources */,
@@ -11129,6 +11735,7 @@
 				06308BF4150BB7EC00EF9D00 /* vsip_vadd_si.c in Sources */,
 				06308BF5150BB7EC00EF9D00 /* vsip_vadd_uc.c in Sources */,
 				06308BF6150BB7EC00EF9D00 /* vsip_vadd_vi.c in Sources */,
+				06198F6B1DA2C74000138F73 /* vsip_mcopy_i_li.c in Sources */,
 				06308BF7150BB7EC00EF9D00 /* vsip_valldestroy_bl.c in Sources */,
 				06308BF8150BB7EC00EF9D00 /* vsip_valldestroy_d.c in Sources */,
 				06308BF9150BB7EC00EF9D00 /* vsip_valldestroy_f.c in Sources */,
@@ -11193,10 +11800,12 @@
 				06308C34150BB7EC00EF9D00 /* vsip_vcopy_d_d.c in Sources */,
 				06308C35150BB7EC00EF9D00 /* vsip_vcopy_d_f.c in Sources */,
 				06308C36150BB7EC00EF9D00 /* vsip_vcopy_d_i.c in Sources */,
+				06198FE01DA2C98800138F73 /* vsip_vgetblock_li.c in Sources */,
 				06308C37150BB7EC00EF9D00 /* vsip_vcopy_d_si.c in Sources */,
 				06308C38150BB7EC00EF9D00 /* vsip_vcopy_d_uc.c in Sources */,
 				06308C39150BB7EC00EF9D00 /* vsip_vcopy_d_vi.c in Sources */,
 				06308C3A150BB7EC00EF9D00 /* vsip_vcopy_f_bl.c in Sources */,
+				06198F461DA2C73F00138F73 /* vsip_tputattrib_li.c in Sources */,
 				06308C3B150BB7EC00EF9D00 /* vsip_vcopy_f_d.c in Sources */,
 				06308C3C150BB7EC00EF9D00 /* vsip_vcopy_f_f.c in Sources */,
 				06308C3D150BB7EC00EF9D00 /* vsip_vcopy_f_i.c in Sources */,
@@ -11210,6 +11819,7 @@
 				06308C45150BB7EC00EF9D00 /* vsip_vcopy_i_vi.c in Sources */,
 				06308C46150BB7EC00EF9D00 /* vsip_vcopy_mi_mi.c in Sources */,
 				06308C47150BB7EC00EF9D00 /* vsip_vcopy_si_d.c in Sources */,
+				06198F7B1DA2C74000138F73 /* vsip_vleq_li.c in Sources */,
 				06308C48150BB7EC00EF9D00 /* vsip_vcopy_si_f.c in Sources */,
 				06308C49150BB7EC00EF9D00 /* vsip_vcopy_si_si.c in Sources */,
 				06308C4A150BB7EC00EF9D00 /* vsip_vcopy_vi_i.c in Sources */,
@@ -11228,6 +11838,7 @@
 				06308C57150BB7EC00EF9D00 /* vsip_vcos_f.c in Sources */,
 				06308C58150BB7EC00EF9D00 /* vsip_vcosh_d.c in Sources */,
 				06308C59150BB7EC00EF9D00 /* vsip_vcosh_f.c in Sources */,
+				06198F811DA2C74000138F73 /* vsip_vmag_li.c in Sources */,
 				06308C5A150BB7EC00EF9D00 /* vsip_vcreate_bl.c in Sources */,
 				06308C5B150BB7EC00EF9D00 /* vsip_vcreate_blackman_d.c in Sources */,
 				06308C5C150BB7EC00EF9D00 /* vsip_vcreate_blackman_f.c in Sources */,
@@ -11239,14 +11850,18 @@
 				06308C62150BB7EC00EF9D00 /* vsip_vcreate_hanning_f.c in Sources */,
 				06308C63150BB7EC00EF9D00 /* vsip_vcreate_i.c in Sources */,
 				06308C64150BB7EC00EF9D00 /* vsip_vcreate_kaiser_d.c in Sources */,
+				06198FDE1DA2C98800138F73 /* vsip_vget_li.c in Sources */,
 				06308C65150BB7EC00EF9D00 /* vsip_vcreate_kaiser_f.c in Sources */,
 				06308C66150BB7EC00EF9D00 /* vsip_vcreate_mi.c in Sources */,
+				06198F8D1DA2C74000138F73 /* vsip_vcopyto_user_li.c in Sources */,
 				06308C67150BB7EC00EF9D00 /* vsip_vcreate_si.c in Sources */,
 				06308C68150BB7EC00EF9D00 /* vsip_vcreate_uc.c in Sources */,
 				06308C69150BB7EC00EF9D00 /* vsip_vcreate_vi.c in Sources */,
 				06308C6A150BB7EC00EF9D00 /* vsip_vcumsum_d.c in Sources */,
+				06198F8B1DA2C74000138F73 /* vsip_vswap_li.c in Sources */,
 				06308C6B150BB7EC00EF9D00 /* vsip_vcumsum_f.c in Sources */,
 				06308C6C150BB7EC00EF9D00 /* vsip_vcumsum_i.c in Sources */,
+				06198FDB1DA2C98800138F73 /* vsip_vcloneview_li.c in Sources */,
 				06308C6D150BB7EC00EF9D00 /* vsip_vcumsum_si.c in Sources */,
 				06308C6E150BB7EC00EF9D00 /* vsip_vdestroy_bl.c in Sources */,
 				06308C6F150BB7EC00EF9D00 /* vsip_vdestroy_d.c in Sources */,
@@ -11257,6 +11872,7 @@
 				06308C74150BB7EC00EF9D00 /* vsip_vdestroy_uc.c in Sources */,
 				06308C75150BB7EC00EF9D00 /* vsip_vdestroy_vi.c in Sources */,
 				06308C76150BB7EC00EF9D00 /* vsip_vdiv_d.c in Sources */,
+				06198F891DA2C74000138F73 /* vsip_vscatter_li.c in Sources */,
 				06308C77150BB7EC00EF9D00 /* vsip_vdiv_f.c in Sources */,
 				06308C78150BB7EC00EF9D00 /* vsip_vdot_d.c in Sources */,
 				06308C79150BB7EC00EF9D00 /* vsip_vdot_f.c in Sources */,
@@ -11267,6 +11883,7 @@
 				06308C7E150BB7EC00EF9D00 /* vsip_vexp_d.c in Sources */,
 				06308C7F150BB7EC00EF9D00 /* vsip_vexp_f.c in Sources */,
 				06308C80150BB7EC00EF9D00 /* vsip_vexpoavg_d.c in Sources */,
+				06198FE31DA2C98800138F73 /* vsip_vmul_li.c in Sources */,
 				06308C81150BB7EC00EF9D00 /* vsip_vexpoavg_f.c in Sources */,
 				06308C82150BB7EC00EF9D00 /* vsip_vfill_d.c in Sources */,
 				06308C83150BB7EC00EF9D00 /* vsip_vfill_f.c in Sources */,
@@ -11277,12 +11894,14 @@
 				06308C88150BB7EC00EF9D00 /* vsip_vfirst_f.c in Sources */,
 				06308C89150BB7EC00EF9D00 /* vsip_vfirst_i.c in Sources */,
 				06308C8A150BB7EC00EF9D00 /* vsip_vfirst_mi.c in Sources */,
+				06198FCF1DA2C98700138F73 /* vsip_mgetrowlength_li.c in Sources */,
 				06308C8B150BB7EC00EF9D00 /* vsip_vfirst_vi.c in Sources */,
 				06308C8C150BB7EC00EF9D00 /* vsip_vfreqswap_d.c in Sources */,
 				06308C8D150BB7EC00EF9D00 /* vsip_vfreqswap_f.c in Sources */,
 				06308C8E150BB7EC00EF9D00 /* vsip_vgather_d.c in Sources */,
 				06308C8F150BB7EC00EF9D00 /* vsip_vgather_f.c in Sources */,
 				06308C90150BB7EC00EF9D00 /* vsip_vgather_i.c in Sources */,
+				06198F491DA2C73F00138F73 /* vsip_tputylength_li.c in Sources */,
 				06308C91150BB7EC00EF9D00 /* vsip_vgather_mi.c in Sources */,
 				06308C92150BB7EC00EF9D00 /* vsip_vgather_si.c in Sources */,
 				06308C93150BB7EC00EF9D00 /* vsip_vgather_uc.c in Sources */,
@@ -11312,9 +11931,11 @@
 				06308CAB150BB7EC00EF9D00 /* vsip_vgetblock_uc.c in Sources */,
 				06308CAC150BB7EC00EF9D00 /* vsip_vgetblock_vi.c in Sources */,
 				06308CAD150BB7EC00EF9D00 /* vsip_vgetlength_bl.c in Sources */,
+				06198F421DA2C73F00138F73 /* vsip_tgetzlength_li.c in Sources */,
 				06308CAE150BB7EC00EF9D00 /* vsip_vgetlength_d.c in Sources */,
 				06308CAF150BB7EC00EF9D00 /* vsip_vgetlength_f.c in Sources */,
 				06308CB0150BB7EC00EF9D00 /* vsip_vgetlength_i.c in Sources */,
+				06198F9E1DA2C91A00138F73 /* jvsip_floor.c in Sources */,
 				06308CB1150BB7EC00EF9D00 /* vsip_vgetlength_mi.c in Sources */,
 				06308CB2150BB7EC00EF9D00 /* vsip_vgetlength_si.c in Sources */,
 				06308CB3150BB7EC00EF9D00 /* vsip_vgetlength_uc.c in Sources */,
@@ -11333,7 +11954,9 @@
 				06308CC0150BB7EC00EF9D00 /* vsip_vgetstride_i.c in Sources */,
 				06308CC1150BB7EC00EF9D00 /* vsip_vgetstride_mi.c in Sources */,
 				06308CC2150BB7EC00EF9D00 /* vsip_vgetstride_si.c in Sources */,
+				06198F821DA2C74000138F73 /* vsip_vmaxval_li.c in Sources */,
 				06308CC3150BB7EC00EF9D00 /* vsip_vgetstride_uc.c in Sources */,
+				06198EC11DA2C61100138F73 /* vsip_svlle.c in Sources */,
 				06308CC4150BB7EC00EF9D00 /* vsip_vgetstride_vi.c in Sources */,
 				06308CC5150BB7EC00EF9D00 /* vsip_vhisto_d.c in Sources */,
 				06308CC6150BB7EC00EF9D00 /* vsip_vhisto_f.c in Sources */,
@@ -11351,12 +11974,14 @@
 				06308CD2150BB7EC00EF9D00 /* vsip_vinterp_nearest_d.c in Sources */,
 				06308CD3150BB7EC00EF9D00 /* vsip_vinterp_nearest_f.c in Sources */,
 				06308CD4150BB7EC00EF9D00 /* vsip_vinterp_spline_d.c in Sources */,
+				06198F7F1DA2C74000138F73 /* vsip_vllt_li.c in Sources */,
 				06308CD5150BB7EC00EF9D00 /* vsip_vinterp_spline_f.c in Sources */,
 				06308CD6150BB7EC00EF9D00 /* vsip_vinvclip_d.c in Sources */,
 				06308CD7150BB7EC00EF9D00 /* vsip_vinvclip_f.c in Sources */,
 				06308CD8150BB7EC00EF9D00 /* vsip_vinvclip_i.c in Sources */,
 				06308CD9150BB7EC00EF9D00 /* vsip_vinvclip_si.c in Sources */,
 				06308CDA150BB7EC00EF9D00 /* vsip_vinvclip_uc.c in Sources */,
+				06198F3C1DA2C73F00138F73 /* vsip_tgetattrib_li.c in Sources */,
 				06308CDB150BB7EC00EF9D00 /* vsip_vkron_d.c in Sources */,
 				06308CDC150BB7EC00EF9D00 /* vsip_vkron_f.c in Sources */,
 				06308CDD150BB7EC00EF9D00 /* vsip_vleq_d.c in Sources */,
@@ -11368,6 +11993,7 @@
 				06308CE3150BB7EC00EF9D00 /* vsip_vlge_f.c in Sources */,
 				06308CE4150BB7EC00EF9D00 /* vsip_vlge_i.c in Sources */,
 				06308CE5150BB7EC00EF9D00 /* vsip_vlge_si.c in Sources */,
+				06198F641DA2C74000138F73 /* vsip_blockfind_li.c in Sources */,
 				06308CE6150BB7EC00EF9D00 /* vsip_vlge_uc.c in Sources */,
 				06308CE7150BB7EC00EF9D00 /* vsip_vlgt_d.c in Sources */,
 				06308CE8150BB7EC00EF9D00 /* vsip_vlgt_f.c in Sources */,
@@ -11379,8 +12005,10 @@
 				06308CEE150BB7EC00EF9D00 /* vsip_vlle_i.c in Sources */,
 				06308CEF150BB7EC00EF9D00 /* vsip_vlle_si.c in Sources */,
 				06308CF0150BB7EC00EF9D00 /* vsip_vlle_uc.c in Sources */,
+				06198F3B1DA2C73F00138F73 /* vsip_tget_li.c in Sources */,
 				06308CF1150BB7EC00EF9D00 /* vsip_vllt_d.c in Sources */,
 				06308CF2150BB7EC00EF9D00 /* vsip_vllt_f.c in Sources */,
+				06198F331DA2C73F00138F73 /* vsip_msubview_li.c in Sources */,
 				06308CF3150BB7EC00EF9D00 /* vsip_vllt_i.c in Sources */,
 				06308CF4150BB7EC00EF9D00 /* vsip_vllt_si.c in Sources */,
 				06308CF5150BB7EC00EF9D00 /* vsip_vllt_uc.c in Sources */,
@@ -11393,6 +12021,7 @@
 				06308CFC150BB7EC00EF9D00 /* vsip_vlog10_f.c in Sources */,
 				06308CFD150BB7EC00EF9D00 /* vsip_vlog_d.c in Sources */,
 				06308CFE150BB7EC00EF9D00 /* vsip_vlog_f.c in Sources */,
+				06198FCD1DA2C98700138F73 /* vsip_mgetcollength_li.c in Sources */,
 				06308CFF150BB7EC00EF9D00 /* vsip_vma_d.c in Sources */,
 				06308D00150BB7EC00EF9D00 /* vsip_vma_f.c in Sources */,
 				06308D01150BB7EC00EF9D00 /* vsip_vmag_d.c in Sources */,
@@ -11401,18 +12030,24 @@
 				06308D04150BB7EC00EF9D00 /* vsip_vmag_si.c in Sources */,
 				06308D05150BB7EC00EF9D00 /* vsip_vmax_d.c in Sources */,
 				06308D06150BB7EC00EF9D00 /* vsip_vmax_f.c in Sources */,
+				06198FCC1DA2C98700138F73 /* vsip_mgetblock_li.c in Sources */,
 				06308D07150BB7EC00EF9D00 /* vsip_vmaxmg_d.c in Sources */,
+				06198F581DA2C73F00138F73 /* vsip_tcreate_li.c in Sources */,
 				06308D08150BB7EC00EF9D00 /* vsip_vmaxmg_f.c in Sources */,
 				06308D09150BB7EC00EF9D00 /* vsip_vmaxmgval_d.c in Sources */,
 				06308D0A150BB7EC00EF9D00 /* vsip_vmaxmgval_f.c in Sources */,
+				06198FD21DA2C98700138F73 /* vsip_mputattrib_li.c in Sources */,
 				06308D0B150BB7EC00EF9D00 /* vsip_vmaxval_d.c in Sources */,
 				06308D0C150BB7EC00EF9D00 /* vsip_vmaxval_f.c in Sources */,
 				06308D0D150BB7EC00EF9D00 /* vsip_vmaxval_i.c in Sources */,
+				06198FC51DA2C98700138F73 /* vsip_malldestroy_li.c in Sources */,
 				06308D0E150BB7EC00EF9D00 /* vsip_vmaxval_si.c in Sources */,
 				06308D0F150BB7EC00EF9D00 /* vsip_vmeansqval_d.c in Sources */,
 				06308D10150BB7EC00EF9D00 /* vsip_vmeansqval_f.c in Sources */,
+				06198FDD1DA2C98800138F73 /* vsip_vdestroy_li.c in Sources */,
 				06308D11150BB7EC00EF9D00 /* vsip_vmeanval_d.c in Sources */,
 				06308D12150BB7EC00EF9D00 /* vsip_vmeanval_f.c in Sources */,
+				06198F371DA2C73F00138F73 /* vsip_svsub_li.c in Sources */,
 				06308D13150BB7EC00EF9D00 /* vsip_vmin_d.c in Sources */,
 				06308D14150BB7EC00EF9D00 /* vsip_vmin_f.c in Sources */,
 				06308D15150BB7EC00EF9D00 /* vsip_vminmg_d.c in Sources */,
@@ -11497,10 +12132,13 @@
 				06308D64150BB7EC00EF9D00 /* vsip_vramp_i.c in Sources */,
 				06308D65150BB7EC00EF9D00 /* vsip_vramp_si.c in Sources */,
 				06308D66150BB7EC00EF9D00 /* vsip_vramp_uc.c in Sources */,
+				06198F9D1DA2C91A00138F73 /* jvsip_ceil.c in Sources */,
 				06308D67150BB7EC00EF9D00 /* vsip_vramp_vi.c in Sources */,
+				06198F901DA2C74000138F73 /* vsip_vcopy_i_li.c in Sources */,
 				06308D68150BB7EC00EF9D00 /* vsip_vrandn_d.c in Sources */,
 				06308D69150BB7EC00EF9D00 /* vsip_vrandn_f.c in Sources */,
 				06308D6A150BB7EC00EF9D00 /* vsip_vrandu_d.c in Sources */,
+				06198FE51DA2C98800138F73 /* vsip_vputattrib_li.c in Sources */,
 				06308D6B150BB7EC00EF9D00 /* vsip_vrandu_f.c in Sources */,
 				06308D6C150BB7EC00EF9D00 /* vsip_vreal_d.c in Sources */,
 				06308D6D150BB7EC00EF9D00 /* vsip_vreal_f.c in Sources */,
@@ -11512,6 +12150,7 @@
 				06308D73150BB7EC00EF9D00 /* vsip_vrect_f.c in Sources */,
 				06308D74150BB7EC00EF9D00 /* vsip_vrsqrt_d.c in Sources */,
 				06308D75150BB7EC00EF9D00 /* vsip_vrsqrt_f.c in Sources */,
+				06198F561DA2C73F00138F73 /* vsip_blockdestroy_li.c in Sources */,
 				06308D76150BB7EC00EF9D00 /* vsip_vsam_d.c in Sources */,
 				06308D77150BB7EC00EF9D00 /* vsip_vsam_f.c in Sources */,
 				06308D78150BB7EC00EF9D00 /* vsip_vsbm_d.c in Sources */,
@@ -11530,6 +12169,7 @@
 				06308D85150BB7EC00EF9D00 /* vsip_vsma_d.c in Sources */,
 				06308D86150BB7EC00EF9D00 /* vsip_vsma_f.c in Sources */,
 				06308D87150BB7EC00EF9D00 /* vsip_vsmsa_d.c in Sources */,
+				06198F851DA2C74000138F73 /* vsip_vnot_li.c in Sources */,
 				06308D88150BB7EC00EF9D00 /* vsip_vsmsa_f.c in Sources */,
 				06308D89150BB7EC00EF9D00 /* vsip_vsortip_d.c in Sources */,
 				06308D8A150BB7EC00EF9D00 /* vsip_vsortip_f.c in Sources */,
@@ -11540,6 +12180,8 @@
 				06308D8F150BB7EC00EF9D00 /* vsip_vsub_d.c in Sources */,
 				06308D90150BB7EC00EF9D00 /* vsip_vsub_f.c in Sources */,
 				06308D91150BB7EC00EF9D00 /* vsip_vsub_i.c in Sources */,
+				06198F791DA2C74000138F73 /* vsip_vhisto_li.c in Sources */,
+				06198F401DA2C73F00138F73 /* vsip_tgetylength_li.c in Sources */,
 				06308D92150BB7EC00EF9D00 /* vsip_vsub_si.c in Sources */,
 				06308D93150BB7EC00EF9D00 /* vsip_vsub_uc.c in Sources */,
 				06308D94150BB7EC00EF9D00 /* vsip_vsubview_bl.c in Sources */,
@@ -11553,11 +12195,13 @@
 				06308D9C150BB7EC00EF9D00 /* vsip_vsumsqval_d.c in Sources */,
 				06308D9D150BB7EC00EF9D00 /* vsip_vsumsqval_f.c in Sources */,
 				06308D9E150BB7EC00EF9D00 /* vsip_vsumval_bl.c in Sources */,
+				06198FD71DA2C98700138F73 /* vsip_mrowview_li.c in Sources */,
 				06308D9F150BB7EC00EF9D00 /* vsip_vsumval_d.c in Sources */,
 				06308DA0150BB7EC00EF9D00 /* vsip_vsumval_f.c in Sources */,
 				06308DA1150BB7EC00EF9D00 /* vsip_vsumval_i.c in Sources */,
 				06308DA2150BB7EC00EF9D00 /* vsip_vsumval_si.c in Sources */,
 				06308DA3150BB7EC00EF9D00 /* vsip_vsumval_uc.c in Sources */,
+				06198FD81DA2C98700138F73 /* vsip_msub_li.c in Sources */,
 				06308DA4150BB7EC00EF9D00 /* vsip_vswap_d.c in Sources */,
 				06308DA5150BB7EC00EF9D00 /* vsip_vswap_f.c in Sources */,
 				06308DA6150BB7EC00EF9D00 /* vsip_vswap_i.c in Sources */,
@@ -11567,6 +12211,7 @@
 				06308DAA150BB7EC00EF9D00 /* vsip_vtan_f.c in Sources */,
 				06308DAB150BB7EC00EF9D00 /* vsip_vtanh_d.c in Sources */,
 				06308DAC150BB7EC00EF9D00 /* vsip_vtanh_f.c in Sources */,
+				06198F921DA2C74000138F73 /* vsip_vcopy_d_li.c in Sources */,
 				06308DB5150BB7EC00EF9D00 /* vsip_vxor_bl.c in Sources */,
 				06308DB6150BB7EC00EF9D00 /* vsip_vxor_i.c in Sources */,
 				06308DB7150BB7EC00EF9D00 /* vsip_vxor_si.c in Sources */,
@@ -11586,6 +12231,7 @@
 				0604AC1A151A424600DF6A91 /* vsip_rcfir_reset_f.c in Sources */,
 				0604AC1C151A424600DF6A91 /* vsip_rcfirflt_f.c in Sources */,
 				0604AC1E151A599200DF6A91 /* vsip_rcfir_getattr_f.c in Sources */,
+				06198FE71DA2C98800138F73 /* vsip_vputstride_li.c in Sources */,
 				0604AC20151A62CD00DF6A91 /* vsip_rcfir_reset_d.c in Sources */,
 				0604AC24151A62EC00DF6A91 /* vsip_rcfirflt_d.c in Sources */,
 				0604AC26151A62FC00DF6A91 /* vsip_rcfir_destroy_d.c in Sources */,
@@ -11593,8 +12239,10 @@
 				0604AC2A151A631C00DF6A91 /* vsip_rcfir_getattr_d.c in Sources */,
 				0672482E15978A22002AD475 /* vsip_mfill_uc.c in Sources */,
 				06BA61A116DEBB5600C78C00 /* vsip_cmpermute_once_f.c in Sources */,
+				06198ECB1DA2C66F00138F73 /* vsip_mrandu_f.c in Sources */,
 				06BA61A316DEBB6500C78C00 /* vsip_cmpermute_once_d.c in Sources */,
 				061C291A17249E8200773972 /* jvsip_svd_f.c in Sources */,
+				06198F781DA2C74000138F73 /* vsip_vgetoffset_li.c in Sources */,
 				06BF696E172EF232008B99BB /* jvsip_svd_d.c in Sources */,
 				06BF6985172F3214008B99BB /* vsip_vminval_vi.c in Sources */,
 				06BF6987172F3214008B99BB /* vsip_vminval_i.c in Sources */,
