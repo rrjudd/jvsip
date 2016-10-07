@@ -1,5 +1,17 @@
+Current Xcode is  Version 8.0 (8A218a)
 jvsipF
 The jvsipF directory contains an xcode project which should allow one to create
 a framework, called jvsipF, with a jvsip library. I am not sure this will work
 when translated to an apple computer other than my own; so your mileage
 may vary.
+
+vsip
+The vsip directory contains an xcode project which should allow one to create 
+a framework called vsip.  The vsip framework should create a module style framework 
+for use with swift.  A simple example target (vsipExampleAdd) is included. This a work in
+progress.  There is much I do not understand about modules.
+Naming is set up so that vsip.h can be used for the umbrella header.
+In Xcode for the 'vsip' target in "Build Settings" under "Packaging" 
+   "Defines Module"
+Should be set to "yes".  This causes Xcode to create the module file in the Framework
+hierarchy. 
