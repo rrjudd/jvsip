@@ -15,3 +15,7 @@ In Xcode for the 'vsip' target in "Build Settings" under "Packaging"
    "Defines Module"
 Should be set to "yes".  This causes Xcode to create the module file in the Framework
 hierarchy. 
+
+SwiftVsip
+This is a very preliminary example of a VSIP Swift Module.  Need to include vsip module
+above to build.  Code Objectizes vsipl and lets the ARC handle destroys.
