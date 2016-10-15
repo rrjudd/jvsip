@@ -2179,7 +2179,6 @@
 		0604AC25151A62FC00DF6A91 /* vsip_rcfir_destroy_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_rcfir_destroy_d.c; sourceTree = "<group>"; };
 		0604AC27151A630A00DF6A91 /* vsip_rcfir_create_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_rcfir_create_d.c; sourceTree = "<group>"; };
 		0604AC29151A631C00DF6A91 /* vsip_rcfir_getattr_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_rcfir_getattr_d.c; sourceTree = "<group>"; };
-		0612633E1DA7F21A00AA48EA /* vsip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vsip.framework; path = ../../../../../../../Library/Frameworks/vsip.framework; sourceTree = "<group>"; };
 		06198EB81DA2C61100138F73 /* vsip_svlge_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlge_d.c; sourceTree = "<group>"; };
 		06198EB91DA2C61100138F73 /* vsip_svlge_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlge_f.c; sourceTree = "<group>"; };
 		06198EBA1DA2C61100138F73 /* vsip_svlgt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlgt.c; sourceTree = "<group>"; };
@@ -4338,14 +4337,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0612633D1DA7F21A00AA48EA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0612633E1DA7F21A00AA48EA /* vsip.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		061990321DA565B400138F73 /* vsipExampleAdd */ = {
 			isa = PBXGroup;
 			children = (
@@ -4360,7 +4351,6 @@
 				06307E4D150BB71E00EF9D00 /* vsip */,
 				061990321DA565B400138F73 /* vsipExampleAdd */,
 				06307E45150BB71E00EF9D00 /* Products */,
-				0612633D1DA7F21A00AA48EA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
