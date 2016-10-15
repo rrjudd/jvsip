@@ -8,11 +8,11 @@
 
 import Foundation
 import vsip
-class Rand {
+public class Rand {
     var vsip : OpaquePointer? = nil
     let jInit : JVSIP
     var myId : NSNumber?
-    init(seed: vsip_index, numberOfSubSequences: vsip_index, mySequence: vsip_index, portable: Bool){
+    public init(seed: vsip_index, numberOfSubSequences: vsip_index, mySequence: vsip_index, portable: Bool){
         let rng = portable ? VSIP_PRNG : VSIP_NPRNG
         let id = mySequence
         let numprocs = numberOfSubSequences
@@ -20,10 +20,10 @@ class Rand {
         jInit = JVSIP()
         myId = jInit.myId
     }
-    convenience init(seed: vsip_index, portable: Bool){
+    public convenience init(seed: vsip_index, portable: Bool){
         self.init(seed: seed, numberOfSubSequences: 1, mySequence: 1, portable: portable)
     }
-    func randu(_ view: Vector) -> Vector{
+    public func randu(_ view: Vector) -> Vector{
         let definedTypes: Set = ["f","d","cf","cd"]
         let t = view.type.rawValue
         assert(definedTypes.contains(t), "Random only defined for real or complex float values")
@@ -41,7 +41,7 @@ class Rand {
         }
         return view
     }
-    func randu(_ view: Matrix) -> Matrix{
+    public func randu(_ view: Matrix) -> Matrix{
         let definedTypes: Set = ["f","d","cf","cd"]
         let t = view.type.rawValue
         assert(definedTypes.contains(t), "Random only defined for real or complex float values")
@@ -59,7 +59,7 @@ class Rand {
         }
         return view
     }
-    func randn(_ view: Vector) -> Vector {
+    public func randn(_ view: Vector) -> Vector {
         let definedTypes: Set = ["f","d","cf","cd"]
         let t = view.type.rawValue
         assert(definedTypes.contains(t), "Random only defined for real or complex float values")
@@ -77,7 +77,7 @@ class Rand {
         }
         return view
     }
-    func randn(_ view: Matrix) -> Matrix {
+    public func randn(_ view: Matrix) -> Matrix {
         let definedTypes: Set = ["f","d","cf","cd"]
         let t = view.type.rawValue
         assert(definedTypes.contains(t), "Random only defined for real or complex float values")

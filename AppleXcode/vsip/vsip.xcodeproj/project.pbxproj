@@ -4341,6 +4341,7 @@
 			isa = PBXGroup;
 			children = (
 				061990331DA565B400138F73 /* main.swift */,
+				06307E45150BB71E00EF9D00 /* Products */,
 			);
 			path = vsipExampleAdd;
 			sourceTree = "<group>";
@@ -4350,7 +4351,6 @@
 			children = (
 				06307E4D150BB71E00EF9D00 /* vsip */,
 				061990321DA565B400138F73 /* vsipExampleAdd */,
-				06307E45150BB71E00EF9D00 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -4361,6 +4361,7 @@
 				061990311DA565B400138F73 /* vsipExampleAdd */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		06307E4D150BB71E00EF9D00 /* vsip */ = {

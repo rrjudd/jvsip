@@ -10,8 +10,8 @@ import Foundation
 import vsip
 
 //MARK: Block Class
- class Block {
-     enum Types: String{
+ public class Block {
+     public enum Types: String{
         case f
         case d
         case cf
@@ -241,9 +241,9 @@ import vsip
         }
     }
     // MARK: Block Attributes
-    fileprivate(set) var type: Block.Types
+    fileprivate(set) public var type: Block.Types
     fileprivate(set) var jVsip : AnyObject?
-    fileprivate(set) var length : vsip_length
+    fileprivate(set) public var length : vsip_length
     fileprivate var owner = true
     var myId : NSNumber?
     let blockTypeSel = ["f":Block.Types.f,"block_f":Block.Types.f,
@@ -258,7 +258,7 @@ import vsip
                         "mi":Block.Types.mi,"block_mi":Block.Types.mi,
                         "bl":Block.Types.bl,"block_bl":Block.Types.bl]
     // create normal block
-     init(length : vsip_length, type : String){
+     public init(length : vsip_length, type : String){
         switch blockTypeSel[type]! {
         case .f:
             let b = Block_f(length : length)
@@ -312,7 +312,7 @@ import vsip
         self.init(length: length, type: type.rawValue)
     }
     // create special block for derived blocks
-     init(block : Block, cVsipDerivedBlock : OpaquePointer){
+     public init(block : Block, cVsipDerivedBlock : OpaquePointer){
         self.length = block.length
         self.owner = false
         switch block.type{
@@ -371,20 +371,20 @@ import vsip
     }
     
     // Return JVSIP Swift View object.  Allows block.bind for shape vector
-    func bind(_ offset : vsip_offset,
+    public func bind(_ offset : vsip_offset,
               stride : vsip_stride,
               length : vsip_length) -> Vector {
         return Vector(block: self, offset: offset, stride: stride, length: length)
     }
     // Return JVSIP Swift View object.  Allows block.bind for shape matrix
-    func bind(_ offset : vsip_offset,
+    public func bind(_ offset : vsip_offset,
               columnStride : vsip_stride, columnLength : vsip_length,
               rowStride : vsip_stride, rowLength : vsip_length) -> Matrix {
         return Matrix(block: self, offset: offset,
                       columnStride: columnStride, columnLength: columnLength,
                       rowStride: rowStride, rowLength: rowLength)
     }
-    func vector() -> Vector{
+    public func vector() -> Vector{
         return self.bind(0, stride: 1, length: self.length)
     }
     

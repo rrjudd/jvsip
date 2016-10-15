@@ -8,7 +8,7 @@
 
 import Foundation
 import vsip
-class View {
+public class View {
     let sBlock: Block
     let shape : String
     var type: Block.Types{
@@ -17,7 +17,7 @@ class View {
     let jInit : JVSIP
     var myId = NSNumber(value: 0 as Int32)
     // Used to initialize a derived JVSIP View object
-    init(block: Block, shape: String){
+    public init(block: Block, shape: String){
         sBlock = block
         self.shape = shape
         jInit = JVSIP()
@@ -38,7 +38,7 @@ class View {
             return (nil,nil)
         }
     }
-    func imag(_ vsip: OpaquePointer) -> (Block?, OpaquePointer?){
+    public func imag(_ vsip: OpaquePointer) -> (Block?, OpaquePointer?){
         let t = "vector" == shape
         switch self.type{
         case .cf:
@@ -55,7 +55,7 @@ class View {
     }
     
     // MARK: Attribute get/put options
-    func get(_ vsip:OpaquePointer, index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+    public func get(_ vsip:OpaquePointer, index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
         let t = self.type
         switch t{
         case .f:
@@ -85,7 +85,7 @@ class View {
             return (nil, nil, nil)
         }
     }
-    func get(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+    public func get(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
         let t = self.type
         switch t{
         case .f:
@@ -110,7 +110,7 @@ class View {
             return (nil, nil, nil)
         }
     }
-    func put(_ vsip:OpaquePointer, index: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
+    public func put(_ vsip:OpaquePointer, index: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
         let t = self.type
         switch t{
         case .f:
@@ -147,7 +147,7 @@ class View {
              break
         }
     }
-    func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
+    public func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
         let t = self.type
         switch t{
         case .f:
@@ -180,7 +180,7 @@ class View {
         }
     }
     // MARK: Conversion to String and Print
-    func scalarString(_ format : String, value : (Block.Types?, NSNumber?, NSNumber?)) -> String{
+    public func scalarString(_ format : String, value : (Block.Types?, NSNumber?, NSNumber?)) -> String{
         var retval = ""
         switch value.0!{
         case .f:
@@ -212,7 +212,7 @@ class View {
         }
         return retval
     }
-    func formatFmt(_ fmt: String) -> String{
+    public func formatFmt(_ fmt: String) -> String{
         var retval = ""
         func charCheck(_ char: Character) -> Bool {
             let validChars = "0123456789."

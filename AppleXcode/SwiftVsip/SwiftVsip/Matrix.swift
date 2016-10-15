@@ -9,14 +9,14 @@
 import Foundation
 import vsip
 
-class Matrix : View {
+public class Matrix : View {
     var vsip: OpaquePointer?
     // matrix bind
     // matrix create
     // Matrix bind returns vsip object (may be null on malloc failure)
-     func mBind(_ offset : vsip_index,
-                       columnStride : vsip_stride, columnLength : vsip_length,
-                       rowStride : vsip_stride, rowLength : vsip_length) -> OpaquePointer? {
+    public func mBind(_ offset : vsip_index,
+                      columnStride : vsip_stride, columnLength : vsip_length,
+                      rowStride : vsip_stride, rowLength : vsip_length) -> OpaquePointer? {
         let blk = self.sBlock.vsip
         let t = self.sBlock.type
         switch t{
@@ -52,10 +52,10 @@ class Matrix : View {
             return nil
         }
     }
-     init(block: Block, offset: vsip_offset, columnStride: vsip_stride, columnLength: vsip_length, rowStride: vsip_stride, rowLength: vsip_length){
+    public init(block: Block, offset: vsip_offset, columnStride: vsip_stride, columnLength: vsip_length, rowStride: vsip_stride, rowLength: vsip_length){
         super.init(block: block, shape: "matrix")
         self.vsip = self.mBind(offset, columnStride: columnStride, columnLength: columnLength, rowStride: rowStride, rowLength: rowLength)}
-     convenience init(columnLength :vsip_length, rowLength: vsip_length, type : String, major : vsip_major){
+    public convenience init(columnLength :vsip_length, rowLength: vsip_length, type : String, major : vsip_major){
         let N = rowLength * columnLength
         let blk = Block(length: N, type: type)
         if major == VSIP_COL {
@@ -65,7 +65,7 @@ class Matrix : View {
         }
     }
     // create view to hold derived subview
-    init(block: Block, cView: OpaquePointer){
+    public init(block: Block, cView: OpaquePointer){
         super.init(block: block, shape: "matrix")
         self.vsip = cView
     }
@@ -123,7 +123,7 @@ class Matrix : View {
         }
     }
     // MARK: Attributes
-     var offset: vsip_offset {
+    public var offset: vsip_offset {
         get{
             switch self.type {
             case .f :
@@ -173,7 +173,7 @@ class Matrix : View {
             }
         }
     }
-     var rowStride: vsip_stride{
+    public var rowStride: vsip_stride{
         get{
             switch self.type {
             case .f :
@@ -215,7 +215,7 @@ class Matrix : View {
             }
         }
     }
-     var columnStride: vsip_stride{
+    public var columnStride: vsip_stride{
         get{
             switch self.type {
             case .f :
@@ -257,7 +257,7 @@ class Matrix : View {
             }
         }
     }
-     var rowLength: vsip_length{
+    public var rowLength: vsip_length{
         get{
             switch self.type {
             case .f :
@@ -299,7 +299,7 @@ class Matrix : View {
             }
         }
     }
-     var columnLength: vsip_length{
+    public var columnLength: vsip_length{
         get{
             switch self.type {
             case .f :
@@ -341,7 +341,7 @@ class Matrix : View {
             }
         }
     }
-     var real: Matrix {
+    public var real: Matrix {
         get{
             let ans = super.real(self.vsip!) // C VSIP real view
             let blk = ans.0!
@@ -350,7 +350,7 @@ class Matrix : View {
             
         }
     }
-     var imag: Matrix{
+    public var imag: Matrix{
         get{
             let ans = super.imag(self.vsip!) // C VSIP imag view
             let blk = ans.0!
@@ -358,7 +358,7 @@ class Matrix : View {
             return Matrix(block: blk, cView: v)
         }
     }
-     subscript(rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+    subscript(rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
         get{
             return super.get(self.vsip!, rowIndex: rowIndex, columnIndex: columnIndex)
         }
@@ -366,7 +366,7 @@ class Matrix : View {
             super.put(self.vsip!, rowIndex: rowIndex, columnIndex: columnIndex, value: value)
         }
     }
-     subscript() -> (Block.Types?, NSNumber?, NSNumber?){
+    subscript() -> (Block.Types?, NSNumber?, NSNumber?){
         get{
             return self[0,0]
         }
@@ -375,7 +375,7 @@ class Matrix : View {
         }
     }
     // MARK: Data Generators
-     func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
+    public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
         switch self.type{
         case .d:
             vsip_mfill_d(value.1!.doubleValue,self.vsip!)
@@ -397,7 +397,7 @@ class Matrix : View {
             break
         }
     }
-     func fill(_ value: NSNumber){
+    public func fill(_ value: NSNumber){
         switch self.type{
         case .d:
             vsip_mfill_d(value.doubleValue,self.vsip!)
@@ -419,31 +419,31 @@ class Matrix : View {
             break
         }
     }
-     func fill(_ value: vsip_cscalar_d){
+    public func fill(_ value: vsip_cscalar_d){
         self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
     }
-     func fill(_ value: vsip_cscalar_f){
+    public func fill(_ value: vsip_cscalar_f){
         self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
     }
     
-     func randn(_ seed: vsip_index, portable: Bool) -> Matrix{
+    public func randn(_ seed: vsip_index, portable: Bool) -> Matrix{
         let state = Rand(seed: seed, portable: portable)
         state.randn(self)
         return self
     }
-     func randu(_ seed: vsip_index, portable: Bool) -> Matrix{
+    public func randu(_ seed: vsip_index, portable: Bool) -> Matrix{
         let state = Rand(seed: seed, portable: portable)
         state.randu(self)
         return self
     }
     // create empty Matrix of same type and view size. New data space created, created as row major
-     var empty: Matrix?{
+    public var empty: Matrix?{
         return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: self.type.rawValue, major: VSIP_ROW)
     }
-     func empty(_ type: String) -> Matrix{
+    public func empty(_ type: String) -> Matrix{
         return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: self.type.rawValue, major: VSIP_ROW)
     }
-     var copy: Matrix? {
+    public var copy: Matrix? {
         let view = self.empty
         assert(view != nil, "Allocation Error")
         switch view!.type{
@@ -462,7 +462,7 @@ class Matrix : View {
         }
         return view
     }
-     func copy(_ output: Matrix) -> Matrix{
+    public func copy(_ output: Matrix) -> Matrix{
         let t1 = self.type.rawValue
         let t2 = output.type.rawValue
         let t = t1+t2
@@ -494,12 +494,12 @@ class Matrix : View {
         }
         return output
     }
-     var clone: Matrix? {
+    public var clone: Matrix? {
         return Matrix(block: self.sBlock, offset: self.offset, columnStride: self.columnStride, columnLength: self.columnLength, rowStride: self.rowStride, rowLength: self.rowLength)
     }
     
     // MARK: Print
-     func mString(_ format: String) -> String {
+    public func mString(_ format: String) -> String {
         let fmt = formatFmt(format)
         var retval = ""
         let m = self.columnLength - 1
@@ -516,7 +516,7 @@ class Matrix : View {
         }
         return retval
     }
-     func mPrint(_ format: String){
+    public func mPrint(_ format: String){
         let m = mString(format)
         print(m)
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 import vsip
-class Vsip {
+public class Vsip {
     fileprivate static func sizeEqual(_ check: Vector, against: Vector) -> Bool{
         return check.length == against.length
     }
@@ -17,7 +17,7 @@ class Vsip {
     }
     
     // MARK:  - Elementary Math Functions
-    static func acos(_ input: Vector, output: Vector) {
+    public static func acos(_ input: Vector, output: Vector) {
         assert(sizeEqual(input, against: output), "vectors must be the same size")
         switch (input.type, output.type) {
         case (.f, .f):
@@ -28,7 +28,7 @@ class Vsip {
             precondition(false, "function not supported for this type vector")
         }
     }
-    static func acos(_ input: Matrix, output: Matrix) {
+    public static func acos(_ input: Matrix, output: Matrix) {
         assert(sizeEqual(input, against: output), "vectors must be the same size")
         switch (input.type, output.type) {
         case (.f, .f):
@@ -39,7 +39,7 @@ class Vsip {
             precondition(false, "function not supported for this type vector")
         }
     }
-    static func asin(_ input: Vector, output: Vector) {
+    public static func asin(_ input: Vector, output: Vector) {
         assert(sizeEqual(input, against: output), "vectors must be the same size")
         switch (input.type, output.type) {
         case (.f, .f):
@@ -50,7 +50,7 @@ class Vsip {
             precondition(false, "function not supported for this type vector")
         }
     }
-    static func asin(_ input: Matrix, output: Matrix) {
+    public static func asin(_ input: Matrix, output: Matrix) {
         assert(sizeEqual(input, against: output), "vectors must be the same size")
         switch (input.type, output.type) {
         case (.f, .f):
@@ -61,7 +61,7 @@ class Vsip {
             precondition(false, "function not supported for this type vector")
         }
     }
-    static func atan(_ input: Vector, output: Vector) {
+    public static func atan(_ input: Vector, output: Vector) {
         assert(sizeEqual(input, against: output), "View sizes must be the same")
         switch input.type {
         case .f:
@@ -73,7 +73,7 @@ class Vsip {
             break
         }
     }
-    static func atan(_ input: Matrix, output: Matrix) {
+    public static func atan(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -86,7 +86,7 @@ class Vsip {
             break
         }
     }
-    static func atan2(_ numerator: Vector, denominator: Vector, output: Vector) {
+    public static func atan2(_ numerator: Vector, denominator: Vector, output: Vector) {
         let tn = numerator.type
         let td = denominator.type
         let to = output.type
@@ -103,7 +103,7 @@ class Vsip {
         }
         
     }
-    static func atan2(_ numerator: Matrix, denominator: Matrix, output: Matrix) {
+    public static func atan2(_ numerator: Matrix, denominator: Matrix, output: Matrix) {
         let tn = numerator.type
         let td = denominator.type
         let to = output.type
@@ -120,7 +120,7 @@ class Vsip {
         }
         
     }
-    static func cos(_ input: Vector, output: Vector) {
+    public static func cos(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -133,7 +133,7 @@ class Vsip {
             break
         }
     }
-    static func cos(_ input: Matrix, output: Matrix) {
+    public static func cos(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -146,7 +146,7 @@ class Vsip {
             break
         }
     }
-    static func cosh(_ input: Vector, output: Vector) {
+    public static func cosh(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -159,7 +159,7 @@ class Vsip {
             break
         }
     }
-    static func cosh(_ input: Matrix, output: Matrix) {
+    public static func cosh(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -172,7 +172,7 @@ class Vsip {
             break
         }
     }
-    static func sin(_ input: Vector, output: Vector) {
+    public static func sin(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -185,7 +185,7 @@ class Vsip {
             break
         }
     }
-    static func sin(_ input: Matrix, output: Matrix) {
+    public static func sin(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -198,7 +198,7 @@ class Vsip {
             break
         }
     }
-    static func sinh(_ input: Vector, output: Vector) {
+    public static func sinh(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -211,7 +211,7 @@ class Vsip {
             break
         }
     }
-    static func sinh(_ input: Matrix, output: Matrix) {
+    public static func sinh(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -224,7 +224,7 @@ class Vsip {
             break
         }
     }
-    static func exp(_ input: Vector, output: Vector) {
+    public static func exp(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -241,7 +241,7 @@ class Vsip {
             break
         }
     }
-    static func exp(_ input: Matrix, output: Matrix) {
+    public static func exp(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -258,7 +258,7 @@ class Vsip {
             break
         }
     }
-    static func exp10(_ input: Vector, output: Vector) {
+    public static func exp10(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -271,7 +271,7 @@ class Vsip {
             break
         }
     }
-    static func exp10(_ input: Matrix, output: Matrix) {
+    public static func exp10(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -284,7 +284,7 @@ class Vsip {
             break
         }
     }
-    static func log(_ input: Vector, output: Vector) {
+    public static func log(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -301,7 +301,7 @@ class Vsip {
             break
         }
     }
-    static func log(_ input: Matrix, output: Matrix) {
+    public static func log(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -318,7 +318,7 @@ class Vsip {
             break
         }
     }
-    static func log10(_ input: Vector, output: Vector) {
+    public static func log10(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -331,7 +331,7 @@ class Vsip {
             break
         }
     }
-    static func log10(_ input: Matrix, output: Matrix) {
+    public static func log10(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -344,7 +344,7 @@ class Vsip {
             break
         }
     }
-    static func sqrt(_ input: Vector, output: Vector) {
+    public static func sqrt(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -361,7 +361,7 @@ class Vsip {
             break
         }
     }
-    static func sqrt(_ input: Matrix, output: Matrix) {
+    public static func sqrt(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -378,7 +378,7 @@ class Vsip {
             break
         }
     }
-    static func tan(_ input: Vector, output: Vector) {
+    public static func tan(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -391,7 +391,7 @@ class Vsip {
             break
         }
     }
-    static func tan(_ input: Matrix, output: Matrix) {
+    public static func tan(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -404,7 +404,7 @@ class Vsip {
             break
         }
     }
-    static func tanh(_ input: Vector, output: Vector) {
+    public static func tanh(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -417,7 +417,7 @@ class Vsip {
             break
         }
     }
-    static func tanh(_ input: Matrix, output: Matrix) {
+    public static func tanh(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -432,7 +432,7 @@ class Vsip {
     }
     
     // MARK: - Unary Functions
-    static func arg(_ input: Vector, output: Vector) {
+    public static func arg(_ input: Vector, output: Vector) {
         let type = (input.type, output.type)
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch type {
@@ -444,7 +444,7 @@ class Vsip {
             precondition(false, "function not supported for input/output views")
         }
     }
-    static func arg(_ input: Matrix, output: Matrix) {
+    public static func arg(_ input: Matrix, output: Matrix) {
         let type = (input.type, output.type)
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch type {
@@ -456,7 +456,7 @@ class Vsip {
             precondition(false, "function not supported for input/output views")
         }
     }
-    static func ceil(_ input: Vector, output: Vector){
+    public static func ceil(_ input: Vector, output: Vector){
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch (input.type, output.type) {
         case (.d, .d):
@@ -472,7 +472,7 @@ class Vsip {
             break
         }
     }
-    static func ceil(_ input: Matrix, output: Matrix){
+    public static func ceil(_ input: Matrix, output: Matrix){
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch (input.type, output.type) {
         case (.d, .d):
@@ -489,7 +489,7 @@ class Vsip {
         }
         
     }
-    static func conj(_ input: Vector, output: Vector) {
+    public static func conj(_ input: Vector, output: Vector) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -502,7 +502,7 @@ class Vsip {
             break
         }
     }
-    static func conj(_ input: Matrix, output: Matrix) {
+    public static func conj(_ input: Matrix, output: Matrix) {
         assert(input.type == output.type, "View types must agree")
         assert(sizeEqual(input, against: output), "Views must be the same size")
         switch input.type {
@@ -515,7 +515,7 @@ class Vsip {
             break
         }
     }
-    static func neg(_ input: Vector, output: Vector){
+    public static func neg(_ input: Vector, output: Vector){
         assert(sizeEqual(input, against: output), "View size of input an output must be equal for neg")
         assert(input.type == output.type, "View types of input and output must be the same for neg")
         switch input.type {
@@ -539,7 +539,7 @@ class Vsip {
         }
         
     }
-    static func neg(_ input: Matrix, output: Matrix){
+    public static func neg(_ input: Matrix, output: Matrix){
         assert(sizeEqual(input, against: output), "View size of input an output must be equal for neg")
         assert(input.type == output.type, "View types of input and output must be the same for neg")
         switch input.type {
@@ -557,7 +557,7 @@ class Vsip {
         }
         
     }
-    static func sumval(_ input: Vector) -> (Block.Types?, NSNumber?, NSNumber?){
+    public static func sumval(_ input: Vector) -> (Block.Types?, NSNumber?, NSNumber?){
         switch input.type {
         case .d:
             return (.d, NSNumber(value: vsip_vsumval_d(input.vsip!) as Double), nil)
@@ -578,7 +578,7 @@ class Vsip {
             break
         }
     }
-    static func sumval(_ input: Matrix) -> (Block.Types?, NSNumber?, NSNumber?){
+    public static func sumval(_ input: Matrix) -> (Block.Types?, NSNumber?, NSNumber?){
         switch input.type {
         case .d:
             return (.d, NSNumber(value: vsip_msumval_d(input.vsip!) as Double), nil)
@@ -599,7 +599,7 @@ class Vsip {
     }
     
     // MARK: - Binary Functions
-    static func add(_ one: Vector, to: Vector, resultsIn: Vector) {
+    public static func add(_ one: Vector, to: Vector, resultsIn: Vector) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
         assert(to.type == resultsIn.type, "Output view type not compliant with input")
         switch one.type {
@@ -641,7 +641,7 @@ class Vsip {
         }
         
     }
-    static func add(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
+    public static func add(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
         assert(to.type == resultsIn.type, "Output view type not compliant with input")
         switch one.type {
@@ -678,20 +678,20 @@ class Vsip {
             break
         }
     }
-    static func add(_ aScalar: Double, toAVector: Vector, resultIn: Vector){
+    public static func add(_ aScalar: Double, toAVector: Vector, resultIn: Vector){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
         Vsip.add(aNumber, toAVector: toAVector, resultIn: resultIn)
         
     }
-    static func add(_ aScalar: Float, toAVector: Vector, resultIn: Vector){
+    public static func add(_ aScalar: Float, toAVector: Vector, resultIn: Vector){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
         Vsip.add(aNumber, toAVector: toAVector, resultIn: resultIn)
     }
-    static func add(_ aScalar: Int, toAVector: Vector, resultIn: Vector){
+    public static func add(_ aScalar: Int, toAVector: Vector, resultIn: Vector){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.i, aScalar as NSNumber?, nil)
         Vsip.add(aNumber, toAVector: toAVector, resultIn: resultIn)
     }
-    static func add(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAVector: Vector, resultIn: Vector){
+    public static func add(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAVector: Vector, resultIn: Vector){
         assert(toAVector.type == resultIn.type, "View types must agrees")
         let t = toAVector.type
         switch t {
@@ -744,16 +744,16 @@ class Vsip {
         }
         
     }
-    static func add(_ aScalar: Double, toAMatrix: Matrix, resultIn: Matrix){
+    public static func add(_ aScalar: Double, toAMatrix: Matrix, resultIn: Matrix){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
         Vsip.add(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
         
     }
-    static func add(_ aScalar: Float, toAMatrix: Matrix, resultIn: Matrix){
+    public static func add(_ aScalar: Float, toAMatrix: Matrix, resultIn: Matrix){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
         Vsip.add(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
     }
-    static func add(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAMatrix: Matrix, resultIn: Matrix){
+    public static func add(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAMatrix: Matrix, resultIn: Matrix){
         assert(toAMatrix.type == resultIn.type, "View types must agrees")
         let t = toAMatrix.type
         switch t {
@@ -797,7 +797,7 @@ class Vsip {
         
     }
     
-    static func mull(_ one: Vector, to: Vector, resultsIn: Vector) {
+    public static func mull(_ one: Vector, to: Vector, resultsIn: Vector) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
         switch (one.type, to.type, resultsIn.type) {
         case (.f,.f,.f):
@@ -825,7 +825,7 @@ class Vsip {
         }
         
     }
-    static func mul(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
+    public static func mul(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
         switch (one.type, to.type, resultsIn.type) {
         case (.f, .f, .f):
@@ -844,20 +844,20 @@ class Vsip {
             precondition(false, "function not supported for input/output views")
         }
     }
-    static func mul(_ aScalar: Double, toAVector: Vector, resultIn: Vector){
+    public static func mul(_ aScalar: Double, toAVector: Vector, resultIn: Vector){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
         Vsip.mul(aNumber, toAVector: toAVector, resultIn: resultIn)
         
     }
-    static func mul(_ aScalar: Float, toAVector: Vector, resultIn: Vector){
+    public static func mul(_ aScalar: Float, toAVector: Vector, resultIn: Vector){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
         Vsip.mul(aNumber, toAVector: toAVector, resultIn: resultIn)
     }
-    static func mul(_ aScalar: Int, toAVector: Vector, resultIn: Vector){
+    public static func mul(_ aScalar: Int, toAVector: Vector, resultIn: Vector){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.i, aScalar as NSNumber?, nil)
         Vsip.mul(aNumber, toAVector: toAVector, resultIn: resultIn)
     }
-    static func mul(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAVector: Vector, resultIn: Vector){
+    public static func mul(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAVector: Vector, resultIn: Vector){
         let t = (aScalar.0!, resultIn.type)
         switch t {
         case (.f,.f):
@@ -897,16 +897,16 @@ class Vsip {
         }
         
     }
-    static func mul(_ aScalar: Double, toAMatrix: Matrix, resultIn: Matrix){
+    public static func mul(_ aScalar: Double, toAMatrix: Matrix, resultIn: Matrix){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
         Vsip.mul(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
         
     }
-    static func mul(_ aScalar: Float, toAMatrix: Matrix, resultIn: Matrix){
+    public static func mul(_ aScalar: Float, toAMatrix: Matrix, resultIn: Matrix){
         let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
         Vsip.mul(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
     }
-    static func mul(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAMatrix: Matrix, resultIn: Matrix){
+    public static func mul(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAMatrix: Matrix, resultIn: Matrix){
         assert(sizeEqual(toAMatrix, against: resultIn),"Views must be the same size")
         let t = (aScalar.0!,toAMatrix.type)
         switch t {
@@ -946,11 +946,11 @@ class Vsip {
     // MARK: - QRD
     
     // MARK: - SVD
-    class Svd {
+    public class Svd {
         let type: Block.Types
         let n: vsip_length  // length of singular value vector
         fileprivate let jVsip : sv?
-        struct Attrib {
+        public struct Attrib {
             let m: vsip_length
             let n: vsip_length
             let saveU: vsip_svd_uv
@@ -1041,7 +1041,7 @@ class Vsip {
             }
         }
         
-        init(type: Block.Types, m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+        public init(type: Block.Types, m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
             self.n = (m<n) ? m:n
             self.type = type
             self.attr = Attrib(columnLength: m, rowLength: n, saveU: saveU, saveV: saveV)
@@ -1059,10 +1059,10 @@ class Vsip {
                 assert(false, "SVD not supported for this type")
             }
         }
-        convenience init(view: Matrix, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+        public convenience init(view: Matrix, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
             self.init(type: view.type, m: view.columnLength, n: view.rowLength, saveU: saveU, saveV: saveV)
         }
-        convenience init(view: Matrix){
+        public convenience init(view: Matrix){
             self.init(type: view.type, m: view.columnLength, n: view.rowLength, saveU: VSIP_SVD_UVFULL, saveV: VSIP_SVD_UVFULL)
         }
         var vsip: OpaquePointer? {
@@ -1071,7 +1071,7 @@ class Vsip {
         var s: OpaquePointer? {// singular values
             return self.jVsip!.s
         }
-        func decompose(_ matrix: Matrix, vector: Vector) -> Vector{
+        public func decompose(_ matrix: Matrix, vector: Vector) -> Vector{
             switch (self.type, matrix.type, vector.type){
             case (.d, .d, .d):
                 vsip_svd_d(self.vsip!, matrix.vsip!, self.s!)
@@ -1090,11 +1090,11 @@ class Vsip {
             }
             return vector
         }
-        func decompose(_ matrix: Matrix) -> Vector? {
+        public func decompose(_ matrix: Matrix) -> Vector? {
             let v = Vector(length: self.n, type: self.type)
             return self.decompose(matrix, vector: v)
         }
-        func matU(_ lowColumn: UInt, highColumn: UInt, matU: Matrix?) -> Int {
+        public func matU(_ lowColumn: UInt, highColumn: UInt, matU: Matrix?) -> Int {
             let low = CUnsignedLong(lowColumn)
             let high = CUnsignedLong(highColumn)
             let vsipSv = self.vsip!
@@ -1129,7 +1129,7 @@ class Vsip {
                 }
             }
         }
-        func matV(_ lowColumn: UInt, highColumn: UInt, matV: Matrix?) -> Int {
+        public func matV(_ lowColumn: UInt, highColumn: UInt, matV: Matrix?) -> Int {
             let low = CUnsignedLong(lowColumn)
             let high = CUnsignedLong(highColumn)
             let vsipSv = self.vsip!

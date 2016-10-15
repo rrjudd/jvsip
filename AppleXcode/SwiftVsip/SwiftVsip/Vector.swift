@@ -8,10 +8,10 @@
 
 import Foundation
 import vsip
-class Vector : View {
+public class Vector : View {
     var vsip: OpaquePointer?
     // vector bind
-    func vBind(_ offset : vsip_index, stride : vsip_stride, length : vsip_length) -> OpaquePointer? {
+    public func vBind(_ offset : vsip_index, stride : vsip_stride, length : vsip_length) -> OpaquePointer? {
         let blk = self.sBlock.vsip
         let t = self.sBlock.type
         switch t {
@@ -39,21 +39,21 @@ class Vector : View {
             return vsip_vbind_bl(blk, offset, stride, length)
         }
     }
-    init(block: Block, offset: vsip_offset, stride: vsip_stride, length: vsip_length){
+    public init(block: Block, offset: vsip_offset, stride: vsip_stride, length: vsip_length){
         super.init(block: block, shape: "vector")
         self.vsip = self.vBind(offset, stride: stride, length: length)
     }
     // vector create
-    convenience init(length : vsip_length, type : String){
+    public convenience init(length : vsip_length, type : String){
         let blk = Block(length: length, type: type)
         self.init(block: blk, offset: 0, stride: 1, length: length)
     }
-    convenience init(length : vsip_length, type : Block.Types){
+    public convenience init(length : vsip_length, type : Block.Types){
         let blk = Block(length: length, type: type)
         self.init(block: blk, offset: 0, stride: 1, length: length)
     }
     // create view to hold derived subview
-    init(block: Block, cView: OpaquePointer){
+    public init(block: Block, cView: OpaquePointer){
         super.init(block: block, shape: "vector")
         self.vsip = cView
     }
@@ -119,7 +119,7 @@ class Vector : View {
         }
     }
     // MARK: Attributes
-    var offset: vsip_offset {
+    public var offset: vsip_offset {
         get{
             switch self.type {
             case .f :
@@ -173,7 +173,7 @@ class Vector : View {
             }
         }
     }
-    var stride: vsip_stride {
+    public var stride: vsip_stride {
         get{
             switch self.type {
             case .f :
@@ -227,7 +227,7 @@ class Vector : View {
             }
         }
     }
-    var length: vsip_length {
+    public var length: vsip_length {
         get{
             switch self.type {
             case .f :
@@ -282,7 +282,7 @@ class Vector : View {
         }
     }
     // MARK: sub views
-    var real: Vector{
+    public var real: Vector{
         get{
             let ans = super.real(self.vsip!) // C VSIP real view
             let blk = ans.0!
@@ -291,7 +291,7 @@ class Vector : View {
             
         }
     }
-    var imag: Vector{
+    public var imag: Vector{
         get{
             let ans = super.imag(self.vsip!) // C VSIP imag view
             let blk = ans.0!
@@ -301,7 +301,7 @@ class Vector : View {
         }
     }
     // vector subscript operator
-    subscript(index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?) {
+    public subscript(index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?) {
         get{
             return super.get(self.vsip!, index: index)
         }
@@ -309,7 +309,7 @@ class Vector : View {
             super.put(self.vsip!, index: index, value: value)
         }
     }
-    subscript() -> (Block.Types?, NSNumber?, NSNumber?){
+    public subscript() -> (Block.Types?, NSNumber?, NSNumber?){
         get{
             return self[0]
         }
@@ -318,7 +318,7 @@ class Vector : View {
         }
     }
     // MARK: data generators
-    func ramp(_ start : NSNumber, increment : NSNumber) -> Vector {
+    public func ramp(_ start : NSNumber, increment : NSNumber) -> Vector {
         switch self.type {
         case .d:
             vsip_vramp_d(start.doubleValue, increment.doubleValue, self.vsip!)
@@ -337,39 +337,39 @@ class Vector : View {
         }
         return self
     }
-    func ramp(_ start : Double, increment : Double) -> Vector {
+    public func ramp(_ start : Double, increment : Double) -> Vector {
         let s = NSNumber( value: start)
         let i = NSNumber( value: increment)
         return ramp(s, increment: i)
     }
-    func ramp(_ start : Float, increment : Float) -> Vector {
-        let s = NSNumber( value: start)
-        let i = NSNumber( value: increment)
-        return ramp(s, increment: i)
-    }
-
-    func ramp(_ start : Int, increment : Int) -> Vector {
+    public func ramp(_ start : Float, increment : Float) -> Vector {
         let s = NSNumber( value: start)
         let i = NSNumber( value: increment)
         return ramp(s, increment: i)
     }
     
-    func ramp(_ start : UInt, increment : UInt) -> Vector {
+    public func ramp(_ start : Int, increment : Int) -> Vector {
         let s = NSNumber( value: start)
         let i = NSNumber( value: increment)
         return ramp(s, increment: i)
     }
-    func ramp(_ start : vsip_scalar_si, increment : vsip_scalar_si) -> Vector {
+    
+    public func ramp(_ start : UInt, increment : UInt) -> Vector {
         let s = NSNumber( value: start)
         let i = NSNumber( value: increment)
         return ramp(s, increment: i)
     }
-    func ramp(_ start : UInt8, increment : UInt8) -> Vector {
+    public func ramp(_ start : vsip_scalar_si, increment : vsip_scalar_si) -> Vector {
         let s = NSNumber( value: start)
         let i = NSNumber( value: increment)
         return ramp(s, increment: i)
     }
-    func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
+    public func ramp(_ start : UInt8, increment : UInt8) -> Vector {
+        let s = NSNumber( value: start)
+        let i = NSNumber( value: increment)
+        return ramp(s, increment: i)
+    }
+    public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
         switch self.type{
         case .d:
             vsip_vfill_d(value.1!.doubleValue,self.vsip!)
@@ -393,7 +393,7 @@ class Vector : View {
             break
         }
     }
-    func fill(_ value: NSNumber){
+    public func fill(_ value: NSNumber){
         switch self.type{
         case .d:
             vsip_vfill_d(value.doubleValue,self.vsip!)
@@ -417,36 +417,36 @@ class Vector : View {
             break
         }
     }
-    func fill(_ value: vsip_cscalar_d){
+    public func fill(_ value: vsip_cscalar_d){
         self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
     }
-    func fill(_ value: vsip_cscalar_f){
+    public func fill(_ value: vsip_cscalar_f){
         self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
     }
-    func randn(_ seed: vsip_index, portable: Bool) -> Vector {
+    public func randn(_ seed: vsip_index, portable: Bool) -> Vector {
         let state = Rand(seed: seed, portable: portable)
         state.randn(self)
         return self
     }
-    func randn(_ seed: vsip_index) -> Vector {
+    public func randn(_ seed: vsip_index) -> Vector {
         return self.randn(seed, portable: true)
     }
-    func randu(_ seed: vsip_index, portable: Bool) -> Vector{
+    public func randu(_ seed: vsip_index, portable: Bool) -> Vector{
         let state = Rand(seed: seed, portable: portable)
         state.randu(self)
         return self
     }
-    func randu(_ seed: vsip_index) -> Vector {
+    public func randu(_ seed: vsip_index) -> Vector {
         return self.randu(seed, portable: true)
     }
     // create empty vector of same type and view size. New data space created
-    var empty: Vector?{
+    public var empty: Vector?{
         return Vector(length: self.length, type: self.type.rawValue)
     }
-    func empty(_ type: String) -> Vector{
+    public func empty(_ type: String) -> Vector{
         return Vector(length: self.length, type: type)
     }
-    var copy: Vector? {
+    public var copy: Vector? {
         let view = self.empty
         assert(view != nil, "Allocation Error")
         switch view!.type{
@@ -471,7 +471,7 @@ class Vector : View {
         }
         return view
     }
-    func copy(_ output: Vector) -> Vector{
+    public func copy(_ output: Vector) -> Vector{
         let t1 = self.type.rawValue
         let t2 = output.type.rawValue
         let t = t1+t2
@@ -521,11 +521,11 @@ class Vector : View {
         }
         return output
     }
-    var clone: Vector? {
+    public var clone: Vector? {
         return Vector(block: self.sBlock, offset: self.offset, stride: self.stride, length: self.length)
     }
     // MARK: Print
-    func mString(_ format: String) -> String {
+    public func mString(_ format: String) -> String {
         let fmt = formatFmt(format)
         var retval = ""
         let n = self.length - 1
@@ -536,12 +536,12 @@ class Vector : View {
         }
         return retval
     }
-    func mPrint(_ format: String){
+    public func mPrint(_ format: String){
         let m = mString(format)
         print(m)
     }
     // MARK: Elementary Functions
-    func acos(_ out: Vector) -> Vector {
+    public func acos(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vacos_d(self.vsip!, out.vsip!)
@@ -552,7 +552,7 @@ class Vector : View {
         }
         return out
     }
-    func asin(_ out: Vector) -> Vector {
+    public func asin(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vasin_d(self.vsip!, out.vsip!)
@@ -563,7 +563,7 @@ class Vector : View {
         }
         return out
     }
-    func atan(_ out: Vector) -> Vector {
+    public func atan(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vatan_d(self.vsip!, out.vsip!)
@@ -574,7 +574,7 @@ class Vector : View {
         }
         return out
     }
-    func cos(_ out: Vector) -> Vector {
+    public func cos(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vcos_d(self.vsip!, out.vsip!)
@@ -585,7 +585,7 @@ class Vector : View {
         }
         return out
     }
-    func sin(_ out: Vector) -> Vector {
+    public func sin(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vasin_d(self.vsip!, out.vsip!)
@@ -596,7 +596,7 @@ class Vector : View {
         }
         return out
     }
-    func tan(_ out: Vector) -> Vector {
+    public func tan(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vtan_d(self.vsip!, out.vsip!)
@@ -607,7 +607,7 @@ class Vector : View {
         }
         return out
     }
-    func exp(_ out: Vector) -> Vector {
+    public func exp(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vexp_d(self.vsip!, out.vsip!)
@@ -618,7 +618,7 @@ class Vector : View {
         }
         return out
     }
-    func exp10(_ out: Vector) -> Vector {
+    public func exp10(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vexp10_d(self.vsip!, out.vsip!)
@@ -629,7 +629,7 @@ class Vector : View {
         }
         return out
     }
-    func log(_ out: Vector) -> Vector {
+    public func log(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vlog_d(self.vsip!, out.vsip!)
@@ -639,7 +639,7 @@ class Vector : View {
             return out
         }
         return out    }
-    func log10(_ out: Vector) -> Vector {
+    public func log10(_ out: Vector) -> Vector {
         switch self.type{
         case .d:
             vsip_vlog10_d(self.vsip!, out.vsip!)
@@ -651,7 +651,7 @@ class Vector : View {
         return out    }
     
     // MARK: Binary Functions
-    func add(_ to: Vector, resultIn: Vector) -> Vector{
+    public func add(_ to: Vector, resultIn: Vector) -> Vector{
         switch self.type{
         case .f:
             vsip_vadd_f(self.vsip!, to.vsip!, resultIn.vsip!)
@@ -676,7 +676,7 @@ class Vector : View {
         }
         return resultIn
     }
-    func sub(_ from: Vector, resultIn: Vector) -> Vector{
+    public func sub(_ from: Vector, resultIn: Vector) -> Vector{
         switch self.type{
         case .f:
             vsip_vsub_f(self.vsip!, from.vsip!, resultIn.vsip!)
@@ -699,4 +699,4 @@ class Vector : View {
     }
 }
 
-   
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:JVExVector"
+      name = "JVExVector">
+      <FileRef
+         location = "group:JVExVector.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:SwiftVsip"
+      name = "SwiftVsip">
+      <FileRef
+         location = "group:SwiftVsip.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:vsip"
+      name = "vsip">
+      <FileRef
+         location = "group:vsip.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
