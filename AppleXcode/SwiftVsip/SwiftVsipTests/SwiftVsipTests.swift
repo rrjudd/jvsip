@@ -11,16 +11,6 @@ import XCTest
 
 class SwiftVsipTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -33,12 +23,16 @@ class SwiftVsipTests: XCTestCase {
         }
     }
     func testVector() {
-        let v = Vector(length: 10, type: .cd)
-        v.randn(8)
+        var v = Vector(length: 10, type: .cd)
+        let _ = v.randn(8)
         v.mPrint("4.3")
         v.real.mPrint("4.3")
         v.imag.mPrint("4.3")
-        
+        Vsip.add(v.real, to: v.imag, resultsIn: v.real)
+        v.mPrint("4.3")
+        v.randn(9).mPrint("4.3")
+        v = Vector(length: 11, type: .cf)
+        v.randu(11).mPrint("5.4")
     }
     
 }

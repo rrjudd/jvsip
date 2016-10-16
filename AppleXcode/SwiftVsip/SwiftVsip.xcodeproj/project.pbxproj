@@ -14,7 +14,6 @@
 		061263851DA8039200AA48EA /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612637E1DA8039200AA48EA /* Block.swift */; };
 		061263861DA8039200AA48EA /* Jvsip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612637F1DA8039200AA48EA /* Jvsip.swift */; };
 		061263871DA8039200AA48EA /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263801DA8039200AA48EA /* Matrix.swift */; };
-		061263881DA8039200AA48EA /* Rand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263811DA8039200AA48EA /* Rand.swift */; };
 		061263891DA8039200AA48EA /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263821DA8039200AA48EA /* Vector.swift */; };
 		0612638A1DA8039200AA48EA /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263831DA8039200AA48EA /* View.swift */; };
 		0612638B1DA8039200AA48EA /* Vsip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263841DA8039200AA48EA /* Vsip.swift */; };
@@ -42,7 +41,6 @@
 		0612637E1DA8039200AA48EA /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		0612637F1DA8039200AA48EA /* Jvsip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jvsip.swift; sourceTree = "<group>"; };
 		061263801DA8039200AA48EA /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
-		061263811DA8039200AA48EA /* Rand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rand.swift; sourceTree = "<group>"; };
 		061263821DA8039200AA48EA /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		061263831DA8039200AA48EA /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		061263841DA8039200AA48EA /* Vsip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vsip.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				0612637E1DA8039200AA48EA /* Block.swift */,
 				0612637F1DA8039200AA48EA /* Jvsip.swift */,
 				061263801DA8039200AA48EA /* Matrix.swift */,
-				061263811DA8039200AA48EA /* Rand.swift */,
 				061263821DA8039200AA48EA /* Vector.swift */,
 				061263831DA8039200AA48EA /* View.swift */,
 				061263841DA8039200AA48EA /* Vsip.swift */,
@@ -239,7 +236,6 @@
 				061263851DA8039200AA48EA /* Block.swift in Sources */,
 				0612638A1DA8039200AA48EA /* View.swift in Sources */,
 				061263891DA8039200AA48EA /* Vector.swift in Sources */,
-				061263881DA8039200AA48EA /* Rand.swift in Sources */,
 				061263871DA8039200AA48EA /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -467,6 +463,7 @@
 				061263771DA8023500AA48EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		061263781DA8023500AA48EA /* Build configuration list for PBXNativeTarget "SwiftVsipTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +472,7 @@
 				0612637A1DA8023500AA48EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

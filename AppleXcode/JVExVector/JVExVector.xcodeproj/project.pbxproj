@@ -63,8 +63,8 @@
 		06B82A241DB2770E00508112 /* JVExVector */ = {
 			isa = PBXGroup;
 			children = (
-				06B82A251DB2770F00508112 /* main.swift */,
 				06B82A2C1DB2779D00508112 /* JVVector.swift */,
+				06B82A251DB2770F00508112 /* main.swift */,
 			);
 			path = JVExVector;
 			sourceTree = "<group>";

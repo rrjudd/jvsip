@@ -424,7 +424,7 @@ public class Vector : View {
         self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
     }
     public func randn(_ seed: vsip_index, portable: Bool) -> Vector {
-        let state = Rand(seed: seed, portable: portable)
+        let state = Vsip.Rand(seed: seed, portable: portable)
         state.randn(self)
         return self
     }
@@ -432,7 +432,7 @@ public class Vector : View {
         return self.randn(seed, portable: true)
     }
     public func randu(_ seed: vsip_index, portable: Bool) -> Vector{
-        let state = Rand(seed: seed, portable: portable)
+        let state = Vsip.Rand(seed: seed, portable: portable)
         state.randu(self)
         return self
     }

@@ -427,12 +427,12 @@ public class Matrix : View {
     }
     
     public func randn(_ seed: vsip_index, portable: Bool) -> Matrix{
-        let state = Rand(seed: seed, portable: portable)
+        let state = Vsip.Rand(seed: seed, portable: portable)
         state.randn(self)
         return self
     }
     public func randu(_ seed: vsip_index, portable: Bool) -> Matrix{
-        let state = Rand(seed: seed, portable: portable)
+        let state = Vsip.Rand(seed: seed, portable: portable)
         state.randu(self)
         return self
     }
