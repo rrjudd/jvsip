@@ -39,16 +39,16 @@ public class Vector : View {
             return vsip_vbind_bl(blk, offset, stride, length)
         }
     }
-    public init(block: Block, offset: vsip_offset, stride: vsip_stride, length: vsip_length){
+    public init(block: Block, offset: Int, stride: Int, length: Int){
         super.init(block: block, shape: "vector")
-        self.vsip = self.vBind(offset, stride: stride, length: length)
+        self.vsip = self.vBind(vsip_offset(offset), stride: vsip_stride(stride), length: vsip_length(length))
     }
     // vector create
-    public convenience init(length : vsip_length, type : String){
+    public convenience init(length : Int, type : String){
         let blk = Block(length: length, type: type)
         self.init(block: blk, offset: 0, stride: 1, length: length)
     }
-    public convenience init(length : vsip_length, type : Block.Types){
+    public convenience init(length : Int, type : Block.Types){
         let blk = Block(length: length, type: type)
         self.init(block: blk, offset: 0, stride: 1, length: length)
     }
@@ -119,165 +119,165 @@ public class Vector : View {
         }
     }
     // MARK: Attributes
-    public var offset: vsip_offset {
+    public var offset: Int {
         get{
             switch self.type {
             case .f :
-                return vsip_vgetoffset_f(self.vsip!)
+                return Int(vsip_vgetoffset_f(self.vsip!))
             case .d :
-                return vsip_vgetoffset_d(self.vsip!)
+                return Int(vsip_vgetoffset_d(self.vsip!))
             case .cf :
-                return vsip_cvgetoffset_f(self.vsip!)
+                return Int(vsip_cvgetoffset_f(self.vsip!))
             case .cd :
-                return vsip_cvgetoffset_d(self.vsip!)
+                return Int(vsip_cvgetoffset_d(self.vsip!))
             case .si :
-                return vsip_vgetoffset_si(self.vsip!)
+                return Int(vsip_vgetoffset_si(self.vsip!))
             case .i :
-                return vsip_vgetoffset_i(self.vsip!)
+                return Int(vsip_vgetoffset_i(self.vsip!))
             case .li :
-                return vsip_vgetoffset_li(self.vsip!)
+                return Int(vsip_vgetoffset_li(self.vsip!))
             case .uc :
-                return vsip_vgetoffset_uc(self.vsip!)
+                return Int(vsip_vgetoffset_uc(self.vsip!))
             case .vi :
-                return vsip_vgetoffset_vi(self.vsip!)
+                return Int(vsip_vgetoffset_vi(self.vsip!))
             case .mi :
-                return vsip_vgetoffset_mi(self.vsip!)
+                return Int(vsip_vgetoffset_mi(self.vsip!))
             case .bl :
-                return vsip_vgetoffset_bl(self.vsip!)
+                return Int(vsip_vgetoffset_bl(self.vsip!))
             }
         }
         set(offset){
             switch self.type {
             case .f :
-                vsip_vputoffset_f(self.vsip!, offset)
+                vsip_vputoffset_f(self.vsip!, vsip_offset(offset))
             case .d :
-                vsip_vputoffset_d(self.vsip!, offset)
+                vsip_vputoffset_d(self.vsip!, vsip_offset(offset))
             case .cf :
-                vsip_cvputoffset_f(self.vsip!, offset)
+                vsip_cvputoffset_f(self.vsip!, vsip_offset(offset))
             case .cd :
-                vsip_cvputoffset_d(self.vsip!, offset)
+                vsip_cvputoffset_d(self.vsip!, vsip_offset(offset))
             case .si :
-                vsip_vputoffset_si(self.vsip!, offset)
+                vsip_vputoffset_si(self.vsip!, vsip_offset(offset))
             case .i :
-                vsip_vputoffset_i(self.vsip!, offset)
+                vsip_vputoffset_i(self.vsip!, vsip_offset(offset))
             case .li :
-                vsip_vputoffset_li(self.vsip!, offset)
+                vsip_vputoffset_li(self.vsip!, vsip_offset(offset))
             case .uc :
-                vsip_vputoffset_uc(self.vsip!, offset)
+                vsip_vputoffset_uc(self.vsip!, vsip_offset(offset))
             case .mi :
-                vsip_vputoffset_mi(self.vsip!, offset)
+                vsip_vputoffset_mi(self.vsip!, vsip_offset(offset))
             case .vi :
-                vsip_vputoffset_vi(self.vsip!, offset)
+                vsip_vputoffset_vi(self.vsip!, vsip_offset(offset))
             case .bl :
-                vsip_vputoffset_bl(self.vsip!, offset)
+                vsip_vputoffset_bl(self.vsip!, vsip_offset(offset))
             }
         }
     }
-    public var stride: vsip_stride {
+    public var stride: Int {
         get{
             switch self.type {
             case .f :
-                return vsip_vgetstride_f(self.vsip!)
+                return Int(vsip_vgetstride_f(self.vsip!))
             case .d :
-                return vsip_vgetstride_d(self.vsip!)
+                return Int(vsip_vgetstride_d(self.vsip!))
             case .cf :
-                return vsip_cvgetstride_f(self.vsip!)
+                return Int(vsip_cvgetstride_f(self.vsip!))
             case .cd :
-                return vsip_cvgetstride_d(self.vsip!)
+                return Int(vsip_cvgetstride_d(self.vsip!))
             case .si :
-                return vsip_vgetstride_si(self.vsip!)
+                return Int(vsip_vgetstride_si(self.vsip!))
             case .i :
-                return vsip_vgetstride_i(self.vsip!)
+                return Int(vsip_vgetstride_i(self.vsip!))
             case .li :
-                return vsip_vgetstride_li(self.vsip!)
+                return Int(vsip_vgetstride_li(self.vsip!))
             case .uc :
-                return vsip_vgetstride_uc(self.vsip!)
+                return Int(vsip_vgetstride_uc(self.vsip!))
             case .vi :
-                return vsip_vgetstride_vi(self.vsip!)
+                return Int(vsip_vgetstride_vi(self.vsip!))
             case .mi :
-                return vsip_vgetstride_mi(self.vsip!)
+                return Int(vsip_vgetstride_mi(self.vsip!))
             case .bl :
-                return vsip_vgetstride_bl(self.vsip!)
+                return Int(vsip_vgetstride_bl(self.vsip!))
             }
         }
         set(stride){
             switch self.type {
             case .f :
-                vsip_vputstride_f(self.vsip!, stride)
+                vsip_vputstride_f(self.vsip!, vsip_stride(stride))
             case .d :
-                vsip_vputstride_d(self.vsip!, stride)
+                vsip_vputstride_d(self.vsip!, vsip_stride(stride))
             case .cf :
-                vsip_cvputstride_f(self.vsip!, stride)
+                vsip_cvputstride_f(self.vsip!, vsip_stride(stride))
             case .cd :
-                vsip_cvputstride_d(self.vsip!, stride)
+                vsip_cvputstride_d(self.vsip!, vsip_stride(stride))
             case .si :
-                vsip_vputstride_si(self.vsip!, stride)
+                vsip_vputstride_si(self.vsip!, vsip_stride(stride))
             case .i :
-                vsip_vputstride_i(self.vsip!, stride)
+                vsip_vputstride_i(self.vsip!, vsip_stride(stride))
             case .li :
-                vsip_vputstride_li(self.vsip!, stride)
+                vsip_vputstride_li(self.vsip!, vsip_stride(stride))
             case .uc :
-                vsip_vputstride_uc(self.vsip!, stride)
+                vsip_vputstride_uc(self.vsip!, vsip_stride(stride))
             case .mi :
-                vsip_vputstride_mi(self.vsip!, stride)
+                vsip_vputstride_mi(self.vsip!, vsip_stride(stride))
             case .vi :
-                vsip_vputstride_vi(self.vsip!, stride)
+                vsip_vputstride_vi(self.vsip!, vsip_stride(stride))
             case .bl :
-                vsip_vputstride_bl(self.vsip!, stride)
+                vsip_vputstride_bl(self.vsip!, vsip_stride(stride))
             }
         }
     }
-    public var length: vsip_length {
+    public var length: Int {
         get{
             switch self.type {
             case .f :
-                return vsip_vgetlength_f(self.vsip!)
+                return Int(vsip_vgetlength_f(self.vsip!))
             case .d :
-                return vsip_vgetlength_d(self.vsip!)
+                return Int(vsip_vgetlength_d(self.vsip!))
             case .cf :
-                return vsip_cvgetlength_f(self.vsip!)
+                return Int(vsip_cvgetlength_f(self.vsip!))
             case .cd :
-                return vsip_cvgetlength_d(self.vsip!)
+                return Int(vsip_cvgetlength_d(self.vsip!))
             case .si :
-                return vsip_vgetlength_si(self.vsip!)
+                return Int(vsip_vgetlength_si(self.vsip!))
             case .i :
-                return vsip_vgetlength_i(self.vsip!)
+                return Int(vsip_vgetlength_i(self.vsip!))
             case .li :
-                return vsip_vgetlength_li(self.vsip!)
+                return Int(vsip_vgetlength_li(self.vsip!))
             case .uc :
-                return vsip_vgetlength_uc(self.vsip!)
+                return Int(vsip_vgetlength_uc(self.vsip!))
             case .vi :
-                return vsip_vgetlength_vi(self.vsip!)
+                return Int(vsip_vgetlength_vi(self.vsip!))
             case .mi :
-                return vsip_vgetlength_mi(self.vsip!)
+                return Int(vsip_vgetlength_mi(self.vsip!))
             case .bl :
-                return vsip_vgetlength_bl(self.vsip!)
+                return Int(vsip_vgetlength_bl(self.vsip!))
             }
         }
         set(length){
             switch self.type {
             case .f :
-                vsip_vputlength_f(self.vsip!, length)
+                vsip_vputlength_f(self.vsip!, vsip_length(length))
             case .d :
-                vsip_vputlength_d(self.vsip!, length)
+                vsip_vputlength_d(self.vsip!, vsip_length(length))
             case .cf :
-                vsip_cvputlength_f(self.vsip!, length)
+                vsip_cvputlength_f(self.vsip!, vsip_length(length))
             case .cd :
-                vsip_cvputlength_d(self.vsip!, length)
+                vsip_cvputlength_d(self.vsip!, vsip_length(length))
             case .si :
-                vsip_vputlength_si(self.vsip!, length)
+                vsip_vputlength_si(self.vsip!, vsip_length(length))
             case .i :
-                vsip_vputlength_i(self.vsip!, length)
+                vsip_vputlength_i(self.vsip!, vsip_length(length))
             case .li :
-                vsip_vputlength_li(self.vsip!, length)
+                vsip_vputlength_li(self.vsip!, vsip_length(length))
             case .uc :
-                vsip_vputlength_uc(self.vsip!, length)
+                vsip_vputlength_uc(self.vsip!, vsip_length(length))
             case .mi :
-                vsip_vputlength_mi(self.vsip!, length)
+                vsip_vputlength_mi(self.vsip!, vsip_length(length))
             case .vi :
-                vsip_vputlength_vi(self.vsip!, length)
+                vsip_vputlength_vi(self.vsip!, vsip_length(length))
             case .bl :
-                vsip_vputlength_bl(self.vsip!, length)
+                vsip_vputlength_bl(self.vsip!, vsip_length(length))
             }
         }
     }
@@ -301,12 +301,12 @@ public class Vector : View {
         }
     }
     // vector subscript operator
-    public subscript(index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?) {
+    public subscript(index: Int) -> (Block.Types?, NSNumber?, NSNumber?) {
         get{
-            return super.get(self.vsip!, index: index)
+            return super.get(self.vsip!, index: vsip_index(index))
         }
         set(value){
-            super.put(self.vsip!, index: index, value: value)
+            super.put(self.vsip!, index: vsip_index(index), value: value)
         }
     }
     public subscript() -> (Block.Types?, NSNumber?, NSNumber?){

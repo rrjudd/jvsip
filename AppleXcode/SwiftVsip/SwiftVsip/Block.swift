@@ -30,8 +30,8 @@ import vsip
         let jInit : JVSIP
         let precision = "f"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_f(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_f(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -66,8 +66,8 @@ import vsip
         let jInit : JVSIP
         let precision = "d"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_d(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_d(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -101,8 +101,8 @@ import vsip
         let jInit : JVSIP
         let precision = "f"
         let depth = "c"
-        init(length : vsip_length){
-            self.vsip = vsip_cblockcreate_f(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_cblockcreate_f(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -117,8 +117,8 @@ import vsip
         let jInit : JVSIP
         let precision = "f"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_cblockcreate_d(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_cblockcreate_d(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -133,8 +133,8 @@ import vsip
         let jInit : JVSIP
         let precision = "vi"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_vi(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_vi(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -149,8 +149,8 @@ import vsip
         let jInit : JVSIP
         let precision = "si"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_si(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_si(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -165,8 +165,8 @@ import vsip
         let jInit : JVSIP
         let precision = "i"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_i(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_i(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -181,8 +181,8 @@ import vsip
         let jInit : JVSIP
         let precision = "li"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_li(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_li(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -197,8 +197,8 @@ import vsip
         let jInit : JVSIP
         let precision = "bool"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_bl(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_bl(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -213,8 +213,8 @@ import vsip
         let jInit : JVSIP
         let precision = "uc"
         let depth = "r"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_uc(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_uc(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -229,8 +229,8 @@ import vsip
         let jInit : JVSIP
         let precision = "vi"
         let depth = "m"
-        init(length : vsip_length){
-            self.vsip = vsip_blockcreate_mi(length, VSIP_MEM_NONE)
+        init(length : Int){
+            self.vsip = vsip_blockcreate_mi(vsip_length(length), VSIP_MEM_NONE)
             jInit = JVSIP()
         }
         deinit{
@@ -243,7 +243,7 @@ import vsip
     // MARK: Block Attributes
     fileprivate(set) public var type: Block.Types
     fileprivate(set) var jVsip : AnyObject?
-    fileprivate(set) public var length : vsip_length
+    fileprivate(set) public var length : Int
     fileprivate var owner = true
     var myId : NSNumber?
     let blockTypeSel = ["f":Block.Types.f,"block_f":Block.Types.f,
@@ -258,7 +258,7 @@ import vsip
                         "mi":Block.Types.mi,"block_mi":Block.Types.mi,
                         "bl":Block.Types.bl,"block_bl":Block.Types.bl]
     // create normal block
-     public init(length : vsip_length, type : String){
+     public init(length : Int, type : String){
         switch blockTypeSel[type]! {
         case .f:
             let b = Block_f(length : length)
@@ -308,7 +308,7 @@ import vsip
         self.length = length
         self.type = blockTypeSel[type]!
     }
-    convenience init(length : vsip_length, type : Types){
+    convenience init(length : Int, type : Types){
         self.init(length: length, type: type.rawValue)
     }
     // create special block for derived blocks
@@ -371,15 +371,15 @@ import vsip
     }
     
     // Return JVSIP Swift View object.  Allows block.bind for shape vector
-    public func bind(_ offset : vsip_offset,
-              stride : vsip_stride,
-              length : vsip_length) -> Vector {
+    public func bind(_ offset : Int,
+              stride : Int,
+              length : Int) -> Vector {
         return Vector(block: self, offset: offset, stride: stride, length: length)
     }
     // Return JVSIP Swift View object.  Allows block.bind for shape matrix
-    public func bind(_ offset : vsip_offset,
-              columnStride : vsip_stride, columnLength : vsip_length,
-              rowStride : vsip_stride, rowLength : vsip_length) -> Matrix {
+    public func bind(_ offset : Int,
+              columnStride : Int, columnLength : Int,
+              rowStride : Int, rowLength : Int) -> Matrix {
         return Matrix(block: self, offset: offset,
                       columnStride: columnStride, columnLength: columnLength,
                       rowStride: rowStride, rowLength: rowLength)

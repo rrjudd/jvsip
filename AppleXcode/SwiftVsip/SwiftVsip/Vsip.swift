@@ -872,7 +872,7 @@ public class Vsip {
         
     }
     
-    public static func mull(_ one: Vector, to: Vector, resultsIn: Vector) {
+    public static func mul(_ one: Vector, to: Vector, resultsIn: Vector) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
         switch (one.type, to.type, resultsIn.type) {
         case (.f,.f,.f):
@@ -1014,6 +1014,28 @@ public class Vsip {
         }
         
     }
+    public static func vmmul(vector: Vector, matrix: Matrix, major: vsip_major, output: Matrix){
+        let vsipVec = vector.vsip!
+        let vsipMat = matrix.vsip!
+        let vsipOut = output.vsip!
+        let t = (vector.type, matrix.type, output.type)
+        switch t {
+        case(.cd, .cd, .cd):
+            vsip_cvmmul_d ( vsipVec, vsipMat, major, vsipOut)
+        case(.cf, .cf, .cf):
+            vsip_cvmmul_f ( vsipVec, vsipMat, major, vsipOut)
+        case(.d, .cd, .cd):
+            vsip_rvcmmul_d ( vsipVec, vsipMat, major, vsipOut)
+        case(.f, .cf, .cf):
+            vsip_rvcmmul_f ( vsipVec, vsipMat, major, vsipOut)
+        case(.d, .d, .d):
+            vsip_vmmul_d ( vsipVec, vsipMat, major, vsipOut)
+        case(.f, .f, .f):
+            vsip_vmmul_f ( vsipVec, vsipMat, major, vsipOut)
+        default:
+            precondition(false, "Argument list not supported for vmmul")
+        }
+    }
     // Mark: - Random
     public class Rand {
         var vsip : OpaquePointer? = nil
@@ -1120,15 +1142,15 @@ public class Vsip {
             precondition(false, "Type not supported for herm")
         }
     }
-    public static func jdot(_ complexInputVector: Vector?, complexOuputVector: Vector?){
+    public static func jdot(_ complexInputVector: Vector?, complexOuputVector: Vector?) -> Scalar {
         let vsipA = complexInputVector?.vsip!
         let vsipB = complexOuputVector?.vsip!
         let t = (complexInputVector!.type, complexInputVector!.type)
         switch t {
         case (.cf, .cf):
-            vsip_cvjdot_f(vsipA, vsipB)
+            return Scalar(vsip_cvjdot_f(vsipA, vsipB))
         case (.cd, .cd):
-            vsip_cvjdot_d(vsipA, vsipB)
+            return Scalar(vsip_cvjdot_d(vsipA, vsipB))
         default:
             precondition(false, "Type not supported for jdot")
         }
@@ -1223,6 +1245,24 @@ public class Vsip {
             precondition(false, "VSIP function prod3 not supported for argument list")
         }
     }
+    public static func prod3(matA: Matrix?, vecB: Vector?, vecC: Vector?){
+        let t = (matA!.type, vecB!.type, vecC!.type)
+        let vsipA = matA?.vsip!
+        let vsipB = vecB?.vsip!
+        let vsipC = vecC?.vsip!
+        switch(t){
+        case (.f, .f, .f):
+            vsip_mvprod3_f(vsipA, vsipB, vsipC)
+        case (.d, .d, .d):
+            vsip_mvprod3_d(vsipA, vsipB, vsipC)
+        case (.cf, .cf, .cf):
+            vsip_cmvprod3_f(vsipA, vsipB, vsipC)
+        case (.cd, .cd, .cd):
+            vsip_cmvprod3_d(vsipA, vsipB, vsipC)
+        default:
+            precondition(false, "VSIP function prod4 not supported for argument list")
+        }
+    }
     public static func prod4(matA: Matrix?, matB: Matrix?, matC: Matrix?){
         let t = (matA!.type, matB!.type, matC!.type)
         let vsipA = matA?.vsip!
@@ -1241,6 +1281,25 @@ public class Vsip {
             precondition(false, "VSIP function prod4 not supported for argument list")
         }
     }
+    public static func prod4(matA: Matrix?, vecB: Vector?, vecC: Vector?){
+        let t = (matA!.type, vecB!.type, vecC!.type)
+        let vsipA = matA?.vsip!
+        let vsipB = vecB?.vsip!
+        let vsipC = vecC?.vsip!
+        switch(t){
+        case (.f, .f, .f):
+            vsip_mvprod4_f(vsipA, vsipB, vsipC)
+        case (.d, .d, .d):
+            vsip_mvprod4_d(vsipA, vsipB, vsipC)
+        case (.cf, .cf, .cf):
+            vsip_cmvprod4_f(vsipA, vsipB, vsipC)
+        case (.cd, .cd, .cd):
+            vsip_cmvprod4_d(vsipA, vsipB, vsipC)
+        default:
+            precondition(false, "VSIP function prod4 not supported for argument list")
+        }
+    }
+
     public static func prod(matA: Matrix?, matB: Matrix?, matC: Matrix?){
         let t = (matA!.type, matB!.type, matC!.type)
         let vsipA = matA?.vsip!
@@ -1295,6 +1354,104 @@ public class Vsip {
             precondition(false, "VSIP function prod not supported for argument list")
         }
     }
+    public static func prodh(matA: Matrix?, matB: Matrix?, matC: Matrix?){
+        let t = (matA!.type, matB!.type, matC!.type)
+        let vsipA = matA?.vsip!
+        let vsipB = matB?.vsip!
+        let vsipC = matC?.vsip!
+        switch(t){
+        case (.cd, .cd, .cd):
+            vsip_cmprodh_d ( vsipA, vsipB, vsipC )
+        case (.cf, .cf, .cf):
+            vsip_cmprodh_f ( vsipA, vsipB, vsipC )
+        default:
+            precondition(false, "VSIP function prodh not supported for argument list")
+        }
+    }
+    public static func prodj(matA: Matrix?, matB: Matrix?, matC: Matrix?){
+        let t = (matA!.type, matB!.type, matC!.type)
+        let vsipA = matA?.vsip!
+        let vsipB = matB?.vsip!
+        let vsipC = matC?.vsip!
+        switch(t){
+        case (.cd, .cd, .cd):
+            vsip_cmprodj_d ( vsipA, vsipB, vsipC )
+        case (.cf, .cf, .cf):
+            vsip_cmprodj_f ( vsipA, vsipB, vsipC )
+        default:
+            precondition(false, "VSIP function prodj not supported for argument list")
+        }
+    }
+    public static func prodt(matA: Matrix?, matB: Matrix?, matC: Matrix?){
+        let t = (matA!.type, matB!.type, matC!.type)
+        let vsipA = matA?.vsip!
+        let vsipB = matB?.vsip!
+        let vsipC = matC?.vsip!
+        switch(t){
+        case (.cd, .cd, .cd):
+            vsip_cmprodt_d ( vsipA, vsipB, vsipC )
+        case (.cf, .cf, .cf):
+            vsip_cmprodt_f ( vsipA, vsipB, vsipC )
+        case (.d, .d, .d):
+            vsip_mprodt_d ( vsipA, vsipB, vsipC )
+        case (.f, .f, .f):
+            vsip_mprodt_f ( vsipA, vsipB, vsipC )
+        default:
+            precondition(false, "VSIP function prodt not supported for argument list")
+        }
+    }
+    public static func trans(matA: Matrix?, matC: Matrix?){
+        let t = (matA!.type, matC!.type)
+        let vsipA = matA?.vsip!
+        let vsipC = matC?.vsip!
+        switch(t) {
+        case (.cd, .cd):
+            vsip_cmtrans_d(vsipA, vsipC)
+        case(.cf, .cf):
+            vsip_cmtrans_f(vsipA, vsipC)
+        case(.d, .d):
+            vsip_mtrans_d(vsipA, vsipC)
+        case(.f, .f):
+            vsip_mtrans_f(vsipA, vsipC)
+        default:
+            precondition(false, "VSIP function trans not supported for argument list")
+        }
+    }
+    public static func dot(vecX: Vector?, vecY: Vector?) -> Scalar {
+        let t = (vecX!.type, vecY!.type)
+        let vsipX = vecX?.vsip!
+        let vsipY = vecY?.vsip!
+        switch(t){
+        case (.f, .f):
+            return Scalar(Float(vsip_vdot_f(vsipX, vsipY)))
+        case (.d, .d):
+            return Scalar(Double(vsip_vdot_d(vsipX, vsipY)))
+        case (.cf, .cf):
+            return Scalar(vsip_cvdot_f(vsipX, vsipY))
+        case (.cd, .cd):
+            return Scalar(vsip_cvdot_d(vsipX, vsipY))
+        default:
+            precondition(false, "Kron not supported for argument list")
+        }
+    }
+    public static func outer(alpha: Scalar, vecX: Vector?, vecY: Vector?, matC: Matrix?){
+        let vsipX = vecX?.vsip!
+        let vsipY = vecY?.vsip!
+        let vsipC = matC?.vsip!
+        let t = (vecX!.type, vecY!.type, matC!.type)
+        switch(t){
+        case (.f, .f, .f):
+            vsip_vouter_f(alpha.realf, vsipX, vsipY, vsipC)
+        case (.d, .d, .d):
+            vsip_vouter_d(alpha.reald, vsipX, vsipY, vsipC)
+        case (.cf, .cf, .cf):
+            vsip_cvouter_f(alpha.cmplxf, vsipX, vsipY, vsipC)
+        case (.cd, .cd, .cd):
+            vsip_cvouter_d(alpha.cmplxd, vsipX, vsipY, vsipC)
+        default:
+            precondition(false, "Function outer not supported for argument list")
+        }
+    }
     
     // MARK: - LU
     
@@ -1308,20 +1465,20 @@ public class Vsip {
      */
     public class Svd {
         let type: Block.Types
-        let n: vsip_length  // length of singular value vector
+        let n: Int  // length of singular value vector
         fileprivate let jVsip : sv?
         public struct Attrib {
-            let m: vsip_length
-            let n: vsip_length
+            let m: Int
+            let n: Int
             let saveU: vsip_svd_uv
             let saveV: vsip_svd_uv
-            init(columnLength: vsip_length, rowLength: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+            init(columnLength: Int, rowLength: Int, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
                 m=columnLength
                 n=rowLength
                 self.saveU=saveU
                 self.saveV=saveV
             }
-            var size : (vsip_length, vsip_length) {
+            var size : (Int, Int) {
                 return (m,n)
             }
         }
@@ -1336,11 +1493,11 @@ public class Vsip {
             }
         }
         fileprivate class sv_f : sv {
-            init(m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+            init(m: Int, n: Int, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
                 super.init()
                 type = .f
-                self.vsip = vsip_svd_create_f(m,n,saveU,saveV)
-                self.s = vsip_vcreate_f((m<n) ? m:n,VSIP_MEM_NONE)
+                self.vsip = vsip_svd_create_f(vsip_length(m),vsip_length(n),saveU,saveV)
+                self.s = vsip_vcreate_f(vsip_length((m<n) ? m:n),VSIP_MEM_NONE)
             }
             deinit{
                 if _isDebugAssertConfiguration(){
@@ -1352,11 +1509,11 @@ public class Vsip {
             }
         }
         fileprivate class sv_d : sv {
-            init(m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+            init(m: Int, n: Int, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
                 super.init()
                 type = .d
-                self.vsip = vsip_svd_create_d(m,n,saveU,saveV)
-                self.s = vsip_vcreate_d((m<n) ? m:n,VSIP_MEM_NONE)
+                self.vsip = vsip_svd_create_d(vsip_length(m),vsip_length(n),saveU,saveV)
+                self.s = vsip_vcreate_d(vsip_length((m<n) ? m:n),VSIP_MEM_NONE)
             }
             deinit{
                 if _isDebugAssertConfiguration(){
@@ -1368,11 +1525,11 @@ public class Vsip {
             }
         }
         fileprivate class csv_f : sv {
-            init(m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+            init(m: Int, n: Int, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
                 super.init()
                 type = .cf
-                self.vsip = vsip_csvd_create_f(m,n,saveU,saveV)
-                self.s = vsip_vcreate_f((m<n) ? m:n,VSIP_MEM_NONE)
+                self.vsip = vsip_csvd_create_f(vsip_length(m),vsip_length(n),saveU,saveV)
+                self.s = vsip_vcreate_f(vsip_length((m<n) ? m:n),VSIP_MEM_NONE)
             }
             deinit{
                 if _isDebugAssertConfiguration(){
@@ -1384,11 +1541,11 @@ public class Vsip {
             }
         }
         fileprivate class csv_d : sv {
-            init(m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+            init(m: Int, n: Int, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
                 super.init()
                 type = .cd
-                self.vsip = vsip_csvd_create_d(m,n,saveU,saveV)
-                self.s = vsip_vcreate_d((m<n) ? m:n,VSIP_MEM_NONE)
+                self.vsip = vsip_csvd_create_d(vsip_length(m),vsip_length(n),saveU,saveV)
+                self.s = vsip_vcreate_d(vsip_length((m<n) ? m:n),VSIP_MEM_NONE)
             }
             deinit{
                 if _isDebugAssertConfiguration(){
@@ -1400,7 +1557,7 @@ public class Vsip {
             }
         }
         
-        public init(type: Block.Types, m: vsip_length, n: vsip_length, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
+        public init(type: Block.Types, m: Int, n: Int, saveU: vsip_svd_uv, saveV: vsip_svd_uv){
             self.n = (m<n) ? m:n
             self.type = type
             self.attr = Attrib(columnLength: m, rowLength: n, saveU: saveU, saveV: saveV)
@@ -1459,11 +1616,11 @@ public class Vsip {
          element index (0,0). Matrix matU must be large enough to hold the
          output data
          */
-        public func matU(_ lowColumn: UInt, highColumn: UInt, matU: Matrix?) -> Int {
+        public func matU(_ lowColumn: Int, highColumn: Int, matU: Matrix?) -> Int {
             let low = vsip_scalar_vi(lowColumn)
             let high = vsip_scalar_vi(highColumn)
             assert(low <= high, "Error in column selection")
-            let highMax = matU?.rowLength
+            let highMax = vsip_scalar_vi((matU?.rowLength)!)
             let vsipSv = self.vsip! // VSIPL pointer to singular value object
             let vsipC = matU?.vsip! // VSIPL pointer to U Matrix
             if matU == nil{
@@ -1479,16 +1636,16 @@ public class Vsip {
             case (VSIP_SVD_UVFULL, .cd, .cd):
                 return Int(vsip_csvdmatu_d(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .f, .f):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_svdmatu_f(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .cf, .cf):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_csvdmatu_f(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .d, .d):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_svdmatu_d(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .cd, .cd):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_csvdmatu_d(vsipSv, low, high, vsipC))
             default:
                 if self.attr.saveU == VSIP_SVD_UVNOS{
@@ -1506,11 +1663,11 @@ public class Vsip {
          element index (0,0). Matrix matV must be large enough to hold the
          output data
          */
-        public func matV(_ lowColumn: UInt, highColumn: UInt, matV: Matrix?) -> Int {
+        public func matV(_ lowColumn: Int, highColumn: Int, matV: Matrix?) -> Int {
             let low = vsip_scalar_vi(lowColumn)
             let high = vsip_scalar_vi(highColumn)
             assert(low <= high, "Error in column selection")
-            let highMax = matV?.rowLength
+            let highMax = vsip_scalar_vi((matV?.rowLength)!)
             let vsipSv = self.vsip! // VSIPL pointer to singular value object
             let vsipC = matV?.vsip! // VSIPL pointer to V Matrix
             if matV == nil{
@@ -1526,16 +1683,16 @@ public class Vsip {
             case (VSIP_SVD_UVFULL, .cd, .cd):
                 return Int(vsip_csvdmatv_d(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .f, .f):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_svdmatv_f(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .cf, .cf):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_csvdmatv_f(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .d, .d):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_svdmatv_d(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVPART, .cd, .cd):
-                precondition(high <= highMax!, "Input matrix row length to small")
+                precondition(high <= highMax, "Input matrix row length to small")
                 return Int(vsip_csvdmatv_d(vsipSv, low, high, vsipC))
             default:
                 if self.attr.saveU == VSIP_SVD_UVNOS {

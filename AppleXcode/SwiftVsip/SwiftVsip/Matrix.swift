@@ -52,10 +52,20 @@ public class Matrix : View {
             return nil
         }
     }
-    public init(block: Block, offset: vsip_offset, columnStride: vsip_stride, columnLength: vsip_length, rowStride: vsip_stride, rowLength: vsip_length){
+    public init(block: Block, offset: Int, columnStride: Int, columnLength: Int, rowStride: Int, rowLength: Int){
         super.init(block: block, shape: "matrix")
-        self.vsip = self.mBind(offset, columnStride: columnStride, columnLength: columnLength, rowStride: rowStride, rowLength: rowLength)}
-    public convenience init(columnLength :vsip_length, rowLength: vsip_length, type : String, major : vsip_major){
+        self.vsip = self.mBind(vsip_offset(offset), columnStride: vsip_stride(columnStride), columnLength: vsip_length(columnLength), rowStride: vsip_stride(rowStride), rowLength: vsip_length(rowLength))
+    }
+    public convenience init(columnLength :Int, rowLength: Int, type : String, major : vsip_major){
+        let N = rowLength * columnLength
+        let blk = Block(length: N, type: type)
+        if major == VSIP_COL {
+            self.init(block: blk, offset: 0, columnStride: 1, columnLength: columnLength, rowStride: Int(columnLength), rowLength: rowLength)
+        } else {
+            self.init(block: blk, offset: 0, columnStride: Int(rowLength), columnLength: columnLength, rowStride: 1, rowLength: rowLength)
+        }
+    }
+    public convenience init(columnLength :Int, rowLength: Int, type : Block.Types, major : vsip_major){
         let N = rowLength * columnLength
         let blk = Block(length: N, type: type)
         if major == VSIP_COL {
@@ -123,27 +133,27 @@ public class Matrix : View {
         }
     }
     // MARK: Attributes
-    public var offset: vsip_offset {
+    public var offset: Int {
         get{
             switch self.type {
             case .f :
-                return vsip_mgetoffset_f(self.vsip!)
+                return Int(vsip_mgetoffset_f(self.vsip!))
             case .d :
-                return vsip_mgetoffset_d(self.vsip!)
+                return Int(vsip_mgetoffset_d(self.vsip!))
             case .cf :
-                return vsip_cmgetoffset_f(self.vsip!)
+                return Int(vsip_cmgetoffset_f(self.vsip!))
             case .cd :
-                return vsip_cmgetoffset_d(self.vsip!)
+                return Int(vsip_cmgetoffset_d(self.vsip!))
             case .si :
-                return vsip_mgetoffset_si(self.vsip!)
+                return Int(vsip_mgetoffset_si(self.vsip!))
             case .i :
-                return vsip_mgetoffset_i(self.vsip!)
+                return Int(vsip_mgetoffset_i(self.vsip!))
             case .li :
-                return vsip_mgetoffset_li(self.vsip!)
+                return Int(vsip_mgetoffset_li(self.vsip!))
             case .uc :
-                return vsip_mgetoffset_uc(self.vsip!)
+                return Int(vsip_mgetoffset_uc(self.vsip!))
             case .bl :
-                return vsip_mgetoffset_bl(self.vsip!)
+                return Int(vsip_mgetoffset_bl(self.vsip!))
             default:
                 return 0
             }
@@ -151,45 +161,45 @@ public class Matrix : View {
         set(offset) {
             switch self.type {
             case .f :
-                vsip_mputoffset_f(self.vsip!, offset)
+                vsip_mputoffset_f(self.vsip!, vsip_offset(offset))
             case .d :
-                vsip_mputoffset_d(self.vsip!, offset)
+                vsip_mputoffset_d(self.vsip!, vsip_offset(offset))
             case .cf :
-                vsip_cmputoffset_f(self.vsip!, offset)
+                vsip_cmputoffset_f(self.vsip!, vsip_offset(offset))
             case .cd :
-                vsip_cmputoffset_d(self.vsip!, offset)
+                vsip_cmputoffset_d(self.vsip!, vsip_offset(offset))
             case .si :
-                vsip_mputoffset_si(self.vsip!, offset)
+                vsip_mputoffset_si(self.vsip!, vsip_offset(offset))
             case .i :
-                vsip_mputoffset_i(self.vsip!, offset)
+                vsip_mputoffset_i(self.vsip!, vsip_offset(offset))
             case .li :
-                vsip_mputoffset_li(self.vsip!, offset)
+                vsip_mputoffset_li(self.vsip!, vsip_offset(offset))
             case .uc :
-                vsip_mputoffset_uc(self.vsip!, offset)
+                vsip_mputoffset_uc(self.vsip!, vsip_offset(offset))
             case .bl :
-                vsip_mputoffset_bl(self.vsip!, offset)
+                vsip_mputoffset_bl(self.vsip!, vsip_offset(offset))
             default:
                 break
             }
         }
     }
-    public var rowStride: vsip_stride{
+    public var rowStride: Int{
         get{
             switch self.type {
             case .f :
-                return vsip_mgetrowstride_f(self.vsip!)
+                return Int(vsip_mgetrowstride_f(self.vsip!))
             case .d :
-                return vsip_mgetrowstride_d(self.vsip!)
+                return Int(vsip_mgetrowstride_d(self.vsip!))
             case .cf :
-                return vsip_cmgetrowstride_f(self.vsip!)
+                return Int(vsip_cmgetrowstride_f(self.vsip!))
             case .cd :
-                return vsip_cmgetrowstride_d(self.vsip!)
+                return Int(vsip_cmgetrowstride_d(self.vsip!))
             case .i :
-                return vsip_mgetrowstride_i(self.vsip!)
+                return Int(vsip_mgetrowstride_i(self.vsip!))
             case .si :
-                return vsip_mgetrowstride_si(self.vsip!)
+                return Int(vsip_mgetrowstride_si(self.vsip!))
             case .li :
-                return vsip_mgetrowstride_li(self.vsip!)
+                return Int(vsip_mgetrowstride_li(self.vsip!))
             default :
                 return 0
             }
@@ -197,41 +207,41 @@ public class Matrix : View {
         set(stride){
             switch self.type{
             case .f :
-                vsip_mputrowstride_f(self.vsip!,stride)
+                vsip_mputrowstride_f(self.vsip!,vsip_stride(stride))
             case .d :
-                vsip_mputrowstride_d(self.vsip!,stride)
+                vsip_mputrowstride_d(self.vsip!,vsip_stride(stride))
             case .cf :
-                vsip_cmputrowstride_f(self.vsip!,stride)
+                vsip_cmputrowstride_f(self.vsip!,vsip_stride(stride))
             case .cd :
-                vsip_cmputrowstride_d(self.vsip!,stride)
+                vsip_cmputrowstride_d(self.vsip!,vsip_stride(stride))
             case .i :
-                vsip_mputrowstride_i(self.vsip!,stride)
+                vsip_mputrowstride_i(self.vsip!,vsip_stride(stride))
             case .si :
-                vsip_mputrowstride_si(self.vsip!,stride)
+                vsip_mputrowstride_si(self.vsip!,vsip_stride(stride))
             case .li :
-                vsip_mputrowstride_li(self.vsip!,stride)
+                vsip_mputrowstride_li(self.vsip!,vsip_stride(stride))
             default :
                 break
             }
         }
     }
-    public var columnStride: vsip_stride{
+    public var columnStride: Int{
         get{
             switch self.type {
             case .f :
-                return vsip_mgetcolstride_f(self.vsip!)
+                return Int(vsip_mgetcolstride_f(self.vsip!))
             case .d :
-                return vsip_mgetcolstride_d(self.vsip!)
+                return Int(vsip_mgetcolstride_d(self.vsip!))
             case .cf :
-                return vsip_cmgetcolstride_f(self.vsip!)
+                return Int(vsip_cmgetcolstride_f(self.vsip!))
             case .cd :
-                return vsip_cmgetcolstride_d(self.vsip!)
+                return Int(vsip_cmgetcolstride_d(self.vsip!))
             case .i :
-                return vsip_mgetcolstride_i(self.vsip!)
+                return Int(vsip_mgetcolstride_i(self.vsip!))
             case .si :
-                return vsip_mgetcolstride_si(self.vsip!)
+                return Int(vsip_mgetcolstride_si(self.vsip!))
             case .li :
-                return vsip_mgetcolstride_li(self.vsip!)
+                return Int(vsip_mgetcolstride_li(self.vsip!))
             default :
                 return 0
             }
@@ -239,41 +249,41 @@ public class Matrix : View {
         set(stride){
             switch self.type{
             case .f :
-                vsip_mputcolstride_f(self.vsip!,stride)
+                vsip_mputcolstride_f(self.vsip!,vsip_stride(stride))
             case .d :
-                vsip_mputcolstride_d(self.vsip!,stride)
+                vsip_mputcolstride_d(self.vsip!,vsip_stride(stride))
             case .cf :
-                vsip_cmputcolstride_f(self.vsip!,stride)
+                vsip_cmputcolstride_f(self.vsip!,vsip_stride(stride))
             case .cd :
-                vsip_cmputcolstride_d(self.vsip!,stride)
+                vsip_cmputcolstride_d(self.vsip!,vsip_stride(stride))
             case .i :
-                vsip_mputcolstride_i(self.vsip!,stride)
+                vsip_mputcolstride_i(self.vsip!,vsip_stride(stride))
             case .si :
-                vsip_mputcolstride_si(self.vsip!,stride)
+                vsip_mputcolstride_si(self.vsip!,vsip_stride(stride))
             case .li :
-                vsip_mputcolstride_li(self.vsip!,stride)
+                vsip_mputcolstride_li(self.vsip!,vsip_stride(stride))
             default :
                 break
             }
         }
     }
-    public var rowLength: vsip_length{
+    public var rowLength: Int {
         get{
             switch self.type {
             case .f :
-                return vsip_mgetrowlength_f(self.vsip!)
+                return Int(vsip_mgetrowlength_f(self.vsip!))
             case .d :
-                return vsip_mgetrowlength_d(self.vsip!)
+                return Int(vsip_mgetrowlength_d(self.vsip!))
             case .cf :
-                return vsip_cmgetrowlength_f(self.vsip!)
+                return Int(vsip_cmgetrowlength_f(self.vsip!))
             case .cd :
-                return vsip_cmgetrowlength_d(self.vsip!)
+                return Int(vsip_cmgetrowlength_d(self.vsip!))
             case .i :
-                return vsip_mgetrowlength_i(self.vsip!)
+                return Int(vsip_mgetrowlength_i(self.vsip!))
             case .si :
-                return vsip_mgetrowlength_si(self.vsip!)
+                return Int(vsip_mgetrowlength_si(self.vsip!))
             case .li :
-                return vsip_mgetrowlength_li(self.vsip!)
+                return Int(vsip_mgetrowlength_li(self.vsip!))
             default :
                 return 0
             }
@@ -281,41 +291,41 @@ public class Matrix : View {
         set(length){
             switch self.type{
             case .f :
-                vsip_mputrowlength_f(self.vsip!,length)
+                vsip_mputrowlength_f(self.vsip!,vsip_length(length))
             case .d :
-                vsip_mputrowlength_d(self.vsip!,length)
+                vsip_mputrowlength_d(self.vsip!,vsip_length(length))
             case .cf :
-                vsip_cmputrowlength_f(self.vsip!,length)
+                vsip_cmputrowlength_f(self.vsip!,vsip_length(length))
             case .cd :
-                vsip_cmputrowlength_d(self.vsip!,length)
+                vsip_cmputrowlength_d(self.vsip!,vsip_length(length))
             case .i :
-                vsip_mputrowlength_i(self.vsip!,length)
+                vsip_mputrowlength_i(self.vsip!,vsip_length(length))
             case .si :
-                vsip_mputrowlength_si(self.vsip!,length)
+                vsip_mputrowlength_si(self.vsip!,vsip_length(length))
             case .li :
-                vsip_mputrowlength_li(self.vsip!,length)
+                vsip_mputrowlength_li(self.vsip!,vsip_length(length))
             default :
                 break
             }
         }
     }
-    public var columnLength: vsip_length{
+    public var columnLength: Int{
         get{
             switch self.type {
             case .f :
-                return vsip_mgetcollength_f(self.vsip!)
+                return Int(vsip_mgetcollength_f(self.vsip!))
             case .d :
-                return vsip_mgetcollength_d(self.vsip!)
+                return Int(vsip_mgetcollength_d(self.vsip!))
             case .cf :
-                return vsip_cmgetcollength_f(self.vsip!)
+                return Int(vsip_cmgetcollength_f(self.vsip!))
             case .cd :
-                return vsip_cmgetcollength_d(self.vsip!)
+                return Int(vsip_cmgetcollength_d(self.vsip!))
             case .i :
-                return vsip_mgetcollength_i(self.vsip!)
+                return Int(vsip_mgetcollength_i(self.vsip!))
             case .si :
-                return vsip_mgetcollength_si(self.vsip!)
+                return Int(vsip_mgetcollength_si(self.vsip!))
             case .li :
-                return vsip_mgetcollength_li(self.vsip!)
+                return Int(vsip_mgetcollength_li(self.vsip!))
             default :
                 return 0
             }
@@ -323,19 +333,19 @@ public class Matrix : View {
         set(length){
             switch self.type{
             case .f :
-                vsip_mputcollength_f(self.vsip!,length)
+                vsip_mputcollength_f(self.vsip!,vsip_length(length))
             case .d :
-                vsip_mputcollength_d(self.vsip!,length)
+                vsip_mputcollength_d(self.vsip!,vsip_length(length))
             case .cf :
-                vsip_cmputcollength_f(self.vsip!,length)
+                vsip_cmputcollength_f(self.vsip!,vsip_length(length))
             case .cd :
-                vsip_cmputcollength_d(self.vsip!,length)
+                vsip_cmputcollength_d(self.vsip!,vsip_length(length))
             case .i :
-                vsip_mputcollength_i(self.vsip!,length)
+                vsip_mputcollength_i(self.vsip!,vsip_length(length))
             case .si :
-                vsip_mputcollength_si(self.vsip!,length)
+                vsip_mputcollength_si(self.vsip!,vsip_length(length))
             case .li :
-                vsip_mputcollength_li(self.vsip!,length)
+                vsip_mputcollength_li(self.vsip!,vsip_length(length))
             default :
                 break
             }
@@ -358,12 +368,12 @@ public class Matrix : View {
             return Matrix(block: blk, cView: v)
         }
     }
-    subscript(rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+    subscript(rowIndex: Int, columnIndex: Int) -> (Block.Types?, NSNumber?, NSNumber?){
         get{
-            return super.get(self.vsip!, rowIndex: rowIndex, columnIndex: columnIndex)
+            return super.get(self.vsip!, rowIndex: vsip_index(rowIndex), columnIndex: vsip_index(columnIndex))
         }
         set(value){
-            super.put(self.vsip!, rowIndex: rowIndex, columnIndex: columnIndex, value: value)
+            super.put(self.vsip!, rowIndex: vsip_index(rowIndex), columnIndex: vsip_index(columnIndex), value: value)
         }
     }
     subscript() -> (Block.Types?, NSNumber?, NSNumber?){
