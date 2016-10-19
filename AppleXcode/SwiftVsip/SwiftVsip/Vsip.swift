@@ -1466,6 +1466,7 @@ public class Vsip {
     public class Svd {
         let type: Block.Types
         let n: Int  // length of singular value vector
+        var amSet = false
         fileprivate let jVsip : sv?
         public struct Attrib {
             let m: Int
@@ -1604,6 +1605,7 @@ public class Vsip {
             default:
                 precondition(false, "function not supported for input/output views")
             }
+            self.amSet = true
         }
         public func decompose(_ matrix: Matrix) -> Vector? {
             let v = Vector(length: self.n, type: self.type)
@@ -1761,6 +1763,75 @@ public class Vsip {
                 } else {
                     precondition(false, "SVD Not supported for these types")
                     return -1
+                }
+            }
+        }
+        public var sizeU: (Int, Int){
+            get {
+                var retval = (self.attr.m, self.attr.m)
+                switch self.attr.saveU {
+                case VSIP_SVD_UVFULL:
+                    return retval
+                case VSIP_SVD_UVPART:
+                    if self.attr.m > self.attr.n {
+                        retval.1 = self.attr.n
+                    }
+                    return retval
+                default:
+                    return (0,0)
+                }
+            }
+        }
+        public var sizeV: (Int, Int){
+            get {
+                var retval = (self.attr.n, self.attr.n)
+                switch self.attr.saveU {
+                case VSIP_SVD_UVFULL:
+                    return retval
+                case VSIP_SVD_UVPART:
+                    if self.attr.n > self.attr.m {
+                        retval.1 = self.attr.m
+                    }
+                    return retval
+                default:
+                    return (0,0)
+                }
+            }
+        }
+
+        public var matU: Matrix? {
+            get {
+                if !amSet {
+                    return nil
+                }
+                if self.attr.saveU == VSIP_SVD_UVNOS {
+                    return nil
+                }
+                let (m,n) = self.sizeU
+                let mat = Matrix(columnLength: m, rowLength: n, type: self.type, major: VSIP_ROW)
+                let success = self.matU(0, highColumn: n-1, matU: mat)
+                if success == 0 {
+                     return mat
+                } else {
+                    return nil
+                }
+            }
+        }
+        public var matV: Matrix? {
+            get {
+                if !amSet {
+                    return nil
+                }
+                if self.attr.saveU == VSIP_SVD_UVNOS {
+                    return nil
+                }
+                let (m,n) = self.sizeV
+                let mat = Matrix(columnLength: m, rowLength: n, type: self.type, major: VSIP_ROW)
+                let success = self.matV(0, highColumn: n-1, matV: mat)
+                if success == 0 {
+                    return mat
+                } else {
+                    return nil
                 }
             }
         }

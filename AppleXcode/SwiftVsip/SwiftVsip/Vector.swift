@@ -11,37 +11,37 @@ import vsip
 public class Vector : View {
     var vsip: OpaquePointer?
     // vector bind
-    public func vBind(_ offset : vsip_index, stride : vsip_stride, length : vsip_length) -> OpaquePointer? {
+    public func vBind(_ offset : Int, stride : Int, length : Int) -> OpaquePointer? {
         let blk = self.sBlock.vsip
         let t = self.sBlock.type
         switch t {
         case .f:
-            return vsip_vbind_f(blk, offset, stride, length)
+            return vsip_vbind_f(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .d:
-            return vsip_vbind_d(blk, offset, stride, length)
+            return vsip_vbind_d(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .cf:
-            return vsip_cvbind_f(blk, offset, stride, length)
+            return vsip_cvbind_f(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .cd:
-            return vsip_cvbind_d(blk, offset, stride, length)
+            return vsip_cvbind_d(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .i:
-            return vsip_vbind_i(blk, offset, stride, length)
+            return vsip_vbind_i(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .li:
-            return vsip_vbind_li(blk, offset, stride, length)
+            return vsip_vbind_li(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .si:
-            return vsip_vbind_si(blk, offset, stride, length)
+            return vsip_vbind_si(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .uc:
-            return vsip_vbind_uc(blk, offset, stride, length)
+            return vsip_vbind_uc(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .vi:
-            return vsip_vbind_vi(blk, offset, stride, length)
+            return vsip_vbind_vi(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .mi:
-            return vsip_vbind_mi(blk, offset, stride, length)
+            return vsip_vbind_mi(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         case .bl:
-            return vsip_vbind_bl(blk, offset, stride, length)
+            return vsip_vbind_bl(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
         }
     }
     public init(block: Block, offset: Int, stride: Int, length: Int){
         super.init(block: block, shape: "vector")
-        self.vsip = self.vBind(vsip_offset(offset), stride: vsip_stride(stride), length: vsip_length(length))
+        self.vsip = self.vBind(offset, stride: stride, length: length)
     }
     // vector create
     public convenience init(length : Int, type : String){

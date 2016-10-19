@@ -14,39 +14,39 @@ public class Matrix : View {
     // matrix bind
     // matrix create
     // Matrix bind returns vsip object (may be null on malloc failure)
-    public func mBind(_ offset : vsip_index,
-                      columnStride : vsip_stride, columnLength : vsip_length,
-                      rowStride : vsip_stride, rowLength : vsip_length) -> OpaquePointer? {
+    public func mBind(_ offset : Int,
+                      columnStride : Int, columnLength : Int,
+                      rowStride : Int, rowLength : Int) -> OpaquePointer? {
         let blk = self.sBlock.vsip
         let t = self.sBlock.type
         switch t{
         case .f:
-            return vsip_mbind_f(blk, offset, columnStride, columnLength,
-                                rowStride, rowLength)
+            return vsip_mbind_f(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                vsip_stride(rowStride), vsip_length(rowLength))
         case .d:
-            return vsip_mbind_d(blk, offset, columnStride, columnLength,
-                                rowStride, rowLength)
+            return vsip_mbind_d(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                vsip_stride(rowStride), vsip_length(rowLength))
         case .cf:
-            return vsip_cmbind_f(blk, offset, columnStride, columnLength,
-                                 rowStride, rowLength)
+            return vsip_cmbind_f(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                 vsip_stride(rowStride), vsip_length(rowLength))
         case .cd:
-            return vsip_cmbind_d(blk, offset, columnStride, columnLength,
-                                 rowStride, rowLength)
+            return vsip_cmbind_d(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                 vsip_stride(rowStride), vsip_length(rowLength))
         case .i:
-            return vsip_mbind_i(blk, offset, columnStride, columnLength,
-                                rowStride, rowLength)
+            return vsip_mbind_i(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                vsip_stride(rowStride), vsip_length(rowLength))
         case .li:
-            return vsip_mbind_li(blk, offset, columnStride, columnLength,
-                                 rowStride, rowLength)
+            return vsip_mbind_li(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                 vsip_stride(rowStride), vsip_length(rowLength))
         case .si:
-            return vsip_mbind_si(blk, offset, columnStride, columnLength,
-                                 rowStride, rowLength)
+            return vsip_mbind_si(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                 vsip_stride(rowStride), vsip_length(rowLength))
         case .uc:
-            return vsip_mbind_uc(blk, offset, columnStride, columnLength,
-                                 rowStride, rowLength)
+            return vsip_mbind_uc(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                 vsip_stride(rowStride), vsip_length(rowLength))
         case .bl:
-            return vsip_mbind_bl(blk, offset, columnStride, columnLength,
-                                 rowStride, rowLength)
+            return vsip_mbind_bl(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                 vsip_stride(rowStride), vsip_length(rowLength))
         default:
             print("Not supported.")
             return nil
@@ -54,7 +54,7 @@ public class Matrix : View {
     }
     public init(block: Block, offset: Int, columnStride: Int, columnLength: Int, rowStride: Int, rowLength: Int){
         super.init(block: block, shape: "matrix")
-        self.vsip = self.mBind(vsip_offset(offset), columnStride: vsip_stride(columnStride), columnLength: vsip_length(columnLength), rowStride: vsip_stride(rowStride), rowLength: vsip_length(rowLength))
+        self.vsip = self.mBind(offset, columnStride: columnStride, columnLength: columnLength, rowStride: rowStride, rowLength: rowLength)
     }
     public convenience init(columnLength :Int, rowLength: Int, type : String, major : vsip_major){
         let N = rowLength * columnLength
@@ -446,6 +446,7 @@ public class Matrix : View {
         state.randu(self)
         return self
     }
+    // MARK: Views, Sub-Views, Copies, Clones and convenience creaters.
     // create empty Matrix of same type and view size. New data space created, created as row major
     public var empty: Matrix?{
         return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: self.type.rawValue, major: VSIP_ROW)
@@ -453,6 +454,7 @@ public class Matrix : View {
     public func empty(_ type: String) -> Matrix{
         return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: self.type.rawValue, major: VSIP_ROW)
     }
+    // copy is new data space, view of same size, copy of data
     public var copy: Matrix? {
         let view = self.empty
         assert(view != nil, "Allocation Error")
@@ -504,8 +506,13 @@ public class Matrix : View {
         }
         return output
     }
+    // clone is same data space just new view
     public var clone: Matrix? {
         return Matrix(block: self.sBlock, offset: self.offset, columnStride: self.columnStride, columnLength: self.columnLength, rowStride: self.rowStride, rowLength: self.rowLength)
+    }
+    // transview is new view of same data space as a transpose.
+    public var transview: Matrix? {
+        return Matrix(block: self.sBlock, offset: self.offset, columnStride: self.rowStride, columnLength: self.rowLength, rowStride: self.columnStride, rowLength: self.columnLength)
     }
     
     // MARK: Print
