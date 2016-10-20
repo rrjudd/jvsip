@@ -55,7 +55,7 @@ class SwiftVsipTests: XCTestCase {
         U.mPrint(fmt)
         V.mPrint(fmt)
         let Uc = U.empty
-        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_COL, output: Uc!)
+        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: Uc!)
         Vsip.prod(matA: Uc, matB: V.transview, matC: Ac)
         Ac?.mPrint(fmt)
         print("Matrix A");A.mPrint(fmt)

@@ -184,6 +184,7 @@
 		06198FFD1DA2DE4600138F73 /* vsip_vcopy_vi_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FFB1DA2DE4600138F73 /* vsip_vcopy_vi_f.c */; };
 		0619903C1DA5671300138F73 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061990331DA565B400138F73 /* main.swift */; };
 		061990401DA691CA00138F73 /* vsip_vfill_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 0619903F1DA691CA00138F73 /* vsip_vfill_vi.c */; };
+		061A3EC21DB805F600656FB7 /* vsip_mdiagview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 061A3EC11DB805F600656FB7 /* vsip_mdiagview_li.c */; };
 		061C291A17249E8200773972 /* jvsip_svd_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 061C291917249E8200773972 /* jvsip_svd_f.c */; };
 		062836C61517749C001EBA82 /* vsip_mrect_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C41517749C001EBA82 /* vsip_mrect_d.c */; };
 		062836C71517749C001EBA82 /* vsip_mrect_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C51517749C001EBA82 /* vsip_mrect_f.c */; };
@@ -2345,6 +2346,7 @@
 		061990311DA565B400138F73 /* vsipExampleAdd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vsipExampleAdd; sourceTree = BUILT_PRODUCTS_DIR; };
 		061990331DA565B400138F73 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0619903F1DA691CA00138F73 /* vsip_vfill_vi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vfill_vi.c; sourceTree = "<group>"; };
+		061A3EC11DB805F600656FB7 /* vsip_mdiagview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mdiagview_li.c; sourceTree = "<group>"; };
 		061C291917249E8200773972 /* jvsip_svd_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_svd_f.c; sourceTree = "<group>"; };
 		062836C41517749C001EBA82 /* vsip_mrect_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrect_d.c; sourceTree = "<group>"; };
 		062836C51517749C001EBA82 /* vsip_mrect_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrect_f.c; sourceTree = "<group>"; };
@@ -4385,6 +4387,7 @@
 		06307E5C150BB7E700EF9D00 /* c_VSIP_src */ = {
 			isa = PBXGroup;
 			children = (
+				061A3EC11DB805F600656FB7 /* vsip_mdiagview_li.c */,
 				0619903F1DA691CA00138F73 /* vsip_vfill_vi.c */,
 				06198FFA1DA2DE4600138F73 /* vsip_vcopy_vi_d.c */,
 				06198FFB1DA2DE4600138F73 /* vsip_vcopy_vi_f.c */,
@@ -8017,6 +8020,7 @@
 				06308AF4150BB7EC00EF9D00 /* vsip_randu_d.c in Sources */,
 				06308AF5150BB7EC00EF9D00 /* vsip_randu_f.c in Sources */,
 				06308AF6150BB7EC00EF9D00 /* vsip_rcadd_d.c in Sources */,
+				061A3EC21DB805F600656FB7 /* vsip_mdiagview_li.c in Sources */,
 				06308AF7150BB7EC00EF9D00 /* vsip_rcadd_f.c in Sources */,
 				06308AF8150BB7EC00EF9D00 /* vsip_rcfftmop_create_d.c in Sources */,
 				06308AF9150BB7EC00EF9D00 /* vsip_rcfftmop_create_f.c in Sources */,

@@ -384,6 +384,7 @@ public class Matrix : View {
             self.fill(value)
         }
     }
+    
     // MARK: Data Generators
     public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
         switch self.type{
@@ -446,6 +447,7 @@ public class Matrix : View {
         state.randu(self)
         return self
     }
+    
     // MARK: Views, Sub-Views, Copies, Clones and convenience creaters.
     // create empty Matrix of same type and view size. New data space created, created as row major
     public var empty: Matrix?{
@@ -513,6 +515,44 @@ public class Matrix : View {
     // transview is new view of same data space as a transpose.
     public var transview: Matrix? {
         return Matrix(block: self.sBlock, offset: self.offset, columnStride: self.rowStride, columnLength: self.rowLength, rowStride: self.columnStride, rowLength: self.columnLength)
+    }
+    public func diagview(diagIndex: Int) -> Vector? {
+        let blk = self.sBlock
+        switch self.type {
+        case .f:
+            let v = vsip_mdiagview_f(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .d:
+            let v = vsip_mdiagview_d(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .cf:
+            let v = vsip_cmdiagview_f(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .cd:
+            let v = vsip_cmdiagview_d(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .i:
+            let v = vsip_mdiagview_i(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .li:
+            let v = vsip_mdiagview_li(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .si:
+            let v = vsip_mdiagview_si(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .uc:
+            let v = vsip_mdiagview_uc(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        case .bl:
+            let v = vsip_mdiagview_bl(self.vsip!, vsip_stride(diagIndex))
+            return Vector(block: blk, cView: v!)
+        default:
+            precondition(false, "diagview not available for this view")
+        }
+        
+    }
+    public var diagview: Vector? {
+        return self.diagview(diagIndex: 0)
     }
     
     // MARK: Print
