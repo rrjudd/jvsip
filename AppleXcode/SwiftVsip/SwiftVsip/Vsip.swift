@@ -6,7 +6,7 @@
 //  Copyright © 2016 RANDALL JUDD. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 import vsip
 
 public class Vsip {
@@ -64,31 +64,57 @@ public class Vsip {
             self.value.1 = NSNumber(value: value)
             self.value.2 = nil
         }
-        var type: Block.Types {
+        public var type: Block.Types {
             return value.0!
         }
-        var realf: Float{
+        public var realf: Float{
             return Float((value.1?.floatValue)!)
         }
-        var reald: Double{
+        public var reald: Double{
             return Double((value.1?.doubleValue)!)
         }
-        var imagf: Float{
+        public var imagf: Float{
             if let i = value.2 {
                 return Float(i)
             } else {
                 return Float(0.0)
             }
         }
-        var imagd: Double{
+        public var imagd: Double{
             if let i = value.2 {
                 return Double(i)
             } else {
                 return Double(0.0)
             }
         }
-        var cmplxf: vsip_cscalar_f{
+        public var cmplxf: Scalar{
             var c = vsip_cmplx_f(vsip_scalar_f(0.0),(0.0))
+            if let r = value.1 {
+                c.r = vsip_scalar_f(r.floatValue)
+            }
+            if let i = value.2 {
+                c.i = vsip_scalar_f(i.floatValue)
+            }
+            return Scalar(c)
+        }
+        public var cmplxd: Scalar{
+            var c = vsip_cmplx_d(vsip_scalar_d(0.0),vsip_scalar_d(0.0))
+            if let r = value.1 {
+                c.r = vsip_scalar_d(r.doubleValue)
+            }
+            if let i = value.2 {
+                c.i = vsip_scalar_d(i.doubleValue)
+            }
+            return Scalar(c)
+        }
+        public var vsip_f: vsip_scalar_f {
+            return vsip_scalar_f((value.1?.floatValue)!)
+        }
+        public var vsip_d: vsip_scalar_d {
+            return vsip_scalar_d((value.1?.doubleValue)!)
+        }
+        public var vsip_cf: vsip_cscalar_f {
+            var c = vsip_cmplx_f(vsip_scalar_f(0.0),vsip_scalar_f(0.0))
             if let r = value.1 {
                 c.r = vsip_scalar_f(r.floatValue)
             }
@@ -97,13 +123,13 @@ public class Vsip {
             }
             return c
         }
-        var cmplxd: vsip_cscalar_d{
+        public var vsip_cd: vsip_cscalar_d {
             var c = vsip_cmplx_d(vsip_scalar_d(0.0),vsip_scalar_d(0.0))
             if let r = value.1 {
-                c.r = vsip_scalar_d(r.floatValue)
+                c.r = vsip_scalar_d(r.doubleValue)
             }
             if let i = value.2 {
-                c.i = vsip_scalar_d(i.floatValue)
+                c.i = vsip_scalar_d(i.doubleValue)
             }
             return c
         }
@@ -136,19 +162,34 @@ public class Vsip {
             case (.d, .d):
                 return Scalar( left.reald * right.reald)
             case (.cf, .f):
-                return Scalar(vsip_cmplx_f(left.realf + right.realf, left.imagf))
+                return Scalar(vsip_rcmul_f(right.vsip_f, left.vsip_cf))
             case (.cd, .d):
-                return Scalar(vsip_cmplx_d(left.reald + right.reald, left.imagd))
+                return Scalar(vsip_rcmul_d(right.vsip_d, left.vsip_cd))
             case (.f, .cf):
-                return Scalar(vsip_cmplx_f(left.realf + right.realf, right.imagf))
+                return Scalar(vsip_rcmul_f(left.vsip_f, right.vsip_cf))
             case (.d, .cd):
-                return Scalar(vsip_cmplx_d(left.reald + right.reald, right.imagd))
+                return Scalar(vsip_rcmul_d(left.vsip_d, right.vsip_cd))
             case(.cf, .cf):
-                return Scalar(vsip_cmplx_f(left.realf + right.realf, left.imagf + right.imagf))
+                return Scalar(vsip_cmul_f(left.vsip_cf, right.vsip_cf))
             case(.cd, .cd):
-                return Scalar(vsip_cmplx_d(left.reald + right.reald, left.imagd + right.imagd))
+                return Scalar(vsip_cmul_d(left.vsip_cd, right.vsip_cd))
             default:
-                precondition(false, "Vsip Scalar types (\(left.type), \(right.type)) not supported for +")
+                precondition(false, "Vsip Scalar types (\(left.type), \(right.type)) not supported for *")
+            }
+        }
+        public var sqrt: Scalar {
+            switch self.type {
+            case .f:
+                return Scalar(sqrtf(self.realf))
+            case .d:
+                let x = Foundation.sqrt(self.reald)
+                return Scalar(x)
+            case .cf:
+                return Scalar(vsip_csqrt_f(self.vsip_cf))
+            case .cd:
+                return Scalar(vsip_csqrt_d(self.vsip_cd))
+            default:
+                precondition(false, "sqrt not supported for type \(self.type)")
             }
         }
     }
@@ -1250,9 +1291,9 @@ public class Vsip {
         case (.f, .f, .f):
             vsip_gemp_f(alpha.realf, vsipA, opA, vsipB, opB, beta.realf, vsipC)
         case (.cd, .cd, .cd):
-            vsip_cgemp_d(alpha.cmplxd, vsipA, opA, vsipB, opB, beta.cmplxd, vsipC)
+            vsip_cgemp_d(alpha.vsip_cd, vsipA, opA, vsipB, opB, beta.vsip_cd, vsipC)
         case (.cf, .cf, .cf):
-            vsip_cgemp_f(alpha.cmplxf, vsipA, opA, vsipB, opB, beta.cmplxf, vsipC)
+            vsip_cgemp_f(alpha.vsip_cf, vsipA, opA, vsipB, opB, beta.vsip_cf, vsipC)
         default:
             precondition(false, "Type not supported for gemp")
         }
@@ -1268,9 +1309,9 @@ public class Vsip {
         case (.f, .f):
             vsip_gems_f(alpha.realf, vsipA, opA, beta.realf, vsipC)
         case (.cd, .cd):
-            vsip_cgems_d(alpha.cmplxd, vsipA, opA, beta.cmplxd, vsipC)
+            vsip_cgems_d(alpha.vsip_cd, vsipA, opA, beta.vsip_cd, vsipC)
         case (.cf, .cf):
-            vsip_cgems_f(alpha.cmplxf, vsipA, opA, beta.cmplxf, vsipC)
+            vsip_cgems_f(alpha.vsip_cf, vsipA, opA, beta.vsip_cf, vsipC)
         default:
             precondition(false, "Type not supported for gemp")
         }
@@ -1286,9 +1327,9 @@ public class Vsip {
         case (.d, .d, .d):
             vsip_vkron_d(alpha.reald, vsipX, vsipY, vsipC)
         case (.cf, .cf, .cf):
-            vsip_cvkron_f(alpha.cmplxf, vsipX, vsipY, vsipC)
+            vsip_cvkron_f(alpha.vsip_cf, vsipX, vsipY, vsipC)
         case (.cd, .cd, .cd):
-            vsip_cvkron_d(alpha.cmplxd, vsipX, vsipY, vsipC)
+            vsip_cvkron_d(alpha.vsip_cd, vsipX, vsipY, vsipC)
         default:
             precondition(false, "Kron not supported for argument list")
         }
@@ -1304,9 +1345,9 @@ public class Vsip {
         case (.d, .d, .d):
             vsip_mkron_d(alpha.reald, vsipA, vsipB, vsipC)
         case (.cf, .cf, .cf):
-            vsip_cmkron_f(alpha.cmplxf, vsipA, vsipB, vsipC)
+            vsip_cmkron_f(alpha.vsip_cf, vsipA, vsipB, vsipC)
         case (.cd, .cd, .cd):
-            vsip_cmkron_d(alpha.cmplxd, vsipA, vsipB, vsipC)
+            vsip_cmkron_d(alpha.vsip_cd, vsipA, vsipB, vsipC)
         default:
             precondition(false, "Kron not supported for argument list")
         }
@@ -1529,9 +1570,9 @@ public class Vsip {
         case (.d, .d, .d):
             vsip_vouter_d(alpha.reald, vsipX, vsipY, vsipC)
         case (.cf, .cf, .cf):
-            vsip_cvouter_f(alpha.cmplxf, vsipX, vsipY, vsipC)
+            vsip_cvouter_f(alpha.vsip_cf, vsipX, vsipY, vsipC)
         case (.cd, .cd, .cd):
-            vsip_cvouter_d(alpha.cmplxd, vsipX, vsipY, vsipC)
+            vsip_cvouter_d(alpha.vsip_cd, vsipX, vsipY, vsipC)
         default:
             precondition(false, "Function outer not supported for argument list")
         }
