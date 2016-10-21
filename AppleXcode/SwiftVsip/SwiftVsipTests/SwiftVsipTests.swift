@@ -40,6 +40,14 @@ class SwiftVsipTests: XCTestCase {
         let d = a + b
         print("a + b = \(d.reald)")
     }
+    func testSqrt(){
+        let a = Vsip.Scalar(vsip_cmplx_d(4.0, 5.0))
+        let b = vsip_csqrt_d(vsip_cmplx_d(4.0, 5.0))
+        let c = a.sqrt
+        print("( \(b.r), \(b.i))")
+        print("( \(c.reald), \(c.imagd))")
+        XCTAssert((b.r == c.reald) && (b.i == c.imagd))
+    }
     func testSvd(){
         let n = 5
         let A = Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
