@@ -64,11 +64,28 @@ public class Vsip {
             self.value.1 = NSNumber(value: value)
             self.value.2 = nil
         }
-        var realf: vsip_scalar_f{
-            return vsip_scalar_f((value.1?.floatValue)!)
+        var type: Block.Types {
+            return value.0!
         }
-        var reald: vsip_scalar_d{
-            return vsip_scalar_d((value.1?.doubleValue)!)
+        var realf: Float{
+            return Float((value.1?.floatValue)!)
+        }
+        var reald: Double{
+            return Double((value.1?.doubleValue)!)
+        }
+        var imagf: Float{
+            if let i = value.2 {
+                return Float(i)
+            } else {
+                return Float(0.0)
+            }
+        }
+        var imagd: Double{
+            if let i = value.2 {
+                return Double(i)
+            } else {
+                return Double(0.0)
+            }
         }
         var cmplxf: vsip_cscalar_f{
             var c = vsip_cmplx_f(vsip_scalar_f(0.0),(0.0))
@@ -89,6 +106,50 @@ public class Vsip {
                 c.i = vsip_scalar_d(i.floatValue)
             }
             return c
+        }
+        public static func + (left: Scalar, right: Scalar) -> Scalar {
+            switch (left.type, right.type) {
+            case (.f, .f):
+                return Scalar( left.realf + right.realf)
+            case (.d, .d):
+                return Scalar( left.reald + right.reald)
+            case (.cf, .f):
+                return Scalar(vsip_cmplx_f(left.realf + right.realf, left.imagf))
+            case (.cd, .d):
+                return Scalar(vsip_cmplx_d(left.reald + right.reald, left.imagd))
+            case (.f, .cf):
+                return Scalar(vsip_cmplx_f(left.realf + right.realf, right.imagf))
+            case (.d, .cd):
+                return Scalar(vsip_cmplx_d(left.reald + right.reald, right.imagd))
+            case(.cf, .cf):
+                return Scalar(vsip_cmplx_f(left.realf + right.realf, left.imagf + right.imagf))
+            case(.cd, .cd):
+                return Scalar(vsip_cmplx_d(left.reald + right.reald, left.imagd + right.imagd))
+            default:
+                precondition(false, "Vsip Scalar types (\(left.type), \(right.type)) not supported for +")
+            }
+        }
+        public static func * (left: Scalar, right: Scalar) -> Scalar {
+            switch (left.type, right.type) {
+            case (.f, .f):
+                return Scalar( left.realf * right.realf)
+            case (.d, .d):
+                return Scalar( left.reald * right.reald)
+            case (.cf, .f):
+                return Scalar(vsip_cmplx_f(left.realf + right.realf, left.imagf))
+            case (.cd, .d):
+                return Scalar(vsip_cmplx_d(left.reald + right.reald, left.imagd))
+            case (.f, .cf):
+                return Scalar(vsip_cmplx_f(left.realf + right.realf, right.imagf))
+            case (.d, .cd):
+                return Scalar(vsip_cmplx_d(left.reald + right.reald, right.imagd))
+            case(.cf, .cf):
+                return Scalar(vsip_cmplx_f(left.realf + right.realf, left.imagf + right.imagf))
+            case(.cd, .cd):
+                return Scalar(vsip_cmplx_d(left.reald + right.reald, left.imagd + right.imagd))
+            default:
+                precondition(false, "Vsip Scalar types (\(left.type), \(right.type)) not supported for +")
+            }
         }
     }
     // MARK:  - Elementary Math Functions
@@ -672,6 +733,29 @@ public class Vsip {
             break
         }
     }
+    public static func sumsqval(_ input: Vector) -> Scalar {
+        switch input.type {
+        case .d:
+            return Scalar(Double(vsip_vsumsqval_d(input.vsip!)))
+        case .f:
+            return Scalar(Float(vsip_vsumsqval_f(input.vsip!)))
+        default:
+            precondition(false, "sumsqval not supported for this type")
+            break
+        }
+    }
+    public static func sumsqval(_ input: Matrix) -> Scalar {
+        switch input.type {
+        case .d:
+            return Scalar(Double(vsip_msumsqval_d(input.vsip!)))
+        case .f:
+            return Scalar(Float(vsip_msumsqval_f(input.vsip!)))
+        default:
+            precondition(false, "sumsqval not supported for this type")
+            break
+        }
+    }
+    
     
     // MARK: - Binary Functions
     public static func add(_ one: Vector, to: Vector, resultsIn: Vector) {
@@ -1299,7 +1383,7 @@ public class Vsip {
             precondition(false, "VSIP function prod4 not supported for argument list")
         }
     }
-
+    
     public static func prod(matA: Matrix?, matB: Matrix?, matC: Matrix?){
         let t = (matA!.type, matB!.type, matC!.type)
         let vsipA = matA?.vsip!
@@ -1798,7 +1882,7 @@ public class Vsip {
                 }
             }
         }
-
+        
         public var matU: Matrix? {
             get {
                 if !amSet {
@@ -1811,7 +1895,7 @@ public class Vsip {
                 let mat = Matrix(columnLength: m, rowLength: n, type: self.type, major: VSIP_ROW)
                 let success = self.matU(0, highColumn: n-1, matU: mat)
                 if success == 0 {
-                     return mat
+                    return mat
                 } else {
                     return nil
                 }
@@ -1835,6 +1919,49 @@ public class Vsip {
                 }
             }
         }
+    }
+    
+    // MARK: - JVSIP added functionality
+    public class Jvsip {
+        public static func normFro(view: Vector) -> Vsip.Scalar {
+            switch view.type {
+            case .f:
+                return Vsip.sumsqval(view)
+            case .d:
+                return Vsip.sumsqval(view)
+            default:
+                precondition(false, "normFro not supported for this view")
+            }
+            
+            /*
+             f={
+             'vview_f': 'vsip_sqrt_d(self.sumsqval)',
+             'vview_d': 'vsip_sqrt_d(self.sumsqval)',
+             'cvview_f':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
+             'cvview_d':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
+             */
+            return Vsip.Scalar(0.0)
+        }
+        public static func normFro(view: Matrix) -> Vsip.Scalar {
+            switch view.type {
+            case .f:
+                return Vsip.sumsqval(view)
+            case .d:
+                return Vsip.sumsqval(view)
+            default:
+                precondition(false, "normFro not supported for this view")
+            }
+
+            /*
+             f={
+             'mview_f': 'vsip_sqrt_d(self.sumsqval)',
+             'mview_d': 'vsip_sqrt_d(self.sumsqval)',
+             'cmview_f':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
+             'cmview_d':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)'}
+             */
+            return Vsip.Scalar(0.0)
+        }
+        
     }
     
 }

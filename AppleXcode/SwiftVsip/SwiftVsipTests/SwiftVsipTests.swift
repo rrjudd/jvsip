@@ -34,6 +34,12 @@ class SwiftVsipTests: XCTestCase {
         v = Vector(length: 11, type: .cf)
         v.randu(11).mPrint("5.4")
     }
+    func testPlus(){
+        let a = Vsip.Scalar(15.0)
+        let b = Vsip.Scalar(4.0)
+        let d = a + b
+        print("a + b = \(d.reald)")
+    }
     func testSvd(){
         let n = 5
         let A = Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
@@ -46,18 +52,19 @@ class SwiftVsipTests: XCTestCase {
         print("Matrix A");A.mPrint(fmt)
         print("Known x vector");x.mPrint(fmt)
         print("Calculated b=Ax vector"); b.mPrint(fmt)
-        let Ac = A.copy
+        // check that U S V^t gives back A
+        let Ac = A.copy  // Ac is used for decompostion to keep original A
+        let Ar = A.empty // new data space for result
         let svd = Vsip.Svd(view: Ac!)
         let sValues = svd.decompose(Ac!)
-        print("Singular Values");sValues?.mPrint(fmt)
         let U = svd.matU!
         let V = svd.matV!
-        U.mPrint(fmt)
-        V.mPrint(fmt)
-        let Uc = U.empty
-        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: Uc!)
-        Vsip.prod(matA: Uc, matB: V.transview, matC: Ac)
-        Ac?.mPrint(fmt)
-        print("Matrix A");A.mPrint(fmt)
+        print("U");U.mPrint(fmt)
+        print("Singular Values");sValues?.mPrint(fmt)
+        print("V");V.mPrint(fmt)
+        let USr = U.empty // result of matrix product of U and Singular Vaules
+        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: USr!)
+        Vsip.prod(matA: USr, matB: V.transview, matC: Ar)
+        print("Result of USV^t"); Ar?.mPrint(fmt)
     }
 }
