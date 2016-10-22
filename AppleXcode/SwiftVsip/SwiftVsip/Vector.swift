@@ -393,6 +393,30 @@ public class Vector : View {
             break
         }
     }
+    public func fill(_ value: Vsip.Scalar){
+        switch self.type{
+        case .d:
+            vsip_vfill_d(value.vsip_d,self.vsip!)
+        case .f:
+            vsip_vfill_f(value.vsip_f,self.vsip!)
+        case .cd:
+            vsip_cvfill_d(value.vsip_cd,self.vsip!)
+        case .cf:
+            vsip_cvfill_f(value.vsip_cf,self.vsip!)
+        case .vi:
+            vsip_vfill_vi(value.vsip_vi,self.vsip!)
+        case .i:
+            vsip_vfill_i(value.vsip_i,self.vsip!)
+        case .li:
+            vsip_vfill_li(value.vsip_li,self.vsip!)
+        case .si:
+            vsip_vfill_si(value.vsip_si,self.vsip!)
+        case .uc:
+            vsip_vfill_uc(value.vsip_uc,self.vsip!)
+        default:
+            break
+        }
+    }
     public func fill(_ value: NSNumber){
         switch self.type{
         case .d:

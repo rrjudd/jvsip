@@ -40,6 +40,15 @@ class SwiftVsipTests: XCTestCase {
         let d = a + b
         print("a + b = \(d.reald)")
     }
+    func testDiv(){
+        let a = Vector(length: 10, type: .f)
+        let b = a.empty
+        let c = a.empty
+        a.fill(Vsip.Scalar(1.0))
+        b?.fill(Vsip.Scalar(2.0))
+        Vsip.div(numerator: a, denominator: b!, quotient: c!)
+        c?.mPrint("3.2")
+    }
     func testSqrt(){
         let a = Vsip.Scalar(vsip_cmplx_d(4.0, 5.0))
         let b = vsip_csqrt_d(vsip_cmplx_d(4.0, 5.0))
@@ -54,8 +63,10 @@ class SwiftVsipTests: XCTestCase {
         let x = Vector(length: A.rowLength, type: A.type)
         let b = Vector(length: A.columnLength, type: A.type)
         let fmt = "6.5"
+        let chk = 1E-14
         let _ = A.randn(5, portable: true)
         let _ = x.randn(9, portable: true)
+        let normA = Vsip.Jvsip.normFro(view: A)
         Vsip.prod(matA: A, vecB: x, vecC: b)
         print("Matrix A");A.mPrint(fmt)
         print("Known x vector");x.mPrint(fmt)
@@ -74,5 +85,9 @@ class SwiftVsipTests: XCTestCase {
         Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: USr!)
         Vsip.prod(matA: USr, matB: V.transview, matC: Ar)
         print("Result of USV^t"); Ar?.mPrint(fmt)
+        Vsip.sub(A, subtract: Ar!, resultIn: Ar!)
+        let normChk = Vsip.Jvsip.normFro(view:Ar!).reald / normA.reald
+        print("normChk: \(normChk)")
+        XCTAssert( normChk < chk)
     }
 }

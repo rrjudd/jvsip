@@ -133,6 +133,32 @@ public class Vsip {
             }
             return c
         }
+        public var vsip_i: vsip_scalar_i{
+            return vsip_scalar_i((value.1?.int32Value)!)
+        }
+        public var vsip_li: vsip_scalar_li{
+            return vsip_scalar_li((value.1?.intValue)!)
+        }
+        public var vsip_vi: vsip_scalar_vi{
+            return vsip_scalar_vi((value.1?.uintValue)!)
+        }
+        public var vsip_si: vsip_scalar_si{
+            return vsip_scalar_si((value.1?.int16Value)!)
+        }
+        public var vsip_uc: vsip_scalar_uc{
+            return vsip_scalar_uc((value.1?.uint8Value)!)
+        }
+        public var mi: vsip_scalar_mi{
+            var i = vsip_matindex(vsip_scalar_vi(0), vsip_scalar_vi(0))
+            if let row = value.1 {
+                i.r = vsip_scalar_vi(row.uintValue)
+            }
+            if let col = value.2 {
+                i.c = vsip_scalar_vi(col.uintValue)
+            }
+            return i
+        }
+        
         public static func + (left: Scalar, right: Scalar) -> Scalar {
             switch (left.type, right.type) {
             case (.f, .f):
@@ -996,7 +1022,59 @@ public class Vsip {
         }
         
     }
+    public static func div(numerator aView: Vector, denominator by: Vector, quotient resultIn: Vector){
+        assert(sizeEqual(aView, against: by),"Views must be the same size")
+        assert(sizeEqual(aView, against: resultIn),"Views must be the same size")
+        let t = (aView.type, by.type, resultIn.type)
+        switch t {
+        case (.d, .cd, .cd):
+            vsip_rcvdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.f, .cf, .cf):
+            vsip_rcvdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.d, .d, .d):
+            vsip_vdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.f, .f, .f):
+            vsip_vdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cd, .d, .cd):
+            vsip_crvdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cf, .f, .cf):
+            vsip_crvdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cd, .cd, .cd):
+            vsip_cvdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cf, .cf, .cf):
+            vsip_cvdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        default:
+            precondition(false, "function not supported for input/output views of type (\t)")
+        }
+        
+    }
     
+    public static func div(numerator aView: Matrix, denominator by: Matrix, quotient resultIn: Matrix){
+        assert(sizeEqual(aView, against: by),"Views must be the same size")
+        assert(sizeEqual(aView, against: resultIn),"Views must be the same size")
+        let t = (aView.type, by.type, resultIn.type)
+        switch t {
+        case (.cd, .cd, .cd):
+            vsip_cmdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cf, .cf, .cf):
+            vsip_cmdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cd, .d, .cd):
+            vsip_crmdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.cf, .f, .cf):
+            vsip_crmdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.d, .d, .d):
+            vsip_mdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.f, .f, .f):
+            vsip_mdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.d, .cd, .cd):
+            vsip_rcmdiv_d(aView.vsip!, by.vsip!, resultIn.vsip!)
+        case (.f, .cf, .cf):
+            vsip_rcmdiv_f(aView.vsip!, by.vsip!, resultIn.vsip!)
+        default:
+            precondition(false, "function not supported for input/output views of type (\t)")
+        }
+        
+    }
     public static func mul(_ one: Vector, to: Vector, resultsIn: Vector) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
         switch (one.type, to.type, resultsIn.type) {
@@ -1023,7 +1101,6 @@ public class Vsip {
         default:
             precondition(false, "function not supported for input/output views")
         }
-        
     }
     public static func mul(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
@@ -1159,6 +1236,70 @@ public class Vsip {
             vsip_vmmul_f ( vsipVec, vsipMat, major, vsipOut)
         default:
             precondition(false, "Argument list not supported for vmmul")
+        }
+    }
+    public static func sub(_ aView: Vector, subtract: Vector, resultIn: Vector){
+        assert(sizeEqual(aView, against: subtract),"Views must be the same size")
+        assert(sizeEqual(aView, against: resultIn), "Views must be the same size")
+        let t = (aView.type, subtract.type, resultIn.type)
+        switch t{
+        case (.cd, .d, .cd):
+            vsip_crvsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.cf, .f, .cf):
+            vsip_crvsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.cd, .cd, .cd):
+            vsip_cvsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.cf, .cf, .cf):
+            vsip_cvsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.d, .cd, .cd):
+            vsip_rcvsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.f, .cf, .cf):
+            vsip_rcvsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.d, .d, .d):
+            vsip_vsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.f, .f, .f):
+            vsip_vsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.i, .i, .i):
+            vsip_vsub_i (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.li, .li, .li):
+            vsip_vsub_li (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.si, .si, .si):
+            vsip_vsub_si (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.uc, .uc, .uc):
+            vsip_vsub_uc (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        default:
+            precondition(false, "function not supported for input/output views")
+        }
+    }
+    public static func sub(_ aView: Matrix, subtract: Matrix, resultIn: Matrix){
+        assert(sizeEqual(aView, against: subtract),"Views must be the same size")
+        assert(sizeEqual(aView, against: resultIn), "Views must be the same size")
+        let t = (aView.type, subtract.type, resultIn.type)
+        switch t{
+        case (.cd, .cd, .cd):
+        vsip_cmsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.cf, .cf, .cf):
+        vsip_cmsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.cd, .d, .cd):
+        vsip_crmsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.cf, .f, .cf):
+        vsip_crmsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.si, .si, .si):
+        vsip_msub_si (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.d, .cd, .cd):
+        vsip_rcmsub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.d, .d, .d):
+        vsip_msub_d (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.f, .f, .f):
+        vsip_msub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.i, .i, .i):
+        vsip_msub_i (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.li, .li, .li):
+        vsip_msub_li (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        case (.f, .cf, .cf):
+        vsip_rcmsub_f (aView.vsip!,subtract.vsip!,resultIn.vsip! )
+        default:
+            precondition(false, "function not supported for input/output views \(t)")
         }
     }
     // Mark: - Random
@@ -1967,40 +2108,30 @@ public class Vsip {
         public static func normFro(view: Vector) -> Vsip.Scalar {
             switch view.type {
             case .f:
-                return Vsip.sumsqval(view)
+                return Vsip.sumsqval(view).sqrt
             case .d:
-                return Vsip.sumsqval(view)
+                return Vsip.sumsqval(view).sqrt
+            case.cf:
+                return (Vsip.sumsqval(view.real) + Vsip.sumsqval(view.imag)).sqrt
+            case.cd:
+                return (Vsip.sumsqval(view.real) + Vsip.sumsqval(view.imag)).sqrt
             default:
                 precondition(false, "normFro not supported for this view")
             }
-            
-            /*
-             f={
-             'vview_f': 'vsip_sqrt_d(self.sumsqval)',
-             'vview_d': 'vsip_sqrt_d(self.sumsqval)',
-             'cvview_f':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
-             'cvview_d':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
-             */
-            return Vsip.Scalar(0.0)
         }
         public static func normFro(view: Matrix) -> Vsip.Scalar {
             switch view.type {
             case .f:
-                return Vsip.sumsqval(view)
+                return Vsip.sumsqval(view).sqrt
             case .d:
-                return Vsip.sumsqval(view)
+                return Vsip.sumsqval(view).sqrt
+            case.cf:
+                return (Vsip.sumsqval(view.real) + Vsip.sumsqval(view.imag)).sqrt
+            case.cd:
+                return (Vsip.sumsqval(view.real) + Vsip.sumsqval(view.imag)).sqrt
             default:
                 precondition(false, "normFro not supported for this view")
             }
-
-            /*
-             f={
-             'mview_f': 'vsip_sqrt_d(self.sumsqval)',
-             'mview_d': 'vsip_sqrt_d(self.sumsqval)',
-             'cmview_f':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)',
-             'cmview_d':'vsip_sqrt_d(self.realview.sumsqval + self.imagview.sumsqval)'}
-             */
-            return Vsip.Scalar(0.0)
         }
         
     }
