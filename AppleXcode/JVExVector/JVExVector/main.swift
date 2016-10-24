@@ -8,8 +8,13 @@
 
 import Foundation
 
-let v = JVVector_d(length: 10)
-v.ramp(start: 0.1, step: 0.2)
+var v = JVVector_d()
+if let view = JVVector_d(length: 10) {
+      v = view
+      v.ramp(start: 0.1, step: 0.2)
+} else {
+    precondition(false, "Malloc Failure")
+}
 print("vector of length 10 and offset 0")
 for i in 0..<v.length{
     print(v[i])

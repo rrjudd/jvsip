@@ -12,11 +12,18 @@ import vsip
 public class JVVector_d {
     private let vsip: OpaquePointer?
     private let maxLength: Int
-    public init(length: Int){
+    public init() {
+        vsip = nil
+        maxLength = 0
+    }
+    public init?(length: Int){
         vsip_init(nil)
         maxLength = length
-        vsip = vsip_vcreate_d(vsip_length(length), VSIP_MEM_NONE)
-        
+        if let v = vsip_vcreate_d(vsip_length(length), VSIP_MEM_NONE) {
+            self.vsip = v
+        } else {
+            return nil
+        }
     }
     deinit{
         vsip_valldestroy_d(self.vsip)

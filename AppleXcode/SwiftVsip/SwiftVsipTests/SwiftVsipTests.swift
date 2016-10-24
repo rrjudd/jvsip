@@ -45,9 +45,9 @@ class SwiftVsipTests: XCTestCase {
         let b = a.empty
         let c = a.empty
         a.fill(Vsip.Scalar(1.0))
-        b?.fill(Vsip.Scalar(2.0))
-        Vsip.div(numerator: a, denominator: b!, quotient: c!)
-        c?.mPrint("3.2")
+        b.fill(Vsip.Scalar(2.0))
+        Vsip.div(numerator: a, denominator: b, quotient: c)
+        c.mPrint("3.2")
     }
     func testSqrt(){
         let a = Vsip.Scalar(vsip_cmplx_d(4.0, 5.0))
@@ -82,11 +82,11 @@ class SwiftVsipTests: XCTestCase {
         print("Singular Values");sValues?.mPrint(fmt)
         print("V");V.mPrint(fmt)
         let USr = U.empty // result of matrix product of U and Singular Vaules
-        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: USr!)
+        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: USr)
         Vsip.prod(matA: USr, matB: V.transview, matC: Ar)
-        print("Result of USV^t"); Ar?.mPrint(fmt)
-        Vsip.sub(A, subtract: Ar!, resultIn: Ar!)
-        let normChk = Vsip.Jvsip.normFro(view:Ar!).reald / normA.reald
+        print("Result of USV^t"); Ar.mPrint(fmt)
+        Vsip.sub(A, subtract: Ar, resultIn: Ar)
+        let normChk = Vsip.Jvsip.normFro(view:Ar).reald / normA.reald
         print("normChk: \(normChk)")
         XCTAssert( normChk < chk)
     }

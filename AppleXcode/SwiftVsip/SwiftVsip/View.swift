@@ -9,49 +9,97 @@
 import Foundation
 import vsip
 public class View {
-    let sBlock: Block
-    let shape : String
+    public enum Shape: String {
+        case v // vector
+        case m // matrix
+    }
+    let block: Block
+    let shape : Shape
     var type: Block.Types{
-        return sBlock.type
+        return block.type
     }
     let jInit : JVSIP
     var myId = NSNumber(value: 0 as Int32)
     // Used to initialize a derived JVSIP View object
-    public init(block: Block, shape: String){
-        sBlock = block
+    public init(block: Block, shape: View.Shape){
+        self.block = block
         self.shape = shape
         jInit = JVSIP()
         myId = jInit.myId
     }
-    func real(_ vsip: OpaquePointer) -> (Block?, OpaquePointer?){
-        let t = "vector" == shape
-        switch self.type{
-        case .cf:
-            let cRealView = t ? vsip_vrealview_f(vsip) : vsip_mrealview_f(vsip)
-            let blk = t ? vsip_vgetblock_f(cRealView) : vsip_mgetblock_f(cRealView)
-            return (Block(block: self.sBlock, cVsipDerivedBlock: blk!), cRealView)
-        case .cd:
-            let cRealView = t ? vsip_vrealview_d(vsip) : vsip_mrealview_d(vsip)
-            let blk = t ? vsip_vgetblock_d(cRealView) : vsip_mgetblock_d(cRealView)
-            return (Block(block: self.sBlock, cVsipDerivedBlock: blk!), cRealView)
+    func real(_ vsip: OpaquePointer) -> (Block, OpaquePointer){
+        let t = (self.type, self.shape)
+        switch t{
+        case (.cf, .v):
+            if let cRealView = vsip_vrealview_f(vsip) {
+                let blk = vsip_vgetblock_f(cRealView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+            } else {
+                break
+            }
+        case(.cf, .m):
+            if let cRealView = vsip_mrealview_f(vsip){
+                let blk = vsip_mgetblock_f(cRealView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+            } else {
+                break
+            }
+        case (.cd, .v):
+            if let cRealView = vsip_vrealview_d(vsip){
+                let blk = vsip_vgetblock_d(cRealView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+            } else {
+                break
+            }
+        case (.cd, .m):
+            if let cRealView = vsip_mrealview_d(vsip){
+                let blk = vsip_mgetblock_d(cRealView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+            } else {
+                break
+            }
         default:
-            return (nil,nil)
+            print("Case not found")
+            break
         }
+        preconditionFailure("Failure of imag method")
     }
     public func imag(_ vsip: OpaquePointer) -> (Block?, OpaquePointer?){
-        let t = "vector" == shape
-        switch self.type{
-        case .cf:
-            let cRealView = t ? vsip_vimagview_f(vsip) : vsip_mimagview_f(vsip)
-            let blk = t ? vsip_vgetblock_f(cRealView) : vsip_mgetblock_f(cRealView)
-            return (Block(block: self.sBlock, cVsipDerivedBlock: blk!), cRealView)
-        case .cd:
-            let cRealView = t ? vsip_vimagview_d(vsip) : vsip_mimagview_d(vsip)
-            let blk = t ? vsip_vgetblock_d(cRealView) : vsip_mgetblock_d(cRealView)
-            return (Block(block: self.sBlock, cVsipDerivedBlock: blk!), cRealView)
+        let t = (self.type, self.shape)
+        switch t{
+        case (.cf, .v):
+            if let cImagView = vsip_vimagview_f(vsip){
+                let blk = vsip_vgetblock_f(cImagView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+            } else {
+                break
+            }
+        case(.cf, .m):
+            if let cImagView = vsip_mimagview_f(vsip){
+                let blk = vsip_mgetblock_f(cImagView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+            } else {
+                break
+            }
+        case (.cd, .v):
+            if let cImagView = vsip_vimagview_d(vsip){
+                let blk = vsip_vgetblock_d(cImagView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+            } else {
+                break
+            }
+        case (.cd, .m):
+            if let cImagView = vsip_mimagview_d(vsip){
+                let blk = vsip_mgetblock_d(cImagView)
+                return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+            } else {
+                break
+            }
         default:
-            return (nil,nil)
+            print("Case not found")
+            break
         }
+        preconditionFailure("Failure of imag method")
     }
     
     // MARK: Attribute get/put options

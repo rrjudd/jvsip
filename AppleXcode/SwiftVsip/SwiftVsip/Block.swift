@@ -246,20 +246,9 @@ import vsip
     fileprivate(set) public var length : Int
     fileprivate var owner = true
     var myId : NSNumber?
-    let blockTypeSel = ["f":Block.Types.f,"block_f":Block.Types.f,
-                        "cf":Block.Types.cf,"cblock_f":Block.Types.cf,
-                        "d":Block.Types.d,"block_d":Block.Types.d,
-                        "cd":Block.Types.cd,"cblock_d":Block.Types.cd,
-                        "i":Block.Types.i,"block_i":Block.Types.i,
-                        "li":Block.Types.li,"block_li":Block.Types.li,
-                        "si":Block.Types.si,"block_si":Block.Types.si,
-                        "uc":Block.Types.uc,"block_uc":Block.Types.uc,
-                        "vi":Block.Types.vi,"block_vi":Block.Types.vi,
-                        "mi":Block.Types.mi,"block_mi":Block.Types.mi,
-                        "bl":Block.Types.bl,"block_bl":Block.Types.bl]
     // create normal block
-     public init(length : Int, type : String){
-        switch blockTypeSel[type]! {
+     public init(length : Int, type : Block.Types){
+        switch type {
         case .f:
             let b = Block_f(length : length)
             jVsip = b
@@ -306,10 +295,7 @@ import vsip
             self.myId = b.jInit.myId
         }
         self.length = length
-        self.type = blockTypeSel[type]!
-    }
-    convenience init(length : Int, type : Types){
-        self.init(length: length, type: type.rawValue)
+        self.type = type
     }
     // create special block for derived blocks
      public init(block : Block, cVsipDerivedBlock : OpaquePointer){
@@ -332,41 +318,85 @@ import vsip
         }
     }
     // Vector bind returns vsip object (may be null on malloc failure)
-    var vsip: OpaquePointer{
+    var vsip: OpaquePointer?{
         switch self.type {
         case .f:
             let blk = self.jVsip as! Block_f
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .d:
             let blk = self.jVsip as! Block_d
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .cf:
             let blk = self.jVsip as! Block_cf
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .cd:
             let blk = self.jVsip as! Block_cd
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .i:
             let blk = self.jVsip as! Block_i
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .li:
             let blk = self.jVsip as! Block_li
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .si:
             let blk = self.jVsip as! Block_si
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .uc:
             let blk = self.jVsip as! Block_uc
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .vi:
             let blk = self.jVsip as! Block_vi
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .mi:
             let blk = self.jVsip as! Block_mi
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         case .bl:
             let blk = self.jVsip as! Block_bl
-            return blk.vsip!
+            if let vsip = blk.vsip {
+                return vsip
+            } else {
+                preconditionFailure("No vsip object in Block")
+            }
         }
     }
     
