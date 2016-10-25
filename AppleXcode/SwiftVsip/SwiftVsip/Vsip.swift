@@ -219,6 +219,2060 @@ public class Vsip {
             }
         }
     }
+    // MARK: - Support Classes
+    //
+    // An instance of JVSIP class is stored in every VSIP object.
+    // The first time it is called it will call vsip_init
+    // When the garbage collector has collected the last one vsip_finalize is called
+    // The reference count is kept as a class variable
+    
+    class JVSIP {
+        static var vsipInit : UInt = 0
+        static var num = NSNumber(value: 0 as Int32)
+        var myId: NSNumber
+        fileprivate func initInc() {
+            JVSIP.vsipInit += 1;
+        }
+        fileprivate func initDec() {
+            JVSIP.vsipInit -= 1;
+        }
+        fileprivate func vsipInitGTzero() -> Bool{
+            if JVSIP.vsipInit > 0{
+                return true
+            } else {
+                return false
+            }
+        }
+        fileprivate func vsipInitEQzero() -> Bool{
+            if JVSIP.vsipInit == 0{
+                return true
+            } else {
+                return false
+            }
+        }
+        init() {
+            self.myId = JVSIP.num
+            if self.vsipInitGTzero(){
+                self.initInc()
+            } else {
+                let jInit = vsip_init(nil)
+                if jInit != 0 {
+                    print("vsip_init failed; returned \(jInit)")
+                }
+                if _isDebugAssertConfiguration(){
+                    print("called vsip_init")
+                }
+                self.initInc()
+            }
+            let n = JVSIP.num.int32Value + 1
+            JVSIP.num = NSNumber(value: n as Int32)
+            self.myId = JVSIP.num
+            if _isDebugAssertConfiguration(){
+                print("called jinit id \(self.myId)")
+            }
+        }
+        deinit{
+            self.initDec()
+            if self.vsipInitEQzero(){
+                vsip_finalize(nil)
+                if _isDebugAssertConfiguration(){
+                    print("called vsip_finalize")
+                }
+            }
+        }
+    }
+    // MARK: - Block Class
+    public class Block {
+        public enum Types: String{
+            case f
+            case d
+            case cf
+            case cd
+            case si
+            case i
+            case li
+            case uc
+            case vi
+            case mi
+            case bl
+        }
+        fileprivate class Block_f{
+            var vsip : OpaquePointer?
+            let owner = true
+            let jInit : JVSIP
+            let precision = "f"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_f(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_f(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_f id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class DBlock_f{ // Derived Block
+            var vsip : OpaquePointer?
+            var parent : Block
+            let owner = false
+            let precision = "f"
+            let depth = "r"
+            let jInit : JVSIP
+            init(block : Block, cVsipDerivedBlock : OpaquePointer){
+                self.parent = block
+                self.vsip = cVsipDerivedBlock
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_f(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_f (derived) id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_d{
+            var vsip : OpaquePointer?
+            let owner = true
+            let jInit : JVSIP
+            let precision = "d"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_d(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_d(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_d id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class DBlock_d{
+            var vsip : OpaquePointer?
+            var parent : Block
+            let owner = false
+            let precision = "f"
+            let depth = "r"
+            let jInit : JVSIP
+            init(block : Block, cVsipDerivedBlock : OpaquePointer){
+                self.parent = block
+                self.vsip = cVsipDerivedBlock
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_d(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_d (derived) id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_cf{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "f"
+            let depth = "c"
+            init(length : Int){
+                self.vsip = vsip_cblockcreate_f(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_cblockdestroy_f(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("cblockdestroy_f id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_cd{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "f"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_cblockcreate_d(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_cblockdestroy_d(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("cblockdestroy_d id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_vi{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "vi"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_vi(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_vi(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_vi id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_si{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "si"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_si(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_si(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_si id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_i{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "i"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_i(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_i(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_i id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_li{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "li"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_li(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_li(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_li id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_bl{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "bool"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_bl(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_bl(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_bl id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_uc{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "uc"
+            let depth = "r"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_uc(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_uc(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_uc id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        fileprivate class Block_mi{
+            var vsip : OpaquePointer?
+            let jInit : JVSIP
+            let precision = "vi"
+            let depth = "m"
+            init(length : Int){
+                self.vsip = vsip_blockcreate_mi(vsip_length(length), VSIP_MEM_NONE)
+                jInit = JVSIP()
+            }
+            deinit{
+                vsip_blockdestroy_mi(self.vsip!)
+                if _isDebugAssertConfiguration(){
+                    print("blockdestroy_mi id \(jInit.myId.int32Value)")
+                }
+            }
+        }
+        // MARK: Block Attributes
+        fileprivate(set) public var type: Block.Types
+        fileprivate(set) var jVsip : AnyObject?
+        fileprivate(set) public var length : Int
+        fileprivate var owner = true
+        var myId : NSNumber?
+        // create normal block
+        public init(length : Int, type : Block.Types){
+            switch type {
+            case .f:
+                let b = Block_f(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .d:
+                let b = Block_d(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .cf:
+                let b = Block_cf(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .cd:
+                let b = Block_cd(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .i:
+                let b = Block_i(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .li:
+                let b = Block_li(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .si:
+                let b = Block_si(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .uc:
+                let b = Block_uc(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .vi:
+                let b = Block_vi(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .mi:
+                let b = Block_mi(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            case .bl:
+                let b = Block_bl(length : length)
+                jVsip = b
+                self.myId = b.jInit.myId
+            }
+            self.length = length
+            self.type = type
+        }
+        // create special block for derived blocks
+        public init(block : Block, cVsipDerivedBlock : OpaquePointer){
+            self.length = block.length
+            self.owner = false
+            switch block.type{
+            case .cf:
+                let b = DBlock_f(block: block, cVsipDerivedBlock: cVsipDerivedBlock)
+                jVsip = b
+                type = Block.Types.f
+                myId = b.jInit.myId
+            case .cd:
+                let b = DBlock_d(block: block, cVsipDerivedBlock: cVsipDerivedBlock)
+                jVsip = b
+                type = Block.Types.d
+                myId = b.jInit.myId
+            default:
+                jVsip = nil
+                type = block.type
+            }
+        }
+        // Vector bind returns vsip object (may be null on malloc failure)
+        var vsip: OpaquePointer?{
+            switch self.type {
+            case .f:
+                let blk = self.jVsip as! Block_f
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .d:
+                let blk = self.jVsip as! Block_d
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .cf:
+                let blk = self.jVsip as! Block_cf
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .cd:
+                let blk = self.jVsip as! Block_cd
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .i:
+                let blk = self.jVsip as! Block_i
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .li:
+                let blk = self.jVsip as! Block_li
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .si:
+                let blk = self.jVsip as! Block_si
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .uc:
+                let blk = self.jVsip as! Block_uc
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .vi:
+                let blk = self.jVsip as! Block_vi
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .mi:
+                let blk = self.jVsip as! Block_mi
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            case .bl:
+                let blk = self.jVsip as! Block_bl
+                if let vsip = blk.vsip {
+                    return vsip
+                } else {
+                    preconditionFailure("No vsip object in Block")
+                }
+            }
+        }
+        
+        // Return JVSIP Swift View object.  Allows block.bind for shape vector
+        public func bind(_ offset : Int,
+                         stride : Int,
+                         length : Int) -> Vector {
+            return Vector(block: self, offset: offset, stride: stride, length: length)
+        }
+        // Return JVSIP Swift View object.  Allows block.bind for shape matrix
+        public func bind(_ offset : Int,
+                         columnStride : Int, columnLength : Int,
+                         rowStride : Int, rowLength : Int) -> Matrix {
+            return Matrix(block: self, offset: offset,
+                          columnStride: columnStride, columnLength: columnLength,
+                          rowStride: rowStride, rowLength: rowLength)
+        }
+        public func vector() -> Vector{
+            return self.bind(0, stride: 1, length: self.length)
+        }
+        
+    }
+    public class View {
+        public enum Shape: String {
+            case v // vector
+            case m // matrix
+        }
+        let block: Block
+        let shape : Shape
+        var type: Block.Types{
+            return block.type
+        }
+        let jInit : JVSIP
+        var myId = NSNumber(value: 0 as Int32)
+        // Used to initialize a derived JVSIP View object
+        public init(block: Block, shape: View.Shape){
+            self.block = block
+            self.shape = shape
+            jInit = JVSIP()
+            myId = jInit.myId
+        }
+        func real(_ vsip: OpaquePointer) -> (Block, OpaquePointer){
+            let t = (self.type, self.shape)
+            switch t{
+            case (.cf, .v):
+                if let cRealView = vsip_vrealview_f(vsip) {
+                    let blk = vsip_vgetblock_f(cRealView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+                } else {
+                    break
+                }
+            case(.cf, .m):
+                if let cRealView = vsip_mrealview_f(vsip){
+                    let blk = vsip_mgetblock_f(cRealView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+                } else {
+                    break
+                }
+            case (.cd, .v):
+                if let cRealView = vsip_vrealview_d(vsip){
+                    let blk = vsip_vgetblock_d(cRealView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+                } else {
+                    break
+                }
+            case (.cd, .m):
+                if let cRealView = vsip_mrealview_d(vsip){
+                    let blk = vsip_mgetblock_d(cRealView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cRealView)
+                } else {
+                    break
+                }
+            default:
+                print("Case not found")
+                break
+            }
+            preconditionFailure("Failure of imag method")
+        }
+        public func imag(_ vsip: OpaquePointer) -> (Block?, OpaquePointer?){
+            let t = (self.type, self.shape)
+            switch t{
+            case (.cf, .v):
+                if let cImagView = vsip_vimagview_f(vsip){
+                    let blk = vsip_vgetblock_f(cImagView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+                } else {
+                    break
+                }
+            case(.cf, .m):
+                if let cImagView = vsip_mimagview_f(vsip){
+                    let blk = vsip_mgetblock_f(cImagView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+                } else {
+                    break
+                }
+            case (.cd, .v):
+                if let cImagView = vsip_vimagview_d(vsip){
+                    let blk = vsip_vgetblock_d(cImagView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+                } else {
+                    break
+                }
+            case (.cd, .m):
+                if let cImagView = vsip_mimagview_d(vsip){
+                    let blk = vsip_mgetblock_d(cImagView)
+                    return (Block(block: self.block, cVsipDerivedBlock: blk!), cImagView)
+                } else {
+                    break
+                }
+            default:
+                print("Case not found")
+                break
+            }
+            preconditionFailure("Failure of imag method")
+        }
+        
+        // MARK: Attribute get/put options
+        public func get(_ vsip:OpaquePointer, index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+            let t = self.type
+            switch t{
+            case .f:
+                return (t, NSNumber(value: vsip_vget_f(vsip, index) as Float), nil)
+            case .d:
+                return (t,  NSNumber(value: vsip_vget_d(vsip, index) as Double), nil)
+            case .cf:
+                let ans = vsip_cvget_f(vsip, index)
+                return (t, NSNumber(value: ans.r as Float),  NSNumber(value: ans.i as Float))
+            case .cd:
+                let ans = vsip_cvget_d(vsip,index)
+                return (t,  NSNumber(value: ans.r as Double),  NSNumber(value: ans.i as Double))
+            case .vi:
+                return (t,  NSNumber(value: vsip_vget_vi(vsip,index) as UInt),  nil)
+            case .mi:
+                let ans = vsip_vget_mi(vsip,index)
+                return (t,  NSNumber(value: ans.c as UInt), NSNumber(value: ans.r as UInt))
+            case .li:
+                return (t, NSNumber(value: vsip_vget_li(vsip,index) as Int), nil)
+            case .i:
+                return (t, NSNumber(value: vsip_vget_i(vsip,index) as Int32), nil)
+            case .si:
+                return (t, NSNumber(value: vsip_vget_si(vsip,index) as Int16), nil)
+            case .uc:
+                return (t, NSNumber(value: vsip_vget_uc(vsip,index) as UInt8), nil)
+            default:
+                return (nil, nil, nil)
+            }
+        }
+        public func get(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+            let t = self.type
+            switch t{
+            case .f:
+                return (t, NSNumber(value: vsip_mget_f(vsip, rowIndex, columnIndex) as Float), nil)
+            case .d:
+                return (t,  NSNumber(value: vsip_mget_d(vsip, rowIndex, columnIndex) as Double), nil)
+            case .cf:
+                let ans = vsip_cmget_f(vsip, rowIndex, columnIndex)
+                return (t, NSNumber(value: ans.r as Float),  NSNumber(value: ans.i as Float))
+            case .cd:
+                let ans = vsip_cmget_d(vsip,rowIndex, columnIndex)
+                return (t,  NSNumber(value: ans.r as Double),  NSNumber(value: ans.i as Double))
+            case .li:
+                return (t, NSNumber(value: vsip_mget_li(vsip,rowIndex, columnIndex) as Int), nil)
+            case .i:
+                return (t, NSNumber(value: vsip_mget_i(vsip,rowIndex, columnIndex) as Int32), nil)
+            case .si:
+                return (t, NSNumber(value: vsip_mget_si(vsip,rowIndex, columnIndex) as Int16), nil)
+            case .uc:
+                return (t, NSNumber(value: vsip_mget_uc(vsip,rowIndex, columnIndex) as UInt8), nil)
+            default:
+                return (nil, nil, nil)
+            }
+        }
+        public func put(_ vsip:OpaquePointer, index: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
+            let t = self.type
+            switch t{
+            case .f:
+                let vsipValue = value.1!
+                vsip_vput_f(vsip, index, vsipValue.floatValue)
+            case .d:
+                let vsipValue = value.1!
+                vsip_vput_d(vsip, index, vsipValue.doubleValue)
+            case .cf:
+                let arg = vsip_cmplx_f(value.1!.floatValue, value.2!.floatValue)
+                vsip_cvput_f(vsip,index,arg)
+            case .cd:
+                let arg = vsip_cmplx_d(value.1!.doubleValue, value.2!.doubleValue)
+                vsip_cvput_d(vsip,index,arg)
+            case .vi:
+                let vsipValue = value.1!
+                vsip_vput_vi(vsip,index,vsipValue.uintValue)
+            case .mi:
+                let arg = vsip_matindex(value.1!.uintValue, value.2!.uintValue)
+                vsip_vput_mi(vsip,index,arg)
+            case .li:
+                let vsipValue = value.1!
+                vsip_vput_li(vsip, index, vsipValue.intValue)
+            case .i:
+                let vsipValue = value.1!
+                vsip_vput_i(vsip,index,vsipValue.int32Value)
+            case .si:
+                let vsipValue = value.1!
+                vsip_vput_si(vsip,index,vsipValue.int16Value)
+            case .uc:
+                let vsipValue = value.1!
+                vsip_vput_uc(vsip,index,vsipValue.uint8Value)
+            default:
+                break
+            }
+        }
+        public func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
+            let t = self.type
+            switch t{
+            case .f:
+                let vsipValue = value.1!.floatValue
+                vsip_mput_f(vsip, rowIndex, columnIndex, vsipValue)
+            case .d:
+                let vsipValue = value.1!
+                vsip_mput_d(vsip, rowIndex, columnIndex, vsipValue.doubleValue)
+            case .cf:
+                let arg = vsip_cmplx_f(value.1!.floatValue, value.2!.floatValue)
+                vsip_cmput_f(vsip, rowIndex, columnIndex,arg)
+            case .cd:
+                let arg = vsip_cmplx_d(value.1!.doubleValue, value.2!.doubleValue)
+                vsip_cmput_d(vsip, rowIndex, columnIndex,arg)
+            case .li:
+                let vsipValue = value.1!
+                vsip_mput_li(vsip, rowIndex, columnIndex, vsipValue.intValue)
+            case .i:
+                let vsipValue = value.1!
+                vsip_mput_i(vsip, rowIndex, columnIndex,vsipValue.int32Value)
+            case .si:
+                let vsipValue = value.1!
+                vsip_mput_si(vsip, rowIndex, columnIndex,vsipValue.int16Value)
+            case .uc:
+                let vsipValue = value.1!
+                vsip_mput_uc(vsip, rowIndex, columnIndex,vsipValue.uint8Value)
+            default:
+                break
+                
+            }
+        }
+        // MARK: Conversion to String and Print
+        public func scalarString(_ format : String, value : (Block.Types?, NSNumber?, NSNumber?)) -> String{
+            var retval = ""
+            switch value.0!{
+            case .f:
+                let fmt = "%" + format + "f"
+                retval = String(format: fmt, value.1!.floatValue)
+                break
+            case .d:
+                let fmt = "%" + format + "f"
+                retval = String(format: fmt, value.1!.doubleValue)
+                break
+            case .cf:
+                let fmt1 = "%" + format + "f"
+                let fmt2 = "%+" + format + "f"
+                let r = String(format: fmt1, value.1!.floatValue)
+                let i = String(format: fmt2, value.2!.floatValue)
+                retval = r + i + "i"
+                break
+            case .cd:
+                let fmt1 = "%" + format + "f"
+                let fmt2 = "%+" + format + "f"
+                let r = String(format: fmt1, value.1!.doubleValue)
+                let i = String(format: fmt2, value.2!.doubleValue)
+                retval = r + i + "i"
+                break
+            default:
+                let fmt = "%" + format + "d"
+                retval = String(format: fmt, value.1!.intValue)
+                break
+            }
+            return retval
+        }
+        public func formatFmt(_ fmt: String) -> String{
+            var retval = ""
+            func charCheck(_ char: Character) -> Bool {
+                let validChars = "0123456789."
+                for item in validChars.characters{
+                    if char == item {
+                        return true
+                    }
+                }
+                return false
+            }
+            for char in fmt.characters{
+                if charCheck(char){
+                    retval.append(char)
+                }
+            }
+            return retval
+        }
+    }
+    // MARK: - Vector Class
+    public class Vector : View {
+        fileprivate var tryVsip: OpaquePointer? = nil
+        public var vsip: OpaquePointer {
+            get {
+                return tryVsip!
+            }
+        }
+        // vector bind
+        private func vBind(_ offset : Int, stride : Int, length : Int) -> OpaquePointer? {
+            let blk = self.block.vsip
+            let t = self.block.type
+            switch t {
+            case .f:
+                return vsip_vbind_f(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .d:
+                return vsip_vbind_d(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .cf:
+                return vsip_cvbind_f(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .cd:
+                return vsip_cvbind_d(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .i:
+                return vsip_vbind_i(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .li:
+                return vsip_vbind_li(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .si:
+                return vsip_vbind_si(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .uc:
+                return vsip_vbind_uc(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .vi:
+                return vsip_vbind_vi(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .mi:
+                return vsip_vbind_mi(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            case .bl:
+                return vsip_vbind_bl(blk, vsip_offset(offset), vsip_stride(stride), vsip_length(length))
+            }
+        }
+        public init(block: Block, offset: Int, stride: Int, length: Int){
+            super.init(block: block, shape: .v)
+            if let v = self.vBind(offset, stride: stride, length: length){
+                self.tryVsip = v
+            } else {
+                preconditionFailure("Failed to bind to a vsip vector")
+            }
+        }
+        // vector create
+        public convenience init(length : Int, type : Block.Types){
+            let blk = Block(length: length, type: type)
+            self.init(block: blk, offset: 0, stride: 1, length: length)
+        }
+        // create view to hold derived subview
+        public init(block: Block, cView: OpaquePointer){
+            super.init(block: block, shape: .v)
+            self.tryVsip = cView
+        }
+        deinit{
+            let t = self.block.type
+            let id = self.myId.int32Value
+            switch t {
+            case .f:
+                vsip_vdestroy_f(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_f id \(id)")
+                }
+            case .d:
+                vsip_vdestroy_d(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_d id \(id)")
+                }
+            case .cf:
+                vsip_cvdestroy_f(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("cvdestroy_f id \(id)")
+                }
+            case .cd:
+                vsip_cvdestroy_d(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("cvdestroy_d id \(id)")
+                }
+            case .i:
+                vsip_vdestroy_i(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_i id \(id)")
+                }
+            case .li:
+                vsip_vdestroy_li(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_li id \(id)")
+                }
+            case .si:
+                vsip_vdestroy_si(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_si id \(id)")
+                }
+            case .uc:
+                vsip_vdestroy_uc(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_uc id \(id)")
+                }
+            case .vi:
+                vsip_vdestroy_vi(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_vi id \(id)")
+                }
+            case .mi:
+                vsip_vdestroy_mi(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_mi id \(id)")
+                }
+            case .bl:
+                vsip_vdestroy_bl(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("vdestroy_bl id \(id)")
+                }
+            }
+        }
+        // MARK: Attributes
+        public var offset: Int {
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_vgetoffset_f(self.vsip))
+                case .d :
+                    return Int(vsip_vgetoffset_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cvgetoffset_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cvgetoffset_d(self.vsip))
+                case .si :
+                    return Int(vsip_vgetoffset_si(self.vsip))
+                case .i :
+                    return Int(vsip_vgetoffset_i(self.vsip))
+                case .li :
+                    return Int(vsip_vgetoffset_li(self.vsip))
+                case .uc :
+                    return Int(vsip_vgetoffset_uc(self.vsip))
+                case .vi :
+                    return Int(vsip_vgetoffset_vi(self.vsip))
+                case .mi :
+                    return Int(vsip_vgetoffset_mi(self.vsip))
+                case .bl :
+                    return Int(vsip_vgetoffset_bl(self.vsip))
+                }
+            }
+            set(offset){
+                switch self.type {
+                case .f :
+                    vsip_vputoffset_f(self.vsip, vsip_offset(offset))
+                case .d :
+                    vsip_vputoffset_d(self.vsip, vsip_offset(offset))
+                case .cf :
+                    vsip_cvputoffset_f(self.vsip, vsip_offset(offset))
+                case .cd :
+                    vsip_cvputoffset_d(self.vsip, vsip_offset(offset))
+                case .si :
+                    vsip_vputoffset_si(self.vsip, vsip_offset(offset))
+                case .i :
+                    vsip_vputoffset_i(self.vsip, vsip_offset(offset))
+                case .li :
+                    vsip_vputoffset_li(self.vsip, vsip_offset(offset))
+                case .uc :
+                    vsip_vputoffset_uc(self.vsip, vsip_offset(offset))
+                case .mi :
+                    vsip_vputoffset_mi(self.vsip, vsip_offset(offset))
+                case .vi :
+                    vsip_vputoffset_vi(self.vsip, vsip_offset(offset))
+                case .bl :
+                    vsip_vputoffset_bl(self.vsip, vsip_offset(offset))
+                }
+            }
+        }
+        public var stride: Int {
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_vgetstride_f(self.vsip))
+                case .d :
+                    return Int(vsip_vgetstride_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cvgetstride_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cvgetstride_d(self.vsip))
+                case .si :
+                    return Int(vsip_vgetstride_si(self.vsip))
+                case .i :
+                    return Int(vsip_vgetstride_i(self.vsip))
+                case .li :
+                    return Int(vsip_vgetstride_li(self.vsip))
+                case .uc :
+                    return Int(vsip_vgetstride_uc(self.vsip))
+                case .vi :
+                    return Int(vsip_vgetstride_vi(self.vsip))
+                case .mi :
+                    return Int(vsip_vgetstride_mi(self.vsip))
+                case .bl :
+                    return Int(vsip_vgetstride_bl(self.vsip))
+                }
+            }
+            set(stride){
+                switch self.type {
+                case .f :
+                    vsip_vputstride_f(self.vsip, vsip_stride(stride))
+                case .d :
+                    vsip_vputstride_d(self.vsip, vsip_stride(stride))
+                case .cf :
+                    vsip_cvputstride_f(self.vsip, vsip_stride(stride))
+                case .cd :
+                    vsip_cvputstride_d(self.vsip, vsip_stride(stride))
+                case .si :
+                    vsip_vputstride_si(self.vsip, vsip_stride(stride))
+                case .i :
+                    vsip_vputstride_i(self.vsip, vsip_stride(stride))
+                case .li :
+                    vsip_vputstride_li(self.vsip, vsip_stride(stride))
+                case .uc :
+                    vsip_vputstride_uc(self.vsip, vsip_stride(stride))
+                case .mi :
+                    vsip_vputstride_mi(self.vsip, vsip_stride(stride))
+                case .vi :
+                    vsip_vputstride_vi(self.vsip, vsip_stride(stride))
+                case .bl :
+                    vsip_vputstride_bl(self.vsip, vsip_stride(stride))
+                }
+            }
+        }
+        public var length: Int {
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_vgetlength_f(self.vsip))
+                case .d :
+                    return Int(vsip_vgetlength_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cvgetlength_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cvgetlength_d(self.vsip))
+                case .si :
+                    return Int(vsip_vgetlength_si(self.vsip))
+                case .i :
+                    return Int(vsip_vgetlength_i(self.vsip))
+                case .li :
+                    return Int(vsip_vgetlength_li(self.vsip))
+                case .uc :
+                    return Int(vsip_vgetlength_uc(self.vsip))
+                case .vi :
+                    return Int(vsip_vgetlength_vi(self.vsip))
+                case .mi :
+                    return Int(vsip_vgetlength_mi(self.vsip))
+                case .bl :
+                    return Int(vsip_vgetlength_bl(self.vsip))
+                }
+            }
+            set(length){
+                switch self.type {
+                case .f :
+                    vsip_vputlength_f(self.vsip, vsip_length(length))
+                case .d :
+                    vsip_vputlength_d(self.vsip, vsip_length(length))
+                case .cf :
+                    vsip_cvputlength_f(self.vsip, vsip_length(length))
+                case .cd :
+                    vsip_cvputlength_d(self.vsip, vsip_length(length))
+                case .si :
+                    vsip_vputlength_si(self.vsip, vsip_length(length))
+                case .i :
+                    vsip_vputlength_i(self.vsip, vsip_length(length))
+                case .li :
+                    vsip_vputlength_li(self.vsip, vsip_length(length))
+                case .uc :
+                    vsip_vputlength_uc(self.vsip, vsip_length(length))
+                case .mi :
+                    vsip_vputlength_mi(self.vsip, vsip_length(length))
+                case .vi :
+                    vsip_vputlength_vi(self.vsip, vsip_length(length))
+                case .bl :
+                    vsip_vputlength_bl(self.vsip, vsip_length(length))
+                }
+            }
+        }
+        // MARK: sub views
+        public var real: Vector{
+            get{
+                let ans = super.real(self.vsip) // C VSIP real view
+                let blk = ans.0
+                let v = ans.1
+                return Vector(block: blk, cView: v)
+                
+            }
+        }
+        public var imag: Vector{
+            get{
+                let ans = super.imag(self.vsip) // C VSIP imag view
+                let blk = ans.0!
+                let v = ans.1!
+                return Vector(block: blk, cView: v)
+                
+            }
+        }
+        // vector subscript operator
+        public subscript(index: Int) -> (Block.Types?, NSNumber?, NSNumber?) {
+            get{
+                return super.get(self.vsip, index: vsip_index(index))
+            }
+            set(value){
+                super.put(self.vsip, index: vsip_index(index), value: value)
+            }
+        }
+        public subscript() -> (Block.Types?, NSNumber?, NSNumber?){
+            get{
+                return self[0]
+            }
+            set(value){
+                self.fill(value)
+            }
+        }
+        // MARK: data generators
+        public func ramp(_ start : NSNumber, increment : NSNumber) -> Vector {
+            switch self.type {
+            case .d:
+                vsip_vramp_d(start.doubleValue, increment.doubleValue, self.vsip)
+            case .f:
+                vsip_vramp_f(start.floatValue, increment.floatValue, self.vsip)
+            case .i:
+                vsip_vramp_i(start.int32Value, increment.int32Value, self.vsip)
+            case .si:
+                vsip_vramp_si(start.int16Value, increment.int16Value, self.vsip)
+            case .uc:
+                vsip_vramp_uc(start.uint8Value, increment.uint8Value, self.vsip)
+            case .vi:
+                vsip_vramp_vi(start.uintValue, increment.uintValue, self.vsip)
+            default:
+                print("Type " + self.type.rawValue + " not supported for ramp")
+            }
+            return self
+        }
+        public func ramp(_ start : Double, increment : Double) -> Vector {
+            let s = NSNumber( value: start)
+            let i = NSNumber( value: increment)
+            return ramp(s, increment: i)
+        }
+        public func ramp(_ start : Float, increment : Float) -> Vector {
+            let s = NSNumber( value: start)
+            let i = NSNumber( value: increment)
+            return ramp(s, increment: i)
+        }
+        
+        public func ramp(_ start : Int, increment : Int) -> Vector {
+            let s = NSNumber( value: start)
+            let i = NSNumber( value: increment)
+            return ramp(s, increment: i)
+        }
+        
+        public func ramp(_ start : UInt, increment : UInt) -> Vector {
+            let s = NSNumber( value: start)
+            let i = NSNumber( value: increment)
+            return ramp(s, increment: i)
+        }
+        public func ramp(_ start : vsip_scalar_si, increment : vsip_scalar_si) -> Vector {
+            let s = NSNumber( value: start)
+            let i = NSNumber( value: increment)
+            return ramp(s, increment: i)
+        }
+        public func ramp(_ start : UInt8, increment : UInt8) -> Vector {
+            let s = NSNumber( value: start)
+            let i = NSNumber( value: increment)
+            return ramp(s, increment: i)
+        }
+        public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
+            switch self.type{
+            case .d:
+                vsip_vfill_d(value.1!.doubleValue,self.vsip)
+            case .f:
+                vsip_vfill_f(value.1!.floatValue,self.vsip)
+            case .cd:
+                vsip_cvfill_d(vsip_cmplx_d(value.1!.doubleValue,value.2!.doubleValue),self.vsip)
+            case .cf:
+                vsip_cvfill_f(vsip_cmplx_f(value.1!.floatValue,value.2!.floatValue),self.vsip)
+            case .vi:
+                vsip_vfill_vi(value.1!.uintValue,self.vsip)
+            case .i:
+                vsip_vfill_i(value.1!.int32Value,self.vsip)
+            case .li:
+                vsip_vfill_li(value.1!.intValue,self.vsip)
+            case .si:
+                vsip_vfill_si(value.1!.int16Value,self.vsip)
+            case .uc:
+                vsip_vfill_uc(value.1!.uint8Value,self.vsip)
+            default:
+                break
+            }
+        }
+        public func fill(_ value: Vsip.Scalar){
+            switch self.type{
+            case .d:
+                vsip_vfill_d(value.vsip_d,self.vsip)
+            case .f:
+                vsip_vfill_f(value.vsip_f,self.vsip)
+            case .cd:
+                vsip_cvfill_d(value.vsip_cd,self.vsip)
+            case .cf:
+                vsip_cvfill_f(value.vsip_cf,self.vsip)
+            case .vi:
+                vsip_vfill_vi(value.vsip_vi,self.vsip)
+            case .i:
+                vsip_vfill_i(value.vsip_i,self.vsip)
+            case .li:
+                vsip_vfill_li(value.vsip_li,self.vsip)
+            case .si:
+                vsip_vfill_si(value.vsip_si,self.vsip)
+            case .uc:
+                vsip_vfill_uc(value.vsip_uc,self.vsip)
+            default:
+                break
+            }
+        }
+        public func fill(_ value: NSNumber){
+            switch self.type{
+            case .d:
+                vsip_vfill_d(value.doubleValue,self.vsip)
+            case .f:
+                vsip_vfill_f(value.floatValue,self.vsip)
+            case .cd:
+                vsip_cvfill_d(vsip_cmplx_d(value.doubleValue,0.0),self.vsip)
+            case .cf:
+                vsip_cvfill_f(vsip_cmplx_f(value.floatValue,0.0),self.vsip)
+            case .vi:
+                vsip_vfill_vi(value.uintValue,self.vsip)
+            case .i:
+                vsip_vfill_i(value.int32Value,self.vsip)
+            case .li:
+                vsip_vfill_li(value.intValue,self.vsip)
+            case .si:
+                vsip_vfill_si(value.int16Value,self.vsip)
+            case .uc:
+                vsip_vfill_uc(value.uint8Value,self.vsip)
+            default:
+                break
+            }
+        }
+        public func fill(_ value: vsip_cscalar_d){
+            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+        }
+        public func fill(_ value: vsip_cscalar_f){
+            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+        }
+        public func randn(_ seed: vsip_index, portable: Bool) -> Vector {
+            let state = Vsip.Rand(seed: seed, portable: portable)
+            state.randn(self)
+            return self
+        }
+        public func randn(_ seed: vsip_index) -> Vector {
+            return self.randn(seed, portable: true)
+        }
+        public func randu(_ seed: vsip_index, portable: Bool) -> Vector{
+            let state = Vsip.Rand(seed: seed, portable: portable)
+            state.randu(self)
+            return self
+        }
+        public func randu(_ seed: vsip_index) -> Vector {
+            return self.randu(seed, portable: true)
+        }
+        // create empty vector of same type and view size. New data space created
+        public var empty: Vector {
+            return Vector(length: self.length, type: self.type)
+        }
+        public func empty(_ type: Block.Types) -> Vector {
+            return Vector(length: self.length, type: type)
+        }
+        public var copy: Vector {
+            let view = self.empty
+            switch view.type{
+            case .f:
+                vsip_vcopy_f_f(self.vsip,view.vsip)
+            case .d:
+                vsip_vcopy_d_d(self.vsip, view.vsip)
+            case .cf:
+                vsip_cvcopy_f_f(self.vsip,view.vsip)
+            case .cd:
+                vsip_cvcopy_d_d(self.vsip, view.vsip)
+            case .i:
+                vsip_vcopy_i_i(self.vsip,view.vsip)
+            case .si:
+                vsip_vcopy_si_si(self.vsip, view.vsip)
+            case .vi:
+                vsip_vcopy_vi_vi(self.vsip,view.vsip)
+            case .mi:
+                vsip_vcopy_mi_mi(self.vsip, view.vsip)
+            default:
+                break
+            }
+            return view
+        }
+        public func copy(_ output: Vector) -> Vector{
+            let t = (self.type, output.type)
+            switch t{
+            case (.f,.f):
+                vsip_vcopy_f_f(self.vsip,output.vsip)
+            case (.f,.cf):
+                let r = output.real;let i = output.real
+                vsip_vcopy_f_f(self.vsip,r.vsip)
+                vsip_vfill_f(0.0,i.vsip)
+            case (.d,.d):
+                vsip_vcopy_d_d(self.vsip,output.vsip)
+            case (.d,.cd):
+                let r = output.real;let i = output.real
+                vsip_vcopy_d_d(self.vsip,r.vsip)
+                vsip_vfill_d(0.0,i.vsip)
+            case (.d,.f):
+                vsip_vcopy_d_f(self.vsip,output.vsip)
+            case (.f,.d):
+                vsip_vcopy_f_d(self.vsip,output.vsip)
+            case (.i,.f):
+                vsip_vcopy_i_f(self.vsip,output.vsip)
+            case (.i,.d):
+                vsip_vcopy_i_d(self.vsip, output.vsip)
+            case (.i,.i):
+                vsip_vcopy_i_i(self.vsip, output.vsip)
+            case (.i,.uc):
+                vsip_vcopy_i_uc(self.vsip, output.vsip)
+            case (.i,.vi):
+                vsip_vcopy_i_vi(self.vsip, output.vsip)
+            case (.si, .si):
+                vsip_vcopy_si_si(self.vsip, output.vsip)
+            case (.si, .d):
+                vsip_vcopy_si_d(self.vsip, output.vsip)
+            case (.si, .f):
+                vsip_vcopy_si_f(self.vsip, output.vsip)
+            case (.vi,.vi):
+                vsip_vcopy_vi_vi(self.vsip, output.vsip)
+            case (.vi, .i):
+                vsip_vcopy_vi_i(self.vsip, output.vsip)
+            case (.vi,.d):
+                vsip_vcopy_vi_d(self.vsip, output.vsip)
+            default:
+                break
+            }
+            return output
+        }
+        public var clone: Vector? {
+            return Vector(block: self.block, offset: self.offset, stride: self.stride, length: self.length)
+        }
+        // MARK: Print
+        public func mString(_ format: String) -> String {
+            let fmt = formatFmt(format)
+            var retval = ""
+            let n = self.length - 1
+            for i in 0...n{
+                retval += (i == 0) ? "[" : " "
+                retval += super.scalarString(fmt, value: self[i])
+                retval += (i == n) ?  "]\n" : ";\n"
+            }
+            return retval
+        }
+        public func mPrint(_ format: String){
+            let m = mString(format)
+            print(m)
+        }
+        // MARK: Elementary Functions
+        public func acos(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vacos_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vacos_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func asin(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vasin_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vasin_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func atan(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vatan_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vatan_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func cos(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vcos_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vcos_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func sin(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vasin_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vasin_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func tan(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vtan_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vtan_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func exp(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vexp_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vexp_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func exp10(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vexp10_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vexp10_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out
+        }
+        public func log(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vlog_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vlog_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out    }
+        public func log10(_ out: Vector) -> Vector {
+            switch self.type{
+            case .d:
+                vsip_vlog10_d(self.vsip, out.vsip)
+            case .f:
+                vsip_vlog10_f(self.vsip, out.vsip)
+            default:
+                return out
+            }
+            return out    }
+        
+        // MARK: Binary Functions
+        public func add(_ to: Vector, resultIn: Vector) -> Vector{
+            switch self.type{
+            case .f:
+                vsip_vadd_f(self.vsip, to.vsip, resultIn.vsip)
+            case .d:
+                vsip_vadd_d(self.vsip, to.vsip, resultIn.vsip)
+            case .cf:
+                vsip_cvadd_f(self.vsip, to.vsip, resultIn.vsip)
+            case .cd:
+                vsip_cvadd_d(self.vsip, to.vsip, resultIn.vsip)
+            case .si:
+                vsip_vadd_si(self.vsip, to.vsip, resultIn.vsip)
+            case .i:
+                vsip_vadd_i(self.vsip, to.vsip, resultIn.vsip)
+            case .li:
+                vsip_vadd_li(self.vsip, to.vsip, resultIn.vsip)
+            case .uc:
+                vsip_vadd_uc(self.vsip, to.vsip, resultIn.vsip)
+            case .vi:
+                vsip_vadd_vi(self.vsip, to.vsip, resultIn.vsip)
+            default:
+                break
+            }
+            return resultIn
+        }
+        public func sub(_ from: Vector, resultIn: Vector) -> Vector{
+            switch self.type{
+            case .f:
+                vsip_vsub_f(self.vsip, from.vsip, resultIn.vsip)
+            case .d:
+                vsip_vadd_d(self.vsip, from.vsip, resultIn.vsip)
+            case .cf:
+                vsip_cvsub_f(self.vsip, from.vsip, resultIn.vsip)
+            case .cd:
+                vsip_cvsub_d(self.vsip, from.vsip, resultIn.vsip)
+            case .si:
+                vsip_vsub_si(self.vsip, from.vsip, resultIn.vsip)
+            case .i:
+                vsip_vsub_i(self.vsip, from.vsip, resultIn.vsip)
+            case .uc:
+                vsip_vsub_uc(self.vsip, from.vsip, resultIn.vsip)
+            default:
+                break
+            }
+            return resultIn
+        }
+    }
+    // MARK: - Matrix Class
+    public class Matrix : View {
+        fileprivate var tryVsip: OpaquePointer?
+        public var vsip: OpaquePointer {
+            get {
+                return tryVsip!
+            }
+        }
+        // matrix bind
+        // matrix create
+        // Matrix bind returns vsip object (may be null on malloc failure)
+        private func mBind(_ offset : Int,
+                           columnStride : Int, columnLength : Int,
+                           rowStride : Int, rowLength : Int) -> OpaquePointer? {
+            let blk = self.block.vsip
+            let t = self.block.type
+            switch t{
+            case .f:
+                return vsip_mbind_f(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                    vsip_stride(rowStride), vsip_length(rowLength))
+            case .d:
+                return vsip_mbind_d(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                    vsip_stride(rowStride), vsip_length(rowLength))
+            case .cf:
+                return vsip_cmbind_f(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                     vsip_stride(rowStride), vsip_length(rowLength))
+            case .cd:
+                return vsip_cmbind_d(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                     vsip_stride(rowStride), vsip_length(rowLength))
+            case .i:
+                return vsip_mbind_i(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                    vsip_stride(rowStride), vsip_length(rowLength))
+            case .li:
+                return vsip_mbind_li(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                     vsip_stride(rowStride), vsip_length(rowLength))
+            case .si:
+                return vsip_mbind_si(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                     vsip_stride(rowStride), vsip_length(rowLength))
+            case .uc:
+                return vsip_mbind_uc(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                     vsip_stride(rowStride), vsip_length(rowLength))
+            case .bl:
+                return vsip_mbind_bl(blk, vsip_offset(offset), vsip_stride(columnStride), vsip_length(columnLength),
+                                     vsip_stride(rowStride), vsip_length(rowLength))
+            default:
+                print("Not supported.")
+                return nil
+            }
+        }
+        public init(block: Block, offset: Int, columnStride: Int, columnLength: Int, rowStride: Int, rowLength: Int){
+            super.init(block: block, shape: .m)
+            if let m = self.mBind(offset, columnStride: columnStride, columnLength: columnLength, rowStride: rowStride, rowLength: rowLength){
+                self.tryVsip = m
+            } else {
+                preconditionFailure("Failed to bind to a vsip matrix")
+            }
+        }
+        public convenience init(columnLength :Int, rowLength: Int, type : Block.Types, major : vsip_major){
+            let N = rowLength * columnLength
+            let blk = Block(length: N, type: type)
+            if major == VSIP_COL {
+                self.init(block: blk, offset: 0, columnStride: 1, columnLength: columnLength, rowStride: Int(columnLength), rowLength: rowLength)
+            } else {
+                self.init(block: blk, offset: 0, columnStride: Int(rowLength), columnLength: columnLength, rowStride: 1, rowLength: rowLength)
+            }
+        }
+        // create view to hold derived subview
+        public init(block: Block, cView: OpaquePointer){
+            super.init(block: block, shape: .m)
+            self.tryVsip = cView
+        }
+        deinit{
+            let t = self.block.type
+            let id = self.myId.int32Value
+            switch t {
+            case .f:
+                vsip_mdestroy_f(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("deinit mdestroy_f \(id)")
+                }
+            case .d:
+                vsip_mdestroy_d(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("deinit mdestroy_d \(id)")
+                }
+            case .cf:
+                vsip_cmdestroy_f(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("deinit cmdestroy_f \(id)")
+                }
+            case .cd:
+                vsip_cmdestroy_d(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("cmdestroy_d id \(id)")
+                }
+            case .i:
+                vsip_mdestroy_i(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("mdestroy_i id \(id)")
+                }
+            case .li:
+                vsip_mdestroy_li(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("mdestroy_li id \(id)")
+                }
+            case .si:
+                vsip_mdestroy_si(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("mdestroy_si id \(id)")
+                }
+            case .uc:
+                vsip_mdestroy_uc(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("mdestroy_uc id \(id)")
+                }
+            case .bl:
+                vsip_mdestroy_bl(self.vsip)
+                if _isDebugAssertConfiguration(){
+                    print("mdestroy_bl id \(id)")
+                }
+            default:
+                break
+            }
+        }
+        // MARK: Attributes
+        public var offset: Int {
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_mgetoffset_f(self.vsip))
+                case .d :
+                    return Int(vsip_mgetoffset_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cmgetoffset_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cmgetoffset_d(self.vsip))
+                case .si :
+                    return Int(vsip_mgetoffset_si(self.vsip))
+                case .i :
+                    return Int(vsip_mgetoffset_i(self.vsip))
+                case .li :
+                    return Int(vsip_mgetoffset_li(self.vsip))
+                case .uc :
+                    return Int(vsip_mgetoffset_uc(self.vsip))
+                case .bl :
+                    return Int(vsip_mgetoffset_bl(self.vsip))
+                default:
+                    return 0
+                }
+            }
+            set(offset) {
+                switch self.type {
+                case .f :
+                    vsip_mputoffset_f(self.vsip, vsip_offset(offset))
+                case .d :
+                    vsip_mputoffset_d(self.vsip, vsip_offset(offset))
+                case .cf :
+                    vsip_cmputoffset_f(self.vsip, vsip_offset(offset))
+                case .cd :
+                    vsip_cmputoffset_d(self.vsip, vsip_offset(offset))
+                case .si :
+                    vsip_mputoffset_si(self.vsip, vsip_offset(offset))
+                case .i :
+                    vsip_mputoffset_i(self.vsip, vsip_offset(offset))
+                case .li :
+                    vsip_mputoffset_li(self.vsip, vsip_offset(offset))
+                case .uc :
+                    vsip_mputoffset_uc(self.vsip, vsip_offset(offset))
+                case .bl :
+                    vsip_mputoffset_bl(self.vsip, vsip_offset(offset))
+                default:
+                    break
+                }
+            }
+        }
+        public var rowStride: Int{
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_mgetrowstride_f(self.vsip))
+                case .d :
+                    return Int(vsip_mgetrowstride_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cmgetrowstride_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cmgetrowstride_d(self.vsip))
+                case .i :
+                    return Int(vsip_mgetrowstride_i(self.vsip))
+                case .si :
+                    return Int(vsip_mgetrowstride_si(self.vsip))
+                case .li :
+                    return Int(vsip_mgetrowstride_li(self.vsip))
+                default :
+                    return 0
+                }
+            }
+            set(stride){
+                switch self.type{
+                case .f :
+                    vsip_mputrowstride_f(self.vsip,vsip_stride(stride))
+                case .d :
+                    vsip_mputrowstride_d(self.vsip,vsip_stride(stride))
+                case .cf :
+                    vsip_cmputrowstride_f(self.vsip,vsip_stride(stride))
+                case .cd :
+                    vsip_cmputrowstride_d(self.vsip,vsip_stride(stride))
+                case .i :
+                    vsip_mputrowstride_i(self.vsip,vsip_stride(stride))
+                case .si :
+                    vsip_mputrowstride_si(self.vsip,vsip_stride(stride))
+                case .li :
+                    vsip_mputrowstride_li(self.vsip,vsip_stride(stride))
+                default :
+                    break
+                }
+            }
+        }
+        public var columnStride: Int{
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_mgetcolstride_f(self.vsip))
+                case .d :
+                    return Int(vsip_mgetcolstride_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cmgetcolstride_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cmgetcolstride_d(self.vsip))
+                case .i :
+                    return Int(vsip_mgetcolstride_i(self.vsip))
+                case .si :
+                    return Int(vsip_mgetcolstride_si(self.vsip))
+                case .li :
+                    return Int(vsip_mgetcolstride_li(self.vsip))
+                default :
+                    return 0
+                }
+            }
+            set(stride){
+                switch self.type{
+                case .f :
+                    vsip_mputcolstride_f(self.vsip,vsip_stride(stride))
+                case .d :
+                    vsip_mputcolstride_d(self.vsip,vsip_stride(stride))
+                case .cf :
+                    vsip_cmputcolstride_f(self.vsip,vsip_stride(stride))
+                case .cd :
+                    vsip_cmputcolstride_d(self.vsip,vsip_stride(stride))
+                case .i :
+                    vsip_mputcolstride_i(self.vsip,vsip_stride(stride))
+                case .si :
+                    vsip_mputcolstride_si(self.vsip,vsip_stride(stride))
+                case .li :
+                    vsip_mputcolstride_li(self.vsip,vsip_stride(stride))
+                default :
+                    break
+                }
+            }
+        }
+        public var rowLength: Int {
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_mgetrowlength_f(self.vsip))
+                case .d :
+                    return Int(vsip_mgetrowlength_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cmgetrowlength_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cmgetrowlength_d(self.vsip))
+                case .i :
+                    return Int(vsip_mgetrowlength_i(self.vsip))
+                case .si :
+                    return Int(vsip_mgetrowlength_si(self.vsip))
+                case .li :
+                    return Int(vsip_mgetrowlength_li(self.vsip))
+                default :
+                    return 0
+                }
+            }
+            set(length){
+                switch self.type{
+                case .f :
+                    vsip_mputrowlength_f(self.vsip,vsip_length(length))
+                case .d :
+                    vsip_mputrowlength_d(self.vsip,vsip_length(length))
+                case .cf :
+                    vsip_cmputrowlength_f(self.vsip,vsip_length(length))
+                case .cd :
+                    vsip_cmputrowlength_d(self.vsip,vsip_length(length))
+                case .i :
+                    vsip_mputrowlength_i(self.vsip,vsip_length(length))
+                case .si :
+                    vsip_mputrowlength_si(self.vsip,vsip_length(length))
+                case .li :
+                    vsip_mputrowlength_li(self.vsip,vsip_length(length))
+                default :
+                    break
+                }
+            }
+        }
+        public var columnLength: Int{
+            get{
+                switch self.type {
+                case .f :
+                    return Int(vsip_mgetcollength_f(self.vsip))
+                case .d :
+                    return Int(vsip_mgetcollength_d(self.vsip))
+                case .cf :
+                    return Int(vsip_cmgetcollength_f(self.vsip))
+                case .cd :
+                    return Int(vsip_cmgetcollength_d(self.vsip))
+                case .i :
+                    return Int(vsip_mgetcollength_i(self.vsip))
+                case .si :
+                    return Int(vsip_mgetcollength_si(self.vsip))
+                case .li :
+                    return Int(vsip_mgetcollength_li(self.vsip))
+                default :
+                    return 0
+                }
+            }
+            set(length){
+                switch self.type{
+                case .f :
+                    vsip_mputcollength_f(self.vsip,vsip_length(length))
+                case .d :
+                    vsip_mputcollength_d(self.vsip,vsip_length(length))
+                case .cf :
+                    vsip_cmputcollength_f(self.vsip,vsip_length(length))
+                case .cd :
+                    vsip_cmputcollength_d(self.vsip,vsip_length(length))
+                case .i :
+                    vsip_mputcollength_i(self.vsip,vsip_length(length))
+                case .si :
+                    vsip_mputcollength_si(self.vsip,vsip_length(length))
+                case .li :
+                    vsip_mputcollength_li(self.vsip,vsip_length(length))
+                default :
+                    break
+                }
+            }
+        }
+        public var real: Matrix {
+            get{
+                let ans = super.real(self.vsip) // C VSIP real view
+                let blk = ans.0
+                let v = ans.1
+                return Matrix(block: blk, cView: v)
+                
+            }
+        }
+        public var imag: Matrix{
+            get{
+                let ans = super.imag(self.vsip) // C VSIP imag view
+                let blk = ans.0!
+                let v = ans.1!
+                return Matrix(block: blk, cView: v)
+            }
+        }
+        subscript(rowIndex: Int, columnIndex: Int) -> (Block.Types?, NSNumber?, NSNumber?){
+            get{
+                return super.get(self.vsip, rowIndex: vsip_index(rowIndex), columnIndex: vsip_index(columnIndex))
+            }
+            set(value){
+                super.put(self.vsip, rowIndex: vsip_index(rowIndex), columnIndex: vsip_index(columnIndex), value: value)
+            }
+        }
+        subscript() -> (Block.Types?, NSNumber?, NSNumber?){
+            get{
+                return self[0,0]
+            }
+            set(value){
+                self.fill(value)
+            }
+        }
+        
+        // MARK: Data Generators
+        public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
+            switch self.type{
+            case .d:
+                vsip_mfill_d(value.1!.doubleValue,self.vsip)
+            case .f:
+                vsip_mfill_f(value.1!.floatValue,self.vsip)
+            case .cd:
+                vsip_cmfill_d(vsip_cmplx_d(value.1!.doubleValue,value.2!.doubleValue),self.vsip)
+            case .cf:
+                vsip_cmfill_f(vsip_cmplx_f(value.1!.floatValue,value.2!.floatValue),self.vsip)
+            case .i:
+                vsip_mfill_i(value.1!.int32Value,self.vsip)
+            case .li:
+                vsip_mfill_li(value.1!.intValue,self.vsip)
+            case .si:
+                vsip_mfill_si(value.1!.int16Value,self.vsip)
+            case .uc:
+                vsip_mfill_uc(value.1!.uint8Value,self.vsip)
+            default:
+                break
+            }
+        }
+        public func fill(_ value: NSNumber){
+            switch self.type{
+            case .d:
+                vsip_mfill_d(value.doubleValue,self.vsip)
+            case .f:
+                vsip_mfill_f(value.floatValue,self.vsip)
+            case .cd:
+                vsip_cmfill_d(vsip_cmplx_d(value.doubleValue,0.0),self.vsip)
+            case .cf:
+                vsip_cmfill_f(vsip_cmplx_f(value.floatValue,0.0),self.vsip)
+            case .i:
+                vsip_mfill_i(value.int32Value,self.vsip)
+            case .li:
+                vsip_mfill_li(value.intValue,self.vsip)
+            case .si:
+                vsip_mfill_si(value.int16Value,self.vsip)
+            case .uc:
+                vsip_mfill_uc(value.uint8Value,self.vsip)
+            default:
+                break
+            }
+        }
+        public func fill(_ value: vsip_cscalar_d){
+            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+        }
+        public func fill(_ value: vsip_cscalar_f){
+            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+        }
+        
+        public func randn(_ seed: vsip_index, portable: Bool) -> Matrix{
+            let state = Vsip.Rand(seed: seed, portable: portable)
+            state.randn(self)
+            return self
+        }
+        public func randu(_ seed: vsip_index, portable: Bool) -> Matrix{
+            let state = Vsip.Rand(seed: seed, portable: portable)
+            state.randu(self)
+            return self
+        }
+        
+        // MARK: Views, Sub-Views, Copies, Clones and convenience creaters.
+        // create empty Matrix of same type and view size. New data space created, created as row major
+        public var empty: Matrix{
+            return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: self.type, major: VSIP_ROW)
+        }
+        public func empty(_ type: Block.Types) -> Matrix{
+            return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: type, major: VSIP_ROW)
+        }
+        // copy is new data space, view of same size, copy of data
+        public var copy: Matrix? {
+            let view = self.empty
+            switch view.type{
+            case .f:
+                vsip_mcopy_f_f(self.vsip,view.vsip)
+            case .d:
+                vsip_mcopy_d_d(self.vsip, view.vsip)
+            case .cf:
+                vsip_cmcopy_f_f(self.vsip,view.vsip)
+            case .cd:
+                vsip_cmcopy_d_d(self.vsip, view.vsip)
+            case .i:
+                vsip_mcopy_i_i(self.vsip,view.vsip)
+            default:
+                break
+            }
+            return view
+        }
+        public func copy(_ output: Matrix) -> Matrix{
+            let t = (self.type, output.type)
+            switch t{
+            case (.f,.f):
+                vsip_mcopy_f_f(self.vsip,output.vsip)
+            case (.f,.cf):
+                let r = output.real;let i = output.real
+                vsip_mcopy_f_f(self.vsip,r.vsip)
+                vsip_mfill_f(0.0,i.vsip)
+            case (.d,.d):
+                vsip_mcopy_d_d(self.vsip,output.vsip)
+            case (.d,.cd):
+                let r = output.real;let i = output.real
+                vsip_mcopy_d_d(self.vsip,r.vsip)
+                vsip_mfill_d(0.0,i.vsip)
+            case (.d,.f):
+                vsip_mcopy_d_f(self.vsip,output.vsip)
+            case (.f,.d):
+                vsip_mcopy_f_d(self.vsip,output.vsip)
+            case (.i,.f):
+                vsip_mcopy_i_f(self.vsip,output.vsip)
+            case (.i,.i):
+                vsip_mcopy_i_i(self.vsip, output.vsip)
+            case (.si,.f):
+                vsip_mcopy_si_f(self.vsip, output.vsip)
+            default:
+                break
+            }
+            return output
+        }
+        // clone is same data space just new view
+        public var clone: Matrix? {
+            return Matrix(block: self.block, offset: self.offset, columnStride: self.columnStride, columnLength: self.columnLength, rowStride: self.rowStride, rowLength: self.rowLength)
+        }
+        // transview is new view of same data space as a transpose.
+        public var transview: Matrix? {
+            return Matrix(block: self.block, offset: self.offset, columnStride: self.rowStride, columnLength: self.rowLength, rowStride: self.columnStride, rowLength: self.columnLength)
+        }
+        private func diagview(diagIndex: Int) -> Vector {
+            let blk = self.block
+            switch self.type {
+            case .f:
+                if let v = vsip_mdiagview_f(self.vsip, vsip_stride(diagIndex)) {
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+                
+            case .d:
+                if let v = vsip_mdiagview_d(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .cf:
+                if let v = vsip_cmdiagview_f(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .cd:
+                if let v = vsip_cmdiagview_d(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .i:
+                if let v = vsip_mdiagview_i(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .li:
+                if let v = vsip_mdiagview_li(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .si:
+                if let v = vsip_mdiagview_si(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .uc:
+                if let v = vsip_mdiagview_uc(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .bl:
+                if let v = vsip_mdiagview_bl(self.vsip, vsip_stride(diagIndex)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            default:
+                print("diagview not available for this view")
+            }
+            preconditionFailure("Failed to return valid vsip diagview")
+        }
+        public var diagview: Vector {
+            return self.diagview(diagIndex: 0)
+        }
+        
+        // MARK: Print
+        public func mString(_ format: String) -> String {
+            let fmt = formatFmt(format)
+            var retval = ""
+            let m = self.columnLength - 1
+            let n = self.rowLength - 1
+            for i in 0...m{
+                retval += (i == 0) ? "[" : " "
+                for j in 0...n{
+                    retval += super.scalarString(fmt, value: self[i,j])
+                    if j < n {
+                        retval += ", "
+                    }
+                }
+                retval += (i == m) ?  "]\n" : ";\n"
+            }
+            return retval
+        }
+        public func mPrint(_ format: String){
+            let m = mString(format)
+            print(m)
+        }
+    }
+
     // MARK:  - Elementary Math Functions
     public static func acos(_ input: Vector, output: Vector) {
         assert(sizeEqual(input, against: output), "vectors must be the same size")
@@ -1277,27 +3331,27 @@ public class Vsip {
         let t = (aView.type, subtract.type, resultIn.type)
         switch t{
         case (.cd, .cd, .cd):
-        vsip_cmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_cmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.cf, .cf, .cf):
-        vsip_cmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_cmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.cd, .d, .cd):
-        vsip_crmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_crmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.cf, .f, .cf):
-        vsip_crmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_crmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.si, .si, .si):
-        vsip_msub_si (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_si (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.d, .cd, .cd):
-        vsip_rcmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_rcmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.d, .d, .d):
-        vsip_msub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_d (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.f, .f, .f):
-        vsip_msub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_f (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.i, .i, .i):
-        vsip_msub_i (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_i (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.li, .li, .li):
-        vsip_msub_li (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_li (aView.vsip,subtract.vsip,resultIn.vsip )
         case (.f, .cf, .cf):
-        vsip_rcmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_rcmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
         default:
             preconditionFailure("function not supported for input/output views \(t)")
         }
@@ -1762,7 +3816,7 @@ public class Vsip {
             }
             var s: OpaquePointer {
                 get {
-                return tryS!
+                    return tryS!
                 }
             }
             let jInit : JVSIP

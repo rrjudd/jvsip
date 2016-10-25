@@ -184,15 +184,15 @@ public class View {
             vsip_vput_li(vsip, index, vsipValue.intValue)
         case .i:
             let vsipValue = value.1!
-             vsip_vput_i(vsip,index,vsipValue.int32Value)
+            vsip_vput_i(vsip,index,vsipValue.int32Value)
         case .si:
             let vsipValue = value.1!
-             vsip_vput_si(vsip,index,vsipValue.int16Value)
+            vsip_vput_si(vsip,index,vsipValue.int16Value)
         case .uc:
             let vsipValue = value.1!
             vsip_vput_uc(vsip,index,vsipValue.uint8Value)
         default:
-             break
+            break
         }
     }
     public func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
@@ -224,7 +224,7 @@ public class View {
             vsip_mput_uc(vsip, rowIndex, columnIndex,vsipValue.uint8Value)
         default:
             break
-
+            
         }
     }
     // MARK: Conversion to String and Print

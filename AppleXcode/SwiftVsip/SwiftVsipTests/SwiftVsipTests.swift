@@ -11,7 +11,7 @@ import XCTest
 
 class SwiftVsipTests: XCTestCase {
     func testVector() { // All we do here is make sure some stuff runs without failing
-        var v = Vector(length: 10, type: .cd)
+        var v = Vsip.Vector(length: 10, type: .cd)
         let _ = v.randn(8)
         v.mPrint("4.3")
         v.real.mPrint("4.3")
@@ -19,11 +19,11 @@ class SwiftVsipTests: XCTestCase {
         Vsip.add(v.real, to: v.imag, resultsIn: v.real)
         v.mPrint("4.3")
         v.randn(9).mPrint("4.3")
-        v = Vector(length: 11, type: .cf)
+        v = Vsip.Vector(length: 11, type: .cf)
         v.randu(11).mPrint("5.4")
     }
     func testMatrix() { // All we do here is make sure some stuff runs without failing
-        var m = Matrix(columnLength: 4, rowLength: 3, type: .cf, major: VSIP_ROW)
+        var m = Vsip.Matrix(columnLength: 4, rowLength: 3, type: .cf, major: VSIP_ROW)
         let _ = m.randn(8, portable: true)
         m.mPrint("4.3")
         m.real.mPrint("4.3")
@@ -31,7 +31,7 @@ class SwiftVsipTests: XCTestCase {
         Vsip.add(m.real, to: m.imag, resultsIn: m.real)
         m.mPrint("4.3")
         m.randn(9, portable: true).mPrint("4.3")
-        m = Matrix(columnLength: 5, rowLength: 3, type: .d, major: VSIP_COL)
+        m = Vsip.Matrix(columnLength: 5, rowLength: 3, type: .d, major: VSIP_COL)
         m.randu(11, portable: false).mPrint("5.4")
     }
     func testPlus(){
@@ -41,7 +41,7 @@ class SwiftVsipTests: XCTestCase {
         print("a + b = \(d.reald)")
     }
     func testDiv(){
-        let a = Vector(length: 10, type: .f)
+        let a = Vsip.Vector(length: 10, type: .f)
         let b = a.empty
         let c = a.empty
         a.fill(Vsip.Scalar(1.0))
@@ -59,9 +59,9 @@ class SwiftVsipTests: XCTestCase {
     }
     func testSvd(){
         let n = 5
-        let A = Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
-        let x = Vector(length: A.rowLength, type: A.type)
-        let b = Vector(length: A.columnLength, type: A.type)
+        let A = Vsip.Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
+        let x = Vsip.Vector(length: A.rowLength, type: A.type)
+        let b = Vsip.Vector(length: A.columnLength, type: A.type)
         let fmt = "6.5"
         let chk = 1E-14
         let _ = A.randn(5, portable: true)

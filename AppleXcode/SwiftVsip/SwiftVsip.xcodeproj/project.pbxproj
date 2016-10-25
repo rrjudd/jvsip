@@ -11,11 +11,6 @@
 		061263701DA8023500AA48EA /* SwiftVsipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612636F1DA8023500AA48EA /* SwiftVsipTests.swift */; };
 		061263721DA8023500AA48EA /* SwiftVsip.h in Headers */ = {isa = PBXBuildFile; fileRef = 061263641DA8023500AA48EA /* SwiftVsip.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0612637D1DA8033A00AA48EA /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0612637C1DA8033A00AA48EA /* vsip.framework */; };
-		061263851DA8039200AA48EA /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612637E1DA8039200AA48EA /* Block.swift */; };
-		061263861DA8039200AA48EA /* Jvsip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612637F1DA8039200AA48EA /* Jvsip.swift */; };
-		061263871DA8039200AA48EA /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263801DA8039200AA48EA /* Matrix.swift */; };
-		061263891DA8039200AA48EA /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263821DA8039200AA48EA /* Vector.swift */; };
-		0612638A1DA8039200AA48EA /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263831DA8039200AA48EA /* View.swift */; };
 		0612638B1DA8039200AA48EA /* Vsip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263841DA8039200AA48EA /* Vsip.swift */; };
 		0612638C1DA8070800AA48EA /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0612637C1DA8033A00AA48EA /* vsip.framework */; };
 /* End PBXBuildFile section */
@@ -231,12 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				061263861DA8039200AA48EA /* Jvsip.swift in Sources */,
 				0612638B1DA8039200AA48EA /* Vsip.swift in Sources */,
-				061263851DA8039200AA48EA /* Block.swift in Sources */,
-				0612638A1DA8039200AA48EA /* View.swift in Sources */,
-				061263891DA8039200AA48EA /* Vector.swift in Sources */,
-				061263871DA8039200AA48EA /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
