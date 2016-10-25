@@ -10,19 +10,7 @@ import XCTest
 @testable import SwiftVsip
 
 class SwiftVsipTests: XCTestCase {
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    func testVector() {
+    func testVector() { // All we do here is make sure some stuff runs without failing
         var v = Vector(length: 10, type: .cd)
         let _ = v.randn(8)
         v.mPrint("4.3")
@@ -33,6 +21,18 @@ class SwiftVsipTests: XCTestCase {
         v.randn(9).mPrint("4.3")
         v = Vector(length: 11, type: .cf)
         v.randu(11).mPrint("5.4")
+    }
+    func testMatrix() { // All we do here is make sure some stuff runs without failing
+        var m = Matrix(columnLength: 4, rowLength: 3, type: .cf, major: VSIP_ROW)
+        let _ = m.randn(8, portable: true)
+        m.mPrint("4.3")
+        m.real.mPrint("4.3")
+        m.imag.mPrint("4.3")
+        Vsip.add(m.real, to: m.imag, resultsIn: m.real)
+        m.mPrint("4.3")
+        m.randn(9, portable: true).mPrint("4.3")
+        m = Matrix(columnLength: 5, rowLength: 3, type: .d, major: VSIP_COL)
+        m.randu(11, portable: false).mPrint("5.4")
     }
     func testPlus(){
         let a = Vsip.Scalar(15.0)
