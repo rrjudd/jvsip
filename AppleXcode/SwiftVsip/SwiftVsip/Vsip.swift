@@ -1275,6 +1275,87 @@ public class Vsip {
                 self.fill(value)
             }
         }
+        // create empty vector of same type and view size. New data space created
+        public var empty: Vector {
+            return Vector(length: self.length, type: self.type)
+        }
+        public func empty(_ type: Block.Types) -> Vector {
+            return Vector(length: self.length, type: type)
+        }
+        public var copy: Vector {
+            let view = self.empty
+            switch view.type{
+            case .f:
+                vsip_vcopy_f_f(self.vsip,view.vsip)
+            case .d:
+                vsip_vcopy_d_d(self.vsip, view.vsip)
+            case .cf:
+                vsip_cvcopy_f_f(self.vsip,view.vsip)
+            case .cd:
+                vsip_cvcopy_d_d(self.vsip, view.vsip)
+            case .i:
+                vsip_vcopy_i_i(self.vsip,view.vsip)
+            case .si:
+                vsip_vcopy_si_si(self.vsip, view.vsip)
+            case .vi:
+                vsip_vcopy_vi_vi(self.vsip,view.vsip)
+            case .mi:
+                vsip_vcopy_mi_mi(self.vsip, view.vsip)
+            default:
+                break
+            }
+            return view
+        }
+        public func copy(_ output: Vector) -> Vector{
+            let t = (self.type, output.type)
+            switch t{
+            case (.f,.f):
+                vsip_vcopy_f_f(self.vsip,output.vsip)
+            case (.f,.cf):
+                let r = output.real;let i = output.real
+                vsip_vcopy_f_f(self.vsip,r.vsip)
+                vsip_vfill_f(0.0,i.vsip)
+            case (.d,.d):
+                vsip_vcopy_d_d(self.vsip,output.vsip)
+            case (.d,.cd):
+                let r = output.real;let i = output.real
+                vsip_vcopy_d_d(self.vsip,r.vsip)
+                vsip_vfill_d(0.0,i.vsip)
+            case (.d,.f):
+                vsip_vcopy_d_f(self.vsip,output.vsip)
+            case (.f,.d):
+                vsip_vcopy_f_d(self.vsip,output.vsip)
+            case (.i,.f):
+                vsip_vcopy_i_f(self.vsip,output.vsip)
+            case (.i,.d):
+                vsip_vcopy_i_d(self.vsip, output.vsip)
+            case (.i,.i):
+                vsip_vcopy_i_i(self.vsip, output.vsip)
+            case (.i,.uc):
+                vsip_vcopy_i_uc(self.vsip, output.vsip)
+            case (.i,.vi):
+                vsip_vcopy_i_vi(self.vsip, output.vsip)
+            case (.si, .si):
+                vsip_vcopy_si_si(self.vsip, output.vsip)
+            case (.si, .d):
+                vsip_vcopy_si_d(self.vsip, output.vsip)
+            case (.si, .f):
+                vsip_vcopy_si_f(self.vsip, output.vsip)
+            case (.vi,.vi):
+                vsip_vcopy_vi_vi(self.vsip, output.vsip)
+            case (.vi, .i):
+                vsip_vcopy_vi_i(self.vsip, output.vsip)
+            case (.vi,.d):
+                vsip_vcopy_vi_d(self.vsip, output.vsip)
+            default:
+                break
+            }
+            return output
+        }
+        public var clone: Vector {
+            return Vector(block: self.block, offset: self.offset, stride: self.stride, length: self.length)
+        }
+
         // MARK: data generators
         public func ramp(_ start : NSNumber, increment : NSNumber) -> Vector {
             switch self.type {
@@ -1378,86 +1459,6 @@ public class Vsip {
         }
         public func randu(_ seed: vsip_index) -> Vector {
             return self.randu(seed, portable: true)
-        }
-        // create empty vector of same type and view size. New data space created
-        public var empty: Vector {
-            return Vector(length: self.length, type: self.type)
-        }
-        public func empty(_ type: Block.Types) -> Vector {
-            return Vector(length: self.length, type: type)
-        }
-        public var copy: Vector {
-            let view = self.empty
-            switch view.type{
-            case .f:
-                vsip_vcopy_f_f(self.vsip,view.vsip)
-            case .d:
-                vsip_vcopy_d_d(self.vsip, view.vsip)
-            case .cf:
-                vsip_cvcopy_f_f(self.vsip,view.vsip)
-            case .cd:
-                vsip_cvcopy_d_d(self.vsip, view.vsip)
-            case .i:
-                vsip_vcopy_i_i(self.vsip,view.vsip)
-            case .si:
-                vsip_vcopy_si_si(self.vsip, view.vsip)
-            case .vi:
-                vsip_vcopy_vi_vi(self.vsip,view.vsip)
-            case .mi:
-                vsip_vcopy_mi_mi(self.vsip, view.vsip)
-            default:
-                break
-            }
-            return view
-        }
-        public func copy(_ output: Vector) -> Vector{
-            let t = (self.type, output.type)
-            switch t{
-            case (.f,.f):
-                vsip_vcopy_f_f(self.vsip,output.vsip)
-            case (.f,.cf):
-                let r = output.real;let i = output.real
-                vsip_vcopy_f_f(self.vsip,r.vsip)
-                vsip_vfill_f(0.0,i.vsip)
-            case (.d,.d):
-                vsip_vcopy_d_d(self.vsip,output.vsip)
-            case (.d,.cd):
-                let r = output.real;let i = output.real
-                vsip_vcopy_d_d(self.vsip,r.vsip)
-                vsip_vfill_d(0.0,i.vsip)
-            case (.d,.f):
-                vsip_vcopy_d_f(self.vsip,output.vsip)
-            case (.f,.d):
-                vsip_vcopy_f_d(self.vsip,output.vsip)
-            case (.i,.f):
-                vsip_vcopy_i_f(self.vsip,output.vsip)
-            case (.i,.d):
-                vsip_vcopy_i_d(self.vsip, output.vsip)
-            case (.i,.i):
-                vsip_vcopy_i_i(self.vsip, output.vsip)
-            case (.i,.uc):
-                vsip_vcopy_i_uc(self.vsip, output.vsip)
-            case (.i,.vi):
-                vsip_vcopy_i_vi(self.vsip, output.vsip)
-            case (.si, .si):
-                vsip_vcopy_si_si(self.vsip, output.vsip)
-            case (.si, .d):
-                vsip_vcopy_si_d(self.vsip, output.vsip)
-            case (.si, .f):
-                vsip_vcopy_si_f(self.vsip, output.vsip)
-            case (.vi,.vi):
-                vsip_vcopy_vi_vi(self.vsip, output.vsip)
-            case (.vi, .i):
-                vsip_vcopy_vi_i(self.vsip, output.vsip)
-            case (.vi,.d):
-                vsip_vcopy_vi_d(self.vsip, output.vsip)
-            default:
-                break
-            }
-            return output
-        }
-        public var clone: Vector? {
-            return Vector(block: self.block, offset: self.offset, stride: self.stride, length: self.length)
         }
         // MARK: Print
         public func mString(_ format: String) -> String {
@@ -2063,7 +2064,7 @@ public class Vsip {
             return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: type, major: VSIP_ROW)
         }
         // copy is new data space, view of same size, copy of data
-        public var copy: Matrix? {
+        public var copy: Matrix {
             let view = self.empty
             switch view.type{
             case .f:
@@ -2112,11 +2113,11 @@ public class Vsip {
             return output
         }
         // clone is same data space just new view
-        public var clone: Matrix? {
+        public var clone: Matrix {
             return Matrix(block: self.block, offset: self.offset, columnStride: self.columnStride, columnLength: self.columnLength, rowStride: self.rowStride, rowLength: self.rowLength)
         }
         // transview is new view of same data space as a transpose.
-        public var transview: Matrix? {
+        public var transview: Matrix {
             return Matrix(block: self.block, offset: self.offset, columnStride: self.rowStride, columnLength: self.rowLength, rowStride: self.columnStride, rowLength: self.columnLength)
         }
         private func diagview(diagIndex: Int) -> Vector {
@@ -3388,10 +3389,10 @@ public class Vsip {
         
     }
     // MARK: - Linear Algebra Matrix and Vector Operations
-    public static func herm(_ complexInputMatrix: Matrix?, complexOuputMatrix: Matrix?){
-        let vsipA = complexInputMatrix?.vsip
-        let vsipB = complexOuputMatrix?.vsip
-        let t = (complexInputMatrix!.type, complexOuputMatrix!.type)
+    public static func herm(_ complexInputMatrix: Matrix, complexOuputMatrix: Matrix){
+        let vsipA = complexInputMatrix.vsip
+        let vsipB = complexOuputMatrix.vsip
+        let t = (complexInputMatrix.type, complexOuputMatrix.type)
         switch t {
         case (.cf, .cf):
             vsip_cmherm_f(vsipA, vsipB)
@@ -3401,10 +3402,10 @@ public class Vsip {
             preconditionFailure("Type not supported for herm")
         }
     }
-    public static func jdot(_ complexInputVector: Vector?, complexOuputVector: Vector?) -> Scalar {
-        let vsipA = complexInputVector?.vsip
-        let vsipB = complexOuputVector?.vsip
-        let t = (complexInputVector!.type, complexInputVector!.type)
+    public static func jdot(_ complexInputVector: Vector, complexOuputVector: Vector) -> Scalar {
+        let vsipA = complexInputVector.vsip
+        let vsipB = complexOuputVector.vsip
+        let t = (complexInputVector.type, complexInputVector.type)
         switch t {
         case (.cf, .cf):
             return Scalar(vsip_cvjdot_f(vsipA, vsipB))
@@ -3414,11 +3415,11 @@ public class Vsip {
             preconditionFailure("Type not supported for jdot")
         }
     }
-    public static func gemp(alpha: Scalar, matA: Matrix?, opA: vsip_mat_op, matB: Matrix?, opB: vsip_mat_op, beta: Scalar, matC: Matrix?) {
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func gemp(alpha: Scalar, matA: Matrix, opA: vsip_mat_op, matB: Matrix, opB: vsip_mat_op, beta: Scalar, matC: Matrix) {
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.d, .d, .d):
             vsip_gemp_d(alpha.reald, vsipA, opA, vsipB, opB, beta.reald, vsipC)
@@ -3433,10 +3434,10 @@ public class Vsip {
         }
         
     }
-    public static func gems(alpha: Scalar, matA: Matrix?, opA: vsip_mat_op, beta: Scalar, matC: Matrix?){
-        let t = (matA!.type,  matC!.type)
-        let vsipA = matA?.vsip
-        let vsipC = matC?.vsip
+    public static func gems(alpha: Scalar, matA: Matrix, opA: vsip_mat_op, beta: Scalar, matC: Matrix){
+        let t = (matA.type,  matC.type)
+        let vsipA = matA.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.d, .d):
             vsip_gems_d(alpha.reald, vsipA, opA, beta.reald, vsipC)
@@ -3450,11 +3451,11 @@ public class Vsip {
             preconditionFailure("Type not supported for gemp")
         }
     }
-    public static func kron(alpha: Scalar, vecX: Vector?, vecY: Vector?, matC: Matrix?){
-        let t = (vecX!.type, vecY!.type, matC!.type)
-        let vsipX = vecX?.vsip
-        let vsipY = vecY?.vsip
-        let vsipC = matC?.vsip
+    public static func kron(alpha: Scalar, vecX: Vector, vecY: Vector, matC: Matrix){
+        let t = (vecX.type, vecY.type, matC.type)
+        let vsipX = vecX.vsip
+        let vsipY = vecY.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.f, .f, .f):
             vsip_vkron_f(alpha.realf, vsipX, vsipY, vsipC)
@@ -3468,11 +3469,11 @@ public class Vsip {
             preconditionFailure("Kron not supported for argument list")
         }
     }
-    public static func kron(alpha: Scalar, matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func kron(alpha: Scalar, matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.f, .f, .f):
             vsip_mkron_f(alpha.realf, vsipA, vsipB, vsipC)
@@ -3486,11 +3487,11 @@ public class Vsip {
             preconditionFailure("Kron not supported for argument list")
         }
     }
-    public static func prod3(matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func prod3(matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.f, .f, .f):
             vsip_mprod3_f(vsipA, vsipB, vsipC)
@@ -3504,11 +3505,11 @@ public class Vsip {
             preconditionFailure("VSIP function prod3 not supported for argument list")
         }
     }
-    public static func prod3(matA: Matrix?, vecB: Vector?, vecC: Vector?){
-        let t = (matA!.type, vecB!.type, vecC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = vecB?.vsip
-        let vsipC = vecC?.vsip
+    public static func prod3(matA: Matrix, vecB: Vector, vecC: Vector){
+        let t = (matA.type, vecB.type, vecC.type)
+        let vsipA = matA.vsip
+        let vsipB = vecB.vsip
+        let vsipC = vecC.vsip
         switch(t){
         case (.f, .f, .f):
             vsip_mvprod3_f(vsipA, vsipB, vsipC)
@@ -3522,11 +3523,11 @@ public class Vsip {
             preconditionFailure("VSIP function prod4 not supported for argument list")
         }
     }
-    public static func prod4(matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func prod4(matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.f, .f, .f):
             vsip_mprod4_f(vsipA, vsipB, vsipC)
@@ -3540,11 +3541,11 @@ public class Vsip {
             preconditionFailure("VSIP function prod4 not supported for argument list")
         }
     }
-    public static func prod4(matA: Matrix?, vecB: Vector?, vecC: Vector?){
-        let t = (matA!.type, vecB!.type, vecC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = vecB?.vsip
-        let vsipC = vecC?.vsip
+    public static func prod4(matA: Matrix, vecB: Vector, vecC: Vector){
+        let t = (matA.type, vecB.type, vecC.type)
+        let vsipA = matA.vsip
+        let vsipB = vecB.vsip
+        let vsipC = vecC.vsip
         switch(t){
         case (.f, .f, .f):
             vsip_mvprod4_f(vsipA, vsipB, vsipC)
@@ -3559,11 +3560,11 @@ public class Vsip {
         }
     }
     
-    public static func prod(matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func prod(matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.cd, .cd, .cd):
             vsip_cmprod_d ( vsipA, vsipB, vsipC )
@@ -3577,11 +3578,11 @@ public class Vsip {
             preconditionFailure("VSIP function prod not supported for argument list")
         }
     }
-    public static func prod(matA: Matrix?, vecB: Vector?, vecC: Vector?){
-        let t = (matA!.type, vecB!.type, vecC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = vecB?.vsip
-        let vsipC = vecC?.vsip
+    public static func prod(matA: Matrix, vecB: Vector, vecC: Vector){
+        let t = (matA.type, vecB.type, vecC.type)
+        let vsipA = matA.vsip
+        let vsipB = vecB.vsip
+        let vsipC = vecC.vsip
         switch(t){
         case (.cd, .cd, .cd):
             vsip_cmvprod_d ( vsipA, vsipB, vsipC )
@@ -3595,11 +3596,11 @@ public class Vsip {
             preconditionFailure("VSIP function prod not supported for argument list")
         }
     }
-    public static func prod(vecA: Vector?, matB: Matrix?, vecC: Vector?){
-        let t = (vecA!.type, matB!.type, vecC!.type)
-        let vsipA = vecA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = vecC?.vsip
+    public static func prod(vecA: Vector, matB: Matrix, vecC: Vector){
+        let t = (vecA.type, matB.type, vecC.type)
+        let vsipA = vecA.vsip
+        let vsipB = matB.vsip
+        let vsipC = vecC.vsip
         switch(t){
         case (.cd, .cd, .cd):
             vsip_cvmprod_d ( vsipA, vsipB, vsipC )
@@ -3613,11 +3614,11 @@ public class Vsip {
             preconditionFailure("VSIP function prod not supported for argument list")
         }
     }
-    public static func prodh(matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func prodh(matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.cd, .cd, .cd):
             vsip_cmprodh_d ( vsipA, vsipB, vsipC )
@@ -3627,11 +3628,11 @@ public class Vsip {
             preconditionFailure("VSIP function prodh not supported for argument list")
         }
     }
-    public static func prodj(matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func prodj(matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.cd, .cd, .cd):
             vsip_cmprodj_d ( vsipA, vsipB, vsipC )
@@ -3641,11 +3642,11 @@ public class Vsip {
             preconditionFailure("VSIP function prodj not supported for argument list")
         }
     }
-    public static func prodt(matA: Matrix?, matB: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matB!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipB = matB?.vsip
-        let vsipC = matC?.vsip
+    public static func prodt(matA: Matrix, matB: Matrix, matC: Matrix){
+        let t = (matA.type, matB.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipB = matB.vsip
+        let vsipC = matC.vsip
         switch(t){
         case (.cd, .cd, .cd):
             vsip_cmprodt_d ( vsipA, vsipB, vsipC )
@@ -3659,10 +3660,10 @@ public class Vsip {
             preconditionFailure("VSIP function prodt not supported for argument list")
         }
     }
-    public static func trans(matA: Matrix?, matC: Matrix?){
-        let t = (matA!.type, matC!.type)
-        let vsipA = matA?.vsip
-        let vsipC = matC?.vsip
+    public static func trans(matA: Matrix, matC: Matrix){
+        let t = (matA.type, matC.type)
+        let vsipA = matA.vsip
+        let vsipC = matC.vsip
         switch(t) {
         case (.cd, .cd):
             vsip_cmtrans_d(vsipA, vsipC)
@@ -3676,10 +3677,10 @@ public class Vsip {
             preconditionFailure("VSIP function trans not supported for argument list")
         }
     }
-    public static func dot(vecX: Vector?, vecY: Vector?) -> Scalar {
-        let t = (vecX!.type, vecY!.type)
-        let vsipX = vecX?.vsip
-        let vsipY = vecY?.vsip
+    public static func dot(vecX: Vector, vecY: Vector) -> Scalar {
+        let t = (vecX.type, vecY.type)
+        let vsipX = vecX.vsip
+        let vsipY = vecY.vsip
         switch(t){
         case (.f, .f):
             return Scalar(Float(vsip_vdot_f(vsipX, vsipY)))
@@ -3693,11 +3694,11 @@ public class Vsip {
             preconditionFailure("Kron not supported for argument list")
         }
     }
-    public static func outer(alpha: Scalar, vecX: Vector?, vecY: Vector?, matC: Matrix?){
-        let vsipX = vecX?.vsip
-        let vsipY = vecY?.vsip
-        let vsipC = matC?.vsip
-        let t = (vecX!.type, vecY!.type, matC!.type)
+    public static func outer(alpha: Scalar, vecX: Vector, vecY: Vector, matC: Matrix){
+        let vsipX = vecX.vsip
+        let vsipY = vecY.vsip
+        let vsipC = matC.vsip
+        let t = (vecX.type, vecY.type, matC.type)
         switch(t){
         case (.f, .f, .f):
             vsip_vouter_f(alpha.realf, vsipX, vsipY, vsipC)
@@ -3908,7 +3909,7 @@ public class Vsip {
             }
             self.amSet = true
         }
-        public func decompose(_ matrix: Matrix) -> Vector? {
+        public func decompose(_ matrix: Matrix) -> Vector {
             let v = Vector(length: self.n, type: self.type)
             self.decompose(matrix, singularValues: v)
             return v
@@ -3919,17 +3920,15 @@ public class Vsip {
          element index (0,0). Matrix matU must be large enough to hold the
          output data
          */
-        public func matU(_ lowColumn: Int, highColumn: Int, matU: Matrix?) -> Int {
+        public func matU(_ lowColumn: Int, highColumn: Int, matU: Matrix) -> Int {
             let low = vsip_scalar_vi(lowColumn)
             let high = vsip_scalar_vi(highColumn)
             assert(low <= high, "Error in column selection")
-            let highMax = vsip_scalar_vi((matU?.rowLength)!)
+            let highMax = vsip_scalar_vi((matU.rowLength))
             let vsipSv = self.vsip // VSIPL pointer to singular value object
-            let vsipC = matU?.vsip // VSIPL pointer to U Matrix
-            if matU == nil{
-                return -1
-            }
-            switch (self.attr.saveU, matU!.type, self.type){
+            let vsipC = matU.vsip // VSIPL pointer to U Matrix
+            
+            switch (self.attr.saveU, matU.type, self.type){
             case (VSIP_SVD_UVFULL, .f, .f):
                 return Int(vsip_svdmatu_f(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVFULL, .cf, .cf):
@@ -3964,17 +3963,14 @@ public class Vsip {
          element index (0,0). Matrix matV must be large enough to hold the
          output data
          */
-        public func matV(_ lowColumn: Int, highColumn: Int, matV: Matrix?) -> Int {
+        public func matV(_ lowColumn: Int, highColumn: Int, matV: Matrix) -> Int {
             let low = vsip_scalar_vi(lowColumn)
             let high = vsip_scalar_vi(highColumn)
             assert(low <= high, "Error in column selection")
-            let highMax = vsip_scalar_vi((matV?.rowLength)!)
+            let highMax = vsip_scalar_vi(matV.rowLength)
             let vsipSv = self.vsip // VSIPL pointer to singular value object
-            let vsipC = matV?.vsip // VSIPL pointer to V Matrix
-            if matV == nil{
-                return -1
-            }
-            switch (self.attr.saveU, matV!.type, self.type){
+            let vsipC = matV.vsip // VSIPL pointer to V Matrix
+            switch (self.attr.saveU, matV.type, self.type){
             case (VSIP_SVD_UVFULL, .f, .f):
                 return Int(vsip_svdmatv_f(vsipSv, low, high, vsipC))
             case (VSIP_SVD_UVFULL, .cf, .cf):
@@ -4003,10 +3999,10 @@ public class Vsip {
                 }
             }
         }
-        public func produ(op: vsip_mat_op, side: vsip_mat_side, matrix: Matrix?) -> Int {
+        public func produ(op: vsip_mat_op, side: vsip_mat_side, matrix: Matrix) -> Int {
             let vsipSv = self.vsip
-            let vsipC = matrix?.vsip
-            switch (self.attr.saveU, matrix!.type, self.type){
+            let vsipC = matrix.vsip
+            switch (self.attr.saveU, matrix.type, self.type){
             case (VSIP_SVD_UVFULL, .f, .f):
                 return Int(vsip_svdprodu_f(vsipSv, op, side, vsipC))
             case (VSIP_SVD_UVFULL, .cf, .cf):
@@ -4031,10 +4027,10 @@ public class Vsip {
                 }
             }
         }
-        public func prodv(op: vsip_mat_op, side: vsip_mat_side, matrix: Matrix?) -> Int {
+        public func prodv(op: vsip_mat_op, side: vsip_mat_side, matrix: Matrix) -> Int {
             let vsipSv = self.vsip
-            let vsipC = matrix?.vsip
-            switch (self.attr.saveV, matrix!.type, self.type){
+            let vsipC = matrix.vsip
+            switch (self.attr.saveV, matrix.type, self.type){
             case (VSIP_SVD_UVFULL, .f, .f):
                 return Int(vsip_svdprodv_f(vsipSv, op, side, vsipC))
             case (VSIP_SVD_UVFULL, .cf, .cf):
