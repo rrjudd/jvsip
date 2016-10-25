@@ -64,6 +64,16 @@ public class Vsip {
             self.value.1 = NSNumber(value: value)
             self.value.2 = nil
         }
+        public init(_ value: vsip_scalar_si){
+            self.value.0 = .si
+            self.value.1 = NSNumber(value: value)
+            self.value.2 = nil
+        }
+        public init(_ value: vsip_scalar_uc){
+            self.value.0 = .uc
+            self.value.1 = NSNumber(value: value)
+            self.value.2 = nil
+        }
         public var type: Block.Types {
             return value.0!
         }
@@ -86,6 +96,15 @@ public class Vsip {
             } else {
                 return Double(0.0)
             }
+        }
+        public var int: Int{
+            return Int((value.1?.intValue)!)
+        }
+        public var row: Int{
+            return Int((value.1?.intValue)!)
+        }
+        public var col: Int{
+            return Int((value.2?.intValue)!)
         }
         public var cmplxf: Scalar{
             var c = vsip_cmplx_f(vsip_scalar_f(0.0),(0.0))
@@ -148,7 +167,7 @@ public class Vsip {
         public var vsip_uc: vsip_scalar_uc{
             return vsip_scalar_uc((value.1?.uint8Value)!)
         }
-        public var mi: vsip_scalar_mi{
+        public var vsip_mi: vsip_scalar_mi{
             var i = vsip_matindex(vsip_scalar_vi(0), vsip_scalar_vi(0))
             if let row = value.1 {
                 i.r = vsip_scalar_vi(row.uintValue)
@@ -786,161 +805,140 @@ public class Vsip {
         }
         
         // MARK: Attribute get/put options
-        public func get(_ vsip:OpaquePointer, index: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+        public func get(_ vsip:OpaquePointer, index: vsip_index) -> Scalar {
             let t = self.type
             switch t{
             case .f:
-                return (t, NSNumber(value: vsip_vget_f(vsip, index) as Float), nil)
+                return Scalar(vsip_vget_f(vsip, index))
             case .d:
-                return (t,  NSNumber(value: vsip_vget_d(vsip, index) as Double), nil)
+                return Scalar(vsip_vget_d(vsip, index))
             case .cf:
-                let ans = vsip_cvget_f(vsip, index)
-                return (t, NSNumber(value: ans.r as Float),  NSNumber(value: ans.i as Float))
+                return Scalar(vsip_cvget_f(vsip, index))
             case .cd:
-                let ans = vsip_cvget_d(vsip,index)
-                return (t,  NSNumber(value: ans.r as Double),  NSNumber(value: ans.i as Double))
+                return Scalar(vsip_cvget_d(vsip, index))
             case .vi:
-                return (t,  NSNumber(value: vsip_vget_vi(vsip,index) as UInt),  nil)
+                return Scalar(vsip_vget_vi(vsip, index))
             case .mi:
-                let ans = vsip_vget_mi(vsip,index)
-                return (t,  NSNumber(value: ans.c as UInt), NSNumber(value: ans.r as UInt))
+                return Scalar(vsip_vget_mi(vsip,index))
             case .li:
-                return (t, NSNumber(value: vsip_vget_li(vsip,index) as Int), nil)
+                return Scalar(vsip_vget_li(vsip, index))
             case .i:
-                return (t, NSNumber(value: vsip_vget_i(vsip,index) as Int32), nil)
+                return Scalar(vsip_vget_i(vsip, index))
             case .si:
-                return (t, NSNumber(value: vsip_vget_si(vsip,index) as Int16), nil)
+                return Scalar(vsip_vget_si(vsip, index))
             case .uc:
-                return (t, NSNumber(value: vsip_vget_uc(vsip,index) as UInt8), nil)
+                return Scalar(vsip_vget_uc(vsip, index))
             default:
-                return (nil, nil, nil)
+                preconditionFailure("No Scalar Found for this case")
             }
         }
-        public func get(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index) -> (Block.Types?, NSNumber?, NSNumber?){
+        public func get(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index) -> Scalar {
             let t = self.type
             switch t{
             case .f:
-                return (t, NSNumber(value: vsip_mget_f(vsip, rowIndex, columnIndex) as Float), nil)
+                return Scalar(vsip_mget_f(vsip, rowIndex, columnIndex))
             case .d:
-                return (t,  NSNumber(value: vsip_mget_d(vsip, rowIndex, columnIndex) as Double), nil)
+                return Scalar(vsip_mget_d(vsip, rowIndex, columnIndex))
             case .cf:
-                let ans = vsip_cmget_f(vsip, rowIndex, columnIndex)
-                return (t, NSNumber(value: ans.r as Float),  NSNumber(value: ans.i as Float))
+                return Scalar(vsip_cmget_f(vsip, rowIndex, columnIndex))
             case .cd:
-                let ans = vsip_cmget_d(vsip,rowIndex, columnIndex)
-                return (t,  NSNumber(value: ans.r as Double),  NSNumber(value: ans.i as Double))
+                return Scalar(vsip_cmget_d(vsip,rowIndex, columnIndex))
             case .li:
-                return (t, NSNumber(value: vsip_mget_li(vsip,rowIndex, columnIndex) as Int), nil)
+                return Scalar(vsip_mget_li(vsip,rowIndex, columnIndex))
             case .i:
-                return (t, NSNumber(value: vsip_mget_i(vsip,rowIndex, columnIndex) as Int32), nil)
+                return Scalar(vsip_mget_i(vsip,rowIndex, columnIndex))
             case .si:
-                return (t, NSNumber(value: vsip_mget_si(vsip,rowIndex, columnIndex) as Int16), nil)
+                return Scalar(vsip_mget_si(vsip,rowIndex, columnIndex))
             case .uc:
-                return (t, NSNumber(value: vsip_mget_uc(vsip,rowIndex, columnIndex) as UInt8), nil)
+                return Scalar(vsip_mget_uc(vsip,rowIndex, columnIndex))
             default:
-                return (nil, nil, nil)
+                preconditionFailure("No Scalar Found for this case")
             }
         }
-        public func put(_ vsip:OpaquePointer, index: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
+        public func put(_ vsip:OpaquePointer, index: vsip_index, value: Scalar){
             let t = self.type
             switch t{
             case .f:
-                let vsipValue = value.1!
-                vsip_vput_f(vsip, index, vsipValue.floatValue)
+                vsip_vput_f(vsip, index, value.vsip_f)
             case .d:
-                let vsipValue = value.1!
-                vsip_vput_d(vsip, index, vsipValue.doubleValue)
+                vsip_vput_d(vsip, index, value.vsip_d)
             case .cf:
-                let arg = vsip_cmplx_f(value.1!.floatValue, value.2!.floatValue)
-                vsip_cvput_f(vsip,index,arg)
+                vsip_cvput_f(vsip,index,value.vsip_cf)
             case .cd:
-                let arg = vsip_cmplx_d(value.1!.doubleValue, value.2!.doubleValue)
-                vsip_cvput_d(vsip,index,arg)
+                vsip_cvput_d(vsip,index,value.vsip_cd)
             case .vi:
-                let vsipValue = value.1!
-                vsip_vput_vi(vsip,index,vsipValue.uintValue)
+                vsip_vput_vi(vsip,index,value.vsip_vi)
             case .mi:
-                let arg = vsip_matindex(value.1!.uintValue, value.2!.uintValue)
-                vsip_vput_mi(vsip,index,arg)
+                vsip_vput_mi(vsip,index,value.vsip_mi)
             case .li:
-                let vsipValue = value.1!
-                vsip_vput_li(vsip, index, vsipValue.intValue)
+                vsip_vput_li(vsip, index, value.vsip_li)
             case .i:
-                let vsipValue = value.1!
-                vsip_vput_i(vsip,index,vsipValue.int32Value)
+                vsip_vput_i(vsip,index,value.vsip_i)
             case .si:
-                let vsipValue = value.1!
-                vsip_vput_si(vsip,index,vsipValue.int16Value)
+                vsip_vput_si(vsip,index,value.vsip_si)
             case .uc:
-                let vsipValue = value.1!
-                vsip_vput_uc(vsip,index,vsipValue.uint8Value)
+                vsip_vput_uc(vsip,index,value.vsip_uc)
             default:
-                break
+                preconditionFailure("No Scalar Found for this case")
+
             }
         }
-        public func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: (Block.Types?, NSNumber?, NSNumber?)){
+        public func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: Scalar){
             let t = self.type
             switch t{
             case .f:
-                let vsipValue = value.1!.floatValue
-                vsip_mput_f(vsip, rowIndex, columnIndex, vsipValue)
+                vsip_mput_f(vsip, rowIndex, columnIndex, value.vsip_f)
             case .d:
-                let vsipValue = value.1!
-                vsip_mput_d(vsip, rowIndex, columnIndex, vsipValue.doubleValue)
+                vsip_mput_d(vsip, rowIndex, columnIndex, value.vsip_d)
             case .cf:
-                let arg = vsip_cmplx_f(value.1!.floatValue, value.2!.floatValue)
-                vsip_cmput_f(vsip, rowIndex, columnIndex,arg)
+                vsip_cmput_f(vsip, rowIndex, columnIndex,value.vsip_cf)
             case .cd:
-                let arg = vsip_cmplx_d(value.1!.doubleValue, value.2!.doubleValue)
-                vsip_cmput_d(vsip, rowIndex, columnIndex,arg)
+                vsip_cmput_d(vsip, rowIndex, columnIndex,value.vsip_cd)
             case .li:
-                let vsipValue = value.1!
-                vsip_mput_li(vsip, rowIndex, columnIndex, vsipValue.intValue)
+                vsip_mput_li(vsip, rowIndex, columnIndex, value.vsip_li)
             case .i:
-                let vsipValue = value.1!
-                vsip_mput_i(vsip, rowIndex, columnIndex,vsipValue.int32Value)
+                vsip_mput_i(vsip, rowIndex, columnIndex,value.vsip_i)
             case .si:
-                let vsipValue = value.1!
-                vsip_mput_si(vsip, rowIndex, columnIndex,vsipValue.int16Value)
+                vsip_mput_si(vsip, rowIndex, columnIndex,value.vsip_si)
             case .uc:
-                let vsipValue = value.1!
-                vsip_mput_uc(vsip, rowIndex, columnIndex,vsipValue.uint8Value)
+                vsip_mput_uc(vsip, rowIndex, columnIndex,value.vsip_uc)
             default:
-                break
+                preconditionFailure("No Scalar Found for this case")
+
                 
             }
         }
         // MARK: Conversion to String and Print
-        public func scalarString(_ format : String, value : (Block.Types?, NSNumber?, NSNumber?)) -> String{
+        public func scalarString(_ format : String, value : Scalar) -> String{
             var retval = ""
-            switch value.0!{
+            switch value.type{
             case .f:
                 let fmt = "%" + format + "f"
-                retval = String(format: fmt, value.1!.floatValue)
-                break
+                retval = String(format: fmt, value.realf)
             case .d:
                 let fmt = "%" + format + "f"
-                retval = String(format: fmt, value.1!.doubleValue)
-                break
+                retval = String(format: fmt, value.reald)
             case .cf:
                 let fmt1 = "%" + format + "f"
                 let fmt2 = "%+" + format + "f"
-                let r = String(format: fmt1, value.1!.floatValue)
-                let i = String(format: fmt2, value.2!.floatValue)
+                let r = String(format: fmt1, value.realf)
+                let i = String(format: fmt2, value.imagf)
                 retval = r + i + "i"
-                break
             case .cd:
                 let fmt1 = "%" + format + "f"
                 let fmt2 = "%+" + format + "f"
-                let r = String(format: fmt1, value.1!.doubleValue)
-                let i = String(format: fmt2, value.2!.doubleValue)
+                let r = String(format: fmt1, value.reald)
+                let i = String(format: fmt2, value.imagd)
                 retval = r + i + "i"
-                break
+            case .mi:
+                let fmt1 = "(%d,"
+                let fmt2 = " %d)"
+                let r = String(format: fmt1, value.row)
+                let c = String(format: fmt2, value.col)
+                retval = r + c
             default:
-                let fmt = "%" + format + "d"
-                retval = String(format: fmt, value.1!.intValue)
-                break
-            }
+                let fmt = "%d"
+                retval = String(format: fmt, value.int)            }
             return retval
         }
         public func formatFmt(_ fmt: String) -> String{
@@ -1261,7 +1259,7 @@ public class Vsip {
             }
         }
         // vector subscript operator
-        public subscript(index: Int) -> (Block.Types?, NSNumber?, NSNumber?) {
+        public subscript(index: Int) -> Scalar {
             get{
                 return super.get(self.vsip, index: vsip_index(index))
             }
@@ -1269,7 +1267,7 @@ public class Vsip {
                 super.put(self.vsip, index: vsip_index(index), value: value)
             }
         }
-        public subscript() -> (Block.Types?, NSNumber?, NSNumber?){
+        public subscript() -> Scalar{
             get{
                 return self[0]
             }
@@ -1329,36 +1327,12 @@ public class Vsip {
             let i = NSNumber( value: increment)
             return ramp(s, increment: i)
         }
-        public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
+        public func fill(_ value: Scalar){
             switch self.type{
             case .d:
-                vsip_vfill_d(value.1!.doubleValue,self.vsip)
+                vsip_vfill_d(value.vsip_d, self.vsip)
             case .f:
-                vsip_vfill_f(value.1!.floatValue,self.vsip)
-            case .cd:
-                vsip_cvfill_d(vsip_cmplx_d(value.1!.doubleValue,value.2!.doubleValue),self.vsip)
-            case .cf:
-                vsip_cvfill_f(vsip_cmplx_f(value.1!.floatValue,value.2!.floatValue),self.vsip)
-            case .vi:
-                vsip_vfill_vi(value.1!.uintValue,self.vsip)
-            case .i:
-                vsip_vfill_i(value.1!.int32Value,self.vsip)
-            case .li:
-                vsip_vfill_li(value.1!.intValue,self.vsip)
-            case .si:
-                vsip_vfill_si(value.1!.int16Value,self.vsip)
-            case .uc:
-                vsip_vfill_uc(value.1!.uint8Value,self.vsip)
-            default:
-                break
-            }
-        }
-        public func fill(_ value: Vsip.Scalar){
-            switch self.type{
-            case .d:
-                vsip_vfill_d(value.vsip_d,self.vsip)
-            case .f:
-                vsip_vfill_f(value.vsip_f,self.vsip)
+                vsip_vfill_f(value.vsip_f, self.vsip)
             case .cd:
                 vsip_cvfill_d(value.vsip_cd,self.vsip)
             case .cf:
@@ -1377,35 +1351,17 @@ public class Vsip {
                 break
             }
         }
-        public func fill(_ value: NSNumber){
-            switch self.type{
-            case .d:
-                vsip_vfill_d(value.doubleValue,self.vsip)
-            case .f:
-                vsip_vfill_f(value.floatValue,self.vsip)
-            case .cd:
-                vsip_cvfill_d(vsip_cmplx_d(value.doubleValue,0.0),self.vsip)
-            case .cf:
-                vsip_cvfill_f(vsip_cmplx_f(value.floatValue,0.0),self.vsip)
-            case .vi:
-                vsip_vfill_vi(value.uintValue,self.vsip)
-            case .i:
-                vsip_vfill_i(value.int32Value,self.vsip)
-            case .li:
-                vsip_vfill_li(value.intValue,self.vsip)
-            case .si:
-                vsip_vfill_si(value.int16Value,self.vsip)
-            case .uc:
-                vsip_vfill_uc(value.uint8Value,self.vsip)
-            default:
-                break
-            }
+        public func fill(_ value: Double){
+            self.fill(Scalar(value))
+        }
+        public func fill(_ value: Int){
+            self.fill(Scalar(value))
         }
         public func fill(_ value: vsip_cscalar_d){
-            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+            self.fill(Scalar(value))
         }
         public func fill(_ value: vsip_cscalar_f){
-            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+            self.fill(Scalar(value))
         }
         public func randn(_ seed: vsip_index, portable: Bool) -> Vector {
             let state = Vsip.Rand(seed: seed, portable: portable)
@@ -2037,7 +1993,7 @@ public class Vsip {
                 return Matrix(block: blk, cView: v)
             }
         }
-        subscript(rowIndex: Int, columnIndex: Int) -> (Block.Types?, NSNumber?, NSNumber?){
+        subscript(rowIndex: Int, columnIndex: Int) -> Scalar {
             get{
                 return super.get(self.vsip, rowIndex: vsip_index(rowIndex), columnIndex: vsip_index(columnIndex))
             }
@@ -2045,7 +2001,7 @@ public class Vsip {
                 super.put(self.vsip, rowIndex: vsip_index(rowIndex), columnIndex: vsip_index(columnIndex), value: value)
             }
         }
-        subscript() -> (Block.Types?, NSNumber?, NSNumber?){
+        subscript() -> Scalar {
             get{
                 return self[0,0]
             }
@@ -2055,55 +2011,36 @@ public class Vsip {
         }
         
         // MARK: Data Generators
-        public func fill(_ value: (Block.Types?, NSNumber?,  NSNumber?)){
+        public func fill(_ value: Scalar){
             switch self.type{
             case .d:
-                vsip_mfill_d(value.1!.doubleValue,self.vsip)
+                vsip_mfill_d(value.vsip_d, self.vsip)
             case .f:
-                vsip_mfill_f(value.1!.floatValue,self.vsip)
+                vsip_mfill_f(value.vsip_f,self.vsip)
             case .cd:
-                vsip_cmfill_d(vsip_cmplx_d(value.1!.doubleValue,value.2!.doubleValue),self.vsip)
+                vsip_cmfill_d(value.vsip_cd,self.vsip)
             case .cf:
-                vsip_cmfill_f(vsip_cmplx_f(value.1!.floatValue,value.2!.floatValue),self.vsip)
+                vsip_cmfill_f(value.vsip_cf,self.vsip)
             case .i:
-                vsip_mfill_i(value.1!.int32Value,self.vsip)
+                vsip_mfill_i(value.vsip_i,self.vsip)
             case .li:
-                vsip_mfill_li(value.1!.intValue,self.vsip)
+                vsip_mfill_li(value.vsip_li,self.vsip)
             case .si:
-                vsip_mfill_si(value.1!.int16Value,self.vsip)
+                vsip_mfill_si(value.vsip_si,self.vsip)
             case .uc:
-                vsip_mfill_uc(value.1!.uint8Value,self.vsip)
+                vsip_mfill_uc(value.vsip_uc,self.vsip)
             default:
                 break
             }
         }
-        public func fill(_ value: NSNumber){
-            switch self.type{
-            case .d:
-                vsip_mfill_d(value.doubleValue,self.vsip)
-            case .f:
-                vsip_mfill_f(value.floatValue,self.vsip)
-            case .cd:
-                vsip_cmfill_d(vsip_cmplx_d(value.doubleValue,0.0),self.vsip)
-            case .cf:
-                vsip_cmfill_f(vsip_cmplx_f(value.floatValue,0.0),self.vsip)
-            case .i:
-                vsip_mfill_i(value.int32Value,self.vsip)
-            case .li:
-                vsip_mfill_li(value.intValue,self.vsip)
-            case .si:
-                vsip_mfill_si(value.int16Value,self.vsip)
-            case .uc:
-                vsip_mfill_uc(value.uint8Value,self.vsip)
-            default:
-                break
-            }
+        public func fill(_ value: Double){
+            self.fill(Scalar(value))
         }
         public func fill(_ value: vsip_cscalar_d){
-            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+            self.fill(Scalar(value))
         }
         public func fill(_ value: vsip_cscalar_f){
-            self.fill((Block.Types.cd, NSNumber(value: value.r), NSNumber(value: value.i)))
+            self.fill(Scalar(value))
         }
         
         public func randn(_ seed: vsip_index, portable: Bool) -> Matrix{
@@ -2272,7 +2209,7 @@ public class Vsip {
             print(m)
         }
     }
-
+    
     // MARK:  - Elementary Math Functions
     public static func acos(_ input: Vector, output: Vector) {
         assert(sizeEqual(input, against: output), "vectors must be the same size")
