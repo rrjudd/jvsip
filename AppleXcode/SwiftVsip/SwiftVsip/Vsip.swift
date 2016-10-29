@@ -880,7 +880,7 @@ public class Vsip {
                 vsip_vput_uc(vsip,index,value.vsip_uc)
             default:
                 preconditionFailure("No Scalar Found for this case")
-
+                
             }
         }
         public func put(_ vsip:OpaquePointer, rowIndex: vsip_index, columnIndex: vsip_index, value: Scalar){
@@ -904,7 +904,7 @@ public class Vsip {
                 vsip_mput_uc(vsip, rowIndex, columnIndex,value.vsip_uc)
             default:
                 preconditionFailure("No Scalar Found for this case")
-
+                
                 
             }
         }
@@ -1355,59 +1355,44 @@ public class Vsip {
         public var clone: Vector {
             return Vector(block: self.block, offset: self.offset, stride: self.stride, length: self.length)
         }
-
+        
         // MARK: data generators
-        public func ramp(_ start : NSNumber, increment : NSNumber) -> Vector {
+        public func ramp(_ start : Scalar, increment : Scalar) -> Vector {
             switch self.type {
             case .d:
-                vsip_vramp_d(start.doubleValue, increment.doubleValue, self.vsip)
+                vsip_vramp_d(start.vsip_d, increment.vsip_d, self.vsip)
             case .f:
-                vsip_vramp_f(start.floatValue, increment.floatValue, self.vsip)
+                vsip_vramp_f(start.vsip_f, increment.vsip_f, self.vsip)
             case .i:
-                vsip_vramp_i(start.int32Value, increment.int32Value, self.vsip)
+                vsip_vramp_i(start.vsip_i, increment.vsip_i, self.vsip)
             case .si:
-                vsip_vramp_si(start.int16Value, increment.int16Value, self.vsip)
+                vsip_vramp_si(start.vsip_si, increment.vsip_si, self.vsip)
             case .uc:
-                vsip_vramp_uc(start.uint8Value, increment.uint8Value, self.vsip)
+                vsip_vramp_uc(start.vsip_uc, increment.vsip_uc, self.vsip)
             case .vi:
-                vsip_vramp_vi(start.uintValue, increment.uintValue, self.vsip)
+                vsip_vramp_vi(start.vsip_vi, increment.vsip_vi, self.vsip)
             default:
                 print("Type " + self.type.rawValue + " not supported for ramp")
             }
             return self
         }
         public func ramp(_ start : Double, increment : Double) -> Vector {
-            let s = NSNumber( value: start)
-            let i = NSNumber( value: increment)
+            let s = Scalar(start)
+            let i = Scalar(increment)
             return ramp(s, increment: i)
         }
         public func ramp(_ start : Float, increment : Float) -> Vector {
-            let s = NSNumber( value: start)
-            let i = NSNumber( value: increment)
+            let s = Scalar(start)
+            let i = Scalar(increment)
             return ramp(s, increment: i)
         }
         
         public func ramp(_ start : Int, increment : Int) -> Vector {
-            let s = NSNumber( value: start)
-            let i = NSNumber( value: increment)
+            let s = Scalar(start)
+            let i = Scalar(increment)
             return ramp(s, increment: i)
         }
-        
-        public func ramp(_ start : UInt, increment : UInt) -> Vector {
-            let s = NSNumber( value: start)
-            let i = NSNumber( value: increment)
-            return ramp(s, increment: i)
-        }
-        public func ramp(_ start : vsip_scalar_si, increment : vsip_scalar_si) -> Vector {
-            let s = NSNumber( value: start)
-            let i = NSNumber( value: increment)
-            return ramp(s, increment: i)
-        }
-        public func ramp(_ start : UInt8, increment : UInt8) -> Vector {
-            let s = NSNumber( value: start)
-            let i = NSNumber( value: increment)
-            return ramp(s, increment: i)
-        }
+    
         public func fill(_ value: Scalar){
             switch self.type{
             case .d:
@@ -1587,51 +1572,51 @@ public class Vsip {
             return out    }
         
         // MARK: Binary Functions
-        public func add(_ to: Vector, resultIn: Vector) -> Vector{
+        public func add(_ to: Vector, output: Vector) -> Vector{
             switch self.type{
             case .f:
-                vsip_vadd_f(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_f(self.vsip, to.vsip, output.vsip)
             case .d:
-                vsip_vadd_d(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_d(self.vsip, to.vsip, output.vsip)
             case .cf:
-                vsip_cvadd_f(self.vsip, to.vsip, resultIn.vsip)
+                vsip_cvadd_f(self.vsip, to.vsip, output.vsip)
             case .cd:
-                vsip_cvadd_d(self.vsip, to.vsip, resultIn.vsip)
+                vsip_cvadd_d(self.vsip, to.vsip, output.vsip)
             case .si:
-                vsip_vadd_si(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_si(self.vsip, to.vsip, output.vsip)
             case .i:
-                vsip_vadd_i(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_i(self.vsip, to.vsip, output.vsip)
             case .li:
-                vsip_vadd_li(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_li(self.vsip, to.vsip, output.vsip)
             case .uc:
-                vsip_vadd_uc(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_uc(self.vsip, to.vsip, output.vsip)
             case .vi:
-                vsip_vadd_vi(self.vsip, to.vsip, resultIn.vsip)
+                vsip_vadd_vi(self.vsip, to.vsip, output.vsip)
             default:
                 break
             }
-            return resultIn
+            return output
         }
-        public func sub(_ from: Vector, resultIn: Vector) -> Vector{
+        public func sub(_ from: Vector, output: Vector) -> Vector{
             switch self.type{
             case .f:
-                vsip_vsub_f(self.vsip, from.vsip, resultIn.vsip)
+                vsip_vsub_f(self.vsip, from.vsip, output.vsip)
             case .d:
-                vsip_vadd_d(self.vsip, from.vsip, resultIn.vsip)
+                vsip_vadd_d(self.vsip, from.vsip, output.vsip)
             case .cf:
-                vsip_cvsub_f(self.vsip, from.vsip, resultIn.vsip)
+                vsip_cvsub_f(self.vsip, from.vsip, output.vsip)
             case .cd:
-                vsip_cvsub_d(self.vsip, from.vsip, resultIn.vsip)
+                vsip_cvsub_d(self.vsip, from.vsip, output.vsip)
             case .si:
-                vsip_vsub_si(self.vsip, from.vsip, resultIn.vsip)
+                vsip_vsub_si(self.vsip, from.vsip, output.vsip)
             case .i:
-                vsip_vsub_i(self.vsip, from.vsip, resultIn.vsip)
+                vsip_vsub_i(self.vsip, from.vsip, output.vsip)
             case .uc:
-                vsip_vsub_uc(self.vsip, from.vsip, resultIn.vsip)
+                vsip_vsub_uc(self.vsip, from.vsip, output.vsip)
             default:
                 break
             }
-            return resultIn
+            return output
         }
     }
     // MARK: - Matrix Class
@@ -2281,7 +2266,7 @@ public class Vsip {
             break
         }
     }
-    public static func atan2(_ numerator: Vector, denominator: Vector, output: Vector) {
+    public static func atan2(numerator: Vector, denominator: Vector, output: Vector) {
         let tn = numerator.type
         let td = denominator.type
         let to = output.type
@@ -2298,7 +2283,7 @@ public class Vsip {
         }
         
     }
-    public static func atan2(_ numerator: Matrix, denominator: Matrix, output: Matrix) {
+    public static func atan2(numerator: Matrix, denominator: Matrix, output: Matrix) {
         let tn = numerator.type
         let td = denominator.type
         let to = output.type
@@ -2752,44 +2737,39 @@ public class Vsip {
         }
         
     }
-    public static func sumval(_ input: Vector) -> (Block.Types?, NSNumber?, NSNumber?){
+    public static func sumval(_ input: Vector) -> Scalar {
         switch input.type {
         case .d:
-            return (.d, NSNumber(value: vsip_vsumval_d(input.vsip) as Double), nil)
+            return Scalar(vsip_vsumval_d(input.vsip))
         case .f:
-            return (.f, NSNumber(value: vsip_vsumval_f(input.vsip) as Float), nil)
+            return Scalar(vsip_vsumval_f(input.vsip))
         case .cd:
-            let ans = vsip_cvsumval_d(input.vsip)
-            return (.cd, NSNumber(value: ans.r as Double), NSNumber(value: ans.i as Double))
+            return Scalar(vsip_cvsumval_d(input.vsip))
         case .cf:
-            let ans = vsip_cvsumval_f(input.vsip)
-            return (.cf, NSNumber(value: ans.r as Float), NSNumber(value: ans.i as Float))
+            return Scalar(vsip_cvsumval_f(input.vsip))
         case .i:
-            return (.i, NSNumber(value: vsip_vsumval_i(input.vsip) as Int32), nil)
+            return Scalar(vsip_vsumval_i(input.vsip))
         case .bl:
-            return (.vi, NSNumber(value: vsip_vsumval_bl(input.vsip) as UInt), nil)
+            return Scalar(vsip_vsumval_bl(input.vsip))
         default:
             preconditionFailure("sumval not supported for this type")
-            break
         }
     }
-    public static func sumval(_ input: Matrix) -> (Block.Types?, NSNumber?, NSNumber?){
+    public static func sumval(_ input: Matrix) -> Scalar {
         switch input.type {
         case .d:
-            return (.d, NSNumber(value: vsip_msumval_d(input.vsip) as Double), nil)
+            return Scalar(vsip_msumval_d(input.vsip))
         case .f:
-            return (.f, NSNumber(value: vsip_msumval_f(input.vsip) as Float), nil)
+            return Scalar(vsip_msumval_f(input.vsip))
         case .cd:
-            let ans = vsip_cmsumval_d(input.vsip)
-            return (.cd, NSNumber(value: ans.r as Double), NSNumber(value: ans.i as Double))
+            return Scalar(vsip_cmsumval_d(input.vsip))
         case .cf:
-            let ans = vsip_cmsumval_f(input.vsip)
-            return (.cf, NSNumber(value: ans.r as Float), NSNumber(value: ans.i as Float))
+            return Scalar(vsip_cmsumval_f(input.vsip))
         case .bl:
-            return (.vi, NSNumber(value: vsip_msumval_bl(input.vsip) as UInt), nil)
+            return Scalar(vsip_msumval_bl(input.vsip))
         default:
             preconditionFailure("sumval not supported for this type")
-            break
+            
         }
     }
     public static func sumsqval(_ input: Vector) -> Scalar {
@@ -2815,394 +2795,315 @@ public class Vsip {
         }
     }
     
-    
     // MARK: - Binary Functions
-    public static func add(_ one: Vector, to: Vector, resultsIn: Vector) {
+    public static func add(_ one: Vector, _ to: Vector, output: Vector) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
-        assert(to.type == resultsIn.type, "Output view type not compliant with input")
+        assert(to.type == output.type, "Output view type not compliant with input")
         switch one.type {
         case .f:
             switch to.type{
             case .f:
-                vsip_vadd_f(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_vadd_f(one.vsip, to.vsip, output.vsip)
             case .cf:
-                vsip_rcvadd_f(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_rcvadd_f(one.vsip, to.vsip, output.vsip)
             default:
                 break
             }
         case .d:
             switch to.type{
             case .d:
-                vsip_vadd_d(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_vadd_d(one.vsip, to.vsip, output.vsip)
             case .cd:
-                vsip_rcvadd_d(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_rcvadd_d(one.vsip, to.vsip, output.vsip)
             default:
                 break
             }
         case .cf:
-            vsip_cvadd_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cvadd_f(one.vsip, to.vsip, output.vsip)
         case .cd:
-            vsip_cvadd_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cvadd_d(one.vsip, to.vsip, output.vsip)
         case .i:
-            vsip_vadd_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vadd_d(one.vsip, to.vsip, output.vsip)
         case .li:
-            vsip_vadd_li(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vadd_li(one.vsip, to.vsip, output.vsip)
         case .uc:
-            vsip_vadd_li(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vadd_li(one.vsip, to.vsip, output.vsip)
         case .si:
-            vsip_vadd_si(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vadd_si(one.vsip, to.vsip, output.vsip)
         case .vi:
-            vsip_vadd_vi(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vadd_vi(one.vsip, to.vsip, output.vsip)
         default:
             preconditionFailure("View type not supported")
             break
         }
         
     }
-    public static func add(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
+    public static func add(_ one: Matrix, _ to: Matrix, output: Matrix) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
-        assert(to.type == resultsIn.type, "Output view type not compliant with input")
+        assert(to.type == output.type, "Output view type not compliant with input")
         switch one.type {
         case .f:
             switch to.type{
             case .f:
-                vsip_madd_f(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_madd_f(one.vsip, to.vsip, output.vsip)
             case .cf:
-                vsip_rcmadd_f(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_rcmadd_f(one.vsip, to.vsip, output.vsip)
             default:
                 break
             }
         case .d:
             switch to.type{
             case .d:
-                vsip_madd_d(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_madd_d(one.vsip, to.vsip, output.vsip)
             case .cd:
-                vsip_rcmadd_d(one.vsip, to.vsip, resultsIn.vsip)
+                vsip_rcmadd_d(one.vsip, to.vsip, output.vsip)
             default:
                 break
             }
         case .cf:
-            vsip_cmadd_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cmadd_f(one.vsip, to.vsip, output.vsip)
         case .cd:
-            vsip_cmadd_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cmadd_d(one.vsip, to.vsip, output.vsip)
         case .i:
-            vsip_madd_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_madd_d(one.vsip, to.vsip, output.vsip)
         case .li:
-            vsip_madd_li(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_madd_li(one.vsip, to.vsip, output.vsip)
         case .si:
-            vsip_madd_si(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_madd_si(one.vsip, to.vsip, output.vsip)
         default:
             preconditionFailure("View type not supported")
             break
         }
     }
-    public static func add(_ aScalar: Double, toAVector: Vector, resultIn: Vector){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
-        Vsip.add(aNumber, toAVector: toAVector, resultIn: resultIn)
+    public static func add(_ scalar: Double, _ vector: Vector, output: Vector){
+        Vsip.add(Scalar(scalar), vector, output: output)
         
     }
-    public static func add(_ aScalar: Float, toAVector: Vector, resultIn: Vector){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
-        Vsip.add(aNumber, toAVector: toAVector, resultIn: resultIn)
+    public static func add(_ scalar: Float, _ vector: Vector, output: Vector){
+        Vsip.add(Scalar(scalar), vector, output: output)
+        
     }
-    public static func add(_ aScalar: Int, toAVector: Vector, resultIn: Vector){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.i, aScalar as NSNumber?, nil)
-        Vsip.add(aNumber, toAVector: toAVector, resultIn: resultIn)
+    public static func add(_ scalar: Int, _ vector: Vector, output: Vector){
+        Vsip.add(Scalar(scalar), vector, output: output)
     }
-    public static func add(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAVector: Vector, resultIn: Vector){
-        assert(toAVector.type == resultIn.type, "View types must agrees")
-        let t = toAVector.type
+    public static func add(_ scalar: Scalar, _ vector: Vector, output: Vector){
+        assert(vector.type == output.type, "View types must agrees")
+        let t = (scalar.type, vector.type, output.type)
         switch t {
-        case .f:
-            vsip_svadd_f((aScalar.1?.floatValue)!, toAVector.vsip, resultIn.vsip)
-        case .d:
-            vsip_svadd_d((aScalar.1?.doubleValue)!, toAVector.vsip, resultIn.vsip)
-        case .cf:
-            switch aScalar.0!{
-            case .f:
-                vsip_rscvadd_f((aScalar.1?.floatValue)!, toAVector.vsip, resultIn.vsip)
-            case .d:
-                vsip_rscvadd_f((aScalar.1?.floatValue)!, toAVector.vsip, resultIn.vsip)
-            case .cf:
-                let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-                vsip_csvadd_f(aNumber, toAVector.vsip, resultIn.vsip)
-            case .cd:
-                let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-                vsip_csvadd_f(aNumber, toAVector.vsip, resultIn.vsip)
-            default:
-                break
-            }
-        case .cd:
-            switch aScalar.0!{
-            case .f:
-                vsip_rscvadd_d((aScalar.1?.doubleValue)!, toAVector.vsip, resultIn.vsip)
-            case .d:
-                vsip_rscvadd_d((aScalar.1?.doubleValue)!, toAVector.vsip, resultIn.vsip)
-            case .cf:
-                let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-                vsip_csvadd_d(aNumber, toAVector.vsip, resultIn.vsip)
-            case .cd:
-                let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-                vsip_csvadd_d(aNumber, toAVector.vsip, resultIn.vsip)
-            default:
-                break
-            }
-        case .i:
-            vsip_svadd_i((aScalar.1?.int32Value)!, toAVector.vsip, resultIn.vsip)
-        case .li:
-            vsip_svadd_li((aScalar.1?.intValue)!, toAVector.vsip, resultIn.vsip)
-        case .si:
-            vsip_svadd_si((aScalar.1?.int16Value)!, toAVector.vsip, resultIn.vsip)
-        case .uc:
-            vsip_svadd_uc((aScalar.1?.uint8Value)!, toAVector.vsip, resultIn.vsip)
-        case .vi:
-            vsip_svadd_vi((aScalar.1?.uintValue)!, toAVector.vsip, resultIn.vsip)
+        case (.f, .f, .f):
+            vsip_svadd_f(scalar.vsip_f, vector.vsip, output.vsip)
+        case (.d, .d, .d):
+            vsip_svadd_d(scalar.vsip_d, vector.vsip, output.vsip)
+        case (.f, .cf, .cf):
+            vsip_rscvadd_f(scalar.vsip_f, vector.vsip, output.vsip)
+        case (.d, .cd, .cd):
+            vsip_rscvadd_d(scalar.vsip_d, vector.vsip, output.vsip)
+        case  (.cf, .cf, .cf):
+            vsip_csvadd_f(scalar.vsip_cf, vector.vsip, output.vsip)
+        case (.cd, .cd, .cd):
+            vsip_csvadd_d(scalar.vsip_cd, vector.vsip, output.vsip)
+        case (.i, .i, .i):
+            vsip_svadd_i(scalar.vsip_i, vector.vsip, output.vsip)
+        case (.li, .li, .li):
+            vsip_svadd_li(scalar.vsip_li, vector.vsip, output.vsip)
+        case (.si, .si, .si):
+            vsip_svadd_si(scalar.vsip_si, vector.vsip, output.vsip)
+        case (.uc, .uc, .uc):
+            vsip_svadd_uc(scalar.vsip_uc, vector.vsip, output.vsip)
+        case (.vi, .vi, .vi):
+            vsip_svadd_vi(scalar.vsip_vi, vector.vsip, output.vsip)
         default:
             preconditionFailure("Argument string not supported for svadd")
         }
+    }
+    public static func add(_ scalar: Double, _ matrix: Matrix, output: Matrix){
+        Vsip.add(Scalar(scalar), matrix, output: output)
+    }
+    public static func add(_ scalar: Float, _ matrix: Matrix, output: Matrix){
+        Vsip.add(Scalar(scalar), matrix, output: output)
         
     }
-    public static func add(_ aScalar: Double, toAMatrix: Matrix, resultIn: Matrix){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
-        Vsip.add(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
-        
-    }
-    public static func add(_ aScalar: Float, toAMatrix: Matrix, resultIn: Matrix){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
-        Vsip.add(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
-    }
-    public static func add(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAMatrix: Matrix, resultIn: Matrix){
-        assert(toAMatrix.type == resultIn.type, "View types must agrees")
-        let t = toAMatrix.type
+    public static func add(_ scalar: Scalar, _ matrix: Matrix, output: Matrix){
+        assert(sizeEqual(matrix, against: output),"Views must be the same size")
+        let t = (scalar.type, matrix.type, output.type)
         switch t {
-        case .f:
-            vsip_smadd_f((aScalar.1?.floatValue)!, toAMatrix.vsip, resultIn.vsip)
-        case .d:
-            vsip_smadd_d((aScalar.1?.doubleValue)!, toAMatrix.vsip, resultIn.vsip)
-        case .cf:
-            switch aScalar.0!{
-            case .f:
-                vsip_rscmadd_f((aScalar.1?.floatValue)!, toAMatrix.vsip, resultIn.vsip)
-            case .d:
-                vsip_rscmadd_f((aScalar.1?.floatValue)!, toAMatrix.vsip, resultIn.vsip)
-            case .cf:
-                let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-                vsip_csmadd_f(aNumber, toAMatrix.vsip, resultIn.vsip)
-            case .cd:
-                let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-                vsip_csmadd_f(aNumber, toAMatrix.vsip, resultIn.vsip)
-            default:
-                break
-            }
-        case .cd:
-            switch aScalar.0!{
-            case .f:
-                vsip_rscmadd_d((aScalar.1?.doubleValue)!, toAMatrix.vsip, resultIn.vsip)
-            case .d:
-                vsip_rscmadd_d((aScalar.1?.doubleValue)!, toAMatrix.vsip, resultIn.vsip)
-            case .cf:
-                let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-                vsip_csmadd_d(aNumber, toAMatrix.vsip, resultIn.vsip)
-            case .cd:
-                let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-                vsip_csmadd_d(aNumber, toAMatrix.vsip, resultIn.vsip)
-            default:
-                break
-            }
+        case (.f, .f, .f):
+            vsip_smadd_f(scalar.vsip_f, matrix.vsip, output.vsip)
+        case (.d, .d, .d):
+            vsip_smadd_d(scalar.vsip_d, matrix.vsip, output.vsip)
+        case (.f, .cf, .cf):
+            vsip_rscmadd_f(scalar.vsip_f, matrix.vsip, output.vsip)
+        case (.d, .cd, .cd):
+            vsip_rscmadd_d(scalar.vsip_d, matrix.vsip, output.vsip)
+        case  (.cf, .cf, .cf):
+            vsip_csmadd_f(scalar.vsip_cf, matrix.vsip, output.vsip)
+        case (.cd, .cd, .cd):
+            vsip_csmadd_d(scalar.vsip_cd, matrix.vsip, output.vsip)
         default:
-            preconditionFailure("Argument string not supported for svadd")
+            preconditionFailure("Argument string not supported for scalar matrix add")
+            
         }
-        
     }
-    public static func div(numerator aView: Vector, denominator by: Vector, quotient resultIn: Vector){
+    
+    public static func div(numerator aView: Vector, denominator by: Vector, quotient output: Vector){
         assert(sizeEqual(aView, against: by),"Views must be the same size")
-        assert(sizeEqual(aView, against: resultIn),"Views must be the same size")
-        let t = (aView.type, by.type, resultIn.type)
+        assert(sizeEqual(aView, against: output),"Views must be the same size")
+        let t = (aView.type, by.type, output.type)
         switch t {
         case (.d, .cd, .cd):
-            vsip_rcvdiv_d(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_rcvdiv_d(aView.vsip, by.vsip, output.vsip)
         case (.f, .cf, .cf):
-            vsip_rcvdiv_f(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_rcvdiv_f(aView.vsip, by.vsip, output.vsip)
         case (.d, .d, .d):
-            vsip_vdiv_d(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_vdiv_d(aView.vsip, by.vsip, output.vsip)
         case (.f, .f, .f):
-            vsip_vdiv_f(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_vdiv_f(aView.vsip, by.vsip, output.vsip)
         case (.cd, .d, .cd):
-            vsip_crvdiv_d(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_crvdiv_d(aView.vsip, by.vsip, output.vsip)
         case (.cf, .f, .cf):
-            vsip_crvdiv_f(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_crvdiv_f(aView.vsip, by.vsip, output.vsip)
         case (.cd, .cd, .cd):
-            vsip_cvdiv_d(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_cvdiv_d(aView.vsip, by.vsip, output.vsip)
         case (.cf, .cf, .cf):
-            vsip_cvdiv_f(aView.vsip, by.vsip, resultIn.vsip)
+            vsip_cvdiv_f(aView.vsip, by.vsip, output.vsip)
+        default:
+            preconditionFailure("function not supported for input/output views of type (\t)")
+        }
+        
+    }
+    public static func div(numerator aView: Matrix, denominator by: Matrix, quotient output: Matrix){
+        assert(sizeEqual(aView, against: by),"Views must be the same size")
+        assert(sizeEqual(aView, against: output),"Views must be the same size")
+        let t = (aView.type, by.type, output.type)
+        switch t {
+        case (.cd, .cd, .cd):
+            vsip_cmdiv_d(aView.vsip, by.vsip, output.vsip)
+        case (.cf, .cf, .cf):
+            vsip_cmdiv_f(aView.vsip, by.vsip, output.vsip)
+        case (.cd, .d, .cd):
+            vsip_crmdiv_d(aView.vsip, by.vsip, output.vsip)
+        case (.cf, .f, .cf):
+            vsip_crmdiv_f(aView.vsip, by.vsip, output.vsip)
+        case (.d, .d, .d):
+            vsip_mdiv_d(aView.vsip, by.vsip, output.vsip)
+        case (.f, .f, .f):
+            vsip_mdiv_f(aView.vsip, by.vsip, output.vsip)
+        case (.d, .cd, .cd):
+            vsip_rcmdiv_d(aView.vsip, by.vsip, output.vsip)
+        case (.f, .cf, .cf):
+            vsip_rcmdiv_f(aView.vsip, by.vsip, output.vsip)
         default:
             preconditionFailure("function not supported for input/output views of type (\t)")
         }
         
     }
     
-    public static func div(numerator aView: Matrix, denominator by: Matrix, quotient resultIn: Matrix){
-        assert(sizeEqual(aView, against: by),"Views must be the same size")
-        assert(sizeEqual(aView, against: resultIn),"Views must be the same size")
-        let t = (aView.type, by.type, resultIn.type)
-        switch t {
-        case (.cd, .cd, .cd):
-            vsip_cmdiv_d(aView.vsip, by.vsip, resultIn.vsip)
-        case (.cf, .cf, .cf):
-            vsip_cmdiv_f(aView.vsip, by.vsip, resultIn.vsip)
-        case (.cd, .d, .cd):
-            vsip_crmdiv_d(aView.vsip, by.vsip, resultIn.vsip)
-        case (.cf, .f, .cf):
-            vsip_crmdiv_f(aView.vsip, by.vsip, resultIn.vsip)
-        case (.d, .d, .d):
-            vsip_mdiv_d(aView.vsip, by.vsip, resultIn.vsip)
-        case (.f, .f, .f):
-            vsip_mdiv_f(aView.vsip, by.vsip, resultIn.vsip)
-        case (.d, .cd, .cd):
-            vsip_rcmdiv_d(aView.vsip, by.vsip, resultIn.vsip)
-        case (.f, .cf, .cf):
-            vsip_rcmdiv_f(aView.vsip, by.vsip, resultIn.vsip)
-        default:
-            preconditionFailure("function not supported for input/output views of type (\t)")
-        }
-        
-    }
-    public static func mul(_ one: Vector, to: Vector, resultsIn: Vector) {
+    public static func mul(_ one: Vector, _ to: Vector, output: Vector) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
-        switch (one.type, to.type, resultsIn.type) {
+        switch (one.type, to.type, output.type) {
         case (.f,.f,.f):
-            vsip_vmul_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vmul_f(one.vsip, to.vsip, output.vsip)
         case (.f,.cf, .cf):
-            vsip_rcvmul_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_rcvmul_f(one.vsip, to.vsip, output.vsip)
         case (.d, .d,.d):
-            vsip_vmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vmul_d(one.vsip, to.vsip, output.vsip)
         case (.d, .cd, .cd):
-            vsip_rcvmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_rcvmul_d(one.vsip, to.vsip, output.vsip)
         case (.cf, .cf, .cf):
-            vsip_cvmul_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cvmul_f(one.vsip, to.vsip, output.vsip)
         case (.cd, .cd, .cd):
-            vsip_cvmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cvmul_d(one.vsip, to.vsip, output.vsip)
         case (.i, .i, .i):
-            vsip_vmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vmul_d(one.vsip, to.vsip, output.vsip)
         case (.li, .li, .li):
-            vsip_vmul_li(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vmul_li(one.vsip, to.vsip, output.vsip)
         case (.uc,.uc,.uc):
-            vsip_vmul_uc(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vmul_uc(one.vsip, to.vsip, output.vsip)
         case (.si,.si,.si):
-            vsip_vmul_si(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_vmul_si(one.vsip, to.vsip, output.vsip)
         default:
             preconditionFailure("function not supported for input/output views")
         }
     }
-    public static func mul(_ one: Matrix, to: Matrix, resultsIn: Matrix) {
+    public static func mul(_ one: Matrix, _ to: Matrix, output: Matrix) {
         assert(sizeEqual(one, against: to),"Views must be the same size")
-        switch (one.type, to.type, resultsIn.type) {
+        switch (one.type, to.type, output.type) {
         case (.f, .f, .f):
-            vsip_mmul_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_mmul_f(one.vsip, to.vsip, output.vsip)
         case (.f, .cf, .cf):
-            vsip_rcmmul_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_rcmmul_f(one.vsip, to.vsip, output.vsip)
         case (.d, .d, .d):
-            vsip_mmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_mmul_d(one.vsip, to.vsip, output.vsip)
         case (.f, .cd, .cd):
-            vsip_rcmmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_rcmmul_d(one.vsip, to.vsip, output.vsip)
         case (.cf, .cf, .cf):
-            vsip_cmmul_f(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cmmul_f(one.vsip, to.vsip, output.vsip)
         case (.cd, .cd, .cd):
-            vsip_cmmul_d(one.vsip, to.vsip, resultsIn.vsip)
+            vsip_cmmul_d(one.vsip, to.vsip, output.vsip)
         default:
             preconditionFailure("function not supported for input/output views")
         }
     }
-    public static func mul(_ aScalar: Double, toAVector: Vector, resultIn: Vector){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
-        Vsip.mul(aNumber, toAVector: toAVector, resultIn: resultIn)
-        
+    public static func mul(_ scalar: Double, _ vector: Vector, output: Vector){
+            Vsip.mul(Scalar(scalar), vector, output: output)
     }
-    public static func mul(_ aScalar: Float, toAVector: Vector, resultIn: Vector){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
-        Vsip.mul(aNumber, toAVector: toAVector, resultIn: resultIn)
+    public static func mul(_ scalar: Float, _ vector: Vector, output: Vector){
+        Vsip.mul(Scalar(scalar), vector, output: output)
     }
-    public static func mul(_ aScalar: Int, toAVector: Vector, resultIn: Vector){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.i, aScalar as NSNumber?, nil)
-        Vsip.mul(aNumber, toAVector: toAVector, resultIn: resultIn)
+    public static func mul(_ scalar: Int, _ vector: Vector, output: Vector){
+        Vsip.mul(Scalar(scalar), vector, output: output)
     }
-    public static func mul(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAVector: Vector, resultIn: Vector){
-        let t = (aScalar.0!, resultIn.type)
+    public static func mul(_ scalar: Scalar,_ vector: Vector, output: Vector){
+        assert(sizeEqual(vector, against: output), "View sizes must be the same")
+        let t = (scalar.type, vector.type, output.type)
         switch t {
-        case (.f,.f):
-            vsip_svmul_f((aScalar.1?.floatValue)!, toAVector.vsip, resultIn.vsip)
-        case (.d,.d):
-            vsip_svmul_d((aScalar.1?.doubleValue)!, toAVector.vsip, resultIn.vsip)
-        case (.f, .cf):
-            vsip_rscvmul_f((aScalar.1?.floatValue)!, toAVector.vsip, resultIn.vsip)
-        case (.d, .cf):
-            vsip_rscvmul_f((aScalar.1?.floatValue)!, toAVector.vsip, resultIn.vsip)
-        case (.cf, .cf):
-            let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-            vsip_csvmul_f(aNumber, toAVector.vsip, resultIn.vsip)
-        case (.cd, .cf):
-            let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-            vsip_csvmul_f(aNumber, toAVector.vsip, resultIn.vsip)
-        case (.f,.cd):
-            vsip_rscvmul_d((aScalar.1?.doubleValue)!, toAVector.vsip, resultIn.vsip)
-        case (.d,.cd):
-            vsip_rscvmul_d((aScalar.1?.doubleValue)!, toAVector.vsip, resultIn.vsip)
-        case (.cf, .cd):
-            let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-            vsip_csvmul_d(aNumber, toAVector.vsip, resultIn.vsip)
-        case (.cd,.cd):
-            let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-            vsip_csvmul_d(aNumber, toAVector.vsip, resultIn.vsip)
-        case (.i, .i):
-            vsip_svmul_i((aScalar.1?.int32Value)!, toAVector.vsip, resultIn.vsip)
-        case (.li,.li):
-            vsip_svmul_li((aScalar.1?.intValue)!, toAVector.vsip, resultIn.vsip)
-        case (.si,.si):
-            vsip_svmul_si((aScalar.1?.int16Value)!, toAVector.vsip, resultIn.vsip)
-        case (.uc,.uc):
-            vsip_svmul_uc((aScalar.1?.uint8Value)!, toAVector.vsip, resultIn.vsip)
+        case (.f, .f, .f):
+            vsip_svmul_f(scalar.vsip_f, vector.vsip, output.vsip)
+        case (.d, .d, .d):
+            vsip_svmul_d(scalar.vsip_d, vector.vsip, output.vsip)
+        case (.f, .cf, .cf):
+            vsip_rscvmul_f(scalar.vsip_f, vector.vsip, output.vsip)
+        case (.d, .cd, .cd):
+            vsip_rscvmul_d(scalar.vsip_d, vector.vsip, output.vsip)
+        case (.cf, .cf, .cf):
+            vsip_csvmul_f(scalar.vsip_cf, vector.vsip, output.vsip)
+        case (.cd, .cd, .cd):
+            vsip_csvmul_d(scalar.vsip_cd, vector.vsip, output.vsip)
+        case (.i, .i, .i):
+            vsip_svmul_i(scalar.vsip_i, vector.vsip, output.vsip)
+        case (.li, .li, .li):
+            vsip_svmul_li(scalar.vsip_li, vector.vsip, output.vsip)
+        case (.si, .si, .si):
+            vsip_svmul_si(scalar.vsip_si, vector.vsip, output.vsip)
+        case (.uc, .uc, .uc):
+            vsip_svmul_uc(scalar.vsip_uc, vector.vsip, output.vsip)
         default:
             preconditionFailure("Argument string not supported for svmul")
         }
         
     }
-    public static func mul(_ aScalar: Double, toAMatrix: Matrix, resultIn: Matrix){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.d, aScalar as NSNumber?, nil)
-        Vsip.mul(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
+    public static func mul(_ scalar: Double, _ matrix: Matrix, output: Matrix){
+        Vsip.mul(Scalar(scalar), matrix, output: output)
         
     }
-    public static func mul(_ aScalar: Float, toAMatrix: Matrix, resultIn: Matrix){
-        let aNumber: (Block.Types?, NSNumber?, NSNumber?) = (.f, aScalar as NSNumber?, nil)
-        Vsip.mul(aNumber, toAMatrix: toAMatrix, resultIn: resultIn)
+    public static func mul(_ scalar: Float, _ matrix: Matrix, output: Matrix){
+        Vsip.mul(Scalar(scalar), matrix, output: output)
+        
     }
-    public static func mul(_ aScalar: (Block.Types?, NSNumber?, NSNumber?), toAMatrix: Matrix, resultIn: Matrix){
-        assert(sizeEqual(toAMatrix, against: resultIn),"Views must be the same size")
-        let t = (aScalar.0!,toAMatrix.type)
+    public static func mul(_ scalar: Scalar,_ matrix: Matrix, output: Matrix){
+        assert(sizeEqual(matrix, against: output),"Views must be the same size")
+        let t = (scalar.type, matrix.type, output.type)
         switch t {
-        case (.f,.f):
-            vsip_smmul_f((aScalar.1?.floatValue)!, toAMatrix.vsip, resultIn.vsip)
-        case (.d,.d):
-            vsip_smmul_d((aScalar.1?.doubleValue)!, toAMatrix.vsip, resultIn.vsip)
-        case (.f,.cf):
-            vsip_rscmmul_f((aScalar.1?.floatValue)!, toAMatrix.vsip, resultIn.vsip)
-        case (.d,.f):
-            vsip_rscmmul_f((aScalar.1?.floatValue)!, toAMatrix.vsip, resultIn.vsip)
-        case (.cf,.f):
-            let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-            vsip_csmmul_f(aNumber, toAMatrix.vsip, resultIn.vsip)
-        case (.cd,.f):
-            let aNumber = vsip_cmplx_f((aScalar.1?.floatValue)!,(aScalar.2?.floatValue)!)
-            vsip_csmmul_f(aNumber, toAMatrix.vsip, resultIn.vsip)
-        case (.f,.cd):
-            vsip_rscmmul_d((aScalar.1?.doubleValue)!, toAMatrix.vsip, resultIn.vsip)
-        case (.d,.cd):
-            vsip_rscmmul_d((aScalar.1?.doubleValue)!, toAMatrix.vsip, resultIn.vsip)
-        case (.cf,.cd):
-            let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-            vsip_csmmul_d(aNumber, toAMatrix.vsip, resultIn.vsip)
-        case (.cd,.cd):
-            let aNumber = vsip_cmplx_d((aScalar.1?.doubleValue)!,(aScalar.2?.doubleValue)!)
-            vsip_csmmul_d(aNumber, toAMatrix.vsip, resultIn.vsip)
+        case (.f, .f, .f):
+            vsip_smmul_f(scalar.vsip_f, matrix.vsip, output.vsip)
+        case (.d, .d, .d):
+            vsip_smmul_d(scalar.vsip_d, matrix.vsip, output.vsip)
+        case (.f,.cf, .cf):
+            vsip_rscmmul_f(scalar.vsip_f, matrix.vsip, output.vsip)
+        case (.d, .cd, .cd):
+            vsip_rscmmul_d(scalar.vsip_d, matrix.vsip, output.vsip)
+        case (.cd, .cd, .cd):
+            vsip_csmmul_d(scalar.vsip_cd, matrix.vsip, output.vsip)
         default:
             preconditionFailure("Argument string not supported for mmul")
         }
@@ -3230,66 +3131,66 @@ public class Vsip {
             preconditionFailure("Argument list not supported for vmmul")
         }
     }
-    public static func sub(_ aView: Vector, subtract: Vector, resultIn: Vector){
+    public static func sub(_ aView: Vector, subtract: Vector, output: Vector){
         assert(sizeEqual(aView, against: subtract),"Views must be the same size")
-        assert(sizeEqual(aView, against: resultIn), "Views must be the same size")
-        let t = (aView.type, subtract.type, resultIn.type)
+        assert(sizeEqual(aView, against: output), "Views must be the same size")
+        let t = (aView.type, subtract.type, output.type)
         switch t{
         case (.cd, .d, .cd):
-            vsip_crvsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_crvsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.cf, .f, .cf):
-            vsip_crvsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_crvsub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.cd, .cd, .cd):
-            vsip_cvsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_cvsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.cf, .cf, .cf):
-            vsip_cvsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_cvsub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.d, .cd, .cd):
-            vsip_rcvsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_rcvsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.f, .cf, .cf):
-            vsip_rcvsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_rcvsub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.d, .d, .d):
-            vsip_vsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_vsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.f, .f, .f):
-            vsip_vsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_vsub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.i, .i, .i):
-            vsip_vsub_i (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_vsub_i (aView.vsip,subtract.vsip,output.vsip )
         case (.li, .li, .li):
-            vsip_vsub_li (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_vsub_li (aView.vsip,subtract.vsip,output.vsip )
         case (.si, .si, .si):
-            vsip_vsub_si (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_vsub_si (aView.vsip,subtract.vsip,output.vsip )
         case (.uc, .uc, .uc):
-            vsip_vsub_uc (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_vsub_uc (aView.vsip,subtract.vsip,output.vsip )
         default:
             preconditionFailure("function not supported for input/output views")
         }
     }
-    public static func sub(_ aView: Matrix, subtract: Matrix, resultIn: Matrix){
+    public static func sub(_ aView: Matrix, subtract: Matrix, output: Matrix){
         assert(sizeEqual(aView, against: subtract),"Views must be the same size")
-        assert(sizeEqual(aView, against: resultIn), "Views must be the same size")
-        let t = (aView.type, subtract.type, resultIn.type)
+        assert(sizeEqual(aView, against: output), "Views must be the same size")
+        let t = (aView.type, subtract.type, output.type)
         switch t{
         case (.cd, .cd, .cd):
-            vsip_cmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_cmsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.cf, .cf, .cf):
-            vsip_cmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_cmsub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.cd, .d, .cd):
-            vsip_crmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_crmsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.cf, .f, .cf):
-            vsip_crmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_crmsub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.si, .si, .si):
-            vsip_msub_si (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_si (aView.vsip,subtract.vsip,output.vsip )
         case (.d, .cd, .cd):
-            vsip_rcmsub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_rcmsub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.d, .d, .d):
-            vsip_msub_d (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_d (aView.vsip,subtract.vsip,output.vsip )
         case (.f, .f, .f):
-            vsip_msub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_f (aView.vsip,subtract.vsip,output.vsip )
         case (.i, .i, .i):
-            vsip_msub_i (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_i (aView.vsip,subtract.vsip,output.vsip )
         case (.li, .li, .li):
-            vsip_msub_li (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_msub_li (aView.vsip,subtract.vsip,output.vsip )
         case (.f, .cf, .cf):
-            vsip_rcmsub_f (aView.vsip,subtract.vsip,resultIn.vsip )
+            vsip_rcmsub_f (aView.vsip,subtract.vsip,output.vsip )
         default:
             preconditionFailure("function not supported for input/output views \(t)")
         }
@@ -3714,8 +3615,182 @@ public class Vsip {
     }
     
     // MARK: - LU
+    public class LU {
+        
+    }
     
     // MARK: - QRD
+    public class QRD{
+        fileprivate struct Attrib {
+            let m: Scalar
+            let n: Scalar
+            let op: vsip_qrd_qopt
+        }
+        var type: Block.Types {
+            return (jVsip?.type)!
+        }
+        fileprivate(set) var amSet = false
+        fileprivate let attrib: Attrib
+        var columnLength: Scalar {
+            get{
+                return attrib.m
+            }
+        }
+        var rowLength: Scalar {
+            get {
+                return attrib.n
+            }
+        }
+        var qrdNoSaveQ: Bool{
+            get {
+                return attrib.op == VSIP_QRD_NOSAVEQ
+            }
+        }
+        var qrdSaveQ: Bool{
+            get {
+                return attrib.op == VSIP_QRD_SAVEQ
+            }
+        }
+        var qrdSaveQ1: Bool{
+            get {
+                return attrib.op == VSIP_QRD_SAVEQ1
+            }
+        }
+        fileprivate class qr {
+            var tryVsip : OpaquePointer?
+            var vsip: OpaquePointer {
+                get {
+                    return tryVsip!
+                }
+            }
+            let jInit : JVSIP
+            var type : Block.Types?
+            init(){
+                jInit = JVSIP()
+            }
+            
+        }
+        fileprivate class qr_f: qr {
+            init(m: Int, n: Int, qopt: vsip_qrd_qopt){
+                super.init()
+                type = .f
+                if let qrd = vsip_qrd_create_f(vsip_length(m),vsip_length(n),qopt){
+                    self.tryVsip = qrd
+                } else {
+                    preconditionFailure("Failed to create vsip qrd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_qrd_destroy_f \(jInit.myId.int32Value)")
+                }
+                vsip_qrd_destroy_f(self.vsip)
+                
+            }
+        }
+        fileprivate class qr_d: qr {
+            init(m: Int, n: Int, qopt: vsip_qrd_qopt){
+                super.init()
+                type = .d
+                if let qrd = vsip_qrd_create_d(vsip_length(m),vsip_length(n),qopt){
+                    self.tryVsip = qrd
+                } else {
+                    preconditionFailure("Failed to create vsip qrd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_qrd_destroy_d \(jInit.myId.int32Value)")
+                }
+                vsip_qrd_destroy_d(self.vsip)
+                
+            }
+        }
+        fileprivate class cqr_f: qr {
+            init(m: Int, n: Int, qopt: vsip_qrd_qopt){
+                super.init()
+                type = .cf
+                if let qrd = vsip_cqrd_create_f(vsip_length(m),vsip_length(n),qopt){
+                    self.tryVsip = qrd
+                } else {
+                    preconditionFailure("Failed to create vsip qrd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_cqrd_destroy_f \(jInit.myId.int32Value)")
+                }
+                vsip_cqrd_destroy_f(self.vsip)
+                
+            }
+        }
+        fileprivate class cqr_d: qr {
+            init(m: Int, n: Int, qopt: vsip_qrd_qopt){
+                super.init()
+                type = .cd
+                if let qrd = vsip_cqrd_create_d(vsip_length(m),vsip_length(n),qopt){
+                    self.tryVsip = qrd
+                } else {
+                    preconditionFailure("Failed to create vsip qrd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_cqrd_destroy_d \(jInit.myId.int32Value)")
+                }
+                vsip_cqrd_destroy_d(self.vsip)
+                
+            }
+        }
+        fileprivate let jVsip : qr?
+        fileprivate var vsip: OpaquePointer {
+            get {
+                return (jVsip?.vsip)!
+            }
+        }
+        init(type: Block.Types, columnLength: Scalar, rowLength: Scalar, qopt: vsip_qrd_qopt) {
+            attrib = Attrib(m: columnLength, n: rowLength, op: qopt)
+            self.amSet = false
+            switch type {
+            case .f:
+                jVsip = qr_f(m: columnLength.int, n: columnLength.int, qopt: qopt)
+            case .d:
+                jVsip = qr_d(m: columnLength.int, n: columnLength.int, qopt: qopt)
+            case .cf:
+                jVsip = cqr_f(m: columnLength.int, n: columnLength.int, qopt: qopt)
+            case .cd:
+                jVsip = cqr_d(m: columnLength.int, n: columnLength.int, qopt: qopt)
+            default:
+                self.jVsip = nil
+                assert(false, "QRD not supported for this type")
+            }
+        }
+        public func decompose(_ aMatrix: Matrix) -> Scalar {
+            let t = (aMatrix.type, self.type)
+            switch t {
+            case(.f,.f):
+                return Scalar(vsip_qrd_f(self.vsip, aMatrix.vsip))
+            case(.d,.d):
+                return Scalar(vsip_qrd_d(self.vsip, aMatrix.vsip))
+            case(.cf,.cf):
+                return Scalar(vsip_cqrd_f(self.vsip, aMatrix.vsip))
+            case(.cd,.cd):
+                return Scalar(vsip_cqrd_d(self.vsip, aMatrix.vsip))
+            default:
+                preconditionFailure("Types \(t) not supported for qrd decompostion")
+            }
+        }
+        public func prod() {
+            
+        }
+        public func solveR() {
+            
+        }
+        public func solveCovariance() {
+            
+        }
+        
+    }
     
     // MARK: - SVD
     // needs work on error checks

@@ -230,7 +230,7 @@ public class View {
     // MARK: Conversion to String and Print
     public func scalarString(_ format : String, value : (Block.Types?, NSNumber?, NSNumber?)) -> String{
         var retval = ""
-        switch value.0!{
+        switch value.0! {
         case .f:
             let fmt = "%" + format + "f"
             retval = String(format: fmt, value.1!.floatValue)

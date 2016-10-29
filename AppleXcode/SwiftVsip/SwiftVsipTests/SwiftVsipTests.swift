@@ -16,7 +16,7 @@ class SwiftVsipTests: XCTestCase {
         v.mPrint("4.3")
         v.real.mPrint("4.3")
         v.imag.mPrint("4.3")
-        Vsip.add(v.real, to: v.imag, resultsIn: v.real)
+        Vsip.add(v.real, v.imag, output: v.real)
         v.mPrint("4.3")
         v.randn(9).mPrint("4.3")
         v = Vsip.Vector(length: 11, type: .cf)
@@ -28,13 +28,13 @@ class SwiftVsipTests: XCTestCase {
         m.mPrint("4.3")
         m.real.mPrint("4.3")
         m.imag.mPrint("4.3")
-        Vsip.add(m.real, to: m.imag, resultsIn: m.real)
+        Vsip.add(m.real, m.imag, output: m.real)
         m.mPrint("4.3")
         m.randn(9, portable: true).mPrint("4.3")
         m = Vsip.Matrix(columnLength: 5, rowLength: 3, type: .d, major: VSIP_COL)
         m.randu(11, portable: false).mPrint("5.4")
     }
-    func testPlus(){
+    func testScalarPlus(){
         let a = Vsip.Scalar(15.0)
         let b = Vsip.Scalar(4.0)
         let d = a + b
@@ -49,7 +49,7 @@ class SwiftVsipTests: XCTestCase {
         Vsip.div(numerator: a, denominator: b, quotient: c)
         c.mPrint("3.2")
     }
-    func testSqrt(){
+    func testScalarSqrt(){
         let a = Vsip.Scalar(vsip_cmplx_d(4.0, 5.0))
         let b = vsip_csqrt_d(vsip_cmplx_d(4.0, 5.0))
         let c = a.sqrt
@@ -74,20 +74,48 @@ class SwiftVsipTests: XCTestCase {
         // check that U S V^t gives back A
         let Ac = A.copy  // Ac is used for decompostion to keep original A
         let Ar = A.empty // new data space for result
-        let svd = Vsip.Svd(view: Ac!)
-        let sValues = svd.decompose(Ac!)
+        let svd = Vsip.Svd(view: Ac)
+        let sValues = svd.decompose(Ac)
         let U = svd.matU!
         let V = svd.matV!
         print("U");U.mPrint(fmt)
-        print("Singular Values");sValues?.mPrint(fmt)
+        print("Singular Values");sValues.mPrint(fmt)
         print("V");V.mPrint(fmt)
         let USr = U.empty // result of matrix product of U and Singular Vaules
-        Vsip.vmmul(vector: sValues!, matrix: U, major: VSIP_ROW, output: USr)
+        Vsip.vmmul(vector: sValues, matrix: U, major: VSIP_ROW, output: USr)
         Vsip.prod(matA: USr, matB: V.transview, matC: Ar)
         print("Result of USV^t"); Ar.mPrint(fmt)
-        Vsip.sub(A, subtract: Ar, resultIn: Ar)
-        let normChk = Vsip.Jvsip.normFro(view:Ar).reald / normA.reald
+        Vsip.sub(A, subtract: Ar, output: Ar)
+        var normChk = Vsip.Jvsip.normFro(view:Ar).reald / normA.reald
         print("normChk: \(normChk)")
-        XCTAssert( normChk < chk)
+        print("Check USV^t equal input matrix within reasonable bounds")
+        XCTAssert( normChk < chk, "Check Failed for equality of USV^t with input matrix within reasonable bounds")
+        let xe = x.empty  // x estimate for backsolve
+        Vsip.prod(matA: U.transview, vecB: b, vecC: xe)
+        Vsip.div(numerator: xe, denominator: sValues, quotient: xe)
+        Vsip.prod(matA: V, vecB: xe.copy, vecC: xe)
+        print("solve for estimate of x from b");xe.mPrint(fmt)
+        Vsip.sub(x, subtract: xe, output: xe)
+        normChk = Vsip.Jvsip.normFro(view: xe).reald/Vsip.Jvsip.normFro(view: x).reald
+        print("Check estimate of x equal x within reasonable bounds (for Ax=b then x_est = V S^-1 U^T b)")
+        XCTAssert( normChk < chk, "Check Failed for (in Ax=b) estimate of x equal to x within reasonable bounds")
+    }
+    func testHouseReflection(){
+        let n = 3
+        let v = Vsip.Vector(length: n, type: .d)
+        let A = Vsip.Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
+        v[0] = Vsip.Scalar(2.0); v[1] = Vsip.Scalar(3.0); v[2] = Vsip.Scalar(1.0)
+        Vsip.outer(alpha: Vsip.Scalar(1.0), vecX: v, vecY: v, matC: A)
+        let beta = Vsip.Scalar(2.0 / Vsip.dot(vecX: v, vecY: v).reald)
+        Vsip.mul(beta.reald, A, output: A)
+        let P = A.empty
+        P.fill(0.0)
+        P.diagview.fill(1.0)
+        Vsip.sub(P, subtract: A, output: P)
+        print(beta.reald)
+        A.mPrint("4.3")
+        P.mPrint("4.3")
+        Vsip.prod(matA: P, matB: P, matC: A)
+        A.mPrint("4.3")
     }
 }
