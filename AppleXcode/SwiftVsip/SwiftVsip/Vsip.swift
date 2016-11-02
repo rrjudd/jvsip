@@ -1356,7 +1356,7 @@ public class Vsip {
             return Vector(block: self.block, offset: self.offset, stride: self.stride, length: self.length)
         }
         
-        // MARK: data generators
+        // MARK: Vector Data Generators
         public func ramp(_ start : Scalar, increment : Scalar) -> Vector {
             switch self.type {
             case .d:
@@ -1996,7 +1996,7 @@ public class Vsip {
             }
         }
         
-        // MARK: Data Generators
+        // MARK: Matrix Data Generators
         public func fill(_ value: Scalar){
             switch self.type{
             case .d:
@@ -2067,6 +2067,7 @@ public class Vsip {
             }
             return view
         }
+        
         public func copy(_ output: Matrix) -> Matrix{
             let t = (self.type, output.type)
             switch t{
@@ -3289,6 +3290,30 @@ public class Vsip {
         }
         
     }
+    // MARK: - Element Generation and Copy
+    public static func copyTo(_ vector: Vector) -> [Any] {
+        switch vector.type {
+        case .d:
+            var a = Array(repeating: vsip_scalar_d(0.0), count: vector.length)
+            vsip_vcopyto_user_d(vector.vsip, &a)
+            return a
+        case .f:
+            var a = Array(repeating: vsip_scalar_f(0.0), count: vector.length)
+            vsip_vcopyto_user_f(vector.vsip, &a)
+            return a
+        default:
+            preconditionFailure("Copy from vsip to array not supported for type \(vector.type)")
+        }
+    }
+    public static func copyTo(_ vector: Vector, array: UnsafeMutablePointer<vsip_scalar_d>){
+        switch vector.type {
+        case .d:
+            vsip_vcopyto_user_d(vector.vsip, array)
+        default:
+            preconditionFailure("Copy from vsip to array not supported for type \(vector.type)")
+        }
+    }
+    
     // MARK: - Linear Algebra Matrix and Vector Operations
     public static func herm(_ complexInputMatrix: Matrix, complexOuputMatrix: Matrix){
         let vsipA = complexInputMatrix.vsip
@@ -3622,8 +3647,8 @@ public class Vsip {
     // MARK: - QRD
     public class QRD{
         fileprivate struct Attrib {
-            let m: Scalar
-            let n: Scalar
+            let m: Int
+            let n: Int
             let op: vsip_qrd_qopt
         }
         var type: Block.Types {
@@ -3631,12 +3656,12 @@ public class Vsip {
         }
         fileprivate(set) var amSet = false
         fileprivate let attrib: Attrib
-        var columnLength: Scalar {
+        var columnLength: Int {
             get{
                 return attrib.m
             }
         }
-        var rowLength: Scalar {
+        var rowLength: Int {
             get {
                 return attrib.n
             }
@@ -3748,23 +3773,37 @@ public class Vsip {
                 return (jVsip?.vsip)!
             }
         }
-        init(type: Block.Types, columnLength: Scalar, rowLength: Scalar, qopt: vsip_qrd_qopt) {
+        init(type: Block.Types, columnLength: Int, rowLength: Int, qopt: vsip_qrd_qopt) {
             attrib = Attrib(m: columnLength, n: rowLength, op: qopt)
             self.amSet = false
             switch type {
             case .f:
-                jVsip = qr_f(m: columnLength.int, n: columnLength.int, qopt: qopt)
+                jVsip = qr_f(m: columnLength, n: columnLength, qopt: qopt)
             case .d:
-                jVsip = qr_d(m: columnLength.int, n: columnLength.int, qopt: qopt)
+                jVsip = qr_d(m: columnLength, n: columnLength, qopt: qopt)
             case .cf:
-                jVsip = cqr_f(m: columnLength.int, n: columnLength.int, qopt: qopt)
+                jVsip = cqr_f(m: columnLength, n: columnLength, qopt: qopt)
             case .cd:
-                jVsip = cqr_d(m: columnLength.int, n: columnLength.int, qopt: qopt)
+                jVsip = cqr_d(m: columnLength, n: columnLength, qopt: qopt)
             default:
                 self.jVsip = nil
                 assert(false, "QRD not supported for this type")
             }
         }
+        public static func decompose(_ aMatrix: Matrix) -> (Q: Matrix, R: Matrix){
+            let qrd = QRD(type: aMatrix.type, columnLength: aMatrix.columnLength, rowLength: aMatrix.rowLength, qopt: VSIP_QRD_SAVEQ)
+            let Q = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.columnLength, type: aMatrix.type, major: VSIP_ROW)
+            let R = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.rowLength, type: aMatrix.type, major: VSIP_ROW)
+            let aCopy = aMatrix.copy
+            Q.fill(0.0)
+            R.fill(0.0)
+            Q.diagview.fill(1.0)
+            let _ = qrd.decompose(aMatrix)
+            qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
+            Vsip.prod(matA: Q.transview, matB: aCopy, matC: R)
+            return (Q,R)
+        }
+        
         public func decompose(_ aMatrix: Matrix) -> Scalar {
             let t = (aMatrix.type, self.type)
             switch t {
@@ -3780,8 +3819,44 @@ public class Vsip {
                 preconditionFailure("Types \(t) not supported for qrd decompostion")
             }
         }
-        public func prod() {
-            
+        public func prodq(matrixOperator op: vsip_mat_op, matrixSide side: vsip_mat_side, matrix: Matrix) {
+            let t = (self.type, op, side, matrix.type)
+            switch t{
+            case (.f, VSIP_MAT_NTRANS, VSIP_MAT_LSIDE, .f):
+                vsip_qrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.d, VSIP_MAT_NTRANS, VSIP_MAT_LSIDE, .d):
+                vsip_qrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.cf, VSIP_MAT_NTRANS, VSIP_MAT_LSIDE, .cf):
+                vsip_cqrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.cd, VSIP_MAT_NTRANS, VSIP_MAT_LSIDE, .cd):
+                vsip_cqrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.f, VSIP_MAT_TRANS, VSIP_MAT_LSIDE, .f):
+                vsip_qrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.d, VSIP_MAT_TRANS, VSIP_MAT_LSIDE, .d):
+                vsip_qrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.cf, VSIP_MAT_HERM, VSIP_MAT_LSIDE, .cf):
+                vsip_cqrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.cd, VSIP_MAT_HERM, VSIP_MAT_LSIDE, .cd):
+                vsip_cqrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.f, VSIP_MAT_NTRANS, VSIP_MAT_RSIDE, .f):
+                vsip_qrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.d, VSIP_MAT_NTRANS, VSIP_MAT_RSIDE, .d):
+                vsip_qrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.cf, VSIP_MAT_NTRANS, VSIP_MAT_RSIDE, .cf):
+                vsip_cqrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.cd, VSIP_MAT_NTRANS, VSIP_MAT_RSIDE, .cd):
+                vsip_cqrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.f, VSIP_MAT_TRANS, VSIP_MAT_RSIDE, .f):
+                vsip_qrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.d, VSIP_MAT_TRANS, VSIP_MAT_RSIDE, .d):
+                vsip_qrdprodq_d(self.vsip, op, side, matrix.vsip)
+            case (.cf, VSIP_MAT_HERM, VSIP_MAT_RSIDE, .cf):
+                vsip_cqrdprodq_f(self.vsip, op, side, matrix.vsip)
+            case (.cd, VSIP_MAT_HERM, VSIP_MAT_RSIDE, .cd):
+                vsip_cqrdprodq_d(self.vsip, op, side, matrix.vsip)
+            default:
+                preconditionFailure("Type \(t) not supported for QRD prodq.")
+            }
         }
         public func solveR() {
             
