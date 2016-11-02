@@ -14,7 +14,7 @@ build/
 vsip.py
 .ipynb_checkpoints
 ToDo
-Untitled*
+Untited*
 *.aux
 *.lot
 *.log
@@ -36,3 +36,6 @@ Untitled*
 /java/cvsip/dist/
 /java/JavaVsip/nbproject/private/
 /java/JavaVsip/dist/
+AppleXcode/JVSwift.xcworkspace/contents.xcworkspacedata
+AppleXcode/JVSwift.xcworkspace/xcuserdata/judd.xcuserdatad/UserInterfaceState.xcuserstate
+java/*
