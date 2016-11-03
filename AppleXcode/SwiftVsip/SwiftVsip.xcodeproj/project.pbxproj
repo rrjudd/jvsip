@@ -33,11 +33,6 @@
 		0612636F1DA8023500AA48EA /* SwiftVsipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVsipTests.swift; sourceTree = "<group>"; };
 		061263711DA8023500AA48EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0612637C1DA8033A00AA48EA /* vsip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vsip.framework; path = ../../../../../../../Library/Frameworks/vsip.framework; sourceTree = "<group>"; };
-		0612637E1DA8039200AA48EA /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
-		0612637F1DA8039200AA48EA /* Jvsip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jvsip.swift; sourceTree = "<group>"; };
-		061263801DA8039200AA48EA /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
-		061263821DA8039200AA48EA /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
-		061263831DA8039200AA48EA /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		061263841DA8039200AA48EA /* Vsip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vsip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,11 +79,6 @@
 		061263631DA8023500AA48EA /* SwiftVsip */ = {
 			isa = PBXGroup;
 			children = (
-				0612637E1DA8039200AA48EA /* Block.swift */,
-				0612637F1DA8039200AA48EA /* Jvsip.swift */,
-				061263801DA8039200AA48EA /* Matrix.swift */,
-				061263821DA8039200AA48EA /* Vector.swift */,
-				061263831DA8039200AA48EA /* View.swift */,
 				061263841DA8039200AA48EA /* Vsip.swift */,
 				061263641DA8023500AA48EA /* SwiftVsip.h */,
 				061263651DA8023500AA48EA /* Info.plist */,
