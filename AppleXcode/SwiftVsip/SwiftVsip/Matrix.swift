@@ -457,7 +457,7 @@ public class Matrix : View {
         return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: type, major: VSIP_ROW)
     }
     // copy is new data space, view of same size, copy of data
-    public var copy: Matrix? {
+    public var copy: Matrix {
         let view = self.empty
         switch view.type{
         case .f:
@@ -506,11 +506,11 @@ public class Matrix : View {
         return output
     }
     // clone is same data space just new view
-    public var clone: Matrix? {
+    public var clone: Matrix {
         return Matrix(block: self.block, offset: self.offset, columnStride: self.columnStride, columnLength: self.columnLength, rowStride: self.rowStride, rowLength: self.rowLength)
     }
     // transview is new view of same data space as a transpose.
-    public var transview: Matrix? {
+    public var transview: Matrix {
         return Matrix(block: self.block, offset: self.offset, columnStride: self.rowStride, columnLength: self.rowLength, rowStride: self.columnStride, rowLength: self.columnLength)
     }
     private func diagview(diagIndex: Int) -> Vector {

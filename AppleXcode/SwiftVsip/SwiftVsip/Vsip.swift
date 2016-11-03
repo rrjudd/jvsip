@@ -3778,30 +3778,17 @@ public class Vsip {
             self.amSet = false
             switch type {
             case .f:
-                jVsip = qr_f(m: columnLength, n: columnLength, qopt: qopt)
+                jVsip = qr_f(m: columnLength, n: rowLength, qopt: qopt)
             case .d:
-                jVsip = qr_d(m: columnLength, n: columnLength, qopt: qopt)
+                jVsip = qr_d(m: columnLength, n: rowLength, qopt: qopt)
             case .cf:
-                jVsip = cqr_f(m: columnLength, n: columnLength, qopt: qopt)
+                jVsip = cqr_f(m: columnLength, n: rowLength, qopt: qopt)
             case .cd:
-                jVsip = cqr_d(m: columnLength, n: columnLength, qopt: qopt)
+                jVsip = cqr_d(m: columnLength, n: rowLength, qopt: qopt)
             default:
                 self.jVsip = nil
                 assert(false, "QRD not supported for this type")
             }
-        }
-        public static func decompose(_ aMatrix: Matrix) -> (Q: Matrix, R: Matrix){
-            let qrd = QRD(type: aMatrix.type, columnLength: aMatrix.columnLength, rowLength: aMatrix.rowLength, qopt: VSIP_QRD_SAVEQ)
-            let Q = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.columnLength, type: aMatrix.type, major: VSIP_ROW)
-            let R = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.rowLength, type: aMatrix.type, major: VSIP_ROW)
-            let aCopy = aMatrix.copy
-            Q.fill(0.0)
-            R.fill(0.0)
-            Q.diagview.fill(1.0)
-            let _ = qrd.decompose(aMatrix)
-            qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
-            Vsip.prod(matA: Q.transview, matB: aCopy, matC: R)
-            return (Q,R)
         }
         
         public func decompose(_ aMatrix: Matrix) -> Scalar {
@@ -4305,6 +4292,24 @@ public class Vsip {
             default:
                 preconditionFailure("normFro not supported for this view")
             }
+        }
+        
+        public static func decompose(_ aMatrix: Vsip.Matrix) -> (Q: Vsip.Matrix, R: Vsip.Matrix){
+            let qrd = Vsip.QRD(type: aMatrix.type, columnLength: aMatrix.columnLength, rowLength: aMatrix.rowLength, qopt: VSIP_QRD_SAVEQ)
+            let Q = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.columnLength, type: aMatrix.type, major: VSIP_ROW)
+            let R = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.rowLength, type: aMatrix.type, major: VSIP_ROW)
+            let aCopy = aMatrix.copy
+            Q.fill(0.0)
+            R.fill(0.0)
+            print("create/destroy Q.diagview")
+            Q.diagview.fill(1.0)
+            print("call qrd.decompose")
+            let _ = qrd.decompose(aMatrix)
+            qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
+            print("create Qt")
+            let Qt = Q.transview
+            Vsip.prod(matA: Qt, matB: aCopy, matC: R)
+            return (Q,R)
         }
         
     }

@@ -118,4 +118,25 @@ class SwiftVsipTests: XCTestCase {
         Vsip.prod(matA: P, matB: P, matC: A)
         A.mPrint("4.3")
     }
+    func testQrd(){
+        let m = 6
+        let n = 4
+        let A = Vsip.Matrix(columnLength: m, rowLength: n, type: .d, major: VSIP_ROW)
+        // generate some data
+        let _ = A.randn(8, portable: true)
+        // keep a copy of original
+        let Acopy = A.copy
+        // make some space for an estimate of A to be calculated with Q and R
+        let Ae = A.empty
+        // get (Q,R)
+        let qr = Vsip.Jvsip.decompose(Acopy)
+        let Q = qr.0
+         let R = qr.1
+         // Calculate Ae
+         Vsip.prod(matA: Q, matB: R, matC: Ae)
+         // print original and estimate
+         A.mPrint("5.3")
+         Ae.mPrint("5.3")
+    }
+    
 }
