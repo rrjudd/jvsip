@@ -2106,7 +2106,7 @@ public class Vsip {
         public var transview: Matrix {
             return Matrix(block: self.block, offset: self.offset, columnStride: self.rowStride, columnLength: self.rowLength, rowStride: self.columnStride, rowLength: self.columnLength)
         }
-        private func diagview(diagIndex: Int) -> Vector {
+        public func diagview(diagIndex: Int) -> Vector {
             let blk = self.block
             switch self.type {
             case .f:
@@ -2172,7 +2172,132 @@ public class Vsip {
         public var diagview: Vector {
             return self.diagview(diagIndex: 0)
         }
-        
+        public func rowview(row: Int) -> Vector {
+            let blk = self.block
+            switch self.type {
+            case .f:
+                if let v = vsip_mrowview_f(self.vsip, vsip_index(row)) {
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+                
+            case .d:
+                if let v = vsip_mrowview_d(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .cf:
+                if let v = vsip_cmrowview_f(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .cd:
+                if let v = vsip_cmrowview_d(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .i:
+                if let v = vsip_mrowview_i(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .li:
+                if let v = vsip_mrowview_li(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .si:
+                if let v = vsip_mrowview_si(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .uc:
+                if let v = vsip_mrowview_uc(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .bl:
+                if let v = vsip_mrowview_bl(self.vsip, vsip_index(row)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            default:
+                print("diagview not available for this view")
+            }
+            preconditionFailure("Failed to return valid vsip diagview")
+        }
+        public func colview(col: Int) -> Vector {
+            let blk = self.block
+            switch self.type {
+            case .f:
+                if let v = vsip_mcolview_f(self.vsip, vsip_index(col)) {
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+                
+            case .d:
+                if let v = vsip_mcolview_d(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .cf:
+                if let v = vsip_cmcolview_f(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .cd:
+                if let v = vsip_cmcolview_d(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .i:
+                if let v = vsip_mcolview_i(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .li:
+                if let v = vsip_mcolview_li(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .si:
+                if let v = vsip_mcolview_si(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .uc:
+                if let v = vsip_mcolview_uc(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            case .bl:
+                if let v = vsip_mcolview_bl(self.vsip, vsip_index(col)){
+                    return Vector(block: blk, cView: v)
+                } else {
+                    break
+                }
+            default:
+                print("diagview not available for this view")
+            }
+            preconditionFailure("Failed to return valid vsip diagview")
+        }
         // MARK: Print
         public func mString(_ format: String) -> String {
             let fmt = formatFmt(format)
@@ -3313,6 +3438,72 @@ public class Vsip {
             preconditionFailure("Copy from vsip to array not supported for type \(vector.type)")
         }
     }
+    public static func copy(from: Matrix, to: Matrix) {
+        let t = (from.type, to.type)
+        switch t{
+        case (.f, .f):
+            vsip_mcopy_f_f(from.vsip, to.vsip)
+        case (.f, .d):
+            vsip_mcopy_f_d(from.vsip, to.vsip)
+        case (.d, .f):
+            vsip_mcopy_d_f(from.vsip, to.vsip)
+        case(.d, .d):
+            vsip_mcopy_d_d(from.vsip, to.vsip)
+        case (.cf, .cf):
+            vsip_cmcopy_f_f(from.vsip, to.vsip)
+        case (.cf, .cd):
+            vsip_cmcopy_f_d(from.vsip, to.vsip)
+        case (.cd, .cf):
+            vsip_cmcopy_d_f(from.vsip, to.vsip)
+        case(.cd, .cd):
+            vsip_cmcopy_d_d(from.vsip, to.vsip)
+        case(.i, .i):
+            vsip_mcopy_i_i(from.vsip, to.vsip)
+        case(.f, .i):
+            vsip_mcopy_f_i(from.vsip, to.vsip)
+        case(.i, .f):
+            vsip_mcopy_f_i(from.vsip, to.vsip)
+        case(.d, .i):
+            vsip_mcopy_f_i(from.vsip, to.vsip)
+        case(.i, .d):
+            vsip_mcopy_f_i(from.vsip, to.vsip)
+        default:
+            preconditionFailure("Copy not supported for type \(t)")
+        }
+    }
+    public static func copy(from: Vector, to: Vector) {
+        let t = (from.type, to.type)
+        switch t {
+        case (.f, .f):
+            vsip_vcopy_f_f(from.vsip, to.vsip)
+        case (.f, .d):
+            vsip_vcopy_f_d(from.vsip, to.vsip)
+        case (.d, .f):
+            vsip_vcopy_d_f(from.vsip, to.vsip)
+        case(.d, .d):
+            vsip_vcopy_d_d(from.vsip, to.vsip)
+        case (.cf, .cf):
+            vsip_cvcopy_f_f(from.vsip, to.vsip)
+        case (.cf, .cd):
+            vsip_cvcopy_f_d(from.vsip, to.vsip)
+        case (.cd, .cf):
+            vsip_cvcopy_d_f(from.vsip, to.vsip)
+        case(.cd, .cd):
+            vsip_cvcopy_d_d(from.vsip, to.vsip)
+        case(.i, .i):
+            vsip_vcopy_i_i(from.vsip, to.vsip)
+        case(.f, .i):
+            vsip_vcopy_f_i(from.vsip, to.vsip)
+        case(.i, .f):
+            vsip_vcopy_f_i(from.vsip, to.vsip)
+        case(.d, .i):
+            vsip_vcopy_f_i(from.vsip, to.vsip)
+        case(.i, .d):
+            vsip_vcopy_f_i(from.vsip, to.vsip)
+        default:
+            preconditionFailure("Copy not supported for type \(t)")
+        }
+    }
     
     // MARK: - Linear Algebra Matrix and Vector Operations
     public static func herm(_ complexInputMatrix: Matrix, complexOuputMatrix: Matrix){
@@ -3486,7 +3677,7 @@ public class Vsip {
         }
     }
     
-    public static func prod(matA: Matrix, matB: Matrix, matC: Matrix){
+    public static func prod(_ matA: Matrix,times matB: Matrix,resultIn matC: Matrix){
         let t = (matA.type, matB.type, matC.type)
         let vsipA = matA.vsip
         let vsipB = matB.vsip
@@ -3504,7 +3695,7 @@ public class Vsip {
             preconditionFailure("VSIP function prod not supported for argument list")
         }
     }
-    public static func prod(matA: Matrix, vecB: Vector, vecC: Vector){
+    public static func prod(_ matA: Matrix, times vecB: Vector,resultIn vecC: Vector){
         let t = (matA.type, vecB.type, vecC.type)
         let vsipA = matA.vsip
         let vsipB = vecB.vsip
@@ -3522,7 +3713,7 @@ public class Vsip {
             preconditionFailure("VSIP function prod not supported for argument list")
         }
     }
-    public static func prod(vecA: Vector, matB: Matrix, vecC: Vector){
+    public static func prod(_ vecA: Vector, times matB: Matrix, resultIn vecC: Vector){
         let t = (vecA.type, matB.type, vecC.type)
         let vsipA = vecA.vsip
         let vsipB = matB.vsip
@@ -3540,7 +3731,7 @@ public class Vsip {
             preconditionFailure("VSIP function prod not supported for argument list")
         }
     }
-    public static func prodh(matA: Matrix, matB: Matrix, matC: Matrix){
+    public static func prodh(_ matA: Matrix,timesHermitian matB: Matrix, resultIn matC: Matrix){
         let t = (matA.type, matB.type, matC.type)
         let vsipA = matA.vsip
         let vsipB = matB.vsip
@@ -3554,7 +3745,7 @@ public class Vsip {
             preconditionFailure("VSIP function prodh not supported for argument list")
         }
     }
-    public static func prodj(matA: Matrix, matB: Matrix, matC: Matrix){
+    public static func prodj(_ matA: Matrix, timesConjugate matB: Matrix, resultIn matC: Matrix){
         let t = (matA.type, matB.type, matC.type)
         let vsipA = matA.vsip
         let vsipB = matB.vsip
@@ -3568,7 +3759,7 @@ public class Vsip {
             preconditionFailure("VSIP function prodj not supported for argument list")
         }
     }
-    public static func prodt(matA: Matrix, matB: Matrix, matC: Matrix){
+    public static func prodt(_ matA: Matrix,timesTranspose matB: Matrix, resultIn matC: Matrix){
         let t = (matA.type, matB.type, matC.type)
         let vsipA = matA.vsip
         let vsipB = matB.vsip
@@ -3586,7 +3777,7 @@ public class Vsip {
             preconditionFailure("VSIP function prodt not supported for argument list")
         }
     }
-    public static func trans(matA: Matrix, matC: Matrix){
+    public static func trans(_ matA: Matrix, transposeIn matC: Matrix){
         let t = (matA.type, matC.type)
         let vsipA = matA.vsip
         let vsipC = matC.vsip
@@ -3603,7 +3794,7 @@ public class Vsip {
             preconditionFailure("VSIP function trans not supported for argument list")
         }
     }
-    public static func dot(vecX: Vector, vecY: Vector) -> Scalar {
+    public static func dot(product vecX: Vector, with vecY: Vector) -> Scalar {
         let t = (vecX.type, vecY.type)
         let vsipX = vecX.vsip
         let vsipY = vecY.vsip
@@ -3638,9 +3829,308 @@ public class Vsip {
             preconditionFailure("Function outer not supported for argument list")
         }
     }
-    
+    // Mark: - Simple Solvers
+    public static func covsol(_ A: Matrix, inputOutput: Matrix) -> Int {
+        let t = (A.type, inputOutput.type)
+        switch t {
+        case (.f, .f):
+            return Int(vsip_covsol_f(A.vsip, inputOutput.vsip))
+        case (.d, .d):
+            return Int(vsip_covsol_d(A.vsip, inputOutput.vsip))
+        case (.cf, .cf):
+            return Int(vsip_ccovsol_f(A.vsip, inputOutput.vsip))
+        case (.cd, .cd):
+            return Int(vsip_ccovsol_d(A.vsip, inputOutput.vsip))
+        default:
+            preconditionFailure("Type \(t) not supported by covsol")
+        }
+    }
+    // MARK: - Chold
+    public class Chold {
+        var size: Int
+        var type: Block.Types {
+            return (jVsip?.type)!
+        }
+        fileprivate var vsip: OpaquePointer {
+            get {
+                return (jVsip?.vsip)!
+            }
+        }
+        fileprivate class chol {
+            var tryVsip : OpaquePointer?
+            var vsip: OpaquePointer {
+                get {
+                    return tryVsip!
+                }
+            }
+            let jInit : JVSIP
+            var type : Vsip.Block.Types?
+            init(){
+                jInit = JVSIP()
+            }
+        }
+        fileprivate class chol_d: chol {
+            init(size: Int){
+                super.init()
+                self.type = .d
+                if let chold = vsip_chold_create_d(VSIP_TR_LOW, vsip_length(size)){
+                    self.tryVsip = chold
+                } else {
+                    preconditionFailure("Failed to create vsip cholesky object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_chold_destroy_d \(jInit.myId.int32Value)")
+                }
+                vsip_chold_destroy_d(self.vsip)
+                
+            }
+        }
+        fileprivate class chol_f: chol {
+            init(size: Int){
+                super.init()
+                self.type = .f
+                if let chold = vsip_chold_create_f(VSIP_TR_LOW, vsip_length(size)){
+                    self.tryVsip = chold
+                } else {
+                    preconditionFailure("Failed to create vsip cholesky object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_chold_destroy_f \(jInit.myId.int32Value)")
+                }
+                vsip_chold_destroy_f(self.vsip)
+                
+            }
+        }
+        fileprivate class chol_cd: chol {
+            init(size: Int){
+                super.init()
+                self.type = .cd
+                if let chold = vsip_cchold_create_d(VSIP_TR_LOW, vsip_length(size)){
+                    self.tryVsip = chold
+                } else {
+                    preconditionFailure("Failed to create vsip cholesky object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_cchold_destroy_d \(jInit.myId.int32Value)")
+                }
+                vsip_cchold_destroy_d(self.vsip)
+                
+            }
+        }
+        fileprivate class chol_cf: chol {
+            init(size: Int){
+                super.init()
+                self.type = .cf
+                if let chold = vsip_cchold_create_f(VSIP_TR_LOW, vsip_length(size)){
+                    self.tryVsip = chold
+                } else {
+                    preconditionFailure("Failed to create vsip cholesky object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_cchold_destroy_f \(jInit.myId.int32Value)")
+                }
+                vsip_cchold_destroy_f(self.vsip)
+            }
+        }
+        fileprivate let jVsip : chol?
+        init(type: Vsip.Block.Types, size: Int) {
+            self.size = size
+            switch type {
+            case .f:
+                self.jVsip = chol_f(size: size)
+            case .d:
+                self.jVsip = chol_d(size: size)
+            case .cf:
+                self.jVsip = chol_cf(size: size)
+            case .cd:
+                self.jVsip = chol_cd(size: size)
+            default:
+                preconditionFailure ("type \(type) not found for cholesky decomposition")
+            }
+        }
+        public func decompose(_ A: Matrix) -> Int {
+            let t = (self.type, A.type)
+            switch t {
+            case (.f, .f):
+                return Int(vsip_chold_f(self.vsip, A.vsip))
+            case (.d, .d):
+                return Int(vsip_chold_d(self.vsip, A.vsip))
+            case (.cf, .cf):
+                return Int(vsip_cchold_f(self.vsip, A.vsip))
+            case (.cd, .cd):
+                return Int(vsip_cchold_d(self.vsip, A.vsip))
+            default:
+                preconditionFailure("Type \(t) not supported for cholesky decompostion")
+            }
+        }
+        public func solve(_ XB: Matrix) -> Int {
+            let t = (self.type, XB.type)
+            switch t {
+            case (.f, .f):
+                return Int(vsip_cholsol_f(self.vsip, XB.vsip))
+            case (.d, .d):
+                return Int(vsip_cholsol_d(self.vsip, XB.vsip))
+            case (.cf, .cf):
+                return Int(vsip_ccholsol_f(self.vsip, XB.vsip))
+            case (.cd, .cd):
+                return Int(vsip_ccholsol_d(self.vsip, XB.vsip))
+            default:
+                preconditionFailure ("type \(type) not found for cholesky decomposition")
+            }
+        }
+    }
     // MARK: - LU
-    public class LU {
+    public class LUD {
+        var type: Block.Types {
+            return (jVsip?.type)!
+        }
+        fileprivate class lu {
+            var tryVsip : OpaquePointer?
+            var vsip: OpaquePointer {
+                get {
+                    return tryVsip!
+                }
+            }
+            let jInit : JVSIP
+            var type : Block.Types?
+            init(){
+                jInit = JVSIP()
+            }
+        }
+        fileprivate class lu_f: lu{
+            init(_ size: Int){
+                super.init()
+                type = .f
+                if let lud = vsip_lud_create_f(vsip_length(size)){
+                    self.tryVsip = lud
+                } else {
+                    preconditionFailure("Failed to create vsip svd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_lud_destroy_f \(jInit.myId.int32Value)")
+                }
+                vsip_lud_destroy_f(self.vsip)
+            }
+        }
+        fileprivate class lu_d: lu{
+            init(_ size: Int){
+                super.init()
+                type = .d
+                if let lud = vsip_lud_create_d(vsip_length(size)){
+                    self.tryVsip = lud
+                } else {
+                    preconditionFailure("Failed to create vsip svd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_lud_destroy_d \(jInit.myId.int32Value)")
+                }
+                vsip_lud_destroy_d(self.vsip)
+            }
+        }
+        fileprivate class clu_f: lu{
+            init(_ size: Int){
+                super.init()
+                type = .cf
+                if let lud = vsip_clud_create_f(vsip_length(size)){
+                    self.tryVsip = lud
+                } else {
+                    preconditionFailure("Failed to create vsip svd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_clud_destroy_f \(jInit.myId.int32Value)")
+                }
+                vsip_clud_destroy_f(self.vsip)
+            }
+        }
+        fileprivate class clu_d: lu{
+            init(_ size: Int){
+                super.init()
+                type = .cd
+                if let lud = vsip_clud_create_d(vsip_length(size)){
+                    self.tryVsip = lud
+                } else {
+                    preconditionFailure("Failed to create vsip svd object")
+                }
+            }
+            deinit{
+                if _isDebugAssertConfiguration(){
+                    print("vsip_clud_destroy_d \(jInit.myId.int32Value)")
+                }
+                vsip_clud_destroy_d(self.vsip)
+            }
+        }
+        fileprivate let jVsip : lu?
+        fileprivate var vsip: OpaquePointer {
+            get {
+                return (jVsip?.vsip)!
+            }
+        }
+        init(type: Vsip.Block.Types, size: Int) {
+            switch type {
+            case .f:
+                jVsip = lu_f(size)
+            case .d:
+                jVsip = lu_d(size)
+            case .cf:
+                jVsip = clu_f(size)
+            case .cd:
+                jVsip = clu_d(size)
+            default:
+                preconditionFailure("Type \(type) not supported")
+            }
+        }
+        public func decompose(_ A: Matrix) -> Int{
+            let t = (self.type, A.type)
+            switch t{
+            case (.f, .f):
+                return Int(vsip_lud_f(self.vsip, A.vsip))
+            case (.d, .d):
+                return Int(vsip_lud_d(self.vsip, A.vsip))
+            case (.cf, .cf):
+                return Int(vsip_clud_f(self.vsip, A.vsip))
+            case (.cd, .cd):
+                return Int(vsip_clud_d(self.vsip, A.vsip))
+            default:
+                preconditionFailure("Type \(t) not found for lud decompose")
+            }
+        }
+        public func solve(matOp: vsip_mat_op, _ XB: Matrix) -> Int{
+            let t = (matOp, self.type, XB.type)
+            switch t {
+            case (VSIP_MAT_NTRANS,.f,.f):
+                return Int(vsip_lusol_f(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+            case (VSIP_MAT_NTRANS,.d,.d):
+                return Int(vsip_lusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+            case (VSIP_MAT_NTRANS,.cf,.cf):
+                return Int(vsip_clusol_f(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+            case (VSIP_MAT_NTRANS,.cd,.cd):
+                return Int(vsip_clusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))                
+            case (VSIP_MAT_TRANS,.f,.f):
+                return Int(vsip_lusol_f(self.vsip, VSIP_MAT_TRANS, XB.vsip))
+            case (VSIP_MAT_TRANS,.d,.d):
+                return Int(vsip_lusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+            case (VSIP_MAT_HERM,.cf,.cf):
+                return Int(vsip_clusol_f(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+            case (VSIP_MAT_HERM,.cd,.cd):
+                return Int(vsip_clusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+            default:
+                preconditionFailure("Type \(t) not found for lud solve")
+            }
+        }
         
     }
     
@@ -3845,11 +4335,51 @@ public class Vsip {
                 preconditionFailure("Type \(t) not supported for QRD prodq.")
             }
         }
-        public func solveR() {
-            
+        public func solveR(matrixOperator opR: vsip_mat_op, alpha: Scalar, XB: Matrix) -> Int {
+            let t = (opR, XB.type)
+            switch t {
+            case (VSIP_MAT_NTRANS, .f):
+                return Int(vsip_qrdsolr_f(self.vsip, VSIP_MAT_NTRANS, alpha.vsip_f, XB.vsip))
+            case (VSIP_MAT_TRANS, .f):
+                return Int(vsip_qrdsolr_f(self.vsip, VSIP_MAT_TRANS, alpha.vsip_f, XB.vsip))
+            case (VSIP_MAT_NTRANS, .d):
+                return Int(vsip_qrdsolr_d(self.vsip, VSIP_MAT_NTRANS, alpha.vsip_d, XB.vsip))
+            case (VSIP_MAT_TRANS, .f):
+                return Int(vsip_qrdsolr_d(self.vsip, VSIP_MAT_TRANS, alpha.vsip_d, XB.vsip))
+            case (VSIP_MAT_NTRANS, .cf):
+                return Int(vsip_cqrdsolr_f(self.vsip, VSIP_MAT_NTRANS, alpha.vsip_cf, XB.vsip))
+            case (VSIP_MAT_TRANS, .cf):
+                return Int(vsip_cqrdsolr_f(self.vsip, VSIP_MAT_HERM, alpha.vsip_cf, XB.vsip))
+            case (VSIP_MAT_NTRANS, .d):
+                return Int(vsip_cqrdsolr_d(self.vsip, VSIP_MAT_NTRANS, alpha.vsip_cd, XB.vsip))
+            case (VSIP_MAT_TRANS, .f):
+                return Int(vsip_cqrdsolr_d(self.vsip, VSIP_MAT_HERM, alpha.vsip_cd, XB.vsip))
+            default:
+                preconditionFailure("Case \(t) not found for solveR")
+            }
         }
-        public func solveCovariance() {
-            
+        public func solveCovariance(solveProblem prob: vsip_qrd_prob, XB: Matrix) -> Int {
+            let t = (prob, XB.type)
+            switch t {
+            case (VSIP_COV, .f):
+                return Int(vsip_qrsol_f(self.vsip, VSIP_COV, XB.vsip))
+            case (VSIP_LLS, .f):
+                return Int(vsip_qrsol_f(self.vsip, VSIP_LLS, XB.vsip))
+            case (VSIP_COV, .d):
+                return Int(vsip_qrsol_d(self.vsip, VSIP_COV, XB.vsip))
+            case (VSIP_LLS, .d):
+                return Int(vsip_qrsol_d(self.vsip, VSIP_LLS, XB.vsip))
+            case (VSIP_COV, .cf):
+                return Int(vsip_cqrsol_f(self.vsip, VSIP_COV, XB.vsip))
+            case (VSIP_LLS, .cf):
+                return Int(vsip_cqrsol_f(self.vsip, VSIP_LLS, XB.vsip))
+            case (VSIP_COV, .cd):
+                return Int(vsip_cqrsol_d(self.vsip, VSIP_COV, XB.vsip))
+            case (VSIP_LLS, .cd):
+                return Int(vsip_cqrsol_d(self.vsip, VSIP_LLS, XB.vsip))
+            default:
+                preconditionFailure("Case \(t) not found for Covariance/LeastSquare solver")
+            }
         }
         
     }
@@ -4308,10 +4838,8 @@ public class Vsip {
             qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
             print("create Qt")
             let Qt = Q.transview
-            Vsip.prod(matA: Qt, matB: aCopy, matC: R)
+            Vsip.prod(Qt, times: aCopy, resultIn: R)
             return (Q,R)
         }
-        
     }
-    
 }

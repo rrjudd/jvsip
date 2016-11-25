@@ -67,7 +67,7 @@ class SwiftVsipTests: XCTestCase {
         let _ = A.randn(5, portable: true)
         let _ = x.randn(9, portable: true)
         let normA = Vsip.Jvsip.normFro(view: A)
-        Vsip.prod(matA: A, vecB: x, vecC: b)
+        Vsip.prod(A, times: x, resultIn: b)
         print("Matrix A");A.mPrint(fmt)
         print("Known x vector");x.mPrint(fmt)
         print("Calculated b=Ax vector"); b.mPrint(fmt)
@@ -83,17 +83,17 @@ class SwiftVsipTests: XCTestCase {
         print("V");V.mPrint(fmt)
         let USr = U.empty // result of matrix product of U and Singular Vaules
         Vsip.vmmul(vector: sValues, matrix: U, major: VSIP_ROW, output: USr)
-        Vsip.prod(matA: USr, matB: V.transview, matC: Ar)
+        Vsip.prod(USr, times: V.transview, resultIn: Ar)
         print("Result of USV^t"); Ar.mPrint(fmt)
         Vsip.sub(A, subtract: Ar, output: Ar)
         var normChk = Vsip.Jvsip.normFro(view:Ar).reald / normA.reald
         print("normChk: \(normChk)")
-        print("Check USV^t equal input matrix within reasonable bounds")
+        print("Check USV^t equal input matrprix within reasonable bounds")
         XCTAssert( normChk < chk, "Check Failed for equality of USV^t with input matrix within reasonable bounds")
         let xe = x.empty  // x estimate for backsolve
-        Vsip.prod(matA: U.transview, vecB: b, vecC: xe)
+        Vsip.prod(U.transview, times: b, resultIn: xe)
         Vsip.div(numerator: xe, denominator: sValues, quotient: xe)
-        Vsip.prod(matA: V, vecB: xe.copy, vecC: xe)
+        Vsip.prod(V, times: xe.copy, resultIn: xe)
         print("solve for estimate of x from b");xe.mPrint(fmt)
         Vsip.sub(x, subtract: xe, output: xe)
         normChk = Vsip.Jvsip.normFro(view: xe).reald/Vsip.Jvsip.normFro(view: x).reald
@@ -106,7 +106,7 @@ class SwiftVsipTests: XCTestCase {
         let A = Vsip.Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
         v[0] = Vsip.Scalar(2.0); v[1] = Vsip.Scalar(3.0); v[2] = Vsip.Scalar(1.0)
         Vsip.outer(alpha: Vsip.Scalar(1.0), vecX: v, vecY: v, matC: A)
-        let beta = Vsip.Scalar(2.0 / Vsip.dot(vecX: v, vecY: v).reald)
+        let beta = Vsip.Scalar(2.0 / Vsip.dot(product: v, with: v).reald)
         Vsip.mul(beta.reald, A, output: A)
         let P = A.empty
         P.fill(0.0)
@@ -115,7 +115,7 @@ class SwiftVsipTests: XCTestCase {
         print(beta.reald)
         A.mPrint("4.3")
         P.mPrint("4.3")
-        Vsip.prod(matA: P, matB: P, matC: A)
+        Vsip.prod(P, times: P, resultIn: A)
         A.mPrint("4.3")
     }
     func testQrd(){
@@ -133,7 +133,7 @@ class SwiftVsipTests: XCTestCase {
         let Q = qr.0
          let R = qr.1
          // Calculate Ae
-         Vsip.prod(matA: Q, matB: R, matC: Ae)
+         Vsip.prod(Q, times: R, resultIn: Ae)
          // print original and estimate
          A.mPrint("5.3")
          Ae.mPrint("5.3")
