@@ -222,6 +222,36 @@ public class Vsip {
                 preconditionFailure("Vsip Scalar types (\(left.type), \(right.type)) not supported for *")
             }
         }
+        public static func - (left: Scalar, right: Scalar) -> Scalar {
+            switch (left.type, right.type) {
+            case (.f, .f):
+                return Scalar( left.realf - right.realf)
+            case (.d, .d):
+                return Scalar( left.reald - right.reald)
+            case (.cf, .f):
+                return Scalar(vsip_cmplx_f(left.realf - right.realf, left.imagf))
+            case (.cd, .d):
+                return Scalar(vsip_cmplx_d(left.reald - right.reald, left.imagd))
+            case (.f, .cf):
+                return Scalar(vsip_cmplx_f(left.realf - right.realf, -right.imagf))
+            case (.d, .cd):
+                return Scalar(vsip_cmplx_d(left.reald - right.reald, -right.imagd))
+            case(.cf, .cf):
+                return Scalar(vsip_cmplx_f(left.realf - right.realf, left.imagf - right.imagf))
+            case(.cd, .cd):
+                return Scalar(vsip_cmplx_d(left.reald - right.reald, left.imagd - right.imagd))
+            case(.f, .i):
+                return Scalar( left.realf - right.realf)
+            case(.i, .f):
+                return Scalar( left.realf - right.realf)
+            case(.d, .i):
+                return Scalar( left.reald - right.reald)
+            case(.i, .d):
+                return Scalar( left.reald - right.reald)
+            default:
+                preconditionFailure("Vsip Scalar types (\(left.type), \(right.type)) not supported for - ")
+            }
+        }
         public var sqrt: Scalar {
             switch self.type {
             case .f:
@@ -1275,6 +1305,16 @@ public class Vsip {
                 self.fill(value)
             }
         }
+        public static func + (left: Vector, right: Vector) -> Vector {
+            let retval = left.empty
+            Vsip.add(left, right, output: retval)
+            return retval
+        }
+        public static func - (left: Vector, right: Vector) -> Vector {
+            let retval = left.empty
+            Vsip.sub(left, subtract: right, output: retval)
+            return retval
+        }
         // create empty vector of same type and view size. New data space created
         public var empty: Vector {
             return Vector(length: self.length, type: self.type)
@@ -1994,6 +2034,16 @@ public class Vsip {
             set(value){
                 self.fill(value)
             }
+        }
+        public static func + (left: Matrix, right: Matrix) -> Matrix {
+            let retval = left.empty
+            Vsip.add(left, right, output: retval)
+            return retval
+        }
+        public static func - (left: Matrix, right: Matrix) -> Matrix {
+            let retval = left.empty
+            Vsip.sub(left, subtract: right, output: retval)
+            return retval
         }
         
         // MARK: Matrix Data Generators
@@ -3171,7 +3221,7 @@ public class Vsip {
         }
     }
     public static func mul(_ scalar: Double, _ vector: Vector, output: Vector){
-            Vsip.mul(Scalar(scalar), vector, output: output)
+        Vsip.mul(Scalar(scalar), vector, output: output)
     }
     public static func mul(_ scalar: Float, _ vector: Vector, output: Vector){
         Vsip.mul(Scalar(scalar), vector, output: output)
@@ -3230,8 +3280,10 @@ public class Vsip {
             vsip_rscmmul_d(scalar.vsip_d, matrix.vsip, output.vsip)
         case (.cd, .cd, .cd):
             vsip_csmmul_d(scalar.vsip_cd, matrix.vsip, output.vsip)
+        case (.cf, .cf, .cf):
+            vsip_csmmul_f(scalar.vsip_cf, matrix.vsip, output.vsip)
         default:
-            preconditionFailure("Argument string not supported for mmul")
+            preconditionFailure("Argument string not supported for mul")
         }
         
     }
@@ -4118,15 +4170,15 @@ public class Vsip {
             case (VSIP_MAT_NTRANS,.cf,.cf):
                 return Int(vsip_clusol_f(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
             case (VSIP_MAT_NTRANS,.cd,.cd):
-                return Int(vsip_clusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))                
+                return Int(vsip_clusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
             case (VSIP_MAT_TRANS,.f,.f):
                 return Int(vsip_lusol_f(self.vsip, VSIP_MAT_TRANS, XB.vsip))
             case (VSIP_MAT_TRANS,.d,.d):
-                return Int(vsip_lusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+                return Int(vsip_lusol_d(self.vsip, VSIP_MAT_TRANS, XB.vsip))
             case (VSIP_MAT_HERM,.cf,.cf):
-                return Int(vsip_clusol_f(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+                return Int(vsip_clusol_f(self.vsip, VSIP_MAT_HERM, XB.vsip))
             case (VSIP_MAT_HERM,.cd,.cd):
-                return Int(vsip_clusol_d(self.vsip, VSIP_MAT_NTRANS, XB.vsip))
+                return Int(vsip_clusol_d(self.vsip, VSIP_MAT_HERM, XB.vsip))
             default:
                 preconditionFailure("Type \(t) not found for lud solve")
             }
