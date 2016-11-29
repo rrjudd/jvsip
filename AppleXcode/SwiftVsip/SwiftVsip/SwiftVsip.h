@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <vsip/vsip.h>
+#import <stdio.h>
 //! Project version number for SwiftVsip.
 FOUNDATION_EXPORT double SwiftVsipVersionNumber;
 
