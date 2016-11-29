@@ -13,7 +13,7 @@
 #define _VSIP_H
 #define JVSIP_VSIPL 1
 #define JVSIP_VERSION_MAJOR 1.0
-#define JVSIP_VERSION_MINOR 0.5.0
+#define JVSIP_VERSION_MINOR 0.5
 #include<stdio.h>
 #include<stdlib.h>
 #include<float.h>
