@@ -10,9 +10,8 @@
 		0612636B1DA8023500AA48EA /* SwiftVsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 061263611DA8023500AA48EA /* SwiftVsip.framework */; };
 		061263701DA8023500AA48EA /* SwiftVsipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612636F1DA8023500AA48EA /* SwiftVsipTests.swift */; };
 		061263721DA8023500AA48EA /* SwiftVsip.h in Headers */ = {isa = PBXBuildFile; fileRef = 061263641DA8023500AA48EA /* SwiftVsip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0612637D1DA8033A00AA48EA /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0612637C1DA8033A00AA48EA /* vsip.framework */; };
 		0612638B1DA8039200AA48EA /* Vsip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061263841DA8039200AA48EA /* Vsip.swift */; };
-		0612638C1DA8070800AA48EA /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0612637C1DA8033A00AA48EA /* vsip.framework */; };
+		061AFE421DF31ECD002440AB /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 061AFE411DF31ECD002440AB /* vsip.framework */; };
 		062511001DE65DC000659755 /* solverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062510FE1DE5ED1600659755 /* solverTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +32,8 @@
 		0612636A1DA8023500AA48EA /* SwiftVsipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftVsipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0612636F1DA8023500AA48EA /* SwiftVsipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVsipTests.swift; sourceTree = "<group>"; };
 		061263711DA8023500AA48EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0612637C1DA8033A00AA48EA /* vsip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vsip.framework; path = ../../../../../../../Library/Frameworks/vsip.framework; sourceTree = "<group>"; };
 		061263841DA8039200AA48EA /* Vsip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vsip.swift; sourceTree = "<group>"; };
+		061AFE411DF31ECD002440AB /* vsip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vsip.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/JVSwift-fbjswltwaxosubcifjwyvngruttw/Build/Products/Debug/vsip.framework"; sourceTree = "<group>"; };
 		062510FE1DE5ED1600659755 /* solverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = solverTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -43,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0612637D1DA8033A00AA48EA /* vsip.framework in Frameworks */,
+				061AFE421DF31ECD002440AB /* vsip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +50,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0612638C1DA8070800AA48EA /* vsip.framework in Frameworks */,
 				0612636B1DA8023500AA48EA /* SwiftVsip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,7 +99,7 @@
 		0612637B1DA8033900AA48EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0612637C1DA8033A00AA48EA /* vsip.framework */,
+				061AFE411DF31ECD002440AB /* vsip.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
