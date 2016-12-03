@@ -16,7 +16,7 @@ class SwiftVsipTests: XCTestCase {
         v.mPrint("4.3")
         v.real.mPrint("4.3")
         v.imag.mPrint("4.3")
-        Vsip.add(v.real, v.imag, output: v.real)
+        Vsip.add(v.real, v.imag, resultsIn: v.real)
         v.mPrint("4.3")
         v.randn(9).mPrint("4.3")
         v = Vsip.Vector(length: 11, type: .cf)
@@ -28,7 +28,7 @@ class SwiftVsipTests: XCTestCase {
         m.mPrint("4.3")
         m.real.mPrint("4.3")
         m.imag.mPrint("4.3")
-        Vsip.add(m.real, m.imag, output: m.real)
+        Vsip.add(m.real, m.imag, resultsIn: m.real)
         m.mPrint("4.3")
         m.randn(9, portable: true).mPrint("4.3")
         m = Vsip.Matrix(columnLength: 5, rowLength: 3, type: .d, major: VSIP_COL)
@@ -67,7 +67,7 @@ class SwiftVsipTests: XCTestCase {
         let _ = A.randn(5, portable: true)
         let _ = x.randn(9, portable: true)
         let normA = Vsip.Jvsip.normFro(view: A)
-        Vsip.prod(A, times: x, resultIn: b)
+        Vsip.prod(A, times: x, resultsIn: b)
         print("Matrix A");A.mPrint(fmt)
         print("Known x vector");x.mPrint(fmt)
         print("Calculated b=Ax vector"); b.mPrint(fmt)
@@ -82,20 +82,20 @@ class SwiftVsipTests: XCTestCase {
         print("Singular Values");sValues.mPrint(fmt)
         print("V");V.mPrint(fmt)
         let USr = U.empty // result of matrix product of U and Singular Vaules
-        Vsip.vmmul(vector: sValues, matrix: U, major: VSIP_ROW, output: USr)
-        Vsip.prod(USr, times: V.transview, resultIn: Ar)
+        Vsip.vmmul(vector: sValues, matrix: U, major: VSIP_ROW, resultsIn: USr)
+        Vsip.prod(USr, prod: V.transview, resultsIn: Ar)
         print("Result of USV^t"); Ar.mPrint(fmt)
-        Vsip.sub(A, subtract: Ar, output: Ar)
+        Vsip.sub(A, subtract: Ar, resultsIn: Ar)
         var normChk = Vsip.Jvsip.normFro(view:Ar).reald / normA.reald
         print("normChk: \(normChk)")
         print("Check USV^t equal input matrprix within reasonable bounds")
         XCTAssert( normChk < chk, "Check Failed for equality of USV^t with input matrix within reasonable bounds")
         let xe = x.empty  // x estimate for backsolve
-        Vsip.prod(U.transview, times: b, resultIn: xe)
+        Vsip.prod(U.transview, times: b, resultsIn: xe)
         Vsip.div(numerator: xe, denominator: sValues, quotient: xe)
-        Vsip.prod(V, times: xe.copy, resultIn: xe)
+        Vsip.prod(V, times: xe.copy, resultsIn: xe)
         print("solve for estimate of x from b");xe.mPrint(fmt)
-        Vsip.sub(x, subtract: xe, output: xe)
+        Vsip.sub(x, subtract: xe, resultsIn: xe)
         normChk = Vsip.Jvsip.normFro(view: xe).reald/Vsip.Jvsip.normFro(view: x).reald
         print("Check estimate of x equal x within reasonable bounds (for Ax=b then x_est = V S^-1 U^T b)")
         XCTAssert( normChk < chk, "Check Failed for (in Ax=b) estimate of x equal to x within reasonable bounds")
@@ -105,22 +105,23 @@ class SwiftVsipTests: XCTestCase {
         let v = Vsip.Vector(length: n, type: .d)
         let A = Vsip.Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
         let I = A.empty
-        A.fill(0.0)
-        let _ = I.diagview.fill(1.0)
+        I.fill(0.0)
+        let Id = I.diagview
+        Id.fill(1.0)
         v[0] = Vsip.Scalar(2.0); v[1] = Vsip.Scalar(3.0); v[2] = Vsip.Scalar(1.0)
         Vsip.outer(alpha: Vsip.Scalar(1.0), vecX: v, vecY: v, matC: A)
         let beta = Vsip.Scalar(2.0 / Vsip.dot(product: v, with: v).reald)
-        Vsip.mul(beta.reald, A, output: A)
+        Vsip.mul(beta.reald, A, resultsIn: A)
         let P = A.empty
         P.fill(0.0)
         P.diagview.fill(1.0)
-        Vsip.sub(P, subtract: A, output: P)
+        Vsip.sub(P, subtract: A, resultsIn: P)
         print(beta.reald)
         A.mPrint("4.3")
         P.mPrint("4.3")
-        Vsip.prod(P, times: P, resultIn: A)
+        Vsip.prod(P, prod: P, resultsIn: A)
         A.mPrint("4.3")
-        let chk = Vsip.Jvsip.normFro(view: (I - A)).reald
+        let chk = (I-A).normFro //Vsip.Jvsip.normFro(view: tmp).reald
         print("chk is \(chk)")
         XCTAssert(chk < 1E-10)
     }
@@ -139,7 +140,7 @@ class SwiftVsipTests: XCTestCase {
         let Q = qr.0
          let R = qr.1
          // Calculate Ae
-         Vsip.prod(Q, times: R, resultIn: Ae)
+         Vsip.prod(Q, prod: R, resultsIn: Ae)
          // print original and estimate
          A.mPrint("5.3")
          Ae.mPrint("5.3")
@@ -222,7 +223,6 @@ class SwiftVsipTests: XCTestCase {
         let chk_nt = Vsip.Matrix(columnLength: 3,rowLength: 3, type: .cf, major: VSIP_COL)
         let chk_nt_r = chk_nt.real
         let chk_tn = Vsip.Matrix(columnLength: 5,rowLength: 5, type: .cf, major: VSIP_ROW)
-        let chk_tn_r = chk_tn.real
         Vsip.copy(from: au, to: a)
         Vsip.copy(from: bu, to: b)
         cnt.fill(Vsip.Scalar(vsip_cmplx_f(1.0,0.5)))
@@ -237,19 +237,19 @@ class SwiftVsipTests: XCTestCase {
         print("on input matrix c = "); cnt.mPrint("6.4")
         // for manual calculation
         let cexact = cnt.copy
-        Vsip.mul(beta, cexact, output: cexact)
+        Vsip.mul(beta, cexact, resultsIn: cexact)
         let aexact = a.copy
-        Vsip.mul(alpha, aexact, output: aexact)
+        Vsip.mul(alpha, aexact, resultsIn: aexact)
         let bexact = b.transview.copy
-        Vsip.herm(b,complexOuputMatrix: bexact)
+        Vsip.herm(b, resultsIn: bexact)
         let tmp = cnt.empty
-        Vsip.prod(aexact, times: bexact, resultIn: tmp)
-        Vsip.add(cexact, tmp, output: cexact)
+        Vsip.prod(aexact, prod: bexact, resultsIn: tmp)
+        Vsip.add(cexact, tmp, resultsIn: cexact)
         // cexact has result of gemp as manual calculation
         Vsip.gemp(alpha: alpha,matA: a,opA: VSIP_MAT_NTRANS,matB: b,opB: VSIP_MAT_HERM,beta: beta,matC: cnt);
-        print("on output matrix c = "); cnt.mPrint("6.4")
+        print("on resultsIn matrix c = "); cnt.mPrint("6.4")
         print("right answer = "); ans_nh.mPrint("6.4")
-        Vsip.sub(cnt,subtract: ans_nh, output: chk_nt)  //; vsip_cmmag_f(chk_nt,chk_nt_r); vsip_mclip_f(chk_nt_r,.0001,.0001,0,1,chk_nt_r);
+        Vsip.sub(cnt,subtract: ans_nh, resultsIn: chk_nt)
         var chk = Vsip.Jvsip.normFro(view: chk_nt_r).reald
         print(chk); fflush(stdout)
         chk > 0.5 ? print("error\n") : print("correct\n")
@@ -259,34 +259,44 @@ class SwiftVsipTests: XCTestCase {
         
         /* test hn */
         print("\nvsip_cgemp_f(alpha,a,VSIP_MAT_HERM,b,VSIP_MAT_NTRANS,beta,c)\n");
-        print("alpha = (%f %+fi)\n",vsip_real_f(alpha),vsip_imag_f(alpha));
-        print("matrix a = ");VU_cmprintm_f("6.4",a);
-        print("matrix b = ");VU_cmprintm_f("6.4",b);
-        print("beta = (%f %+fi)\n",vsip_real_f(beta),vsip_imag_f(beta));
-        print("on input matrix c = ");VU_cmprintm_f("6.4",ctn);
-        Vsip.gemp(alpha,a,VSIP_MAT_HERM,b,VSIP_MAT_NTRANS,beta,ctn);
-        print("on output matrix c = ");VU_cmprintm_f("6.4",ctn);
-        print("right answer = ");VU_cmprintm_f("6.4",ans_hn);
-        vsip_cmsub_f(ctn,ans_hn,chk_tn); vsip_cmmag_f(chk_tn,chk_tn_r); vsip_mclip_f(chk_tn_r,.0001,.0001,0,1,chk_tn_r);
-        if(vsip_msumval_f(chk_tn_r) > .5)
-        print("error\n");
-        else
-        print("correct\n");
+        print("alpha = " + alpha.string(format: "4.2"))
+        print("matrix a = ");a.mPrint("6.4")
+        print("matrix b = ");b.mPrint("6.4")
+        print("beta = " + beta.string(format: "4.2"))
+        print("on input matrix c = ");ctn.mPrint("6.4")
+        Vsip.gemp(alpha: alpha,matA: a,opA: VSIP_MAT_HERM,matB: b,opB: VSIP_MAT_NTRANS,beta: beta,matC: ctn);
+        print("on results In matrix c = ");ctn.mPrint("6.4")
+        print("right answer = ");ans_hn.mPrint("6.4")
+        Vsip.sub(ctn, subtract: ans_hn, resultsIn: chk_tn)
+        chk = Vsip.Jvsip.normFro(view: chk_tn).reald
+        if chk > 1E-4 {
+            print("error\n");
+        } else {
+            print("correct\n");
+        }
         
         /* test tn */
         print("\nvsip_cgemp_f(alpha,a,VSIP_MAT_TRANS,b,VSIP_MAT_NTRANS,beta,c)\n");
-        print("alpha = (%f %+fi)\n",vsip_real_f(alpha),vsip_imag_f(alpha));
-        print("matrix a = ");VU_cmprintm_f("6.4",a);
-        print("matrix b = ");VU_cmprintm_f("6.4",b);
-        print("beta = (%f %+fi)\n",vsip_real_f(beta),vsip_imag_f(beta));
-        print("on input matrix c = ");VU_cmprintm_f("6.4",ctn);
-        Vsip.gemp(alpha,a,VSIP_MAT_TRANS,b,VSIP_MAT_NTRANS,beta,ctn);
-        print("on output matrix c = ");VU_cmprintm_f("6.4",ctn);
-        print("right answer = ");VU_cmprintm_f("6.4",ans_tn);
-        vsip_cmsub_f(ctn,ans_tn,chk_tn); vsip_cmmag_f(chk_tn,chk_tn_r); vsip_mclip_f(chk_tn_r,.0001,.0001,0,1,chk_tn_r);
-        if(vsip_msumval_f(chk_tn_r) > .5)
-        print("error\n");
-        else
-        print("correct\n");
+        print("alpha = " + alpha.string(format: "6.4"))
+        print("matrix a = ");a.mPrint("6.4")
+        print("matrix b = ");b.mPrint("6.4")
+        print("beta = " + beta.string(format: "6.4"))
+        print("on input matrix c = ");ctn.mPrint("6.4")
+        Vsip.gemp(alpha: alpha,matA: a,opA: VSIP_MAT_TRANS,matB: b,opB: VSIP_MAT_NTRANS,beta: beta,matC: ctn);
+        print("on results In matrix c = ");ctn.mPrint("6.4")
+        print("right answer = "); ans_tn.mPrint("6.4")
+        Vsip.sub(ctn, subtract: ans_tn, resultsIn: chk_tn)
+        chk = Vsip.Jvsip.normFro(view: chk_tn).reald
+        if chk > 1E-4 {
+            print("error\n")
+        } else {
+            print("correct\n")
+        }
+    }
+    func testPut() {
+        let v = Vsip.Vector(length: 10, type: .d)
+        v.fill(0.0)
+        v.put(1.0,1.3,1.4,1.2,0.9,3.9,5.6)
+        v.mPrint("3.2")
     }
 }
