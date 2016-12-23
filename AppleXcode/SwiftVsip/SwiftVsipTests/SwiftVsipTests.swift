@@ -294,6 +294,7 @@ class SwiftVsipTests: XCTestCase {
         }
     }
     func testPut() {
+        print("Testing Put")
         let v = Vsip.Vector(length: 10, type: .d)
         v.fill(0.0)
         v.put(1.0,1.3,1.4,1.2,0.9,3.9,5.6)

@@ -802,7 +802,7 @@ public class Vsip {
         }
         let block: Block
         let shape : Shape
-        var type: Block.Types{
+        public var type: Block.Types{
             return block.type
         }
         let jInit : JVSIP
@@ -3509,10 +3509,10 @@ public class Vsip {
     }
     
     // MARK: - Linear Algebra Matrix and Vector Operations
-    public static func herm(_ complexInputMatrix: Matrix, resultsIn: Matrix){
+    public static func herm(_ complexInputMatrix: Matrix, output: Matrix){
         let vsipA = complexInputMatrix.vsip
-        let vsipB = resultsIn.vsip
-        let t = (complexInputMatrix.type, resultsIn.type)
+        let vsipB = output.vsip
+        let t = (complexInputMatrix.type, output.type)
         switch t {
         case (.cf, .cf):
             vsip_cmherm_f(vsipA, vsipB)
@@ -4525,7 +4525,7 @@ public class Vsip {
                     print("vsip_csvd_destroy_cd \(jInit.myId.int32Value)")
                     print("svd s destroy")
                 }
-                vsip_svd_destroy_d(self.vsip)
+                vsip_csvd_destroy_d(self.vsip)
                 vsip_valldestroy_d(self.s)
             }
         }
@@ -4580,7 +4580,15 @@ public class Vsip {
             self.amSet = true
         }
         public func decompose(_ matrix: Matrix) -> Vector {
-            let v = Vector(length: self.n, type: self.type)
+            let v: Vsip.Vector
+            switch matrix.type {
+            case .cd, .d:
+                v = Vector(length: self.n, type: .d)
+            case .cf, .f:
+                v = Vector(length: self.n, type: .f)
+            default:
+                preconditionFailure("Case not found for decompose")
+            }
             self.decompose(matrix, singularValues: v)
             return v
         }

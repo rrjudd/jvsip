@@ -22,4 +22,10 @@
          location = "group:vsip.xcodeproj">
       </FileRef>
    </Group>
+   <FileRef
+      location = "group:TryIt.playground">
+   </FileRef>
+   <FileRef
+      location = "group:SwiftAccelerate.playground">
+   </FileRef>
 </Workspace>
