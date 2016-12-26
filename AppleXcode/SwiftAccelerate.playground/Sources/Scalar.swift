@@ -63,7 +63,7 @@ public struct Scalar {
         self.value.1 = NSNumber(value: value)
         self.value.2 = nil
     }
-    public init(_ value: Int){
+    public init(_ value: Int32){
         self.value.0 = .i
         self.value.1 = NSNumber(value: value)
         self.value.2 = nil
@@ -101,14 +101,26 @@ public struct Scalar {
             return Double(0.0)
         }
     }
-    public var int: Int{
-        return Int((value.1?.intValue)!)
+    public var int: Int32{
+        return Int32((value.1?.intValue)!)
     }
-    public var row: Int{
-        return Int((value.1?.intValue)!)
+    public var rowIndex: UInt32{
+        return UInt32((value.1?.intValue)!)
     }
-    public var col: Int{
-        return Int((value.2?.intValue)!)
+    public var colIndex: UInt32{
+        return UInt32((value.2?.intValue)!)
+    }
+    public var index: UInt32{
+        return UInt32((value.1?.intValue)!)
+    }
+    public var length: UInt32{
+        return UInt32((value.1?.intValue)!)
+    }
+    public var offset: UInt32{
+        return self.length
+    }
+    public var stride: Int32{
+        return self.int
     }
     public var cmplxf: DSPComplex {
         return DSPComplex(real: self.realf, imag: self.imagf)
@@ -423,6 +435,20 @@ public struct Scalar {
         default:
             preconditionFailure("sqrt not supported for type \(self.type)")
         }
+    }
+    public var mag: Scalar {
+        switch self.type {
+        case .d:
+            return Scalar(Foundation.fabs(self.reald))
+        case .f:
+            return Scalar(Foundation.fabsf(self.realf))
+        case .cf:
+            return Scalar.cmagf(value: self)
+        case .cd:
+            return Scalar.cmagd(value: self)
+        case .i:
+            return Scalar((self.int > 0 ? self.int : -self.int))
+       }
     }
     public func string(format fmt: String) -> String {
         return scalarString(formatFmt(fmt), value:self)

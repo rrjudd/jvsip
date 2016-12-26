@@ -1,59 +1,94 @@
+//: Blocks are a data storage abstraction. We support Float, Double (real and complex) and Int blocks.
+//: Complex blocks are structures made up of two real Blocks. This is a split storage format.
+//: Real blocks are classes to allow for deinit and ARC to free memory.
+
 import Foundation
 import Accelerate
+
+// data types; for this implementation everything is done dynamically
 public enum BlockTypes: String {
     case f, cf, d, cd, i
 }
 fileprivate class DataDouble {
-    let dta: UnsafeMutablePointer<Double>
+    let dta: UnsafeRawPointer
     let length: Int
     let derived: Bool
     init(length: Int){
         self.length = length
         self.derived = false
-        self.dta = UnsafeMutablePointer<Double>.allocate(capacity: length)
-        self.dta.initialize(to: 0.0)
+        let dta = UnsafeMutablePointer<Double>.allocate(capacity: length)
+        dta.initialize(to: 0.0, count: length )
+        self.dta = UnsafeRawPointer(dta)
     }
-    init(data: UnsafeMutablePointer<Double>, length: Int){
+    init(data: UnsafeRawPointer, length: Int){
         self.length = length
         self.dta = data
         self.derived = true
     }
     deinit {
         if !self.derived {
-            self.dta.deinitialize(count: self.length)
-            self.dta.deallocate(capacity: self.length)
+            let dta = UnsafeMutablePointer<Double>(mutating: self.dta.assumingMemoryBound(to: Double.self))
+            dta.deinitialize(count: self.length)
+            dta.deallocate(capacity: self.length)
         }
     }
 }
+fileprivate class DataFloat {
+    let dta: UnsafeRawPointer
+    let length: Int
+    let derived: Bool
+    init(length: Int){
+        self.length = length
+        self.derived = false
+        let dta = UnsafeMutablePointer<Float>.allocate(capacity: length)
+        dta.initialize(to: 0.0, count: length )
+        self.dta = UnsafeRawPointer(dta)
+    }
+    init(data: UnsafeRawPointer, length: Int){
+        self.length = length
+        self.dta = data
+        self.derived = true
+    }
+    deinit {
+        if !self.derived {
+            let dta = UnsafeMutablePointer<Float>(mutating: self.dta.assumingMemoryBound(to: Float.self))
+            dta.deinitialize(count: self.length)
+            dta.deallocate(capacity: self.length)
+        }
+    }
+}
+fileprivate class DataInt32 {
+    let dta: UnsafeRawPointer
+    let length: Int
+    let derived: Bool
+    init(length: Int){
+        self.length = length
+        self.derived = false
+        let dta = UnsafeMutablePointer<Int32>.allocate(capacity: length)
+        dta.initialize(to: 0, count: length )
+        self.dta = UnsafeRawPointer(dta)
+    }
+    init(data: UnsafeRawPointer, length: Int){
+        self.length = length
+        self.dta = data
+        self.derived = true
+    }
+    deinit {
+        if !self.derived {
+            let dta = UnsafeMutablePointer<Int32>(mutating: self.dta.assumingMemoryBound(to: Int32.self))
+            dta.deinitialize(count: self.length)
+            dta.deallocate(capacity: self.length)
+        }
+    }
+    
+}
+
 fileprivate struct DataComplexDouble {
     let dtaReal: DataDouble
     let dtaImag: DataDouble
     init(length: Int){
         self.dtaReal = DataDouble(length: length)
         self.dtaImag = DataDouble(length: length)
-    }
-}
-
-fileprivate class DataFloat {
-    let dta: UnsafeMutablePointer<Float>
-    let length: Int
-    let derived: Bool
-    init(length: Int){
-        self.length = length
-        self.derived = false
-        self.dta = UnsafeMutablePointer<Float>.allocate(capacity: length)
-        self.dta.initialize(to: Float(0.0))
-    }
-    init(data: UnsafeMutablePointer<Float>, length: Int){
-        self.length = length
-        self.dta = data
-        self.derived = true
-    }
-    deinit {
-        if !self.derived {
-            self.dta.deinitialize(count: self.length)
-            self.dta.deallocate(capacity: self.length)
-        }
     }
 }
 fileprivate struct DataComplexFloat {
@@ -65,40 +100,44 @@ fileprivate struct DataComplexFloat {
     }
 }
 
-fileprivate class DataInt {
-    let dta: UnsafeMutablePointer<Int>
-    let length: Int
-    init(length: Int){
-        self.length = length
-        self.dta = UnsafeMutablePointer<Int>.allocate(capacity: length)
-        self.dta.initialize(to: 0)
-    }
-    deinit {
-        self.dta.deinitialize(count: self.length)
-        self.dta.deallocate(capacity: self.length)
-    }
-}
+
 public struct Block {
     public let count: Int
-    var dta: Any
+    public var dta: UnsafeRawPointer?
+    public var imagDta: UnsafeRawPointer?
     public let type: BlockTypes
+    let derived: Bool
+    let dtaObj: Any //need to retain data object so ARC does not collect it
     public init(length: Int, type: BlockTypes){
         self.count = length
+        self.derived = false
         switch type{
         case .f:
-            self.dta = DataDouble(length: length)
+            let dta = DataFloat(length: length)
+            self.dtaObj = dta
+            self.dta = dta.dta
             self.type = type
         case .cf:
-            self.dta = DataComplexDouble(length: length)
+            let dta = DataComplexFloat(length: length)
+            self.dtaObj = dta
+            self.dta = dta.dtaReal.dta
+            self.imagDta = dta.dtaImag.dta
             self.type = type
         case .d:
-            self.dta = DataDouble(length: length)
+            let dta = DataDouble(length: length)
+            self.dtaObj = dta
+            self.dta = dta.dta
             self.type = type
         case .cd:
-            self.dta = DataComplexDouble(length: length)
+            let dta = DataComplexDouble(length: length)
+            self.dtaObj = dta
+            self.dta = dta.dtaReal.dta
+            self.imagDta = dta.dtaImag.dta
             self.type = type
         case .i:
-            self.dta = DataInt(length: length)
+            let dta = DataInt32(length: length)
+            self.dtaObj = dta
+            self.dta = dta.dta
             self.type = type
         }
     }
@@ -106,43 +145,48 @@ public struct Block {
         get {
             switch self.type {
             case .f:
-                let dta = self.dta as! DataFloat
-                return Scalar((dta.dta + index).pointee)
+                let dta = UnsafeMutablePointer<Float>(mutating: self.dta?.assumingMemoryBound(to: Float.self))
+                return Scalar((dta! + index).pointee)
             case .d:
-                let dta = self.dta as! DataDouble
-                return Scalar((dta.dta + index).pointee)
+                let dta = UnsafeMutablePointer<Double>(mutating: self.dta?.assumingMemoryBound(to: Double.self))
+                return Scalar((dta! + index).pointee)
             case .cf:
-                let dta = self.dta as! DataComplexFloat
-                return Scalar(DSPComplex(real: (dta.dtaReal.dta + index).pointee,
-                                         imag: (dta.dtaImag.dta + index).pointee))
+                let dtaReal = UnsafeMutablePointer<Float>(mutating: self.dta?.assumingMemoryBound(to: Float.self))
+                let dtaImag = UnsafeMutablePointer<Float>(mutating: self.imagDta?.assumingMemoryBound(to: Float.self))
+                return Scalar(DSPComplex(real: (dtaReal! + index).pointee,
+                                         imag: (dtaImag! + index).pointee))
             case .cd:
-                let dta = self.dta as! DataComplexDouble
-                return Scalar(DSPDoubleComplex(real: (dta.dtaReal.dta + index).pointee,
-                                               imag: (dta.dtaImag.dta + index).pointee))
+                let dtaReal = UnsafeMutablePointer<Double>(mutating: self.dta?.assumingMemoryBound(to: Double.self))
+                let dtaImag = UnsafeMutablePointer<Double>(mutating: self.imagDta?.assumingMemoryBound(to: Double.self))
+                return Scalar(DSPDoubleComplex(real: (dtaReal! + index).pointee, imag: (dtaImag! + index).pointee))
             case .i:
-                let dta = self.dta as! DataInt
-                return Scalar((dta.dta + index).pointee)
+                let dta = UnsafeMutablePointer<Int32>(mutating: self.dta?.assumingMemoryBound(to: Int32.self))
+                return Scalar((dta! + index).pointee)
             }
         }
         set(value) {
             switch self.type {
             case .f:
-                let dta = self.dta as! DataFloat
-                (dta.dta + index).pointee = value.realf
+                let dta = UnsafeMutablePointer<Float>(mutating: self.dta?.assumingMemoryBound(to: Float.self))
+                (dta! + index).pointee = value.realf
             case .d:
-                let dta = self.dta as! DataDouble
-                (dta.dta + index).pointee = value.reald
+                let dta = UnsafeMutablePointer<Double>(mutating: self.dta?.assumingMemoryBound(to: Double.self))
+                (dta! + index).pointee = value.reald
+
             case .cf:
-                let dta = self.dta as! DataComplexFloat
-                (dta.dtaReal.dta + index).pointee = value.realf
-                (dta.dtaImag.dta + index).pointee = value.imagf
+                let dtaReal = UnsafeMutablePointer<Float>(mutating: self.dta?.assumingMemoryBound(to: Float.self))
+                let dtaImag = UnsafeMutablePointer<Float>(mutating: self.imagDta?.assumingMemoryBound(to: Float.self))
+                (dtaReal! + index).pointee = value.realf
+                (dtaImag! + index).pointee = value.imagf
             case .cd:
-                let dta = self.dta as! DataComplexDouble
-                (dta.dtaReal.dta + index).pointee = value.reald
-                (dta.dtaImag.dta + index).pointee = value.imagd
+                let dtaReal = UnsafeMutablePointer<Double>(mutating: self.dta?.assumingMemoryBound(to: Double.self))
+                let dtaImag = UnsafeMutablePointer<Double>(mutating: self.imagDta?.assumingMemoryBound(to: Double.self))
+                (dtaReal! + index).pointee = value.reald
+                (dtaImag! + index).pointee = value.imagd
             case .i:
-                let dta = self.dta as! DataInt
-                (dta.dta + index).pointee = value.int
+                let dta = UnsafeMutablePointer<Int32>(mutating: self.dta?.assumingMemoryBound(to: Int32.self))
+                (dta! + index).pointee = value.int
+
             }
         }
     }

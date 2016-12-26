@@ -9,7 +9,7 @@
 import Cocoa
 import vsip
 
-public class Vsip {
+public final class Vsip {
     fileprivate static func sizeEqual(_ check: Vector, against: Vector) -> Bool{
         return check.length == against.length
     }
