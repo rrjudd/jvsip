@@ -1,10 +1,16 @@
 //: Playground - noun: a place where people can play
 
-import Foundation
+import Cocoa
 import vsip
 
+let ump = UnsafeMutablePointer<Any>.allocate(capacity: 10)
+ump.initialize(to: Int(0))
+
+let b = UnsafeMutablePointer<CGRect>.allocate(capacity: 1)
+b.initialize(to: CGRect())
+
 //: Run some C VSIPL code
-/*print("A C VSIPL ramp")
+print("A C VSIPL ramp")
 let vsipInit = vsip_init(nil)
 let v = vsip_vcreate_d(10, VSIP_MEM_NONE)
 vsip_vramp_d(0.1, 0.2, v)
