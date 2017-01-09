@@ -2198,6 +2198,12 @@ int vsip_csvdprodu_d(const vsip_csv_d*, vsip_mat_op, vsip_mat_side, const vsip_c
 int vsip_csvdprodv_d(const vsip_csv_d*, vsip_mat_op, vsip_mat_side,const vsip_cmview_d*);
 int vsip_csvdmatu_d(const vsip_csv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_cmview_d*);
 int vsip_csvdmatv_d(const vsip_csv_d*, vsip_scalar_vi, vsip_scalar_vi, const vsip_cmview_d*);
-
+/* swift function helpers (break VSIPL rules for library) */
+double* vsipUnsafeBlockPtr_d(vsip_block_d*, vsip_stride*);
+float* vsipUnsafeBlockPtr_f(vsip_block_f*, vsip_stride*);
+double* vsipUnsafeBlockPtr_cdR(vsip_cblock_d*, vsip_stride*);
+float* vsipUnsafeBlockPtr_cfR(vsip_cblock_f*, vsip_stride*);
+double* vsipUnsafeBlockPtr_cdI(vsip_cblock_d*, vsip_stride*);
+float* vsipUnsafeBlockPtr_cfI(vsip_cblock_f*, vsip_stride*);
 #endif
 
