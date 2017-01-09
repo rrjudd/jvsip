@@ -3,12 +3,6 @@
 import Cocoa
 import vsip
 
-let ump = UnsafeMutablePointer<Any>.allocate(capacity: 10)
-ump.initialize(to: Int(0))
-
-let b = UnsafeMutablePointer<CGRect>.allocate(capacity: 1)
-b.initialize(to: CGRect())
-
 //: Run some C VSIPL code
 print("A C VSIPL ramp")
 let vsipInit = vsip_init(nil)
@@ -21,7 +15,7 @@ vsip_valldestroy_d(v)
 let vsipFin = vsip_finalize(nil)
 
 
-//: Run some Swift Vsip code*/
+//: Run some Swift Vsip code
 import SwiftVsip
 print("\nA Swift VSIPL Ramp")
 var Vec: Vsip.Vector
@@ -34,12 +28,14 @@ let m = 4
 let n = 5
 var M = Vsip.Matrix(columnLength: m, rowLength: n, type: .cd, major: VSIP_ROW)
 M.randn(8, portable: true)
+print("A matrix to work with ")
 M.mPrint("0.5")
 
 var svd: Vsip.Svd = Vsip.Svd(type: (M.type), columnLength: (M.columnLength), rowLength: (M.rowLength), saveU: VSIP_SVD_UVFULL, saveV: VSIP_SVD_UVFULL)
 let s = svd.decompose(M.copy)
 let sizeU = svd.sizeU
 let sizeV = svd.sizeV
+//: output singular values for matrix
 print("Singular values")
 s.mPrint("4.3")
 var U = Vsip.Matrix(columnLength: sizeU.0, rowLength: sizeU.1,type: .cd, major: VSIP_ROW)
