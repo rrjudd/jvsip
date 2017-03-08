@@ -19,10 +19,8 @@ void komega( kw_obj* kw, vsip_mview_f *m_data){
 
     /* scaling for average */
     vsip_smmul_f(1.0/(float)kw->Navg,kw->rm_freq,kw->rm_freq);
-    vsip_blockadmit_f(vsip_mgetblock_f(kw->m_gram),VSIP_TRUE);
     /* add in new values to gram estimate */
     vsip_madd_f(kw->rm_freq,kw->m_gram,kw->m_gram);
-    vsip_blockrelease_f(vsip_mgetblock_f(kw->m_gram),VSIP_TRUE);
     return;
 }
 
@@ -32,7 +30,6 @@ int kw_init(kw_obj* kw, param_obj* param){
      vsip_length Nsens = param->Nsens;
      vsip_length Nts   = param->Nts;
      vsip_length Nfreq;
-     vsip_length L = Nsens * Nfreq;
      if(param->Nts % 2){
           printf("Data length must be even\n"); 
           retval++;
