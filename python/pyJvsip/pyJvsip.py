@@ -738,7 +738,7 @@ class Block (object):
                 return pSel[t](a,r,c,x)
             #
             tValue = getType(value)[1]
-            assert tValue == 'scalar' or tValue == 'View','Value type note recognized for __setitem__'
+            ## assert tValue == 'scalar' or tValue == 'View' or type(value) == numpy.ndarray,'Value type note recognized for __setitem__'
             if 'vview' in self.type:
                 if isinstance(i,int) :
                     assert i >= 0 and i < self.length,'Index out of bound'
@@ -1021,7 +1021,9 @@ class Block (object):
                     no=start * strd + o                       #new offset
                     ns=step * strd                            #new stride stride
                     stop = slc.stop
-                    if (stop is None) or (stop > l):
+                    if (stop is None):
+                        stop = l
+                    if (stop > l):
                         stop = l
                     nl=int(nlength(start,stop,step))  #new length
                 elif len(vals) == 1 and isinstance(vals[0],int):
@@ -1055,12 +1057,16 @@ class Block (object):
                     no=rstart * rs + cstart * cs + o
                     ncs=int(cstep * cs)
                     stop = cslc.stop
-                    if (stop > cl) or (stop is None):
+                    if stop is None:
+                        stop = cl
+                    if (stop > cl):
                         stop = cl
                     ncl= int(nlength(cstart,stop,cstep))
                     nrs=rstep * rs
                     stop = rslc.stop
-                    if (stop > rl) or (stop is None):
+                    if (stop is None):
+                        stop = rl
+                    if (stop > rl): 
                         stop = rl
                     nrl= int(nlength(rstart,stop,rstep))
                 elif len(vals) == 2 and isinstance(vals[0],int) and isinstance(vals[1],int):
