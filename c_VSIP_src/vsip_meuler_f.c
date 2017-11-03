@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_meuler_f.c,v 2.2 2005/12/21 00:13:02 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 #include"vsip_scalars.h"
 
 void (vsip_meuler_f)(

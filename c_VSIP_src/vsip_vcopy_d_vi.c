@@ -15,9 +15,9 @@
 /* Modified RJudd September 2, 2001 */
 /* to copy d to vi */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_vviewattributes_vi.h"
 
 void (vsip_vcopy_d_vi)(
   const vsip_vview_d* a,

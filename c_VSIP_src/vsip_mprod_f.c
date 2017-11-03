@@ -13,8 +13,8 @@
 /* new version done August 2000 */
 /* $Id: vsip_mprod_f.c,v 2.5 2006/11/27 21:39:41 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
 
 #define VI_MFILL_F( la, lr) { vsip_length n_mj, n_mn; vsip_stride rst_mj, rst_mn; \
     vsip_scalar_f *rpl  = (lr->block->array) + lr->offset * lr->block->rstride; \

@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_cvkron_f.c,v 2.0 2003/02/22 15:18:50 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 
 void vsip_cvkron_f(
    vsip_cscalar_f alpha,

@@ -16,9 +16,9 @@
 /* to fix cmbind */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
 
 void (vsip_vouter_d)(
   vsip_scalar_d alpha,

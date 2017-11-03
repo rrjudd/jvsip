@@ -11,8 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_cchold_getattr_f.c,v 2.0 2003/02/22 15:18:40 judd Exp $ */
-#include<vsip.h>
-#include<vsip_ccholdattributes_f.h>
+#include"vsip.h"
+#include"vsip_ccholdattributes_f.h"
 
 void
 vsip_cchold_getattr_f(

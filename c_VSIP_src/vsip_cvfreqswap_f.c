@@ -9,10 +9,10 @@
 // product, or process disclosed, or represents that its use would    /
 // not infringe privately owned rights                                /
 **********************************************************************/
-#include<vsip.h>
-#include<vsip_blockattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_blockattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
 
 #define VGET(v,i) (*(v->block->array + (v->offset + (vsip_stride)(i) * v->stride) * v->block->rstride))
 #define VPUT(v,i,s) {*(v->block->array + (v->offset + (vsip_stride)(i) * v->stride) * v->block->rstride) = (s);}

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_blockrebind_vi.c,v 2.1 2009/05/20 17:11:15 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_vi.h>
+#include"vsip.h"
+#include"vsip_blockattributes_vi.h"
 
 vsip_scalar_vi* (vsip_blockrebind_vi)(
   vsip_block_vi *b,

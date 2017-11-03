@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_qrdprodq_f.c,v 2.3 2011/08/08 03:59:38 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_qrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_f.h"
 #include"VI_mcolview_f.h"
 #include"VI_vcopy_f_f.h"
 #include"VI_vput_f.h"

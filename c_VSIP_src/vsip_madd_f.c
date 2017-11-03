@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_madd_f.c,v 2.0 2003/02/22 15:18:53 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
 
 void (vsip_madd_f)(
   const vsip_mview_f *a,

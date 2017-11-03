@@ -13,8 +13,8 @@
 /* $Id: vsip_choldattributes_d.h,v 2.0 2003/02/22 15:48:15 judd Exp $ */
 #ifndef VI_CHOLDATTRIBUTES_D_H
 #define VI_CHOLDATTRIBUTES_D_H
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 struct vsip_choldattributes_d{
        const vsip_mview_d* matrix;

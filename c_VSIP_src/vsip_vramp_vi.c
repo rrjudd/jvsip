@@ -6,8 +6,8 @@
  */
 /* $Id: vsip_vramp_vi.c,v 2.4 2007/04/21 19:39:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
 
 void (vsip_vramp_vi)(
                     vsip_scalar_vi x,

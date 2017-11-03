@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_msubview_f.c,v 2.0 2003/02/22 15:19:01 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
 
 vsip_mview_f* (vsip_msubview_f)(
   const vsip_mview_f* v,

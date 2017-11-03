@@ -17,9 +17,9 @@
 /* Removed Development Mode RJudd Sept 00 */
 /* initially for Core lite */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_vviewattributes_li.h"
 
 void (vsip_vcopy_f_li)(
   const vsip_vview_f* a,

@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_clusol_f.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 /* vsip_clusol_f */             
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cludattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cludattributes_f.h"
 #include"VI_cmrowview_f.h"
 
 static void VI_cvjsubvmprodIP_f(

@@ -13,9 +13,9 @@
 /* $Id: vsip_mviewattributes_i.h,v 2.0 2003/02/22 15:48:15 judd Exp $ */
 #ifndef _vsip_mviewattributes_i_h
 #define _vsip_mviewattributes_i_h 1
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_blockattributes_i.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_blockattributes_i.h"
 
 struct vsip_mviewattributes_i {
   vsip_block_i* block;

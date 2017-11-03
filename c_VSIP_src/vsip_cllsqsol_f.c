@@ -12,8 +12,8 @@
 **********************************************************************/ 
 /* $Id: vsip_cllsqsol_f.c,v 2.1 2006/05/16 16:48:17 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cqrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_cqrdattributes_f.h"
 #include"VI_cmrowview_f.h"
 
 static void VI_cvjsubvmprodIP_f(

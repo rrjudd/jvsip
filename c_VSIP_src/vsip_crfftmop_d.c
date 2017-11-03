@@ -13,12 +13,12 @@
 /* $Id: vsip_crfftmop_d.c,v 2.0 2003/02/22 15:18:46 judd Exp $ */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_fftmattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_fftmattributes_d.h"
 
 #if defined(VSIP_USE_FFT_FOR_FFTM_D)
    #include"VI_crfftmop_d_loop.h"

@@ -13,10 +13,10 @@
 /* $Id: vsip_ccfftip_create_d.c,v 2.0 2003/02/22 15:18:38 judd Exp $ */
 /* calculate number of factors of 2,3,4 in N */
 /* calculate N = 2^n2 * 4^n4 * 8^n8 * 3^n3 * 5^n5 *7^n7 * n */
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_fftattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_fftattributes_d.h"
 #if defined(VSIP_USE_FFTW_FOR_FFT_D)
    #include"VI_ccfftip_create_d_fftw.h"
 #else

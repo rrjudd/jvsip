@@ -14,8 +14,8 @@
 /* Modified to vsip_vfill_i.c RJudd March 19, 1998 */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
 
 void (vsip_vfill_i)(vsip_scalar_i alpha,
   const vsip_vview_i* r) {

@@ -14,10 +14,10 @@
 /* $Id: vsip_cmprod_f.c,v 2.2 2006/05/07 15:56:03 judd Exp $ */
 /* Remove Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 #include"VI_cmfill_f.h"
 
 /* note that matrix products may not be done in place */

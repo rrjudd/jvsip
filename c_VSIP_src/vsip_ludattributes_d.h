@@ -12,11 +12,11 @@
 **********************************************************************/    
 #ifndef _vsip_ludattributes_d_h  
 #define _vsip_ludattributes_d_h 1
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_vviewattributes_vi.h"
 
 struct vsip_ludattributes_d{
        vsip_mview_d* LU;

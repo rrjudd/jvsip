@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mhisto_li.c,v 2.3 2004/07/18 15:28:14 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_li.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_li.h"
+#include"vsip_vviewattributes_li.h"
 #include"VI_vfill_li.h"
 
 void (vsip_mhisto_li)(

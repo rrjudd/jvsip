@@ -14,8 +14,8 @@
 /* vsip_cqrd_destroy_f */
 
 
-#include<vsip.h>
-#include<vsip_cqrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_cqrdattributes_f.h"
 #include"VI_cvalldestroy_f.h"
 
 int vsip_cqrd_destroy_f(

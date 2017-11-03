@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cvrsdiv_d.c,v 2.0 2003/02/22 15:18:52 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_cvrsdiv_d)(
   const vsip_cvview_d *a,

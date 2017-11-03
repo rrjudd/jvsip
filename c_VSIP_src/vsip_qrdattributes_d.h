@@ -4,8 +4,8 @@
 #ifndef _vsip_qrddattributes_d_h  
 #define _vsip_qrdattributes_d_h 1 
 
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
 
 
 struct vsip_qrdattributes_d{

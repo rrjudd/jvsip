@@ -16,8 +16,8 @@
 /* Removed Tisdale error checking Sept 00 */
 
 #include<math.h>
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_cvconj_d)(
   const vsip_cvview_d* a,

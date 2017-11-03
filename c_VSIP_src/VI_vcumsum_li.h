@@ -14,8 +14,8 @@
 #ifndef __VI_VCUMSUM_LI_H
 #define __VI_VCUMSUM_LI_H
 
-#include<vsip.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_li.h"
 
 static
 void VI_vcumsum_l(

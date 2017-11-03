@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vbind_f.c,v 2.0 2003/02/22 15:19:10 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 vsip_vview_f* (vsip_vbind_f)(
   const vsip_block_f* b, 

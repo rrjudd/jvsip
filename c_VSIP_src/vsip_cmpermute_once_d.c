@@ -10,9 +10,9 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_vviewattributes_vi.h"
 
 void vsip_cmpermute_once_d(
      const vsip_cmview_d* in,

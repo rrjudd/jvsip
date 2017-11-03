@@ -15,8 +15,8 @@
 /* to add complex block support */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 
 void (vsip_csvmul_f)(
   vsip_cscalar_f alpha,

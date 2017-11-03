@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cfir_getattr_d.c,v 2.0 2003/02/22 15:18:40 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cfirattributes_d.h>
+#include"vsip.h"
+#include"vsip_cfirattributes_d.h"
 
 void vsip_cfir_getattr_d(
      const vsip_cfir_d *fir,

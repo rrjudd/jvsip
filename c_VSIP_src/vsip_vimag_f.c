@@ -15,9 +15,9 @@
 /* to add complex block support */
 /* Removed Development Mode Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 void vsip_vimag_f(
                   const vsip_cvview_f* a,

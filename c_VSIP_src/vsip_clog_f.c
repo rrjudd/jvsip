@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_clog_f.c,v 2.0 2003/02/22 15:18:41 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 
 vsip_cscalar_f (vsip_clog_f)(
   vsip_cscalar_f x) {

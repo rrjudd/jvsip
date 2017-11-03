@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_vlne_uc.c,v 2.0 2003/02/22 15:19:15 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_uc.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_uc.h"
+#include"vsip_vviewattributes_bl.h"
 
 void (vsip_vlne_uc)(
   const vsip_vview_uc* a,

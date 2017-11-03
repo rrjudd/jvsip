@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mminval_d.c,v 2.0 2003/02/22 15:18:58 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 vsip_scalar_d (vsip_mminval_d)(
   const vsip_mview_d *r,

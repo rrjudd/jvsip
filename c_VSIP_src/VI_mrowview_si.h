@@ -14,9 +14,9 @@
 #ifndef VI_MROWVIEW_SI_H
 #define VI_MROWVIEW_SI_H
 
-#include<vsip.h>
-#include<vsip_mviewattributes_si.h>
-#include<vsip_vviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_si.h"
+#include"vsip_vviewattributes_si.h"
 
 static
 vsip_vview_si* 

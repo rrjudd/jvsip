@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vsdiv_d.c,v 2.0 2003/02/22 15:19:18 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 void (vsip_vsdiv_d)(
   const vsip_vview_d *a,

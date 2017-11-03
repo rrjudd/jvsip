@@ -13,8 +13,8 @@
 /* $Id: vsip_ccholdattributes_d.h,v 2.0 2003/02/22 15:48:15 judd Exp $ */
 #ifndef VI_CCHOLDATTRIBUTES_D_H
 #define VI_CCHOLDATTRIBUTES_D_H
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
 
 struct vsip_ccholdattributes_d{
        const vsip_cmview_d* matrix;

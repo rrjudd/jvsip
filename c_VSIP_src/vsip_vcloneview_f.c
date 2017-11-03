@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vcloneview_f.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 vsip_vview_f* vsip_vcloneview_f(
       const vsip_vview_f* vview_f)

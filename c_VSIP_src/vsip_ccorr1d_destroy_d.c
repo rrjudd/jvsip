@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_ccorr1d_destroy_d.c,v 2.0 2003/02/22 15:18:40 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_ccorr1dattributes_d.h>
+#include"vsip.h"
+#include"vsip_ccorr1dattributes_d.h"
 #include"VI_cvalldestroy_d.h"
 
 int vsip_ccorr1d_destroy_d(vsip_ccorr1d_d *cor)

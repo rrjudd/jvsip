@@ -16,9 +16,9 @@
  // The MIT License (see copyright for jvsip in top level directory)
  // http://opensource.org/licenses/MIT
  **********************************************************************/
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_vviewattributes_vi.h"
 
 void (vsip_vcopy_vi_f)(
   const vsip_vview_vi* a,

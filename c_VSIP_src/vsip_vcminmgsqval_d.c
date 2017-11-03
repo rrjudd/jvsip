@@ -17,8 +17,8 @@
 /* To incorporate rstride */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 vsip_scalar_d (vsip_vcminmgsqval_d)(
    const vsip_cvview_d* a, 

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vhisto_i.c,v 2.1 2003/07/04 14:12:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
 #include"VI_vfill_i.h"
 
 void (vsip_vhisto_i)(

@@ -2,7 +2,7 @@
 /* SPAWARSYSCEN D881 */
 #ifndef _vsip_firattributes_f_h
 #define _vsip_firattributes_f_h 1
-#include<VI.h>
+#include"VI.h"
 
 struct vsip_firattributes_f{
      vsip_vview_f  *h;

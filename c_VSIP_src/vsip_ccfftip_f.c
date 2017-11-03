@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_ccfftip_f.c,v 2.0 2003/02/22 15:18:38 judd Exp $ */
-#include<vsip.h>
-#include<vsip_fftattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_fftattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 #if defined(VSIP_USE_FFTW_FOR_FFT_F)
       #include"VI_ccfftip_f_fftw.h"

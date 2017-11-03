@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: VI_vimagview_d.h,v 2.1 2008/03/03 16:33:47 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 
 #ifndef VI_VIMAGVIEW_D_H
 #define VI_VIMAGVIEW_D_H

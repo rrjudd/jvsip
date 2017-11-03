@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vcopyto_user_li.c,v 2.1 2007/04/21 19:39:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_li.h"
 
 void (vsip_vcopyto_user_li)(
   const vsip_vview_li* a,

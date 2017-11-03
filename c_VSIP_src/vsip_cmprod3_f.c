@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_cmprod3_f.c,v 2.4 2006/04/27 01:58:00 judd Exp $ */
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 /* note that matrix products may not be done in place */
 void (vsip_cmprod3_f)(
@@ -59,19 +59,19 @@ void (vsip_cmprod3_f)(
     vsip_length i; /* need a counter */
 
     /* we copy a to local storage */
-    a00_r = *ap0_r, a00_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
-    a01_r = *ap0_r, a01_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
-    a02_r = *ap0_r, a02_i = *ap0_i; 
+    a00_r = *ap0_r; a00_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
+    a01_r = *ap0_r; a01_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
+    a02_r = *ap0_r; a02_i = *ap0_i; 
 
     ap0_r = ap_r + a_st_c; ap0_i = ap_i + a_st_c;
-    a10_r = *ap0_r, a10_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
-    a11_r = *ap0_r, a11_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
-    a12_r = *ap0_r, a12_i = *ap0_i;
+    a10_r = *ap0_r; a10_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
+    a11_r = *ap0_r; a11_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
+    a12_r = *ap0_r; a12_i = *ap0_i;
 
     ap0_r = ap_r + 2 * a_st_c; ap0_i = ap_i + 2 * a_st_c;
-    a20_r = *ap0_r, a20_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
-    a21_r = *ap0_r, a21_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
-    a22_r = *ap0_r, a22_i = *ap0_i; 
+    a20_r = *ap0_r; a20_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
+    a21_r = *ap0_r; a21_i = *ap0_i; ap0_r+=a_st_r; ap0_i += a_st_r;
+    a22_r = *ap0_r; a22_i = *ap0_i; 
 
     for(i=0; i< c_r_l; i++){
        /* copy i'th column of b into local */

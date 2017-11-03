@@ -15,8 +15,8 @@
 /* to copy _mi to _mi */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_mi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_mi.h"
 
 void (vsip_vcopy_mi_mi)(
   const vsip_vview_mi* a,

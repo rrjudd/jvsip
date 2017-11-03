@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_blockadmit_bl.c,v 2.1 2006/06/08 22:19:26 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_bl.h>
+#include"vsip.h"
+#include"vsip_blockattributes_bl.h"
 
 int (vsip_blockadmit_bl)(
   vsip_block_bl* b,

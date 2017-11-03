@@ -15,10 +15,10 @@
 #ifndef _vsip_ctviewattributes_d_h
 #define _vsip_ctviewattributes_d_h 1
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_blockattributes_d.h>
-#include<vsip_cblockattributes_d.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_blockattributes_d.h"
+#include"vsip_cblockattributes_d.h"
 
 struct vsip_ctviewattributes_d {
   vsip_cblock_d*      block;      /* memory data block object        */

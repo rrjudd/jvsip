@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: VI_support_priv_uc.h,v 2.0 2003/02/22 15:18:33 judd Exp $ */
-#include<vsip.h>
-#include<vsip_tviewattributes_uc.h>
-#include<vsip_blockattributes_uc.h>
+#include"vsip.h"
+#include"vsip_tviewattributes_uc.h"
+#include"vsip_blockattributes_uc.h"
 
 #ifdef VI_TVIEW_UC_
 static vsip_tview_uc *VI_tview_uc(void)

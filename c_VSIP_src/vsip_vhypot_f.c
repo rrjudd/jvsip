@@ -10,8 +10,8 @@
 // product, or process disclosed, or represents that its use would/
 // not infringe privately owned rights                          /
 **********************************************************************/
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 void vsip_vhypot_f(
      const vsip_vview_f *a,

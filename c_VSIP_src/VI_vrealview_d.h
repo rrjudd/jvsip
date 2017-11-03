@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: VI_vrealview_d.h,v 2.0 2003/02/22 15:18:34 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 
 #ifndef VI_VREALVIEW_D_H
 #define VI_VREALVIEW_D_H

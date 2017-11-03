@@ -14,8 +14,8 @@
 
 #ifndef VI_VCOS_F_H
 #define VI_VCOS_F_H
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 #include"vsip_scalars.h"
 
 static

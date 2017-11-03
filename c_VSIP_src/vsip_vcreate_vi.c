@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_vcreate_vi.c,v 2.0 2003/02/22 15:19:12 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 #include"VI_blockcreate_vi.h"
 #include"VI_blockdestroy_vi.h"
 

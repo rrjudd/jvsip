@@ -16,8 +16,8 @@
 /* Removed Development Mode RJudd Sept 00 */
 
 #include<math.h>
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 
 void (vsip_cvconj_f)(
   const vsip_cvview_f* a,

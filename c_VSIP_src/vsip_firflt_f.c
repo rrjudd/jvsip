@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_firflt_f.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_firattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_firattributes_f.h"
 #include"VI_vcopy_f_f.h"
 #include"VI_vfill_f.h"
 #include"VI_vput_f.h"

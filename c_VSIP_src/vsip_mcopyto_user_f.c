@@ -11,8 +11,8 @@
 **********************************************************************/
 /* $Id: vsip_mcopyto_user_f.c,v 2.1 2007/04/18 17:15:18 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
 
 void (vsip_mcopyto_user_f)(
   const vsip_mview_f *a,

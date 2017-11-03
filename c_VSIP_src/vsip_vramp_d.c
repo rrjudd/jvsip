@@ -17,8 +17,8 @@
 /* to different ramp calculation method */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 void (vsip_vramp_d)(vsip_scalar_d x,
                     vsip_scalar_d y, 

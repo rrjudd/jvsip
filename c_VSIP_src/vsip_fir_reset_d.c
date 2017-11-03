@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_fir_reset_d.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_firattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_firattributes_d.h"
 #include"VI_vfill_d.h"
 
 void vsip_fir_reset_d(

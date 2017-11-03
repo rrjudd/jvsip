@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mexp10_f.c,v 2.2 2006/02/16 03:51:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
 #include"vsip_scalars.h"
 
 void (vsip_mexp10_f)(

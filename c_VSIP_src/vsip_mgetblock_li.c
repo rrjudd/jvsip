@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mgetblock_li.c,v 2.0 2003/02/22 15:18:56 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_li.h"
 
 vsip_block_li* (vsip_mgetblock_li)(
   const vsip_mview_li* v) {

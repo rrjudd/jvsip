@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mget_uc.c,v 2.0 2003/02/22 15:18:56 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_uc.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_uc.h"
 
 vsip_scalar_uc (vsip_mget_uc)(
   const vsip_mview_uc *v, 

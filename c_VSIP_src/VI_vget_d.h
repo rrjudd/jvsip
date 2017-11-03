@@ -14,9 +14,9 @@
 #ifndef VI_VGET_D_H
 #define VI_VGET_D_H 1
 
-#include<vsip.h>
-#include<vsip_blockattributes_d.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_blockattributes_d.h"
+#include"vsip_vviewattributes_d.h"
 
 #define VI_VGET_D(v,i) (*(v->block->array + (v->offset + (vsip_stride)(i) * v->stride) * v->block->rstride))
 

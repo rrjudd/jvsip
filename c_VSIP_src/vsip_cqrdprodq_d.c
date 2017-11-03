@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cqrdprodq_d.c,v 2.2 2011/08/08 03:59:38 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cqrdattributes_d.h>
+#include"vsip.h"
+#include"vsip_cqrdattributes_d.h"
 #include"VI_cmcolview_d.h"
 #include"VI_cmrowview_d.h"
 #include"VI_cvcopy_d_d.h"

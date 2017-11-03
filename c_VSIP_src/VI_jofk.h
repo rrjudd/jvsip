@@ -13,7 +13,7 @@
 /* $Id: VI_jofk.h,v 2.0 2003/02/22 15:18:32 judd Exp $ */
 #ifndef VI_JOFK__H
 #define VI_JOFK__H
-#include<vsip.h>
+#include"vsip.h"
 
 /* Index conversion routine for DFT's */
 /* 2.2.3 of Van Loan, "computational Frameworks for the */
@@ -44,6 +44,6 @@ VI_jofk(vsip_scalar_vi k, /* index to reverse */
    s = m/pF; 
    aq = m - s * pF; 
    j = pF * j + aq; 
-   return j; 
+   return j;
 }
 #endif

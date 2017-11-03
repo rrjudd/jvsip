@@ -13,8 +13,8 @@
 /* $Id: vsip_vcreate_kaiser_d.c,v 2.0 2003/02/22 15:19:12 judd Exp $ */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 #include"VI_vcreate_d.h"
 
 #define a1    2.2499997

@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: VI_rcvadd_d.h,v 2.0 2003/02/22 15:18:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 #ifndef VI_RCVADD_D_H
 #define VI_RCVADD_D_H
 

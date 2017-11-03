@@ -10,10 +10,10 @@
 **********************************************************************/
 /* $Id: vsip_minterp_spline_f.c,v 2.1 2008/08/17 18:01:49 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_splineattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_splineattributes_f.h"
 
 #define GETROW(_a,_i,_row) {\
     _row->block  = _a->block; \

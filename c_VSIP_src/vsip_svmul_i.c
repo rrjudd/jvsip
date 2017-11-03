@@ -15,8 +15,8 @@
 /* to vsip_svmul_i.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
 
 void (vsip_svmul_i)(
   vsip_scalar_i a,

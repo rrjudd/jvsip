@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mcloneview_i.c,v 2.0 2003/02/22 15:18:54 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_i.h"
 
 vsip_mview_i* vsip_mcloneview_i(
       const vsip_mview_i* mview_i) 

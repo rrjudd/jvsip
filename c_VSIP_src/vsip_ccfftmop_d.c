@@ -11,10 +11,10 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_ccfftmop_d.c,v 2.0 2003/02/22 15:18:39 judd Exp $ */
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_fftmattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_fftmattributes_d.h"
 
 #if defined(VSIP_USE_FFT_FOR_FFTM_D)  
    #include"VI_ccfftmop_d_loop.h"  

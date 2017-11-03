@@ -17,9 +17,9 @@
 /* initially for Core lite */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_vviewattributes_li.h"
 
 void (vsip_vcopy_d_li)(
   const vsip_vview_d* a,

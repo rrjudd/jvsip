@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_qrdsolr_d.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_qrdattributes_d.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_d.h"
 #include"VI_mrowview_d.h"
 #include"VI_vget_d.h"
 

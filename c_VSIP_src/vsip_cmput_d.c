@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cmput_d.c,v 2.0 2003/02/22 15:18:44 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
 
 void (vsip_cmput_d)(
   const vsip_cmview_d *v,

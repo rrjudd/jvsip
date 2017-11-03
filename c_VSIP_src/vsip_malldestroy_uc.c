@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_malldestroy_uc.c,v 2.0 2003/02/22 15:18:54 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 #include"VI_blockdestroy_uc.h"
 
 void (vsip_malldestroy_uc)(

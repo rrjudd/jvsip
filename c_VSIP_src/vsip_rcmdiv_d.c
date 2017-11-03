@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_rcmdiv_d.c,v 2.0 2003/02/22 15:19:03 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
 
 void (vsip_rcmdiv_d)(
   const vsip_mview_d *a,

@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_crfftop_d.c,v 2.0 2003/02/22 15:18:47 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_fftattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_fftattributes_d.h"
 
 #if defined(VSIP_USE_FFTW_FOR_FFT_D)
    #include"VI_crfftop_d_fftw.h"

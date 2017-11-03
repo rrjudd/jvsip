@@ -14,8 +14,8 @@
 #ifndef _VI_MIMAGVIEW_F_H
 #define _VI_MIMAGVIEW_F_H
 
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_mviewattributes_f.h"
 
 static
 vsip_mview_f* VI_mimagview_f(

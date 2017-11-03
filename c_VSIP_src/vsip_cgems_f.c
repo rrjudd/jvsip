@@ -13,9 +13,9 @@
 **********************************************************************/
 /* $Id: vsip_cgems_f.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip.h>
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip.h"
 
 void vsip_cgems_f(vsip_cscalar_f alpha,
                    const vsip_cmview_f *AA,

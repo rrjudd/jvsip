@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_vramp_i.h,v 2.1 2003/07/04 14:12:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
 
 #ifndef VI_VRAMP_I_H
 #define VI_VRAMP_I_H

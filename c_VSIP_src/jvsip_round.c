@@ -17,13 +17,13 @@
 /*********************************************************************
  // The MIT License (see copyright for jvsip in top level directory)
  // http://opensource.org/licenses/MIT
- **********************************************************************/#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_mviewattributes_i.h>
-#include<vsip_vviewattributes_i.h>
+ **********************************************************************/#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_mviewattributes_i.h"
+#include"vsip_vviewattributes_i.h"
 #include<math.h>
 #include"vsip_scalars.h"
 void vsip_mround_d_d(const vsip_mview_d* a, const vsip_mview_d* r)

@@ -10,10 +10,10 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_rcfirattributes_f.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_rcfirattributes_f.h"
+#include"vsip_vviewattributes_f.h"
 #include"VI_cvcopy_f_f.h"
 #include"VI_cvfill_f.h"
 

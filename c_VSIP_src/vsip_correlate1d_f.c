@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_correlate1d_f.c,v 2.1 2007/04/16 16:50:41 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_corr1dattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_corr1dattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
 #include"VI_vcopy_f_f.h"
 #include"VI_vfill_f.h"
 #include"VI_vrealview_f.h"

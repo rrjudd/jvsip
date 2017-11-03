@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cvgetblock_f.c,v 2.0 2003/02/22 15:18:50 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 
 vsip_cblock_f* (vsip_cvgetblock_f)(
   const vsip_cvview_f* v) {

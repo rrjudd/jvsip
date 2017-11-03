@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mtransview_i.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_i.h"
 
 vsip_mview_i* (vsip_mtransview_i)(
   const vsip_mview_i* v) {

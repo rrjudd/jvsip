@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mputrowlength_uc.c,v 2.0 2003/02/22 15:18:59 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_uc.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_uc.h"
 
 vsip_mview_uc* (vsip_mputrowlength_uc)(
   vsip_mview_uc* v, 

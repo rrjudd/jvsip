@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_blockdestroy_li.c,v 2.0 2003/02/22 15:18:37 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_li.h>
+#include"vsip.h"
+#include"vsip_blockattributes_li.h"
 
 void (vsip_blockdestroy_li)(
   vsip_block_li* b) {

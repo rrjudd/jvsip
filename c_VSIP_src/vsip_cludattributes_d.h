@@ -12,11 +12,11 @@
 **********************************************************************/    
 #ifndef _vsip_cludattributes_d_h
 #define _vsip_cludattributes_d_h 1
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_vi.h"
 
 struct vsip_cludattributes_d{
        vsip_cmview_d* LU;

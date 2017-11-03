@@ -14,8 +14,8 @@
 /* new version done August 2000 */
 /* $Id: vsip_mprod4_d.c,v 2.2 2006/04/17 19:28:45 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 void (vsip_mprod4_d)(
     const vsip_mview_d* a,

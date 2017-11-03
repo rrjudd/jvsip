@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cblockrebind_d.c,v 2.1 2009/05/20 17:11:15 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cblockattributes_d.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_d.h"
 
 void (vsip_cblockrebind_d)(
   vsip_cblock_d *b,

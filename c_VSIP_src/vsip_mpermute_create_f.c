@@ -11,8 +11,8 @@
  **********************************************************************/
 
 
-#include<vsip.h>
-#include<vsip_permuteattributes.h>
+#include"vsip.h"
+#include"vsip_permuteattributes.h"
 
 vsip_permute* 
 vsip_mpermute_create_f(

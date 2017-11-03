@@ -44,7 +44,7 @@
 // Feb. 28, 1997	Added copyright notice.
 // Mar. 31, 1997	Modified to conform with VSIP decoder ring.	*/
 
-#include<vsip.h>
+#include"vsip.h"
 
 vsip_scalar_f (vsip_arg_f)(vsip_cscalar_f x) {
   return (float)atan2(vsip_imag_f(x), vsip_real_f(x)); 

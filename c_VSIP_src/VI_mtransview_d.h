@@ -14,8 +14,8 @@
 
 #ifndef _VI_MTRANSVIEW_D_H
 #define _VI_MTRANSVIEW_D_H
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 static
 vsip_mview_d 

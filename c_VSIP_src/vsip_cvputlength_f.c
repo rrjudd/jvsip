@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cvputlength_f.c,v 2.0 2003/02/22 15:18:51 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 
 vsip_cvview_f* (vsip_cvputlength_f)(
   vsip_cvview_f* v, 

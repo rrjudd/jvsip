@@ -4,11 +4,11 @@
 #ifndef _vsip_cqrddattributes_f_h  
 #define _vsip_cqrdattributes_f_h 1
 
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
-#include<VI.h>
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
+#include"VI.h"
 
 
 struct vsip_cqrdattributes_f{

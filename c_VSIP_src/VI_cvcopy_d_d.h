@@ -15,8 +15,8 @@
 #ifndef VI_CVCOPY_D_D_H
 #define VI_CVCOPY_D_D_H 1
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 static
 void 

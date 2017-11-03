@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_blockcreate_bl.h,v 2.1 2006/06/08 22:19:25 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_bl.h>
+#include"vsip.h"
+#include"vsip_blockattributes_bl.h"
 
 #ifndef VI_BLOCKCREATE_BL_H
 #define VI_BLOCKCREATE_BL_H

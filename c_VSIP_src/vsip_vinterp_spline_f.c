@@ -12,9 +12,9 @@
 
 /* Based on f77 algorithm in Cheney & Kincaid Numerical Mathematics (2ndEd) */
  
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_splineattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_splineattributes_f.h"
 
 void vsip_vinterp_spline_f(
       const vsip_vview_f *t0, 

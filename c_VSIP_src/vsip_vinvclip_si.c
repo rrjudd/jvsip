@@ -15,8 +15,8 @@
 /* to vsip_vinvclip_d.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_si.h"
 
 void (vsip_vinvclip_si)(
   const vsip_vview_si* a,

@@ -11,7 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_toepsol_f.c,v 2.0 2003/02/22 15:19:07 judd Exp $ */
-#include<vsip_vviewattributes_f.h>
+#include"vsip_vviewattributes_f.h"
 
 static void VI_scale_f(
          vsip_vview_f *a,

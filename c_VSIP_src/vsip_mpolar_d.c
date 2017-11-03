@@ -9,11 +9,11 @@
 // product, or process disclosed, or represents that its use would    /
 // not infringe privately owned rights                                /
 **********************************************************************/
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 #include"vsip_scalars.h"
 #include"VI_mrowview_d.h"
 #include"VI_mcolview_d.h"

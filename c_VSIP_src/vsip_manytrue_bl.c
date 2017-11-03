@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_manytrue_bl.c,v 2.0 2003/02/22 15:18:54 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_bl.h"
 
 vsip_scalar_bl (vsip_manytrue_bl)(
   const vsip_mview_bl *r){ 

@@ -12,8 +12,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_clud_create_f.c,v 2.0 2003/02/22 15:18:41 judd Exp $ */
-#include<vsip.h>
-#include<vsip_cludattributes_f.h>
+#include"vsip.h"
+#include"vsip_cludattributes_f.h"
 
 vsip_clu_f* (vsip_clud_create_f)(
              vsip_length N)

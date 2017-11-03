@@ -16,9 +16,9 @@
 /* to fix cmbind */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
 
 void (vsip_vouter_f)(
   vsip_scalar_f alpha,

@@ -46,7 +46,7 @@
 // Feb. 28, 1997	Added copyright notice.
 // Mar. 31, 1997	Modified to conform with VSIP decoder ring.	*/
 
-#include<vsip.h>
+#include"vsip.h"
 
 vsip_cscalar_d (vsip_cmul_d)(
   vsip_cscalar_d x, vsip_cscalar_d y) {/*  x*y	*/

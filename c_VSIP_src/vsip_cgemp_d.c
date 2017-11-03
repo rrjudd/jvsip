@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_cgemp_d.c,v 2.2 2008/03/03 17:48:38 judd Exp $ */
 
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip.h>
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip.h"
 
 #define CMCOLVIEW(_v,_j,_a) {\
    (_a)->block    = (_v)->block;\

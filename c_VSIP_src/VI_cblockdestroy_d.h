@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_cblockdestroy_d.h,v 2.0 2003/02/22 15:18:28 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cblockattributes_d.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_d.h"
 
 #ifndef VI_CBLOCKDESTROY_D_H
 #define VI_CBLOCKDESTROY_D_H

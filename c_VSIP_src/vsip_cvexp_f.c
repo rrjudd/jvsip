@@ -16,8 +16,8 @@
 /* Removed Development Mode RJudd Sept 00 */
 
 #include<math.h>
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 #include"vsip_scalars.h"
 
 void (vsip_cvexp_f)(

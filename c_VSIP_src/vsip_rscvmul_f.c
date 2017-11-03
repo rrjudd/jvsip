@@ -14,8 +14,8 @@
 /* Modified RJudd June 28, 1998 */
 /* to add complex block support */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 
 void (vsip_rscvmul_f)(
   vsip_scalar_f alpha,

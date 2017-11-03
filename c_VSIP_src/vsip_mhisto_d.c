@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mhisto_d.c,v 2.2 2004/07/18 15:33:48 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
 #include"VI_vfill_d.h"
 
 void (vsip_mhisto_d)(

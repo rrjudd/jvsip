@@ -14,8 +14,8 @@
 /* Create QRD object for real qrd float */
 /* vsip_qrd_create_f.c */
 
-#include<vsip.h>
-#include<vsip_qrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_f.h"
 #include"VI_vcreate_f.h"
 #include"VI_valldestroy_f.h"
 

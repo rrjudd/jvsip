@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_varg_d.c,v 2.0 2003/02/22 15:19:09 judd Exp $ */
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_varg_d)(
   const vsip_cvview_d* a,

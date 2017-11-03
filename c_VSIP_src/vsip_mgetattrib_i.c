@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mgetattrib_i.c,v 2.0 2003/02/22 15:18:56 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_i.h"
 
 void (vsip_mgetattrib_i)(
   const vsip_mview_i* v, 

@@ -21,10 +21,10 @@
 
 #include"VI_cmcolview_f.h"
 #include"VI_cmrowview_f.h"
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_randobject.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_randobject.h"
 
 static void cvrandu_f(
      vsip_randstate *state,

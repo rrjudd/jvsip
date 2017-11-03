@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_cblockbind_f.c,v 2.2 2009/05/20 17:11:15 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cblockattributes_f.h>
-#include<vsip_blockattributes_f.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_f.h"
+#include"vsip_blockattributes_f.h"
 
 vsip_cblock_f* (vsip_cblockbind_f)(
   vsip_scalar_f*  const Rp,

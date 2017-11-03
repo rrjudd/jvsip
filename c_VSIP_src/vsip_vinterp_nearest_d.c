@@ -10,8 +10,8 @@
 **********************************************************************/
 /* $Id: vsip_vinterp_nearest_d.c,v 2.1 2008/09/14 20:48:40 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 #define F2(x1,x2,y1,y2,x,y) {   \
    vsip_scalar_d dif1 = x - x1;\

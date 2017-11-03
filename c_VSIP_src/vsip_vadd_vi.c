@@ -6,8 +6,8 @@
  */
 /* $Id: vsip_vadd_vi.c,v 2.2 2007/04/16 18:40:59 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
 
 void (vsip_vadd_vi)(
   const vsip_vview_vi *a,

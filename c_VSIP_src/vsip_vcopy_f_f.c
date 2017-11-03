@@ -14,8 +14,8 @@
 /* to include attributes support */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 void (vsip_vcopy_f_f)(
   const vsip_vview_f* a,

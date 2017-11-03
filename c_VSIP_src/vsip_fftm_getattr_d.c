@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_fftm_getattr_d.c,v 2.0 2003/02/22 15:18:52 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_fftmattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_fftmattributes_d.h"
 
 void vsip_fftm_getattr_d(
      const vsip_fftm_d *fft,

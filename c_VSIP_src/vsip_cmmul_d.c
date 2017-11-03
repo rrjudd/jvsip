@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_cmmul_d.c,v 2.0 2003/02/22 15:18:43 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
 
 void (vsip_cmmul_d)(
   const vsip_cmview_d *a,

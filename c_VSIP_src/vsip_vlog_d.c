@@ -15,8 +15,8 @@
 /* to add rstride */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 void (vsip_vlog_d)(
   const vsip_vview_d *a,

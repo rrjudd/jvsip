@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_llsqsol_f.c,v 2.1 2006/05/16 16:48:17 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_qrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_f.h"
 #include"VI_mrowview_f.h"
 #include"VI_vput_f.h"
 #include"VI_vget_f.h"

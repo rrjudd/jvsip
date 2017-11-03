@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mput_si.c,v 2.0 2003/02/22 15:18:59 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_si.h"
 
 void (vsip_mput_si)(
   const vsip_mview_si *v,

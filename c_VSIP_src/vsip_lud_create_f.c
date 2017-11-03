@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_lud_create_f.c,v 2.0 2003/02/22 15:18:53 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_ludattributes_f.h>
+#include"vsip.h"
+#include"vsip_ludattributes_f.h"
 
 vsip_lu_f* (vsip_lud_create_f)(
              vsip_length N)

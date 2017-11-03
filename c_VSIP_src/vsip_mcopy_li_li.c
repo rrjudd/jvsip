@@ -1,6 +1,6 @@
-#include<vsip.h>
-#include<vsip_mviewattributes_li.h>
-#include<vsip_mviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_li.h"
+#include"vsip_mviewattributes_li.h"
 
 
 void (vsip_mcopy_li_li)(

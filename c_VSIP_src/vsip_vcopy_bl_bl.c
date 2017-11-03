@@ -16,8 +16,8 @@
 /* Modified RJudd January 1, 1999 */
 /* to vsip_vcopy_bl_bl.c */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_bl.h"
 
 void (vsip_vcopy_bl_bl)(
   const vsip_vview_bl* a,

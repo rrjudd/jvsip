@@ -39,8 +39,8 @@
 // Feb. 28, 1997	Added copyright notice.
 // Mar. 31, 1997	Modified to conform with VSIP decoder ring.	*/
 
-#include<vsip.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_bl.h"
 
 vsip_scalar_bl (vsip_vanytrue_bl)(const vsip_vview_bl* v) {
   /* v_0 && v_1 && ... && v_n-1						*/

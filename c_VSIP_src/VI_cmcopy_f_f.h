@@ -14,8 +14,8 @@
 #ifndef VI_CMCOPY_F_F_H
 #define VI_CMCOPY_F_F_H 1
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_f.h"
 
 static
 void 

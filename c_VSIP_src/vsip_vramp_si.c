@@ -14,8 +14,8 @@
 /* Modified RJudd March 19, 1998 for vsip_vramp_si.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_si.h"
 
 void (vsip_vramp_si)(
                     vsip_scalar_si x,

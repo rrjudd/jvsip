@@ -14,8 +14,8 @@
 /* April 21, 1998 1,2 to row,col */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 void (vsip_mtrans_d)(
   const vsip_mview_d* A,

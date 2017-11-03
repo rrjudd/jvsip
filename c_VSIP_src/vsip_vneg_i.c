@@ -13,8 +13,8 @@
 /* $Id: vsip_vneg_i.c,v 2.0 2003/02/22 15:19:16 judd Exp $ */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
 
 void (vsip_vneg_i)(
   const vsip_vview_i *a,

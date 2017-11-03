@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mcumsum_si.c,v 2.1 2004/04/03 14:19:04 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_si.h"
 #include"VI_mcolview_si.h"
 #include"VI_mrowview_si.h"
 #include"VI_vcumsum_si.h"

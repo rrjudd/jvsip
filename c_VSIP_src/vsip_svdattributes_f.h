@@ -18,13 +18,13 @@
 #ifndef _vsip_svd_f_h  
 #define _vsip_svd_f_h 1 
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_vviewattributes_vi.h"
 
 typedef vsip_sv_attr_f sv_attr;
 struct vsip_svd{

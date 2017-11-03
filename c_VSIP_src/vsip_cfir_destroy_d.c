@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cfir_destroy_d.c,v 2.0 2003/02/22 15:18:40 judd Exp $ */
 /* destroy complex fir object */
-#include<vsip.h>
-#include<vsip_cfirattributes_d.h>
+#include"vsip.h"
+#include"vsip_cfirattributes_d.h"
 #include"VI_cvalldestroy_d.h"
 
 int vsip_cfir_destroy_d(

@@ -13,8 +13,8 @@
 /* $Id: vsip_qrd_d.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 /* Do QRD decomposition for real qrd float */
 /* vsip_qrd_d.c */
-#include<vsip.h>
-#include<vsip_qrdattributes_d.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_d.h"
 #include"VI_mcolview_d.h"
 #include"VI_vcopy_d_d.h"
 #include"VI_vput_d.h"
@@ -114,6 +114,7 @@ int vsip_qrd_d(
    ac = &acc;
    qr->AA = *A;
    VI_mcolview_d(A,0,ac);
+    
    for(j=0; j<n; j++){
      ac->offset = j * A->row_stride + j * A->col_stride + A->offset;
      ac->length = A->col_length -j;

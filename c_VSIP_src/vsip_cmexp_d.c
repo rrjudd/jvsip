@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cmexp_d.c,v 2.1 2003/04/22 02:19:57 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
 #include"vsip_scalars.h"
 
 void (vsip_cmexp_d)(

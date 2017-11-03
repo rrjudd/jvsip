@@ -11,8 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_fir_getattr_f.c,v 2.0 2003/02/22 15:18:53 judd Exp $ */
-#include<vsip.h>
-#include<vsip_firattributes_f.h>
+#include"vsip.h"
+#include"vsip_firattributes_f.h"
 
 void vsip_fir_getattr_f(
      const vsip_fir_f *fir,

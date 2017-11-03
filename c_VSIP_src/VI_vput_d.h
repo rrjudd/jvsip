@@ -14,8 +14,8 @@
 #ifndef VI_VPUT_D_H
 #define VI_VPUT_D_H 1
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 #define VI_VPUT_D(v,i,s) {*(v->block->array + (v->offset + (vsip_stride)(i) * v->stride) * v->block->rstride) = (s);}
 

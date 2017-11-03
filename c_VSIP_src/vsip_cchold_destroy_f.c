@@ -11,8 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_cchold_destroy_f.c,v 2.0 2003/02/22 15:18:39 judd Exp $ */
-#include<vsip.h>
-#include<vsip_ccholdattributes_f.h>
+#include"vsip.h"
+#include"vsip_ccholdattributes_f.h"
 
 int
 vsip_cchold_destroy_f(

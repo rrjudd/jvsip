@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_cfir_create_d.c,v 2.1 2003/03/08 14:43:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cfirattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cfirattributes_d.h"
 #include"VI_cvcopy_d_d.h"
 #include"VI_cvfill_d.h"
 

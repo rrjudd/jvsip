@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cvgetoffset_d.c,v 2.0 2003/02/22 15:18:50 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 vsip_offset (vsip_cvgetoffset_d)(
   const vsip_cvview_d *v) {

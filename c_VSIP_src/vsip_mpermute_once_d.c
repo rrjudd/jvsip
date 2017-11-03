@@ -11,9 +11,9 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_vi.h"
 
 void vsip_mpermute_once_d(
      const vsip_mview_d* in,

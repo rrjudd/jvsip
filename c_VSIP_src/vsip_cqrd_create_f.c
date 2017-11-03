@@ -15,8 +15,8 @@
 /* vsip_cqrd_create_f.c */
 
 
-#include<vsip.h>
-#include<vsip_cqrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_cqrdattributes_f.h"
 #include"VI_cvalldestroy_f.h"
 
 vsip_cqr_f *vsip_cqrd_create_f(

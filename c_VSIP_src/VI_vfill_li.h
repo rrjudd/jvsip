@@ -14,8 +14,8 @@
 #ifndef VI_VFILL_LI_H
 #define VI_VFILL_LI_H 1
 
-#include<vsip.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_li.h"
 
 static
 void 

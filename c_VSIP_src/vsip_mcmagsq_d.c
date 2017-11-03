@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mcmagsq_d.c,v 2.0 2003/02/22 15:18:54 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
 
 void (vsip_mcmagsq_d)(
   const vsip_cmview_d *a,

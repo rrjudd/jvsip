@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_cvbind_d.c,v 2.0 2003/02/22 15:18:49 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 #include"vsip_cvviewattributes_d.h"
 
 vsip_cvview_d* (vsip_cvbind_d)(

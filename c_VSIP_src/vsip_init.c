@@ -11,7 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_init.c,v 2.2 2009/09/05 18:03:19 judd Exp $ */
-#include<vsip.h>
+#include"vsip.h"
 
 /* this is a NOP but to prevent warnings I do some useless stuff */
 int vsip_init( void *ptr){

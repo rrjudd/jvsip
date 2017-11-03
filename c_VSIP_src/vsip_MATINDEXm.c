@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_MATINDEXm.c,v 2.0 2003/02/22 15:18:36 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 
 void (vsip_MATINDEX)(
   vsip_scalar_vi r, 

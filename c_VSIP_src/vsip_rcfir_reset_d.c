@@ -9,10 +9,10 @@
  // product, or process disclosed, or represents that its use would    /
  // not infringe privately owned rights                                /
  **********************************************************************/
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_rcfirattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_rcfirattributes_d.h"
 #include"VI_cvfill_d.h"
 
 void vsip_rcfir_reset_d(

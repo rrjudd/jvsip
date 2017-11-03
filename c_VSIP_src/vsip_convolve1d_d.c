@@ -11,12 +11,12 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_convolve1d_d.c,v 2.0 2003/02/22 15:18:45 judd Exp $ */
-#include<vsip.h>
-#include<vsip_conv1dattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_conv1dattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
 #include"VI_cmrowview_d.h"
 #include"VI_vcopy_d_d.h"
 #include"VI_cvfill_d.h"

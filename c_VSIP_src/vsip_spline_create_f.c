@@ -10,9 +10,9 @@
 **********************************************************************/
 /* $Id: vsip_spline_create_f.c,v 2.2 2009/09/12 23:15:46 judd Exp $ */
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_splineattributes_f.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_splineattributes_f.h"
 
 
 vsip_spline_f *vsip_spline_create_f(vsip_length N){

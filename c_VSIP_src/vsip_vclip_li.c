@@ -15,8 +15,8 @@
 /* to vsip_vclip_li.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_li.h"
 
 void (vsip_vclip_li)(
   const vsip_vview_li* a,

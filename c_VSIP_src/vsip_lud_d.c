@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_lud_d.c,v 2.0 2003/02/22 15:18:53 judd Exp $ */
 /* vsip_lud_d */    
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_ludattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_ludattributes_d.h"
 
 static vsip_index VI_max_index_d(
        vsip_length N,

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mmaxval_i.c,v 2.1 2004/04/03 16:03:08 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_i.h"
 
 vsip_scalar_i (vsip_mmaxval_i)(
   const vsip_mview_i *r,

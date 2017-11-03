@@ -15,9 +15,9 @@
 #ifndef VI_CVGET_F_H
 #define VI_CVGET_F_H 1
 
-#include<vsip.h>
-#include<vsip_cblockattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 /* get and store a value in the internal block scalar storage */
 #define VI_CVGETP_F(v, k) { vsip_offset o = (v)->block->cstride * ((v)->offset + (vsip_stride)(k) * (v)->stride); \

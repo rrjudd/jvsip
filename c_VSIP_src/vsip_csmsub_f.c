@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_csmsub_f.c,v 2.0 2003/02/22 15:18:47 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 
 void (vsip_csmsub_f)(
   vsip_cscalar_f alpha,

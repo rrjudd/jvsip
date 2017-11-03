@@ -13,7 +13,7 @@
 /* $Id: VI_nuV.h,v 2.0 2003/02/22 15:18:33 judd Exp $ */
 #ifndef VI_NUV__H
 #define VI_NUV__H
-#include<vsip.h>
+#include"vsip.h"
 
 /* nuV*/
 /* calculate number of factors of 2,3,4,5,7,8,n in N */

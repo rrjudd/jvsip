@@ -14,7 +14,7 @@
 /*  This program is the work of a US Government Employee */
 /*  done as part of his official duties */
 
-#include<vsip_ludattributes_d.h>
+#include"vsip_ludattributes_d.h"
 
 int (vsip_lud_destroy_d)( 
            vsip_lu_d* lud) {

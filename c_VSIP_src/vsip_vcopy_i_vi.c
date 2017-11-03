@@ -19,9 +19,9 @@
 /* to copy i to vi */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
+#include"vsip_vviewattributes_vi.h"
 
 void (vsip_vcopy_i_vi)(
   const vsip_vview_i* a,

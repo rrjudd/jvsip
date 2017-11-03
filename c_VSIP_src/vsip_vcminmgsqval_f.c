@@ -17,8 +17,8 @@
 /* To incorporate rstride */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
 
 vsip_scalar_f (vsip_vcminmgsqval_f)(
    const vsip_cvview_f* a,

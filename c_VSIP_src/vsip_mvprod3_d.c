@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mvprod3_d.c,v 2.2 2006/04/17 19:38:02 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
 
 void (vsip_mvprod3_d)(
   const vsip_mview_d* A,

@@ -11,8 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_vcosh_d.c,v 2.1 2003/04/22 02:19:58 judd Exp $ */
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 #include"vsip_scalars.h"
 
 void (vsip_vcosh_d)(

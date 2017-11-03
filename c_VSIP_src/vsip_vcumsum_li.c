@@ -13,7 +13,7 @@
 /* $Id: vsip_vcumsum_li.c,v 2.1 2004/04/03 14:19:04 judd Exp $ */
 
 #include"vsip.h"
-#include<vsip_vviewattributes_li.h>
+#include"vsip_vviewattributes_li.h"
 
 void vsip_vcumsum_li(
    const vsip_vview_li *a,

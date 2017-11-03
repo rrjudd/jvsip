@@ -13,8 +13,8 @@
 /* $Id: vsip_qrd_f.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 /* Do QRD decomposition for real qrd float */
 /* vsip_qrd_f.c */
-#include<vsip.h>
-#include<vsip_qrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_f.h"
 #include"VI_mcolview_f.h"
 #include"VI_vcopy_f_f.h"
 #include"VI_vput_f.h"

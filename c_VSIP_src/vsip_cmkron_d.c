@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_cmkron_d.c,v 2.1 2006/06/08 22:19:26 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
 
 static
 void

@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: VI_ccfftip_d_def.h,v 2.0 2003/02/22 15:18:29 judd Exp $ */
-#include<vsip.h>
-#include<vsip_fftattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_fftattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 #include"VI_fft_building_blocks_d.h"
 #include"VI_ccfftip_d.h"
 

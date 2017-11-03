@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mrealview_d.c,v 2.0 2003/02/22 15:19:00 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
 
 vsip_mview_d* vsip_mrealview_d(
   const vsip_cmview_d* v) {

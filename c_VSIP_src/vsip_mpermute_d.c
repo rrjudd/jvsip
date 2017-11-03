@@ -13,10 +13,10 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_permuteattributes.h>
-#include<vsip_vviewattributes_vi.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_permuteattributes.h"
+#include"vsip_vviewattributes_vi.h"
+#include"vsip_mviewattributes_d.h"
 
 
 void 

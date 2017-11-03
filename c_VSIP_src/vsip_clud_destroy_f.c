@@ -13,7 +13,7 @@
 /* $Id: vsip_clud_destroy_f.c,v 2.0 2003/02/22 15:18:41 judd Exp $ */
 /*  This program is the work of a US Government Employee */
 /*  done as part of his official duties */
-#include<vsip_cludattributes_f.h>
+#include"vsip_cludattributes_f.h"
 
 int (vsip_clud_destroy_f)( 
            vsip_clu_f* clud) {

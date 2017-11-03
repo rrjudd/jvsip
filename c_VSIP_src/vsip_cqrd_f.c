@@ -13,8 +13,8 @@
 /* $Id: vsip_cqrd_f.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 /* Do QRD decomposition for complex qrd float */
 /* vsip_cqrd_f.c */
-#include<vsip.h>
-#include<vsip_cqrdattributes_f.h>
+#include"vsip.h"
+#include"vsip_cqrdattributes_f.h"
 #include"VI_cmcolview_f.h"
 #include"VI_cmrowview_f.h"
 #include"VI_cvcopy_f_f.h"

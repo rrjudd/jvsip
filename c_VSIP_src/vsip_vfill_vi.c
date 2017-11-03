@@ -11,8 +11,8 @@
  **********************************************************************/
 /* created by modifying vsip_vfill_si.c */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
 
 void vsip_vfill_vi(vsip_scalar_vi alpha,
                     const vsip_vview_vi* r) {

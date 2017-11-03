@@ -9,7 +9,7 @@
 // product, or process disclosed, or represents that its use would    /
 // not infringe privately owned rights                                /
 **********************************************************************/
-#include<vsip.h>
+#include"vsip.h"
 #include"VI_mimagview_f.h"
 #include"VI_mcopy_f_f.h"
 

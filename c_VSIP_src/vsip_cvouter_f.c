@@ -17,9 +17,9 @@
 /* to fix cmbind */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 
 void (vsip_cvouter_f)(
   vsip_cscalar_f alpha,
@@ -63,7 +63,7 @@ void (vsip_cvouter_f)(
            R_pur += stRu; R_pui += stRu;
            b_pr += sta; b_pi += sta;
         }
-        a_pr += sta, a_pi += sta;
+         a_pr += sta; a_pi += sta;
      }
   } else { 
      vsip_length  n = a->length,

@@ -10,9 +10,9 @@
 **********************************************************************/
 /* $Id: vsip_minterp_nearest_d.c,v 2.1 2008/09/14 20:48:40 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
 
 #define GETROW(_a,_i,_row) {\
     _row->block  = _a->block; \

@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_vmmul_d.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
 #include"VI_mrowview_d.h"
 #include"VI_mcolview_d.h"
 

@@ -3,7 +3,7 @@
 
 #ifndef _vsip_conv1dattributes_f
 #define _vsip_conv1dattributes_f 1
-#include<VI.h>
+#include"VI.h"
 
 struct vsip_conv1dattributes_f{
      vsip_cvview_f  *H;

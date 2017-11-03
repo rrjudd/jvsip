@@ -11,10 +11,10 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_rvcmmul_f.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 #include"VI_cmcolview_f.h"
 #include"VI_cmrowview_f.h"
 

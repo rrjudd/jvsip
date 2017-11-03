@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_rscmdiv_f.c,v 2.0 2003/02/22 15:19:03 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_f.h"
 
 void (vsip_rscmdiv_f)(
   vsip_scalar_f alpha,

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vgetstride_d.c,v 2.0 2003/02/22 15:19:14 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 vsip_stride (vsip_vgetstride_d)(
   const vsip_vview_d* v) {

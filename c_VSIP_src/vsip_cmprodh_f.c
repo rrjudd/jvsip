@@ -17,10 +17,10 @@
 /* vsip_cmprodj_f.c used cmprod */
 /* Remove Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 void (vsip_cmprodh_f)(
   const vsip_cmview_f* A,

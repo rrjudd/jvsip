@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_cmadd_f.c,v 2.1 2004/08/02 16:24:00 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 
 void (vsip_cmadd_f)(
   const vsip_cmview_f *a,

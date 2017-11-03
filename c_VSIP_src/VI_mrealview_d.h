@@ -14,8 +14,8 @@
 #ifndef _VI_MREALVIEW_D_H
 #define _VI_MREALVIEW_D_H
 
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
 
 static
 vsip_mview_d* VI_mrealview_d(

@@ -11,11 +11,11 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: VI_support_cpriv_f.h,v 2.0 2003/02/22 15:18:33 judd Exp $ */
-#include<vsip.h>
-#include<vsip_tviewattributes_f.h>
-#include<vsip_ctviewattributes_f.h>
-#include<vsip_blockattributes_f.h>
-#include<vsip_cblockattributes_f.h>
+#include"vsip.h"
+#include"vsip_tviewattributes_f.h"
+#include"vsip_ctviewattributes_f.h"
+#include"vsip_blockattributes_f.h"
+#include"vsip_cblockattributes_f.h"
 
 #ifdef VI_TVIEW_F_
 static vsip_tview_f *VI_tview_f(void)

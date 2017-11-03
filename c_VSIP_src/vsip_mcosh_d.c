@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mcosh_d.c,v 2.1 2003/04/22 02:19:58 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 #include"vsip_scalars.h"
 
 void (vsip_mcosh_d)(

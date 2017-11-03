@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_blockrelease_f.c,v 2.1 2006/06/08 22:19:26 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_f.h>
+#include"vsip.h"
+#include"vsip_blockattributes_f.h"
 
 vsip_scalar_f* (vsip_blockrelease_f)(
   vsip_block_f* b,

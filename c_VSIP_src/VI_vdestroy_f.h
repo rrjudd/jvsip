@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_vdestroy_f.h,v 2.0 2003/02/22 15:18:34 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 #ifndef VI_VDESTROY_F_H
 #define VI_VDESTROY_F_H
 

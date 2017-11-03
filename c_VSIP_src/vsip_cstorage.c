@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_cstorage.c,v 2.0 2003/02/22 15:18:47 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 
 vsip_cmplx_mem vsip_cstorage(
         void)

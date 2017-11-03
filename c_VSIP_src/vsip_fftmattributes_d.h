@@ -2,7 +2,7 @@
 /* SPAWARSYSCEN D881 */
 #ifndef _vsip_fftmattributes_d_h
 #define _vsip_fftmattributes_d_h 1
-#include<VI.h>
+#include"VI.h"
 #include"VI_ffttype.h"
 
 struct vsip_fftmattributes_d{

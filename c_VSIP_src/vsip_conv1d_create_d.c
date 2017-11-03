@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_conv1d_create_d.c,v 2.0 2003/02/22 15:18:44 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_conv1dattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_conv1dattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
 #include"VI_vcopy_d_d.h"
 #include"VI_cvfill_d.h"
 #include"VI_vrealview_d.h"

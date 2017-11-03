@@ -2,7 +2,7 @@
 /* SPAWARSYSCEN D881 */
 #ifndef _vsip_cfirattributes_f_h
 #define _vsip_cfirattributes_f_h 1
-#include<VI.h>
+#include"VI.h"
 
 struct vsip_cfirattributes_f{
      vsip_cvview_f  *h;

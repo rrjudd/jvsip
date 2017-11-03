@@ -15,9 +15,9 @@
 #ifndef _vsip_tviewattributes_si_h
 #define _vsip_tviewattributes_si_h 1
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_blockattributes_si.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_blockattributes_si.h"
 
 struct vsip_tviewattributes_si {
   vsip_block_si*      block;      /* memory data block object        */

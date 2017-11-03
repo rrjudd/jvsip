@@ -11,8 +11,8 @@
  // product, or process disclosed, or represents that its use would    /
  // not infringe privately owned rights                                /
  **********************************************************************/
-#include<vsip.h>
-#include<vsip_mviewattributes_uc.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_uc.h"
 
 void vsip_mfill_uc(
           vsip_scalar_uc alpha,

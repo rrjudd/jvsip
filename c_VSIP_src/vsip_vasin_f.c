@@ -15,8 +15,8 @@
 /* to include r->stride */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 #include"vsip_scalars.h"
 
 void (vsip_vasin_f)(

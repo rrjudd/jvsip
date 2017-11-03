@@ -10,8 +10,8 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_rcfirattributes_f.h>
+#include"vsip.h"
+#include"vsip_rcfirattributes_f.h"
 #include"VI_valldestroy_f.h"
 #include"VI_cvalldestroy_f.h"
 

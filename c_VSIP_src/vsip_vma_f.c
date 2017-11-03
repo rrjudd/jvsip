@@ -16,8 +16,8 @@
 /* vsip_vma_f.c Version 0.000 February 28, 1997 */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 void (vsip_vma_f)(
   const vsip_vview_f* a,

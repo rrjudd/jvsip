@@ -15,8 +15,8 @@
 /* to vsip_vsumval_i.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_i.h"
 
 vsip_scalar_i (vsip_vsumval_i)(
   const vsip_vview_i* a) {

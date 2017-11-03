@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vfill_uc.c,v 2.0 2003/02/22 15:19:13 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_uc.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_uc.h"
 
 void (vsip_vfill_uc)(vsip_scalar_uc alpha,
   const vsip_vview_uc* r) {

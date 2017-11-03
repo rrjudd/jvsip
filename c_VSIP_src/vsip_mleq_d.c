@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mleq_d.c,v 2.0 2003/02/22 15:18:57 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_mviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_mviewattributes_bl.h"
 
 void (vsip_mleq_d)(
   const vsip_mview_d *a,

@@ -13,8 +13,8 @@
 /* $Id: vsip_lud_getattr_f.c,v 2.0 2003/02/22 15:18:53 judd Exp $ */
 /* modified RJudd attr->N to attr->n */
 
-#include<vsip.h>
-#include<vsip_ludattributes_f.h>
+#include"vsip.h"
+#include"vsip_ludattributes_f.h"
 
 void vsip_lud_getattr_f(
           const vsip_lu_f *lud,

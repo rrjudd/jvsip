@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_clud_getattr_d.c,v 2.0 2003/02/22 15:18:41 judd Exp $ */
 /* modified RJudd attr->N to attr->n */
-#include<vsip.h>
-#include<vsip_cludattributes_d.h>
+#include"vsip.h"
+#include"vsip_cludattributes_d.h"
 
 void vsip_clud_getattr_d(
           const vsip_clu_d *lud,

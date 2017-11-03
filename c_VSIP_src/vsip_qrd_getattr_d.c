@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_qrd_getattr_d.c,v 2.0 2003/02/22 15:19:01 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_qrdattributes_d.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_d.h"
 
 void vsip_qrd_getattr_d(
          const vsip_qr_d *qr,

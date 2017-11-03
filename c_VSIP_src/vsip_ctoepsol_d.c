@@ -13,8 +13,8 @@
 /* $Id: vsip_ctoepsol_d.c,v 2.0 2003/02/22 15:18:49 judd Exp $ */
 /* vsip_ctoepsol_d.c */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 static void VI_cscale_d(
          vsip_cvview_d *a,

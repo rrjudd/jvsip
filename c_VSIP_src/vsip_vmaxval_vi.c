@@ -11,8 +11,8 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
 
 vsip_scalar_vi (vsip_vmaxval_vi)(
    const vsip_vview_vi* a, 

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_fft_destroy_f.c,v 2.0 2003/02/22 15:18:52 judd Exp $ */
 /* destroy vsip vectors created in vsip_xxfftxx_create_f */
-#include<vsip.h>
-#include<vsip_fftattributes_f.h>
+#include"vsip.h"
+#include"vsip_fftattributes_f.h"
 
 #ifdef VSIP_USE_FFTW_FOR_FFT_F
    #include"VI_fft_destroy_f_fftw.h"

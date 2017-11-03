@@ -11,9 +11,9 @@
  **********************************************************************/
 /* $Id: vsip_vgather_vi.c,v 2.1 2008/03/04 06:13:12 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_si.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_si.h"
+#include"vsip_vviewattributes_vi.h"
 
 void vsip_vgather_vi(
                      const vsip_vview_vi* a,

@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_cvdestroy_d.c,v 2.0 2003/02/22 15:18:50 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 #include"vsip_cvviewattributes_d.h"
 
 vsip_cblock_d* (vsip_cvdestroy_d)(

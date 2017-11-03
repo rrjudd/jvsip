@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cvcopyto_user_d.c,v 2.1 2007/04/18 17:15:17 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_cvcopyto_user_d)(
   const vsip_cvview_d* a,

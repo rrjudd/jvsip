@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mminmg_d.c,v 2.0 2003/02/22 15:18:58 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 void (vsip_mminmg_d)(
   const vsip_mview_d *a,

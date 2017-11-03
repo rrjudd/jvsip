@@ -9,10 +9,10 @@
  // apparatus,  product, or process disclosed, or represents that its  /
  // use would not infringe privately owned rights.                     /
  **********************************************************************/
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_vviewattributes_bl.h"
 
 void vsip_svlgt_f(
   vsip_scalar_f a,

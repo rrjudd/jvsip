@@ -17,9 +17,9 @@
 /* to incorporate rstride */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 #include"vsip_scalars.h"
 
 vsip_scalar_f (vsip_vmodulate_f)(

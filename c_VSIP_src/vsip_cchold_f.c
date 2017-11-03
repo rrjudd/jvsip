@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_cchold_f.c,v 2.4 2004/09/22 02:25:38 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_ccholdattributes_f.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_ccholdattributes_f.h"
 
 static
 int

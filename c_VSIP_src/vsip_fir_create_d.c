@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_fir_create_d.c,v 2.0 2003/02/22 15:18:52 judd Exp $ */
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_firattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_firattributes_d.h"
 #include"VI_vcreate_d.h"
 #include"VI_vcopy_d_d.h"
 #include"VI_vfill_d.h"

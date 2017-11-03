@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: VI_valldestroy_f.h,v 2.0 2003/02/22 15:18:34 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 #ifndef VI_VALLDESTROY_F_H
 #define VI_VALLDESTROY_F_H
 #include"VI_blockdestroy_f.h"

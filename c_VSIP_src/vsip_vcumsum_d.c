@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vcumsum_d.c,v 2.1 2004/04/03 14:19:04 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 void vsip_vcumsum_d(
    const vsip_vview_d *a,

@@ -15,8 +15,8 @@
 /* to add complex block support */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_csvadd_d)(
   vsip_cscalar_d alpha,

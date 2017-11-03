@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_cvadd_d.h,v 2.0 2003/02/22 15:18:31 judd Exp $ */
 
-#include<vsip.h>
-#include <vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include "vsip_cvviewattributes_d.h"
 
 #ifndef VI_CVADD_D_H
 #define VI_CVADD_D_H

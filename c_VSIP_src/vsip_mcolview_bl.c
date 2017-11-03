@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mcolview_bl.c,v 2.0 2003/02/22 15:18:55 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_bl.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_bl.h"
+#include"vsip_vviewattributes_bl.h"
 
 vsip_vview_bl* (vsip_mcolview_bl)(
    const vsip_mview_bl* v, 

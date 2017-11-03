@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_vsin_d.h,v 2.1 2003/04/22 02:19:57 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 #include"vsip_scalars.h"
 #ifndef VI_VSIN_D_H
 #define VI_VSIN_D_H

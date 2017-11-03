@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_rcmadd_d.c,v 2.0 2003/02/22 15:19:02 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_cmviewattributes_d.h"
 
 void (vsip_rcmadd_d)(
   const vsip_mview_d *a,

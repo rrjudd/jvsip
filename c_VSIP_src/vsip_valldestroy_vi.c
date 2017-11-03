@@ -40,7 +40,7 @@
 // Feb. 28, 1997	Added copyright notice.
 // Mar. 31, 1997	Modified to conform with VSIP decoder ring.	*/
 
-#include<vsip.h>
+#include"vsip.h"
 
 void (vsip_valldestroy_vi)(
   vsip_vview_vi* v) {	/* vector view  destructor	*/

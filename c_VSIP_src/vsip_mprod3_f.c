@@ -13,8 +13,8 @@
 /* new version done August 2000 */
 /* $Id: */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
 
 void (vsip_mprod3_f)(
     const vsip_mview_f* a,

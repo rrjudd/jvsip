@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mputrowstride_si.c,v 2.0 2003/02/22 15:19:00 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_si.h"
 
 vsip_mview_si* (vsip_mputrowstride_si)(
   vsip_mview_si* v, 

@@ -11,8 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_vtanh_f.c,v 2.0 2003/02/22 15:19:19 judd Exp $ */
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
 
 void (vsip_vtanh_f)(
   const vsip_vview_f *a,

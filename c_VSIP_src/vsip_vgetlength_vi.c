@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vgetlength_vi.c,v 2.0 2003/02/22 15:19:14 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
 
 vsip_length (vsip_vgetlength_vi)(
   const vsip_vview_vi* v) {

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_csvmul_d.h,v 2.1 2006/10/20 16:22:58 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
 #ifndef VI_CSVMUL_D_H
 #define VI_CSVMUL_D_H
 

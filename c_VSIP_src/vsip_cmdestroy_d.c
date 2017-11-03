@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cmdestroy_d.c,v 2.0 2003/02/22 15:18:42 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
 
 vsip_cblock_d* (vsip_cmdestroy_d)(
   vsip_cmview_d* v) {

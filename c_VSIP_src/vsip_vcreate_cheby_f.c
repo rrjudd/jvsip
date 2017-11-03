@@ -46,9 +46,9 @@
 */
 
 #include<math.h>
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 #include"vsip_scalars.h"
 #include"VI_vcreate_f.h"
 #include"VI_valldestroy_f.h"

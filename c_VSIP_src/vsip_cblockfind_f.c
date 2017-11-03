@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cblockfind_f.c,v 2.0 2003/02/22 15:18:38 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cblockattributes_f.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_f.h"
 
 void (vsip_cblockfind_f)(
   const vsip_cblock_f* b,

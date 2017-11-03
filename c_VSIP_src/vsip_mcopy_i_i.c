@@ -1,5 +1,5 @@
-#include<vsip.h>
-#include<vsip_mviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_i.h"
 
 void (vsip_mcopy_i_i)(
          const vsip_mview_i* a,

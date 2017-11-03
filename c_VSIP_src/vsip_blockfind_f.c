@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_blockfind_f.c,v 2.0 2003/02/22 15:18:37 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_f.h>
+#include"vsip.h"
+#include"vsip_blockattributes_f.h"
 
 vsip_scalar_f* (vsip_blockfind_f)(
   const vsip_block_f* b) {

@@ -16,9 +16,9 @@
 /* to vsip_vcopy_l_li.c */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_li.h>
-#include<vsip_vviewattributes_i.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_li.h"
+#include"vsip_vviewattributes_i.h"
 
 
 void (vsip_vcopy_i_li)(

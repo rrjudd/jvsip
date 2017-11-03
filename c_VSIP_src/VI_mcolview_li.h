@@ -14,9 +14,9 @@
 #ifndef VI_MCOLVIEW_LI_H
 #define VI_MCOLVIEW_LI_H 1
 
-#include<vsip.h>
-#include<vsip_mviewattributes_li.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_li.h"
+#include"vsip_vviewattributes_li.h"
 
 static
 vsip_vview_li* 

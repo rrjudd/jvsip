@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: VI_support_priv_d.h,v 2.0 2003/02/22 15:18:33 judd Exp $ */
-#include<vsip.h>
-#include<vsip_tviewattributes_d.h>
-#include<vsip_blockattributes_d.h>
+#include"vsip.h"
+#include"vsip_tviewattributes_d.h"
+#include"vsip_blockattributes_d.h"
 
 #ifdef VI_TVIEW_D_
 static vsip_tview_d *VI_tview_d(void)

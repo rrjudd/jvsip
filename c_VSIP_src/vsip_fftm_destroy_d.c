@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_fftm_destroy_d.c,v 2.0 2003/02/22 15:18:52 judd Exp $ */
 /* destroy vsip vectors created in vsip_xxfftxx_create_d */
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_fftmattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_fftmattributes_d.h"
 #include"VI_cvalldestroy_d.h"
 
 int vsip_fftm_destroy_d(vsip_fftm_d *fftm)

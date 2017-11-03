@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mindexbool.c,v 2.0 2003/02/22 15:18:57 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_mi.h>
-#include<vsip_mviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_mi.h"
+#include"vsip_mviewattributes_bl.h"
 
 vsip_length vsip_mindexbool(
    const vsip_mview_bl *r,

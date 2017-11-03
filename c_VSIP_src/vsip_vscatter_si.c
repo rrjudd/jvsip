@@ -15,9 +15,9 @@
 /* to vsip_vscatter_si.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_si.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_si.h"
+#include"vsip_vviewattributes_vi.h"
 
 void (vsip_vscatter_si)(
   const vsip_vview_si* a,

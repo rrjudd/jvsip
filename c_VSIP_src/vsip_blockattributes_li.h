@@ -31,8 +31,8 @@
 // Feb. 28, 1997Added copyright notice.
 // Mar. 31, 1997Modified to conform with VSIP decoder ring.*/
 
-#include<vsip.h>
-#include<VI.h>
+#include"vsip.h"
+#include"VI.h"
 
 struct vsip_blockattributes_li{
   vsip_scalar_li*   array;       /* external data array         */

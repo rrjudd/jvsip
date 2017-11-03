@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_clud_f.c,v 2.0 2003/02/22 15:18:41 judd Exp $ */
 /* vsip_clud_f */    
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cludattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cludattributes_f.h"
 
 static vsip_index VI_max_index_f(
        vsip_length N,
@@ -30,7 +30,7 @@ static vsip_index VI_max_index_f(
     vsip_index n;
     vsip_index index = 0; 
     for(n=1; n<A->col_length; n++){
-       ap_r += ast, ap_i += ast;
+        ap_r += ast; ap_i += ast;
        if((max0 = *ap_r * *ap_r + *ap_i * *ap_i) > max){
           max = max0;
           index = n;

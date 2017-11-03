@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cmmeanval_f.c,v 2.0 2003/02/22 15:18:43 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_f.h"
 
 vsip_cscalar_f (vsip_cmmeanval_f)(
   const vsip_cmview_f *a) {

@@ -13,8 +13,8 @@
 /* $Id: vsip_cqrd_destroy_d.c,v 2.0 2003/02/22 15:18:46 judd Exp $ */
 /* vsip_cqrd_destroy_d */
 
-#include<vsip.h>
-#include<vsip_cqrdattributes_d.h>
+#include"vsip.h"
+#include"vsip_cqrdattributes_d.h"
 #include"VI_cvalldestroy_d.h"
 
 int vsip_cqrd_destroy_d(

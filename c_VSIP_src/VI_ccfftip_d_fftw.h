@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: VI_ccfftip_d_fftw.h,v 2.0 2003/02/22 15:18:29 judd Exp $ */
 /* use fftw for calculation */
-#include<vsip.h>
-#include<vsip_fftattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_fftattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 #if !defined(VSIP_ASSUME_COMPLEX_IS_INTERLEAVED)
    #define __VSIPL_CVCOPY_TO_FFTW_D
    #define __VSIPL_CVCOPY_FROM_FFTW_D

@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_lusol_d.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 /* vsip_lusol_d */     
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_ludattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_ludattributes_d.h"
 #include"VI_mrowview_d.h"
 #include"VI_vget_d.h"
 

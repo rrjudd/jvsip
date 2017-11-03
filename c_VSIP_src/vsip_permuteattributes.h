@@ -16,7 +16,7 @@
 #ifndef _vsip_permute_h
 #define _vsip_permtue_h 1 
 
-#include<vsip.h>
+#include"vsip.h"
 
 struct vsip_permuteattributes{
                            

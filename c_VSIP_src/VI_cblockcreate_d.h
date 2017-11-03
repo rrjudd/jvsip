@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_cblockcreate_d.h,v 2.1 2006/06/08 22:19:26 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cblockattributes_d.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_d.h"
 
 #ifndef VI_CBLOCKCREATE_D_H
 #define VI_CBLOCKCREATE_D_H

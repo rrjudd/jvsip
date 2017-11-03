@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_mgetrowstride_d.c,v 2.0 2003/02/22 15:18:57 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_d.h"
 
 vsip_stride (vsip_mgetrowstride_d)(
   const vsip_mview_d* v) {

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vputstride_vi.c,v 2.0 2003/02/22 15:19:17 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
 
 vsip_vview_vi* (vsip_vputstride_vi)(
   vsip_vview_vi* v, 

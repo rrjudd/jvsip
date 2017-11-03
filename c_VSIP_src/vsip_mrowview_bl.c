@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mrowview_bl.c,v 2.0 2003/02/22 15:19:00 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_bl.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_bl.h"
+#include"vsip_vviewattributes_bl.h"
 
 vsip_vview_bl* (vsip_mrowview_bl)(
   const vsip_mview_bl* v, 

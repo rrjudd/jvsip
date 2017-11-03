@@ -18,9 +18,9 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_permuteattributes.h>
-#include<vsip_vviewattributes_vi.h>
+#include"vsip.h"
+#include"vsip_permuteattributes.h"
+#include"vsip_vviewattributes_vi.h"
 
 /* this will init or re-init */
 vsip_permute *vsip_permute_init(

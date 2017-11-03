@@ -12,12 +12,12 @@
 **********************************************************************/
 /* $Id: vsip_cholsol_d.c,v 2.2 2004/09/22 02:25:39 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_d.h>
-#include<vsip_blockattributes_d.h>
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_choldattributes_d.h>
+#include"vsip.h"
+#include"vsip_blockattributes_d.h"
+#include"vsip_blockattributes_d.h"
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_choldattributes_d.h"
 
 int
 vsip_cholsol_d(

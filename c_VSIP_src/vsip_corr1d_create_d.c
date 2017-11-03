@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_corr1d_create_d.c,v 2.0 2003/02/22 15:18:45 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_corr1dattributes_d.h>
+#include"vsip.h"
+#include"vsip_corr1dattributes_d.h"
 
 vsip_corr1d_d *vsip_corr1d_create_d(
      vsip_length M,

@@ -15,9 +15,9 @@
 /* to add complex block support */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_rcvsub_d)(
   const vsip_vview_d* a,

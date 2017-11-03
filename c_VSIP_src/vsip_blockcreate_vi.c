@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_blockcreate_vi.c,v 2.1 2006/06/08 22:19:26 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_vi.h>
+#include"vsip.h"
+#include"vsip_blockattributes_vi.h"
 
 vsip_block_vi* (vsip_blockcreate_vi)(
   vsip_length N, 

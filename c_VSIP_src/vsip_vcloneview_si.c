@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_vcloneview_si.c,v 2.0 2003/02/22 15:19:10 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_si.h"
 
 vsip_vview_si* vsip_vcloneview_si(
       const vsip_vview_si* vview_si)

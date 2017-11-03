@@ -10,8 +10,8 @@
 **********************************************************************/
 /* $Id: vsip_vinterp_linear_d.c,v 2.1 2008/09/14 20:48:40 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 
 #define F1(x0,x1,y0,y1,x,y) {y = y0 + (y1-y0)/(x1-x0) * (x - x0);}
 

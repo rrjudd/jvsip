@@ -10,8 +10,8 @@
  // product, or process disclosed, or represents that its use would    /
  // not infringe privately owned rights                                /
  **********************************************************************/
-#include<vsip.h>
-#include<vsip_vviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_li.h"
 
 vsip_scalar_li (vsip_vminval_li)(
    const vsip_vview_li* a, 

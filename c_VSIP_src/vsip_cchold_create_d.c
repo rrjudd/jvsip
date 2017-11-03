@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_cchold_create_d.c,v 2.0 2003/02/22 15:18:39 judd Exp $ */
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_ccholdattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_ccholdattributes_d.h"
 
 vsip_cchol_d*
 vsip_cchold_create_d(

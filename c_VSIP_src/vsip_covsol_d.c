@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_covsol_d.c,v 2.1 2006/05/07 15:54:34 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_qrdattributes_d.h>
+#include"vsip.h"
+#include"vsip_qrdattributes_d.h"
 #include"VI_mrowview_d.h"
 #include"VI_vput_d.h"
 #include"VI_vget_d.h"

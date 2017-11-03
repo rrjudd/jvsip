@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_fft_destroy_f_fftw.h,v 2.0 2003/02/22 15:18:32 judd Exp $ */
 /* fft if fftw is defined */
-#include<vsip.h>
-#include<vsip_fftattributes_f.h>
+#include"vsip.h"
+#include"vsip_fftattributes_f.h"
 #define __VSIPL_FFTWOBJ_FIN
 #include"VI_fftw_obj.h"
 #include"VI_cvalldestroy_f.h"

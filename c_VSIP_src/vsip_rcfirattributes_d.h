@@ -12,7 +12,7 @@
 
 #ifndef _vsip_rcfirattributes_d_h
 #define _vsip_rcfirattributes_d_h
-#include<VI.h>
+#include"VI.h"
 
 struct vsip_rcfirattributes_d{
    vsip_vview_d  *h;

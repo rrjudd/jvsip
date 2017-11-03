@@ -19,9 +19,9 @@
 /* to copy f to bl */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_vviewattributes_bl.h"
 
 void (vsip_vcopy_f_bl)(
   const vsip_vview_f* a,

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_svmul_d.h,v 2.0 2003/02/22 15:18:33 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 #ifndef VI_SVMUL_D_H
 #define VI_SVMUL_D_H
 

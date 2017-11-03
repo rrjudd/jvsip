@@ -11,9 +11,9 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_randu_d.c,v 2.1 2004/09/23 01:43:19 judd Exp $ */
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_randobject.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_randobject.h"
 
 vsip_scalar_d vsip_randu_d(
      vsip_randstate *state)

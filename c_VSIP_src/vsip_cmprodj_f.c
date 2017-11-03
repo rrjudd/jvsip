@@ -15,9 +15,9 @@
 /* April 20, 1998 1,2 to row,col */
 /* Remove Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 void (vsip_cmprodj_f)(
   const vsip_cmview_f* A,

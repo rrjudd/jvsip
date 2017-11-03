@@ -11,7 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: VI_ccfftop_d_def.h,v 2.1 2009/12/26 19:19:48 judd Exp $ */
-#include<vsip_fftattributes_d.h>
+#include"vsip_fftattributes_d.h"
 #include"VI_fft_building_blocks_d.h"
 #include"VI_ccfftip_d.h"
 

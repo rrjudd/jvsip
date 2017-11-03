@@ -11,8 +11,8 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_conv1d_getattr_f.c,v 2.0 2003/02/22 15:18:45 judd Exp $ */
-#include<vsip.h>
-#include<vsip_conv1dattributes_f.h>
+#include"vsip.h"
+#include"vsip_conv1dattributes_f.h"
 
 void vsip_conv1d_getattr_f(
       const vsip_conv1d_f *conv,

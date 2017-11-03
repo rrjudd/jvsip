@@ -16,9 +16,9 @@
 /* vsip_cmprodj_d.c used cmprod */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 
 void (vsip_cmprodh_d)(
   const vsip_cmview_d* A,

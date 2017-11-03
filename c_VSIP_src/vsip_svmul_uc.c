@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_svmul_uc.c,v 2.1 2007/04/16 18:39:38 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_uc.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_uc.h"
 
 void (vsip_svmul_uc)(
   vsip_scalar_uc a,

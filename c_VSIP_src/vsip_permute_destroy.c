@@ -19,8 +19,8 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include<vsip.h>
-#include<vsip_permuteattributes.h>
+#include"vsip.h"
+#include"vsip_permuteattributes.h"
 
 void vsip_permute_destroy(vsip_permute *perm){
    if(perm){

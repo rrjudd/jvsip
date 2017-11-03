@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id: vsip_malldestroy_si.c,v 2.0 2003/02/22 15:18:54 judd Exp $ */
 
-#include<vsip.h>
+#include"vsip.h"
 
 void (vsip_malldestroy_si)(
   vsip_mview_si* mview_si) {

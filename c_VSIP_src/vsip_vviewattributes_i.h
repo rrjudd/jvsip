@@ -41,9 +41,9 @@
 // Feb. 28, 1997	Added copyright notice.
 // Mar. 31, 1997	Modified to conform with VSIP decoder ring.	*/
 
-#include<vsip.h>
-#include<VI.h>
-#include<vsip_blockattributes_i.h>
+#include"vsip.h"
+#include"VI.h"
+#include"vsip_blockattributes_i.h"
 
 struct vsip_vviewattributes_i {
   vsip_block_i*	block;		/* memory data block object	*/

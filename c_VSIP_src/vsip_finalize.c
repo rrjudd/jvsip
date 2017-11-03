@@ -11,7 +11,7 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_finalize.c,v 2.2 2009/09/05 18:03:19 judd Exp $ */
-#include<vsip.h>
+#include"vsip.h"
 
 int vsip_finalize(
          void *ptr){

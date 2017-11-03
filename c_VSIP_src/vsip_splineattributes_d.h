@@ -10,8 +10,8 @@
 **********************************************************************/
 /* $Id: vsip_splineattributes_d.h,v 2.1 2008/09/14 20:50:30 judd Exp $ */
 
-#include<vsip.h>
-#include<VI.h>
+#include"vsip.h"
+#include"VI.h"
 
 struct vsip_splineattributes_d{
    vsip_scalar_d *h,*b,*u,*v,*z;

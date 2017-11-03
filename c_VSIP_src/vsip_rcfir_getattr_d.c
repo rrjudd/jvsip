@@ -9,8 +9,8 @@
  // product, or process disclosed, or represents that its use would    /
  // not infringe privately owned rights                                /
  **********************************************************************/
-#include<vsip.h>
-#include<vsip_rcfirattributes_d.h>
+#include"vsip.h"
+#include"vsip_rcfirattributes_d.h"
 
 void vsip_rcfir_getattr_d(
      const vsip_rcfir_d *fir,

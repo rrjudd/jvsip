@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cmcopyfrom_user_d.c,v 2.1 2007/04/18 17:15:17 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
 
 void (vsip_cmcopyfrom_user_d)(
   vsip_scalar_d* const re,

@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_cblockrelease_f.c,v 2.1 2006/06/08 22:19:26 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_cblockattributes_f.h>
+#include"vsip.h"
+#include"vsip_cblockattributes_f.h"
 
 void (vsip_cblockrelease_f)(
   vsip_cblock_f* b,

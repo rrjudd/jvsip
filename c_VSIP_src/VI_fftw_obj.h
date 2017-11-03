@@ -17,9 +17,9 @@
 #ifndef _VI_FFTW_OBJ_H
 #define _VI_FFTW_OBJ_H
 #include<fftw.h>
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cvviewattributes_d.h"
 #include<VU.h>
 
 typedef struct {

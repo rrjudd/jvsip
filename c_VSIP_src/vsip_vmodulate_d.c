@@ -17,9 +17,9 @@
 /* to incorporate rstride */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_cvviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_cvviewattributes_d.h"
 #include"vsip_scalars.h"
 
 vsip_scalar_d (vsip_vmodulate_d)(

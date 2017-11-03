@@ -12,10 +12,10 @@
 **********************************************************************/
 /* $Id: vsip_chold_f.c,v 2.3 2004/09/22 02:25:39 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_choldattributes_f.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_choldattributes_f.h"
 
 static
 int

@@ -15,8 +15,8 @@
 /* to vsip_vswap_si.c */
 /* Removed Tisdale error checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_si.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_si.h"
 
 void (vsip_vswap_si)(
   const vsip_vview_si* a,

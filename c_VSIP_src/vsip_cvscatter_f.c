@@ -14,9 +14,9 @@
 /* Modified RJudd June 28, 1998 */
 /* to add complex block support */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
+#include"vsip_cvviewattributes_f.h"
 
 void (vsip_cvscatter_f)(
   const vsip_cvview_f* a,

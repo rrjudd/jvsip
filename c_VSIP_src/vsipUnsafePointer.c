@@ -6,11 +6,11 @@
 //  Copyright © 2016 JVSIP. All rights reserved.
 */
  
-#include<vsip.h>
-#include<vsip_blockattributes_d.h>
-#include<vsip_blockattributes_f.h>
-#include<vsip_cblockattributes_d.h>
-#include<vsip_cblockattributes_f.h>
+#include"vsip.h"
+#include"vsip_blockattributes_d.h"
+#include"vsip_blockattributes_f.h"
+#include"vsip_cblockattributes_d.h"
+#include"vsip_cblockattributes_f.h"
 
 double* vsipUnsafeBlockPtr_d(vsip_block_d *blk, vsip_stride *stride){
     *stride = blk->rstride;

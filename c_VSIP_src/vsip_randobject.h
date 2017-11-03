@@ -2,7 +2,7 @@
 /* SPAWARSYSCEN D881 */
 #ifndef _vsip_randobject_h
 #define _vsip_randobject_h 1
-#include<VI.h>
+#include"VI.h"
 
 struct vsip_randobject{
      vsip_scalar_ue32  a; /* multiplier in LCG */

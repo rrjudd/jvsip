@@ -11,10 +11,10 @@
 // not infringe privately owned rights                                /
 **********************************************************************/
 /* $Id: vsip_cvrandu_d.c,v 2.0 2003/02/22 15:18:51 judd Exp $ */
-#include<vsip.h>
-#include<vsip_cvviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip_randobject.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip_randobject.h"
 
 void vsip_cvrandu_d(
      vsip_randstate *state,

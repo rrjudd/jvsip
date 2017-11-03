@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: vsip_fir_destroy_f.c,v 2.0 2003/02/22 15:18:53 judd Exp $ */
 /* destroy fir object */
-#include<vsip.h>
-#include<vsip_firattributes_f.h>
+#include"vsip.h"
+#include"vsip_firattributes_f.h"
 #include"VI_valldestroy_f.h"
 
 int vsip_fir_destroy_f(

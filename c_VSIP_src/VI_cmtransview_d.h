@@ -15,8 +15,8 @@
 #ifndef _VI_CMTRANSVIEW_D_H
 #define _VI_CMTRANSVIEW_D_H
 
-#include<vsip.h>
-#include<vsip_cmviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_cmviewattributes_d.h"
 
 static
 vsip_cmview_d*

@@ -13,9 +13,9 @@
 /* $Id: vsip_vfirst_vi.c,v 2.1 2007/01/30 20:24:04 judd Exp $ */
 
 
-#include<vsip.h>
-#include<vsip_vviewattributes_vi.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_vi.h"
+#include"vsip_vviewattributes_bl.h"
 
 vsip_index (vsip_vfirst_vi)(
   vsip_index j,

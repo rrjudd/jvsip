@@ -12,7 +12,7 @@
 **********************************************************************/
 /* $Id */
 
-#include<vsip.h>
+#include"vsip.h"
 #ifndef VI_VCREATE_F_H
 #define VI_VCREATE_F_H
 

@@ -14,9 +14,9 @@
 /* Modified to vsip_cmvprod_f.c */
 /* Removed Development Mode RJudd Sept 00 */
 
-#include<vsip.h>
-#include<vsip_cvviewattributes_f.h>
-#include<vsip_cmviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_cvviewattributes_f.h"
+#include"vsip_cmviewattributes_f.h"
 
 void (vsip_cmvprod_f)(
   const vsip_cmview_f* A,

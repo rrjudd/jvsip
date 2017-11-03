@@ -18,9 +18,9 @@
  // not infringe privately owned rights                                /
  **********************************************************************/
 
-#include <vsip_blockattributes_vi.h>
-#include <vsip_vviewattributes_vi.h>
-#include <vsip.h>
+#include "vsip_blockattributes_vi.h"
+#include "vsip_vviewattributes_vi.h"
+#include "vsip.h"
 
 #define VRAMP(x) { \
     vsip_scalar_vi k; \

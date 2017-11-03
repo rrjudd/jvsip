@@ -14,8 +14,8 @@
 
 #ifndef VI_VACOS_D_H
 #define VI_VACOS_D_H
-#include<vsip.h>
-#include<vsip_vviewattributes_d.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_d.h"
 #include"vsip_scalars.h"
 
 static

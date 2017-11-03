@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_mcopy_f_li.c,v 2.0 2003/02/22 15:18:55 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_mviewattributes_f.h>
-#include<vsip_mviewattributes_li.h>
+#include"vsip.h"
+#include"vsip_mviewattributes_f.h"
+#include"vsip_mviewattributes_li.h"
 
 void (vsip_mcopy_f_li)(
   const vsip_mview_f *a,

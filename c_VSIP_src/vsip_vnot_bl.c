@@ -13,8 +13,8 @@
 /* $Id: vsip_vnot_bl.c,v 2.0 2003/02/22 15:19:16 judd Exp $ */
 /* Remove Tisdale Error Checking Sept 00 */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_bl.h"
 
 void (vsip_vnot_bl)(
   const vsip_vview_bl *a,

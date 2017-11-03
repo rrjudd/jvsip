@@ -12,8 +12,8 @@
 **********************************************************************/
 /* $Id: VI_blockdestroy_mi.h,v 2.0 2003/02/22 15:18:27 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_blockattributes_mi.h>
+#include"vsip.h"
+#include"vsip_blockattributes_mi.h"
 
 #ifndef VI_BLOCKDESTROY_MI_H
 #define VI_BLOCKDESTROY_MI_H

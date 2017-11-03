@@ -13,9 +13,9 @@
 **********************************************************************/
 /* $Id: vsip_gems_f.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 
-#include<vsip_mviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip.h>
+#include"vsip_mviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip.h"
 
 void vsip_gems_f(vsip_scalar_f alpha,
                    const vsip_mview_f *AA,

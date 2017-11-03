@@ -13,9 +13,9 @@
 **********************************************************************/
 /* $Id: vsip_gemp_f.c,v 2.3 2008/03/03 18:36:36 judd Exp $ */
 
-#include<vsip_mviewattributes_f.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip.h>
+#include"vsip_mviewattributes_f.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip.h"
 
 #define VI_GEMP_jki_F {\
 vsip_scalar_f *ap_ik = ap0, *ap_0k = ap0;\

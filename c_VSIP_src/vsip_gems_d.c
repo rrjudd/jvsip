@@ -12,9 +12,9 @@
 **********************************************************************/
 /* $Id: vsip_gems_d.c,v 2.1 2003/03/08 14:43:34 judd Exp $ */
 
-#include<vsip_mviewattributes_d.h>
-#include<vsip_vviewattributes_d.h>
-#include<vsip.h>
+#include"vsip_mviewattributes_d.h"
+#include"vsip_vviewattributes_d.h"
+#include"vsip.h"
 
 void vsip_gems_d(vsip_scalar_d alpha,
                    const vsip_mview_d *AA,

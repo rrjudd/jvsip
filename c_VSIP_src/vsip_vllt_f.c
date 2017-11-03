@@ -14,9 +14,9 @@
 /* Modified RJudd January 2, 1999 */
 /* to add rstride */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_vviewattributes_bl.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_vviewattributes_bl.h"
 
 void (vsip_vllt_f)(
   const vsip_vview_f* a,

@@ -12,9 +12,9 @@
  **********************************************************************/
 /* $Id: vsip_vrealview_f.c,v 2.1 2003/03/08 14:43:35 judd Exp $ */
 
-#include<vsip.h>
-#include<vsip_vviewattributes_f.h>
-#include<vsip_cvviewattributes_f.h>
+#include"vsip.h"
+#include"vsip_vviewattributes_f.h"
+#include"vsip_cvviewattributes_f.h"
 
 vsip_vview_f* vsip_vrealview_f(
                                const vsip_cvview_f* v) {
