@@ -72,7 +72,7 @@ class SwiftVsipTests: XCTestCase {
         print("Known x vector");x.mPrint(fmt)
         print("Calculated b=Ax vector"); b.mPrint(fmt)
         // check that U S V^t gives back A
-        let Ac = A.copy  // Ac is used for decompostion to keep original A
+        let Ac = A.newCopy  // Ac is used for decompostion to keep original A
         let Ar = A.empty // new data space for result
         let svd = Vsip.Svd(view: Ac)
         let sValues = svd.decompose(Ac)
@@ -93,7 +93,7 @@ class SwiftVsipTests: XCTestCase {
         let xe = x.empty  // x estimate for backsolve
         Vsip.prod(U.transview, times: b, resultsIn: xe)
         Vsip.div(numerator: xe, denominator: sValues, quotient: xe)
-        Vsip.prod(V, times: xe.copy, resultsIn: xe)
+        Vsip.prod(V, times: xe.newCopy, resultsIn: xe)
         print("solve for estimate of x from b");xe.mPrint(fmt)
         Vsip.sub(x, subtract: xe, resultsIn: xe)
         normChk = Vsip.Jvsip.normFro(view: xe).reald/Vsip.Jvsip.normFro(view: x).reald
@@ -105,16 +105,16 @@ class SwiftVsipTests: XCTestCase {
         let v = Vsip.Vector(length: n, type: .d)
         let A = Vsip.Matrix(columnLength: n, rowLength: n, type: .d, major: VSIP_ROW)
         let I = A.empty
-        I.fill(0.0)
+        I.fill(Vsip.Scalar(0.0))
         let Id = I.diagview
-        Id.fill(1.0)
+        Id.fill(Vsip.Scalar(1.0))
         v[0] = Vsip.Scalar(2.0); v[1] = Vsip.Scalar(3.0); v[2] = Vsip.Scalar(1.0)
         Vsip.outer(alpha: Vsip.Scalar(1.0), vecX: v, vecY: v, matC: A)
         let beta = Vsip.Scalar(2.0 / Vsip.dot(product: v, with: v).reald)
         Vsip.mul(beta.reald, A, resultsIn: A)
         let P = A.empty
-        P.fill(0.0)
-        P.diagview.fill(1.0)
+        P.fill(Vsip.Scalar(0.0))
+        P.diagview.fill(Vsip.Scalar(1.0))
         Vsip.sub(P, subtract: A, resultsIn: P)
         print(beta.reald)
         A.mPrint("4.3")
@@ -132,7 +132,7 @@ class SwiftVsipTests: XCTestCase {
         // generate some data
         let _ = A.randn(8, portable: true)
         // keep a copy of original
-        let Acopy = A.copy
+        let Acopy = A.newCopy
         // make some space for an estimate of A to be calculated with Q and R
         let Ae = A.empty
         // get (Q,R)
@@ -236,12 +236,12 @@ class SwiftVsipTests: XCTestCase {
         print("beta = \(beta)")
         print("on input matrix c = "); cnt.mPrint("6.4")
         // for manual calculation
-        let cexact = cnt.copy
+        let cexact = cnt.newCopy
         Vsip.mul(beta, cexact, resultsIn: cexact)
-        let aexact = a.copy
+        let aexact = a.newCopy
         Vsip.mul(alpha, aexact, resultsIn: aexact)
-        let bexact = b.transview.copy
-        Vsip.herm(b, resultsIn: bexact)
+        let bexact = b.transview.newCopy
+        Vsip.herm(b, output: bexact)
         let tmp = cnt.empty
         Vsip.prod(aexact, prod: bexact, resultsIn: tmp)
         Vsip.add(cexact, tmp, resultsIn: cexact)
@@ -296,8 +296,15 @@ class SwiftVsipTests: XCTestCase {
     func testPut() {
         print("Testing Put")
         let v = Vsip.Vector(length: 10, type: .d)
-        v.fill(0.0)
+        v.fill(Vsip.Scalar(0.0))
         v.put(1.0,1.3,1.4,1.2,0.9,3.9,5.6)
+        v.mPrint("3.2")
+    }
+    func testKvc(){
+        let v = Vsip.Vector(length: 35, type: .d)
+        let _ = v.ramp(Vsip.Scalar(0.1), increment: Vsip.Scalar(0.2))
+        v.setValue(10, forKey: "length")
+        v.setValue(2, forKey: "stride")
         v.mPrint("3.2")
     }
 }

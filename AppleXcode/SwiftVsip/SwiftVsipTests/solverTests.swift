@@ -30,17 +30,17 @@ class solverTests: XCTestCase {
         /* Solving for X in A X = B */
         /* A is (M,N) M >= N; X is (N,K), B is (N,K) */
         for i in 0..<A.rowLength {  // Data for matrix A; fill by column
-            let ac = A.colview(col: i)
-            let _ = ac.real.ramp(-1.3, increment: 1.1)
-            let _ = ac.imag.ramp(1.3, increment: -1.1)
+            let ac = A.col(i)
+            let _ = ac.real.ramp(Vsip.Scalar(-1.3), increment: Vsip.Scalar(1.1))
+            let _ = ac.imag.ramp(Vsip.Scalar(1.3), increment: Vsip.Scalar(-1.1))
         }
         let ad = A.diagview
-        let _ = ad.real.ramp(3.0, increment: 1.2)
-        let _ = ad.imag.ramp(3.0, increment: -1.2)
+        let _ = ad.real.ramp(Vsip.Scalar(3.0), increment: Vsip.Scalar(1.2))
+        let _ = ad.imag.ramp(Vsip.Scalar(3.0), increment: Vsip.Scalar(-1.2))
         for i in 0..<BX.columnLength {  //Data for matrix B; fill by row
-            let bxr = BX.rowview(row: i)
-            let _ = bxr.real.ramp(0.1, increment: Double(i)/3.0)
-            let _ = bxr.imag.ramp(0.2, increment: Double(i)/3.0)
+            let bxr = BX.row(i)
+            let _ = bxr.real.ramp(Vsip.Scalar(0.1), increment: Vsip.Scalar(Double(i)/3.0))
+            let _ = bxr.imag.ramp(Vsip.Scalar(0.2), increment: Vsip.Scalar(Double(i)/3.0))
         }
         print("Input data \n")
         print("A = "); A.mPrint("4.2")
@@ -55,7 +55,7 @@ class solverTests: XCTestCase {
         print("\nA is input matrix, AT (AH) is transpose (Hermitian) of A\n");
         print("Solve for X least squares using (AH prod A ) prod X = AH prod B\n");
         /* calculate matrix AHA = AH * A */
-        Vsip.herm(A, resultsIn: AH);
+        Vsip.herm(A, output: AH);
         Vsip.prod(AH, prod: A,resultsIn: AHA);
         /* calculate AH * B */
         Vsip.prod(AH, prod: BX, resultsIn: X);
@@ -136,8 +136,8 @@ class solverTests: XCTestCase {
         
         // Ident[6][6] => identity matrix
         let Ident = Vsip.Matrix(columnLength: 6, rowLength: 6, type: .d, major: VSIP_COL)
-        Ident.fill(0.0)
-        Ident.diagview.fill(1.0)
+        Ident.fill(Vsip.Scalar(0.0))
+        Ident.diagview.fill(Vsip.Scalar(1.0))
         
         // put data in our matrices
         // we could use (for instance) > let AC = A.copy but we also test view indexing for robustness

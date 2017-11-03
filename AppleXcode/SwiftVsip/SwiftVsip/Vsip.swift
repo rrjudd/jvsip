@@ -53,14 +53,14 @@ public final class Vsip {
         var retval = ""
         func charCheck(_ char: Character) -> Bool {
             let validChars = "0123456789."
-            for item in validChars.characters{
+            for item in validChars{
                 if char == item {
                     return true
                 }
             }
             return false
         }
-        for char in fmt.characters{
+        for char in fmt{
             if charCheck(char){
                 retval.append(char)
             }
@@ -795,7 +795,7 @@ public final class Vsip {
         }
         
     }
-    public class View {
+    public class View: NSObject {
         public enum Shape: String {
             case v // vector
             case m // matrix
@@ -813,6 +813,7 @@ public final class Vsip {
             self.shape = shape
             jInit = JVSIP()
             myId = jInit.myId
+            super.init()
         }
         func real(_ vsip: OpaquePointer) -> (Block, OpaquePointer){
             let t = (self.type, self.shape)
@@ -995,11 +996,32 @@ public final class Vsip {
         }
     }
     // MARK: - Vector Class
-    public class Vector : View {
+    public class Vector : View, Sequence, NSTableViewDataSource {
+        public func numberOfRows(in tableView: NSTableView) -> Int {
+            return self.length
+        }
+        public func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+            return self[row]
+        }
+        public func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
+            self[row] = object as! Vsip.Scalar
+        }
         fileprivate var tryVsip: OpaquePointer? = nil
         public var vsip: OpaquePointer {
             get {
                 return tryVsip!
+            }
+        }
+        public func makeIterator() -> AnyIterator<Vsip.Scalar> {
+            var vindex = 0
+            return AnyIterator {
+                let nextIndex = vindex
+                guard vindex < self.length else {
+                    return nil
+                }
+                vindex += 1
+                // return DSPDoubleComplex(real: self.rdata[nextIndex], imag: self.idata[nextIndex])
+                return self[nextIndex]
             }
         }
         // vector bind
@@ -1326,7 +1348,7 @@ public final class Vsip {
         public func empty(_ type: Block.Types) -> Vector {
             return Vector(length: self.length, type: type)
         }
-        public var copy: Vector {
+        public var newCopy: Vector {
             let view = self.empty
             switch view.type{
             case .f:
@@ -1416,25 +1438,9 @@ public final class Vsip {
             case .vi:
                 vsip_vramp_vi(start.vsip_vi, increment.vsip_vi, self.vsip)
             default:
-                print("Type " + self.type.rawValue + " not supported for ramp")
+                preconditionFailure("Type " + self.type.rawValue + " not supported for ramp")
             }
             return self
-        }
-        public func ramp(_ start : Double, increment : Double) -> Vector {
-            let s = Scalar(start)
-            let i = Scalar(increment)
-            return ramp(s, increment: i)
-        }
-        public func ramp(_ start : Float, increment : Float) -> Vector {
-            let s = Scalar(start)
-            let i = Scalar(increment)
-            return ramp(s, increment: i)
-        }
-        
-        public func ramp(_ start : Int, increment : Int) -> Vector {
-            let s = Scalar(start)
-            let i = Scalar(increment)
-            return ramp(s, increment: i)
         }
     
         public func fill(_ value: Scalar){
@@ -1458,20 +1464,8 @@ public final class Vsip {
             case .uc:
                 vsip_vfill_uc(value.vsip_uc,self.vsip)
             default:
-                break
+                preconditionFailure("Type " + self.type.rawValue + " not supported for fill")
             }
-        }
-        public func fill(_ value: Double){
-            self.fill(Scalar(value))
-        }
-        public func fill(_ value: Int){
-            self.fill(Scalar(value))
-        }
-        public func fill(_ value: vsip_cscalar_d){
-            self.fill(Scalar(value))
-        }
-        public func fill(_ value: vsip_cscalar_f){
-            self.fill(Scalar(value))
         }
         public func randn(_ seed: vsip_index, portable: Bool) -> Vector {
             let state = Vsip.Rand(seed: seed, portable: portable)
@@ -1494,7 +1488,7 @@ public final class Vsip {
             let fmt = Vsip.formatFmt(format)
             var retval = ""
             let n = self.length - 1
-            for i in 0...n{
+            for i in 0...n {
                 retval += (i == 0) ? "[" : " "
                 retval += Vsip.scalarString(fmt, value: self[i])
                 retval += (i == n) ?  "]\n" : ";\n"
@@ -1627,11 +1621,26 @@ public final class Vsip {
         }
     }
     // MARK: - Matrix Class
-    public class Matrix : View {
+    public class Matrix : View, Sequence, NSTableViewDataSource {
+        public func numberOfRows(in tableView: NSTableView) -> Int {
+            return self.columnLength
+        }
         fileprivate var tryVsip: OpaquePointer?
         public var vsip: OpaquePointer {
             get {
                 return tryVsip!
+            }
+        }
+        public func makeIterator() -> AnyIterator<Vsip.Vector> {
+            var vindex = 0
+            return AnyIterator {
+                let nextIndex = vindex
+                guard vindex < self.columnLength else {
+                    return nil
+                }
+                vindex += 1
+                // return DSPDoubleComplex(real: self.rdata[nextIndex], imag: self.idata[nextIndex])
+                return self.row(nextIndex)
             }
         }
         // matrix bind
@@ -2036,15 +2045,6 @@ public final class Vsip {
                 break
             }
         }
-        public func fill(_ value: Double){
-            self.fill(Scalar(value))
-        }
-        public func fill(_ value: vsip_cscalar_d){
-            self.fill(Scalar(value))
-        }
-        public func fill(_ value: vsip_cscalar_f){
-            self.fill(Scalar(value))
-        }
         
         public func randn(_ seed: vsip_index, portable: Bool) -> Matrix{
             let state = Vsip.Rand(seed: seed, portable: portable)
@@ -2066,7 +2066,7 @@ public final class Vsip {
             return Matrix(columnLength: self.columnLength, rowLength: self.rowLength, type: type, major: VSIP_ROW)
         }
         // copy is new data space, view of same size, copy of data
-        public var copy: Matrix {
+        public var newCopy: Matrix {
             let view = self.empty
             switch view.type{
             case .f:
@@ -2189,7 +2189,7 @@ public final class Vsip {
         public var diagview: Vector {
             return self.diagview(diagIndex: 0)
         }
-        public func rowview(row: Int) -> Vector {
+        public func row(_ row: Int) -> Vector {
             let blk = self.block
             switch self.type {
             case .f:
@@ -2252,7 +2252,7 @@ public final class Vsip {
             }
             preconditionFailure("Failed to return valid vsip diagview")
         }
-        public func colview(col: Int) -> Vector {
+        public func col(_ col: Int) -> Vector {
             let blk = self.block
             switch self.type {
             case .f:
@@ -4839,11 +4839,11 @@ public final class Vsip {
             let qrd = Vsip.QRD(type: aMatrix.type, columnLength: aMatrix.columnLength, rowLength: aMatrix.rowLength, qopt: VSIP_QRD_SAVEQ)
             let Q = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.columnLength, type: aMatrix.type, major: VSIP_ROW)
             let R = Vsip.Matrix(columnLength: qrd.columnLength, rowLength: qrd.rowLength, type: aMatrix.type, major: VSIP_ROW)
-            let aCopy = aMatrix.copy
-            Q.fill(0.0)
-            R.fill(0.0)
+            let aCopy = aMatrix.newCopy
+            Q.fill(Scalar(0.0))
+            R.fill(Scalar(0.0))
             print("create/destroy Q.diagview")
-            Q.diagview.fill(1.0)
+            Q.diagview.fill(Vsip.Scalar(1.0))
             print("call qrd.decompose")
             let _ = qrd.decompose(aMatrix)
             qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
