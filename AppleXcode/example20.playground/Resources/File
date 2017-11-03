@@ -1,0 +1,30 @@
+var filePath = Bundle.main.path(forResource: "param_file", ofType: nil)
+
+let params = try! String(contentsOfFile: filePath!)
+let myParams = Param(parameterFile: filePath!)
+// print(params)
+let p = Array(params.characters)
+let pd:Dictionary = ["cspeed":1500,"Nts":1024]
+let pd2 = Dictionary(dictionaryLiteral: ("cspeed", 1500),("NTS", 1024))
+var mark: [Int] = []
+var i = 0
+params.endIndex
+params.startIndex
+let input = params.cString(using: .ascii)!
+var position: String.CharacterView.Index
+let end = input.endIndex
+let c = "*".cString(using: .ascii)![0]
+c == params.cString(using: .ascii)![0]
+for item in input {
+if c == item {
+mark.append(i)
+}
+i += 1
+}
+print(mark)
+let parts = params.components(separatedBy: "*")
+for item in parts {
+print(item)
+}
+let x = parts[1].components(separatedBy: " ")[0]
+Double(x)
