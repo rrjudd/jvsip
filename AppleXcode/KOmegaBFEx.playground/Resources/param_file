@@ -1,0 +1,20 @@
+*1500   c
+*1024   Fs sample rate
+*1024   Nts
+*1.5    Dsens
+*128    Nsens
+*8      Data sets to average
+*6      nsim_freqs  
+*450    hertz 0 
+*300    hertz 1
+*150    hertz 2
+*50     hertz 3
+*55     hertz 4
+*95     hertz 5
+*50     degrees 0
+*130    degrees 1
+*130    degrees 2
+*90     degrees 3
+*120    degrees 4
+*70     degrees 5
+*64     Nnoise;
