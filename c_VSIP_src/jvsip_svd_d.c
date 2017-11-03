@@ -2207,22 +2207,22 @@ static void chouseProd_d(vsip_cvview_d *v, vsip_cmview_d *A, vsip_cvview_d*w)
     }
     beta=2.0/(t1+t2);
     w->length = A->row_length;
-    for((void)(i=0), wi=0; i<N; (void)(i+=ArStrd), wi+=wstrd){
+    for(i=0, wi=0; i<N; i+=ArStrd,wi+=wstrd){
         vsip_scalar_d *ar_r=&Aptr_r[i], *ar_i=&Aptr_i[i];
         vsip_scalar_d re=0.0,im=0.0;
-        for((void)(j=0), vi=0; j<M; (void)(j+=AcStrd), vi+=vstrd){
+        for(j=0, vi=0; j<M; j+=AcStrd, vi+=vstrd){
             re +=  ar_r[j] * vptr_r[vi] + ar_i[j] * vptr_i[vi];
             im += -ar_r[j] * vptr_i[vi] + ar_i[j] * vptr_r[vi];
         }
         wptr_r[wi] = re;
         wptr_i[wi] = -im;
     }
-    for((void)(i=0), vi=0; i<M; (void)(i+=AcStrd), vi+=vstrd){
+    for(i=0, vi=0; i<M; i+=AcStrd, vi+=vstrd){
         vsip_scalar_d cr = beta * vptr_r[vi];
         vsip_scalar_d ci = beta * vptr_i[vi];
         vsip_scalar_d *aprp=Aptr_r+i;
         vsip_scalar_d *apip=Aptr_i+i;
-        for((void)(j=0, wi=0); j<N; (void)(j+=ArStrd), wi+=wstrd){
+        for(j=0, wi=0; j<N; j+=ArStrd, wi+=wstrd){
             vsip_scalar_d yr =  wptr_r[wi];
             vsip_scalar_d yi = -wptr_i[wi];
             aprp[j] -= (cr * yr - ci * yi);
@@ -2255,22 +2255,22 @@ static void cprodHouse_d(vsip_cmview_d *A, vsip_cvview_d *v, vsip_cvview_d *w)
     beta=2.0/(t1+t2);
     
     w->length = A->col_length;
-    for(i=0, wi=0; i<M; (void)(i+=AcStrd),wi+=wstrd){
+    for(i=0, wi=0; i<M; i+=AcStrd, wi+=wstrd){
         vsip_scalar_d *ac_r=&Aptr_r[i], *ac_i=&Aptr_i[i];
         vsip_scalar_d re=0.0,im=0.0;
-        for(j=0, vi=0; j<N; (void)(j+=ArStrd), vi+=vstrd){
+        for(j=0, vi=0; j<N; j+=ArStrd, vi+=vstrd){
             re += ac_r[j] * vptr_r[vi] - ac_i[j] * vptr_i[vi];
             im += ac_r[j] * vptr_i[vi] + ac_i[j] * vptr_r[vi];
         }
         wptr_r[wi] = -beta * re;
         wptr_i[wi] = -beta * im;
     }
-    for(i=0, wi=0; i<M; (void)(i+=AcStrd), wi+=wstrd){
+    for(i=0, wi=0; i<M; i+=AcStrd, wi+=wstrd){
         vsip_scalar_d cr = wptr_r[wi];
         vsip_scalar_d ci = wptr_i[wi];
         vsip_scalar_d *aprp=Aptr_r+i;
         vsip_scalar_d *apip=Aptr_i+i;
-        for(j=0, vi=0; j<N; (void)(j+=ArStrd), vi+=vstrd){
+        for(j=0, vi=0; j<N; j+=ArStrd, vi+=vstrd){
             vsip_scalar_d yr =  vptr_r[vi];
             vsip_scalar_d yi = -vptr_i[vi];
             aprp[j] += (cr * yr - ci * yi);
