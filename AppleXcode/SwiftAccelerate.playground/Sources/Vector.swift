@@ -1,6 +1,7 @@
 import Foundation
 import Accelerate
 public struct Vector {
+    
     public var block: Block
     public var offset: Int
     public var stride: Int
@@ -40,26 +41,26 @@ public struct Vector {
         case .f:
             var s = value.realf
             let dta = UnsafeMutablePointer<Float>(mutating: self.block.dta?.assumingMemoryBound(to: Float.self))
-            vDSP_vfill((dta! + self.offset), &s, vDSP_Stride(self.stride), vDSP_Length(self.length))
+            vDSP_vfill(&s,(dta! + self.offset),  vDSP_Stride(self.stride), vDSP_Length(self.length))
         case .d:
             var s = value.reald
             let dta = UnsafeMutablePointer<Double>(mutating: self.block.dta?.assumingMemoryBound(to: Double.self))
-            vDSP_vfillD((dta! + self.offset), &s, vDSP_Stride(self.stride), vDSP_Length(self.length))
+            vDSP_vfillD( &s,(dta! + self.offset), vDSP_Stride(self.stride), vDSP_Length(self.length))
         case .cf:
             var sr = value.realf
             var si = value.imagf
             let dtaReal = UnsafeMutablePointer<Float>(mutating: self.block.dta?.assumingMemoryBound(to: Float.self))
             let dtaImag = UnsafeMutablePointer<Float>(mutating: self.block.imagDta?.assumingMemoryBound(to: Float.self))
-            vDSP_vfill((dtaReal! + self.offset), &sr, vDSP_Stride(self.stride), vDSP_Length(self.length))
-            vDSP_vfill((dtaImag! + self.offset), &si, vDSP_Stride(self.stride), vDSP_Length(self.length))
-
+            vDSP_vfill(&sr,(dtaReal! + self.offset),  vDSP_Stride(self.stride), vDSP_Length(self.length))
+            vDSP_vfill(&si,(dtaImag! + self.offset),  vDSP_Stride(self.stride), vDSP_Length(self.length))
+            
         case .cd:
             var sr = value.reald
             var si = value.imagd
             let dtaReal = UnsafeMutablePointer<Double>(mutating: self.block.dta?.assumingMemoryBound(to: Double.self))
             let dtaImag = UnsafeMutablePointer<Double>(mutating: self.block.imagDta?.assumingMemoryBound(to: Double.self))
-            vDSP_vfillD((dtaReal! + self.offset), &sr, vDSP_Stride(self.stride), vDSP_Length(self.length))
-            vDSP_vfillD((dtaImag! + self.offset), &si, vDSP_Stride(self.stride), vDSP_Length(self.length))
+            vDSP_vfillD(&sr,(dtaReal! + self.offset),  vDSP_Stride(self.stride), vDSP_Length(self.length))
+            vDSP_vfillD(&si,(dtaImag! + self.offset),  vDSP_Stride(self.stride), vDSP_Length(self.length))
         default:
             preconditionFailure("type \(self.type) not supported for fill")
         }
@@ -110,5 +111,12 @@ public struct Vector {
             
         }
         return retval
+    }
+    public func string(format: String) -> String {
+        var s = ""
+        for i in 0..<self.length {
+            s.append(self[i].string(format: format) + "\n")
+        }
+        return s
     }
 }

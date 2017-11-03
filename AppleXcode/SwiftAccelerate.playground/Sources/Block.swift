@@ -5,11 +5,13 @@
 import Foundation
 import Accelerate
 
-// data types; for this implementation everything is done dynamically
+//: Data types; for this implementation everything is done dynamically
 public enum BlockTypes: String {
-    case f, cf, d, cd, i
+    case f, cf, d, cd, i, ui
 }
-fileprivate class DataDouble {
+
+//: a class to handle creation and deinit for Views of type Double
+fileprivate class DataDouble: NSObject {
     let dta: UnsafeRawPointer
     let length: Int
     let derived: Bool
@@ -33,7 +35,8 @@ fileprivate class DataDouble {
         }
     }
 }
-fileprivate class DataFloat {
+//: a class to handle creation and deinit for Views of type Float
+fileprivate class DataFloat: NSObject {
     let dta: UnsafeRawPointer
     let length: Int
     let derived: Bool
@@ -57,7 +60,33 @@ fileprivate class DataFloat {
         }
     }
 }
-fileprivate class DataInt32 {
+//: Accelerate uses UInt32 for indexing, offsets and length
+fileprivate class DataUInt32: NSObject {
+    let dta: UnsafeRawPointer
+    let length: Int
+    let derived: Bool
+    init(length: Int){
+        self.length = length
+        self.derived = false
+        let dta = UnsafeMutablePointer<UInt32>.allocate(capacity: length)
+        dta.initialize(to: 0, count: length )
+        self.dta = UnsafeRawPointer(dta)
+    }
+    init(data: UnsafeRawPointer, length: Int){
+        self.length = length
+        self.dta = data
+        self.derived = true
+    }
+    deinit {
+        if !self.derived {
+            let dta = UnsafeMutablePointer<UInt32>(mutating: self.dta.assumingMemoryBound(to: UInt32.self))
+            dta.deinitialize(count: self.length)
+            dta.deallocate(capacity: self.length)
+        }
+    }
+}
+//: Accelerate uses Int32 for strides
+fileprivate class DataInt32: NSObject {
     let dta: UnsafeRawPointer
     let length: Int
     let derived: Bool
@@ -80,9 +109,9 @@ fileprivate class DataInt32 {
             dta.deallocate(capacity: self.length)
         }
     }
-    
 }
 
+//: complex views are structures.  They don't allocate any memory from the heap directly
 fileprivate struct DataComplexDouble {
     let dtaReal: DataDouble
     let dtaImag: DataDouble
@@ -100,7 +129,7 @@ fileprivate struct DataComplexFloat {
     }
 }
 
-
+//: Blocks are data raw data containers.  The type is set at create.
 public struct Block {
     public let count: Int
     public var dta: UnsafeRawPointer?
@@ -139,6 +168,11 @@ public struct Block {
             self.dtaObj = dta
             self.dta = dta.dta
             self.type = type
+        case .ui:
+            let dta = DataUInt32(length: length)
+            self.dtaObj = dta
+            self.dta = dta.dta
+            self.type = type
         }
     }
     public subscript(index: Int) -> Scalar {
@@ -162,6 +196,9 @@ public struct Block {
             case .i:
                 let dta = UnsafeMutablePointer<Int32>(mutating: self.dta?.assumingMemoryBound(to: Int32.self))
                 return Scalar((dta! + index).pointee)
+            case .ui:
+                let dta = UnsafeMutablePointer<UInt32>(mutating: self.dta?.assumingMemoryBound(to: UInt32.self))
+                return Scalar((dta! + index).pointee)
             }
         }
         set(value) {
@@ -172,7 +209,7 @@ public struct Block {
             case .d:
                 let dta = UnsafeMutablePointer<Double>(mutating: self.dta?.assumingMemoryBound(to: Double.self))
                 (dta! + index).pointee = value.reald
-
+                
             case .cf:
                 let dtaReal = UnsafeMutablePointer<Float>(mutating: self.dta?.assumingMemoryBound(to: Float.self))
                 let dtaImag = UnsafeMutablePointer<Float>(mutating: self.imagDta?.assumingMemoryBound(to: Float.self))
@@ -186,7 +223,9 @@ public struct Block {
             case .i:
                 let dta = UnsafeMutablePointer<Int32>(mutating: self.dta?.assumingMemoryBound(to: Int32.self))
                 (dta! + index).pointee = value.int
-
+            case .ui:
+                let dta = UnsafeMutablePointer<UInt32>(mutating: self.dta?.assumingMemoryBound(to: UInt32.self))
+                (dta! + index).pointee = UInt32(value.int)
             }
         }
     }

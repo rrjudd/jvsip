@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <FileRef
+      location = "group:PngEx.playground">
+   </FileRef>
+   <FileRef
+      location = "group:KOmegaBFEx.playground">
+   </FileRef>
+   <FileRef
+      location = "group:example20.playground">
+   </FileRef>
+   <FileRef
+      location = "group:example18.playground">
+   </FileRef>
+   <FileRef
+      location = "group:MatrixExplorer/MatrixExplorer.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/judd/local/src/jvsip/AppleXcode/VectorInspector/VectorExplorer.xcodeproj">
+   </FileRef>
    <Group
       location = "group:JVExVector"
       name = "JVExVector">
@@ -27,5 +45,8 @@
    </FileRef>
    <FileRef
       location = "group:SwiftAccelerate.playground">
+   </FileRef>
+   <FileRef
+      location = "group:FunctionDict.playground">
    </FileRef>
 </Workspace>

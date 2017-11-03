@@ -1,7 +1,10 @@
+/// Scalar is a structure to allow generalized return of scalars from a view
+//: To support the SwiftAccelerate framework we need a Scalar type to handle the various
+//: atomic data types.
 import Foundation
 import Accelerate
 
-/// Scalar is a structure to allow generalized return of scalars from a view
+
 func scalarString(_ format : String, value : Scalar) -> String{
     var retval = ""
     switch value.type{
@@ -25,7 +28,11 @@ func scalarString(_ format : String, value : Scalar) -> String{
         retval = r + i + "i"
     case .i:
         let fmt = "%d"
-        retval = String(format: fmt, value.int)            }
+        retval = String(format: fmt, value.int)
+    case .ui:
+        let fmt = "%d"
+        retval = String(format: fmt, value.int)
+    }
     return retval
 }
 func formatFmt(_ fmt: String) -> String{
@@ -68,6 +75,11 @@ public struct Scalar {
         self.value.1 = NSNumber(value: value)
         self.value.2 = nil
     }
+    public init(_ value: UInt32){
+        self.value.0 = .i
+        self.value.1 = NSNumber(value: value)
+        self.value.2 = nil
+    }
     public init(_ value: DSPDoubleComplex){
         self.value.0 = .cd
         self.value.1 = NSNumber(value: value.real)
@@ -79,7 +91,7 @@ public struct Scalar {
         self.value.2 = NSNumber(value: value.imag)
     }
     public var type: BlockTypes {
-        return value.0!
+        return self.value.0!
     }
     public var realf: Float{
         return Float((value.1?.floatValue)!)
@@ -177,6 +189,20 @@ public struct Scalar {
             return Scalar(DSPComplex(real: left.realf + right.realf, imag: left.imagf))
         case (.cd, .i):
             return Scalar(DSPDoubleComplex(real: left.reald + right.reald, imag: left.imagd))
+        case (.ui, .ui):
+            return Scalar(UInt32(left.int + right.int))
+        case (.i, .ui):
+            return Scalar(Int32(left.int + right.int))
+        case (.ui, .i):
+            return Scalar(Int32(left.int + right.int))
+        case (.ui, .f):
+            return Scalar(left.realf + right.realf)
+        case (.f, .ui):
+            return Scalar(left.realf + right.realf)
+        case (.ui, .d):
+            return Scalar(left.reald + right.reald)
+        case (.d, .ui):
+            return Scalar(left.reald + right.reald)
         default:
             preconditionFailure("Vsip Scalar types (\(left.type), \(right.type)) not supported for +")
         }
@@ -245,6 +271,20 @@ public struct Scalar {
         case(.cd, .cd):
             return Scalar(DSPDoubleComplex(real: left.reald * right.reald - left.imagd * right.imagd,
                                            imag: left.reald * left.imagd + left.imagd * right.imagd))
+        case (.ui, .ui):
+            return Scalar(UInt32(left.int * right.int))
+        case (.i, .ui):
+            return Scalar(Int32(left.int * right.int))
+        case (.ui, .i):
+            return Scalar(Int32(left.int * right.int))
+        case (.ui, .f):
+            return Scalar(left.realf * right.realf)
+        case (.f, .ui):
+            return Scalar(left.realf * right.realf)
+        case (.ui, .d):
+            return Scalar(left.reald * right.reald)
+        case (.d, .ui):
+            return Scalar(left.reald * right.reald)
         default:
             preconditionFailure("Vsip Scalar types (\(left.type), \(right.type)) not supported for *")
         }
@@ -400,6 +440,8 @@ public struct Scalar {
             return Scalar(self.type, NSNumber(value: self.reald), NSNumber(value: -self.imagd))
         case .i:
             return self
+        case .ui:
+            return self
         }
     }
     public var inverse: Scalar {
@@ -418,6 +460,8 @@ public struct Scalar {
         case .cd:
             return Scalar(DSPDoubleComplex(real: self.reald/mag.reald, imag: self.imagd/mag.reald))
         case .i:
+            return Scalar(1/self.int)
+        case .ui:
             return Scalar(1/self.int)
         }
     }
@@ -448,7 +492,9 @@ public struct Scalar {
             return Scalar.cmagd(value: self)
         case .i:
             return Scalar((self.int > 0 ? self.int : -self.int))
-       }
+        case .ui:
+            return Scalar(self.int)
+        }
     }
     public func string(format fmt: String) -> String {
         return scalarString(formatFmt(fmt), value:self)

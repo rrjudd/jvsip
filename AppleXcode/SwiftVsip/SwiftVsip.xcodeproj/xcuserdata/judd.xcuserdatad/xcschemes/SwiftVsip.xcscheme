@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06307E43150BB71E00EF9D00"
-               BuildableName = "vsip.framework"
-               BlueprintName = "vsip"
-               ReferencedContainer = "container:vsip.xcodeproj">
+               BlueprintIdentifier = "061263601DA8023500AA48EA"
+               BuildableName = "SwiftVsip.framework"
+               BlueprintName = "SwiftVsip"
+               ReferencedContainer = "container:SwiftVsip.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -25,25 +25,35 @@
    <TestAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "061263691DA8023500AA48EA"
+               BuildableName = "SwiftVsipTests.xctest"
+               BlueprintName = "SwiftVsipTests"
+               ReferencedContainer = "container:SwiftVsip.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06307E43150BB71E00EF9D00"
-            BuildableName = "jvsipF.framework"
-            BlueprintName = "jvsipF"
-            ReferencedContainer = "container:jvsipF.xcodeproj">
+            BlueprintIdentifier = "061263601DA8023500AA48EA"
+            BuildableName = "SwiftVsip.framework"
+            BlueprintName = "SwiftVsip"
+            ReferencedContainer = "container:SwiftVsip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
@@ -56,10 +66,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06307E43150BB71E00EF9D00"
-            BuildableName = "vsip.framework"
-            BlueprintName = "vsip"
-            ReferencedContainer = "container:vsip.xcodeproj">
+            BlueprintIdentifier = "061263601DA8023500AA48EA"
+            BuildableName = "SwiftVsip.framework"
+            BlueprintName = "SwiftVsip"
+            ReferencedContainer = "container:SwiftVsip.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -71,6 +81,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "061263601DA8023500AA48EA"
+            BuildableName = "SwiftVsip.framework"
+            BlueprintName = "SwiftVsip"
+            ReferencedContainer = "container:SwiftVsip.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -4,20 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>SwiftVsip.xcscheme</key>
+		<key>MatrixExplorer.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>061263601DA8023500AA48EA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>061263691DA8023500AA48EA</key>
+		<key>06D8896A1E2EA3D100A4580A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
