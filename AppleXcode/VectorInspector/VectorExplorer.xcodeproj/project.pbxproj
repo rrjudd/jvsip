@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06D8894B1E2DAA0900A4580A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D8894A1E2DAA0900A4580A /* AppDelegate.swift */; };
+		06D8894D1E2DAA0900A4580A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D8894C1E2DAA0900A4580A /* Assets.xcassets */; };
+		06D889501E2DAA0900A4580A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06D8894E1E2DAA0900A4580A /* MainMenu.xib */; };
+		06D889591E2DAA8E00A4580A /* VectorExplorerControllerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D889571E2DAA8E00A4580A /* VectorExplorerControllerWindow.swift */; };
+		06D8895A1E2DAA8E00A4580A /* VectorExplorerControllerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06D889581E2DAA8E00A4580A /* VectorExplorerControllerWindow.xib */; };
+		06D8895C1E2E3D5700A4580A /* VectorExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D8895B1E2E3D5700A4580A /* VectorExplorer.swift */; };
+		06D8895F1E2E617800A4580A /* SwiftVsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D8895E1E2E617800A4580A /* SwiftVsip.framework */; };
+		06D889611E2E617A00A4580A /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D889601E2E617A00A4580A /* vsip.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		06D889471E2DAA0900A4580A /* VectorExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		06D8894A1E2DAA0900A4580A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		06D8894C1E2DAA0900A4580A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		06D8894F1E2DAA0900A4580A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		06D889511E2DAA0900A4580A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06D889571E2DAA8E00A4580A /* VectorExplorerControllerWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorExplorerControllerWindow.swift; sourceTree = "<group>"; };
+		06D889581E2DAA8E00A4580A /* VectorExplorerControllerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VectorExplorerControllerWindow.xib; sourceTree = "<group>"; };
+		06D8895B1E2E3D5700A4580A /* VectorExplorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorExplorer.swift; sourceTree = "<group>"; };
+		06D8895E1E2E617800A4580A /* SwiftVsip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftVsip.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/JVSwift-fbjswltwaxosubcifjwyvngruttw/Build/Products/Debug/SwiftVsip.framework"; sourceTree = "<group>"; };
+		06D889601E2E617A00A4580A /* vsip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vsip.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/JVSwift-fbjswltwaxosubcifjwyvngruttw/Build/Products/Debug/vsip.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		06D889441E2DAA0900A4580A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06D8895F1E2E617800A4580A /* SwiftVsip.framework in Frameworks */,
+				06D889611E2E617A00A4580A /* vsip.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06D8893E1E2DAA0900A4580A = {
+			isa = PBXGroup;
+			children = (
+				06D889491E2DAA0900A4580A /* VectorExplorer */,
+				06D889481E2DAA0900A4580A /* Products */,
+				06D8895D1E2E617800A4580A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		06D889481E2DAA0900A4580A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06D889471E2DAA0900A4580A /* VectorExplorer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		06D889491E2DAA0900A4580A /* VectorExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				06D8894A1E2DAA0900A4580A /* AppDelegate.swift */,
+				06D8894C1E2DAA0900A4580A /* Assets.xcassets */,
+				06D8894E1E2DAA0900A4580A /* MainMenu.xib */,
+				06D889511E2DAA0900A4580A /* Info.plist */,
+				06D889571E2DAA8E00A4580A /* VectorExplorerControllerWindow.swift */,
+				06D889581E2DAA8E00A4580A /* VectorExplorerControllerWindow.xib */,
+				06D8895B1E2E3D5700A4580A /* VectorExplorer.swift */,
+			);
+			name = VectorExplorer;
+			path = VectorInspector;
+			sourceTree = "<group>";
+		};
+		06D8895D1E2E617800A4580A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06D889601E2E617A00A4580A /* vsip.framework */,
+				06D8895E1E2E617800A4580A /* SwiftVsip.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		06D889461E2DAA0900A4580A /* VectorExplorer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06D889541E2DAA0900A4580A /* Build configuration list for PBXNativeTarget "VectorExplorer" */;
+			buildPhases = (
+				06D889431E2DAA0900A4580A /* Sources */,
+				06D889441E2DAA0900A4580A /* Frameworks */,
+				06D889451E2DAA0900A4580A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VectorExplorer;
+			productName = VectorInspector;
+			productReference = 06D889471E2DAA0900A4580A /* VectorExplorer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		06D8893F1E2DAA0900A4580A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = JVSIP;
+				TargetAttributes = {
+					06D889461E2DAA0900A4580A = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 06D889421E2DAA0900A4580A /* Build configuration list for PBXProject "VectorExplorer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 06D8893E1E2DAA0900A4580A;
+			productRefGroup = 06D889481E2DAA0900A4580A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				06D889461E2DAA0900A4580A /* VectorExplorer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		06D889451E2DAA0900A4580A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06D8895A1E2DAA8E00A4580A /* VectorExplorerControllerWindow.xib in Resources */,
+				06D8894D1E2DAA0900A4580A /* Assets.xcassets in Resources */,
+				06D889501E2DAA0900A4580A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06D889431E2DAA0900A4580A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06D8895C1E2E3D5700A4580A /* VectorExplorer.swift in Sources */,
+				06D889591E2DAA8E00A4580A /* VectorExplorerControllerWindow.swift in Sources */,
+				06D8894B1E2DAA0900A4580A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		06D8894E1E2DAA0900A4580A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				06D8894F1E2DAA0900A4580A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		06D889521E2DAA0900A4580A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		06D889531E2DAA0900A4580A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		06D889551E2DAA0900A4580A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = VectorInspector/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = JVSIP.VectorInspector;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		06D889561E2DAA0900A4580A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = VectorInspector/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = JVSIP.VectorInspector;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		06D889421E2DAA0900A4580A /* Build configuration list for PBXProject "VectorExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06D889521E2DAA0900A4580A /* Debug */,
+				06D889531E2DAA0900A4580A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06D889541E2DAA0900A4580A /* Build configuration list for PBXNativeTarget "VectorExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06D889551E2DAA0900A4580A /* Debug */,
+				06D889561E2DAA0900A4580A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 06D8893F1E2DAA0900A4580A /* Project object */;
+}
