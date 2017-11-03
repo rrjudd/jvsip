@@ -20,6 +20,7 @@
 		0604AC28151A630B00DF6A91 /* vsip_rcfir_create_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0604AC27151A630A00DF6A91 /* vsip_rcfir_create_d.c */; };
 		0604AC2A151A631C00DF6A91 /* vsip_rcfir_getattr_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 0604AC29151A631C00DF6A91 /* vsip_rcfir_getattr_d.c */; };
 		061263401DA7F2B200AA48EA /* vsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06307E44150BB71E00EF9D00 /* vsip.framework */; };
+		0616D7CD1EA7F0530083BFD1 /* meansqvalEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0616D7CC1EA7F0530083BFD1 /* meansqvalEx.swift */; };
 		06198EBE1DA2C61100138F73 /* vsip_svlge_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EB81DA2C61100138F73 /* vsip_svlge_d.c */; };
 		06198EBF1DA2C61100138F73 /* vsip_svlge_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EB91DA2C61100138F73 /* vsip_svlge_f.c */; };
 		06198EC01DA2C61100138F73 /* vsip_svlgt.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198EBA1DA2C61100138F73 /* vsip_svlgt.c */; };
@@ -184,6 +185,7 @@
 		06198FFD1DA2DE4600138F73 /* vsip_vcopy_vi_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06198FFB1DA2DE4600138F73 /* vsip_vcopy_vi_f.c */; };
 		0619903C1DA5671300138F73 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061990331DA565B400138F73 /* main.swift */; };
 		061990401DA691CA00138F73 /* vsip_vfill_vi.c in Sources */ = {isa = PBXBuildFile; fileRef = 0619903F1DA691CA00138F73 /* vsip_vfill_vi.c */; };
+		0619DBEA1EA9A9E500AC3C98 /* modulateEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0619DBE81EA9A7B200AC3C98 /* modulateEx.swift */; };
 		061A3EC21DB805F600656FB7 /* vsip_mdiagview_li.c in Sources */ = {isa = PBXBuildFile; fileRef = 061A3EC11DB805F600656FB7 /* vsip_mdiagview_li.c */; };
 		061C291A17249E8200773972 /* jvsip_svd_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 061C291917249E8200773972 /* jvsip_svd_f.c */; };
 		062836C61517749C001EBA82 /* vsip_mrect_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 062836C41517749C001EBA82 /* vsip_mrect_d.c */; };
@@ -2148,12 +2150,23 @@
 		0672482E15978A22002AD475 /* vsip_mfill_uc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0672482D15978A22002AD475 /* vsip_mfill_uc.c */; };
 		06917BB41519049A0044F7F9 /* vsip_mcmplx_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */; };
 		06917BB51519049A0044F7F9 /* vsip_mcmplx_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */; };
+		06B91F311EEC622F0093FBB1 /* jofkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B91F2E1EEC5DDE0093FBB1 /* jofkTest.swift */; };
 		06BA61A116DEBB5600C78C00 /* vsip_cmpermute_once_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */; };
 		06BA61A316DEBB6500C78C00 /* vsip_cmpermute_once_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */; };
 		06BF696E172EF232008B99BB /* jvsip_svd_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06BF696D172EF232008B99BB /* jvsip_svd_d.c */; };
 		06E047641518F56A001765DF /* vsip_mpolar_d.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047621518F56A001765DF /* vsip_mpolar_d.c */; };
 		06E047651518F56A001765DF /* vsip_mpolar_f.c in Sources */ = {isa = PBXBuildFile; fileRef = 06E047631518F56A001765DF /* vsip_mpolar_f.c */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		06C41B2B1EE1C9E700B98068 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06C41B271EE1C9E600B98068 /* cVsipTest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06C41B1D1EE1C9E600B98068;
+			remoteInfo = cVsipTest;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		0619902F1DA565B400138F73 /* CopyFiles */ = {
@@ -2180,6 +2193,7 @@
 		0604AC25151A62FC00DF6A91 /* vsip_rcfir_destroy_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_rcfir_destroy_d.c; sourceTree = "<group>"; };
 		0604AC27151A630A00DF6A91 /* vsip_rcfir_create_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_rcfir_create_d.c; sourceTree = "<group>"; };
 		0604AC29151A631C00DF6A91 /* vsip_rcfir_getattr_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_rcfir_getattr_d.c; sourceTree = "<group>"; };
+		0616D7CC1EA7F0530083BFD1 /* meansqvalEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = meansqvalEx.swift; sourceTree = "<group>"; };
 		06198EB81DA2C61100138F73 /* vsip_svlge_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlge_d.c; sourceTree = "<group>"; };
 		06198EB91DA2C61100138F73 /* vsip_svlge_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlge_f.c; sourceTree = "<group>"; };
 		06198EBA1DA2C61100138F73 /* vsip_svlgt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_svlgt.c; sourceTree = "<group>"; };
@@ -2346,6 +2360,7 @@
 		061990311DA565B400138F73 /* vsipExampleAdd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vsipExampleAdd; sourceTree = BUILT_PRODUCTS_DIR; };
 		061990331DA565B400138F73 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0619903F1DA691CA00138F73 /* vsip_vfill_vi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_vfill_vi.c; sourceTree = "<group>"; };
+		0619DBE81EA9A7B200AC3C98 /* modulateEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = modulateEx.swift; sourceTree = "<group>"; };
 		061A3EC11DB805F600656FB7 /* vsip_mdiagview_li.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mdiagview_li.c; sourceTree = "<group>"; };
 		061C291917249E8200773972 /* jvsip_svd_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_svd_f.c; sourceTree = "<group>"; };
 		062836C41517749C001EBA82 /* vsip_mrect_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mrect_d.c; sourceTree = "<group>"; };
@@ -4312,10 +4327,12 @@
 		0672482D15978A22002AD475 /* vsip_mfill_uc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mfill_uc.c; sourceTree = "<group>"; };
 		06917BB21519049A0044F7F9 /* vsip_mcmplx_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_d.c; sourceTree = "<group>"; };
 		06917BB31519049A0044F7F9 /* vsip_mcmplx_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mcmplx_f.c; sourceTree = "<group>"; };
+		06B91F2E1EEC5DDE0093FBB1 /* jofkTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = jofkTest.swift; sourceTree = "<group>"; };
 		06BA61A016DEBB5600C78C00 /* vsip_cmpermute_once_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmpermute_once_f.c; sourceTree = "<group>"; };
 		06BA61A216DEBB6500C78C00 /* vsip_cmpermute_once_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_cmpermute_once_d.c; sourceTree = "<group>"; };
 		06BF696D172EF232008B99BB /* jvsip_svd_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jvsip_svd_d.c; sourceTree = "<group>"; };
 		06BF696F172EF2DE008B99BB /* vsip_svdattributes_d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vsip_svdattributes_d.h; sourceTree = "<group>"; };
+		06C41B271EE1C9E600B98068 /* cVsipTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cVsipTest.xcodeproj; path = cVsipTest/cVsipTest.xcodeproj; sourceTree = "<group>"; };
 		06E047621518F56A001765DF /* vsip_mpolar_d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_d.c; sourceTree = "<group>"; };
 		06E047631518F56A001765DF /* vsip_mpolar_f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vsip_mpolar_f.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -4339,20 +4356,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		061990321DA565B400138F73 /* vsipExampleAdd */ = {
+		061990321DA565B400138F73 /* vsipExample */ = {
 			isa = PBXGroup;
 			children = (
 				061990331DA565B400138F73 /* main.swift */,
+				0616D7CC1EA7F0530083BFD1 /* meansqvalEx.swift */,
+				0619DBE81EA9A7B200AC3C98 /* modulateEx.swift */,
+				06B91F2E1EEC5DDE0093FBB1 /* jofkTest.swift */,
 			);
+			name = vsipExample;
 			path = vsipExampleAdd;
 			sourceTree = "<group>";
 		};
 		06307E38150BB71E00EF9D00 = {
 			isa = PBXGroup;
 			children = (
-				06307E4D150BB71E00EF9D00 /* vsip */,
 				06307E45150BB71E00EF9D00 /* Products */,
-				061990321DA565B400138F73 /* vsipExampleAdd */,
+				06C41B271EE1C9E600B98068 /* cVsipTest.xcodeproj */,
+				06307E4D150BB71E00EF9D00 /* vsip */,
+				061990321DA565B400138F73 /* vsipExample */,
 			);
 			sourceTree = "<group>";
 		};
@@ -6537,6 +6559,14 @@
 			path = ../../../../Users/judd/local/src/jvsip/c_VSIP_src;
 			sourceTree = DEVELOPER_DIR;
 		};
+		06C41B281EE1C9E600B98068 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06C41B2C1EE1C9E700B98068 /* cVsipTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -6925,13 +6955,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = JVSIP;
 				TargetAttributes = {
 					061990301DA565B400138F73 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 62KA2JD6VA;
 						ProvisioningStyle = Automatic;
+					};
+					06307E43150BB71E00EF9D00 = {
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -6945,6 +6978,12 @@
 			mainGroup = 06307E38150BB71E00EF9D00;
 			productRefGroup = 06307E45150BB71E00EF9D00 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 06C41B281EE1C9E600B98068 /* Products */;
+					ProjectRef = 06C41B271EE1C9E600B98068 /* cVsipTest.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				06307E43150BB71E00EF9D00 /* vsip */,
@@ -6952,6 +6991,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		06C41B2C1EE1C9E700B98068 /* cVsipTest */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = cVsipTest;
+			remoteRef = 06C41B2B1EE1C9E700B98068 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		06307E42150BB71E00EF9D00 /* Resources */ = {
@@ -6969,6 +7018,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0619903C1DA5671300138F73 /* main.swift in Sources */,
+				0616D7CD1EA7F0530083BFD1 /* meansqvalEx.swift in Sources */,
+				0619DBEA1EA9A9E500AC3C98 /* modulateEx.swift in Sources */,
+				06B91F311EEC622F0093FBB1 /* jofkTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8860,13 +8912,19 @@
 		06307E57150BB71E00EF9D00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -8904,13 +8962,19 @@
 		06307E58150BB71E00EF9D00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -8942,6 +9006,8 @@
 		06307E5A150BB71E00EF9D00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -8951,11 +9017,12 @@
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = c89;
+				GCC_C_LANGUAGE_STANDARD = ansi;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = ./;
 				INFOPLIST_FILE = "$(SRCROOT)/vsip/vsip-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../c_VSIP_src\"",
@@ -8963,6 +9030,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "jvsip.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -8970,6 +9039,7 @@
 		06307E5B150BB71E00EF9D00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -8979,12 +9049,13 @@
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				FRAMEWORK_VERSION = A;
-				GCC_C_LANGUAGE_STANDARD = c89;
+				GCC_C_LANGUAGE_STANDARD = ansi;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = ./;
 				INFOPLIST_FILE = "$(SRCROOT)/vsip/vsip-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../c_VSIP_src\"",
@@ -8992,6 +9063,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "jvsip.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
