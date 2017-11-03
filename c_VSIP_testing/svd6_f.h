@@ -40,9 +40,8 @@ static void svd6_f(void){
       vsip_svdmatv_f(svd, 0, N-1, V);
       VU_vprintm_f("12.10",s);
       {  /* check that A0 = U * B * V' */
-         vsip_scalar_mi mi;
          vsip_scalar_f chk = 1.0;
-         vsip_scalar_f lim = 5 * FLT_EPSILON * fabs(vsip_mmaxmgval_f(A0,&mi));
+         vsip_scalar_f lim = 1E-10;
          vsip_mview_f *dif=vsip_mcreate_f(M,N,VSIP_ROW,VSIP_MEM_NONE);
          vsip_mview_f *out = vsip_mcreate_f(M,N,VSIP_ROW,VSIP_MEM_NONE);
          vsip_mview_f *Vt = vsip_mtransview_f(V);
