@@ -5,8 +5,8 @@ To run at a command line type
 
 > python bf_ex.py
 
-I also run by starting ipython. Looks like
-> ipython --pylab
-In [1]: from beamformer import *
-
-In [2]: beamformer('param_file',2)
+kw_pyJvsip.ipynb is a version which runs in a notebook environment. 
+Start with 
+> jupyter notebook
+and open up the kw_pyJvsip notebook
+Note this is a newer version using pyJvsip as the module instead of vsiputils.

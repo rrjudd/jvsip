@@ -12,7 +12,7 @@ class Kw(object):
         self.Navg=param['Navg']
         self.Nfreq=Nfreq
         self.cm_freq=vsip.create('cmview_d',(Nsens,Nfreq,col,mem)) 
-        self.rm_freq=vsip.create('mview_d',(Nsens,Nts,row,mem))
+        self.rm_freq=vsip.realview(self.cm_freq)
         self.m_gram=vsip.create('mview_d',(Nsens,Nfreq,col,mem))
         self.rcfftm=vsip.create('rcfftmop_d',(Nsens,Nts,1,row,0,0))
         self.ccfftm=vsip.create('ccfftmip_d',(Nsens,Nfreq,fftfwd,1,col,0,0))
@@ -20,8 +20,8 @@ class Kw(object):
         self.array_taper=vsip.create('hanning_d',(Nsens,0));
 
     def __del__(self):
+        vsip.destroy(self.rm_freq)
         vsip.allDestroy(self.cm_freq)
-        vsip.allDestroy(self.rm_freq)
         vsip.allDestroy(self.m_gram)
         vsip.allDestroy(self.ts_taper)
         vsip.allDestroy(self.array_taper)
