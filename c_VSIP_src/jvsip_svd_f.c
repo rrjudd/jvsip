@@ -2205,27 +2205,35 @@ static void chouseProd_f(vsip_cvview_f *v, vsip_cmview_f *A, vsip_cvview_f*w)
     }
     beta=2.0/(t1+t2);
     w->length = A->row_length;
-    for(i=0,wi=0; i<N; i+=ArStrd,wi+=wstrd){
+    wi = 0;
+    for(i=0; i<N; i+=ArStrd){
         vsip_scalar_f *ar_r=&Aptr_r[i], *ar_i=&Aptr_i[i];
         vsip_scalar_f re=0.0,im=0.0;
-        for(j=0,vi=0; j<M; j+=AcStrd, vi+=vstrd){
+        vi = 0;
+        for(j=0; j<M; j+=AcStrd){
             re +=  ar_r[j] * vptr_r[vi] + ar_i[j] * vptr_i[vi];
             im += -ar_r[j] * vptr_i[vi] + ar_i[j] * vptr_r[vi];
+            vi += vstrd;
         }
         wptr_r[wi] = re;
         wptr_i[wi] = -im;
+        wi += wstrd;
     }
-    for(i=0, vi=0; i<M; i+=AcStrd, vi+=vstrd){
+    vi = 0;
+    for(i=0; i<M; i+=AcStrd){
         vsip_scalar_f cr = beta * vptr_r[vi];
         vsip_scalar_f ci = beta * vptr_i[vi];
         vsip_scalar_f *aprp=Aptr_r+i;
         vsip_scalar_f *apip=Aptr_i+i;
-        for(j=0, wi=0; j<N; j+=ArStrd, wi+=wstrd){
+        wi = 0;
+        for(j=0; j<N; j+=ArStrd){
             vsip_scalar_f yr =  wptr_r[wi];
             vsip_scalar_f yi = -wptr_i[wi];
             aprp[j] -= (cr * yr - ci * yi);
             apip[j] -= (cr * yi + ci * yr);
+            wi += wstrd;
         }
+        vi += vstrd;
     }
 }
 static void cprodHouse_f(vsip_cmview_f *A, vsip_cvview_f *v, vsip_cvview_f *w)
@@ -2253,27 +2261,35 @@ static void cprodHouse_f(vsip_cmview_f *A, vsip_cvview_f *v, vsip_cvview_f *w)
     beta=2.0/(t1+t2);
     
     w->length = A->col_length;
-    for(i=0,wi=0; i<M; i+=AcStrd,wi+=wstrd){
+    wi = 0;
+    for(i=0; i<M; i+=AcStrd){
         vsip_scalar_f *ac_r=&Aptr_r[i], *ac_i=&Aptr_i[i];
         vsip_scalar_f re=0.0,im=0.0;
-        for(j=0,vi=0; j<N; j+=ArStrd, vi+=vstrd){
+        vi = 0;
+        for(j=0; j<N; j+=ArStrd){
             re += ac_r[j] * vptr_r[vi] - ac_i[j] * vptr_i[vi];
             im += ac_r[j] * vptr_i[vi] + ac_i[j] * vptr_r[vi];
+            vi += vstrd;
         }
         wptr_r[wi] = -beta * re;
         wptr_i[wi] = -beta * im;
+        wi += wstrd;
     }
-    for(i=0, wi=0; i<M; i+=AcStrd, wi+=wstrd){
+    wi = 0;
+    for(i=0; i<M; i+=AcStrd){
         vsip_scalar_f cr = wptr_r[wi];
         vsip_scalar_f ci = wptr_i[wi];
         vsip_scalar_f *aprp=Aptr_r+i;
         vsip_scalar_f *apip=Aptr_i+i;
-        for(j=0, vi=0; j<N; j+=ArStrd, vi+=vstrd){
+        vi = 0;
+        for(j=0; j<N; j+=ArStrd){
             vsip_scalar_f yr =  vptr_r[vi];
             vsip_scalar_f yi = -vptr_i[vi];
             aprp[j] += (cr * yr - ci * yi);
             apip[j] += (cr * yi + ci * yr);
+            vi += vstrd;
         }
+        wi += wstrd;
     }
 }
 static vsip_cvview_f *chouseVector_f(vsip_cvview_f* x)
