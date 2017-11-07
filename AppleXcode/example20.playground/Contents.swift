@@ -1,3 +1,6 @@
+//: This is a conversion of the example20 contained in the c_VSIP_example example directory.
+//: The C code is also kept in the Resources directory.
+
 import Cocoa
 import vsip
 let N_data = vsip_length(4096)
