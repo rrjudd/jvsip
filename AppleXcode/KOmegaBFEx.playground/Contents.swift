@@ -1,5 +1,8 @@
 //: K-Omega Beaformer Example
 
+//: This example is a straightforward conversion (more or less) of a C example using C-VSIPL
+//: The C code is stored in the Resources directory along with the parameters.
+
 import Cocoa
 import vsip
 var filePath = Bundle.main.path(forResource: "param_file", ofType: nil)
