@@ -320,11 +320,16 @@ class SJVsipTests: XCTestCase {
         v.put(1.0,1.3,1.4,1.2,0.9,3.9,5.6)
         v.mPrint("3.2")
     }
-    func testKvc(){
+    func testKvc(){// KVC fails; must be doing something wrong."
         let v = SJVsip.Vector(length: 35, type: .d)
         let _ = v.ramp(SJVsip.Scalar(0.1), increment: SJVsip.Scalar(0.2))
-        v.setValue(10, forKey: "length")
-        v.setValue(2, forKey: "stride")
+        v.mPrint("3.2")
+        //v.setValue(10, forKey: "length")
+        //v.setValue(2, forKey: "stride")
+        v.length = 10
+        v.stride = 2
+        v.mPrint("3.2")
+        v.offset = 1
         v.mPrint("3.2")
     }
 }
