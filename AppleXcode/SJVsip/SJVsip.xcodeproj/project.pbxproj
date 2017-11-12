@@ -25,6 +25,7 @@
 		063DE5DD1FAF7A87001A6117 /* extensionVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5D51FAE43CF001A6117 /* extensionVector.swift */; };
 		063DE5DE1FAF7A92001A6117 /* extensionBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5CF1FAE402A001A6117 /* extensionBlocks.swift */; };
 		06646DBC1FB7EDD80013ED56 /* lud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06646DBB1FB7EDD80013ED56 /* lud.swift */; };
+		0676BEFE1FB8F729007A6D58 /* cholesky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676BEFD1FB8F729007A6D58 /* cholesky.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		063DE5D91FAE4448001A6117 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		063DE5DB1FAE47CB001A6117 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		06646DBB1FB7EDD80013ED56 /* lud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lud.swift; sourceTree = "<group>"; };
+		0676BEFD1FB8F729007A6D58 /* cholesky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cholesky.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				063DE5A11FAE16B4001A6117 /* Info.plist */,
 				063DE5C31FAE3D2D001A6117 /* Scalar.swift */,
 				063DE5C91FAE3D93001A6117 /* JVSIP.swift */,
+				0676BEFD1FB8F729007A6D58 /* cholesky.swift */,
 				063DE5CB1FAE3DCE001A6117 /* utility.swift */,
 				063DE5CD1FAE3EED001A6117 /* Block.swift */,
 				063DE5CF1FAE402A001A6117 /* extensionBlocks.swift */,
@@ -254,6 +257,7 @@
 				063DE5CC1FAE3DCE001A6117 /* utility.swift in Sources */,
 				0627EB131FB7582800611CDF /* extensionMatrix.swift in Sources */,
 				063DE5CE1FAE3EED001A6117 /* Block.swift in Sources */,
+				0676BEFE1FB8F729007A6D58 /* cholesky.swift in Sources */,
 				0627EB111FB7552B00611CDF /* svd.swift in Sources */,
 				063DE5DD1FAF7A87001A6117 /* extensionVector.swift in Sources */,
 				063DE5D41FAE43BD001A6117 /* Matrix.swift in Sources */,
