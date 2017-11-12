@@ -35,9 +35,7 @@ extension Vector {
     public func randu(_ seed: vsip_index) -> Vector {
         return self.randu(seed, portable: true)
     }
-    
-    
-    var normFro: Double {
+    public var normFro: Double {
         get {
             return (SJvsip.normFro(view: self).reald)
         }

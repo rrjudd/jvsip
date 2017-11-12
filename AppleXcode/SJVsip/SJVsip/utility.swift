@@ -89,21 +89,4 @@ public class SJvsip {
             preconditionFailure("normFro not supported for this view")
         }
     }
-    public static func decompose(_ aMatrix: Matrix) -> (Q: Matrix, R: Matrix){
-        let qrd = QRD(type: aMatrix.type, columnLength: aMatrix.columnLength, rowLength: aMatrix.rowLength, qopt: VSIP_QRD_SAVEQ)
-        let Q = Matrix(columnLength: qrd.columnLength, rowLength: qrd.columnLength, type: aMatrix.type, major: VSIP_ROW)
-        let R = Matrix(columnLength: qrd.columnLength, rowLength: qrd.rowLength, type: aMatrix.type, major: VSIP_ROW)
-        let aCopy = aMatrix.newCopy
-        Q.fill(Scalar(0.0))
-        R.fill(Scalar(0.0))
-        print("create/destroy Q.diagview")
-        Q.diagview.fill(Scalar(1.0))
-        print("call qrd.decompose")
-        let _ = qrd.decompose(aMatrix)
-        qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
-        print("create Qt")
-        let Qt = Q.transview
-        prod(Qt, prod: aCopy, resultsIn: R)
-        return (Q,R)
-    }
 }

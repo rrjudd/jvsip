@@ -399,16 +399,7 @@ public class Matrix : View, Sequence {
             self.fill(value)
         }
     }
-    public static func + (left: Matrix, right: Matrix) -> Matrix {
-        let retval = left.empty
-        add(left, right, resultsIn: retval)
-        return retval
-    }
-    public static func - (left: Matrix, right: Matrix) -> Matrix {
-        let retval = left.empty
-        sub(left, subtract: right, resultsIn: retval)
-        return retval
-    }
+    
     
     // MARK: Matrix Data Generators
     public func fill(_ value: Scalar){
@@ -724,11 +715,5 @@ public class Matrix : View, Sequence {
     public func mPrint(_ format: String){
         let m = mString(format)
         print(m)
-    }
-    // MARK: Jvsip methods on matrix
-    var normFro: Double {
-        get {
-            return (SJvsip.normFro(view: self).reald)
-        }
     }
 }

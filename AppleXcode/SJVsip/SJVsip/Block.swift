@@ -302,7 +302,7 @@ public class Block {
             type = block.type
         }
     }
-    // Vector bind returns vsip object (may be null on malloc failure)
+
     var vsip: OpaquePointer?{
         switch self.type {
         case .f:
