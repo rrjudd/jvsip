@@ -2,57 +2,14 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SvdEx.playground">
+   </FileRef>
+   <FileRef
       location = "group:README.md">
    </FileRef>
    <Group
       location = "group:SJVsip"
       name = "SJVsip">
-      <Group
-         location = "group:SJVsip"
-         name = "SJVsip">
-         <FileRef
-            location = "group:Block.swift">
-         </FileRef>
-         <FileRef
-            location = "group:extensionBlocks.swift">
-         </FileRef>
-         <FileRef
-            location = "group:extensionMatrix.swift">
-         </FileRef>
-         <FileRef
-            location = "group:extensionVector.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Functions.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Info.plist">
-         </FileRef>
-         <FileRef
-            location = "group:JVSIP.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Matrix.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Scalar.swift">
-         </FileRef>
-         <FileRef
-            location = "group:SJVsip.h">
-         </FileRef>
-         <FileRef
-            location = "group:utility.swift">
-         </FileRef>
-         <FileRef
-            location = "group:Vector.swift">
-         </FileRef>
-         <FileRef
-            location = "group:View.swift">
-         </FileRef>
-         <FileRef
-            location = "group:README.md">
-         </FileRef>
-      </Group>
       <FileRef
          location = "group:SJVsip.xcodeproj">
       </FileRef>

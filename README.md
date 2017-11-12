@@ -21,6 +21,24 @@ The code is written from the ground up with standard C; and is the de-facto refe
 implementation for the C VSIPL specification.  No other third party library is needed 
 to make the code so the implementation is very portable.
 
+The c_VSIP_src directory holds C Source code needed to build the jvsip VSIPL C Library.
+
+To **Build** type **make**. If that fails try (in a terminal)
+
+> cc -c *.c -I./
+
+> ar rcvs libvsip.a *.o
+
+To use include vsip.h (in this directory; put it in a handy place) and link
+with libvsip.a .
+
+There are other ways to make this library and lots of flags you can try. 
+This is the most brain dead way if you just want to try it out and don't know a lot about C or libraries. 
+Use only if you can't get the Makefile to work properly for you. You should just be able to
+type **make** in a terminal window opened in the root (jvsip) directory. This code
+depends only on an ansi C89 compliant compiler to build. Look for more information in the 
+**doc** directory.
+
 ## C++ version
 
 Currently a C++ API exists; developed by the HPEC-SI working group.

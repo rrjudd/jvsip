@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0627EB111FB7552B00611CDF /* svd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0627EB0F1FB7552A00611CDF /* svd.swift */; };
+		0627EB121FB7552B00611CDF /* qrd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0627EB101FB7552B00611CDF /* qrd.swift */; };
+		0627EB131FB7582800611CDF /* extensionMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5D71FAE43E2001A6117 /* extensionMatrix.swift */; };
 		063DE5A71FAE16B5001A6117 /* SJVsip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063DE59D1FAE16B4001A6117 /* SJVsip.framework */; };
 		063DE5AC1FAE16B5001A6117 /* SJVsipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5AB1FAE16B5001A6117 /* SJVsipTests.swift */; };
 		063DE5AE1FAE16B5001A6117 /* SJVsip.h in Headers */ = {isa = PBXBuildFile; fileRef = 063DE5A01FAE16B4001A6117 /* SJVsip.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,6 +24,7 @@
 		063DE5DC1FAE47CB001A6117 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5DB1FAE47CB001A6117 /* Functions.swift */; };
 		063DE5DD1FAF7A87001A6117 /* extensionVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5D51FAE43CF001A6117 /* extensionVector.swift */; };
 		063DE5DE1FAF7A92001A6117 /* extensionBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063DE5CF1FAE402A001A6117 /* extensionBlocks.swift */; };
+		06646DBC1FB7EDD80013ED56 /* lud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06646DBB1FB7EDD80013ED56 /* lud.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0627EB0F1FB7552A00611CDF /* svd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = svd.swift; sourceTree = "<group>"; };
+		0627EB101FB7552B00611CDF /* qrd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qrd.swift; sourceTree = "<group>"; };
 		063DE59D1FAE16B4001A6117 /* SJVsip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SJVsip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		063DE5A01FAE16B4001A6117 /* SJVsip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SJVsip.h; sourceTree = "<group>"; };
 		063DE5A11FAE16B4001A6117 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,6 +58,7 @@
 		063DE5D71FAE43E2001A6117 /* extensionMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionMatrix.swift; sourceTree = "<group>"; };
 		063DE5D91FAE4448001A6117 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		063DE5DB1FAE47CB001A6117 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		06646DBB1FB7EDD80013ED56 /* lud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lud.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +103,8 @@
 		063DE59F1FAE16B4001A6117 /* SJVsip */ = {
 			isa = PBXGroup;
 			children = (
+				0627EB101FB7552B00611CDF /* qrd.swift */,
+				0627EB0F1FB7552A00611CDF /* svd.swift */,
 				063DE5A01FAE16B4001A6117 /* SJVsip.h */,
 				063DE5A11FAE16B4001A6117 /* Info.plist */,
 				063DE5C31FAE3D2D001A6117 /* Scalar.swift */,
@@ -109,6 +118,7 @@
 				063DE5D71FAE43E2001A6117 /* extensionMatrix.swift */,
 				063DE5D91FAE4448001A6117 /* View.swift */,
 				063DE5DB1FAE47CB001A6117 /* Functions.swift */,
+				06646DBB1FB7EDD80013ED56 /* lud.swift */,
 			);
 			path = SJVsip;
 			sourceTree = "<group>";
@@ -242,7 +252,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				063DE5CC1FAE3DCE001A6117 /* utility.swift in Sources */,
+				0627EB131FB7582800611CDF /* extensionMatrix.swift in Sources */,
 				063DE5CE1FAE3EED001A6117 /* Block.swift in Sources */,
+				0627EB111FB7552B00611CDF /* svd.swift in Sources */,
 				063DE5DD1FAF7A87001A6117 /* extensionVector.swift in Sources */,
 				063DE5D41FAE43BD001A6117 /* Matrix.swift in Sources */,
 				063DE5D21FAE43A8001A6117 /* Vector.swift in Sources */,
@@ -250,7 +262,9 @@
 				063DE5CA1FAE3D93001A6117 /* JVSIP.swift in Sources */,
 				063DE5C41FAE3D2D001A6117 /* Scalar.swift in Sources */,
 				063DE5DC1FAE47CB001A6117 /* Functions.swift in Sources */,
+				06646DBC1FB7EDD80013ED56 /* lud.swift in Sources */,
 				063DE5DE1FAF7A92001A6117 /* extensionBlocks.swift in Sources */,
+				0627EB121FB7552B00611CDF /* qrd.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
