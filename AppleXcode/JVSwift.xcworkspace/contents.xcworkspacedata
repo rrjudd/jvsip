@@ -16,16 +16,6 @@
       <FileRef
          location = "group:SJVsip.xcodeproj">
       </FileRef>
-      <Group
-         location = "group:SJVsipTests"
-         name = "SJVsipTests">
-         <FileRef
-            location = "group:Info.plist">
-         </FileRef>
-         <FileRef
-            location = "group:SJVsipTests.swift">
-         </FileRef>
-      </Group>
    </Group>
    <FileRef
       location = "group:PngEx.playground">
