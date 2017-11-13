@@ -103,7 +103,7 @@ class SJVsipTests: XCTestCase {
         print("V");V.mPrint(fmt)
         let USr = U.empty // result of matrix product of U and Singular Vaules
         SJVsip.vmmul(vector: sValues, matrix: U, major: VSIP_ROW, resultsIn: USr)
-        SJVsip.prod(USr, prod: V.transview, resultsIn: Ar)
+        SJVsip.prod(USr, times: V.transview, resultsIn: Ar)
         print("Result of USV^t"); Ar.mPrint(fmt)
         SJVsip.sub(A, subtract: Ar, resultsIn: Ar)
         var normChk = SJvsip.normFro(view:Ar).reald / normA.reald
@@ -139,7 +139,7 @@ class SJVsipTests: XCTestCase {
         print(beta.reald)
         A.mPrint("4.3")
         P.mPrint("4.3")
-        SJVsip.prod(P, prod: P, resultsIn: A)
+        SJVsip.prod(P, times: P, resultsIn: A)
         A.mPrint("4.3")
         let chk = (I-A).normFro //SJvsip.normFro(view: tmp).reald
         print("chk is \(chk)")
@@ -160,7 +160,7 @@ class SJVsipTests: XCTestCase {
         let Q = qr.0
         let R = qr.1
         // Calculate Ae
-        SJVsip.prod(Q, prod: R, resultsIn: Ae)
+        SJVsip.prod(Q, times: R, resultsIn: Ae)
         // print original and estimate
         A.mPrint("5.3")
         Ae.mPrint("5.3")
@@ -263,7 +263,7 @@ class SJVsipTests: XCTestCase {
         let bexact = b.transview.newCopy
         SJVsip.herm(b, output: bexact)
         let tmp = cnt.empty
-        SJVsip.prod(aexact, prod: bexact, resultsIn: tmp)
+        SJVsip.prod(aexact, times: bexact, resultsIn: tmp)
         SJVsip.add(cexact, tmp, resultsIn: cexact)
         // cexact has result of gemp as manual calculation
         SJVsip.gemp(alpha: alpha,matA: a,opA: VSIP_MAT_NTRANS,matB: b,opB: VSIP_MAT_HERM,beta: beta,matC: cnt);

@@ -11,7 +11,7 @@ let aMatrixCp = aMatrix.newCopy
 let (Q,R) = aMatrixCp.qr
 let chk = aMatrix.empty
 chk.fill(zero)
-prod(Q, prod: R, resultsIn: chk)
+prod(Q, times: R, resultsIn: chk)
 aMatrix.mPrint(fmt)
 chk.mPrint(fmt)
 

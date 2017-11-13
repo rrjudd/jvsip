@@ -56,9 +56,9 @@ class solverTests: XCTestCase {
         print("Solve for X least squares using (AH prod A ) prod X = AH prod B\n");
         /* calculate matrix AHA = AH * A */
         Vsip.herm(A, output: AH);
-        Vsip.prod(AH, prod: A,resultsIn: AHA);
+        Vsip.prod(AH, times: A,resultsIn: AHA);
         /* calculate AH * B */
-        Vsip.prod(AH, prod: BX, resultsIn: X);
+        Vsip.prod(AH, times: BX, resultsIn: X);
         print("\nAH prod A = "); AHA.mPrint("4.2")
         print("\nAH prod B = ");X.mPrint("4.2")
         let _ = chol.decompose(AHA)
@@ -67,12 +67,12 @@ class solverTests: XCTestCase {
         /* check */
         print("\ncheck\n (AH prod A) prod X := AH prod B");
         /* restore AHA */
-        Vsip.prod(AH, prod: A, resultsIn: AHA)
+        Vsip.prod(AH, times: A, resultsIn: AHA)
         /* calculate AHA prod X */
-        Vsip.prod(AHA, prod: X, resultsIn: B)
+        Vsip.prod(AHA, times: X, resultsIn: B)
         Vsip.copy(from: X, to: ANS); /* if correct Need ANSwer */
         /* for check place AH * BX into X */
-        Vsip.prod(AH, prod: BX, resultsIn: X)
+        Vsip.prod(AH, times: BX, resultsIn: X)
         print("\nAHA * X ="); //VU_cmprintm_d("4.2",B);
         Vsip.sub(X, subtract: B, resultsIn: X)
         var check = Vsip.Jvsip.normFro(view: X).reald
@@ -82,7 +82,7 @@ class solverTests: XCTestCase {
             print("error")
         }
         /* restore X for use by covsol */
-        Vsip.prod(AH, prod: BX, resultsIn: X);
+        Vsip.prod(AH, times: BX, resultsIn: X);
         /* solve using ccovsol */
         /* copy data so we can solve covariance problem later on */
         
@@ -169,11 +169,11 @@ class solverTests: XCTestCase {
         print("for general case X = \n");IG.mPrint("8.4"); fflush(stdout);
         chk = Vsip.Jvsip.normFro(view: (IC - IG)).reald
         (chk > 1.0E-10) ? print("error\n") : print("correct\n"); fflush(stdout);
-        Vsip.prod(A,prod: IC, resultsIn: B)
+        Vsip.prod(A,times: IC, resultsIn: B)
         chk = Vsip.Jvsip.normFro(view: (B - Ident)).reald
         (chk > 1.0E-10) ? print("error\n") : print("correct\n"); fflush(stdout);
         print("(line 175) chk = \(chk)")
-        Vsip.prod(A,prod: IG, resultsIn: B)
+        Vsip.prod(A,times: IG, resultsIn: B)
         chk = Vsip.Jvsip.normFro(view: (B - Ident)).reald
         (chk > 1.0E-10) ? print("error\n") : print("correct\n"); fflush(stdout);
         print("(line 179) chk = \(chk)")
@@ -194,11 +194,11 @@ class solverTests: XCTestCase {
         print("for general case X = \n");IG.mPrint("8.4"); fflush(stdout);
         chk = Vsip.Jvsip.normFro(view: (IC - IG)).reald
         (chk > 1.0E-10) ? print("error\n") : print("correct\n"); fflush(stdout);
-        Vsip.prod(A.transview,prod: IC, resultsIn: B);
+        Vsip.prod(A.transview,times: IC, resultsIn: B);
         
         chk = Vsip.Jvsip.normFro(view: (B-Ident)).reald
         (chk > 1.0E-10) ? print("error\n") : print("correct\n")
-        Vsip.prod(A.transview,prod: IG, resultsIn: B);
+        Vsip.prod(A.transview,times: IG, resultsIn: B);
         chk = Vsip.Jvsip.normFro(view: (B - Ident)).reald
         print("mprod(trans(A),X) = \n"); B.mPrint("8.3")
         (chk > 1.0E-10) ? print("error\n") : print("correct\n")
@@ -209,7 +209,7 @@ class solverTests: XCTestCase {
         print("Y = \n");X.mPrint("8.4")
         let _ = ludC.solve(matOp: VSIP_MAT_NTRANS, X)
         print("X = \n"); X.mPrint("8.4");
-        Vsip.prod(A,prod: X, resultsIn: Y)
+        Vsip.prod(A,times: X, resultsIn: Y)
         print(" Y = A X\n");Y.mPrint("8.4")
         chk = Vsip.Jvsip.normFro(view: (Y - Ydata)).reald
         (chk > 1.0E-10) ? print("error\n") : print("correct\n"); fflush(stdout);
@@ -219,7 +219,7 @@ class solverTests: XCTestCase {
         Vsip.copy(from: Ydata, to: X)
         print("Y = \n"); X.mPrint("8.4")
         let _ = ludG.solve(matOp: VSIP_MAT_TRANS, X)
-        Vsip.prod(A.transview,prod: X, resultsIn: Y)
+        Vsip.prod(A.transview,times: X, resultsIn: Y)
         print("X = \n");X.mPrint("8.4")
         print("Y = trans(A) X\n");Y.mPrint("8.4")
         chk = Vsip.Jvsip.normFro(view: (Y - Ydata)).reald

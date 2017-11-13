@@ -1268,7 +1268,7 @@ public  func kron(alpha: Scalar, matA: Matrix, matB: Matrix, resutltsIn matC: Ma
         preconditionFailure("Kron not supported for argument list")
     }
 }
-public  func prod3(_ matA: Matrix,prod matB: Matrix, resutltsIn matC: Matrix){
+public  func prod3(_ matA: Matrix,times matB: Matrix, resutltsIn matC: Matrix){
     let t = (matA.type, matB.type, matC.type)
     let vsipA = matA.vsip
     let vsipB = matB.vsip
@@ -1286,7 +1286,7 @@ public  func prod3(_ matA: Matrix,prod matB: Matrix, resutltsIn matC: Matrix){
         preconditionFailure("VSIP function prod3 not supported for argument list")
     }
 }
-public  func prod3(_ matA: Matrix,prod  vecB: Vector, resutltsIn  vecC: Vector){
+public  func prod3(_ matA: Matrix,times  vecB: Vector, resutltsIn  vecC: Vector){
     let t = (matA.type, vecB.type, vecC.type)
     let vsipA = matA.vsip
     let vsipB = vecB.vsip
@@ -1304,7 +1304,7 @@ public  func prod3(_ matA: Matrix,prod  vecB: Vector, resutltsIn  vecC: Vector){
         preconditionFailure("VSIP function prod4 not supported for argument list")
     }
 }
-public  func prod4(_ matA: Matrix, prod matB: Matrix, resutltsIn matC: Matrix){
+public  func prod4(_ matA: Matrix, times matB: Matrix, resutltsIn matC: Matrix){
     let t = (matA.type, matB.type, matC.type)
     let vsipA = matA.vsip
     let vsipB = matB.vsip
@@ -1322,7 +1322,7 @@ public  func prod4(_ matA: Matrix, prod matB: Matrix, resutltsIn matC: Matrix){
         preconditionFailure("VSIP function prod4 not supported for argument list")
     }
 }
-public  func prod4(_ matA: Matrix, prod vecB: Vector, resutltsIn vecC: Vector){
+public  func prod4(_ matA: Matrix, times vecB: Vector, resutltsIn vecC: Vector){
     let t = (matA.type, vecB.type, vecC.type)
     let vsipA = matA.vsip
     let vsipB = vecB.vsip
@@ -1341,7 +1341,7 @@ public  func prod4(_ matA: Matrix, prod vecB: Vector, resutltsIn vecC: Vector){
     }
 }
 
-public  func prod(_ matA: Matrix,prod matB: Matrix,resultsIn matC: Matrix){
+public  func prod(_ matA: Matrix,times matB: Matrix,resultsIn matC: Matrix){
     let t = (matA.type, matB.type, matC.type)
     let vsipA = matA.vsip
     let vsipB = matB.vsip

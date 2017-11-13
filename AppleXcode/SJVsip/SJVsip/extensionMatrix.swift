@@ -35,7 +35,7 @@ extension Matrix {
         let _ = qrd.decompose(aCopy)
         qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
         let Qt = Q.transview
-        prod(Qt, prod: self, resultsIn: R)
+        prod(Qt, times: self, resultsIn: R)
         return (Q,R)
     }
     public var sv: Vector {

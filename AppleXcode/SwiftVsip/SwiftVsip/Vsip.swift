@@ -3625,7 +3625,7 @@ public final class Vsip {
             preconditionFailure("VSIP function prod3 not supported for argument list")
         }
     }
-    public static func prod3(_ matA: Matrix,prod  vecB: Vector, resutltsIn  vecC: Vector){
+    public static func prod3(_ matA: Matrix,times  vecB: Vector, resutltsIn  vecC: Vector){
         let t = (matA.type, vecB.type, vecC.type)
         let vsipA = matA.vsip
         let vsipB = vecB.vsip
@@ -3643,7 +3643,7 @@ public final class Vsip {
             preconditionFailure("VSIP function prod4 not supported for argument list")
         }
     }
-    public static func prod4(_ matA: Matrix, prod matB: Matrix, resutltsIn matC: Matrix){
+    public static func prod4(_ matA: Matrix, times matB: Matrix, resutltsIn matC: Matrix){
         let t = (matA.type, matB.type, matC.type)
         let vsipA = matA.vsip
         let vsipB = matB.vsip
@@ -4849,7 +4849,7 @@ public final class Vsip {
             qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
             print("create Qt")
             let Qt = Q.transview
-            Vsip.prod(Qt, prod: aCopy, resultsIn: R)
+            Vsip.prod(Qt, times: aCopy, resultsIn: R)
             return (Q,R)
         }
     }

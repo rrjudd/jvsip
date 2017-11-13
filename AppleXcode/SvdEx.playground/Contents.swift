@@ -15,7 +15,7 @@ let (U,s,V) = aMatrix.svdPart
 U.mPrint(fmt);s.mPrint(fmt); V.mPrint(fmt)
 chk.fill(zero)
 vmmul(vector: s, matrix: U, major: VSIP_ROW, resultsIn: U)
-prod(U, prod: V.transview, resultsIn: chk)
+prod(U, times: V.transview, resultsIn: chk)
 chk.mPrint(fmt)
 let svd = Svd(type: .d, columnLength: aMatrix.columnLength, rowLength: aMatrix.rowLength, saveU: VSIP_SVD_UVFULL, saveV: VSIP_SVD_UVFULL)
 svd.decompose(aMatrix.newCopy)

@@ -50,7 +50,7 @@ V.mPrint("4.3")
 let Uout = U.empty
 let Uherm = U.transview.empty
 Vsip.herm(U, output: Uherm)
-Vsip.prod(U, prod: Uherm, resultsIn: Uout)
+Vsip.prod(U, times: Uherm, resultsIn: Uout)
 Uout.mPrint("4.3")
 let dta = Vsip.Matrix(columnLength: 3, rowLength: 100, type: .d, major: VSIP_ROW)
 dta.row(0).ramp(Vsip.Scalar(0.0), increment: Vsip.Scalar(2.0 * Double.pi/Double(dta.rowLength)))
