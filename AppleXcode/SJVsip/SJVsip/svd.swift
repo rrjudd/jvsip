@@ -64,10 +64,10 @@ public class Svd {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_svd_destroy_f \(jInit.myId.int32Value)")
                 print("svd s destroy")
-            }
+            }*/
             vsip_svd_destroy_f(self.vsip)
             vsip_valldestroy_f(self.s)
         }
@@ -88,10 +88,10 @@ public class Svd {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_svd_destroy_d \(jInit.myId.int32Value)")
                 print("svd s destroy")
-            }
+            }*/
             vsip_svd_destroy_d(self.vsip)
             vsip_valldestroy_d(self.s)
         }
@@ -112,10 +112,10 @@ public class Svd {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_svd_destroy_f \(jInit.myId.int32Value)")
                 print("svd s destroy")
-            }
+            }*/
             vsip_csvd_destroy_f(self.vsip)
             vsip_valldestroy_f(self.s)
         }
@@ -136,10 +136,10 @@ public class Svd {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_csvd_destroy_cd \(jInit.myId.int32Value)")
                 print("svd s destroy")
-            }
+            }*/
             vsip_csvd_destroy_d(self.vsip)
             vsip_valldestroy_d(self.s)
         }

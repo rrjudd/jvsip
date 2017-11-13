@@ -43,9 +43,9 @@ public class Chold {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_chold_destroy_d \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_chold_destroy_d(self.vsip)
             
         }
@@ -61,9 +61,9 @@ public class Chold {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_chold_destroy_f \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_chold_destroy_f(self.vsip)
             
         }
@@ -79,9 +79,9 @@ public class Chold {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_cchold_destroy_d \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_cchold_destroy_d(self.vsip)
             
         }
@@ -97,9 +97,9 @@ public class Chold {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+          /*  if _isDebugAssertConfiguration(){
                 print("vsip_cchold_destroy_f \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_cchold_destroy_f(self.vsip)
         }
     }

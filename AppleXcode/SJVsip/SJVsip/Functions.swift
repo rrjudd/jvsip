@@ -1093,11 +1093,11 @@ public class Rand {
         }
     }
     deinit{
-        let id = self.myId?.int32Value
+        //let id = self.myId?.int32Value
         vsip_randdestroy(self.vsip)
-        if _isDebugAssertConfiguration(){
+       /* if _isDebugAssertConfiguration(){
             print("randdestroy id \(id!)")
-        }
+        }*/
     }
     
 }

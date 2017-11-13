@@ -156,9 +156,7 @@ class SJVsipTests: XCTestCase {
         // make some space for an estimate of A to be calculated with Q and R
         let Ae = A.empty
         // get (Q,R)
-        let qr = SJvsip.decompose(Acopy)
-        let Q = qr.0
-        let R = qr.1
+        let (Q,R) = Acopy.qr
         // Calculate Ae
         SJVsip.prod(Q, times: R, resultsIn: Ae)
         // print original and estimate

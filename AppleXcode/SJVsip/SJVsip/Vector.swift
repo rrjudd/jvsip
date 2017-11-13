@@ -79,63 +79,63 @@ public class Vector : View, Sequence {
     }
     deinit{
         let t = self.block.type
-        let id = self.myId.int32Value
+        //let id = self.myId.int32Value
         switch t {
         case .f:
             vsip_vdestroy_f(self.vsip)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vdestroy_f id \(id)")
-            }
+            }*/
         case .d:
             vsip_vdestroy_d(self.vsip)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vdestroy_d id \(id)")
-            }
+            }*/
         case .cf:
             vsip_cvdestroy_f(self.vsip)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("cvdestroy_f id \(id)")
-            }
+            }*/
         case .cd:
             vsip_cvdestroy_d(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("cvdestroy_d id \(id)")
-            }
+            }*/
         case .i:
             vsip_vdestroy_i(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vdestroy_i id \(id)")
-            }
+            }*/
         case .li:
             vsip_vdestroy_li(self.vsip)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vdestroy_li id \(id)")
-            }
+            }*/
         case .si:
             vsip_vdestroy_si(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vdestroy_si id \(id)")
-            }
+            }*/
         case .uc:
             vsip_vdestroy_uc(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vdestroy_uc id \(id)")
-            }
+            }*/
         case .vi:
             vsip_vdestroy_vi(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vdestroy_vi id \(id)")
-            }
+            }*/
         case .mi:
             vsip_vdestroy_mi(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vdestroy_mi id \(id)")
-            }
+            }*/
         case .bl:
             vsip_vdestroy_bl(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vdestroy_bl id \(id)")
-            }
+            }*/
         }
     }
     // MARK: Attributes

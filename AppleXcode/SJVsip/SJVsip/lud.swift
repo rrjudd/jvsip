@@ -37,9 +37,9 @@ public class LUD {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vsip_lud_destroy_f \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_lud_destroy_f(self.vsip)
         }
     }
@@ -54,9 +54,9 @@ public class LUD {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vsip_lud_destroy_d \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_lud_destroy_d(self.vsip)
         }
     }
@@ -71,9 +71,9 @@ public class LUD {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vsip_clud_destroy_f \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_clud_destroy_f(self.vsip)
         }
     }
@@ -88,9 +88,9 @@ public class LUD {
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vsip_clud_destroy_d \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_clud_destroy_d(self.vsip)
         }
     }

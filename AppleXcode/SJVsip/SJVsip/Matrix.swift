@@ -96,53 +96,53 @@ public class Matrix : View, Sequence {
     }
     deinit{
         let t = self.block.type
-        let id = self.myId.int32Value
+        //let id = self.myId.int32Value
         switch t {
         case .f:
             vsip_mdestroy_f(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("deinit mdestroy_f \(id)")
-            }
+            }*/
         case .d:
             vsip_mdestroy_d(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("deinit mdestroy_d \(id)")
-            }
+            }*/
         case .cf:
             vsip_cmdestroy_f(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("deinit cmdestroy_f \(id)")
-            }
+            }*/
         case .cd:
             vsip_cmdestroy_d(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("cmdestroy_d id \(id)")
-            }
+            }*/
         case .i:
             vsip_mdestroy_i(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("mdestroy_i id \(id)")
-            }
+            }*/
         case .li:
             vsip_mdestroy_li(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("mdestroy_li id \(id)")
-            }
+            }*/
         case .si:
             vsip_mdestroy_si(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("mdestroy_si id \(id)")
-            }
+            }*/
         case .uc:
             vsip_mdestroy_uc(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("mdestroy_uc id \(id)")
-            }
+            }*/
         case .bl:
             vsip_mdestroy_bl(self.vsip)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("mdestroy_bl id \(id)")
-            }
+            }*/
         default:
             break
         }

@@ -46,25 +46,25 @@ public class JVSIP {
             if jInit != 0 {
                 print("vsip_init failed; returned \(jInit)")
             }
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("called vsip_init")
-            }
+            }*/
             self.initInc()
         }
         let n = JVSIP.num.int32Value + 1
         JVSIP.num = NSNumber(value: n as Int32)
         self.myId = JVSIP.num
-        if _isDebugAssertConfiguration(){
+       /* if _isDebugAssertConfiguration(){
             print("called jinit id \(self.myId)")
-        }
+        }*/
     }
     deinit{
         self.initDec()
         if self.vsipInitEQzero(){
             vsip_finalize(nil)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("called vsip_finalize")
-            }
+            }*/
         }
     }
 }

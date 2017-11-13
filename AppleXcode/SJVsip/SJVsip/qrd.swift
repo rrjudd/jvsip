@@ -69,9 +69,9 @@ public class QRD{
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_qrd_destroy_f \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_qrd_destroy_f(self.vsip)
             
         }
@@ -87,9 +87,9 @@ public class QRD{
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("vsip_qrd_destroy_d \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_qrd_destroy_d(self.vsip)
             
         }
@@ -105,9 +105,9 @@ public class QRD{
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vsip_cqrd_destroy_f \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_cqrd_destroy_f(self.vsip)
             
         }
@@ -123,9 +123,9 @@ public class QRD{
             }
         }
         deinit{
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("vsip_cqrd_destroy_d \(jInit.myId.int32Value)")
-            }
+            }*/
             vsip_cqrd_destroy_d(self.vsip)
             
         }

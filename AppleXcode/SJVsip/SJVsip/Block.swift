@@ -21,9 +21,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_f(self.vsip!)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("blockdestroy_f id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class DBlock_f{ // Derived Block
@@ -40,9 +40,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_f(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("blockdestroy_f (derived) id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_d{
@@ -57,9 +57,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_d(self.vsip!)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("blockdestroy_d id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class DBlock_d{
@@ -76,9 +76,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_d(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("blockdestroy_d (derived) id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_cf{
@@ -92,9 +92,9 @@ public class Block {
         }
         deinit{
             vsip_cblockdestroy_f(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("cblockdestroy_f id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_cd{
@@ -108,9 +108,9 @@ public class Block {
         }
         deinit{
             vsip_cblockdestroy_d(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("cblockdestroy_d id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_vi{
@@ -124,9 +124,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_vi(self.vsip!)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("blockdestroy_vi id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_si{
@@ -140,9 +140,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_si(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("blockdestroy_si id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_i{
@@ -156,9 +156,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_i(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("blockdestroy_i id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_li{
@@ -172,9 +172,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_li(self.vsip!)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("blockdestroy_li id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_bl{
@@ -188,9 +188,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_bl(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("blockdestroy_bl id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_uc{
@@ -204,9 +204,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_uc(self.vsip!)
-            if _isDebugAssertConfiguration(){
+            /*if _isDebugAssertConfiguration(){
                 print("blockdestroy_uc id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     fileprivate class Block_mi{
@@ -220,9 +220,9 @@ public class Block {
         }
         deinit{
             vsip_blockdestroy_mi(self.vsip!)
-            if _isDebugAssertConfiguration(){
+           /* if _isDebugAssertConfiguration(){
                 print("blockdestroy_mi id \(jInit.myId.int32Value)")
-            }
+            }*/
         }
     }
     // MARK: Block Attributes
