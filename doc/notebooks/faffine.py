@@ -147,8 +147,8 @@ def faffine(M,wp,ws,Kp,Ks,eta_p,eta_s):
     h[:a1.length]=a1; h[a1.length]=a[0]; h[a1.length+1:]=a2   # h : filter coefficients
     pi_inv=1.0/pi
     pyplot.figure(1) 
-    pyplot.plot((w*pi_inv).list,A.list,'r'); pyplot.hold(True); 
-    pyplot.plot((rs*pi_inv).list,Ar.list,'+'); pyplot.hold(False)
+    pyplot.plot((w*pi_inv).list,A.list,'r')
+    pyplot.plot((rs*pi_inv).list,Ar.list,'+')
     pyplot.xlabel('w/pi',fontsize=14);pyplot.ylabel('A',fontsize=14)
     pyplot.title('Frequency Response Amplitude',fontsize=16)
     return (h,rs,del_p,del_s)

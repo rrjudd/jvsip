@@ -3,7 +3,7 @@ from math import pi, ceil, log, pow, floor
 from localmax import localmax
 from frefine import frefine
 from firfbe import firfbe
-from matplotlib.pyplot import figure,plot,hold,axis,xlabel,ylabel,title
+from matplotlib.pyplot import figure,plot,axis,xlabel,ylabel,title,clf
 
 def firebp(n,w1,w2,Del):
     """[h,rs,be] = firebp(n,w1,w2,Del);
@@ -145,15 +145,11 @@ def firebp(n,w1,w2,Del):
         if PF:
             figure(1)
             plot((w*(1./pi)).list,H.list)
-            hold(True)
             plot((rs*(1.0/pi)).list,Hr.list,'o')
-            hold(False)
             axis([0, 1, -.2, 1.2])
             figure(2)
             plot(Er.list)
-            hold(True)
             plot(Er.list,'o'),
-            hold(False)
             pause(0.05)
         # --------------- calculate new interpolation points  -----------------
         Y=Id.empty
@@ -244,7 +240,7 @@ def firebp(n,w1,w2,Del):
     h[a.length:]=a[1:]
     atr=a[1:].attrib;atr['offset']=atr['length'];atr['stride']*=-1
     a.putattrib(atr);h[:a.length]=a
-    figure(1); plot((w*(1.0/pi)).list,H.list); hold(True); plot((rs*(1.0/pi)).list,Y.list,'x'); hold(False)
+    figure(1); clf(); plot((w*(1.0/pi)).list,H.list); plot((rs*(1.0/pi)).list,Y.list,'x') 
     axis([0, 1, -.2, 1.2])
     xlabel('w'); ylabel('H'); title('Frequency Response Amplitude')
     return(h,rs,be)
