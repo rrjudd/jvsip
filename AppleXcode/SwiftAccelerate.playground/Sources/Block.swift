@@ -19,7 +19,7 @@ fileprivate class DataDouble: NSObject {
         self.length = length
         self.derived = false
         let dta = UnsafeMutablePointer<Double>.allocate(capacity: length)
-        dta.initialize(to: 0.0, count: length )
+        dta.initialize(repeating: 0.0, count: length )
         self.dta = UnsafeRawPointer(dta)
     }
     init(data: UnsafeRawPointer, length: Int){
@@ -30,8 +30,7 @@ fileprivate class DataDouble: NSObject {
     deinit {
         if !self.derived {
             let dta = UnsafeMutablePointer<Double>(mutating: self.dta.assumingMemoryBound(to: Double.self))
-            dta.deinitialize(count: self.length)
-            dta.deallocate(capacity: self.length)
+            dta.deallocate()
         }
     }
 }
@@ -44,7 +43,7 @@ fileprivate class DataFloat: NSObject {
         self.length = length
         self.derived = false
         let dta = UnsafeMutablePointer<Float>.allocate(capacity: length)
-        dta.initialize(to: 0.0, count: length )
+        dta.initialize(repeating: 0.0, count: length )
         self.dta = UnsafeRawPointer(dta)
     }
     init(data: UnsafeRawPointer, length: Int){
@@ -55,8 +54,7 @@ fileprivate class DataFloat: NSObject {
     deinit {
         if !self.derived {
             let dta = UnsafeMutablePointer<Float>(mutating: self.dta.assumingMemoryBound(to: Float.self))
-            dta.deinitialize(count: self.length)
-            dta.deallocate(capacity: self.length)
+            dta.deallocate()
         }
     }
 }
@@ -69,7 +67,7 @@ fileprivate class DataUInt32: NSObject {
         self.length = length
         self.derived = false
         let dta = UnsafeMutablePointer<UInt32>.allocate(capacity: length)
-        dta.initialize(to: 0, count: length )
+        dta.initialize(repeating: 0, count: length )
         self.dta = UnsafeRawPointer(dta)
     }
     init(data: UnsafeRawPointer, length: Int){
@@ -80,8 +78,7 @@ fileprivate class DataUInt32: NSObject {
     deinit {
         if !self.derived {
             let dta = UnsafeMutablePointer<UInt32>(mutating: self.dta.assumingMemoryBound(to: UInt32.self))
-            dta.deinitialize(count: self.length)
-            dta.deallocate(capacity: self.length)
+            dta.deallocate()
         }
     }
 }
@@ -94,7 +91,7 @@ fileprivate class DataInt32: NSObject {
         self.length = length
         self.derived = false
         let dta = UnsafeMutablePointer<Int32>.allocate(capacity: length)
-        dta.initialize(to: 0, count: length )
+        dta.initialize(repeating: 0, count: length )
         self.dta = UnsafeRawPointer(dta)
     }
     init(data: UnsafeRawPointer, length: Int){
@@ -105,8 +102,7 @@ fileprivate class DataInt32: NSObject {
     deinit {
         if !self.derived {
             let dta = UnsafeMutablePointer<Int32>(mutating: self.dta.assumingMemoryBound(to: Int32.self))
-            dta.deinitialize(count: self.length)
-            dta.deallocate(capacity: self.length)
+            dta.deallocate()
         }
     }
 }

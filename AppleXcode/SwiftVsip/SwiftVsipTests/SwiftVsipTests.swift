@@ -83,7 +83,7 @@ class SwiftVsipTests: XCTestCase {
         print("V");V.mPrint(fmt)
         let USr = U.empty // result of matrix product of U and Singular Vaules
         Vsip.vmmul(vector: sValues, matrix: U, major: VSIP_ROW, resultsIn: USr)
-        Vsip.prod(USr, times: V.transview, resultsIn: Ar)
+        Vsip.prod(USr, prod: V.transview, resultsIn: Ar)
         print("Result of USV^t"); Ar.mPrint(fmt)
         Vsip.sub(A, subtract: Ar, resultsIn: Ar)
         var normChk = Vsip.Jvsip.normFro(view:Ar).reald / normA.reald
@@ -119,7 +119,7 @@ class SwiftVsipTests: XCTestCase {
         print(beta.reald)
         A.mPrint("4.3")
         P.mPrint("4.3")
-        Vsip.prod(P, times: P, resultsIn: A)
+        Vsip.prod(P, prod: P, resultsIn: A)
         A.mPrint("4.3")
         let chk = (I-A).normFro //Vsip.Jvsip.normFro(view: tmp).reald
         print("chk is \(chk)")
@@ -243,7 +243,7 @@ class SwiftVsipTests: XCTestCase {
         let bexact = b.transview.newCopy
         Vsip.herm(b, output: bexact)
         let tmp = cnt.empty
-        Vsip.prod(aexact, times: bexact, resultsIn: tmp)
+        Vsip.prod(aexact, prod: bexact, resultsIn: tmp)
         Vsip.add(cexact, tmp, resultsIn: cexact)
         // cexact has result of gemp as manual calculation
         Vsip.gemp(alpha: alpha,matA: a,opA: VSIP_MAT_NTRANS,matB: b,opB: VSIP_MAT_HERM,beta: beta,matC: cnt);

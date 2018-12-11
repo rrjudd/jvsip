@@ -39,14 +39,14 @@ func formatFmt(_ fmt: String) -> String{
     var retval = ""
     func charCheck(_ char: Character) -> Bool {
         let validChars = "0123456789."
-        for item in validChars.characters{
+        for item in validChars{
             if char == item {
                 return true
             }
         }
         return false
     }
-    for char in fmt.characters{
+    for char in fmt{
         if charCheck(char){
             retval.append(char)
         }
@@ -408,7 +408,7 @@ public struct Scalar {
             }
         } else if 0.0 == value.realf {		// pure imaginary
             
-            let r = Foundation.sqrt((0.5 * Foundation.fabs(value.imagf)))
+            let r = Foundation.sqrt((0.5 * Swift.abs(value.imagf)))
             if value.imagf < 0.0 {
                 return Scalar(DSPComplex(real:r, imag: -(r)))
             } else {

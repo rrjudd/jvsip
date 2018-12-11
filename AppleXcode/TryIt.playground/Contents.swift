@@ -13,7 +13,7 @@ let lu = LUD(type: aMatrix.type, size: aMatrix.columnLength)
 let xb = Matrix(columnLength: 5, rowLength: 2, type: .d, major: VSIP_ROW)
 let b = xb.empty
 xb.randn(9, portable: true)
-prod(aMatrix, prod: xb, resultsIn: b)
+prod(aMatrix, times: xb, resultsIn: b)
 lu.decompose(aMatrix)
 xb.mPrint(fmt); b.mPrint(fmt)
 lu.solve(matOp: VSIP_MAT_NTRANS, b)

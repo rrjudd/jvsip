@@ -137,16 +137,16 @@ public final class Vsip {
         }
         public var imagf: Float{
             if let i = value.2 {
-                return Float(i)
+                return i.floatValue
             } else {
-                return Float(0.0)
+                return 0.0
             }
         }
         public var imagd: Double{
             if let i = value.2 {
-                return Double(i)
+                return i.doubleValue
             } else {
-                return Double(0.0)
+                return 0.0
             }
         }
         public var int: Int{
@@ -4849,7 +4849,7 @@ public final class Vsip {
             qrd.prodq(matrixOperator: VSIP_MAT_NTRANS, matrixSide: VSIP_MAT_LSIDE, matrix: Q)
             print("create Qt")
             let Qt = Q.transview
-            Vsip.prod(Qt, times: aCopy, resultsIn: R)
+            Vsip.prod(Qt, prod: aCopy, resultsIn: R)
             return (Q,R)
         }
     }
