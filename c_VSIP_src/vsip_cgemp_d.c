@@ -92,15 +92,18 @@ void vsip_cgemp_d(vsip_cscalar_d alpha,
       CMROWVIEW(A,0,a);
       CMCOLVIEW(B,0,b);
       af = a; bs = b;
-      if( ((OpA == VSIP_MAT_HERM) || (OpA == VSIP_MAT_CONJ)) && ((OpB != VSIP_MAT_HERM) || (OpB != VSIP_MAT_CONJ))){
+      if( ((OpA == VSIP_MAT_HERM) || (OpA == VSIP_MAT_CONJ)) &&
+          ((OpB == VSIP_MAT_TRANS) || (OpB == VSIP_MAT_NTRANS))){
                   dot = vsip_cvjdot_d;
                   af = b;
                   bs = a;
       }
-      if( ((OpA != VSIP_MAT_HERM) || (OpA != VSIP_MAT_CONJ)) && ((OpB ==VSIP_MAT_HERM) || (OpB ==VSIP_MAT_CONJ))){
+      if( ((OpA == VSIP_MAT_TRANS) || (OpA == VSIP_MAT_NTRANS)) &&
+          ((OpB == VSIP_MAT_HERM) || (OpB == VSIP_MAT_CONJ))){
                  dot = vsip_cvjdot_d;
-      } 
-      if( ((OpA == VSIP_MAT_HERM) || (OpA == VSIP_MAT_CONJ)) && ((OpB ==VSIP_MAT_HERM) || (OpB ==VSIP_MAT_CONJ))){
+      }
+      if( ((OpA == VSIP_MAT_HERM) || (OpA == VSIP_MAT_CONJ)) &&
+          ((OpB == VSIP_MAT_HERM) || (OpB == VSIP_MAT_CONJ))){
                   dot = VI_cvjjdot_d;
       }
       c = &cc;
