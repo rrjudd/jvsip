@@ -41,7 +41,6 @@ VI_cholesky_low_f(
    vsip_offset off_a0 = off_A_diag;
    vsip_offset off_a;
 
-   vsip_offset off_as0 = off_A_diag;
    vsip_offset off_as;
 
    for(k=0; k<n; k++){
@@ -67,7 +66,6 @@ VI_cholesky_low_f(
       off_b = off_b0;
       off_b0 += A_diag_str;
       off_as = off_a0;
-      off_as0 += A_diag_str;
       off_a = off_a0;
       off_a0 += A_diag_str;
       for(j=k+1; j<n; j++){
