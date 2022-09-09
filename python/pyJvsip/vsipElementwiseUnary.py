@@ -54,7 +54,7 @@ def cumsum(a,b):
     assert __isSizeCompatible(a,b), 'Arguments must be the same size for cumsum'
     assert t in f,'Type <:'+t+':> not supported by cumsum'
     if 'mview' in t:
-        if a.major is 'COL':
+        if a.major == 'COL':
             f[t](a.vsip,VSIP_COL,b.vsip)
         else:
             f[t](a.vsip,VSIP_ROW,b.vsip)
