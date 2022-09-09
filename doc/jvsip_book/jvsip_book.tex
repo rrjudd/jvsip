@@ -1,4 +1,5 @@
 \documentclass[pdftex,10pt,oneside,a4paper]{book}
+\usepackage[T1]{fontenc} 
 \usepackage[margin=2cm]{geometry}
 \usepackage{array}
 \usepackage{enumitem}
@@ -10,7 +11,6 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true}
 \usepackage{mathtools}
-\usepackage[T1]{fontenc} 
 \usepackage{lmodern}
 \usepackage{listings} 
 \usepackage{float}
@@ -104,17 +104,22 @@
 \newcounter{cexctr} \setcounter{cexctr}{1}
 \newcommand{\cex}{{\begin{center} \bfseries{c VSIPL Example \arabic{cexctr}} \end{center}}}
 \makeindex
+% document starts here
 \begin{document}
+
 \overfullrule=2cm
 \hypersetup{pageanchor=false} 
 \include{titlePage}
+%book formating info; might not need these
 \frontmatter
 \include{preface}
 \hypersetup{pageanchor=true} 
 \tableofcontents
 \listoffigures
 \listoftables
+%book formating info. Could need a backmatter as well.
 \mainmatter
+% c stands for chapter document
 \include{c1}
 \include{c2}
 \include{c3}
@@ -122,5 +127,6 @@
 \include{c5}
 \include{c6}
 \include{c7}
+\backmatter
 \printindex
 \end{document}
