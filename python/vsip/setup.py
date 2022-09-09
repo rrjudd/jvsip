@@ -29,8 +29,7 @@ vsip_module = Extension('_vsip',
                                   './c_src/jvsip_mprod.c'],
                         include_dirs=['../../c_VSIP_src','./c_src'],
                         library_dirs=['../../lib'],
-                        libraries=['vsip'],
-                        language=['c']
+                        libraries=['vsip']
                        )
 setup (name = 'vsip',
        version = '0.6',
