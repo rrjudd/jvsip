@@ -380,9 +380,9 @@ class Block (object):
             arg = args
         assert len(arg) == 3 or len(arg) == 5,\
                   'Argument list to block bind must be 3 (for vectors) or 5 (for matrices) integers.'
-        if len(arg) is 3:
+        if len(arg) == 3:
             attr=(arg[0],arg[1],arg[2])
-        else:# len(arg) is 5:
+        else:# len(arg) == 5:
             attr=(arg[0],arg[1],arg[2],arg[3],arg[4])
         bType=self.type
         if self.type in bSel:
@@ -688,7 +688,7 @@ class Block (object):
                 return self.rowview(index)
             elif 'vview' in self.type and isinstance(index,slice):
                 return self.subview(index)
-            elif 'mview' in self.type and (len(index) is 2) and \
+            elif 'mview' in self.type and (len(index) == 2) and \
                         isinstance(index[0],int) and isinstance(index[1],int) \
                         and (index[0] >=0) and (index[1] >= 0):
                 assert index[0] < self.collength and index[1] < self.rowlength,\
@@ -696,13 +696,13 @@ class Block (object):
                 i = (index[0],index[1])
                 val=vsipGet(self,i)
                 return(scalarVal(val))
-            elif 'mview' in self.type and (len(index) is 2) and \
+            elif 'mview' in self.type and (len(index) == 2) and \
                         isinstance(index[0],slice) and isinstance(index[1],slice):
                 return self.subview(index[0],index[1])
-            elif 'mview' in self.type and (len(index) is 2) and \
+            elif 'mview' in self.type and (len(index) == 2) and \
                         isinstance(index[0],slice) and isinstance(index[1],int):
                 return self.subview(index[0],slice(index[1],index[1]+1,1))
-            elif 'mview' in self.type and (len(index) is 2) and \
+            elif 'mview' in self.type and (len(index) == 2) and \
                         isinstance(index[0],int) and isinstance(index[1],slice):
                 return self.subview(slice(index[0],index[0]+1,1),index[1])
             else:
@@ -1003,7 +1003,7 @@ class Block (object):
             def nlength(b,e,s): #begin(start),end(stop),step(step)=>b,e,s
                 d=int(e)-int(b)
                 chk=d%int(s)
-                if chk is 0:
+                if chk == 0:
                     return d//int(s)
                 else:
                     return (d//int(s)) + 1
@@ -2448,7 +2448,7 @@ class Block (object):
                'vview_si':'vview_si','vview_uc':'vview_uc','vview_mi':'vview_mi',
                'vview_vi':'vview_vi'}
             assert len(vars) < 2, 'Gather only supports an index view, or an index view and an output view'
-            if len(vars) is 1:
+            if len(vars) == 1:
                 other = vars[0]
             else:
                 other = create(ot[self.type],indx.length)
