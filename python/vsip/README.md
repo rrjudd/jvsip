@@ -6,7 +6,11 @@ VSIP library.
 ## Quick Start
 From command line
 
->    python setup.py build_ext install --user
+>    python3 setup.py build_ext install --user
+
+or, if you prefer
+
+>    python3 setup.py build_ext install
 
 ## Additional information
 
@@ -17,22 +21,20 @@ directory expected locations.
 
 To build use from the command line
 
->    python setup.py build_ext
+>    python3 setup.py build_ext
 
 to build and install use from the command line
 
->    python setup.py build_ext install --user
+>    python3 setup.py build_ext install --user
 
 ### Installation
  There seem to be continual changes to python and it's environment which
- have caused problems.  I have changed the install so the module goes to
- a user folder which seems to cause fewer problems.
+ have caused problems.  You can do the install so the module goes to
+ a user folder which seems to cause fewer problems.  Also on my systems I seem to 
+ need to use python3 to do the build.
 
- Distutils seems to be deprecated but still around and how to replace it
- is not clear. I removed the line "language=['c']" from setup.py because
- it was causing an error in the build process. It still builds OK
- without that line. I have more trouble on my apple devices. I also
- build and test on a raspberry pi which seems to be less sensitive.
+ Currently I use the setuptools module so make sure you have that installed for your
+ version of python.
 
  The code works.  Getting it installed may require the use of a python
  knowledgable person.
@@ -60,4 +62,6 @@ when installing.
   * I still use Homebrew but Apple seems to be installing the latest
 Python3. To avoid conflicts I use Apples version. Python knowledgable
 people may want to go some other way.
+* I also build on a Raspberrypi platform (linux).  In general there are fewer problems
+  on that platform than on the Apple platform
 

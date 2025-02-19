@@ -3,22 +3,22 @@
 # makefile in the JVSIP home directory. Extension parmaeters listing should be self
 # explanatory for library and include directory expected locations.
 # to build use from the command line
-#   python setup.py build_ext
+#   python3 setup.py build_ext
 # to build and install use from the command line
-#   python setup.py build_ext install
+#   python3 setup.py build_ext install
 # Note 
 #   To use another vsip implementation you need to edit vsip.i to include the proper vsip.h
 #   and to list the functionality available (or desired) with the other implementation.
 #   Edit Extension and setup calls as needed
 """
-Python setup file for distutils. Creates JVSIP vsip module.
+Python setup file. Creates JVSIP vsip module.
 Requirements:
     C Compiler
-    Python installation and distribution utilities module
+    python setuptools module needs to be downloaded
     SWIG program installed (www.swig.org)
     Need to have built the JVSIP vsip library (libvsip.a)
 """
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 
 vsip_module = Extension('_vsip',
                         sources=['vsip.i',

@@ -1424,7 +1424,7 @@ def put(a,i,scl):
         else:
             assert False,'Index for function <:put:> must be an int for a vector'
     elif 'mview' in t:
-        if type(i) is tuple or type(i) is list and len(i) is 2:
+        if type(i) == tuple or type(i) == list and len(i) == 2:
             r=i[0]; c = i[1]
             t += 'scalar_mi'
         elif 'scalar_mi' in getType(i)[1]:
