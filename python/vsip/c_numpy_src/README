@@ -5,6 +5,11 @@ swig -python jvsipNumpyUtils.i
 python setup.py build
 python setup.py install
 
+In the current version I  have the setup.py file load numpy which has a
+get_include function and looks for the proper include file location.
+That seems to work for me. Information below might be needed if it fails to
+ work.
+
 IMPORTANT
 Just because you have the numpy module does not mean you can compile code to the numpy C api.
 You need to make sure the header files are available where the compiler can find them.
