@@ -56,7 +56,7 @@ def npToJv(a):
         fm={'float32':'mview_f','float64':'mview_d','complex64':'cmview_f','complex128':'cmview_d'}
         ashp=a.shape
         t=a.dtype.name
-        if len(a.shape) is 1: # create a vector
+        if len(a.shape) == 1: # create a vector
             v=create(fv[t],ashp[0])
         else: #create a matrix
             if a.flags.f_contiguous:
