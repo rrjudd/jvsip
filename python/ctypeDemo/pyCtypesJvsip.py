@@ -174,7 +174,7 @@ def _add(a,b,c):
        'vview_vivview_vivview_vi':vadd_vi, 'scalarvview_fvview_f':svadd_f,
        'scalarvview_ivview_i':svadd_i, 'scalarcvview_fcvview_f':rscvadd_f, 
        'scalarvview_vivview_vi':svadd_vi,'cscalarcvview_fcvview_f':csvadd_f}
-    if isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    if isinstance(a,int) or isinstance(a,float):
         t='scalar'+b.type+c.type
     elif isinstance(a,complex):
         t='cscalar'+b.type+c.type
