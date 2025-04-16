@@ -1,5 +1,5 @@
 import ctypes
-lib=ctypes.CDLL("libvsip.so")
+lib=ctypes.CDLL("./libvsip.so")
 
 # Memory hints are only supported at the interface for C JVSIP. Here I don't expose them to the user interface.
 memory_hint = {

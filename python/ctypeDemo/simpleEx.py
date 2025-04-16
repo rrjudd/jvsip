@@ -1,5 +1,5 @@
 import ctypes
-lib=ctypes.CDLL("libvsip.so")
+lib=ctypes.CDLL("./libvsip.so")
 
 memory_hint = {
     "VSIP_MEM_NONE":ctypes.c_int(0),
