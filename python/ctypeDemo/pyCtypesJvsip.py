@@ -1,5 +1,5 @@
 import ctypes
-lib=ctypes.CDLL("./_vsip.so")
+lib=ctypes.CDLL("libvsip.so")
 
 # Memory hints are only supported at the interface for C JVSIP. Here I don't expose them to the user interface.
 memory_hint = {
@@ -44,7 +44,7 @@ class JVSIP (object):
 def _tType(a):
     if isinstance(a,complex):
         return 'cscalar'
-    elif isinstance(a,int) or isinstance(a,long) or isinstance(a,float):
+    elif isinstance(a,int) or isinstance(a,float):
         return 'scalar'
     elif 'View' in repr(a):
         return a.type
@@ -53,7 +53,7 @@ def _tType(a):
 def _nlength(b,e,s): #begin(start),end(stop),step(step)=>b,e,s; Slice Length
     d=int(e)-int(b)
     chk=d%int(s)
-    if chk is 0:
+    if chk == 0:
         return d//int(s)
     else:
         return (d//int(s)) + 1
@@ -62,14 +62,14 @@ def _blockcreate(t,l):
     assert isinstance(t,str),'Type parameter to blockcreate ia a string'
     f={'block_f':lib.vsip_blockcreate_f,'cblock_f':lib.vsip_cblockcreate_f,
        'block_i':lib.vsip_blockcreate_i,'block_vi':lib.vsip_blockcreate_vi}
-    assert f.has_key(t),'Block type string <:%s:> not recognized'%t
+    assert t in f,'Block type string <:%s:> not recognized'%t
     f[t].restype=ctypes.c_void_p
     return f[t](ctypes.c_ulong(l),memory_hint["VSIP_MEM_NONE"])
 def _blockdestroy(t,aVsipBlock):
     assert isinstance(t,str),'Type parameter to blockdestroy is a string'
     f={'block_f':lib.vsip_blockdestroy_f,'cblock_f':lib.vsip_cblockdestroy_f,
        'block_i':lib.vsip_blockdestroy_i,'block_vi':lib.vsip_blockdestroy_vi}
-    assert f.has_key(t),'Block type string <:%s:> not recognized'%t
+    assert t in f,'Block type string <:%s:> not recognized'%t
     f[t](ctypes.c_void_p(aVsipBlock))
 def _bind(t,block,offset,stride,length):
     def vbind_f(block,offset,stride,length):
@@ -85,13 +85,13 @@ def _bind(t,block,offset,stride,length):
         lib.vsip_vbind_f.restype=ctypes.c_void_p
         return lib.vsip_vbind_f(ctypes.c_void_p(block),ctypes.c_ulong(offset),ctypes.c_long(stride),ctypes.c_ulong(length))
     f={'vview_f':vbind_f,'cvview_f':cvbind_f,'vview_i':vbind_i,'vview_vi':vbind_vi}
-    assert f.has_key(t),'Type <:%s:> not found for bind.'%t
+    assert t in f,'Type <:%s:> not found for bind.'%t
     return f[t](block,offset,stride,length)
 def _viewDestroy(t,aVSipView):
     assert isinstance(t,str),'Type parameter to viewDestroy must be a string'
     f={'vview_f':lib.vsip_vdestroy_f,'cvview_f':lib.vsip_cvdestroy_f,
        'vview_i':lib.vsip_vdestroy_i,'vview_vi':lib.vsip_vdestroy_vi}
-    assert f.has_key(t),'Type paramter <:%s:> not recognized for viewDestroy.'%t
+    assert t in f,'Type paramter <:%s:> not recognized for viewDestroy.'%t
     f[t].restype = ctypes.c_void_p
     f[t](ctypes.c_void_p(aVSipView))
 def _getattrib(view):
@@ -180,7 +180,7 @@ def _add(a,b,c):
         t='cscalar'+b.type+c.type
     else:
         t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:%s:> not recognized for add'%t
+    assert t in f, 'Type <:%s:> not recognized for add'%t
     f[t](a,b,c)
     return c
 def _sub(a,b,c):
@@ -195,7 +195,7 @@ def _sub(a,b,c):
         'vview_ivview_ivview_i':lib.vsip_vsub_i,
         'scalarvview_vivview_vi':lib.vsip_svsub_vi}
     t=_tType(a)+_tType(b)+_tType(c)
-    assert f.has_key(t), 'Type <:%s:> not recognized for sub'%t
+    assert t in f, 'Type <:%s:> not recognized for sub'%t
     if 'cscalar' in t:
         _sub(a.real,b.realview,c.realview)
         _sub(a.imag,b.imagview,c.imagview)
@@ -238,7 +238,7 @@ def _mul(a,b,c):
         t='cscalar'+b.type+c.type
     else:
         t=a.type+b.type+c.type
-    assert f.has_key(t), 'Type <:%s:> not recognized for mul'%t
+    assert t in f, 'Type <:%s:> not recognized for mul'%t
     f[t](a,b,c)
     return c
 class Block (object):
@@ -309,7 +309,7 @@ class Block (object):
         bSel={'imag_f':'block_f','real_f':'block_f'}
         if isinstance(arg,tuple):#create derived block
             return cls(blk,arg[0],arg[1])
-        elif bSel.has_key(blk):#create new block starting with derived block
+        elif blk in Sel:#create new block starting with derived block
             return cls(bSel[blk],arg)
         else:#create new block
             return cls(blk,arg)
@@ -334,7 +334,7 @@ class Block (object):
             'block_vivector':'vview_vi'}
         assert len(args) == 3,'Only vector views are supported for pyCtypesJvsip demo'
         t = self.type+'vector'
-        assert f.has_key(t),'Block bind method has no type <:%s:>.'%t
+        assert t in f,'Block bind method has no type <:%s:>.'%t
         viewType=f[t]
         offset = int(args[0]);stride=int(args[1]);length=int(args[2])
         assert self.length > offset + stride*(length-1),'View exceeds block size'
@@ -356,7 +356,7 @@ class Block (object):
         def __realview(cls,V):
             db={'cvview_f':'real_f'}
             rv={'cvview_f': _realview}
-            assert db.has_key(V.type),'View of type <:%s:> not supported for realview.'%V.type
+            assert V.type in db,'View of type <:%s:> not supported for realview.'%V.type
             t=db[V.type] #type of derived block
             v=rv[V.type](V.vsip) #get real vsip view
             attr=vattr(0,0,0,0)
@@ -370,7 +370,7 @@ class Block (object):
         def __imagview(cls,V):
             db={'cvview_f':'imag_f'}
             rv={'cvview_f': _imagview}
-            assert db.has_key(V.type),'View of type <:%s:> not supported for imagview.'%V.type
+            assert V.type in db,'View of type <:%s:> not supported for imagview.'%V.type
             t=db[V.type] #type of derived block
             v=rv[V.type](V.vsip) #get real vsip view
             attr=vattr(0,0,0,0)
@@ -460,10 +460,10 @@ class Block (object):
                'cvview_f':cvramp_f,
                'vview_i':vramp_i,
                'vview_vi':vramp_vi}
-            assert f.has_key(self.type)
+            assert self.type in f
             extended = ['cvview_f']
             t=self.type
-            assert f.has_key(t),'Type <:%s:> not support for ramp'%self.type
+            assert t in f,'Type <:%s:> not support for ramp'%self.type
             f[t](start,increment,self)
             return self
         @property
