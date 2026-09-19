@@ -1,0 +1,53 @@
+\documentclass[11pt, oneside]{article}
+\usepackage{geometry} 
+\geometry{letterpaper} 
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{titlesec}
+\newcommand{\cvl}{\ttbf{C VSIPL}}
+\newcommand{\pyjv}{{\ttbf{pyJvsip}}}
+\newcommand{\ttbf}[1]{{\ttfamily \bfseries #1}}
+\newcommand{\jv}{{\ttbf{JVSIP}}}
+\setlength{\parindent}{0pt} 
+\setlength{\parskip}{0.5 em}
+\titlespacing{\section}{0em}{0.5 em}{0.5em}
+
+\title{Brief Intro and Install Info for jvsipNumpy}
+\author{Randall Judd}
+\begin{document}
+\maketitle
+ \section*{Introduction}
+ The VSIPL project is all about a numerical library for signal processing. For python
+the de facto standard for doing similar calculations is the textbf{numpy} module. The purpose
+for writing the \textbf{jvsipNumpy} module is to provide a means to enable copies from-and-to
+\textbf{numpy} arrays; and to-and-from \textbf{pyJvsip} arrays. The only precisions supported at this
+time are float and double; both complex and real.
+\subsection*{Methods}
+To try for a little performance we write C code for the various needed copy functions.
+These are the numpyArrayCopies.c and numpyArrayCopies.h files. The header file
+includes needed \textbf{python} and \textbf{numpy} header files. You must have these headers on your
+system somewhere.  The \textbf{setup.py} has code to import the \textbf{numpy} header file location from the \textbf{numpy} module.  The \textbf{C vsip} library has copy functions that are needed by the  \textbf{numpyArrayCopies}.  It is expected that the \textbf{libvsip.a} has been made and installed
+in the standard location and \textbf{vsip.h} is also in the standard location.
+
+To wrap the code for compiling into a python module we include the \textbf{jvsipNumpyUtils.i}
+file. This file is needed by \textbf{SWIG} to generate the \textbf{jvsipNumpyUtils\_wrap.c} file and the
+\textbf{jvsipNumpyUtils.py} module file.
+
+The \textbf{jvsipNumpy.py} file uses the \textbf{jvsipNumpyUtils} module and defines two functions.
+The first is  \ttbf{jvToNp} which takes a \textbf{pyJvsip} matrix or vector object and returns the
+equivalent \textbf{numpy} object. The second is \ttbf{npToJv} which takes a \textbf{numpy} array and returns
+the equivalent \textbf{pyJvsip} object.
+
+We assume the file layout is the same as that downloaded with the \textbf{JVSIP} package. The \textbf{setup python} file assumes a compiled \textbf{vsip} library and header in the default location with respect to the \textbf{jvsipNumpy} code.  A knowledgable person could change that by editing these files.
+
+\section*{Make and Install}
+It is recommended you create a virtual python environment and work in that environment when working with the python code in \textbf{jvsip}.  It is also recommended you install \textbf{numpy}. \textbf{matplotlib} and \textbf{jupyter} for use in the virtual environment.
+
+When in the \textbf{jvsipNumpy} directory do
+
+\textbf{python -m pip install .}
+
+to install \textbf{jvsipNumpy} in your virtual environment.
+
+
+ \end{document}
